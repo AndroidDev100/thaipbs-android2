@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="more_with_login">
+        <item>Ganti kata sandi</item>
+        <item>perincian anda</item>
+        <item>Daftar Tontonan Anda</item>
+        <item>sejarah tontonan</item>
+        <item>Keanggotaan dan Rencana</item>
+        <item>aplikasi</item>
+        <item>Syarat dan ketentuan</item>
+        <item>Rahasia pribadi</item>
+        <item>Keluar</item>
+    </string-array>
+    <string-array name="more_with_login_fb">
+        <item>perincian anda</item>
+        <item>Daftar Tontonan Anda</item>
+        <item>sejarah tontonan</item>
+        <item>Keanggotaan dan Rencana</item>
+        <item>aplikasi</item>
+        <item>Syarat dan ketentuan</item>
+        <item>Rahasia pribadi</item>
+        <item>Keluar</item>
+        <item>Keluar</item>
+    </string-array>
+
+    <string-array name="more_with_verify">
+        <item>Ganti kata sandi</item>
+        <item>Verify Account</item>
+        <item>perincian anda</item>
+        <item>Daftar Tontonan Anda</item>
+        <item>sejarah tontonan</item>
+        <item>Keanggotaan dan Rencana</item>
+        <item>aplikasi</item>
+        <item>Syarat dan ketentuan</item>
+        <item>Rahasia pribadi</item>
+        <item>Keluar</item>
+    </string-array>
+
+    <string-array name="more_logout">
+        <item>Ganti kata sandi</item>
+        <item>perincian anda</item>
+        <item>Daftar Tontonan Anda</item>
+        <item>sejarah tontonan</item>
+        <item>Keanggotaan dan Rencana</item>
+        <item>aplikasi</item>
+        <item>Syarat dan ketentuan</item>
+        <item>Rahasia pribadi</item>
+
+    </string-array>
+
+</resources>

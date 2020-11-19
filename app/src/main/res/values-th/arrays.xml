@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="more_with_login">
+        <item>เปลื่ยนพาสเวิร์ด</item>
+        <item>ข้อมูลของฉัน</item>
+        <item>รายการของฉัน</item>
+        <item>ประวัติการรับชม</item>
+        <item>ข้อมูลสมาชิก</item>
+        <item>แลกคูปอง</item>
+        <item>ตั้งค่า</item>
+        <item>ข้อกำหนดและเงื่อนไข</item>
+        <item>นโยบายความเป็นส่วนตัว</item>
+        <item>ออกจากระบบ</item>
+    </string-array>
+    <string-array name="more_with_login_fb">
+        <item>ข้อมูลของฉัน</item>
+        <item>รายการของฉัน</item>
+        <item>ประวัติการรับชม</item>
+        <item>ข้อมูลสมาชิก</item>
+        <item>แลกคูปอง</item>
+        <item>ตั้งค่า</item>
+        <item>ข้อกำหนดและเงื่อนไข</item>
+        <item>นโยบายความเป็นส่วนตัว</item>
+        <item>ออกจากระบบ</item>
+    </string-array>
+
+    <string-array name="more_with_verify">
+        <item>เปลื่ยนพาสเวิร์ด</item>
+        <item>Verify Account</item>
+        <item>ข้อมูลของฉัน</item>
+        <item>รายการของฉัน</item>
+        <item>ประวัติการรับชม</item>
+        <item>ข้อมูลสมาชิก</item>
+        <item>แลกคูปอง</item>
+        <item>ตั้งค่า</item>
+        <item>ข้อกำหนดและเงื่อนไข</item>
+        <item>นโยบายความเป็นส่วนตัว</item>
+        <item>ออกจากระบบ</item>
+    </string-array>
+
+    <string-array name="more_logout">
+        <item>เปลื่ยนพาสเวิร์ด</item>
+        <item>ข้อมูลของฉัน</item>
+        <item>รายการของฉัน</item>
+        <item>ประวัติการรับชม</item>
+        <item>ข้อมูลสมาชิก</item>
+        <item>แลกคูปอง</item>
+        <item>ตั้งค่า</item>
+        <item>ข้อกำหนดและเงื่อนไข</item>
+        <item>นโยบายความเป็นส่วนตัว</item>
+
+
+    </string-array>
+
+</resources>
