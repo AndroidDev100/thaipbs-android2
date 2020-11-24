@@ -177,6 +177,7 @@ dependencies {
  //   testImplementation 'junit:junit:4.12'
     implementation project(':brightcovelibrary')
     implementation project(':enveusdk')
+    implementation project(':flutter')
 
 }
 
