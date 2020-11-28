@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import me.vipa.app.beanModel.beanModel.SectionDataModel;
 import me.vipa.app.beanModel.params.ParamBean;
 import me.vipa.app.callbacks.commonCallbacks.NoInternetConnectionCallBack;
-import com.vipa.app.databinding.FragmentMoreBinding;
+import me.vipa.app.databinding.FragmentMoreBinding;
 import me.vipa.app.utils.helpers.NoInternetConnection;
 
 import java.util.ArrayList;

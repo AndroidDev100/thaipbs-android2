@@ -19,10 +19,10 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.google.gson.Gson;
-import com.vipa.app.R;
+import me.vipa.app.R;
 import me.vipa.app.SDKConfig;
 import me.vipa.app.baseModels.BaseBindingActivity;
-import com.vipa.app.databinding.ActivityHelpBinding;
+import me.vipa.app.databinding.ActivityHelpBinding;
 import me.vipa.app.utils.helpers.ToastHandler;
 import me.vipa.app.utils.helpers.ToolBarHandler;
 import me.vipa.app.SDKConfig;

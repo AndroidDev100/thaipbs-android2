@@ -16,8 +16,8 @@ import androidx.lifecycle.ViewModelProviders;
 
 import me.vipa.app.activities.usermanagment.viewmodel.RegistrationLoginViewModel;
 import me.vipa.app.baseModels.BaseBindingActivity;
-import com.vipa.app.R;
-import com.vipa.app.databinding.NewPasswordScreenBinding;
+import me.vipa.app.R;
+import me.vipa.app.databinding.NewPasswordScreenBinding;
 import me.vipa.app.fragments.dialog.AlertDialogFragment;
 import me.vipa.app.fragments.dialog.AlertDialogSingleButtonFragment;
 import me.vipa.app.utils.cropImage.helpers.Logger;
@@ -35,7 +35,7 @@ import java.util.regex.Pattern;
 import me.vipa.app.activities.usermanagment.viewmodel.RegistrationLoginViewModel;
 import me.vipa.app.baseModels.BaseBindingActivity;
 
-import static com.vipa.app.R.font.roboto_regular;
+import static me.vipa.app.R.font.roboto_regular;
 
 public class ChangePasswordActivity extends BaseBindingActivity<NewPasswordScreenBinding> implements AlertDialogFragment.AlertDialogListener {
 

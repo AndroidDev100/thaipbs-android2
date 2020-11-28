@@ -8,8 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.vipa.app.R;
-import com.vipa.app.databinding.SeasonShimmerBinding;
+import me.vipa.app.R;
+import me.vipa.app.databinding.SeasonShimmerBinding;
 
 
 public class SeriesShimmerAdapter extends RecyclerView.Adapter<SeriesShimmerAdapter.ShimmerViewHolder> {

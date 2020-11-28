@@ -9,9 +9,9 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.vipa.app.R;
+import me.vipa.app.R;
 import me.vipa.app.beanModel.responseModels.series.SeasonsItem;
-import com.vipa.app.databinding.ListSeasonSelectionBinding;
+import me.vipa.app.databinding.ListSeasonSelectionBinding;
 import me.vipa.app.utils.helpers.SortSeasonNumber;
 
 import java.util.Collections;

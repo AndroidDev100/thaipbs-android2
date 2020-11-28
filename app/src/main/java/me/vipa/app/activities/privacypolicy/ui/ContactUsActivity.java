@@ -9,8 +9,8 @@ import android.webkit.WebViewClient;
 import androidx.annotation.NonNull;
 
 import me.vipa.app.baseModels.BaseBindingActivity;
-import com.vipa.app.R;
-import com.vipa.app.databinding.ActivityContactUsBinding;
+import me.vipa.app.R;
+import me.vipa.app.databinding.ActivityContactUsBinding;
 
 import me.vipa.app.baseModels.BaseBindingActivity;
 

@@ -8,7 +8,7 @@ import android.content.Intent;
 import me.vipa.app.callbacks.commonCallbacks.NoInternetConnectionCallBack;
 import me.vipa.app.utils.cropImage.helpers.Logger;
 import me.vipa.app.utils.cropImage.helpers.NetworkConnectivity;
-import com.vipa.app.databinding.NoConnectionBinding;
+import me.vipa.app.databinding.NoConnectionBinding;
 
 import me.vipa.app.callbacks.commonCallbacks.NoInternetConnectionCallBack;
 import me.vipa.app.utils.cropImage.helpers.Logger;

@@ -8,10 +8,10 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.vipa.app.R;
+import me.vipa.app.R;
 import me.vipa.app.activities.redeemcoupon.viewModel.RedeemViewModel;
 import me.vipa.app.baseModels.BaseBindingActivity;
-import com.vipa.app.databinding.ActivityRedeemCouponBinding;
+import me.vipa.app.databinding.ActivityRedeemCouponBinding;
 import me.vipa.app.fragments.dialog.AlertDialogFragment;
 import me.vipa.app.fragments.dialog.AlertDialogSingleButtonFragment;
 import me.vipa.app.utils.helpers.CheckInternetConnection;

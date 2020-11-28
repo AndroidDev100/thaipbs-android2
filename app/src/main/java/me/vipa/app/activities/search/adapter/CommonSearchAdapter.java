@@ -11,11 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import me.vipa.app.beanModel.popularSearch.ItemsItem;
-import com.vipa.app.R;
+import me.vipa.app.R;
 import me.vipa.app.beanModel.enveuCommonRailData.RailCommonData;
 import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
 import me.vipa.app.callbacks.commonCallbacks.SearchClickCallbacks;
-import com.vipa.app.databinding.CommonSearchAdapterBinding;
+import me.vipa.app.databinding.CommonSearchAdapterBinding;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.cropImage.helpers.Logger;
 import me.vipa.app.utils.helpers.ImageHelper;

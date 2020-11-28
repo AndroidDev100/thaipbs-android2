@@ -13,9 +13,9 @@ import android.view.ViewGroup;
 
 import me.vipa.app.MvHubPlusApplication;
 import me.vipa.app.activities.videoquality.callBack.NotificationItemClickListner;
-import com.vipa.app.R;
+import me.vipa.app.R;
 import me.vipa.app.activities.videoquality.bean.TrackItem;
-import com.vipa.app.databinding.VideoQualityItemBinding;
+import me.vipa.app.databinding.VideoQualityItemBinding;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 

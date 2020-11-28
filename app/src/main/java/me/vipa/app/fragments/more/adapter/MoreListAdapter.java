@@ -12,9 +12,9 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import me.vipa.app.MvHubPlusApplication;
-import com.vipa.app.R;
+import me.vipa.app.R;
 import me.vipa.app.callbacks.commonCallbacks.MoreItemClickListener;
-import com.vipa.app.databinding.MoreItemBinding;
+import me.vipa.app.databinding.MoreItemBinding;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.constants.AppConstants;
 import me.vipa.app.utils.cropImage.helpers.Logger;

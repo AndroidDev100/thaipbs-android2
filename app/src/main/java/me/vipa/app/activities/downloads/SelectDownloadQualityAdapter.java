@@ -10,8 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.vipa.app.R;
-import com.vipa.app.databinding.SelectDownloadVideoQualityBinding;
+import me.vipa.app.R;
+import me.vipa.app.databinding.SelectDownloadVideoQualityBinding;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 
 import java.util.List;

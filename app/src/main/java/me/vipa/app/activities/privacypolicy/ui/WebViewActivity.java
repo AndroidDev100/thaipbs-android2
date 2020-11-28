@@ -18,7 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
 import me.vipa.app.baseModels.BaseBindingActivity;
-import com.vipa.app.databinding.ActivityTermsConditionBinding;
+import me.vipa.app.databinding.ActivityTermsConditionBinding;
 import me.vipa.app.utils.constants.AppConstants;
 import me.vipa.app.baseModels.BaseBindingActivity;
 

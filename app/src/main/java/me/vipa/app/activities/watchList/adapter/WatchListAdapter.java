@@ -11,10 +11,10 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.vipa.app.R;
+import me.vipa.app.R;
 import me.vipa.app.activities.search.ui.ActivitySearch;
 import me.vipa.app.beanModel.allWatchList.ItemsItem;
-import com.vipa.app.databinding.CommonSearchAdapterBinding;
+import me.vipa.app.databinding.CommonSearchAdapterBinding;
 import me.vipa.app.utils.MediaTypeConstants;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.constants.AppConstants;

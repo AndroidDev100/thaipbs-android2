@@ -7,13 +7,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import com.vipa.app.R;
+import me.vipa.app.R;
 import me.vipa.app.activities.videoquality.adapter.VideoQualityAdapter;
 import me.vipa.app.activities.videoquality.bean.TrackItem;
 import me.vipa.app.activities.videoquality.callBack.NotificationItemClickListner;
 import me.vipa.app.activities.videoquality.viewModel.VideoQualityViewModel;
 import me.vipa.app.baseModels.BaseBindingActivity;
-import com.vipa.app.databinding.VideoQualityActivityBinding;
+import me.vipa.app.databinding.VideoQualityActivityBinding;
 import me.vipa.app.utils.helpers.NetworkConnectivity;
 
 import java.util.ArrayList;

@@ -8,9 +8,9 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.vipa.app.R;
+import me.vipa.app.R;
 import me.vipa.app.beanModel.KeywordList;
-import com.vipa.app.databinding.KeywordItemBinding;
+import me.vipa.app.databinding.KeywordItemBinding;
 import me.vipa.app.utils.cropImage.helpers.Logger;
 
 import java.util.List;

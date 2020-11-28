@@ -6,11 +6,11 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
-import com.vipa.baseCollection.baseCategoryModel.BaseCategory;
+import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
 import me.vipa.app.baseModels.HomeBaseViewModel;
 import me.vipa.app.repository.more.MoreFragmentRepository;
 import me.vipa.app.beanModel.params.ParamBean;
-import com.vipa.app.databinding.FragmentMoreBinding;
+import me.vipa.app.databinding.FragmentMoreBinding;
 
 import java.util.List;
 

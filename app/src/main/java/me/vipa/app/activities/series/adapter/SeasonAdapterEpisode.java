@@ -9,10 +9,10 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.vipa.app.R;
+import me.vipa.app.R;
 import me.vipa.app.activities.detail.ui.EpisodeActivity;
 import me.vipa.app.beanModel.responseModels.series.season.ItemsItem;
-import com.vipa.app.databinding.ListRowSeasonBinding;
+import me.vipa.app.databinding.ListRowSeasonBinding;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.constants.AppConstants;
 import me.vipa.app.utils.cropImage.helpers.PrintLogging;

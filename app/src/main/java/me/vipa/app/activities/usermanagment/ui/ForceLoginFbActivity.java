@@ -11,11 +11,11 @@ import androidx.lifecycle.ViewModelProviders;
 
 import me.vipa.app.activities.usermanagment.viewmodel.RegistrationLoginViewModel;
 import me.vipa.app.baseModels.BaseBindingActivity;
-import com.vipa.app.R;
+import me.vipa.app.R;
 import me.vipa.app.activities.homeactivity.ui.HomeActivity;
 import me.vipa.app.beanModel.configBean.ResponseConfig;
 import me.vipa.app.beanModel.responseModels.LoginResponse.Data;
-import com.vipa.app.databinding.ActivityForceLoginBinding;
+import me.vipa.app.databinding.ActivityForceLoginBinding;
 import me.vipa.app.fragments.dialog.AlertDialogFragment;
 import me.vipa.app.fragments.dialog.AlertDialogSingleButtonFragment;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;

@@ -11,10 +11,10 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import me.vipa.app.activities.videoquality.callBack.ItemClick;
-import com.vipa.app.R;
+import me.vipa.app.R;
 import me.vipa.app.activities.videoquality.bean.LanguageItem;
 
-import com.vipa.app.databinding.VideoQualityItemBinding;
+import me.vipa.app.databinding.VideoQualityItemBinding;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 
 import java.util.List;

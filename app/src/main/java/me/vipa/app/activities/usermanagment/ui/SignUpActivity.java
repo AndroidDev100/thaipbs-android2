@@ -14,9 +14,9 @@ import androidx.lifecycle.ViewModelProviders;
 
 import me.vipa.app.activities.usermanagment.viewmodel.RegistrationLoginViewModel;
 import me.vipa.app.baseModels.BaseBindingActivity;
-import com.vipa.app.R;
+import me.vipa.app.R;
 import me.vipa.app.beanModel.responseModels.LoginResponse.Data;
-import com.vipa.app.databinding.SignupActivityBinding;
+import me.vipa.app.databinding.SignupActivityBinding;
 import me.vipa.app.fragments.dialog.AlertDialogFragment;
 import me.vipa.app.fragments.dialog.AlertDialogSingleButtonFragment;
 import me.vipa.app.tarcker.EventConstant;

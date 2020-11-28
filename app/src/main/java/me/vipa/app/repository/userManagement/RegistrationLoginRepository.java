@@ -7,11 +7,11 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.vipa.baseCollection.baseCategoryServices.BaseCategoryServices;
+import me.vipa.baseCollection.baseCategoryServices.BaseCategoryServices;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
-import com.vipa.userManagement.callBacks.ForgotPasswordCallBack;
-import com.vipa.userManagement.callBacks.LoginCallBack;
-import com.vipa.userManagement.callBacks.UserProfileCallBack;
+import me.vipa.userManagement.callBacks.ForgotPasswordCallBack;
+import me.vipa.userManagement.callBacks.LoginCallBack;
+import me.vipa.userManagement.callBacks.UserProfileCallBack;
 import com.google.gson.Gson;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
@@ -26,7 +26,7 @@ import me.vipa.app.networking.apiendpoints.ApiInterface;
 import me.vipa.app.networking.apiendpoints.RequestConfig;
 import me.vipa.app.networking.intercepter.ErrorCodesIntercepter;
 import me.vipa.app.MvHubPlusApplication;
-import com.vipa.app.R;
+import me.vipa.app.R;
 import me.vipa.app.utils.constants.AppConstants;
 import me.vipa.app.utils.cropImage.helpers.Logger;
 
