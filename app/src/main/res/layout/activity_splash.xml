@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        tools:context="com.mvhub.mvhubplus.activities.splash.ui.ActivitySplash">
+        tools:context="com.vipa.app.me.vipa.app.activities.splash.ui.ActivitySplash">
 
         <ImageView
             android:id="@+id/img_logo"

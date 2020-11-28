@@ -71,7 +71,7 @@
             </RelativeLayout>
 
 
-            <com.mvhub.mvhubplus.utils.CustomProgressBar
+            <me.vipa.app.utils.CustomProgressBar
                 android:id="@+id/exoPlayerProgressBar"
                 style="?android:attr/progressBarStyle"
                 android:layout_width="wrap_content"

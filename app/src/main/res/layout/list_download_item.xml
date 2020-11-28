@@ -8,14 +8,14 @@
             type="com.brightcove.player.model.Video" />
         <variable
             name="downloadedVideo"
-            type="com.mvhub.mvhubplus.utils.helpers.downloads.room.DownloadedVideo" />
+            type="com.vipa.app.utils.helpers.downloads.room.DownloadedVideo" />
 
         <variable
             name="downloadStatus"
-            type="com.mvhub.mvhubplus.enums.DownloadStatus" />
+            type="me.vipa.app.enums.DownloadStatus" />
 
         <import type="android.view.View" />
-        <import type="com.mvhub.mvhubplus.enums.DownloadStatus" />
+        <import type="me.vipa.app.enums.DownloadStatus" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -126,7 +126,7 @@
             app:layout_constraintStart_toEndOf="@id/list_details"
             app:layout_constraintTop_toTopOf="parent">
 
-            <com.mvhub.mvhubplus.utils.DownloadProgressBar
+            <me.vipa.app.utils.DownloadProgressBar
                 android:id="@+id/video_downloading"
                 android:layout_width="22dp"
                 android:layout_height="22dp"

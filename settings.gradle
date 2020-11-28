@@ -1,9 +1,4 @@
 include ':app', ':sample', ':previewseekbar-exoplayer', ':previewseekbar', ':brightcovelibrary',':enveusdk'
 setBinding(new Binding([gradle: this]))
-evaluate(new File(
-        settingsDir,
-        '../thaipbs-flutter-module/thaipbs_flutter_module/.android/include_flutter.groovy'
-))
 
-rootProject.name = "thaipbs-android"
 

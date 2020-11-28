@@ -22,7 +22,7 @@ repositories {
 android {
     compileSdkVersion 30
     defaultConfig {
-        applicationId "com.mvhub.mvhubplus"
+        applicationId "me.vipa.app"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1005
@@ -56,11 +56,11 @@ android {
     productFlavors {
         dev {
             dimension 'default'
-            applicationId "com.mvhub.mvhubplus.dev"
+            applicationId "me.vipa.app.dev"
         }
         prod {
             dimension 'default'
-            applicationId "com.mvhub.mvhubplus"
+            applicationId "me.vipa.app"
         }
     }
 
@@ -177,7 +177,7 @@ dependencies {
  //   testImplementation 'junit:junit:4.12'
     implementation project(':brightcovelibrary')
     implementation project(':enveusdk')
-    implementation project(':flutter')
+   // implementation project(':flutter')
 
 }
 

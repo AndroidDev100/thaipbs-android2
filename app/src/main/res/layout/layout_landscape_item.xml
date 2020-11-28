@@ -20,7 +20,7 @@
 
         <variable
             name="playlistItem"
-            type="com.mvhub.mvhubplus.beanModelV3.playListModelV2.VideosItem" />
+            type="me.vipa.app.beanModelV3.playListModelV2.VideosItem" />
 
 
     </data>

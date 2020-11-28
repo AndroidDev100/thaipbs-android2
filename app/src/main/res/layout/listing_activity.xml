@@ -6,7 +6,7 @@
         android:layout_height="match_parent"
         android:background="?attr/backgroundColor">
 
-        <com.mvhub.mvhubplus.utils.CustomProgressBar
+        <me.vipa.app.utils.CustomProgressBar
             android:id="@+id/progress_bar"
             style="@style/Widget.AppCompat.ProgressBar"
             android:layout_width="wrap_content"

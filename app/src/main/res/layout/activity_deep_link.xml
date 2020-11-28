@@ -5,6 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/theme_background"
-    tools:context="com.mvhub.mvhubplus.com.mvhub.demo.activities.deeplink.DeepLinkActivity">
+    tools:context="com.vipa.app.com.mvhub.demo.activities.deeplink.DeepLinkActivity">
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.mvhub.mvhubplus">
+    package="me.vipa.app">
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -19,7 +19,7 @@
     <uses-permission android:name="android.permission.GET_TASKS" />
 
     <application
-        android:name=".MvHubPlusApplication"
+        android:name="me.vipa.app.MvHubPlusApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -31,18 +31,18 @@
         android:theme="@style/MyMaterialTheme"
         android:usesCleartextTraffic="true"
         tools:replace="allowBackup">
-        <activity android:name=".activities.ContactActivity"></activity>
-        <activity android:name=".activities.downloads.DownloadedEpisodesActivity" />
-        <activity android:name=".activities.settings.downloadsettings.changequality.ui.ChangeDownloadQuality" />
-        <activity android:name=".activities.settings.downloadsettings.DownloadSettings" />
-        <activity android:name=".activities.deeplink.DeepLinkActivity" />
+        <activity android:name="me.vipa.app.activities.ContactActivity"></activity>
+        <activity android:name="me.vipa.app.activities.downloads.DownloadedEpisodesActivity" />
+        <activity android:name="me.vipa.app.activities.settings.downloadsettings.changequality.ui.ChangeDownloadQuality" />
+        <activity android:name="me.vipa.app.activities.settings.downloadsettings.DownloadSettings" />
+        <activity android:name="me.vipa.app.activities.deeplink.DeepLinkActivity" />
         <activity
-            android:name=".utils.helpers.downloads.DownloadedVideoActivity"
+            android:name="me.vipa.app.utils.helpers.downloads.DownloadedVideoActivity"
             android:label="@string/title_activity_downloaded_video"
             android:screenOrientation="landscape"
             android:theme="@style/FullscreenTheme" />
         <activity
-            android:name=".activities.downloads.MyDownloads"
+            android:name="me.vipa.app.activities.downloads.MyDownloads"
             android:launchMode="singleTop"
             android:theme="@style/MyMaterialTheme" />
 
@@ -62,7 +62,7 @@
         <!-- android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService" -->
         <!-- android:enabled="true" /> -->
         <activity
-            android:name=".activities.splash.ui.ActivitySplash"
+            android:name="me.vipa.app.activities.splash.ui.ActivitySplash"
             android:launchMode="singleTop"
             android:theme="@style/SplashTheme">
             <intent-filter>
@@ -146,40 +146,40 @@
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
         <activity
-            android:name=".activities.usermanagment.ui.ChangePasswordActivity"
+            android:name="me.vipa.app.activities.usermanagment.ui.ChangePasswordActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name=".activities.profile.ui.ProfileActivity"
+            android:name="me.vipa.app.activities.profile.ui.ProfileActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".activities.profile.ui.ProfileActivityNew"
+            android:name="me.vipa.app.activities.profile.ui.ProfileActivityNew"
             android:launchMode="singleTop"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".activities.homeactivity.ui.HomeActivity"
+            android:name="me.vipa.app.activities.homeactivity.ui.HomeActivity"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:launchMode="singleTop"
             android:theme="@style/MyMaterialTheme" />
         <activity
-            android:name=".activities.search.ui.ActivitySearch"
+            android:name="me.vipa.app.activities.search.ui.ActivitySearch"
             android:configChanges="orientation|screenSize"
             android:launchMode="singleTop"
             android:windowSoftInputMode="stateVisible" />
         <activity
-            android:name=".activities.detail.ui.DetailActivity"
+            android:name="me.vipa.app.activities.detail.ui.DetailActivity"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:screenOrientation="locked"
             android:resizeableActivity="true"
             android:theme="@style/MyMaterialTheme" />
         <activity
-            android:name=".activities.live.LiveActivity"
+            android:name="me.vipa.app.activities.live.LiveActivity"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:resizeableActivity="true"
             android:screenOrientation="locked"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".activities.detail.ui.EpisodeActivity"
+            android:name="me.vipa.app.activities.detail.ui.EpisodeActivity"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:resizeableActivity="true"
             android:screenOrientation="locked"
@@ -197,51 +197,51 @@
         </receiver>
 
         <activity
-            android:name=".activities.watchList.ui.WatchListActivity"
+            android:name="me.vipa.app.activities.watchList.ui.WatchListActivity"
             android:launchMode="singleTop" />
-        <activity android:name=".activities.notification.ui.NotificationActivity" />
+        <activity android:name="me.vipa.app.activities.notification.ui.NotificationActivity" />
         <activity
-            android:name=".activities.listing.ui.GridActivity"
+            android:name="me.vipa.app.activities.listing.ui.GridActivity"
             android:configChanges="orientation|screenSize"
             android:launchMode="singleTop" />
         <activity
-            android:name=".activities.usermanagment.ui.LoginActivity"
+            android:name="me.vipa.app.activities.usermanagment.ui.LoginActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".activities.usermanagment.ui.SkipActivity"
+            android:name="me.vipa.app.activities.usermanagment.ui.SkipActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name=".activities.usermanagment.ui.SignUpActivity"
+            android:name="me.vipa.app.activities.usermanagment.ui.SignUpActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="stateHidden|adjustPan|adjustResize" />
         <activity
-            android:name=".activities.usermanagment.ui.ForgotPasswordActivity"
+            android:name="me.vipa.app.activities.usermanagment.ui.ForgotPasswordActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".activities.termsandconditions.ui.TermAndCondition"
+            android:name="me.vipa.app.activities.termsandconditions.ui.TermAndCondition"
             android:launchMode="singleTop" />
         <activity
-            android:name=".activities.privacypolicy.ui.WebViewActivity"
+            android:name="me.vipa.app.activities.privacypolicy.ui.WebViewActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name=".activities.usermanagment.ui.ForceLoginFbActivity"
+            android:name="me.vipa.app.activities.usermanagment.ui.ForceLoginFbActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".activities.series.ui.SeriesDetailActivity"
+            android:name="me.vipa.app.activities.series.ui.SeriesDetailActivity"
             android:launchMode="singleTop"
             android:screenOrientation="locked" />
         <activity
-            android:name=".activities.search.ui.ActivityResults"
+            android:name="me.vipa.app.activities.search.ui.ActivityResults"
             android:configChanges="orientation|screenSize"
             android:launchMode="singleTop" />
         <activity
-            android:name=".activities.purchase.ui.PurchaseActivity"
+            android:name="me.vipa.app.activities.purchase.ui.PurchaseActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name=".activities.membershipplans.ui.MemberShipPlanActivity"
+            android:name="me.vipa.app.activities.membershipplans.ui.MemberShipPlanActivity"
             android:launchMode="singleTop" />
 
         <receiver
@@ -258,28 +258,28 @@
             android:enabled="true" />
 
         <activity
-            android:name=".activities.privacypolicy.ui.ContactUsActivity"
+            android:name="me.vipa.app.activities.privacypolicy.ui.ContactUsActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name=".cms.HelpActivity"
+            android:name="me.vipa.app.cms.HelpActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name=".activities.videoquality.ui.ChangeLanguageActivity"
+            android:name="me.vipa.app.activities.videoquality.ui.ChangeLanguageActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name=".activities.settings.ActivitySettings"
+            android:name="me.vipa.app.activities.settings.ActivitySettings"
             android:launchMode="singleTop" />
         <activity
-            android:name=".activities.listing.listui.ListActivity"
+            android:name="me.vipa.app.activities.listing.listui.ListActivity"
             android:configChanges="orientation|screenSize"
             android:launchMode="singleTop" />
 
         <activity
-            android:name=".activities.redeemcoupon.RedeemCouponActivity"
+            android:name="me.vipa.app.activities.redeemcoupon.RedeemCouponActivity"
             android:launchMode="singleTop" />
 
         <service
-            android:name=".MvHubPlusMessagingService"
+            android:name="me.vipa.app.MvHubPlusMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -301,7 +301,7 @@
             android:name="com.brightcove.player.captioning.BrightcoveCaptionPropertiesActivity"
             android:theme="@style/MyCustomCaptionSettingsTheme" />
         <activity
-            android:name=".activities.article.ArticleActivity"
+            android:name="me.vipa.app.activities.article.ArticleActivity"
             android:screenOrientation="locked" />
 
         <meta-data
@@ -324,7 +324,7 @@
             android:value="true" />
 
         <activity
-            android:name=".activities.videoquality.ui.VideoQualityActivity"
+            android:name="me.vipa.app.activities.videoquality.ui.VideoQualityActivity"
             android:screenOrientation="locked" />
 
         <uses-library
@@ -339,7 +339,7 @@
             android:value="com.brightcove.cast.DefaultOptionsProvider" />
 
         <activity
-            android:name=".activities.chromecast.ExpandedControlsActivity"
+            android:name="me.vipa.app.activities.chromecast.ExpandedControlsActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask"
             android:screenOrientation="landscape"
@@ -350,7 +350,7 @@
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.homeactivity.ui.HomeActivity" />
+                android:value="me.vipa.app.activities.homeactivity.ui.HomeActivity" />
         </activity>
     </application>
 

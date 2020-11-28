@@ -1,8 +1,8 @@
-package com.mvhub.mvhubplus;
+package com.vipa.app;
 
-import com.mvhub.mvhubplus.utils.MediaTypeConstants;
-import com.mvhub.mvhubplus.utils.commonMethods.AppCommonMethod;
-import com.mvhub.mvhubplus.utils.config.bean.ConfigBean;
+import com.vipa.app.utils.MediaTypeConstants;
+import com.vipa.app.utils.commonMethods.AppCommonMethod;
+import com.vipa.app.utils.config.bean.ConfigBean;
 
 import java.util.ArrayList;
 import java.util.List;

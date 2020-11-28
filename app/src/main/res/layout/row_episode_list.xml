@@ -6,7 +6,7 @@
     <data>
         <variable
             name="playlistItem"
-            type="com.mvhub.mvhubplus.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean" />
+            type="me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean" />
 
         <variable
             name="videoItem"
@@ -14,11 +14,11 @@
 
         <variable
             name="downloadedVideo"
-            type="com.mvhub.mvhubplus.utils.helpers.downloads.room.DownloadedVideo" />
+            type="com.vipa.app.utils.helpers.downloads.room.DownloadedVideo" />
 
         <variable
             name="downloadStatus"
-            type="com.mvhub.mvhubplus.enums.DownloadStatus" />
+            type="me.vipa.app.enums.DownloadStatus" />
 
         <variable
             name="isDownloadable"
@@ -26,7 +26,7 @@
 
         <import type="android.view.View" />
 
-        <import type="com.mvhub.mvhubplus.enums.DownloadStatus" />
+        <import type="me.vipa.app.enums.DownloadStatus" />
     </data>
 
     <LinearLayout
@@ -217,7 +217,7 @@
                     android:visibility='@{downloadStatus==DownloadStatus.START ? View.VISIBLE : View.GONE, default="gone"}'
                     app:srcCompat="?attr/download_image" />
 
-                <com.mvhub.mvhubplus.utils.DownloadProgressBar
+                <me.vipa.app.utils.DownloadProgressBar
                     android:id="@+id/video_downloading"
                     android:layout_width="22dp"
                     android:layout_height="22dp"

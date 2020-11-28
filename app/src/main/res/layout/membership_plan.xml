@@ -624,7 +624,7 @@
                 android:layout_centerInParent="true"
                 android:layout_height="match_parent">
 
-                <com.mvhub.mvhubplus.utils.CustomProgressBar
+                <me.vipa.app.utils.CustomProgressBar
                     android:id="@+id/progress_bar"
                     android:layout_marginBottom="@dimen/NontonSize60"
                     style="@style/Widget.AppCompat.ProgressBar"

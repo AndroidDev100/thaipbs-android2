@@ -19,7 +19,7 @@
             android:background="@color/home_screen_seperator"
             android:visibility="gone" />
 
-        <com.mvhub.mvhubplus.utils.CustomProgressBar
+        <me.vipa.app.utils.CustomProgressBar
             android:id="@+id/progress_bar"
             android:layout_centerInParent="true"
             style="@style/Widget.AppCompat.ProgressBar"

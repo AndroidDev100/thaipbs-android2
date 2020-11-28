@@ -6,7 +6,7 @@
 
         <variable
             name="downloadStatus"
-            type="com.mvhub.mvhubplus.enums.DownloadStatus" />
+            type="me.vipa.app.enums.DownloadStatus" />
 
         <variable
             name="isDownloadable"
@@ -14,7 +14,7 @@
 
         <import type="android.view.View" />
 
-        <import type="com.mvhub.mvhubplus.enums.DownloadStatus" />
+        <import type="me.vipa.app.enums.DownloadStatus" />
     </data>
 
     <LinearLayout
@@ -34,7 +34,7 @@
                 android:layout_gravity="center"
                 android:orientation="vertical">
 
-                <com.mvhub.mvhubplus.utils.CustomProgressBar
+                <me.vipa.app.utils.CustomProgressBar
                     android:id="@+id/w_progress_bar"
                     style="@style/Widget.AppCompat.ProgressBar"
                     android:layout_width="@dimen/watch_ListWidth"
@@ -80,7 +80,7 @@
                 android:layout_marginRight="40dp"
                 android:orientation="vertical">
 
-                <com.mvhub.mvhubplus.utils.CustomProgressBar
+                <me.vipa.app.utils.CustomProgressBar
                     android:id="@+id/l_progress_bar"
                     style="@style/Widget.AppCompat.ProgressBar"
                     android:layout_width="@dimen/watchListWidth"
@@ -159,7 +159,7 @@
                 android:visibility='@{downloadStatus==DownloadStatus.START ? View.VISIBLE : View.GONE, default="gone"}'
                 app:srcCompat="@drawable/ic_start_download" />
 
-            <com.mvhub.mvhubplus.utils.DownloadProgressBar
+            <me.vipa.app.utils.DownloadProgressBar
                 android:id="@+id/video_downloading"
                 android:layout_width="22dp"
                 android:layout_height="22dp"

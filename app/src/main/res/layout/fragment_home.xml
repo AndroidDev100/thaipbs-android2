@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         android:background="?attr/backgroundColor">
 
-        <com.mvhub.mvhubplus.utils.CustomProgressBar
+        <me.vipa.app.utils.CustomProgressBar
             android:id="@+id/progress_bar"
             style="@style/Widget.AppCompat.ProgressBar"
             android:layout_width="wrap_content"
@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <com.mvhub.mvhubplus.utils.helpers.CustomSwipeToRefresh xmlns:android="http://schemas.android.com/apk/res/android"
+            <me.vipa.app.utils.helpers.CustomSwipeToRefresh xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/swipe_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -41,7 +41,7 @@
                     android:overScrollMode="never"
                     android:scrollbars="none" />
 
-            </com.mvhub.mvhubplus.utils.helpers.CustomSwipeToRefresh>
+            </me.vipa.app.utils.helpers.CustomSwipeToRefresh>
 
         </RelativeLayout>
 
