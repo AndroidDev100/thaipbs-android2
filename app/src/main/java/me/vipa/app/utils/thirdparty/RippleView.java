@@ -23,7 +23,7 @@ import android.widget.RelativeLayout;
 
 import androidx.annotation.ColorRes;
 
-import com.vipa.app.R;
+import me.vipa.app.R;
 
 
 public class RippleView extends RelativeLayout {

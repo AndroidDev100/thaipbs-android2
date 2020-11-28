@@ -28,9 +28,9 @@ import androidx.annotation.NonNull;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-import com.vipa.baseCollection.baseCategoryModel.BaseCategory;
-import com.vipa.enums.ImageType;
-import com.vipa.enums.WidgetImageType;
+import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
+import me.vipa.enums.ImageType;
+import me.vipa.enums.WidgetImageType;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -64,7 +64,7 @@ import me.vipa.app.utils.helpers.carousel.model.Slide;
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 import me.vipa.app.utils.recoSense.RecoSenceManager;
-import com.vipa.app.R;
+import me.vipa.app.R;
 import me.vipa.app.SDKConfig;
 
 import com.google.android.material.tabs.TabLayout;

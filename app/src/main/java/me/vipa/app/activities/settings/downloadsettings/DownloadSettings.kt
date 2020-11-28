@@ -4,12 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import com.vipa.app.R
-import com.vipa.app.activities.settings.downloadsettings.changequality.ui.ChangeDownloadQuality
-import com.vipa.app.databinding.ActivityDownloadSettingsBinding
-import com.vipa.app.utils.constants.SharedPrefesConstants
+import me.vipa.app.R
+import me.vipa.app.activities.settings.downloadsettings.changequality.ui.ChangeDownloadQuality
+import me.vipa.app.baseModels.BaseBindingActivity
+import me.vipa.app.databinding.ActivityDownloadSettingsBinding
+import me.vipa.app.utils.constants.SharedPrefesConstants
+import me.vipa.app.utils.helpers.SharedPrefHelper
 
-class DownloadSettings : _root_ide_package_.me.vipa.app.baseModels.BaseBindingActivity<ActivityDownloadSettingsBinding>(), View.OnClickListener {
+class DownloadSettings : BaseBindingActivity<ActivityDownloadSettingsBinding>(), View.OnClickListener {
     companion object {
         const val CHANGE_QUALITY_REQUEST_CODE = 10001
     }
@@ -18,15 +20,15 @@ class DownloadSettings : _root_ide_package_.me.vipa.app.baseModels.BaseBindingAc
         super.onCreate(savedInstanceState)
         setupToolbar()
 
-        binding.selectedQualityText.text = resources.getStringArray(R.array.download_quality)[_root_ide_package_.me.vipa.app.utils.helpers.SharedPrefHelper(this).getInt(SharedPrefesConstants.DOWNLOAD_QUALITY_INDEX, 4)]
+        binding.selectedQualityText.text = resources.getStringArray(R.array.download_quality)[SharedPrefHelper(this).getInt(SharedPrefesConstants.DOWNLOAD_QUALITY_INDEX, 4)]
         binding.textDownloadQuality.setOnClickListener(this)
-        binding.switchTheme.isChecked = _root_ide_package_.me.vipa.app.utils.helpers.SharedPrefHelper(this).getInt(SharedPrefesConstants.DOWNLOAD_OVER_WIFI, 0) == 1
+        binding.switchTheme.isChecked = SharedPrefHelper(this).getInt(SharedPrefesConstants.DOWNLOAD_OVER_WIFI, 0) == 1
 
         binding.switchTheme.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
-                _root_ide_package_.me.vipa.app.utils.helpers.SharedPrefHelper(this@DownloadSettings).setInt(SharedPrefesConstants.DOWNLOAD_OVER_WIFI, 1)
+                SharedPrefHelper(this@DownloadSettings).setInt(SharedPrefesConstants.DOWNLOAD_OVER_WIFI, 1)
             } else {
-                _root_ide_package_.me.vipa.app.utils.helpers.SharedPrefHelper(this@DownloadSettings).setInt(SharedPrefesConstants.DOWNLOAD_OVER_WIFI, 0)
+                SharedPrefHelper(this@DownloadSettings).setInt(SharedPrefesConstants.DOWNLOAD_OVER_WIFI, 0)
             }
         }
     }
@@ -56,7 +58,7 @@ class DownloadSettings : _root_ide_package_.me.vipa.app.baseModels.BaseBindingAc
         super.onActivityResult(requestCode, resultCode, data)
         when (resultCode) {
             CHANGE_QUALITY_REQUEST_CODE -> {
-                binding.selectedQualityText.text = resources.getStringArray(R.array.download_quality)[_root_ide_package_.me.vipa.app.utils.helpers.SharedPrefHelper(this).getInt(SharedPrefesConstants.DOWNLOAD_QUALITY_INDEX, 4)]
+                binding.selectedQualityText.text = resources.getStringArray(R.array.download_quality)[SharedPrefHelper(this).getInt(SharedPrefesConstants.DOWNLOAD_QUALITY_INDEX, 4)]
             }
         }
     }

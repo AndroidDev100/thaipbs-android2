@@ -3,7 +3,7 @@ package me.vipa.app.repository.bookmarking;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.vipa.baseCollection.baseCategoryServices.BaseCategoryServices;
+import me.vipa.baseCollection.baseCategoryServices.BaseCategoryServices;
 import me.vipa.bookmarking.bean.BookmarkingResponse;
 import me.vipa.bookmarking.bean.GetBookmarkResponse;
 import me.vipa.bookmarking.bean.continuewatching.GetContinueWatchingBean;
@@ -11,7 +11,7 @@ import com.vipa.userManagement.callBacks.BookmarkingCallback;
 import com.vipa.userManagement.callBacks.GetBookmarkCallback;
 import com.vipa.userManagement.callBacks.GetContinueWatchingCallback;
 import me.vipa.watchHistory.beans.ResponseWatchHistoryAssetList;
-import com.vipa.watchHistory.callbacks.GetWatchHistoryCallBack;
+import me.vipa.watchHistory.callbacks.GetWatchHistoryCallBack;
 import me.vipa.app.utils.constants.AppConstants;
 import me.vipa.app.utils.cropImage.helpers.Logger;
 

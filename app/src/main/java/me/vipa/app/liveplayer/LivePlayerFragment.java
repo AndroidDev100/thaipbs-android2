@@ -69,7 +69,7 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.util.Log;
 import com.google.android.exoplayer2.util.Util;
-import com.vipa.app.R;
+import me.vipa.app.R;
 import me.vipa.app.callbacks.commonCallbacks.PhoneListenerCallBack;
 import me.vipa.app.utils.cropImage.helpers.Logger;
 import me.vipa.app.utils.helpers.PhoneStateHelper;

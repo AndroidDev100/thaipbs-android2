@@ -17,8 +17,8 @@ import me.vipa.app.beanModel.enveuCommonRailData.RailCommonData;
 import me.vipa.app.callbacks.commonCallbacks.CommonRailtItemClickListner;
 import me.vipa.app.utils.constants.AppConstants;
 import me.vipa.app.utils.cropImage.helpers.Logger;
-import com.vipa.app.BR;
-import com.vipa.app.R;
+import me.vipa.app.BR;
+import me.vipa.app.R;
 import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
 
 import java.util.List;

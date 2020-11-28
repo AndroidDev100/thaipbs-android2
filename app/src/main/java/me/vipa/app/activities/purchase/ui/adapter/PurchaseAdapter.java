@@ -14,7 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.vipa.app.R;
+import me.vipa.app.R;
 import me.vipa.app.SDKConfig;
 import me.vipa.app.activities.purchase.ui.PurchaseActivity;
 import me.vipa.app.activities.purchase.ui.VodOfferType;

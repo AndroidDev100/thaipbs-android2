@@ -18,7 +18,7 @@ import androidx.core.app.NotificationCompat;
 import me.vipa.app.activities.splash.ui.ActivitySplash;
 import me.vipa.app.utils.cropImage.helpers.Logger;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
-import com.vipa.app.R;
+import me.vipa.app.R;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.google.gson.Gson;

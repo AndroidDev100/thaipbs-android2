@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.vipa.app.R;
+import me.vipa.app.R;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.util.ArrayList;

@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.vipa.app.R;
+import me.vipa.app.R;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 public class BottomDialogFragment extends BottomSheetDialogFragment {

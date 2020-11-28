@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import me.vipa.app.MvHubPlusApplication;
-import com.vipa.app.R;
+import me.vipa.app.R;
 import me.vipa.app.SDKConfig;
 import me.vipa.app.beanModel.cancelPurchase.ResponseCancelPurchase;
 import me.vipa.app.beanModel.membershipAndPlan.ResponseMembershipAndPlan;

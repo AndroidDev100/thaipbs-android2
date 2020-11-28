@@ -1,11 +1,11 @@
 package me.vipa.app.beanModel.enveuCommonRailData;
 
-import com.vipa.baseCollection.baseCategoryModel.BaseCategory;
-import com.vipa.enums.ImageSource;
-import com.vipa.enums.ImageType;
-import com.vipa.enums.LandingPageType;
-import com.vipa.enums.Layouts;
-import com.vipa.enums.WidgetImageType;
+import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
+import me.vipa.enums.ImageSource;
+import me.vipa.enums.ImageType;
+import me.vipa.enums.LandingPageType;
+import me.vipa.enums.Layouts;
+import me.vipa.enums.WidgetImageType;
 import me.vipa.app.beanModelV3.continueWatching.DataItem;
 import me.vipa.app.beanModelV3.playListModelV2.ItemsItem;
 import me.vipa.app.beanModelV3.playListModelV2.PlayListDetailsResponse;

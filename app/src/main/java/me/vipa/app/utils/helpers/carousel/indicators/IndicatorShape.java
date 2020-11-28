@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 
 import androidx.appcompat.widget.AppCompatImageView;
 
-import com.vipa.app.R;
+import me.vipa.app.R;
 
 
 /**

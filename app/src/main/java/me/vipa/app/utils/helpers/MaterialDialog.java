@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import me.vipa.app.callbacks.commonCallbacks.DialogInterface;
 import me.vipa.app.utils.cropImage.helpers.Logger;
-import com.vipa.app.R;
+import me.vipa.app.R;
 
 import me.vipa.app.callbacks.commonCallbacks.DialogInterface;
 import me.vipa.app.utils.cropImage.helpers.Logger;

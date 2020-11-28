@@ -1,7 +1,7 @@
 package me.vipa.app.dependencies.modules
 
 import android.content.Context
-import com.vipa.app.dependencies.providers.DTGPrefrencesProvider
+import me.vipa.app.dependencies.providers.DTGPrefrencesProvider
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

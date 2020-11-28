@@ -1,6 +1,6 @@
 package me.vipa.app.networking.responsehandler;
 
-import com.vipa.baseCollection.baseCategoryModel.BaseCategory;
+import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
 import me.vipa.app.networking.errormodel.ApiErrorModel;
 
 import java.util.List;

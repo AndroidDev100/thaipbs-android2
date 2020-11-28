@@ -28,7 +28,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 
-import com.vipa.app.R;
+import me.vipa.app.R;
 
 public class PreviewDelegate implements PreviewView.OnPreviewChangeListener {
 

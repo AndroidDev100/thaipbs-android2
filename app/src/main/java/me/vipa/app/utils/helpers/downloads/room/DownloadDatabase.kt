@@ -10,8 +10,8 @@ import androidx.room.migration.Migration
 @Database(entities = [DownloadedVideo::class, DownloadedEpisodes::class], version = 7, exportSchema = false)
 @Singleton
 abstract class DownloadDatabase : RoomDatabase() {
-    abstract fun downloadVideoDao(): _root_ide_package_.me.vipa.app.utils.helpers.downloads.room.DownloadVideoDao
-    abstract fun downloadEpisodeDao(): _root_ide_package_.me.vipa.app.utils.helpers.downloads.room.DownloadEpisodeDao
+    abstract fun downloadVideoDao(): DownloadVideoDao
+    abstract fun downloadEpisodeDao(): DownloadEpisodeDao
 
     companion object {
         @Volatile

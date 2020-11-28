@@ -1,6 +1,5 @@
 package me.vipa.app.utils;
 
-import com.vipa.BuildConfig;
 import me.vipa.app.utils.config.bean.ConfigBean;
 import me.vipa.app.utils.config.bean.ConfigBean;
 

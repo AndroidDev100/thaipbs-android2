@@ -17,7 +17,7 @@ import me.vipa.app.adapters.commonRails.CommonLandscapeAdapter;
 import me.vipa.app.adapters.commonRails.CommonPotraitAdapter;
 import me.vipa.app.adapters.commonRails.SquareCommonAdapter;
 import me.vipa.app.beanModel.beanModel.SectionDataModel;
-import com.vipa.app.R;
+import me.vipa.app.R;
 import me.vipa.app.adapters.HeaderAdapter;
 import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
 import me.vipa.app.utils.cropImage.helpers.Logger;

@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.vipa.app.R;
+import me.vipa.app.R;
 
 
 public class ShimmerViewHolder extends RecyclerView.ViewHolder {

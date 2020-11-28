@@ -10,7 +10,7 @@ import android.provider.Settings;
 
 import androidx.core.app.ActivityCompat;
 
-import com.vipa.app.R;
+import me.vipa.app.R;
 
 public class PermissionUtil {
     private final String[] galleryPermissions = {

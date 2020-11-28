@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import me.vipa.app.beanModel.beanModel.SingleItemModel;
-import com.vipa.app.R;
+import me.vipa.app.R;
 
 import java.util.ArrayList;
 

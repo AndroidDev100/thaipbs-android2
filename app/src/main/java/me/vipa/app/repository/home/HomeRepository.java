@@ -4,8 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.vipa.baseCollection.baseCategoryServices.BaseCategoryServices;
-import com.vipa.userManagement.callBacks.LogoutCallBack;
+import me.vipa.baseCollection.baseCategoryServices.BaseCategoryServices;
+import me.vipa.userManagement.callBacks.LogoutCallBack;
 import me.vipa.app.beanModel.emptyResponse.ResponseEmpty;
 import me.vipa.app.networking.apiendpoints.ApiInterface;
 import me.vipa.app.networking.apiendpoints.RequestConfig;

@@ -14,7 +14,7 @@
 
         <variable
             name="downloadedVideo"
-            type="com.vipa.app.utils.helpers.downloads.room.DownloadedVideo" />
+            type="me.vipa.app.utils.helpers.downloads.room.DownloadedVideo" />
 
         <variable
             name="downloadStatus"

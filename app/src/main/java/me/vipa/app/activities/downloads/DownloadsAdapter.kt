@@ -17,11 +17,14 @@ import com.brightcove.player.network.DownloadStatus
 import com.brightcove.player.offline.MediaDownloadable
 import com.mmtv.utils.helpers.downloads.DownloadHelper
 
-import com.vipa.app.R
-import com.vipa.app.databinding.ListDownloadItemBinding
-import com.vipa.app.utils.helpers.downloads.DownloadedVideoActivity
-import com.vipa.app.utils.helpers.downloads.room.DownloadModel
-import com.vipa.app.utils.helpers.downloads.room.DownloadedVideo
+import me.vipa.app.R
+import me.vipa.app.databinding.ListDownloadItemBinding
+import me.vipa.app.utils.MediaTypeConstants
+import me.vipa.app.utils.cropImage.helpers.Logger
+import me.vipa.app.utils.helpers.downloads.DownloadedVideoActivity
+import me.vipa.app.utils.helpers.downloads.VideoListListener
+import me.vipa.app.utils.helpers.downloads.room.DownloadModel
+import me.vipa.app.utils.helpers.downloads.room.DownloadedVideo
 import java.io.File
 import java.io.Serializable
 import java.text.DecimalFormat
@@ -34,7 +37,7 @@ import kotlin.math.log10
 import kotlin.math.pow
 
 
-class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDownloadable.DownloadEventListener, _root_ide_package_.me.vipa.app.utils.helpers.downloads.VideoListListener {
+class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDownloadable.DownloadEventListener, VideoListListener {
     private fun deleteVideo(view: View, downloadedVideo: DownloadedVideo, position: Int) {
         val popup = PopupMenu(context, view)
         popup.setOnMenuItemClickListener { item ->
@@ -74,7 +77,7 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
     }
 
     private lateinit var video: Video
-    private var viewHolder: _root_ide_package_.me.vipa.app.activities.downloads.DownloadsAdapter.LandscapeItemRowHolder? = null
+    private var viewHolder: DownloadsAdapter.LandscapeItemRowHolder? = null
     private val TAG = this.javaClass.simpleName
     private var context: Activity
     private val downloadedVideos = ArrayList<DownloadedVideo>()
@@ -85,7 +88,7 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
         context = activity
         downloadHelper = DownloadHelper(activity, this)
         downloadsList.downloadVideos.forEachIndexed { index, downloadedVideo ->
-            val b = downloadedVideo.downloadType == _root_ide_package_.me.vipa.app.utils.MediaTypeConstants.getInstance().series || downloadedVideo.downloadType ==  _root_ide_package_.me.vipa.app.utils.MediaTypeConstants.getInstance().episode
+            val b = downloadedVideo.downloadType == MediaTypeConstants.getInstance().series || downloadedVideo.downloadType ==  MediaTypeConstants.getInstance().episode
             if (b) {
                 if (Integer.parseInt(downloadedVideo.episodeCount) != 0){
                     downloadedVideos.add(downloadedVideo)
@@ -130,10 +133,10 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
             } else {
                 downloadHelper.findOfflineVideoById(downloadedVideo.videoId, object : OfflineCallback<Video> {
                     override fun onSuccess(video: Video) {
-                        _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e("Video Found", "true")
+                        Logger.e("Video Found", "true")
                         if (!video.isClearContent) {
                             if (video.licenseExpiryDate!!.time >= System.currentTimeMillis()) {
-                                _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e("License", "Expiry" + video.licenseExpiryDate)
+                                Logger.e("License", "Expiry" + video.licenseExpiryDate)
                                 downloadedVideos.add(downloadedVideo)
                                 if (index == downloadsList.downloadVideos.size - 1) {
                                     buildIndexMap()
@@ -187,7 +190,7 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
                 LayoutInflater.from(viewGroup.context),
                 R.layout.list_download_item, viewGroup, false)
         viewHolder = LandscapeItemRowHolder(listLdsItemBinding)
-        return viewHolder as _root_ide_package_.me.vipa.app.activities.downloads.DownloadsAdapter.LandscapeItemRowHolder
+        return viewHolder as DownloadsAdapter.LandscapeItemRowHolder
     }
 
     override fun getItemCount(): Int {
@@ -195,19 +198,19 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
     }
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
-        setLandscapeData(viewHolder as _root_ide_package_.me.vipa.app.activities.downloads.DownloadsAdapter.LandscapeItemRowHolder, position)
+        setLandscapeData(viewHolder as DownloadsAdapter.LandscapeItemRowHolder, position)
     }
 
-    private fun setLandscapeData(viewHolder: _root_ide_package_.me.vipa.app.activities.downloads.DownloadsAdapter.LandscapeItemRowHolder, position: Int) {
+    private fun setLandscapeData(viewHolder: DownloadsAdapter.LandscapeItemRowHolder, position: Int) {
         val currentVideoItem = downloadedVideos[position]
-        if (currentVideoItem.downloadType == _root_ide_package_.me.vipa.app.utils.MediaTypeConstants.getInstance().series) {
+        if (currentVideoItem.downloadType == MediaTypeConstants.getInstance().series) {
             try {
                 val imgFile = File(Environment.getExternalStorageDirectory().absolutePath + "/Android/data/" + context.packageName + "/files/Download/${currentVideoItem.videoId}.jpg")
                 val bm = BitmapFactory.decodeFile(imgFile.absolutePath)
                 viewHolder.itemBinding.itemImage.setImageBitmap(bm)
                 viewHolder.itemBinding.tvTitle.text = currentVideoItem.seriesName
             } catch (ex: Exception) {
-                _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e(TAG, ex.message)
+                Logger.e(TAG, ex.message)
             }
         }
         downloadHelper.getDownloadStatus(currentVideoItem.videoId)
@@ -215,7 +218,7 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
             override fun onSuccess(p0: Video?) {
                 viewHolder.itemBinding.root.tag = position
                 viewHolder.itemBinding.videoItem = p0
-                if (currentVideoItem.downloadType != _root_ide_package_.me.vipa.app.utils.MediaTypeConstants.getInstance().series) {
+                if (currentVideoItem.downloadType != MediaTypeConstants.getInstance().series) {
                     viewHolder.itemBinding.tvTitle.text = p0?.name
                 }
                 viewHolder.itemBinding.downloadedVideo = currentVideoItem
@@ -224,7 +227,7 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
             override fun onFailure(p0: Throwable?) {
             }
         })
-        if (currentVideoItem.downloadType == _root_ide_package_.me.vipa.app.utils.MediaTypeConstants.getInstance().series) {
+        if (currentVideoItem.downloadType == MediaTypeConstants.getInstance().series) {
             viewHolder.itemBinding.flDeleteWatchlist.visibility = View.GONE
         }
         updateDownloadStatus(viewHolder, currentVideoItem, position)
@@ -241,14 +244,14 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
             downloadHelper.resumeDownload(currentVideoItem.videoId)
         }
         viewHolder.itemBinding.root.setOnClickListener {
-            if (currentVideoItem.downloadType != _root_ide_package_.me.vipa.app.utils.MediaTypeConstants.getInstance().series) {
+            if (currentVideoItem.downloadType != MediaTypeConstants.getInstance().series) {
                 val downloadedVideoIntent = Intent(context, DownloadedVideoActivity::class.java)
                 val status=downloadHelper.getCatalog().getVideoDownloadStatus(currentVideoItem.videoId)
 
                 downloadHelper.findOfflineVideoById(currentVideoItem.videoId, object : OfflineCallback<Video> {
                     override fun onSuccess(p0: Video?) {
                         if (status.code== DownloadStatus.STATUS_COMPLETE){
-                            _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e("isParcelable", (p0 is Parcelable).toString())
+                            Logger.e("isParcelable", (p0 is Parcelable).toString())
                             downloadedVideoIntent.putExtra("DownloadedVideoId", p0 as Parcelable)
                             context.startActivity(downloadedVideoIntent)
                         }
@@ -259,7 +262,7 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
                     }
                 })
             } else {
-                val downloadedEpisodesIntent = Intent(context, _root_ide_package_.me.vipa.app.activities.downloads.DownloadedEpisodesActivity::class.java)
+                val downloadedEpisodesIntent = Intent(context, DownloadedEpisodesActivity::class.java)
                 downloadedEpisodesIntent.putExtra("SeriesId", currentVideoItem.seriesId)
                 downloadedEpisodesIntent.putExtra("SeriesName", currentVideoItem.seriesName)
                 downloadedEpisodesIntent.putExtra("SeasonNumber", currentVideoItem.seasonNumber)
@@ -268,11 +271,11 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
         }
     }
 
-    private fun updateDownloadStatus(viewHolder: _root_ide_package_.me.vipa.app.activities.downloads.DownloadsAdapter.LandscapeItemRowHolder, currentVideoItem: DownloadedVideo, position: Int) {
+    private fun updateDownloadStatus(viewHolder: DownloadsAdapter.LandscapeItemRowHolder, currentVideoItem: DownloadedVideo, position: Int) {
         downloadHelper.getCatalog().getVideoDownloadStatus(currentVideoItem.videoId,
                 object : OfflineCallback<DownloadStatus> {
                     override fun onSuccess(p0: DownloadStatus?) {
-                        if (currentVideoItem.downloadType == _root_ide_package_.me.vipa.app.utils.MediaTypeConstants.getInstance().series) {
+                        if (currentVideoItem.downloadType == MediaTypeConstants.getInstance().series) {
                             if (currentVideoItem.episodeCount.toInt() == 1)
                                 viewHolder.itemBinding.descriptionTxt.text = context.getString(R.string.season) + currentVideoItem.seasonNumber + " | " + currentVideoItem.episodeCount + context.getString(R.string.episode)
                             else
@@ -280,16 +283,16 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
                         } else {
                             when (p0?.code) {
                                 DownloadStatus.STATUS_COMPLETE -> {
-                                    viewHolder.itemBinding.downloadStatus = _root_ide_package_.me.vipa.app.enums.DownloadStatus.DOWNLOADED
+                                    viewHolder.itemBinding.downloadStatus = me.vipa.app.enums.DownloadStatus.DOWNLOADED
                                     viewHolder.itemBinding.descriptionTxt.text = getFileSize(p0.actualSize)
                                 }
                                 DownloadStatus.STATUS_DOWNLOADING -> {
-                                    viewHolder.itemBinding.downloadStatus = _root_ide_package_.me.vipa.app.enums.DownloadStatus.DOWNLOADING
+                                    viewHolder.itemBinding.downloadStatus = me.vipa.app.enums.DownloadStatus.DOWNLOADING
                                     viewHolder.itemBinding.videoDownloading.progress = p0.progress.toFloat()
                                     viewHolder.itemBinding.descriptionTxt.text = "Downloading"
                                 }
                                 DownloadStatus.STATUS_PAUSED -> {
-                                    viewHolder.itemBinding.downloadStatus = _root_ide_package_.me.vipa.app.enums.DownloadStatus.PAUSE
+                                    viewHolder.itemBinding.downloadStatus = me.vipa.app.enums.DownloadStatus.PAUSE
                                     viewHolder.itemBinding.descriptionTxt.text = "Paused"
                                 }
                             }
@@ -327,7 +330,7 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
     }
 
     override fun onDownloadPaused(p0: Video, p1: DownloadStatus) {
-        _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e(TAG, "onDownloadPaused" + p0.id)
+        Logger.e(TAG, "onDownloadPaused" + p0.id)
         notifyVideoChanged(p0.id, p1)
     }
 
@@ -338,7 +341,7 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
     }
 
     override fun onDownloadCanceled(p0: Video) {
-        _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e("DownloadCancelled", "True")
+        Logger.e("DownloadCancelled", "True")
     }
 
     override fun onDownloadDeleted(p0: Video) {
@@ -350,7 +353,7 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
     }
 
     override fun onDownloadProgress(p0: Video, p1: DownloadStatus) {
-        _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e(TAG, "onDownloadProgress" + p1.progress)
+        Logger.e(TAG, "onDownloadProgress" + p1.progress)
         notifyVideoChanged(p0.id, p1)
     }
 
@@ -359,11 +362,11 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
     }
 
     override fun pauseVideoDownload(video: Video) {
-        _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e(TAG, "pauseVideoDownload")
+       Logger.e(TAG, "pauseVideoDownload")
     }
 
     override fun resumeVideoDownload(video: Video) {
-        _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e(TAG, "resumeVideoDownload")
+        Logger.e(TAG, "resumeVideoDownload")
     }
 
     override fun deleteVideo(video: Video) {
@@ -380,7 +383,7 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
     }
 
     override fun downloadStatus(videoId: String, downloadStatus: DownloadStatus?) {
-        _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e(TAG, "downloadStatus" + downloadStatus?.progress)
+        Logger.e(TAG, "downloadStatus" + downloadStatus?.progress)
     }
 
     inner class LandscapeItemRowHolder(internal val itemBinding: ListDownloadItemBinding) : RecyclerView.ViewHolder(itemBinding.root)

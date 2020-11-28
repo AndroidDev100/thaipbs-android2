@@ -13,7 +13,7 @@ import me.vipa.app.utils.config.ImageLayer;
 import me.vipa.app.utils.cropImage.helpers.Logger;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 import me.vipa.app.MvHubPlusApplication;
-import com.vipa.app.R;
+import me.vipa.app.R;
 import me.vipa.app.utils.CustomeFields;
 
 import java.io.Serializable;

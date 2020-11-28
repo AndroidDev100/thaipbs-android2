@@ -7,7 +7,7 @@ import androidx.core.content.ContextCompat;
 import com.google.gson.internal.LinkedTreeMap;
 import me.vipa.app.beanModelV3.playListModelV2.VideosItem;
 import me.vipa.app.MvHubPlusApplication;
-import com.vipa.app.R;
+import me.vipa.app.R;
 import me.vipa.app.beanModelV2.continueWatching.DataItem;
 import me.vipa.app.beanModelV2.searchV2.ItemsItem;
 import me.vipa.app.beanModelV2.videoDetailsV2.EnveuVideoDetailsBean;

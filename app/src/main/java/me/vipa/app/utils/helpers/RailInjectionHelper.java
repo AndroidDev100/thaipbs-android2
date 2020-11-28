@@ -12,9 +12,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.vipa.baseCollection.baseCategoryModel.BaseCategory;
+import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
 import me.vipa.bookmarking.bean.continuewatching.ContinueWatchingBookmark;
-import com.vipa.enums.Layouts;
+import me.vipa.enums.Layouts;
 import me.vipa.watchHistory.beans.ItemsItem;
 import me.vipa.app.Bookmarking.BookmarkingViewModel;
 import me.vipa.app.beanModel.emptyResponse.ResponseEmpty;
@@ -40,7 +40,7 @@ import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 import me.vipa.app.ObservableRxList;
 import me.vipa.app.layersV2.VideoDetailLayer;
 import com.google.gson.JsonObject;
-import com.vipa.enums.PlaylistType;
+import me.vipa.enums.PlaylistType;
 
 import java.util.ArrayList;
 import java.util.List;

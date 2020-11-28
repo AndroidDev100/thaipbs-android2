@@ -12,7 +12,7 @@ import me.vipa.brightcovelibrary.chromecast.CastContextAttachedListner;
 import me.vipa.brightcovelibrary.chromecast.ChromeCastConnectionListener;
 import me.vipa.brightcovelibrary.chromecast.ChromecastManager;
 import com.google.android.gms.cast.framework.CastButtonFactory;
-import com.vipa.app.R;
+import me.vipa.app.R;
 import me.vipa.app.SDKConfig;
 
 public abstract class BaseBindingActivity<B extends ViewDataBinding> extends BaseActivity {

@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 
-import com.vipa.app.R;
+import me.vipa.app.R;
 
 
 /**

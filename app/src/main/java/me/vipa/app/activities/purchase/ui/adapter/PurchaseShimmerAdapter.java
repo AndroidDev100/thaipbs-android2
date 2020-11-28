@@ -9,7 +9,7 @@ import android.widget.RelativeLayout;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.vipa.app.R;
+import me.vipa.app.R;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
 public class PurchaseShimmerAdapter extends RecyclerView.Adapter<PurchaseShimmerAdapter.PurchaseViewHolder> {

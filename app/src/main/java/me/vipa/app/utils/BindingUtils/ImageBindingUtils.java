@@ -5,7 +5,7 @@ import android.widget.ImageView;
 
 import androidx.databinding.BindingAdapter;
 
-import com.vipa.enums.ImageType;
+import me.vipa.enums.ImageType;
 import me.vipa.app.utils.helpers.ImageHelper;
 import me.vipa.enums.ImageType;
 

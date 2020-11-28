@@ -1,7 +1,8 @@
 package me.vipa.userManagement.callBacks
 
-import me.vipa.userManagement.bean.UserProfile.UserProfileResponse
 import retrofit2.Response
+import me.vipa.userManagement.bean.UserProfile.UserProfileResponse
+
 
 interface UserProfileCallBack {
 

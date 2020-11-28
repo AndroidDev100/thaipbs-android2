@@ -11,7 +11,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 
-import com.vipa.app.R;
+import me.vipa.app.R;
 
 
 public class DownloadProgressBar extends View {

@@ -6,7 +6,7 @@ import android.content.res.Resources;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
-import com.vipa.app.R;
+import me.vipa.app.R;
 import me.vipa.app.activities.videoquality.bean.LanguageItem;
 import me.vipa.app.activities.videoquality.bean.TrackItem;
 import me.vipa.app.utils.cropImage.helpers.Logger;

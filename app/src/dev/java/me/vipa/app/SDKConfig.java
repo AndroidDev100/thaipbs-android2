@@ -1,6 +1,6 @@
 package me.vipa.app;
 
-import com.vipa.app.R;
+import me.vipa.app.R;
 
 import me.vipa.app.utils.MediaTypeConstants;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;

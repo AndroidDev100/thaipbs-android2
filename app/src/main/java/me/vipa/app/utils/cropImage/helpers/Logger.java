@@ -2,7 +2,7 @@ package me.vipa.app.utils.cropImage.helpers;
 
 import android.util.Log;
 
-import com.vipa.app.BuildConfig;
+import me.vipa.app.BuildConfig;
 
 public class Logger {
     public static void e(String tag,String message){

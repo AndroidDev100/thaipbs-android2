@@ -3,7 +3,7 @@ package me.vipa.app.utils.helpers.ksPreferenceKeys;
 import android.content.Context;
 
 import me.vipa.app.utils.constants.AppConstants;
-import com.vipa.app.utils.constants.SharedPrefesConstants;
+import me.vipa.app.utils.constants.SharedPrefesConstants;
 import me.vipa.app.MvHubPlusApplication;
 import me.vipa.app.utils.helpers.SharedPrefHelper;
 

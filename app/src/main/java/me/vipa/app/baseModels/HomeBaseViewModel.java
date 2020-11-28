@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.vipa.baseCollection.baseCategoryModel.BaseCategory;
+import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
 
 import java.util.List;
 

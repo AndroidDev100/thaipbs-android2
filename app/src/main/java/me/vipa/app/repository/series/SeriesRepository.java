@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.vipa.app.BuildConfig;
+import me.vipa.app.BuildConfig;
 import me.vipa.app.beanModel.AssetHistoryContinueWatching.ResponseAssetHistory;
 import me.vipa.app.beanModel.addComment.ResponseAddComment;
 import me.vipa.app.beanModel.allComments.ResponseAllComments;

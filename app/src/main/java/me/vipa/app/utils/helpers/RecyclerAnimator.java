@@ -6,7 +6,7 @@ import android.view.animation.LayoutAnimationController;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.vipa.app.R;
+import me.vipa.app.R;
 
 
 public class RecyclerAnimator {

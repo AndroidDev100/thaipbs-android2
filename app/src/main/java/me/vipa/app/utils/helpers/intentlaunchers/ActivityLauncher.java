@@ -5,11 +5,11 @@ import android.app.TaskStackBuilder;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.vipa.baseCollection.baseCategoryModel.BaseCategory;
+import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
 import me.vipa.app.activities.article.ArticleActivity;
 import me.vipa.app.activities.detail.ui.DetailActivity;
 import me.vipa.app.activities.detail.ui.EpisodeActivity;
-import com.vipa.app.activities.downloads.MyDownloads;
+import me.vipa.app.activities.downloads.MyDownloads;
 import me.vipa.app.activities.homeactivity.ui.HomeActivity;
 import me.vipa.app.activities.listing.listui.ListActivity;
 import me.vipa.app.activities.listing.ui.GridActivity;

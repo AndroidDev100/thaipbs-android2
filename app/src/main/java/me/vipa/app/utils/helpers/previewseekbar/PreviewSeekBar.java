@@ -14,7 +14,7 @@ import androidx.appcompat.widget.AppCompatSeekBar;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 
-import com.vipa.app.R;
+import me.vipa.app.R;
 
 import java.util.ArrayList;
 import java.util.List;

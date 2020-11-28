@@ -1,6 +1,6 @@
 package me.vipa.app.layersV2;
 
-import com.vipa.baseCollection.baseCategoryModel.BaseCategory;
+import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
 import me.vipa.app.callbacks.apicallback.ApiResponseModel;
 import me.vipa.app.networking.apiendpoints.ApiInterface;
 import me.vipa.app.networking.apiendpoints.RequestConfig;

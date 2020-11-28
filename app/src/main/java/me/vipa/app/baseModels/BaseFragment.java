@@ -10,12 +10,12 @@ import android.widget.ProgressBar;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.vipa.baseCollection.baseCategoryServices.BaseCategoryServices;
+import me.vipa.baseCollection.baseCategoryServices.BaseCategoryServices;
 import me.vipa.app.MvHubPlusApplication;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.constants.AppConstants;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
-import com.vipa.userManagement.callBacks.LogoutCallBack;
+import me.vipa.userManagement.callBacks.LogoutCallBack;
 import com.facebook.login.LoginManager;
 import com.google.gson.JsonObject;
 

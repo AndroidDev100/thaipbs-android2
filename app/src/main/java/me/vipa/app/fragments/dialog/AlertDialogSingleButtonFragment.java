@@ -8,7 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
-import com.vipa.app.R;
+import me.vipa.app.R;
 
 import java.util.Objects;
 

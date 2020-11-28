@@ -17,7 +17,7 @@ import android.widget.LinearLayout;
 
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 
-import com.vipa.app.R;
+import me.vipa.app.R;
 
 
 public class ExpandableCardLayout extends FrameLayout {

@@ -5,7 +5,7 @@ import android.view.Gravity;
 
 import androidx.core.content.ContextCompat;
 
-import com.vipa.app.R;
+import me.vipa.app.R;
 
 
 public class ToastHandler {

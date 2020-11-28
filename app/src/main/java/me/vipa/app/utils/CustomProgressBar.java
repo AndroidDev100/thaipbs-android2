@@ -5,7 +5,7 @@ import android.graphics.PorterDuff;
 import android.util.AttributeSet;
 import android.widget.ProgressBar;
 
-import com.vipa.app.R;
+import me.vipa.app.R;
 
 public class CustomProgressBar extends ProgressBar {
     public CustomProgressBar(Context context) {

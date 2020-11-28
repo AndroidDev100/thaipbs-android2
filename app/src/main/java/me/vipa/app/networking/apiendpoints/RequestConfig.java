@@ -1,7 +1,7 @@
 package me.vipa.app.networking.apiendpoints;
 
 import me.vipa.app.SDKConfig;
-import com.vipa.app.BuildConfig;
+import me.vipa.app.BuildConfig;
 import me.vipa.app.networking.profiler.HttpProfiler;
 import me.vipa.app.utils.cropImage.helpers.Logger;
 

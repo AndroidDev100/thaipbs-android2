@@ -4,10 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.vipa.baseCollection.baseCategoryModel.BaseCategory;
-import com.vipa.baseCollection.baseCategoryServices.BaseCategoryServices;
+import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
+import me.vipa.baseCollection.baseCategoryServices.BaseCategoryServices;
 import me.vipa.bookmarking.bean.continuewatching.ContinueWatchingBookmark;
-import com.vipa.callBacks.EnveuCallBacks;
+import me.vipa.callBacks.EnveuCallBacks;
 import me.vipa.watchHistory.beans.ItemsItem;
 import com.google.gson.Gson;
 import me.vipa.app.beanModel.enveuCommonRailData.RailCommonData;

@@ -10,7 +10,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import me.vipa.app.utils.cropImage.helpers.Logger;
 import me.vipa.app.utils.cropImage.helpers.PrintLogging;
-import com.vipa.app.R;
+import me.vipa.app.R;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.cropImage.helpers.Logger;

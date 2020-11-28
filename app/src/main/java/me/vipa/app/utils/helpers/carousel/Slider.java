@@ -17,14 +17,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 
-import com.vipa.enums.CRIndicator;
+import me.vipa.enums.CRIndicator;
 import me.vipa.app.beanModel.enveuCommonRailData.RailCommonData;
 import me.vipa.app.callbacks.commonCallbacks.CommonRailtItemClickListner;
 import me.vipa.app.utils.constants.AppConstants;
 import me.vipa.app.utils.helpers.carousel.adapter.SliderAdapter;
 import me.vipa.app.utils.helpers.carousel.indicators.IndicatorShape;
 import me.vipa.app.utils.helpers.carousel.indicators.SlideIndicatorsGroup;
-import com.vipa.app.R;
+import me.vipa.app.R;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
 
 import java.util.Random;

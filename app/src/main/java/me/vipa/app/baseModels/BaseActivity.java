@@ -25,14 +25,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.vipa.baseCollection.baseCategoryServices.BaseCategoryServices;
-import com.vipa.userManagement.callBacks.LogoutCallBack;
+import me.vipa.baseCollection.baseCategoryServices.BaseCategoryServices;
+import me.vipa.userManagement.callBacks.LogoutCallBack;
 import com.facebook.login.LoginManager;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.play.core.install.model.InstallStatus;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.vipa.app.R;
+import me.vipa.app.R;
 import me.vipa.app.activities.detail.ui.DetailActivity;
 import me.vipa.app.activities.homeactivity.ui.HomeActivity;
 import me.vipa.app.beanModel.configBean.ResponseConfig;

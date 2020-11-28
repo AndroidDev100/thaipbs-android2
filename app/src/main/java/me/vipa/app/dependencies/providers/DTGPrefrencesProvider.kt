@@ -2,7 +2,7 @@ package me.vipa.app.dependencies.providers
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.vipa.app.utils.constants.SharedPrefesConstants.DTG_SHARED_PREFS
+import me.vipa.app.utils.constants.SharedPrefesConstants.DTG_SHARED_PREFS
 
 class DTGPrefrencesProvider(mContext: Context) {
     var dtgSharePrefs: SharedPreferences = mContext.getSharedPreferences(DTG_SHARED_PREFS, Context.MODE_PRIVATE)

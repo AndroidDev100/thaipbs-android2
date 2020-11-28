@@ -27,16 +27,28 @@ import com.brightcove.player.network.HttpRequestConfig
 import com.brightcove.player.offline.MediaDownloadable
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
+import me.vipa.app.MvHubPlusApplication
 import me.vipa.app.R
+import me.vipa.app.activities.downloads.SelectDownloadQualityAdapter
+import me.vipa.app.activities.downloads.VideoQualitySelectedListener
+import me.vipa.app.activities.downloads.WifiPreferenceListener
+import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean
+import me.vipa.app.callbacks.commonCallbacks.CommonApiCallBack
 import me.vipa.app.databinding.LayoutDownloadQualityBottomSheetBinding
 import me.vipa.app.databinding.WifiDialogBinding
+import me.vipa.app.utils.MediaTypeConstants
+import me.vipa.app.utils.commonMethods.AppCommonMethod
 import me.vipa.app.utils.constants.SharedPrefesConstants
+import me.vipa.app.utils.cropImage.helpers.Logger
+import me.vipa.app.utils.helpers.SharedPrefHelper
 import me.vipa.app.utils.helpers.downloads.BrightcoveDownloadUtil
 import me.vipa.app.utils.helpers.downloads.ImageDownloadHelper
+import me.vipa.app.utils.helpers.downloads.VideoListListener
 import me.vipa.app.utils.helpers.downloads.room.DownloadDatabase
 import me.vipa.app.utils.helpers.downloads.room.DownloadModel
 import me.vipa.app.utils.helpers.downloads.room.DownloadedEpisodes
 import me.vipa.app.utils.helpers.downloads.room.DownloadedVideo
+import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -47,12 +59,12 @@ class DownloadHelper() {
     private var video: Video? = null
     private var TAG = this.javaClass.simpleName
     private lateinit var catalog: OfflineCatalog
-    private lateinit var videoListListener: _root_ide_package_.me.vipa.app.utils.helpers.downloads.VideoListListener
+    private lateinit var videoListListener: VideoListListener
     private lateinit var activity: Activity
     private lateinit var videoListener: MediaDownloadable.DownloadEventListener
     private lateinit var db: DownloadDatabase
     private var assetType = "VIDEO"
-    private lateinit var enveuVideoItemBean: _root_ide_package_.me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean
+    private lateinit var enveuVideoItemBean: EnveuVideoItemBean
     private var seriesId = ""
     private var seriesName = ""
     private var seasonNumber: String? = null
@@ -69,17 +81,17 @@ class DownloadHelper() {
     constructor(activity: Activity) : this() {
         this.activity = activity
         db = Room.databaseBuilder(
-                _root_ide_package_.me.vipa.app.MvHubPlusApplication.getApplicationContext(activity),
+                MvHubPlusApplication.getApplicationContext(activity),
                 DownloadDatabase::class.java, "enveu.db").build()
         init(activity)
     }
 
     constructor(activity: Activity, videoListener: MediaDownloadable.DownloadEventListener) : this() {
-        this.videoListListener = videoListener as _root_ide_package_.me.vipa.app.utils.helpers.downloads.VideoListListener
+        this.videoListListener = videoListener as VideoListListener
         this.videoListener = videoListener
         this.activity = activity
         db = Room.databaseBuilder(
-                _root_ide_package_.me.vipa.app.MvHubPlusApplication.getApplicationContext(activity),
+                MvHubPlusApplication.getApplicationContext(activity),
                 DownloadDatabase::class.java, "enveu.db").build()
         init(activity)
     }
@@ -88,7 +100,7 @@ class DownloadHelper() {
         this.assetType = assetType
     }
 
-    constructor(activity: Activity, videoListener: MediaDownloadable.DownloadEventListener, seriesId: String, seriesName: String, assetType: String, enveuVideoItemBean: _root_ide_package_.me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean) : this(activity, videoListener) {
+    constructor(activity: Activity, videoListener: MediaDownloadable.DownloadEventListener, seriesId: String, seriesName: String, assetType: String, enveuVideoItemBean: EnveuVideoItemBean) : this(activity, videoListener) {
         this.assetType = assetType
         this.enveuVideoItemBean = enveuVideoItemBean
         this.seriesId = seriesId
@@ -147,12 +159,12 @@ class DownloadHelper() {
     }
 
     fun allowedMobileDownload() {
-        mobileDownloadAllwed = _root_ide_package_.me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys.getInstance().downloadOverWifi
+        mobileDownloadAllwed = KsPreferenceKeys.getInstance().downloadOverWifi
         catalog.isMobileDownloadAllowed = mobileDownloadAllwed==0
     }
 
     fun findVideo(videoId: String): Video? {
-        _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e(TAG, "VideoId$videoId")
+        Logger.e(TAG, "VideoId$videoId")
         catalog.findVideoByID(videoId, object : VideoListener() {
             override fun onVideo(video: Video) {
                 this@DownloadHelper.video = video
@@ -161,7 +173,7 @@ class DownloadHelper() {
             }
 
             override fun onError(error: String) {
-                _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e(TAG, error)
+                Logger.e(TAG, error)
             }
         })
         return video
@@ -225,7 +237,7 @@ class DownloadHelper() {
         }
         if (!::db.isInitialized) {
             db = Room.databaseBuilder(
-                    _root_ide_package_.me.vipa.app.MvHubPlusApplication.getApplicationContext(activity),
+                    MvHubPlusApplication.getApplicationContext(activity),
                     DownloadDatabase::class.java, "enveu.db").build()
         }
         val videosList = ArrayList<Video>()
@@ -251,13 +263,13 @@ class DownloadHelper() {
         if (video.isClearContent) {
             downloadVideo(video, videoQuality)
         } else {
-            acquireLicense(video, object : _root_ide_package_.me.vipa.app.callbacks.commonCallbacks.CommonApiCallBack {
+            acquireLicense(video, object : CommonApiCallBack {
                 override fun onSuccess(item: Any?) {
                     downloadVideo(item as Video, videoQuality)
                 }
 
                 override fun onFailure(throwable: Throwable?) {
-                    _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e(TAG, throwable?.message)
+                    Logger.e(TAG, throwable?.message)
                 }
 
                 override fun onFinish() {
@@ -267,20 +279,20 @@ class DownloadHelper() {
     }
 
     fun startEpisodeDownload(video: Video, seriesId: String, seasonNumber: Int, episodeNumber: String, videoQuality: Int) {
-        assetType = _root_ide_package_.me.vipa.app.utils.MediaTypeConstants.getInstance().episode
+        assetType = MediaTypeConstants.getInstance().episode
         this.seriesId = seriesId
         this.seasonNumber = seasonNumber.toString()
         this.episodeNumber = episodeNumber
         if (video.isClearContent) {
             downloadVideo(video, videoQuality)
         } else {
-            acquireLicense(video, object : _root_ide_package_.me.vipa.app.callbacks.commonCallbacks.CommonApiCallBack {
+            acquireLicense(video, object : CommonApiCallBack {
                 override fun onSuccess(item: Any?) {
                     downloadVideo(item as Video, videoQuality)
                 }
 
                 override fun onFailure(throwable: Throwable?) {
-                   _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e(TAG, throwable?.message)
+                   Logger.e(TAG, throwable?.message)
                 }
 
                 override fun onFinish() {
@@ -290,9 +302,9 @@ class DownloadHelper() {
     }
 
     @SuppressLint("SimpleDateFormat")
-    private fun acquireLicense(video: Video, param: _root_ide_package_.me.vipa.app.callbacks.commonCallbacks.CommonApiCallBack) {
+    private fun acquireLicense(video: Video, param: CommonApiCallBack) {
         var playDuration = (video.duration.plus(10000)).toLong()
-        _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e(TAG, playDuration.toString())
+        Logger.e(TAG, playDuration.toString())
         val sdf = SimpleDateFormat("dd/M/yyyy HH:mm:ss")
         val currentDate = sdf.format(Date())
         val calender = Calendar.getInstance()
@@ -304,15 +316,15 @@ class DownloadHelper() {
         catalog.requestRentalLicense(video, calender.time, calender.timeInMillis, { event ->
             when (event.type) {
                 EventType.ODRM_LICENSE_ACQUIRED -> {
-                    _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.i(TAG, "ODRM_LICENSE_ACQUIRED" + Gson().toJson(event))
+                    Logger.i(TAG, "ODRM_LICENSE_ACQUIRED" + Gson().toJson(event))
                     param.onSuccess(event.properties[Event.VIDEO] as Video)
                 }
                 EventType.ODRM_PLAYBACK_NOT_ALLOWED, EventType.ODRM_SOURCE_NOT_FOUND -> {
-                    _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.w(TAG, "ODRM_PLAYBACK_NOT_ALLOWED")
+                    Logger.w(TAG, "ODRM_PLAYBACK_NOT_ALLOWED")
                     param.onFailure(Throwable("ODRM_PLAYBACK_NOT_ALLOWED"))
                 }
                 EventType.ODRM_LICENSE_ERROR -> {
-                    _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e(TAG, "ODRM_LICENSE_ERROR" + event.properties[Event.ERROR] as Throwable?)
+                    Logger.e(TAG, "ODRM_LICENSE_ERROR" + event.properties[Event.ERROR] as Throwable?)
                     param.onFailure(Throwable("ODRM_LICENSE_ERROR"))
                 }
             }
@@ -328,7 +340,7 @@ class DownloadHelper() {
                 }
 
                 override fun onFailure(throwable: Throwable?) {
-                    _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e(TAG, throwable?.message)
+                    Logger.e(TAG, throwable?.message)
                 }
             })
         }
@@ -343,7 +355,7 @@ class DownloadHelper() {
                 }
 
                 override fun onFailure(throwable: Throwable?) {
-                    _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e(TAG, throwable?.message)
+                    Logger.e(TAG, throwable?.message)
                 }
             })
         }
@@ -356,7 +368,7 @@ class DownloadHelper() {
             }
 
             override fun onFailure(throwable: Throwable?) {
-                _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e(TAG, throwable?.message)
+                Logger.e(TAG, throwable?.message)
             }
         })
     }
@@ -369,14 +381,14 @@ class DownloadHelper() {
             }
 
             override fun onFailure(throwable: Throwable?) {
-                _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e(TAG, throwable?.message)
+                Logger.e(TAG, throwable?.message)
                 callback.onFailure(throwable)
             }
         })
     }
 
     private fun updateDownloadStatus(downloadStatus: DownloadStatus?) {
-        _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e(TAG, downloadStatus?.code.toString())
+        Logger.e(TAG, downloadStatus?.code.toString())
         video?.let {
             updateVideoStatus(downloadStatus!!.code, it.id)
             videoListListener.downloadStatus(it.id, downloadStatus)
@@ -419,7 +431,7 @@ class DownloadHelper() {
     fun deleteVideo(video: Video) {
         catalog.deleteVideo(video, object : OfflineCallback<Boolean> {
             override fun onSuccess(aBoolean: Boolean?) {
-                _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e(TAG, aBoolean!!.toString())
+                Logger.e(TAG, aBoolean!!.toString())
                 if (aBoolean) {
                     checkDownloadStatus()
                     deleteVideoFromDatabase(video.id)
@@ -451,40 +463,40 @@ class DownloadHelper() {
 
         when (videoQuality) {
             0 -> {
-                _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e("Download", BEST_BIT_RATE.toString())
+                Logger.e("Download", BEST_BIT_RATE.toString())
                 catalog.setVideoBitrate(BEST_BIT_RATE)
             }
             1 -> {
-                _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e("Download", BETTER_BIT_RATE.toString())
+                Logger.e("Download", BETTER_BIT_RATE.toString())
                 catalog.setVideoBitrate(BETTER_BIT_RATE)
             }
             2 -> {
-                _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e("Download", GOOD_BIT_RATE.toString())
+                Logger.e("Download", GOOD_BIT_RATE.toString())
                 catalog.setVideoBitrate(GOOD_BIT_RATE)
             }
             3 -> {
-                _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e("Download", DATA_SAVER_BIT_RATE.toString())
+                Logger.e("Download", DATA_SAVER_BIT_RATE.toString())
                 catalog.setVideoBitrate(DATA_SAVER_BIT_RATE)
             }
         }
-        if (assetType != _root_ide_package_.me.vipa.app.utils.MediaTypeConstants.getInstance().series) {
+        if (assetType != MediaTypeConstants.getInstance().series) {
             catalog.getMediaFormatTracksAvailable(video) { mediaDownloadable, bundle ->
                 BrightcoveDownloadUtil.selectMediaFormatTracksAvailable(mediaDownloadable, bundle)
                 when (videoQuality) {
                     0 -> {
-                        _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e("Download", BEST_BIT_RATE.toString())
+                        Logger.e("Download", BEST_BIT_RATE.toString())
                         mediaDownloadable.setVideoBitrate(BEST_BIT_RATE)
                     }
                     1 -> {
-                        _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e("Download", BETTER_BIT_RATE.toString())
+                        Logger.e("Download", BETTER_BIT_RATE.toString())
                         mediaDownloadable.setVideoBitrate(BETTER_BIT_RATE)
                     }
                     2 -> {
-                        _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e("Download", GOOD_BIT_RATE.toString())
+                        Logger.e("Download", GOOD_BIT_RATE.toString())
                         mediaDownloadable.setVideoBitrate(GOOD_BIT_RATE)
                     }
                     3 -> {
-                        _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e("Download", DATA_SAVER_BIT_RATE.toString())
+                        Logger.e("Download", DATA_SAVER_BIT_RATE.toString())
                         mediaDownloadable.setVideoBitrate(DATA_SAVER_BIT_RATE)
                     }
                 }
@@ -510,14 +522,14 @@ class DownloadHelper() {
                 filteredBundle.putStringArrayList(MediaDownloadable.AUDIO_LANGUAGE_ROLES,roles)
                 filteredBundle.putParcelableArrayList(MediaDownloadable.CAPTIONS,captions)
                 mediaDownloadable.configurationBundle = filteredBundle
-                _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e("Bundle", Gson().toJson(filteredBundle))
+                Logger.e("Bundle", Gson().toJson(filteredBundle))
                 catalog.downloadVideo(video, object : OfflineCallback<DownloadStatus> {
                     override fun onSuccess(downloadStatus: DownloadStatus) {
                         updateDownloadStatus(downloadStatus)
                     }
 
                     override fun onFailure(throwable: Throwable) {
-                        _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e(TAG, "onFailure====>" + throwable.message)
+                        Logger.e(TAG, "onFailure====>" + throwable.message)
                     }
                 })
             }
@@ -526,20 +538,20 @@ class DownloadHelper() {
 
 
     private fun addVideotoDatabase(video: Video, seriesId: String) {
-        if (assetType == _root_ide_package_.me.vipa.app.utils.MediaTypeConstants.getInstance().series || assetType == _root_ide_package_.me.vipa.app.utils.MediaTypeConstants.getInstance().episode) {
+        if (assetType == MediaTypeConstants.getInstance().series || assetType == MediaTypeConstants.getInstance().episode) {
             findVideo(seriesId, object : VideoListener() {
                 override fun onVideo(p0: Video?) {
-                    var downloadedVideo = DownloadedVideo(p0!!.id, _root_ide_package_.me.vipa.app.utils.MediaTypeConstants.getInstance().series, seriesId)
+                    var downloadedVideo = DownloadedVideo(p0!!.id, MediaTypeConstants.getInstance().series, seriesId)
                     downloadedVideo.seriesName = seriesName
                     downloadedVideo.seasonNumber = seasonNumber!!
                     val downloadedEpisodes = DownloadedEpisodes(video.id, seasonNumber!!, episodeNumber!!, seriesId)
-                    ImageDownloadHelper(activity as Context, seriesId, object : _root_ide_package_.me.vipa.app.callbacks.commonCallbacks.CommonApiCallBack {
+                    ImageDownloadHelper(activity as Context, seriesId, object : CommonApiCallBack {
                         override fun onSuccess(item: Any?) {
                             insertVideo(downloadedVideo, downloadedEpisodes)
                         }
 
                         override fun onFailure(throwable: Throwable?) {
-                            _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e(TAG, "Unable to save image")
+                            Logger.e(TAG, "Unable to save image")
                             insertVideo(downloadedVideo, downloadedEpisodes)
 
                         }
@@ -552,29 +564,29 @@ class DownloadHelper() {
 
                 override fun onError(error: String) {
                     super.onError(error)
-                    _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e(TAG, error)
+                    Logger.e(TAG, error)
                 }
             })
         } else {
-            var downloadedVideo = DownloadedVideo(video.id, assetType, seriesId, "", "", video.name, _root_ide_package_.me.vipa.app.utils.commonMethods.AppCommonMethod.expiryDate(3))
+            var downloadedVideo = DownloadedVideo(video.id, assetType, seriesId, "", "", video.name, AppCommonMethod.expiryDate(3))
             insertVideo(downloadedVideo, null)
         }
 
-        if (assetType == _root_ide_package_.me.vipa.app.utils.MediaTypeConstants.getInstance().episode || assetType == _root_ide_package_.me.vipa.app.utils.MediaTypeConstants.getInstance().series) {
+        if (assetType == MediaTypeConstants.getInstance().episode || assetType == MediaTypeConstants.getInstance().series) {
             try {
                 AsyncTask.execute {
                     val downloadedEpisodes = DownloadedEpisodes(video.id, seasonNumber!!, episodeNumber!!, seriesId)
                     db.downloadEpisodeDao().insertEpisodes(downloadedEpisodes)
                 }
             } catch (ex: Exception) {
-                _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e(TAG, ex.message)
+                Logger.e(TAG, ex.message)
             }
         }
     }
 
     private fun insertVideo(downloadedVideo: DownloadedVideo, downloadedEpisodes: DownloadedEpisodes?) {
         db = Room.databaseBuilder(
-                _root_ide_package_.me.vipa.app.MvHubPlusApplication.getApplicationContext(activity),
+                MvHubPlusApplication.getApplicationContext(activity),
                 DownloadDatabase::class.java, "enveu.db").build()
         try {
             AsyncTask.execute {
@@ -584,12 +596,12 @@ class DownloadHelper() {
 
             }
         } catch (ex: Exception) {
-            _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e(TAG, ex.message)
+           Logger.e(TAG, ex.message)
         }
     }
 
     private fun deleteVideoFromDatabase(videoId: String) {
-        _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e("DeleteVideo",videoId)
+        Logger.e("DeleteVideo",videoId)
         try {
             AsyncTask.execute {
                 db.downloadVideoDao().deleteVideo(videoId)
@@ -598,7 +610,7 @@ class DownloadHelper() {
                 db.downloadEpisodeDao().deleteVideo(videoId)
             }
         } catch (ex: Exception) {
-            _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e(TAG, ex.message)
+            Logger.e(TAG, ex.message)
         }
     }
 
@@ -609,7 +621,7 @@ class DownloadHelper() {
                 db.downloadEpisodeDao().deleteAllVideos()
             }
         } catch (ex: Exception) {
-            _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e(TAG, ex.message)
+            Logger.e(TAG, ex.message)
         }
     }
 
@@ -677,7 +689,7 @@ class DownloadHelper() {
         video?.id?.let {
             catalog.pauseVideoDownload(it, object : OfflineCallback<Int> {
                 override fun onSuccess(p0: Int?) {
-                    _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e(TAG, "pauseDownload$p0")
+                    Logger.e(TAG, "pauseDownload$p0")
                 }
 
                 override fun onFailure(p0: Throwable?) {
@@ -689,7 +701,7 @@ class DownloadHelper() {
     fun pauseVideo(videoId: String) {
         catalog.pauseVideoDownload(videoId, object : OfflineCallback<Int> {
             override fun onSuccess(p0: Int?) {
-                _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e(TAG, "pauseDownload$p0")
+                Logger.e(TAG, "pauseDownload$p0")
             }
 
             override fun onFailure(p0: Throwable?) {
@@ -717,7 +729,7 @@ class DownloadHelper() {
                 if (p0?.isClearContent!!) {
                     videoDownloadResume(p0)
                 } else {
-                    acquireLicense(p0, object : _root_ide_package_.me.vipa.app.callbacks.commonCallbacks.CommonApiCallBack {
+                    acquireLicense(p0, object : CommonApiCallBack {
                         override fun onSuccess(item: Any?) {
                             videoDownloadResume(item as Video)
                         }
@@ -747,7 +759,7 @@ class DownloadHelper() {
     fun getDownloadedVideos() {
         catalog.findAllVideoDownload(DownloadStatus.STATUS_COMPLETE, object : OfflineCallback<List<Video>> {
             override fun onSuccess(p0: List<Video>?) {
-                _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e(TAG, Gson().toJson(p0?.get(1)))
+                Logger.e(TAG, Gson().toJson(p0?.get(1)))
                 videoListListener.downloadedVideos(p0)
             }
 
@@ -761,7 +773,7 @@ class DownloadHelper() {
         return catalog
     }
 
-    fun startSeriesDownload(seriesId: String, selectedSeason: Int, seasonEpisodes: MutableList<out _root_ide_package_.me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean>, videoQuality: Int) {
+    fun startSeriesDownload(seriesId: String, selectedSeason: Int, seasonEpisodes: MutableList<out EnveuVideoItemBean>, videoQuality: Int) {
         for (enveuVideoItem in seasonEpisodes) {
             enveuVideoItemBean = enveuVideoItem
             this.seriesId = seriesId
@@ -770,7 +782,7 @@ class DownloadHelper() {
             findVideo(enveuVideoItem.brightcoveVideoId, object : VideoListener() {
                 override fun onVideo(video: Video?) {
                     if (video?.isOfflinePlaybackAllowed!!) {
-                        assetType = _root_ide_package_.me.vipa.app.utils.MediaTypeConstants.getInstance().episode
+                        assetType = MediaTypeConstants.getInstance().episode
                         startVideoDownload(video, videoQuality)
                     }
                 }
@@ -778,7 +790,7 @@ class DownloadHelper() {
         }
     }
 
-    fun selectVideoQuality(videoQualitySelectedListener: _root_ide_package_.me.vipa.app.activities.downloads.VideoQualitySelectedListener) {
+    fun selectVideoQuality(videoQualitySelectedListener: VideoQualitySelectedListener) {
         val binding = DataBindingUtil.inflate<LayoutDownloadQualityBottomSheetBinding>(activity.layoutInflater, R.layout.layout_download_quality_bottom_sheet, null, false)
         val dialog = BottomSheetDialog(activity)
         dialog.setContentView(binding.root)
@@ -797,14 +809,14 @@ class DownloadHelper() {
         downloadQualityList.removeAt(4)
 
         var selectedVideoQualityPosition = 0
-        val changeDownloadQualityAdapter = _root_ide_package_.me.vipa.app.activities.downloads.SelectDownloadQualityAdapter(activity, downloadQualityList, object : _root_ide_package_.me.vipa.app.activities.downloads.VideoQualitySelectedListener {
+        val changeDownloadQualityAdapter = SelectDownloadQualityAdapter(activity, downloadQualityList, object : VideoQualitySelectedListener {
             override fun videoQualitySelected(position: Int) {
                 selectedVideoQualityPosition = position
             }
         })
         binding.btnStartDownload.setOnClickListener {
             if (binding.checkboxMakeDefault.isChecked) {
-                _root_ide_package_.me.vipa.app.utils.helpers.SharedPrefHelper(activity).setInt(SharedPrefesConstants.DOWNLOAD_QUALITY_INDEX, selectedVideoQualityPosition)
+                SharedPrefHelper(activity).setInt(SharedPrefesConstants.DOWNLOAD_QUALITY_INDEX, selectedVideoQualityPosition)
             }
             videoQualitySelectedListener.videoQualitySelected(selectedVideoQualityPosition)
             dialog.dismiss()
@@ -813,7 +825,7 @@ class DownloadHelper() {
         dialog.show()
     }
 
-    fun changeWifiSetting(videoQualitySelectedListener: _root_ide_package_.me.vipa.app.activities.downloads.WifiPreferenceListener) {
+    fun changeWifiSetting(videoQualitySelectedListener: WifiPreferenceListener) {
         val binding = DataBindingUtil.inflate<WifiDialogBinding>(activity.layoutInflater, R.layout.wifi_dialog, null, false)
         val dialog = BottomSheetDialog(activity)
         dialog.setContentView(binding.root)
@@ -821,17 +833,17 @@ class DownloadHelper() {
         val downloadQualityList = ArrayList<String>()
         downloadQualityList.addAll(activity.resources.getStringArray(R.array.download_quality))
         downloadQualityList.removeAt(4)
-        binding.switchDownload.isChecked= _root_ide_package_.me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys.getInstance().downloadOverWifi == 1
+        binding.switchDownload.isChecked= KsPreferenceKeys.getInstance().downloadOverWifi == 1
 
         binding.btnStartDownload.setOnClickListener {
             if (binding.switchDownload.isChecked) {
-                _root_ide_package_.me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys.getInstance().downloadOverWifi = 1
+                KsPreferenceKeys.getInstance().downloadOverWifi = 1
                 //SharedPrefHelper(activity).setInt(SharedPrefesConstants.DOWNLOAD_QUALITY_INDEX, selectedVideoQualityPosition)
             }else{
-                _root_ide_package_.me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys.getInstance().downloadOverWifi=0
+                KsPreferenceKeys.getInstance().downloadOverWifi=0
             }
-            _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e("DownloadedVideo1", Gson().toJson(_root_ide_package_.me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys.getInstance().downloadOverWifi))
-            videoQualitySelectedListener.actionP(_root_ide_package_.me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys.getInstance().downloadOverWifi)
+            Logger.e("DownloadedVideo1", Gson().toJson(KsPreferenceKeys.getInstance().downloadOverWifi))
+            videoQualitySelectedListener.actionP(KsPreferenceKeys.getInstance().downloadOverWifi)
             dialog.dismiss()
         }
 
@@ -843,14 +855,14 @@ class DownloadHelper() {
         //Delete Expired Videos
         getAllVideosFromDatabase().observe(activity as LifecycleOwner, androidx.lifecycle.Observer {
             it.downloadVideos.forEach { downloadedVideo ->
-                _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e("DownloadedVideo1", Gson().toJson(downloadedVideo))
-                if (downloadedVideo.downloadType != _root_ide_package_.me.vipa.app.utils.MediaTypeConstants.getInstance().series) {
+                Logger.e("DownloadedVideo1", Gson().toJson(downloadedVideo))
+                if (downloadedVideo.downloadType != MediaTypeConstants.getInstance().series) {
                     findOfflineVideoById(downloadedVideo.videoId, object : OfflineCallback<Video> {
                         override fun onSuccess(video: Video?) {
                             if (video != null) {
                                 if (!video.isClearContent) {
                                     if (video.licenseExpiryDate!!.time >= System.currentTimeMillis()) {
-                                        _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e("License", "Expiry" + video.licenseExpiryDate)
+                                        Logger.e("License", "Expiry" + video.licenseExpiryDate)
                                     } else {
                                         deleteVideo(video)
                                     }
@@ -872,13 +884,13 @@ class DownloadHelper() {
         //Delete Expired Episodes
         getAllEpisodes().observe(activity as LifecycleOwner, androidx.lifecycle.Observer { downloadedEpisodes ->
             downloadedEpisodes.forEach { downloadedVideo ->
-                _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e("DownloadedVideo1", Gson().toJson(downloadedVideo))
+                Logger.e("DownloadedVideo1", Gson().toJson(downloadedVideo))
                 findOfflineVideoById(downloadedVideo.videoId, object : OfflineCallback<Video> {
                     override fun onSuccess(video: Video?) {
                         if (video != null) {
                             if (!video.isClearContent) {
                                 if (video.licenseExpiryDate!!.time >= System.currentTimeMillis()) {
-                                    _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e("License", "Expiry" + video.licenseExpiryDate)
+                                    Logger.e("License", "Expiry" + video.licenseExpiryDate)
                                 } else {
                                     deleteVideo(video)
                                 }
@@ -896,7 +908,7 @@ class DownloadHelper() {
     }
 
     private fun deleteExpireVideoFromDB(videoId: DownloadedVideo) {
-        val diff: Int = _root_ide_package_.me.vipa.app.utils.commonMethods.AppCommonMethod.getTodaysDifference(videoId.expiryDate)
+        val diff: Int = AppCommonMethod.getTodaysDifference(videoId.expiryDate)
         if (diff == 1) {
             try {
                 catalog.deleteVideo(videoId.videoId, object : OfflineCallback<Boolean> {
@@ -913,7 +925,7 @@ class DownloadHelper() {
                 })
 
             } catch (ex: Exception) {
-                _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e(TAG, ex.message)
+                Logger.e(TAG, ex.message)
             }
         }
 
@@ -928,7 +940,7 @@ class DownloadHelper() {
             seriesId.forEachIndexed { index, downloadVideo ->
                 val downloadedEpisodes = params[0].downloadEpisodeDao().getEpisodesList(downloadVideo.seriesId, downloadVideo.seasonNumber)
                 downloadVideo.episodeCount = downloadedEpisodes.size.toString()
-                if (downloadVideo.downloadType == _root_ide_package_.me.vipa.app.utils.MediaTypeConstants.getInstance().series && downloadedEpisodes.size > 0) {
+                if (downloadVideo.downloadType == MediaTypeConstants.getInstance().series && downloadedEpisodes.size > 0) {
                     downloadVideo.seasonNumber = downloadedEpisodes[0].seasonNumber
                     downloadModel.episodeMap[downloadVideo.seriesId + "_" + downloadedEpisodes[0].seasonNumber] = downloadedEpisodes as java.util.ArrayList<DownloadedEpisodes>
                 }

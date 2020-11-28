@@ -4,6 +4,7 @@ import android.os.Bundle
 
 import com.brightcove.player.model.MediaFormat
 import com.brightcove.player.offline.MediaDownloadable
+import me.vipa.app.utils.cropImage.helpers.Logger
 
 import java.util.ArrayList
 
@@ -34,7 +35,7 @@ object BrightcoveDownloadUtil {
 
         // Check to see if there are audio tracks
         if (audio != null && audio.size > 0) {
-            _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.v(TAG, "Adding the \"main\" audio track.")
+            Logger.v(TAG, "Adding the \"main\" audio track.")
             //First let's find the index of the audio with role main
             val roles = bundle.getStringArrayList(MediaDownloadable.AUDIO_LANGUAGE_ROLES)
             for (i in roles!!.indices) {
@@ -58,7 +59,7 @@ object BrightcoveDownloadUtil {
         // that the end user has selected the first of the remaining audio tracks that is not the "main" audio track
         // (if more than one audio track is present)
         if (audio!!.size > 1) {
-            _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.v(TAG, "Alternate audio track download allowed for this video. Adding an \"alternate\" audio track")
+            Logger.v(TAG, "Alternate audio track download allowed for this video. Adding an \"alternate\" audio track")
             if (indexMain == 0) {
                 //The first audio is also the main, so let's pick the second audio
                 newAudio.add(audio[1])
@@ -67,7 +68,7 @@ object BrightcoveDownloadUtil {
                 newAudio.add(audio[0])
             }
         } else {
-            _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.v(TAG, "Alternate audio track download allowed, but there were no \"alternate\" audio tracks to select.")
+            Logger.v(TAG, "Alternate audio track download allowed, but there were no \"alternate\" audio tracks to select.")
         }
         bundle.putParcelableArrayList(MediaDownloadable.AUDIO_LANGUAGES, newAudio)
         didListChange = true
@@ -77,17 +78,17 @@ object BrightcoveDownloadUtil {
         // first caption track as the "default" caption language, and the second caption track as the "alternate" (if more than
         // one caption track is present)
         val captions = bundle.getParcelableArrayList<MediaFormat>(MediaDownloadable.CAPTIONS)
-        _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.v(TAG, "Captions array size: " + captions!!.size)
+        Logger.v(TAG, "Captions array size: " + captions!!.size)
         if (captions.size > 0) {
             val newCaptions = ArrayList<MediaFormat>()
-            _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.v(TAG, "Adding the first caption track as the \"default\" caption track.")
+            Logger.v(TAG, "Adding the first caption track as the \"default\" caption track.")
             newCaptions.add(captions[0])
 
             if (captions.size > 1) {
-                _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.v(TAG, "Adding the first of the remaining caption tracks as the \"alternate\" caption track.")
+                Logger.v(TAG, "Adding the first of the remaining caption tracks as the \"alternate\" caption track.")
                 newCaptions.add(captions[1])
             } else {
-               _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.v(TAG, "Captions size is not GT 1, no alternate captions will be downloaded, even though allowed.")
+               Logger.v(TAG, "Captions size is not GT 1, no alternate captions will be downloaded, even though allowed.")
             }
 
             bundle.putParcelableArrayList(MediaDownloadable.CAPTIONS, newCaptions)

@@ -39,8 +39,6 @@ import java.io.IOException;
 import java.util.Objects;
 
 import me.vipa.baseCollection.baseCategoryServices.BaseCategoryServices;
-import me.vipa.userManagement.bean.LoginResponse.LoginResponseModel;
-import me.vipa.userManagement.bean.UserProfile.UserProfileResponse;
 import me.vipa.userManagement.callBacks.ForgotPasswordCallBack;
 import me.vipa.userManagement.callBacks.LoginCallBack;
 import me.vipa.userManagement.callBacks.UserProfileCallBack;
@@ -77,34 +75,34 @@ public class RegistrationLoginRepository {
         requestParam.addProperty(AppConstants.API_PARAM_EMAIL, username);
         requestParam.addProperty(AppConstants.API_PARAM_PASSWORD, pwd);
 
-        BaseCategoryServices.Companion.getInstance().loginService(username, pwd, new LoginCallBack() {
-            @Override
-            public void success(boolean status, Response<LoginResponseModel> response) {
-                if (status) {
-                    LoginResponseModel cl;
-                    if (response.body() != null) {
-                        String token = response.headers().get("x-auth");
-                        KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
-                        preference.setAppPrefAccessToken(token);
-                        Gson gson = new Gson();
-                        String tmp = gson.toJson(response.body());
-                        LoginResponseModel loginItemBean = gson.fromJson(tmp, LoginResponseModel.class);
-                        responseApi.postValue(loginItemBean);
-                    } else {
-                        LoginResponseModel responseModel = ErrorCodesIntercepter.getInstance().Login(response);
-                        responseApi.postValue(responseModel);
-                    }
-                }
-            }
-
-            @Override
-            public void failure(boolean status, int errorCode, String errorMessage) {
-                Logger.e("", "LoginResponseToUI E" + errorMessage);
-                LoginResponseModel cl = new LoginResponseModel();
-                cl.setStatus(false);
-                responseApi.postValue(cl);
-            }
-        });
+//        BaseCategoryServices.Companion.getInstance().loginService(username, pwd, new LoginCallBack() {
+//            @Override
+//            public void success(boolean status, Response<LoginResponseModel> response) {
+//                if (status) {
+//                    LoginResponseModel cl;
+//                    if (response.body() != null) {
+//                        String token = response.headers().get("x-auth");
+//                        KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
+//                        preference.setAppPrefAccessToken(token);
+//                        Gson gson = new Gson();
+//                        String tmp = gson.toJson(response.body());
+//                        LoginResponseModel loginItemBean = gson.fromJson(tmp, LoginResponseModel.class);
+//                        responseApi.postValue(loginItemBean);
+//                    } else {
+//                        LoginResponseModel responseModel = ErrorCodesIntercepter.getInstance().Login(response);
+//                        responseApi.postValue(responseModel);
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void failure(boolean status, int errorCode, String errorMessage) {
+//                Logger.e("", "LoginResponseToUI E" + errorMessage);
+//                LoginResponseModel cl = new LoginResponseModel();
+//                cl.setStatus(false);
+//                responseApi.postValue(cl);
+//            }
+//        });
 
         return responseApi;
     }
@@ -122,54 +120,54 @@ public class RegistrationLoginRepository {
             requestParam.addProperty(AppConstants.API_PARAM_EMAIL, "");
             requestParam.addProperty(AppConstants.API_PARAM_PASSWORD, pwd);
 
-            BaseCategoryServices.Companion.getInstance().registerService(name, email, pwd, new LoginCallBack() {
-                @Override
-                public void success(boolean status, Response<LoginResponseModel> response) {
-                    if (status) {
-                        try {
-                            if (response != null && response.errorBody() == null) {
-                                Log.w("responseValue", response.code() + "");
-                            }
-
-                        } catch (Exception e) {
-
-                        }
-
-                        if (response.code() == 200  && response.body() != null) {
-                            Gson gson = new Gson();
-                            String tmp = gson.toJson(response.body());
-                            LoginResponseModel cl = gson.fromJson(tmp, LoginResponseModel.class);
-                            cl.setResponseCode(200);
-                            String token = response.headers().get("x-auth");
-                            SignupResponseAccessToken responseModel = new SignupResponseAccessToken();
-                            responseModel.setAccessToken(token);
-                            responseModel.setResponseModel(cl);
-                            Logger.e("manual", "nNontonToken" + token);
-
-                            responseApi.postValue(responseModel);
-                            Logger.e("", "REsponse" + response.body());
-                        } else {
-                            SignupResponseAccessToken responseModel = ErrorCodesIntercepter.getInstance().manualSignUp(response);
-                            responseApi.postValue(responseModel);
-                        }
-                    }
-                }
-
-                @Override
-                public void failure(boolean status, int errorCode, String errorMessage) {
-                    Logger.e("", "LoginResponseToUI E" + errorMessage);
-                    LoginResponseModel cl = new LoginResponseModel();
-                    cl.setResponseCode(400);
-                    SignupResponseAccessToken responseModel = new SignupResponseAccessToken();
-                    responseModel.setResponseModel(cl);
-                    if (KsPreferenceKeys.getInstance().getAppLanguage().equalsIgnoreCase("English")) {
-                        responseModel.setDebugMessage(MvHubPlusApplication.getInstance().getResources().getString(R.string.server_error));
-                    } else {
-                        responseModel.setDebugMessage(MvHubPlusApplication.getInstance().getResources().getString(R.string.server_error));
-                    }
-                    responseApi.postValue(responseModel);
-                }
-            });
+//            BaseCategoryServices.Companion.getInstance().registerService(name, email, pwd, new LoginCallBack() {
+//                @Override
+//                public void success(boolean status, Response<LoginResponseModel> response) {
+//                    if (status) {
+//                        try {
+//                            if (response != null && response.errorBody() == null) {
+//                                Log.w("responseValue", response.code() + "");
+//                            }
+//
+//                        } catch (Exception e) {
+//
+//                        }
+//
+//                        if (response.code() == 200  && response.body() != null) {
+//                            Gson gson = new Gson();
+//                            String tmp = gson.toJson(response.body());
+//                            LoginResponseModel cl = gson.fromJson(tmp, LoginResponseModel.class);
+//                            cl.setResponseCode(200);
+//                            String token = response.headers().get("x-auth");
+//                            SignupResponseAccessToken responseModel = new SignupResponseAccessToken();
+//                            responseModel.setAccessToken(token);
+//                            responseModel.setResponseModel(cl);
+//                            Logger.e("manual", "nNontonToken" + token);
+//
+//                            responseApi.postValue(responseModel);
+//                            Logger.e("", "REsponse" + response.body());
+//                        } else {
+//                            SignupResponseAccessToken responseModel = ErrorCodesIntercepter.getInstance().manualSignUp(response);
+//                            responseApi.postValue(responseModel);
+//                        }
+//                    }
+//                }
+//
+//                @Override
+//                public void failure(boolean status, int errorCode, String errorMessage) {
+//                    Logger.e("", "LoginResponseToUI E" + errorMessage);
+//                    LoginResponseModel cl = new LoginResponseModel();
+//                    cl.setResponseCode(400);
+//                    SignupResponseAccessToken responseModel = new SignupResponseAccessToken();
+//                    responseModel.setResponseModel(cl);
+//                    if (KsPreferenceKeys.getInstance().getAppLanguage().equalsIgnoreCase("English")) {
+//                        responseModel.setDebugMessage(MvHubPlusApplication.getInstance().getResources().getString(R.string.server_error));
+//                    } else {
+//                        responseModel.setDebugMessage(MvHubPlusApplication.getInstance().getResources().getString(R.string.server_error));
+//                    }
+//                    responseApi.postValue(responseModel);
+//                }
+//            });
         }
 
         return responseApi;
@@ -321,69 +319,69 @@ public class RegistrationLoginRepository {
         final JsonObject requestParam = new JsonObject();
         requestParam.addProperty(AppConstants.API_PARAM_NEW_PWD, pwd);
 
-        BaseCategoryServices.Companion.getInstance().changePasswordService(requestParam, token, new LoginCallBack() {
-            @Override
-            public void success(boolean status, Response<LoginResponseModel> response) {
-                if (status) {
-                    LoginResponseModel cl;
-                    if (response.code() == 500) {
-                        cl = new LoginResponseModel();
-                        cl.setResponseCode(Objects.requireNonNull(response.code()));
-                        responseApi.postValue(cl);
-
-                    } else if (response.code() == 401 || response.code() == 404) {
-                        cl = new LoginResponseModel();
-                        cl.setResponseCode(response.code());
-                        String debugMessage = "";
-                        try {
-                            JSONObject jObjError = new JSONObject(response.errorBody().string());
-                            debugMessage = jObjError.getString("debugMessage");
-                            Logger.e("", "" + jObjError.getString("debugMessage"));
-                        } catch (Exception e) {
-                            Logger.e("RegistrationLoginRepo", "" + e.toString());
-                        }
-                        cl.setDebugMessage(debugMessage);
-
-                        responseApi.postValue(cl);
-                    } else if (response.code() == 403) {
-                        cl = new LoginResponseModel();
-                        cl.setResponseCode(response.code());
-                        String debugMessage = "";
-                        try {
-                            JSONObject jObjError = new JSONObject(response.errorBody().string());
-                            debugMessage = jObjError.getString("debugMessage");
-                            Logger.e("", "" + jObjError.getString("debugMessage"));
-                        } catch (Exception e) {
-                            Logger.e("RegistrationLoginRepo", "" + e.toString());
-                        }
-                        if (KsPreferenceKeys.getInstance().getAppLanguage().equalsIgnoreCase("English")) {
-                            cl.setDebugMessage(MvHubPlusApplication.getInstance().getResources().getString(R.string.username_must_be_loggedin));
-                        } else {
-                            cl.setDebugMessage(MvHubPlusApplication.getInstance().getResources().getString(R.string.username_must_be_loggedin));
-                        }
-
-                        responseApi.postValue(cl);
-                    } else if (response.body() != null ) {
-                        Logger.e("", "LoginResponseModel" + response.body());
-                        String token = response.headers().get("x-auth");
-                        KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
-                        preference.setAppPrefAccessToken(token);
-                        Gson gson = new Gson();
-                        String tmp = gson.toJson(response.body());
-                        LoginResponseModel loginItemBean = gson.fromJson(tmp, LoginResponseModel.class);
-                        responseApi.postValue(loginItemBean);
-                    }
-                }
-            }
-
-            @Override
-            public void failure(boolean status, int errorCode, String errorMessage) {
-                Logger.e("", "LoginResponseToUI E" + errorMessage);
-                LoginResponseModel cl = new LoginResponseModel();
-                cl.setStatus(false);
-                responseApi.postValue(cl);
-            }
-        });
+//        BaseCategoryServices.Companion.getInstance().changePasswordService(requestParam, token, new LoginCallBack() {
+//            @Override
+//            public void success(boolean status, Response<LoginResponseModel> response) {
+//                if (status) {
+//                    LoginResponseModel cl;
+//                    if (response.code() == 500) {
+//                        cl = new LoginResponseModel();
+//                        cl.setResponseCode(Objects.requireNonNull(response.code()));
+//                        responseApi.postValue(cl);
+//
+//                    } else if (response.code() == 401 || response.code() == 404) {
+//                        cl = new LoginResponseModel();
+//                        cl.setResponseCode(response.code());
+//                        String debugMessage = "";
+//                        try {
+//                            JSONObject jObjError = new JSONObject(response.errorBody().string());
+//                            debugMessage = jObjError.getString("debugMessage");
+//                            Logger.e("", "" + jObjError.getString("debugMessage"));
+//                        } catch (Exception e) {
+//                            Logger.e("RegistrationLoginRepo", "" + e.toString());
+//                        }
+//                        cl.setDebugMessage(debugMessage);
+//
+//                        responseApi.postValue(cl);
+//                    } else if (response.code() == 403) {
+//                        cl = new LoginResponseModel();
+//                        cl.setResponseCode(response.code());
+//                        String debugMessage = "";
+//                        try {
+//                            JSONObject jObjError = new JSONObject(response.errorBody().string());
+//                            debugMessage = jObjError.getString("debugMessage");
+//                            Logger.e("", "" + jObjError.getString("debugMessage"));
+//                        } catch (Exception e) {
+//                            Logger.e("RegistrationLoginRepo", "" + e.toString());
+//                        }
+//                        if (KsPreferenceKeys.getInstance().getAppLanguage().equalsIgnoreCase("English")) {
+//                            cl.setDebugMessage(MvHubPlusApplication.getInstance().getResources().getString(R.string.username_must_be_loggedin));
+//                        } else {
+//                            cl.setDebugMessage(MvHubPlusApplication.getInstance().getResources().getString(R.string.username_must_be_loggedin));
+//                        }
+//
+//                        responseApi.postValue(cl);
+//                    } else if (response.body() != null ) {
+//                        Logger.e("", "LoginResponseModel" + response.body());
+//                        String token = response.headers().get("x-auth");
+//                        KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
+//                        preference.setAppPrefAccessToken(token);
+//                        Gson gson = new Gson();
+//                        String tmp = gson.toJson(response.body());
+//                        LoginResponseModel loginItemBean = gson.fromJson(tmp, LoginResponseModel.class);
+//                        responseApi.postValue(loginItemBean);
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void failure(boolean status, int errorCode, String errorMessage) {
+//                Logger.e("", "LoginResponseToUI E" + errorMessage);
+//                LoginResponseModel cl = new LoginResponseModel();
+//                cl.setStatus(false);
+//                responseApi.postValue(cl);
+//            }
+//        });
 
            /* call.enqueue(new Callback<ResponseChangePassword>() {
                 @Override
@@ -429,39 +427,39 @@ public class RegistrationLoginRepository {
             requestParam.addProperty(AppConstants.API_PARAM_FB_PIC, profilePic);
             Call<LoginResponseModel> call = endpoint.getFbLogin(requestParam);
 
-            BaseCategoryServices.Companion.getInstance().fbLoginService(requestParam, new LoginCallBack() {
-                @Override
-                public void success(boolean status, Response<LoginResponseModel> response) {
-                    if (status) {
-                        LoginResponseModel cl;
-
-                        if (response.body() != null ) {
-                            String token = response.headers().get("x-auth");
-                            KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
-                            preference.setAppPrefAccessToken(token);
-                            Gson gson = new Gson();
-                            String tmp = gson.toJson(response.body());
-                            LoginResponseModel loginItemBean = gson.fromJson(tmp, LoginResponseModel.class);
-
-                            responseApi.postValue(loginItemBean);
-                        } else {
-                            LoginResponseModel responseModel = ErrorCodesIntercepter.getInstance().fbLogin(response);
-                            responseApi.postValue(responseModel);
-                        }
-
-                    }
-                }
-
-                @Override
-                public void failure(boolean status, int errorCode, String message) {
-                    Logger.e("ResponseError", "getFbLogin" + call.toString());
-                    try {
-                        responseApi.postValue(call.execute().body());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
+//            BaseCategoryServices.Companion.getInstance().fbLoginService(requestParam, new LoginCallBack() {
+//                @Override
+//                public void success(boolean status, Response<LoginResponseModel> response) {
+//                    if (status) {
+//                        LoginResponseModel cl;
+//
+//                        if (response.body() != null ) {
+//                            String token = response.headers().get("x-auth");
+//                            KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
+//                            preference.setAppPrefAccessToken(token);
+//                            Gson gson = new Gson();
+//                            String tmp = gson.toJson(response.body());
+//                            LoginResponseModel loginItemBean = gson.fromJson(tmp, LoginResponseModel.class);
+//
+//                            responseApi.postValue(loginItemBean);
+//                        } else {
+//                            LoginResponseModel responseModel = ErrorCodesIntercepter.getInstance().fbLogin(response);
+//                            responseApi.postValue(responseModel);
+//                        }
+//
+//                    }
+//                }
+//
+//                @Override
+//                public void failure(boolean status, int errorCode, String message) {
+//                    Logger.e("ResponseError", "getFbLogin" + call.toString());
+//                    try {
+//                        responseApi.postValue(call.execute().body());
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            });
 
         }
         return responseApi;
@@ -483,45 +481,45 @@ public class RegistrationLoginRepository {
             requestParam.addProperty(AppConstants.API_PARAM_FB_PIC, profilePic);
             Call<LoginResponseModel> call = endpoint.getForceFbLogin(requestParam);
 
-            BaseCategoryServices.Companion.getInstance().fbForceLoginService(requestParam, new LoginCallBack() {
-                @Override
-                public void success(boolean status, Response<LoginResponseModel> response) {
-                    LoginResponseModel cl;
-                    if (status) {
-
-                        if (response.body() != null ) {
-                            Logger.e("", "LoginResponseModel" + response.body());
-                            String token = response.headers().get("x-auth");
-                            KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
-                            preference.setAppPrefAccessToken(token);
-                            Gson gson = new Gson();
-                            String tmp = gson.toJson(response.body());
-                            LoginResponseModel loginItemBean = gson.fromJson(tmp, LoginResponseModel.class);
-
-                            responseApi.postValue(loginItemBean);
-                        } else {
-                            LoginResponseModel responseModel = ErrorCodesIntercepter.getInstance().fbLogin(response);
-                            responseApi.postValue(responseModel);
-                        }
-
-                    } else {
-                        cl = new LoginResponseModel();
-                        cl.setResponseCode(response.code());
-                        String debugMessage = context.getResources().getString(R.string.server_error);
-                        cl.setDebugMessage(debugMessage);
-                    }
-                }
-
-                @Override
-                public void failure(boolean status, int errorCode, String message) {
-                    Logger.e("ResponseError", "getFbLogin" + call.toString());
-                    try {
-                        responseApi.postValue(call.execute().body());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
+//            BaseCategoryServices.Companion.getInstance().fbForceLoginService(requestParam, new LoginCallBack() {
+//                @Override
+//                public void success(boolean status, Response<LoginResponseModel> response) {
+//                    LoginResponseModel cl;
+//                    if (status) {
+//
+//                        if (response.body() != null ) {
+//                            Logger.e("", "LoginResponseModel" + response.body());
+//                            String token = response.headers().get("x-auth");
+//                            KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
+//                            preference.setAppPrefAccessToken(token);
+//                            Gson gson = new Gson();
+//                            String tmp = gson.toJson(response.body());
+//                            LoginResponseModel loginItemBean = gson.fromJson(tmp, LoginResponseModel.class);
+//
+//                            responseApi.postValue(loginItemBean);
+//                        } else {
+//                            LoginResponseModel responseModel = ErrorCodesIntercepter.getInstance().fbLogin(response);
+//                            responseApi.postValue(responseModel);
+//                        }
+//
+//                    } else {
+//                        cl = new LoginResponseModel();
+//                        cl.setResponseCode(response.code());
+//                        String debugMessage = context.getResources().getString(R.string.server_error);
+//                        cl.setDebugMessage(debugMessage);
+//                    }
+//                }
+//
+//                @Override
+//                public void failure(boolean status, int errorCode, String message) {
+//                    Logger.e("ResponseError", "getFbLogin" + call.toString());
+//                    try {
+//                        responseApi.postValue(call.execute().body());
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            });
         }
         return responseApi;
     }
@@ -623,71 +621,71 @@ public class RegistrationLoginRepository {
 
     public LiveData<UserProfileResponse> getUserProfile(Context context, String token) {
         MutableLiveData<UserProfileResponse> mutableLiveData = new MutableLiveData<>();
-        BaseCategoryServices.Companion.getInstance().userProfileService(token, new UserProfileCallBack() {
-            @Override
-            public void success(boolean status, Response<UserProfileResponse> response) {
-                UserProfileResponse cl;
-                if (status) {
-                    if (response != null) {
-                        if (response.code() == 200) {
-                            Gson gson = new Gson();
-                            String tmp = gson.toJson(response.body());
-                            UserProfileResponse profileItemBean = gson.fromJson(tmp, UserProfileResponse.class);
-                            profileItemBean.setStatus(true);
-                            mutableLiveData.postValue(profileItemBean);
-                        } else {
-
-                            cl = ErrorCodesIntercepter.getInstance().userProfile(response);
-                            mutableLiveData.postValue(cl);
-
-                        }
-                    }
-
-
-                }
-            }
-
-            @Override
-            public void failure(boolean status, int errorCode, String message) {
-                UserProfileResponse cl = new UserProfileResponse();
-                cl.setStatus(false);
-                mutableLiveData.postValue(cl);
-            }
-        });
+//        BaseCategoryServices.Companion.getInstance().userProfileService(token, new UserProfileCallBack() {
+//            @Override
+//            public void success(boolean status, Response<UserProfileResponse> response) {
+//                UserProfileResponse cl;
+//                if (status) {
+//                    if (response != null) {
+//                        if (response.code() == 200) {
+//                            Gson gson = new Gson();
+//                            String tmp = gson.toJson(response.body());
+//                            UserProfileResponse profileItemBean = gson.fromJson(tmp, UserProfileResponse.class);
+//                            profileItemBean.setStatus(true);
+//                            mutableLiveData.postValue(profileItemBean);
+//                        } else {
+//
+//                            cl = ErrorCodesIntercepter.getInstance().userProfile(response);
+//                            mutableLiveData.postValue(cl);
+//
+//                        }
+//                    }
+//
+//
+//                }
+//            }
+//
+//            @Override
+//            public void failure(boolean status, int errorCode, String message) {
+//                UserProfileResponse cl = new UserProfileResponse();
+//                cl.setStatus(false);
+//                mutableLiveData.postValue(cl);
+//            }
+//        });
         return mutableLiveData;
     }
 
     public LiveData<UserProfileResponse> getUpdateProfile(Context context, String token, String name) {
         MutableLiveData<UserProfileResponse> mutableLiveData = new MutableLiveData<>();
-        BaseCategoryServices.Companion.getInstance().userUpdateProfileService(token, name, new UserProfileCallBack() {
-            @Override
-            public void success(boolean status, Response<UserProfileResponse> response) {
-                UserProfileResponse cl;
-                if (status) {
-                    if (response != null) {
-                        if (response.code() == 200) {
-                            Gson gson = new Gson();
-                            String tmp = gson.toJson(response.body());
-                            UserProfileResponse profileItemBean = gson.fromJson(tmp, UserProfileResponse.class);
-                            profileItemBean.setStatus(true);
-                            mutableLiveData.postValue(profileItemBean);
-                        } else {
-                            cl = ErrorCodesIntercepter.getInstance().userProfile(response);
-                            mutableLiveData.postValue(cl);
-                        }
-                    }
-
-
-                }
-            }
-
-            @Override
-            public void failure(boolean status, int errorCode, String message) {
-                UserProfileResponse cl = new UserProfileResponse();
-                cl.setStatus(false);
-                mutableLiveData.postValue(cl);
-            }
-        });
+//        BaseCategoryServices.Companion.getInstance().userUpdateProfileService(token, name, new UserProfileCallBack() {
+//            @Override
+//            public void success(boolean status, Response<UserProfileResponse> response) {
+//                UserProfileResponse cl;
+//                if (status) {
+//                    if (response != null) {
+//                        if (response.code() == 200) {
+//                            Gson gson = new Gson();
+//                            String tmp = gson.toJson(response.body());
+//                            UserProfileResponse profileItemBean = gson.fromJson(tmp, UserProfileResponse.class);
+//                            profileItemBean.setStatus(true);
+//                            mutableLiveData.postValue(profileItemBean);
+//                        } else {
+//                            cl = ErrorCodesIntercepter.getInstance().userProfile(response);
+//                            mutableLiveData.postValue(cl);
+//                        }
+//                    }
+//
+//
+//                }
+//            }
+//
+//            @Override
+//            public void failure(boolean status, int errorCode, String message) {
+//                UserProfileResponse cl = new UserProfileResponse();
+//                cl.setStatus(false);
+//                mutableLiveData.postValue(cl);
+//            }
+//        });
         return mutableLiveData;
     }
 

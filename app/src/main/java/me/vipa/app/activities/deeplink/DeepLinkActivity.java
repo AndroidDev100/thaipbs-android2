@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.SystemClock;
 
-import com.vipa.app.R;
+import me.vipa.app.R;
 import me.vipa.app.activities.article.ArticleActivity;
 import me.vipa.app.activities.detail.ui.EpisodeActivity;
 import me.vipa.app.activities.series.ui.SeriesDetailActivity;

@@ -11,26 +11,29 @@ import com.brightcove.player.network.DownloadStatus
 import com.brightcove.player.offline.MediaDownloadable
 import com.google.gson.Gson
 import com.mmtv.utils.helpers.downloads.DownloadHelper
-import com.vipa.app.R
-import com.vipa.app.databinding.ActivityMyDownloadsBinding
-import com.vipa.app.utils.helpers.downloads.room.DownloadModel
+import me.vipa.app.R
+import me.vipa.app.databinding.ActivityMyDownloadsBinding
+import me.vipa.app.utils.helpers.downloads.room.DownloadModel
 import kotlinx.android.synthetic.main.activity_my_downloads.*
+import me.vipa.app.baseModels.BaseBindingActivity
+import me.vipa.app.utils.cropImage.helpers.Logger
+import me.vipa.app.utils.helpers.downloads.VideoListListener
 import java.io.Serializable
 
-class MyDownloads : _root_ide_package_.me.vipa.app.baseModels.BaseBindingActivity<ActivityMyDownloadsBinding>(), MediaDownloadable.DownloadEventListener, _root_ide_package_.me.vipa.app.utils.helpers.downloads.VideoListListener {
+class MyDownloads : BaseBindingActivity<ActivityMyDownloadsBinding>(), MediaDownloadable.DownloadEventListener, VideoListListener {
     override fun inflateBindingLayout(inflater: LayoutInflater): ActivityMyDownloadsBinding {
         return ActivityMyDownloadsBinding.inflate(inflater)
     }
 
     override fun downloadStatus(videoId: String, downloadStatus: DownloadStatus?) {
-        _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e(TAG, downloadStatus?.code.toString())
+        Logger.e(TAG, downloadStatus?.code.toString())
         downloadHelper.updateVideoStatus(downloadStatus!!.code, videoId)
         downloadsAdapter?.notifyVideoChanged(videoId, downloadStatus)
 
     }
 
     private lateinit var downloadHelper: DownloadHelper
-    private var downloadsAdapter: _root_ide_package_.me.vipa.app.activities.downloads.DownloadsAdapter? = null
+    private var downloadsAdapter: DownloadsAdapter? = null
     val TAG = this.javaClass.simpleName
     override fun alreadyDownloaded(video: Video) {
     }
@@ -42,40 +45,40 @@ class MyDownloads : _root_ide_package_.me.vipa.app.baseModels.BaseBindingActivit
     }
 
     override fun onDownloadRequested(video: Video) {
-        _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e(TAG, String.format(
+        Logger.e(TAG, String.format(
                 "Starting to process '%s' video download request", video.name))
     }
 
     override fun onDownloadStarted(video: Video, l: Long, map: Map<String, Serializable>) {
-        _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e(TAG, "onDownloadStarted" + video.name)
+        Logger.e(TAG, "onDownloadStarted" + video.name)
         downloadHelper.updateVideoStatus(DownloadStatus.STATUS_DOWNLOADING, video.id)
     }
 
-    override fun onDownloadProgress(video: Video, downloadStatus: com.brightcove.player.network.DownloadStatus) {
-        _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e(TAG, "onDownloadProgress" + downloadStatus.progress)
+    override fun onDownloadProgress(video: Video, downloadStatus: DownloadStatus) {
+        Logger.e(TAG, "onDownloadProgress" + downloadStatus.progress)
         downloadsAdapter?.notifyVideoChanged(video.id, downloadStatus)
     }
 
-    override fun onDownloadPaused(video: Video, downloadStatus: com.brightcove.player.network.DownloadStatus) {
-        _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e(TAG, "onDownloadPaused")
+    override fun onDownloadPaused(video: Video, downloadStatus: DownloadStatus) {
+        Logger.e(TAG, "onDownloadPaused")
     }
 
-    override fun onDownloadCompleted(video: Video, downloadStatus: com.brightcove.player.network.DownloadStatus) {
+    override fun onDownloadCompleted(video: Video, downloadStatus: DownloadStatus) {
         downloadHelper.updateVideoStatus(DownloadStatus.STATUS_COMPLETE, video.id)
         downloadsAdapter?.notifyVideoChanged(video.id, downloadStatus)
     }
 
     override fun onDownloadCanceled(video: Video) {
-        _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e(TAG, "onDownloadCanceled")
+        Logger.e(TAG, "onDownloadCanceled")
 
     }
 
     override fun onDownloadDeleted(video: Video) {
-        _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e(TAG, "onDownloadDeleted")
+        Logger.e(TAG, "onDownloadDeleted")
     }
 
-    override fun onDownloadFailed(video: Video, downloadStatus: com.brightcove.player.network.DownloadStatus) {
-        _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e(TAG, "onDownloadFailed")
+    override fun onDownloadFailed(video: Video, downloadStatus: DownloadStatus) {
+        Logger.e(TAG, "onDownloadFailed")
 
     }
 
@@ -84,7 +87,7 @@ class MyDownloads : _root_ide_package_.me.vipa.app.baseModels.BaseBindingActivit
     }
 
     override fun pauseVideoDownload(video: Video) {
-        _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e(TAG, "pauseVideoDownload")
+        Logger.e(TAG, "pauseVideoDownload")
     }
 
     override fun resumeVideoDownload(video: Video) {
@@ -99,7 +102,7 @@ class MyDownloads : _root_ide_package_.me.vipa.app.baseModels.BaseBindingActivit
         var counter = 0
         downloadHelper = DownloadHelper(this, this)
         downloadHelper.getAllVideosFromDatabase().observe(this, Observer {
-            downloadsAdapter = _root_ide_package_.me.vipa.app.activities.downloads.DownloadsAdapter(this, it)
+            downloadsAdapter = DownloadsAdapter(this, it)
             downloaded_recycler_view.layoutManager = LinearLayoutManager(this)
             downloaded_recycler_view.setHasFixedSize(true)
             downloaded_recycler_view.itemAnimator = DefaultItemAnimator()
@@ -119,6 +122,6 @@ class MyDownloads : _root_ide_package_.me.vipa.app.baseModels.BaseBindingActivit
     }
 
     private fun setData(it: DownloadModel?) {
-        _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e(TAG, "Videos: => " + Gson().toJson(it))
+        Logger.e(TAG, "Videos: => " + Gson().toJson(it))
     }
 }

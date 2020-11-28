@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
-import com.vipa.enums.CRIndicator;
-import com.vipa.app.R;
+import me.vipa.enums.CRIndicator;
+import me.vipa.app.R;
 import me.vipa.app.utils.helpers.carousel.listener.OnSlideChangeListener;
 
 import java.util.ArrayList;

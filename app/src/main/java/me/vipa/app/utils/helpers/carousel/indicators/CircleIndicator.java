@@ -5,7 +5,7 @@ import android.content.Context;
 
 import androidx.core.content.res.ResourcesCompat;
 
-import com.vipa.app.R;
+import me.vipa.app.R;
 
 
 /**

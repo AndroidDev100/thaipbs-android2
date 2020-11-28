@@ -9,9 +9,11 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import android.graphics.Bitmap
+import me.vipa.app.callbacks.commonCallbacks.CommonApiCallBack
+import me.vipa.app.utils.cropImage.helpers.Logger
 
 
-class ImageDownloadHelper(context: Context, seriesId: String?, param: _root_ide_package_.me.vipa.app.callbacks.commonCallbacks.CommonApiCallBack) : AsyncTask<String, Int, Bitmap>() {
+class ImageDownloadHelper(context: Context, seriesId: String?, param: CommonApiCallBack) : AsyncTask<String, Int, Bitmap>() {
     private var context = context
     private var seriesId = seriesId
     private var commonApiCallBack = param
@@ -36,7 +38,7 @@ class ImageDownloadHelper(context: Context, seriesId: String?, param: _root_ide_
 
     override fun onProgressUpdate(vararg values: Int?) {
         super.onProgressUpdate(*values)
-        _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e("ImageDownloadHelper", values.toString())
+        Logger.e("ImageDownloadHelper", values.toString())
     }
 
     @SuppressLint("WrongThread")
@@ -52,7 +54,7 @@ class ImageDownloadHelper(context: Context, seriesId: String?, param: _root_ide_
                 commonApiCallBack.onSuccess(destination.absolutePath)
             } catch (e: IOException) {
                 e.printStackTrace()
-                _root_ide_package_.me.vipa.app.utils.cropImage.helpers.Logger.e("ERROR", e.message)
+                Logger.e("ERROR", e.message)
                 commonApiCallBack.onFailure(e)
             }
 
