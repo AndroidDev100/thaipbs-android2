@@ -11,8 +11,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import me.vipa.app.beanModel.ContinueRailModel.CommonContinueRail;
-import com.vipa.app.R;
-import com.vipa.app.databinding.PosterPotraitItemBinding;
+import me.vipa.app.R;
+import me.vipa.app.databinding.PosterPotraitItemBinding;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.constants.AppConstants;
 import me.vipa.app.utils.helpers.ImageHelper;

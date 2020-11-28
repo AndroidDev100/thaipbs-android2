@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import me.vipa.app.beanModel.ContinueRailModel.CommonContinueRail;
 import me.vipa.app.beanModel.responseModels.landingTabResponses.railData.ContentsItem;
 import me.vipa.app.beanModel.responseModels.series.season.ItemsItem;
-import com.vipa.app.R;
-import com.vipa.app.databinding.LandscapeShimmerItemBinding;
+import me.vipa.app.R;
+import me.vipa.app.databinding.LandscapeShimmerItemBinding;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 
 

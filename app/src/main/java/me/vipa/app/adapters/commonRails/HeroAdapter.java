@@ -9,8 +9,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import me.vipa.app.beanModelV3.playListModelV2.PlayListDetailsResponse;
-import com.vipa.app.R;
-import com.vipa.app.databinding.RowHeroLayoutBinding;
+import me.vipa.app.R;
+import me.vipa.app.databinding.RowHeroLayoutBinding;
 import me.vipa.app.utils.config.ImageLayer;
 import me.vipa.app.utils.helpers.ImageHelper;
 import com.google.android.gms.ads.doubleclick.PublisherAdRequest;

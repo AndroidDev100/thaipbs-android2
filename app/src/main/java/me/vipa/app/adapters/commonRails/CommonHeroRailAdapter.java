@@ -12,12 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import me.vipa.app.beanModel.enveuCommonRailData.RailCommonData;
 import me.vipa.app.callbacks.commonCallbacks.CommonRailtItemClickListner;
-import com.vipa.app.R;
-import com.vipa.app.databinding.LayoutHeroCircularItemBinding;
-import com.vipa.app.databinding.LayoutHeroLandscapeItemBinding;
-import com.vipa.app.databinding.LayoutHeroPosterItemBinding;
-import com.vipa.app.databinding.LayoutHeroPotraitItemBinding;
-import com.vipa.app.databinding.LayoutHeroSquareItemBinding;
+import me.vipa.app.R;
+import me.vipa.app.databinding.LayoutHeroCircularItemBinding;
+import me.vipa.app.databinding.LayoutHeroLandscapeItemBinding;
+import me.vipa.app.databinding.LayoutHeroPosterItemBinding;
+import me.vipa.app.databinding.LayoutHeroPotraitItemBinding;
+import me.vipa.app.databinding.LayoutHeroSquareItemBinding;
 import me.vipa.app.utils.constants.AppConstants;
 import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
 

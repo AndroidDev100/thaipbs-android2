@@ -10,9 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.vipa.app.R;
-import com.vipa.app.databinding.ChangeLanguageItemBinding;
-import com.vipa.app.utils.constants.SharedPrefesConstants;
+import me.vipa.app.R;
+import me.vipa.app.databinding.ChangeLanguageItemBinding;
+import me.vipa.app.utils.constants.SharedPrefesConstants;
 import me.vipa.app.utils.helpers.SharedPrefHelper;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 

@@ -8,12 +8,12 @@ import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 
-import com.vipa.app.activities.settings.downloadsettings.DownloadSettings;
+import me.vipa.app.activities.settings.downloadsettings.DownloadSettings;
 import me.vipa.app.activities.videoquality.ui.ChangeLanguageActivity;
 import me.vipa.app.activities.videoquality.ui.VideoQualityActivity;
 import me.vipa.app.baseModels.BaseBindingActivity;
-import com.vipa.app.R;
-import com.vipa.app.databinding.SettingsActivityBinding;
+import me.vipa.app.R;
+import me.vipa.app.databinding.SettingsActivityBinding;
 import me.vipa.app.utils.constants.AppConstants;
 
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;

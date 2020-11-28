@@ -17,13 +17,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import me.vipa.bookmarking.bean.BookmarkingResponse;
-import com.vipa.enums.ImageType;
+import me.vipa.enums.ImageType;
 import me.vipa.app.Bookmarking.BookmarkingViewModel;
 import me.vipa.app.activities.watchList.adapter.WatchHistoryAdapter;
 import me.vipa.app.activities.watchList.adapter.WatchListAdapter;
 import me.vipa.app.activities.watchList.viewModel.WatchListViewModel;
 import me.vipa.app.baseModels.BaseBindingActivity;
-import com.vipa.app.R;
+import me.vipa.app.R;
 import me.vipa.app.activities.detail.ui.DetailActivity;
 import me.vipa.app.activities.detail.ui.EpisodeActivity;
 import me.vipa.app.activities.listing.callback.ItemClickListener;
@@ -36,7 +36,7 @@ import me.vipa.app.beanModel.emptyResponse.ResponseEmpty;
 import me.vipa.app.beanModel.enveuCommonRailData.RailCommonData;
 import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
 import me.vipa.app.beanModel.watchHistory.ItemsItem;
-import com.vipa.app.databinding.WatchListActivityBinding;
+import me.vipa.app.databinding.WatchListActivityBinding;
 import me.vipa.app.fragments.dialog.AlertDialogFragment;
 import me.vipa.app.fragments.dialog.AlertDialogSingleButtonFragment;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
@@ -64,7 +64,6 @@ import me.vipa.app.baseModels.BaseBindingActivity;
 import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
 import me.vipa.bookmarking.bean.BookmarkingResponse;
 import me.vipa.enums.ImageType;
-import me.vipa.watchHistory.beans.ItemsItem;
 
 
 public class WatchListActivity extends BaseBindingActivity<WatchListActivityBinding> implements WatchListAdapter.WatchListAdaperListener, WatchHistoryAdapter.WatchHistoryAdaperListener, WatchListAdapter.DeleteWatchList, AlertDialogFragment.AlertDialogListener, ItemClickListener, View.OnClickListener {

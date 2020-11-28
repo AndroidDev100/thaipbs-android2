@@ -9,18 +9,18 @@ import android.widget.LinearLayout;
 import androidx.core.app.ActivityOptionsCompat;
 
 import me.vipa.app.activities.search.ui.ActivitySearch;
-import com.vipa.app.databinding.ActivityHelpBinding;
+import me.vipa.app.databinding.ActivityHelpBinding;
 import me.vipa.app.utils.cropImage.helpers.Logger;
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
-import com.vipa.app.R;
-import com.vipa.app.databinding.ActivitySeriesDetailBinding;
-import com.vipa.app.databinding.DetailScreenBinding;
-import com.vipa.app.databinding.EpisodeScreenBinding;
-import com.vipa.app.databinding.FragmentMoreBinding;
-import com.vipa.app.databinding.LiveDetailBinding;
-import com.vipa.app.databinding.LoginBinding;
-import com.vipa.app.databinding.ProfileScreenBinding;
-import com.vipa.app.databinding.ToolbarBinding;
+import me.vipa.app.R;
+import me.vipa.app.databinding.ActivitySeriesDetailBinding;
+import me.vipa.app.databinding.DetailScreenBinding;
+import me.vipa.app.databinding.EpisodeScreenBinding;
+import me.vipa.app.databinding.FragmentMoreBinding;
+import me.vipa.app.databinding.LiveDetailBinding;
+import me.vipa.app.databinding.LoginBinding;
+import me.vipa.app.databinding.ProfileScreenBinding;
+import me.vipa.app.databinding.ToolbarBinding;
 
 import me.vipa.app.activities.search.ui.ActivitySearch;
 import me.vipa.app.utils.cropImage.helpers.Logger;

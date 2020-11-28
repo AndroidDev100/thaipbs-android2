@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.vipa.app.R;
+import me.vipa.app.R;
 import me.vipa.app.activities.search.adapter.CommonSearchAdapter;
 import me.vipa.app.activities.search.viewmodel.SearchViewModel;
 import me.vipa.app.activities.series.ui.SeriesDetailActivity;
@@ -23,7 +23,7 @@ import me.vipa.app.activities.search.adapter.RowSearchAdapter;
 import me.vipa.app.adapters.CommonShimmerAdapter;
 import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
 import me.vipa.app.beanModel.popularSearch.ResponsePopularSearch;
-import com.vipa.app.databinding.ActivityResultBinding;
+import me.vipa.app.databinding.ActivityResultBinding;
 import me.vipa.app.utils.MediaTypeConstants;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.constants.AppConstants;

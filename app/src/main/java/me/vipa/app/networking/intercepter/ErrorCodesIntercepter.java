@@ -2,7 +2,7 @@ package me.vipa.app.networking.intercepter;
 
 
 import me.vipa.app.MvHubPlusApplication;
-import com.vipa.app.R;
+import me.vipa.app.R;
 import me.vipa.app.beanModel.emptyResponse.ResponseEmpty;
 import me.vipa.app.beanModel.entitle.ResponseEntitle;
 import me.vipa.app.beanModel.membershipAndPlan.ResponseMembershipAndPlan;
@@ -22,8 +22,7 @@ import org.json.JSONObject;
 
 import me.vipa.app.redeemcoupon.RedeemCouponResponseModel;
 import me.vipa.app.repository.redeemCoupon.RedeemModel;
-import me.vipa.userManagement.bean.LoginResponse.LoginResponseModel;
-import me.vipa.userManagement.bean.UserProfile.UserProfileResponse;
+
 import retrofit2.Response;
 
 public class ErrorCodesIntercepter {
@@ -66,9 +65,9 @@ public class ErrorCodesIntercepter {
 
                 responseModel = new SignupResponseAccessToken();
                 if (KsPreferenceKeys.getInstance().getAppLanguage().equalsIgnoreCase("English")) {
-                    responseModel.setDebugMessage(MvHubPlusApplication.getInstance().getResources().getString(R.string.user_already_exists​));
+                    responseModel.setDebugMessage(MvHubPlusApplication.getInstance().getResources().getString(R.string.user_already_exists));
                 } else {
-                    responseModel.setDebugMessage(MvHubPlusApplication.getInstance().getResources().getString(R.string.user_already_exists​));
+                    responseModel.setDebugMessage(MvHubPlusApplication.getInstance().getResources().getString(R.string.user_already_exists));
                 }
 
             } catch (Exception e) {

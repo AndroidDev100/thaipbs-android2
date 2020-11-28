@@ -17,10 +17,10 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.vipa.app.R;
+import me.vipa.app.R;
 import me.vipa.app.beanModel.AppUserModel;
 import me.vipa.app.beanModel.allComments.ItemsItem;
-import com.vipa.app.databinding.RowCommentsBinding;
+import me.vipa.app.databinding.RowCommentsBinding;
 import me.vipa.app.fragments.dialog.AlertDialogFragment;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.constants.AppConstants;

@@ -23,10 +23,10 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.vipa.app.R;
+import me.vipa.app.R;
 import me.vipa.app.activities.detail.ui.DetailActivity;
 import me.vipa.app.beanModel.allComments.ItemsItem;
-import com.vipa.app.databinding.FragmentCommentLayoutBinding;
+import me.vipa.app.databinding.FragmentCommentLayoutBinding;
 import me.vipa.app.fragments.dialog.AlertDialogFragment;
 import me.vipa.app.utils.constants.AppConstants;
 

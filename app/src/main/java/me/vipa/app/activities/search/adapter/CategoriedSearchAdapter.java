@@ -15,9 +15,9 @@ import me.vipa.app.beanModel.enveuCommonRailData.RailCommonData;
 import me.vipa.app.callbacks.commonCallbacks.SearchClickCallbacks;
 import me.vipa.app.utils.cropImage.helpers.Logger;
 import me.vipa.app.utils.cropImage.helpers.PrintLogging;
-import com.vipa.app.R;
+import me.vipa.app.R;
 import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
-import com.vipa.app.databinding.RowSearchCategoryBinding;
+import me.vipa.app.databinding.RowSearchCategoryBinding;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
 
 import java.util.List;

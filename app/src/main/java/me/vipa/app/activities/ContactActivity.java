@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 
 import me.vipa.app.baseModels.BaseBindingActivity;
-import com.vipa.app.databinding.ActivityContactBinding;
+import me.vipa.app.databinding.ActivityContactBinding;
 import me.vipa.app.utils.constants.AppConstants;
 
 import java.net.URISyntaxException;

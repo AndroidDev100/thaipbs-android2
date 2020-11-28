@@ -6,7 +6,7 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 
 import me.vipa.app.repository.notification.NotificationRepository;
-import com.vipa.app.databinding.NotificationBinding;
+import me.vipa.app.databinding.NotificationBinding;
 
 import me.vipa.app.repository.notification.NotificationRepository;
 

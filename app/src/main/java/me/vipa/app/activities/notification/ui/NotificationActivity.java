@@ -5,8 +5,8 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
-import com.vipa.app.R;
-import com.vipa.app.databinding.NotificationBinding;
+import me.vipa.app.R;
+import me.vipa.app.databinding.NotificationBinding;
 import me.vipa.app.utils.helpers.ToolBarHandler;
 
 public class NotificationActivity extends AppCompatActivity {

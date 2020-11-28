@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import me.vipa.app.activities.notification.adapter.NotificationListAdapter;
 import me.vipa.app.beanModel.beanModel.SingleItemModel;
-import com.vipa.app.databinding.NotificationBinding;
+import me.vipa.app.databinding.NotificationBinding;
 
 import java.util.ArrayList;
 

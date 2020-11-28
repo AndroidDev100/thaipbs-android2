@@ -11,10 +11,10 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import me.vipa.app.beanModel.beanModel.SectionDataModel;
-import com.vipa.app.R;
-import com.vipa.app.databinding.LandscapeShimmerBinding;
-import com.vipa.app.databinding.PotraitShimmerBinding;
-import com.vipa.app.databinding.SquareShimmerBinding;
+import me.vipa.app.R;
+import me.vipa.app.databinding.LandscapeShimmerBinding;
+import me.vipa.app.databinding.PotraitShimmerBinding;
+import me.vipa.app.databinding.SquareShimmerBinding;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.util.ArrayList;
