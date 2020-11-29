@@ -51,7 +51,7 @@ public class ErrorCodesIntercepter {
     }
 
 
-    public SignupResponseAccessToken manualSignUp(Response<LoginResponseModel> response) {
+    public SignupResponseAccessToken manualSignUp(Response<me.vipa.userManagement.bean.LoginResponse.LoginResponseModel> response) {
         SignupResponseAccessToken responseModel = null;
         if (response.code() == ErrorCode409) {
             LoginResponseModel cl = new LoginResponseModel();
@@ -114,7 +114,7 @@ public class ErrorCodesIntercepter {
         return responseModel;
     }
 
-    public LoginResponseModel fbLogin(Response<LoginResponseModel> response) {
+    public LoginResponseModel fbLogin(Response<me.vipa.userManagement.bean.LoginResponse.LoginResponseModel> response) {
         LoginResponseModel cl = null;
         try {
             cl = new LoginResponseModel();
@@ -155,7 +155,7 @@ public class ErrorCodesIntercepter {
         return cl;
     }
 
-    public LoginResponseModel Login(Response<LoginResponseModel> response) {
+    public LoginResponseModel Login(Response<me.vipa.userManagement.bean.LoginResponse.LoginResponseModel> response) {
         LoginResponseModel responseModel = null;
         try {
             responseModel = new LoginResponseModel();
@@ -238,7 +238,7 @@ public class ErrorCodesIntercepter {
         return null;
     }
 
-    public UserProfileResponse userProfile(Response<UserProfileResponse> response) {
+    public UserProfileResponse userProfile(Response<me.vipa.userManagement.bean.UserProfile.UserProfileResponse> response) {
         UserProfileResponse empty = new UserProfileResponse();
         try {
             JSONObject errorObject = new JSONObject(response.errorBody().string());
