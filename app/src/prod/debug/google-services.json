@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:607174406587:android:0c44ca284ee577457b949e",
         "android_client_info": {
-          "package_name": "com.mvhub.mvhubplus"
+          "package_name": "me.vipa.app"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "607174406587-9ibcmqmsacgp00uh9pvlpv63lubs5jgh.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.mvhub.mvhubplus",
+            "package_name": "me.vipa.app",
             "certificate_hash": "cfaf7ba76c17030caf7c18540c7d8efdbf3e2805"
           }
         },

@@ -1,4 +1,4 @@
-package com.vipa.app;
+package me.vipa.app;
 
 
 

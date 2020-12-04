@@ -3,14 +3,14 @@
     "project_number": "607174406587",
     "firebase_url": "https://mvhub-prod.firebaseio.com",
     "project_id": "mvhub-prod",
-    "storage_bucket": "mvhub-prod.appspot.com"
+    "storage_bucket": "me.vipa.app"
   },
   "client": [
     {
       "client_info": {
         "mobilesdk_app_id": "1:607174406587:android:0c44ca284ee577457b949e",
         "android_client_info": {
-          "package_name": "com.mvhub.mvhubplus"
+          "package_name": "me.vipa.app"
         }
       },
       "oauth_client": [

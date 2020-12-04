@@ -1,8 +1,8 @@
-package com.vipa.app;
+package me.vipa.app;
 
-import com.vipa.app.utils.MediaTypeConstants;
-import com.vipa.app.utils.commonMethods.AppCommonMethod;
-import com.vipa.app.utils.config.bean.ConfigBean;
+import me.vipa.app.utils.MediaTypeConstants;
+import me.vipa.app.utils.commonMethods.AppCommonMethod;
+import me.vipa.app.utils.config.bean.ConfigBean;
 
 import java.util.ArrayList;
 import java.util.List;
