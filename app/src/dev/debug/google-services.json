@@ -1,50 +1,42 @@
 {
   "project_info": {
-    "project_number": "1001366573423",
-    "firebase_url": "https://mvhub-qa.firebaseio.com",
-    "project_id": "mvhub-qa",
-    "storage_bucket": "mvhub-qa.appspot.com"
+    "project_number": "113937781614",
+    "project_id": "vipa-qa",
+    "storage_bucket": "vipa-qa.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1001366573423:android:6771ab9291d8ff6252589a",
+        "mobilesdk_app_id": "1:113937781614:android:024e2fe920c4e4714fa77f",
         "android_client_info": {
           "package_name": "me.vipa.app.dev"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1001366573423-3so3p2h83hsuq6tk2tes6pp6d5h1ml3r.apps.googleusercontent.com",
+          "client_id": "113937781614-48p1mf06a5hlaeaegpd48bf9a66l2q5h.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.mvhub.mvhubplus.dev",
-            "certificate_hash": "cfaf7ba76c17030caf7c18540c7d8efdbf3e2805"
+            "package_name": "me.vipa.app.dev",
+            "certificate_hash": "be7390c7888b7675b248dde00d3e6ef4062bdd7d"
           }
         },
         {
-          "client_id": "1001366573423-b96rpp4tedjmaomep6glscke8i9m0qar.apps.googleusercontent.com",
+          "client_id": "113937781614-vvme6eb1ro3hp4880m7tobe968d9nggk.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyADekMOEEBVcQ_TCO5ZcIwXP6XHMpTw8PA"
+          "current_key": "AIzaSyBx8vTyZUNq98ZgAPR72C1sJNqDy9UZjyc"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1001366573423-b96rpp4tedjmaomep6glscke8i9m0qar.apps.googleusercontent.com",
+              "client_id": "113937781614-vvme6eb1ro3hp4880m7tobe968d9nggk.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "1001366573423-eoctl7dtlmokumaadog3uo4npeuo5j8s.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.mvhub.mvhubplus.dev"
-              }
             }
           ]
         }
