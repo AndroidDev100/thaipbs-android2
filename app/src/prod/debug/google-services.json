@@ -1,49 +1,49 @@
 {
   "project_info": {
-    "project_number": "607174406587",
-    "firebase_url": "https://mvhub-prod.firebaseio.com",
-    "project_id": "mvhub-prod",
-    "storage_bucket": "mvhub-prod.appspot.com"
+    "project_number": "434962665665",
+    "firebase_url": "https://vipa-555f2.firebaseio.com",
+    "project_id": "vipa-555f2",
+    "storage_bucket": "vipa-555f2.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:607174406587:android:0c44ca284ee577457b949e",
+        "mobilesdk_app_id": "1:434962665665:android:f4700767dd5356f9658440",
         "android_client_info": {
           "package_name": "me.vipa.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "607174406587-9ibcmqmsacgp00uh9pvlpv63lubs5jgh.apps.googleusercontent.com",
+          "client_id": "434962665665-hql29mj1sjlgcb8jbljje3ed1a1rao38.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "me.vipa.app",
-            "certificate_hash": "cfaf7ba76c17030caf7c18540c7d8efdbf3e2805"
+            "certificate_hash": "be7390c7888b7675b248dde00d3e6ef4062bdd7d"
           }
         },
         {
-          "client_id": "607174406587-u6k8urb9tr03s86ssr0940g5gmgl242j.apps.googleusercontent.com",
+          "client_id": "434962665665-drdgvjcli8lj00khsu6n5buqrgusteth.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAGny2mLmV86ZrcHrcBRv-0aMxlQctsYMk"
+          "current_key": "AIzaSyBsUXd5WPIYf27xH9nfCF_BEGnWvjyRqco"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "607174406587-u6k8urb9tr03s86ssr0940g5gmgl242j.apps.googleusercontent.com",
+              "client_id": "434962665665-drdgvjcli8lj00khsu6n5buqrgusteth.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "607174406587-up89om839k95917khr9dse3l9apn2qb6.apps.googleusercontent.com",
+              "client_id": "434962665665-ghfb2rdf87nlrcgtc9rkg83auml5h39m.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.mvhub.mvhubplus"
+                "bundle_id": "me.vipa.ios"
               }
             }
           ]

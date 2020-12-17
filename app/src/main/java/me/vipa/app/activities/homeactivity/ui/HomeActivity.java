@@ -185,6 +185,7 @@ public class HomeActivity extends BaseBindingActivity<ActivityMainBinding> imple
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //setupCrashlytics();
 
         strCurrentTheme = KsPreferenceKeys.getInstance().getCurrentTheme();
         Logger.d("CurrentThemeIs",strCurrentTheme);
@@ -224,6 +225,10 @@ public class HomeActivity extends BaseBindingActivity<ActivityMainBinding> imple
         });
 
         new AnalyticsController(HomeActivity.this).callAnalytics("home_activity", "Action", "Launch");
+    }
+
+    private void setupCrashlytics() {
+        throw new RuntimeException("Test crash");
     }
 
     private void callBinding() {
