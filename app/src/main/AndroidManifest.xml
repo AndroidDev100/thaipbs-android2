@@ -99,7 +99,7 @@
             <intent-filter>
                 <data
                     android:host="open"
-                    android:scheme="mvhubplus" />
+                    android:scheme="vipa" />
 
                 <action android:name="android.intent.action.VIEW" />
 
@@ -114,10 +114,12 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
                 <data
-                    android:host="www.mvhub.com"
+                    android:host="vipa.me"
                     android:scheme="https" />
+<!--                <data-->
+<!--                    android:host="vipaott.test-app.link"-->
+<!--                    android:scheme="https" />-->
                 <!-- <data -->
                 <!-- android:host="www.watcho.com" -->
                 <!-- android:scheme="https" /> -->
