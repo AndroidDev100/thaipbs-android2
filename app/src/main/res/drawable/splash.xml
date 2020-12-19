@@ -3,7 +3,7 @@
 
     <item android:drawable="@color/black" />
     <item
-        android:drawable="@drawable/mvhub_light_180"
+        android:drawable="@drawable/vipalogo512"
         android:gravity="center">
     </item>
 </layer-list>

@@ -174,7 +174,7 @@
         <item name="download_tvtitle_color">@color/navy_blue</item>
         <item name="download_description_text_color">@color/navy_blue</item>
         <item name="no_download_video_background_color">@color/navy_blue</item>
-        <item name="app_logo">@drawable/mvhub_light_180</item>
+        <item name="app_logo">@drawable/vipalogo512</item>
 
         <!--<item name="tabSelector">@drawable/tab_selector_light</item>-->
     </style>
@@ -208,7 +208,7 @@
         <item name="more_item_bottom_line_color">@color/search_toolbar_color</item>
         <item name="toolbar_text_color">@color/white</item>
         <item name="toolbar_back_arrow">@drawable/ic_arrow_back_black_24dp</item>
-        <item name="app_logo">@drawable/mvhub_dark_180</item>
+        <item name="app_logo">@drawable/vipalogo180</item>
 
         <item name="new_password_text_and_hint_color">@color/login_edittxt_color</item>
         <item name="change_password_bakground_color">@color/black_theme_color</item>

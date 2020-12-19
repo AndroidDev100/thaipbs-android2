@@ -87,7 +87,7 @@
                     android:layout_width="@dimen/toolbar_logo_icon_width"
                     android:layout_height="@dimen/toolbar_logo_icon_height"
                     android:layout_toRightOf="@+id/back_layout"
-                    android:background="@drawable/mvhub_light_500"
+                    android:background="@drawable/vipalogo180"
                     android:contentDescription="TODO" />
 
 

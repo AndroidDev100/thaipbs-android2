@@ -68,10 +68,10 @@
 
                             <ImageView
                                 android:layout_width="@dimen/_120sdp"
-                                android:layout_height="@dimen/_50sdp"
+                                android:layout_height="@dimen/_45sdp"
                                 android:contentDescription="TODO"
                                 android:layout_gravity="center"
-                                android:src="@drawable/mvhub_light_180"
+                                android:src="@drawable/vipalogo512"
                                  />
 
                             <LinearLayout

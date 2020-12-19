@@ -367,12 +367,12 @@
 
 
                     <ImageView
-                        android:layout_width="@dimen/_70sdp"
-                        android:layout_height="@dimen/_29sdp"
+                        android:layout_width="@dimen/_80sdp"
+                        android:layout_height="@dimen/_30sdp"
                         android:contentDescription="TODO"
                         android:layout_centerInParent="true"
                         android:layout_marginTop="@dimen/_5sdp"
-                        android:src="@drawable/mvhub_light_180" />
+                        android:src="@drawable/vipalogo180" />
 
                 </RelativeLayout>
 
