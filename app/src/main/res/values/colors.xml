@@ -34,6 +34,7 @@
     <color name="transparentColor">#00000000</color>
     <color name="white">#ffffff</color>
     <color name="description_title_white">#fefefe</color>
+    <color name="description_title_yellow">#f68b1f</color>
     <color name="description_grey">#929292</color>
     <color name="less_white">#7de3e3e3</color>
     <color name="navy_blue">#191925</color>
@@ -88,6 +89,7 @@
     <color name="home_screen_seperator">#12575757</color>
     <color name="icons_color">#999999</color>
     <color name="more_listtitle_color">#999999</color>
+    <color name="change_language_color">#ffffff</color>
     <color name="progress_bar_color">#006de4</color>
     <color name="splash_bg_color">#1F1E2F</color>
     <!--<color name="badge_background_color">#00BBF6</color>-->
@@ -95,13 +97,13 @@
     <color name="gray">#BDBEC2</color>
 
     <color name="themeLight">#000000</color>
-    <color name="theme_background_dark">#1E1E1E</color>
+    <color name="theme_background_dark">#181818</color>
     <color name="more_icon_color">#1F1E2F</color>
     <color name="more_item_line_color">#F5F4F2</color>
     <color name="black_overlay">#66000000</color>
-    <color name="more_text_color_dark">#009FFF</color>
+    <color name="more_text_color_dark">#ffffff</color>
     <color name="more_text_color_light">#391F68</color>
-    <color name="toolbar_bg_color_dark">#3A3A3A</color>
+    <color name="toolbar_bg_color_dark">#231f20</color>
     <color name="toolbar_bg_color_light">#ffffff</color>
     <color name="bottom_navigation_bg_dark">#333333</color>
     <color name="bottom_navigation_bg_light">#ffffff</color>

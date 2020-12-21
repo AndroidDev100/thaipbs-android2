@@ -139,8 +139,8 @@
     <string name="username_must_be_loggedin">ผู้ใช้งานต้องล็อคอินเข้าสู่ระบบ​​</string>
     <string name="user_not_found">ไม่พบผู้ใช้งาน</string>
     <string name="title_home">หน้าแรก</string>
-    <string name="title_free">ฟรี</string>
-    <string name="title_premium">พรีเมี่ยม</string>
+    <string name="title_free">พอดคาสต์</string>
+    <string name="title_premium">โปรแกรม</string>
     <string name="title_live_tv">ช่องทีวี</string>
     <string name="title_more1">เพิ่มเติม</string>
     <string name="more">เพิ่มเติม</string>

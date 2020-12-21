@@ -12,6 +12,7 @@
     <attr name="more_layout_background_color" format="color" />
     <attr name="more_recyclerview_background_color" format="color" />
     <attr name="more_item_text_color" format="color" />
+    <attr name="change_language_text_color" format="color" />
     <attr name="more_item_bottom_line_color" format="color" />
     <attr name="toolbar_text_color" format="color" />
     <attr name="toolbar_back_arrow" format="reference" />

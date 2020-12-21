@@ -51,21 +51,21 @@
                     android:textSize="@dimen/font_medium_large"
                     android:paddingLeft="@dimen/NontonSize10"
                     android:paddingRight="@dimen/NontonSize10"
-                    android:textColor="?attr/more_item_text_color"
+                    android:textColor="?attr/change_language_text_color"
                     android:layout_gravity="center" />
+
                 <TextView
                     android:id="@+id/language_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/change_language"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="34dp"
                     android:fontFamily="@font/sarabun_v7_thai_latin_regular"
-                    android:textSize="@dimen/font_medium_large"
                     android:paddingLeft="@dimen/NontonSize10"
                     android:paddingRight="@dimen/NontonSize10"
-                    android:textColor="?attr/more_text_color"
-                    android:layout_marginStart="34dp"
-                    android:layout_gravity="center"
-                    />
+                    android:text="@string/change_language"
+                    android:textColor="?attr/header_text_color"
+                    android:textSize="@dimen/font_medium_large" />
 
             </LinearLayout>
 
@@ -90,7 +90,7 @@
                     android:textSize="@dimen/font_medium_large"
                     android:paddingLeft="@dimen/NontonSize10"
                     android:paddingRight="@dimen/NontonSize10"
-                    android:textColor="?attr/more_item_text_color"
+                    android:textColor="?attr/change_language_text_color"
                     android:layout_gravity="center" />
                 <TextView
                     android:id="@+id/quality_text"
@@ -101,7 +101,7 @@
                     android:textSize="@dimen/font_medium_large"
                     android:paddingLeft="@dimen/NontonSize10"
                     android:paddingRight="@dimen/NontonSize10"
-                    android:textColor="?attr/more_text_color"
+                    android:textColor="?attr/header_text_color"
                     android:layout_marginStart="34dp"
                     android:layout_gravity="center"
                     />
