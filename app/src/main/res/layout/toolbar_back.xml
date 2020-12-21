@@ -25,6 +25,17 @@
                     android:background="?attr/toolbar_back_arrow"
                     android:contentDescription="TODO" />
             </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/toolbarSearchLeft"
+                android:layout_toRightOf="@+id/back_layout"
+                android:fontFamily="@font/kefa_regular"
+                android:text="Sign In"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:layout_centerHorizontal="true"
+                android:visibility="gone"/>
 
             <View
                 android:layout_width="match_parent"
