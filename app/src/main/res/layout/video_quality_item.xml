@@ -24,7 +24,7 @@
             android:textSize="@dimen/font_large"
             android:paddingLeft="@dimen/NontonSize10"
             android:paddingRight="@dimen/NontonSize10"
-            android:textColor="?attr/more_item_text_color"
+            android:textColor="?attr/change_language_text_color"
             android:layout_gravity="center" />
         <TextView
             android:id="@+id/second_title_text"
