@@ -241,7 +241,7 @@
     <string name="title_free">पॉडकास्ट</string>
     <string name="title_premium">कार्यक्रम</string>
     <string name="title_live_tv">चलचित्र</string>
-    <string name="title_more1">अधिक</string>
+    <string name="title_more1">Profile</string>
 
     <string name="delete_from_watchhistory">Video removed from Watchhistory</string>
     <string name="delete_from_watchhistory_error">Video can not be removed  from Watchhistory</string>

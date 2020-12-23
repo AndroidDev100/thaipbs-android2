@@ -2,7 +2,15 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/rootScroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/backgroundColor"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        >
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -21,6 +29,7 @@
                 android:indeterminate="true"
                 android:indeterminateTintMode="src_atop"
                 android:visibility="gone" />
+
 
 
             <LinearLayout
@@ -42,28 +51,14 @@
                         <RelativeLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:visibility="visible">
+                            android:visibility="visible"
+                            android:layout_marginTop="@dimen/NontonSize60">
 
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:background="@drawable/profile_gradient"
-                                android:layout_height="@dimen/more_uper_profile_frame">
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:background="@color/black_theme_color"
-                                android:layout_marginTop="@dimen/more_uper_profile_frame"
-                                android:layout_height="wrap_content">
-
-                            </LinearLayout>
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:gravity="center_horizontal"
-                                android:layout_marginTop="@dimen/more_img_top"
                                 android:layout_height="wrap_content">
 
                                 <LinearLayout
@@ -171,6 +166,6 @@
 
         </FrameLayout>
 
-
+    </androidx.core.widget.NestedScrollView>
 
 </layout>

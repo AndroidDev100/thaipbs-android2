@@ -244,7 +244,7 @@
     <string name="title_free">Podcast</string>
     <string name="title_premium">Program</string>
     <string name="title_live_tv">Live TV</string>
-    <string name="title_more1">More</string>
+    <string name="title_more1">Profile</string>
 
     <string name="delete_from_watchhistory">Video removed from Watchhistory</string>
     <string name="delete_from_watchhistory_error">Video can not be removed  from Watchhistory</string>
