@@ -3,57 +3,57 @@
 
     <string-array name="more_with_login">
         <item>จัดการบัญชี</item>
-        <item>รายการเฝ้าดูของฉัน</item>
-        <item>ประวัติการดูของฉัน</item>
-        <item>การดาวน์โหลดของฉัน</item>
+        <item>รายการของฉัน</item>
+        <item>ประวัติการรับชม</item>
+        <item>ดาวน์โหลด</item>
         <item>วิภาคิดส์</item>
         <item>ติดต่อเรา</item>
         <item>คำถามที่ถามบ่อย</item>
         <item>เกี่ยวกับ VIPA</item>
         <item>ข้อเสนอแนะ</item>
         <item>แอปพลิเคชันอื่น ๆ</item>
-        <item>การตั้งค่า</item>
+        <item>ตั้งค่า</item>
         <item>ออกจากระบบ</item>
     </string-array>
     <string-array name="more_with_login_fb">
         <item>ข้อมูลของฉัน</item>
         <item>รายการของฉัน</item>
         <item>ประวัติการรับชม</item>
-        <item>ข้อมูลสมาชิก</item>
+        <item>ดาวน์โหลด</item>
         <item>แลกคูปอง</item>
         <item>ตั้งค่า</item>
         <item>ข้อกำหนดและเงื่อนไข</item>
-        <item>นโยบายความเป็นส่วนตัว</item>
+        <item>ตั้งค่า</item>
         <item>ออกจากระบบ</item>
     </string-array>
 
     <string-array name="more_with_verify">
         <item>จัดการบัญชี</item>
-        <item>รายการเฝ้าดูของฉัน</item>
-        <item>ประวัติการดูของฉัน</item>
-        <item>การดาวน์โหลดของฉัน</item>
+        <item>รายการของฉัน</item>
+        <item>ประวัติการรับชม</item>
+        <item>ดาวน์โหลด</item>
         <item>วิภาคิดส์</item>
         <item>ติดต่อเรา</item>
         <item>คำถามที่ถามบ่อย</item>
         <item>เกี่ยวกับ VIPA</item>
         <item>ข้อเสนอแนะ</item>
         <item>แอปพลิเคชันอื่น ๆ</item>
-        <item>การตั้งค่า</item>
+        <item>ตั้งค่า</item>
         <item>ออกจากระบบ</item>
     </string-array>
 
     <string-array name="more_logout">
         <item>จัดการบัญชี</item>
-        <item>รายการเฝ้าดูของฉัน</item>
-        <item>ประวัติการดูของฉัน</item>
-        <item>การดาวน์โหลดของฉัน</item>
+        <item>รายการของฉัน</item>
+        <item>ประวัติการรับชม</item>
+        <item>ดาวน์โหลด</item>
         <item>วิภาคิดส์</item>
         <item>ติดต่อเรา</item>
         <item>คำถามที่ถามบ่อย</item>
         <item>เกี่ยวกับ VIPA</item>
         <item>ข้อเสนอแนะ</item>
         <item>แอปพลิเคชันอื่น ๆ</item>
-        <item>การตั้งค่า</item>
+        <item>ตั้งค่า</item>
 
 
     </string-array>
