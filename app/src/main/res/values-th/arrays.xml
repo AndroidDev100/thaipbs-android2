@@ -26,29 +26,32 @@
     </string-array>
 
     <string-array name="more_with_verify">
-        <item>เปลื่ยนพาสเวิร์ด</item>
-        <item>Verify Account</item>
-        <item>ข้อมูลของฉัน</item>
-        <item>รายการของฉัน</item>
-        <item>ประวัติการรับชม</item>
-        <item>ข้อมูลสมาชิก</item>
-        <item>แลกคูปอง</item>
-        <item>ตั้งค่า</item>
-        <item>ข้อกำหนดและเงื่อนไข</item>
-        <item>นโยบายความเป็นส่วนตัว</item>
+        <item>จัดการบัญชี</item>
+        <item>รายการเฝ้าดูของฉัน</item>
+        <item>ประวัติการดูของฉัน</item>
+        <item>การดาวน์โหลดของฉัน</item>
+        <item>วิภาคิดส์</item>
+        <item>ติดต่อเรา</item>
+        <item>คำถามที่ถามบ่อย</item>
+        <item>เกี่ยวกับ VIPA</item>
+        <item>ข้อเสนอแนะ</item>
+        <item>แอปพลิเคชันอื่น ๆ</item>
+        <item>การตั้งค่า</item>
         <item>ออกจากระบบ</item>
     </string-array>
 
     <string-array name="more_logout">
-        <item>เปลื่ยนพาสเวิร์ด</item>
-        <item>ข้อมูลของฉัน</item>
-        <item>รายการของฉัน</item>
-        <item>ประวัติการรับชม</item>
-        <item>ข้อมูลสมาชิก</item>
-        <item>แลกคูปอง</item>
-        <item>ตั้งค่า</item>
-        <item>ข้อกำหนดและเงื่อนไข</item>
-        <item>นโยบายความเป็นส่วนตัว</item>
+        <item>จัดการบัญชี</item>
+        <item>รายการเฝ้าดูของฉัน</item>
+        <item>ประวัติการดูของฉัน</item>
+        <item>การดาวน์โหลดของฉัน</item>
+        <item>วิภาคิดส์</item>
+        <item>ติดต่อเรา</item>
+        <item>คำถามที่ถามบ่อย</item>
+        <item>เกี่ยวกับ VIPA</item>
+        <item>ข้อเสนอแนะ</item>
+        <item>แอปพลิเคชันอื่น ๆ</item>
+        <item>การตั้งค่า</item>
 
 
     </string-array>
