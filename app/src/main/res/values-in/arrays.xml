@@ -2,15 +2,18 @@
 <resources>
 
     <string-array name="more_with_login">
-        <item>Ganti kata sandi</item>
-        <item>perincian anda</item>
-        <item>Daftar Tontonan Anda</item>
-        <item>sejarah tontonan</item>
-        <item>Keanggotaan dan Rencana</item>
-        <item>aplikasi</item>
-        <item>Syarat dan ketentuan</item>
-        <item>Rahasia pribadi</item>
-        <item>Keluar</item>
+        <item>Manage Account</item>
+        <item>My Watchlist</item>
+        <item>My Watch History</item>
+        <item>My Downloads</item>
+        <item>Vipa Kids</item>
+        <item>Contact Us</item>
+        <item>Frequently Ask Questions</item>
+        <item>About VIPA</item>
+        <item>Feedback</item>
+        <item>Other Applications</item>
+        <item>Settings</item>
+        <item>Logout</item>
     </string-array>
     <string-array name="more_with_login_fb">
         <item>perincian anda</item>

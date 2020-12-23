@@ -2,15 +2,18 @@
 <resources>
 
     <string-array name="more_with_login">
-        <item>अपना पासवर्ड बदलें</item>
-        <item>आपकी जानकारी</item>
-        <item>आपकी वॉचलिस्‍ट</item>
-        <item>देखे हुए वीडियो</item>
-        <item>सदस्यता और योजनाएँ</item>
-        <item>सेटिंग्स</item>
-        <item>नियम और शर्तें</item>
-        <item>गोपनीयता नीति</item>
-        <item>लॉग आउट</item>
+        <item>Manage Account</item>
+        <item>My Watchlist</item>
+        <item>My Watch History</item>
+        <item>My Downloads</item>
+        <item>Vipa Kids</item>
+        <item>Contact Us</item>
+        <item>Frequently Ask Questions</item>
+        <item>About VIPA</item>
+        <item>Feedback</item>
+        <item>Other Applications</item>
+        <item>Settings</item>
+        <item>Logout</item>
     </string-array>
 
     <string-array name="more_with_login_fb">

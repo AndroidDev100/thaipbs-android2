@@ -2,15 +2,17 @@
 <resources>
 
     <string-array name="more_with_login">
-        <item>Change Password</item>
-        <item>My Profile</item>
+        <item>Manage Account</item>
         <item>My Watchlist</item>
         <item>My Watch History</item>
-        <item>Membership and Plans</item>
-        <item>Redeem Coupon</item>
+        <item>My Downloads</item>
+        <item>Vipa Kids</item>
+        <item>Contact Us</item>
+        <item>Frequently Ask Questions</item>
+        <item>About VIPA</item>
+        <item>Feedback</item>
+        <item>Other Applications</item>
         <item>Settings</item>
-        <item>Terms and Conditions</item>
-        <item>Privacy Policy</item>
         <item>Logout</item>
     </string-array>
 
