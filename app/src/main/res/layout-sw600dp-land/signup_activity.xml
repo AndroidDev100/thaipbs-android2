@@ -68,8 +68,7 @@
 
                             <ImageView
                                 android:layout_width="@dimen/_100sdp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
+                                android:layout_height="@dimen/_45sdp"
                                 android:contentDescription="TODO"
                                 android:src="@drawable/vipalogo512"
                                  />
@@ -130,7 +129,6 @@
                                     android:layout_marginRight="@dimen/NontonSize2"
                                     android:contentDescription="TODO"
                                     android:padding="@dimen/NontonSize4"
-                                    android:visibility="gone"
                                     android:scaleType="centerInside"
                                     android:src="?attr/profile_icon_background" />
 
@@ -147,7 +145,7 @@
                                     android:maxLength="40"
                                     android:singleLine="true"
                     android:textColor="?attr/app_edit_text_color"
-android:textColorHint="?attr/new_password_text_and_hint_color"
+android:textColorHint="?attr/app_edit_text_color"
                                     android:textSize="@dimen/TextSize14" />
                             </LinearLayout>
                             <View
@@ -180,7 +178,6 @@ android:textColorHint="?attr/new_password_text_and_hint_color"
                                     android:layout_marginRight="@dimen/NontonSize2"
                                     android:contentDescription="TODO"
                                     android:padding="@dimen/NontonSize4"
-                                    android:visibility="gone"
                                     android:src="?attr/email_icon_background" />
 
 
@@ -195,7 +192,7 @@ android:textColorHint="?attr/new_password_text_and_hint_color"
                                     android:imeOptions="actionDone"
                                     android:singleLine="true"
                     android:textColor="?attr/app_edit_text_color"
-android:textColorHint="?attr/new_password_text_and_hint_color"
+android:textColorHint="?attr/app_edit_text_color"
                                     android:textSize="@dimen/TextSize14" />
                             </LinearLayout>
                             <View
@@ -226,7 +223,6 @@ android:textColorHint="?attr/new_password_text_and_hint_color"
                                     android:layout_height="wrap_content"
                                     android:contentDescription="TODO"
                                     android:padding="@dimen/NontonSize4"
-                                    android:visibility="gone"
                                     android:src="?attr/lock_icon" />
 
 
@@ -242,7 +238,7 @@ android:textColorHint="?attr/new_password_text_and_hint_color"
                                     android:inputType="textPassword|textNoSuggestions"
                                     android:singleLine="true"
                     android:textColor="?attr/app_edit_text_color"
-android:textColorHint="?attr/new_password_text_and_hint_color"
+android:textColorHint="?attr/app_edit_text_color"
                                     android:textSize="@dimen/TextSize14" />
                             </LinearLayout>
                             <View
@@ -327,7 +323,7 @@ android:textColorHint="?attr/new_password_text_and_hint_color"
                                     android:layout_marginLeft="@dimen/alreadyUserMargin"
                                     android:fontFamily="@font/sarabun_v7_thai_latin_regular"
                                     android:text="@string/sign_in"
-                                    android:textColor="@color/popular_search_color"
+                                    android:textColor="@color/description_title_yellow"
                                     android:textSize="@dimen/TextSize14" />
                             </FrameLayout>
 
