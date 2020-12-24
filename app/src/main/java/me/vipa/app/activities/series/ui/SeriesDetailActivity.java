@@ -1453,7 +1453,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
         public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
             holder.season.setText(list.get(position).getList());
             if (list.get(position).isSelected()) {
-                holder.season.setTextColor(getResources().getColor(R.color.moretitlecolor));
+                holder.season.setTextColor(getResources().getColor(R.color.description_title_yellow));
                 Typeface boldTypeface = Typeface.defaultFromStyle(Typeface.BOLD);
                 holder.season.setTypeface(boldTypeface);
 

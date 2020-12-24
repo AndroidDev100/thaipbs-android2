@@ -48,13 +48,13 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/season_heading_margin_left"
                     android:layout_marginTop="@dimen/NontonSize12"
-                    android:background="@drawable/season_header_bc"
+                    android:background="@null"
                     android:fontFamily="@font/roboto_bold"
                     android:gravity="center_vertical"
                     android:paddingLeft="@dimen/_10sdp"
                     android:paddingRight="@dimen/_7sdp"
                     android:text=""
-                    android:textColor="@color/more_text_color_dark"
+                    android:textColor="@color/description_title_yellow"
                     android:textSize="@dimen/detailHeadingSize" />
 
 

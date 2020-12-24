@@ -16,7 +16,7 @@
             android:layout_gravity="center_horizontal"
             android:text=""
             android:layout_centerVertical="true"
-            android:textColor="@color/blackColor"
+            android:textColor="@color/description_title_yellow"
             android:textSize="@dimen/font_large" />
 
 
