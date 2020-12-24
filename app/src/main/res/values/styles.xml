@@ -117,6 +117,7 @@
         <item name="watchlist_delete_icon">@drawable/delete_icon_navy_blue</item>
         <item name="list_circle_item_title_color">@color/navy_blue</item>
         <item name="list_circle_item_description">@color/navy_blue</item>
+        <item name="watchlist_icon_text">@color/navy_blue</item>
         <item name="list_circle_item_genre">@color/navy_blue</item>
         <item name="pr_item_title_text_color">@color/navy_blue</item>
         <item name="pr_item_description_text_color">@color/navy_blue</item>
@@ -236,6 +237,7 @@
         <item name="watchlist_delete_icon">@drawable/delete_comment_icon</item>
         <item name="list_circle_item_title_color">@color/description_title_white</item>
         <item name="list_circle_item_description">@color/description_grey</item>
+        <item name="watchlist_icon_text">@color/white</item>
         <item name="list_circle_item_genre_grey">@color/description_grey</item>
         <item name="list_circle_item_genre">@color/white</item>
         <item name="pr_item_title_text_color">@color/white</item>

@@ -34,6 +34,7 @@
     <attr name="watchlist_delete_icon" format="reference" />
     <attr name="list_circle_item_title_color" format="reference" />
     <attr name="list_circle_item_description" format="reference" />
+    <attr name="watchlist_icon_text" format="reference" />
     <attr name="list_circle_item_genre_grey" format="reference" />
     <attr name="list_circle_item_genre" format="reference" />
     <attr name="pr_item_title_text_color" format="reference" />

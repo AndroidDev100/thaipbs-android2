@@ -191,7 +191,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="@dimen/_5sdp"
                                             android:fontFamily="@font/sarabun_v7_thai_latin_regular"
-                                            android:textColor="@color/white"
+                                            android:textColor="@color/gray_thai"
                                             android:textSize="@dimen/font_small" />
                                     </LinearLayout>
 

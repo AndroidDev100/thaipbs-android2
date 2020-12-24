@@ -225,7 +225,7 @@
                                     android:layout_marginEnd="@dimen/movie_metadata_tag_margin_margin_right"
                                     android:fontFamily="@font/sarabun_v7_thai_latin_regular"
                                     android:text=""
-                                    android:textColor="@color/white"
+                                    android:textColor="@color/gray_thai"
                                     android:textSize="@dimen/font_small" />
 
 
@@ -371,16 +371,16 @@
                         android:background="?attr/backgroundColor"
                         android:minHeight="?actionBarSize"
                         app:tabGravity="fill"
-                        app:tabIndicatorColor="@color/more_text_color_dark"
+                        app:tabIndicatorColor="@color/description_title_yellow"
                         app:tabMode="fixed"
                         app:tabSelectedTextColor="@color/white"
                         app:tabTextColor="?attr/cancel_text_color"
-
                         />
                     <ImageView
                         android:background="@color/description_grey"
                         android:layout_width="match_parent"
-                        android:layout_height="1dp" />
+                        android:layout_height="1dp"
+                        />
 
                     <me.vipa.app.utils.helpers.WrappingViewPager
                         android:id="@+id/viewPager"

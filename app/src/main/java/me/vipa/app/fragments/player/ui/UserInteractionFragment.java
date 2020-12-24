@@ -571,8 +571,8 @@ public class UserInteractionFragment extends BaseBindingFragment<DetailWatchlist
 
     private void setLikeProperty() {
         if (KsPreferenceKeys.getInstance().getCurrentTheme().equalsIgnoreCase(AppConstants.LIGHT_THEME)) {
-            getBinding().tvLike.setTextColor(ContextCompat.getColor(getActivity(), R.color.more_text_color_dark));
-            ImageViewCompat.setImageTintList(getBinding().likeIcon, ColorStateList.valueOf(getResources().getColor(R.color.more_text_color_dark)));
+            getBinding().tvLike.setTextColor(ContextCompat.getColor(getActivity(), R.color.navy_blue));
+            ImageViewCompat.setImageTintList(getBinding().likeIcon, ColorStateList.valueOf(getResources().getColor(R.color.navy_blue)));
         } else {
             getBinding().tvLike.setTextColor(ContextCompat.getColor(getActivity(), R.color.more_text_color_dark));
             ImageViewCompat.setImageTintList(getBinding().likeIcon, ColorStateList.valueOf(getResources().getColor(R.color.more_text_color_dark)));
@@ -589,8 +589,8 @@ public class UserInteractionFragment extends BaseBindingFragment<DetailWatchlist
                 getBinding().tvLike.setTextColor(ContextCompat.getColor(getActivity(), R.color.navy_blue));
                 ImageViewCompat.setImageTintList(getBinding().likeIcon, ColorStateList.valueOf(getResources().getColor(R.color.navy_blue)));
             } else {
-                getBinding().tvLike.setTextColor(ContextCompat.getColor(getActivity(), R.color.description_grey));
-                ImageViewCompat.setImageTintList(getBinding().likeIcon, ColorStateList.valueOf(getResources().getColor(R.color.description_grey)));
+                getBinding().tvLike.setTextColor(ContextCompat.getColor(getActivity(), R.color.more_text_color_dark));
+                ImageViewCompat.setImageTintList(getBinding().likeIcon, ColorStateList.valueOf(getResources().getColor(R.color.more_text_color_dark)));
 
             }
 
@@ -599,8 +599,8 @@ public class UserInteractionFragment extends BaseBindingFragment<DetailWatchlist
                 getBinding().tvLike.setTextColor(ContextCompat.getColor(getActivity(), R.color.navy_blue));
                 ImageViewCompat.setImageTintList(getBinding().likeIcon, ColorStateList.valueOf(getResources().getColor(R.color.navy_blue)));
             } else {
-                getBinding().tvLike.setTextColor(ContextCompat.getColor(getActivity(), R.color.description_grey));
-                ImageViewCompat.setImageTintList(getBinding().likeIcon, ColorStateList.valueOf(getResources().getColor(R.color.description_grey)));
+                getBinding().tvLike.setTextColor(ContextCompat.getColor(getActivity(), R.color.more_text_color_dark));
+                ImageViewCompat.setImageTintList(getBinding().likeIcon, ColorStateList.valueOf(getResources().getColor(R.color.more_text_color_dark)));
 
             }
         }
@@ -634,7 +634,7 @@ public class UserInteractionFragment extends BaseBindingFragment<DetailWatchlist
     private void setTextColor() {
         if (KsPreferenceKeys.getInstance().getCurrentTheme().equalsIgnoreCase(AppConstants.LIGHT_THEME)) {
             //  ImageViewCompat.setImageTintList(getBinding().addIcon, ColorStateList.valueOf(getResources().getColor(R.color.dialog_green_color)));
-            getBinding().tvWatch.setTextColor(ContextCompat.getColor(getActivity(), R.color.more_text_color_dark));
+            getBinding().tvWatch.setTextColor(ContextCompat.getColor(getActivity(), R.color.navy_blue));
         } else {
             getBinding().tvWatch.setTextColor(ContextCompat.getColor(getActivity(), R.color.more_text_color_dark));
         }
@@ -663,7 +663,7 @@ public class UserInteractionFragment extends BaseBindingFragment<DetailWatchlist
             //  ImageViewCompat.setImageTintList(getBinding().addIcon, ColorStateList.valueOf(getResources().getColor(R.color.dialog_green_color)));
             getBinding().tvWatch.setTextColor(ContextCompat.getColor(getActivity(), R.color.navy_blue));
         } else {
-            getBinding().tvWatch.setTextColor(ContextCompat.getColor(getActivity(), R.color.description_grey));
+            getBinding().tvWatch.setTextColor(ContextCompat.getColor(getActivity(), R.color.more_text_color_dark));
         }
 
     }

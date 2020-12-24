@@ -60,7 +60,7 @@
                     android:fontFamily="@font/sarabun_v7_thai_latin_medium"
                     android:gravity="center"
                     android:text="@string/watchlist"
-                    android:textColor="?attr/list_circle_item_description"
+                    android:textColor="?attr/watchlist_icon_text"
                     android:textSize="@dimen/font_medium" />
             </LinearLayout>
 
@@ -106,7 +106,7 @@
                     android:fontFamily="@font/sarabun_v7_thai_latin_medium"
                     android:gravity="center"
                     android:text="@string/like"
-                    android:textColor="?attr/like_text_color"
+                    android:textColor="?attr/watchlist_icon_text"
                     android:textSize="@dimen/font_medium" />
             </LinearLayout>
 
@@ -135,7 +135,7 @@
                 android:fontFamily="@font/sarabun_v7_thai_latin_medium"
                 android:gravity="center"
                 android:text="@string/share"
-                android:textColor="?attr/watchlist_share_like_text_color"
+                android:textColor="?attr/watchlist_icon_text"
                 android:textSize="@dimen/font_medium" />
         </LinearLayout>
 
