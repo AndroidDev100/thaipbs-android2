@@ -192,7 +192,7 @@
                     android:ellipsize="end"
                     android:fontFamily="@font/sarabun_v7_thai_latin_regular"
                     android:text="duration"
-                    android:textColor="?attr/episode_serial_number"
+                    android:textColor="?attr/cast_text_color"
                     android:textSize="@dimen/detail_rail_episode_duration"
                     android:visibility="visible" />
 
