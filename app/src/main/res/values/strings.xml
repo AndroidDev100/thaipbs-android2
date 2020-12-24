@@ -117,7 +117,7 @@
     <string name="no_result_found_title">No Results Found</string>
     <string name="popular_search">Popular Searches</string>
     <string name="recent_searches">Recent Searches</string>
-    <string name="no_result">Sorry! we could not find any results.</string>
+    <string name="no_result">No results found</string>
     <string name="no_result1">Try searching for another episode, movie or show</string>
 
     <string name="something_went_wrong">Something went wrong</string>

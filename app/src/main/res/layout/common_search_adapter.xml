@@ -145,7 +145,7 @@
                     android:fontFamily="@font/sarabun_v7_thai_latin_light"
                     android:maxLines="1"
                     android:text=""
-                    android:textColor="?attr/watchlist_item_episode_color"
+                    android:textColor="?attr/cast_text_color"
                     android:textSize="@dimen/search_desc" />
 
             </LinearLayout>

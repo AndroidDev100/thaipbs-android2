@@ -51,25 +51,12 @@
                             android:fontFamily="@font/roboto_medium"
                             android:text="@string/no_result"
                             android:textAllCaps="false"
-                            android:layout_gravity="center"
-                            android:textColor="?attr/watchlist_item_title_color"
+                            android:layout_gravity="left"
+                            android:textColor="?attr/cast_text_color"
                             android:textSize="@dimen/font_large"
                             android:visibility="visible" />
 
-                        <TextView
-                            android:id="@+id/no_result1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="@dimen/toolbarSearchLeft"
-                            android:layout_marginRight="@dimen/toolbarSearchRight"
-                            android:layout_marginBottom="@dimen/_10sdp"
-                            android:fontFamily="@font/roboto_regular"
-                            android:text="@string/no_result1"
-                            android:textAllCaps="false"
-                            android:textColor="?attr/episode_serial_number"
-                            android:textSize="@dimen/font_medium"
-                            android:visibility="visible" />
+
                         <LinearLayout
                             android:id="@+id/rootView"
                             android:layout_width="match_parent"
@@ -93,7 +80,7 @@
                                     android:fontFamily="@font/sarabun_v7_thai_latin_medium"
                                     android:text="@string/popular_search"
                                     android:textAllCaps="true"
-                                    android:textColor="?attr/watchlist_item_title_color"
+                                    android:textColor="?attr/cast_text_color"
                                     android:textSize="@dimen/popularSearchSize" />
 
                                 <androidx.recyclerview.widget.RecyclerView

@@ -90,7 +90,7 @@ public class ActivitySearch extends BaseBindingActivity<ActivitySearchBinding> i
 
     private void clickListner() {
         getBinding().noResult.setVisibility(View.GONE);
-        getBinding().noResult1.setVisibility(View.GONE);
+       // getBinding().noResult1.setVisibility(View.GONE);
         hitApiPopularSearch();
         setRecyclerProperties(getBinding().recentSearchRecycler);
         setRecentSearchAdapter("");
@@ -192,7 +192,7 @@ public class ActivitySearch extends BaseBindingActivity<ActivitySearchBinding> i
 
         getBinding().rootView.setVisibility(View.GONE);
         getBinding().noResult.setVisibility(View.GONE);
-        getBinding().noResult1.setVisibility(View.GONE);
+      //  getBinding().noResult1.setVisibility(View.GONE);
         // getBinding().progressBar.setVisibility(View.VISIBLE);
         getBinding().llSearchResultLayout.setVisibility(View.VISIBLE);
         railInjectionHelper.getSearch(searchKeyword, 4, 0).observe(ActivitySearch.this, data -> {
@@ -200,7 +200,7 @@ public class ActivitySearch extends BaseBindingActivity<ActivitySearchBinding> i
             if (Objects.requireNonNull(data).size() > 0) {
                 try {
                     getBinding().noResult.setVisibility(View.GONE);
-                    getBinding().noResult1.setVisibility(View.GONE);
+                   // getBinding().noResult1.setVisibility(View.GONE);
                     getBinding().rootView.setVisibility(View.GONE);
                     for (int i = 0; i < data.size(); i++) {
                         if (data.get(i).getPageTotal() > 0) {
@@ -239,13 +239,13 @@ public class ActivitySearch extends BaseBindingActivity<ActivitySearchBinding> i
                     getBinding().searchResultRecycler.setAdapter(searchAdapter);
                 } else {
                     getBinding().noResult.setVisibility(View.VISIBLE);
-                    getBinding().noResult1.setVisibility(View.VISIBLE);
+                  //  getBinding().noResult1.setVisibility(View.VISIBLE);
                     getBinding().rootView.setVisibility(View.VISIBLE);
                     getBinding().llSearchResultLayout.setVisibility(View.GONE);
                 }
             } else {
                 getBinding().noResult.setVisibility(View.VISIBLE);
-                getBinding().noResult1.setVisibility(View.VISIBLE);
+              //  getBinding().noResult1.setVisibility(View.VISIBLE);
                 getBinding().rootView.setVisibility(View.VISIBLE);
                 getBinding().llSearchResultLayout.setVisibility(View.GONE);
             }
