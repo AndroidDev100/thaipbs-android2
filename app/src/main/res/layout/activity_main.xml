@@ -37,7 +37,7 @@
                 android:layout_alignParentBottom="true"
                 android:background="?attr/bottomNavigationBackground"
                 android:theme="@style/Widget.BottomNavigationView"
-                app:itemTextAppearanceActive="@font/sarabun_v7_thai_latin_regular"
+                app:itemTextAppearanceActive="@font/sukhumvittadmai_medium"
                 app:itemIconTint="?attr/menuItemSelector"
                 app:itemTextColor="?attr/menuItemTextSelector"
                 app:labelVisibilityMode="unlabeled"

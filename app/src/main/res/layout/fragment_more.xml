@@ -10,7 +10,7 @@
         android:fillViewport="true"
         android:overScrollMode="never"
         android:scrollbars="none"
-        >
+        android:descendantFocusability="blocksDescendants">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -78,7 +78,7 @@
                                             android:layout_width="wrap_content"
                                             android:textSize="@dimen/more_img_txt_size"
                                             android:text=""
-                                            android:fontFamily="@font/sarabun_v7_thai_latin_regular"
+                                            android:fontFamily="@font/sukhumvittadmai_bold"
                                             android:textColor="@color/white"
                                             android:layout_height="wrap_content" />
 
@@ -101,7 +101,7 @@
                                         android:textSize="@dimen/moreItemTextSize"
                                         android:textAllCaps="false"
                                         android:text="@string/guest_user"
-                                        android:fontFamily="@font/sarabun_v7_thai_latin_regular"
+                                        android:fontFamily="@font/sukhumvittadmai_bold"
                                         android:layout_marginTop="@dimen/_10sdp"
                                         android:textColor="?attr/more_item_text_color"
                                         android:layout_height="wrap_content" />
@@ -113,7 +113,7 @@
                                         android:layout_gravity="center"
                                         android:background="@drawable/rounded_button"
                                         android:gravity="center"
-                                        android:fontFamily="@font/sarabun_v7_thai_latin_regular"
+                                        android:fontFamily="@font/sukhumvittadmai_normal"
                                         android:layout_marginTop="@dimen/_5sdp"
                                         android:text="@string/login_txt"
                                         android:textAllCaps="false"

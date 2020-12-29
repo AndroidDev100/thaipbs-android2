@@ -100,6 +100,7 @@
     <attr name="list_shimmer" format="reference" />
     <attr name="splash_bg" format="reference" />
     <attr name="app_edit_text_color" format="reference" />
+    <attr name="user_name_text_color" format="reference" />
 
     <declare-styleable name="RippleView">
         <attr name="rv_alpha" format="integer" />
