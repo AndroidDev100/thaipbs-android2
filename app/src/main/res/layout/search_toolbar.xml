@@ -69,7 +69,7 @@
                     android:layout_marginLeft="@dimen/_4sdp"
                     android:layout_marginRight="@dimen/_15sdp"
                     android:background="@null"
-                    android:fontFamily="@font/roboto_regular"
+                    android:fontFamily="@font/sukhumvittadmai_normal"
                     android:hint="@string/search_mv_hub"
                     android:imeOptions="actionDone"
                     android:inputType="textNoSuggestions"
@@ -96,7 +96,8 @@
                     app:queryBackground="@null"
                     app:queryHint="@string/search_mv_hub"
                     app:searchHintIcon="@null"
-                    app:searchIcon="@null" />
+                    app:searchIcon="@null"
+                    />
 
 
             </LinearLayout>
@@ -113,7 +114,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_regular"
+                    android:fontFamily="@font/sukhumvittadmai_normal"
                     android:text="@string/cancel"
                     android:textColor="?attr/cancel_text_color"
                     android:textSize="@dimen/NontonSize14" />

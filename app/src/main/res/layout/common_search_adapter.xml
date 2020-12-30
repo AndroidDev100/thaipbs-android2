@@ -131,7 +131,7 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text=" "
-                    android:fontFamily="@font/sarabun_v7_thai_latin_medium"
+                    android:fontFamily="@font/sukhumvittadmai_bold"
                     android:textColor="?attr/watchlist_item_title_color"
                     android:textSize="@dimen/search_title" />
 
@@ -142,7 +142,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:ellipsize="end"
-                    android:fontFamily="@font/sarabun_v7_thai_latin_light"
+                    android:fontFamily="@font/sukhumvittadmai_medium"
                     android:maxLines="1"
                     android:text=""
                     android:textColor="?attr/cast_text_color"
