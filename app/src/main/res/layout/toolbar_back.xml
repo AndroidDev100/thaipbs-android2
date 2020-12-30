@@ -30,11 +30,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/toolbarSearchLeft"
                 android:layout_toRightOf="@+id/back_layout"
-                android:fontFamily="@font/kefa_regular"
+                android:fontFamily="@font/sukhumvittadmai_bold"
                 android:text="Sign In"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:layout_centerHorizontal="true"
+                android:layout_centerInParent="true"
                 android:visibility="gone"/>
 
             <View

@@ -32,7 +32,7 @@
                 android:id="@+id/toolbar_title"
                 android:layout_width="wrap_content"
                 android:text=""
-                android:fontFamily="@font/roboto_regular"
+                android:fontFamily="@font/sukhumvittadmai_bold"
                 android:textColor="#ffffff"
                 android:textSize="@dimen/font_medium"
                 android:layout_marginLeft="10dp"
