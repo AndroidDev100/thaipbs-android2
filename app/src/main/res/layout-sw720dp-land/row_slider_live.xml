@@ -52,7 +52,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentLeft="true"
                             android:layout_alignParentBottom="true"
-                            android:fontFamily="@font/roboto_medium"
+                            android:fontFamily="@font/sukhumvittadmai_medium"
                             android:gravity="left"
                             android:singleLine="true"
                             android:text="This is the label"

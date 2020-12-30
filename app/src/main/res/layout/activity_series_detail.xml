@@ -206,7 +206,7 @@
                                     android:id="@+id/series_title"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="@font/sarabun_v7_thai_latin_medium"
+                                    android:fontFamily="@font/sukhumvittadmai_bold"
                                     android:lineHeight="@dimen/movie_title_line_height"
                                     android:singleLine="true"
                                     android:text=""
@@ -223,7 +223,7 @@
                                     android:layout_gravity="center_vertical"
                                     android:layout_marginStart="2dp"
                                     android:layout_marginEnd="@dimen/movie_metadata_tag_margin_margin_right"
-                                    android:fontFamily="@font/sarabun_v7_thai_latin_regular"
+                                    android:fontFamily="@font/sukhumvittadmai_normal"
                                     android:text=""
                                     android:textColor="@color/gray_thai"
                                     android:textSize="@dimen/font_small" />
@@ -241,7 +241,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_marginEnd="6dp"
                                         android:ellipsize="end"
-                                        android:fontFamily="@font/sarabun_v7_thai_latin_regular"
+                                        android:fontFamily="@font/sukhumvittadmai_medium"
                                         android:lineSpacingExtra="2dp"
                                         android:maxLines="2"
                                         android:text="@{responseApi.trim()}"
@@ -270,7 +270,7 @@
                                                 <TextView
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
-                                                    android:fontFamily="@font/sarabun_v7_thai_latin_semibold"
+                                                    android:fontFamily="@font/sukhumvittadmai_bold"
                                                     android:text="@string/cast"
                                                     android:textColor="?attr/cast_title_color"
                                                     android:textSize="@dimen/font_medium" />
@@ -279,7 +279,7 @@
                                                     android:id="@+id/cast_text"
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
-                                                    android:fontFamily="@font/sarabun_v7_thai_latin_regular"
+                                                    android:fontFamily="@font/sukhumvittadmai_medium"
                                                     android:text="@{casttext}"
                                                     android:textColor="?attr/cast_text_color"
                                                     android:textSize="@dimen/font_medium" />
@@ -293,7 +293,7 @@
                                                 <TextView
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
-                                                    android:fontFamily="@font/sarabun_v7_thai_latin_semibold"
+                                                    android:fontFamily="@font/sukhumvittadmai_bold"
                                                     android:text="@string/crew"
                                                     android:textColor="?attr/cast_title_color"
                                                     android:textSize="@dimen/font_medium" />
@@ -302,7 +302,7 @@
                                                     android:id="@+id/crew_text"
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
-                                                    android:fontFamily="@font/sarabun_v7_thai_latin_regular"
+                                                    android:fontFamily="@font/sukhumvittadmai_medium"
                                                     android:text="@{crewtext}"
                                                     android:textColor="?attr/cast_text_color"
                                                     android:textSize="@dimen/font_medium" />
@@ -323,7 +323,7 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:ellipsize="end"
-                                            android:fontFamily="@font/sarabun_v7_thai_latin_semibold"
+                                            android:fontFamily="@font/sukhumvittadmai_bold"
                                             android:maxLines="2"
                                             android:padding="5dp"
                                             android:textAllCaps="true"
