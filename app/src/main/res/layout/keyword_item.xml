@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/_2sdp"
-            android:fontFamily="@font/sarabun_v7_thai_latin_regular"
+            android:fontFamily="@font/sukhumvittadmai_bold"
             android:text="@{rowItem.keywords}"
             android:textColor="?attr/watchlist_item_episode_color"
             android:textSize="@dimen/_12sdp" />
