@@ -81,7 +81,9 @@
     <dimen name="more_uper_profile_frame">220dp</dimen>
     <dimen name="more_img_top">148dp</dimen>
     <dimen name="more_img_size">148dp</dimen>
+    <dimen name="new_more_img_size">148dp</dimen>
     <dimen name="more_img_txt_size">65sp</dimen>
+    <dimen name="new_more_img_txt_size">50sp</dimen>
     <dimen name="more_login_btn_width">160sp</dimen>
     <dimen name="more_login_btn_height">45sp</dimen>
 

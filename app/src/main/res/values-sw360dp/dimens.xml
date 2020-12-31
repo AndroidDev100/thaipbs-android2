@@ -30,7 +30,7 @@
 
     <dimen name="cameraPaddingProfile">12dp</dimen>
     <!-- ios size 15-->
-    <dimen name="moreItemTextSize">16sp</dimen>
+    <dimen name="moreItemTextSize">14sp</dimen>
 
     <dimen name="NontonSize1">1dp</dimen>
     <dimen name="NontonSize2">2dp</dimen>
@@ -122,7 +122,9 @@
     <dimen name="more_uper_profile_frame">150dp</dimen>
     <dimen name="more_img_top">98dp</dimen>
     <dimen name="more_img_size">98dp</dimen>
+    <dimen name="new_more_img_size">80dp</dimen>
     <dimen name="more_img_txt_size">45sp</dimen>
+    <dimen name="new_more_img_txt_size">35sp</dimen>
     <dimen name="more_login_btn_width">115sp</dimen>
     <dimen name="more_login_btn_height">35sp</dimen>
 
@@ -140,7 +142,7 @@
     <dimen name="search_header_title">15sp</dimen>
     <dimen name="search_title">15sp</dimen>
     <dimen name="search_desc">11sp</dimen>
-    <dimen name="more_fragment_item_title">17sp</dimen>
+    <dimen name="more_fragment_item_title">15sp</dimen>
 
     <dimen name="splash_logo_icon_height">180dp</dimen>
     <dimen name="splash_logo_icon_width">51dp</dimen>
