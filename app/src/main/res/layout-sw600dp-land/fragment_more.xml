@@ -10,13 +10,14 @@
         android:fillViewport="true"
         android:overScrollMode="never"
         android:scrollbars="none"
-        android:descendantFocusability="blocksDescendants">
+        >
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/blurred_background_image_view"
-            android:clickable="true">
+            android:clickable="true"
+            android:descendantFocusability="blocksDescendants">
 
             <me.vipa.app.utils.CustomProgressBar
                 android:id="@+id/progress_bar"
