@@ -177,12 +177,12 @@
                                             android:layout_alignParentLeft="true"
                                             android:layout_marginLeft="@dimen/_5sdp"
                                             android:layout_marginRight="@dimen/_4sdp"
-                                            android:fontFamily="@font/sarabun_v7_thai_latin_medium"
+                                            android:fontFamily="@font/sukhumvittadmai_bold"
                                             android:lineHeight="@dimen/movie_title_line_height"
                                             android:singleLine="true"
                                             android:text="@{responseApi.title}"
                                             android:textColor="?attr/title_color"
-                                            android:textSize="@dimen/font_large"
+                                            android:textSize="@dimen/font_medium_large"
                                             tools:targetApi="p" />
 
                                         <TextView
@@ -190,7 +190,7 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="@dimen/_5sdp"
-                                            android:fontFamily="@font/sarabun_v7_thai_latin_regular"
+                                            android:fontFamily="@font/sukhumvittadmai_normal"
                                             android:textColor="@color/gray_thai"
                                             android:textSize="@dimen/font_small" />
                                     </LinearLayout>
@@ -285,11 +285,11 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginEnd="6dp"
                                     android:ellipsize="end"
-                                    android:fontFamily="@font/sarabun_v7_thai_latin_regular"
+                                    android:fontFamily="@font/sukhumvittadmai_normal"
                                     android:lineSpacingExtra="2dp"
                                     android:text="@{responseApi.description.trim()}"
                                     android:textColor="?attr/title_color"
-                                    android:textSize="@dimen/font_medium" />
+                                    android:textSize="@dimen/font_small" />
 
 
                                 <LinearLayout

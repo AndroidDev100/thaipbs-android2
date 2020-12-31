@@ -156,7 +156,7 @@
                                     android:text="@{responseApi.title}"
                                     android:textColor="?attr/title_color"
                                     android:layout_toLeftOf="@+id/mPremiumStatus"
-                                    android:textSize="@dimen/font_large"
+                                    android:textSize="@dimen/font_medium_large"
                                     tools:targetApi="p" />
 
 
@@ -257,12 +257,12 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginEnd="6dp"
                                     android:ellipsize="end"
-                                    android:fontFamily="@font/sukhumvittadmai_medium"
+                                    android:fontFamily="@font/sukhumvittadmai_normal"
                                     android:lineSpacingExtra="2dp"
                                     android:maxLines="2"
                                     android:text="@{responseApi.description.trim()}"
                                     android:textColor="?attr/title_color"
-                                    android:textSize="@dimen/font_medium" />
+                                    android:textSize="@dimen/font_small" />
 
                                 <me.vipa.app.utils.helpers.ExpandableCardLayout
                                     android:id="@+id/expandable_layout"
@@ -298,7 +298,7 @@
                                                 android:fontFamily="@font/sukhumvittadmai_medium"
                                                 android:text="@{casttext}"
                                                 android:textColor="?attr/cast_text_color"
-                                                android:textSize="@dimen/font_medium" />
+                                                android:textSize="@dimen/font_small" />
                                         </LinearLayout>
 
                                         <LinearLayout
@@ -322,7 +322,7 @@
                                                 android:fontFamily="@font/sukhumvittadmai_medium"
                                                 android:text="@{crewtext}"
                                                 android:textColor="?attr/cast_text_color"
-                                                android:textSize="@dimen/font_medium" />
+                                                android:textSize="@dimen/font_small" />
                                         </LinearLayout>
                                     </LinearLayout>
                                 </me.vipa.app.utils.helpers.ExpandableCardLayout>
