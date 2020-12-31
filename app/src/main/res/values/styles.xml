@@ -96,7 +96,7 @@
         <item name="more_layout_background_color">@color/white</item>
         <item name="more_recyclerview_background_color">@color/white</item>
         <item name="more_item_text_color">@color/navy_blue</item>
-        <item name="user_name_text_color">@color/user_name_text_color</item>
+        <item name="user_name_text_color">@color/navy_blue</item>
         <item name="change_language_text_color">@color/navy_blue</item>
         <item name="more_item_bottom_line_color">@color/subtitlecolor</item>
         <item name="toolbar_text_color">@color/navy_blue</item>
