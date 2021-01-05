@@ -92,23 +92,23 @@ public class SDKConfig {
     }
 
     public String getMovieDetailId() {
-        return AppCommonMethod.getHomeTabId(configBean,"MOVIE");
+        return AppCommonMethod.getHomeTabId(configBean,"MOVIE DETAIL");
     }
 
     public String getShowDetailId() {
-        return AppCommonMethod.getHomeTabId(configBean,"SHOW");
+        return AppCommonMethod.getHomeTabId(configBean,"SHOW DETAIL");
     }
 
     public String getEpisodeDetailId() {
-        return AppCommonMethod.getHomeTabId(configBean,"EPISODE");
+        return AppCommonMethod.getHomeTabId(configBean,"EPISODE DETAIL");
     }
 
     public String getSeriesDetailId() {
-        return AppCommonMethod.getHomeTabId(configBean,"SERIES");
+        return AppCommonMethod.getHomeTabId(configBean,"SERIES DETAIL");
     }
 
     public String getLiveDetailId() {
-        return AppCommonMethod.getHomeTabId(configBean,"LIVE");
+        return AppCommonMethod.getHomeTabId(configBean,"LIVETV DETAIL");
     }
 
     public String getPopularSearchId() {
