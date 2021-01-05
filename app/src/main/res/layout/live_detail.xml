@@ -313,7 +313,7 @@
                                         android:text="@{expandabletext}"
                                         android:textAllCaps="true"
                                         android:textColor="?attr/more_less_text_color"
-                                        android:textSize="@dimen/font_medium" />
+                                        android:textSize="@dimen/detailMore" />
                                 </LinearLayout>
                             </LinearLayout>
 

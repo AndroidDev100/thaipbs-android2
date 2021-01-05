@@ -61,7 +61,7 @@
                     android:gravity="center"
                     android:text="@string/watchlist"
                     android:textColor="?attr/watchlist_icon_text"
-                    android:textSize="@dimen/font_medium" />
+                    android:textSize="@dimen/font_small" />
             </LinearLayout>
 
 
@@ -107,7 +107,7 @@
                     android:gravity="center"
                     android:text="@string/like"
                     android:textColor="?attr/watchlist_icon_text"
-                    android:textSize="@dimen/font_medium" />
+                    android:textSize="@dimen/font_small" />
             </LinearLayout>
 
         </RelativeLayout>
@@ -136,7 +136,7 @@
                 android:gravity="center"
                 android:text="@string/share"
                 android:textColor="?attr/watchlist_icon_text"
-                android:textSize="@dimen/font_medium" />
+                android:textSize="@dimen/font_small" />
         </LinearLayout>
 
         <LinearLayout

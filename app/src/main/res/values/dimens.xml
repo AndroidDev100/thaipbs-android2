@@ -24,7 +24,7 @@
     <dimen name="newSize">11sp</dimen>
     <dimen name="detailTitleSize">18sp</dimen>
     <dimen name="detailSubTitleSize">14sp</dimen>
-    <dimen name="detailHeadingSize">18sp</dimen>
+    <dimen name="detailHeadingSize">15sp</dimen>
     <dimen name="popularSearchSize">14sp</dimen>
     <dimen name="detailPremium">11sp</dimen>
     <dimen name="detailPurchase">13sp</dimen>
