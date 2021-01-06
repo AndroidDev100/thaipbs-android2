@@ -3,6 +3,7 @@ package me.vipa.app.activities.splash.ui;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,12 +22,19 @@ import android.view.animation.AnimationUtils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.vectordrawable.graphics.drawable.Animatable2Compat;
 
 import me.vipa.baseClient.BaseClient;
 import me.vipa.baseClient.BaseConfiguration;
 import me.vipa.baseClient.BaseDeviceType;
 import me.vipa.baseClient.BaseGateway;
 import me.vipa.baseClient.BasePlatform;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.resource.gif.GifDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -69,6 +77,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.inject.Inject;
+import javax.sql.DataSource;
 
 import io.branch.referral.Branch;
 import io.branch.referral.BranchError;
@@ -222,79 +231,123 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
     }
 
     private void startClapAnimation(JSONObject jsonObject, String updateType) {
-        ObjectAnimator progressAnimator = ObjectAnimator.ofInt(
-                getBinding().progressHorizontal,
-                "progress",
-                getBinding().progressHorizontal.getProgress(),
-                getBinding().progressHorizontal.getProgress() + 100
-        );
-        getBinding().progressHorizontal.setVisibility(View.VISIBLE);
-        progressAnimator.setDuration(500);
-        progressAnimator.start();
 
-        if (clapanimation==1){
-            clapanimation=2;
-            new Handler().postDelayed(() -> {
-                getBinding().flapView.setVisibility(View.VISIBLE);
-                getBinding().flapView.startAnimation(rotateAnimation);
-            }, 550);
+
+        Log.w("branchRedirectors", "onAnimationEnd1");
+
+        if (jsonObject != null) {
+            if (updateType != null && updateType.equalsIgnoreCase(ForceUpdateHandler.RECOMMENDED)) {
+                brachRedirections(jsonObject);
+            } else {
+                boolean updateValue = getForceUpdateValue(jsonObject, 1);
+                if (!updateValue) {
+                    brachRedirections(jsonObject);
+                }
+            }
+        } else {
+            if (updateType != null && updateType.equalsIgnoreCase(ForceUpdateHandler.RECOMMENDED)) {
+                Log.w("branchRedirectors", "-->>config" + "");
+                // homeRedirection();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.w("branchRedirectors", "-->>non" + "");
+                        new ActivityLauncher(ActivitySplash.this).homeScreen(ActivitySplash.this, HomeActivity.class);
+                        finish();
+                    }
+                }, 1);
+            } else {
+                boolean updateValue = getForceUpdateValue(null, 3);
+                if (!updateValue) {
+                    Log.w("branchRedirectors", "-->>config" + "");
+                    // homeRedirection();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Log.w("branchRedirectors", "-->>non" + "");
+                            new ActivityLauncher(ActivitySplash.this).homeScreen(ActivitySplash.this, HomeActivity.class);
+                            finish();
+                        }
+                    }, 1);
+                }
+            }
+
         }
 
-        translateAnimation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
 
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                Log.w("branchRedirectors", "onAnimationEnd1");
-
-                    if (jsonObject != null) {
-                        if (updateType != null && updateType.equalsIgnoreCase(ForceUpdateHandler.RECOMMENDED)) {
-                            brachRedirections(jsonObject);
-                        } else {
-                            boolean updateValue = getForceUpdateValue(jsonObject, 1);
-                            if (!updateValue) {
-                                brachRedirections(jsonObject);
-                            }
-                        }
-                    } else {
-                        if (updateType != null && updateType.equalsIgnoreCase(ForceUpdateHandler.RECOMMENDED)) {
-                            Log.w("branchRedirectors", "-->>config" + "");
-                            // homeRedirection();
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Log.w("branchRedirectors", "-->>non" + "");
-                                    new ActivityLauncher(ActivitySplash.this).homeScreen(ActivitySplash.this, HomeActivity.class);
-                                    finish();
-                                }
-                            }, 1);
-                        } else {
-                            boolean updateValue = getForceUpdateValue(null, 3);
-                            if (!updateValue) {
-                                Log.w("branchRedirectors", "-->>config" + "");
-                                // homeRedirection();
-                                new Handler().postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Log.w("branchRedirectors", "-->>non" + "");
-                                        new ActivityLauncher(ActivitySplash.this).homeScreen(ActivitySplash.this, HomeActivity.class);
-                                        finish();
-                                    }
-                                }, 1);
-                            }
-                        }
-
-                    }
-
-            }
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
+//        ObjectAnimator progressAnimator = ObjectAnimator.ofInt(
+//                getBinding().progressHorizontal,
+//                "progress",
+//                getBinding().progressHorizontal.getProgress(),
+//                getBinding().progressHorizontal.getProgress() + 100
+//        );
+//        getBinding().progressHorizontal.setVisibility(View.VISIBLE);
+//        progressAnimator.setDuration(500);
+//        progressAnimator.start();
+//
+//        if (clapanimation==1){
+//            clapanimation=2;
+//            new Handler().postDelayed(() -> {
+//                getBinding().flapView.setVisibility(View.VISIBLE);
+//                getBinding().flapView.startAnimation(rotateAnimation);
+//            }, 550);
+//        }
+//
+//        translateAnimation.setAnimationListener(new Animation.AnimationListener() {
+//            @Override
+//            public void onAnimationStart(Animation animation) {
+//
+//            }
+//
+//            @Override
+//            public void onAnimationEnd(Animation animation) {
+//                Log.w("branchRedirectors", "onAnimationEnd1");
+//
+//                    if (jsonObject != null) {
+//                        if (updateType != null && updateType.equalsIgnoreCase(ForceUpdateHandler.RECOMMENDED)) {
+//                            brachRedirections(jsonObject);
+//                        } else {
+//                            boolean updateValue = getForceUpdateValue(jsonObject, 1);
+//                            if (!updateValue) {
+//                                brachRedirections(jsonObject);
+//                            }
+//                        }
+//                    } else {
+//                        if (updateType != null && updateType.equalsIgnoreCase(ForceUpdateHandler.RECOMMENDED)) {
+//                            Log.w("branchRedirectors", "-->>config" + "");
+//                            // homeRedirection();
+//                            new Handler().postDelayed(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    Log.w("branchRedirectors", "-->>non" + "");
+//                                    new ActivityLauncher(ActivitySplash.this).homeScreen(ActivitySplash.this, HomeActivity.class);
+//                                    finish();
+//                                }
+//                            }, 1);
+//                        } else {
+//                            boolean updateValue = getForceUpdateValue(null, 3);
+//                            if (!updateValue) {
+//                                Log.w("branchRedirectors", "-->>config" + "");
+//                                // homeRedirection();
+//                                new Handler().postDelayed(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//                                        Log.w("branchRedirectors", "-->>non" + "");
+//                                        new ActivityLauncher(ActivitySplash.this).homeScreen(ActivitySplash.this, HomeActivity.class);
+//                                        finish();
+//                                    }
+//                                }, 1);
+//                            }
+//                        }
+//
+//                    }
+//
+//            }
+//            @Override
+//            public void onAnimationRepeat(Animation animation) {
+//
+//            }
+//        });
     }
 
     private void notificationCheck() {
@@ -334,68 +387,123 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
     }
 
     private void loadAnimations() {
-        zoomInAnimation = AnimationUtils.loadAnimation(this, R.anim.splash_zoom_in);
-        rotateAnimation = AnimationUtils.loadAnimation(this, R.anim.splash_rotate_animation);
-        translateAnimation = AnimationUtils.loadAnimation(this, R.anim.splash_zoom_out);
-        rotateAnimation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
+        //Glide.with(this).load(R.raw.keep).asGif().into(imageView);
+//        Glide.with(ActivitySplash.this).asGif().load(R.drawable.splash_img).into(getBinding().imgLogo);
 
+
+        Glide.with(this).asGif().load(R.drawable.splash_img).listener(new RequestListener<GifDrawable>() {
+            @Override
+            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<GifDrawable> target, boolean isFirstResource) {
+                callNextForRedirection();
+                return false;
             }
 
             @Override
-            public void onAnimationEnd(Animation animation) {
-                Log.w("branchRedirectors", "onAnimationEnd2");
-                getBinding().flapView1.setVisibility(View.VISIBLE);
-                getBinding().flapView1.startAnimation(translateAnimation);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-        zoomInAnimation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                if (viaIntent) {
-                    String notiVAlues = KsPreferenceKeys.getInstance().getNotificationPayload(notificationAssetId + "");
-                    try {
-                        Logger.e("Animation End","Config Call");
-                        JSONObject jsonObject = new JSONObject(notiVAlues);
-                        redirections(jsonObject);
-                    } catch (Exception e) {
-                        if (notificationObject!=null){
-                            redirections(notificationObject);
-                        }else {
-                            redirections(null);
-                        }
+            public boolean onResourceReady(GifDrawable resource, Object model, Target<GifDrawable> target, com.bumptech.glide.load.DataSource dataSource, boolean isFirstResource) {
+                resource.setLoopCount(1);
+                resource.registerAnimationCallback(new Animatable2Compat.AnimationCallback() {
+                    @Override
+                    public void onAnimationEnd(Drawable drawable) {
+                        callNextForRedirection();
                     }
-                }else{
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            Branch.getInstance().initSession(branchReferralInitListener, ActivitySplash.this.getIntent().getData(), ActivitySplash.this);
-                        }
-                    },1000);
+                });
+                return false;
+            }
 
+
+        }).into(getBinding().imgLogo);
+
+
+
+
+
+//        zoomInAnimation = AnimationUtils.loadAnimation(this, R.anim.splash_zoom_in);
+//        rotateAnimation = AnimationUtils.loadAnimation(this, R.anim.splash_rotate_animation);
+//        translateAnimation = AnimationUtils.loadAnimation(this, R.anim.splash_zoom_out);
+//        rotateAnimation.setAnimationListener(new Animation.AnimationListener() {
+//            @Override
+//            public void onAnimationStart(Animation animation) {
+//
+//            }
+//
+//            @Override
+//            public void onAnimationEnd(Animation animation) {
+//                Log.w("branchRedirectors", "onAnimationEnd2");
+//                getBinding().flapView1.setVisibility(View.VISIBLE);
+//                getBinding().flapView1.startAnimation(translateAnimation);
+//            }
+//
+//            @Override
+//            public void onAnimationRepeat(Animation animation) {
+//
+//            }
+//        });
+//        zoomInAnimation.setAnimationListener(new Animation.AnimationListener() {
+//            @Override
+//            public void onAnimationStart(Animation animation) {
+//
+//            }
+//
+//            @Override
+//            public void onAnimationEnd(Animation animation) {
+//                if (viaIntent) {
+//                    String notiVAlues = KsPreferenceKeys.getInstance().getNotificationPayload(notificationAssetId + "");
+//                    try {
+//                        Logger.e("Animation End","Config Call");
+//                        JSONObject jsonObject = new JSONObject(notiVAlues);
+//                        redirections(jsonObject);
+//                    } catch (Exception e) {
+//                        if (notificationObject!=null){
+//                            redirections(notificationObject);
+//                        }else {
+//                            redirections(null);
+//                        }
+//                    }
+//                }else{
+//                    new Handler().postDelayed(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            Branch.getInstance().initSession(branchReferralInitListener, ActivitySplash.this.getIntent().getData(), ActivitySplash.this);
+//                        }
+//                    },1000);
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onAnimationRepeat(Animation animation) {
+//
+//            }
+//        });
+//        new Handler().postDelayed(() -> {
+//            getBinding().imgLogo.setVisibility(View.VISIBLE);
+//            getBinding().imgLogo.startAnimation(zoomInAnimation);
+//        }, 100);
+    }
+
+    private void callNextForRedirection() {
+        if (viaIntent) {
+            String notiVAlues = KsPreferenceKeys.getInstance().getNotificationPayload(notificationAssetId + "");
+            try {
+                Logger.e("Animation End","Config Call");
+                JSONObject jsonObject = new JSONObject(notiVAlues);
+                redirections(jsonObject);
+            } catch (Exception e) {
+                if (notificationObject!=null){
+                    redirections(notificationObject);
+                }else {
+                    redirections(null);
                 }
             }
+        }else{
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Branch.getInstance().initSession(branchReferralInitListener, ActivitySplash.this.getIntent().getData(), ActivitySplash.this);
+                }
+            },1000);
 
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-        new Handler().postDelayed(() -> {
-            getBinding().imgLogo.setVisibility(View.VISIBLE);
-            getBinding().imgLogo.startAnimation(zoomInAnimation);
-        }, 100);
+        }
     }
 
     private void checkLanguage() {
