@@ -33,7 +33,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/NontonSize20"
                 android:layout_toRightOf="@+id/more_list_icon"
-                android:fontFamily="@font/sarabun_v7_thai_latin_regular"
+                android:fontFamily="@font/sukhumvittadmai_normal"
                 android:gravity="center_vertical"
                 android:text=""
                 android:textColor="?attr/more_item_text_color"

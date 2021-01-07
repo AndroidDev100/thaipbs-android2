@@ -5,7 +5,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?attr/episode_screen_background">
+        android:background="?attr/background">
 
 
 
@@ -18,7 +18,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?attr/episode_screen_background"
+                android:background="?attr/background"
                 android:orientation="vertical">
 
 
@@ -82,7 +82,7 @@
                                     android:layout_marginRight="@dimen/purchaseRigntMargin"
                                     android:layout_marginBottom="@dimen/NontonSize4"
                                     android:ellipsize="end"
-                                    android:fontFamily="@font/sarabun_v7_thai_latin_medium"
+                                    android:fontFamily="@font/sukhumvittadmai_medium"
                                     android:maxLines="1"
                                     android:text="Title"
                                     android:textColor="@color/white"
@@ -98,7 +98,7 @@
                                     android:layout_marginRight="@dimen/purchaseRigntMargin"
                                     android:layout_marginBottom="@dimen/NontonSize6"
                                     android:ellipsize="end"
-                                    android:fontFamily="@font/sarabun_v7_thai_latin_regular"
+                                    android:fontFamily="@font/sukhumvittadmai_normal"
                                     android:maxLines="2"
                                     android:text="Description"
                                     android:textColor="@color/white"
@@ -127,7 +127,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/NontonSize20"
                                     android:ellipsize="end"
-                                    android:fontFamily="@font/sarabun_v7_thai_latin_medium"
+                                    android:fontFamily="@font/sukhumvittadmai_medium"
                                     android:maxLines="2"
                                     android:text="@string/purhcase_options"
                                     android:textColor="@color/white"
@@ -183,7 +183,7 @@
                                     android:textColor="@color/white"
                                     android:layout_marginTop="@dimen/NontonSize35"
                                     android:textSize="@dimen/NontonSize15"
-                                    android:fontFamily="@font/sarabun_v7_thai_latin_medium"
+                                    android:fontFamily="@font/sukhumvittadmai_medium"
                                     android:layout_height="wrap_content">
 
                                 </TextView>
@@ -389,7 +389,7 @@
                         android:layout_marginLeft="@dimen/_15sdp"
                         android:layout_marginRight="@dimen/_15sdp"
                         android:gravity="center"
-                        android:fontFamily="@font/sarabun_v7_thai_latin_light"
+                        android:fontFamily="@font/sukhumvittadmai_normal"
                         android:layout_marginTop="@dimen/_10sdp"
                         android:lineSpacingExtra="@dimen/_2sdp"
                         android:textSize="@dimen/NontonSize13"
@@ -466,7 +466,7 @@
                                     android:layout_marginLeft="@dimen/NontonSize20"
                                     android:ellipsize="end"
                                     android:visibility="invisible"
-                                    android:fontFamily="@font/sarabun_v7_thai_latin_medium"
+                                    android:fontFamily="@font/sukhumvittadmai_medium"
                                     android:maxLines="2"
                                     android:text="@string/purhcase_options"
                                     android:textColor="@color/white"
@@ -494,7 +494,7 @@
                                     android:textColor="@color/white"
                                     android:layout_marginTop="@dimen/NontonSize35"
                                     android:textSize="@dimen/NontonSize15"
-                                    android:fontFamily="@font/sarabun_v7_thai_latin_medium"
+                                    android:fontFamily="@font/sukhumvittadmai_medium"
                                     android:layout_height="wrap_content">
 
                                 </TextView>
@@ -527,7 +527,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:drawablePadding="@dimen/NontonSize10"
-                        android:fontFamily="@font/sarabun_v7_thai_latin_regular"
+                        android:fontFamily="@font/sukhumvittadmai_medium"
                         android:text="@string/buy_now"
                         android:textColor="@color/white"
                         android:textSize="@dimen/TextSize12"
@@ -549,7 +549,7 @@
                         android:gravity="center_horizontal"
                         android:layout_width="wrap_content"
                         android:textColor="@color/white"
-                        android:fontFamily="@font/sarabun_v7_thai_latin_regular"
+                        android:fontFamily="@font/sukhumvittadmai_normal"
                         android:textSize="@dimen/NontonSize10"
                         android:text="@string/term_condition"
                         android:layout_height="wrap_content">
@@ -562,7 +562,7 @@
                         android:gravity="center_horizontal"
                         android:layout_weight="1"
                         android:paddingTop="@dimen/_4sdp"
-                        android:fontFamily="@font/sarabun_v7_thai_latin_regular"
+                        android:fontFamily="@font/sukhumvittadmai_normal"
                         android:textSize="@dimen/NontonSize10"
                         android:layout_width="wrap_content"
                         android:textColor="@color/white"
@@ -578,7 +578,7 @@
                         android:textSize="@dimen/NontonSize10"
                         android:layout_weight="1"
                         android:paddingTop="@dimen/_4sdp"
-                        android:fontFamily="@font/sarabun_v7_thai_latin_regular"
+                        android:fontFamily="@font/sukhumvittadmai_normal"
                         android:layout_width="wrap_content"
                         android:textColor="@color/white"
                         android:text="@string/Contact_us"

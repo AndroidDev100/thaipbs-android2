@@ -42,7 +42,7 @@
                 android:layout_marginTop="10dp"
                 android:textSize="15sp"
                 android:text="@string/no_result_found"
-                android:fontFamily="@font/sarabun_v7_thai_latin_regular"
+                android:fontFamily="@font/sukhumvittadmai_normal"
                 android:textColor="@color/gray" />
 
             <TextView
@@ -50,10 +50,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_12sdp"
-                android:background="@drawable/bordrer_button"
+                android:background="@drawable/rounded_button"
                 android:clickable="true"
                 android:focusable="true"
-                android:fontFamily="@font/sarabun_v7_thai_latin_regular"
+                android:fontFamily="@font/sukhumvittadmai_normal"
                 android:paddingStart="@dimen/_35sdp"
                 android:paddingTop="@dimen/_8sdp"
                 android:paddingEnd="@dimen/_35sdp"

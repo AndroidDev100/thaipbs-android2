@@ -9,8 +9,8 @@
         android:layout_height="match_parent"
         tools:context="com.vipa.app.me.vipa.app.activities.splash.ui.ActivitySplash">
 
-        <ImageView
-            android:id="@+id/img_logo"
+        <VideoView
+            android:id="@+id/videoView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="visible"

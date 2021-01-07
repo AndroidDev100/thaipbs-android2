@@ -36,6 +36,7 @@ import me.vipa.app.activities.usermanagment.viewmodel.RegistrationLoginViewModel
 import me.vipa.app.baseModels.BaseBindingActivity;
 
 import static me.vipa.app.R.font.roboto_regular;
+import static me.vipa.app.R.font.sukhumvittadmai_normal;
 
 public class ChangePasswordActivity extends BaseBindingActivity<NewPasswordScreenBinding> implements AlertDialogFragment.AlertDialogListener {
 
@@ -108,7 +109,7 @@ public class ChangePasswordActivity extends BaseBindingActivity<NewPasswordScree
 
         getBinding().etNewPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         getBinding().etConfirmNewPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-        font = ResourcesCompat.getFont(ChangePasswordActivity.this, roboto_regular);
+        font = ResourcesCompat.getFont(ChangePasswordActivity.this, sukhumvittadmai_normal);
         getBinding().etNewPassword.setTypeface(font);
         getBinding().etConfirmNewPassword.setTypeface(font);
 

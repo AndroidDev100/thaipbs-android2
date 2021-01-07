@@ -4,6 +4,8 @@ import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -391,27 +393,48 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
 //        Glide.with(ActivitySplash.this).asGif().load(R.drawable.splash_img).into(getBinding().imgLogo);
 
 
-        Glide.with(this).asGif().load(R.drawable.splash_img).listener(new RequestListener<GifDrawable>() {
+        Uri video = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.splash);
+        getBinding().videoView.setVideoURI(video);
+
+        getBinding().videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            public void onCompletion(MediaPlayer mp) {
+                callNextForRedirection();
+            }
+        });
+
+        getBinding().videoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
             @Override
-            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<GifDrawable> target, boolean isFirstResource) {
+            public boolean onError(MediaPlayer mp, int what, int extra) {
                 callNextForRedirection();
                 return false;
             }
+        });
 
-            @Override
-            public boolean onResourceReady(GifDrawable resource, Object model, Target<GifDrawable> target, com.bumptech.glide.load.DataSource dataSource, boolean isFirstResource) {
-                resource.setLoopCount(1);
-                resource.registerAnimationCallback(new Animatable2Compat.AnimationCallback() {
-                    @Override
-                    public void onAnimationEnd(Drawable drawable) {
-                        callNextForRedirection();
-                    }
-                });
-                return false;
-            }
+        getBinding().videoView.start();
+    }
 
 
-        }).into(getBinding().imgLogo);
+//        Glide.with(this).asGif().load(R.drawable.splash_img).listener(new RequestListener<GifDrawable>() {
+//            @Override
+//            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<GifDrawable> target, boolean isFirstResource) {
+//                callNextForRedirection();
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onResourceReady(GifDrawable resource, Object model, Target<GifDrawable> target, com.bumptech.glide.load.DataSource dataSource, boolean isFirstResource) {
+//                resource.setLoopCount(1);
+//                resource.registerAnimationCallback(new Animatable2Compat.AnimationCallback() {
+//                    @Override
+//                    public void onAnimationEnd(Drawable drawable) {
+//                        callNextForRedirection();
+//                    }
+//                });
+//                return false;
+//            }
+//
+//
+//        }).into(getBinding().imgLogo);
 
 
 
@@ -479,7 +502,7 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
 //            getBinding().imgLogo.setVisibility(View.VISIBLE);
 //            getBinding().imgLogo.startAnimation(zoomInAnimation);
 //        }, 100);
-    }
+
 
     private void callNextForRedirection() {
         if (viaIntent) {
