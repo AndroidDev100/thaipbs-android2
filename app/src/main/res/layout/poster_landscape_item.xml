@@ -101,7 +101,7 @@
                     android:layout_marginTop="@dimen/_30sdp"
                     android:background="@drawable/above_shado"
                     android:ellipsize="end"
-                    android:fontFamily="@font/roboto_regular"
+                    android:fontFamily="@font/sukhumvittadmai_normal"
                     android:gravity="left"
                     android:maxLines="1"
                     android:paddingLeft="@dimen/_5sdp"

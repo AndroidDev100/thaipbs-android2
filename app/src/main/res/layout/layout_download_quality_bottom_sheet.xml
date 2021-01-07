@@ -11,7 +11,7 @@
             android:id="@+id/btn_start_download"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/moretitlecolor"
+            android:background="@color/description_title_yellow"
             android:text="@string/start_download"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent" />
@@ -45,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:fontFamily="@font/roboto_bold"
+            android:fontFamily="@font/sukhumvittadmai_bold"
             android:paddingTop="20dp"
             android:text="@string/download_option"
             android:textColor="@color/white"

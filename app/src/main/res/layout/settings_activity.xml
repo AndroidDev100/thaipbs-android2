@@ -139,7 +139,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Change Theme"
-                android:fontFamily="@font/roboto_regular"
+                android:fontFamily="@font/sukhumvittadmai_normal"
                 android:textSize="@dimen/font_medium_large"
                 android:paddingLeft="@dimen/NontonSize10"
                 android:paddingRight="@dimen/NontonSize10"
@@ -197,7 +197,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:fontFamily="@font/roboto_regular"
+                android:fontFamily="@font/sukhumvittadmai_normal"
                 android:text="@string/download_settings"
                 android:textColor="?attr/change_language_text"
                 android:textSize="@dimen/font_medium_large" />

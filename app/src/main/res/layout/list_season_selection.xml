@@ -24,7 +24,7 @@
                 android:layout_marginLeft="4dp"
                 android:layout_weight="1"
                 android:ellipsize="end"
-                android:fontFamily="@font/roboto_regular"
+                android:fontFamily="@font/sukhumvittadmai_normal"
                 android:maxLines="2"
                 android:text=""
                 android:textColor="@color/white"
@@ -37,7 +37,7 @@
                 android:layout_marginRight="8dp"
                 android:layout_weight="1"
                 android:ellipsize="end"
-                android:fontFamily="@font/roboto_regular"
+                android:fontFamily="@font/sukhumvittadmai_normal"
                 android:text="TVOD"
 
                 android:textSize="15sp"

@@ -118,7 +118,7 @@
                         android:layout_alignParentBottom="true"
                         android:layout_marginTop="@dimen/_30sdp"
                         android:background="@drawable/above_shado"
-                        android:fontFamily="@font/roboto_regular"
+                        android:fontFamily="@font/sukhumvittadmai_normal"
                         android:gravity="left"
                         android:paddingLeft="@dimen/_5sdp"
                         android:paddingBottom="@dimen/_5sdp"

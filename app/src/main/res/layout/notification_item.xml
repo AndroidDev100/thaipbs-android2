@@ -38,7 +38,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_regular"
+                    android:fontFamily="@font/sukhumvittadmai_medium"
                     android:text="Watch Fifa live at 5pm "
                     android:textColor="@color/titleblackcolor"
                     android:textSize="@dimen/_12sdp" />
@@ -47,7 +47,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
-                    android:fontFamily="@font/roboto_regular"
+                    android:fontFamily="@font/sukhumvittadmai_normal"
                     android:maxLines="2"
                     android:text="France vs Cortia final" />
 
@@ -55,7 +55,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_5sdp"
-                    android:fontFamily="@font/roboto_regular"
+                    android:fontFamily="@font/sukhumvittadmai_normal"
                     android:text="3 minute ago" />
 
             </LinearLayout>

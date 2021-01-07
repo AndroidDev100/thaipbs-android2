@@ -64,7 +64,7 @@
                     android:layout_marginLeft="@dimen/toolbarHomeLeft"
                     android:layout_toRightOf="@+id/back_layout"
                     android:contentDescription="TODO"
-                    android:fontFamily="@font/kefa_regular"
+                    android:fontFamily="@font/sukhumvittadmai_normal"
                     android:text="enveu"
                     android:textColor="@color/moretitlecolor"
                     android:textSize="32sp"

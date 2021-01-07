@@ -114,7 +114,6 @@
             android:button="@null"
             android:drawableLeft="@drawable/radio_button_selector"
             android:drawablePadding="6dp"
-            android:fontFamily="@font/roboto_medium"
             android:textColor="@color/white"
             android:textSize="15sp" />
     </RelativeLayout>-->

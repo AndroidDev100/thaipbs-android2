@@ -86,7 +86,7 @@
                                 android:id="@+id/start_value"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/roboto_medium"
+                                android:fontFamily="@font/sukhumvittadmai_medium"
                                 android:text="1"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/font_large" />
@@ -94,7 +94,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/roboto_medium"
+                                android:fontFamily="@font/sukhumvittadmai_medium"
                                 android:text="/"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/font_large" />
@@ -103,7 +103,7 @@
                                 android:id="@+id/end_value"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/roboto_medium"
+                                android:fontFamily="@font/sukhumvittadmai_medium"
                                 android:text="1"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/font_large" />

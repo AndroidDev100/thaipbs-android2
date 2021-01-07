@@ -35,7 +35,7 @@ import java.util.regex.Pattern;
 import me.vipa.app.activities.usermanagment.viewmodel.RegistrationLoginViewModel;
 import me.vipa.app.baseModels.BaseBindingActivity;
 
-import static me.vipa.app.R.font.roboto_regular;
+
 import static me.vipa.app.R.font.sukhumvittadmai_normal;
 
 public class ChangePasswordActivity extends BaseBindingActivity<NewPasswordScreenBinding> implements AlertDialogFragment.AlertDialogListener {
