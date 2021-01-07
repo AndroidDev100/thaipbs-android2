@@ -391,9 +391,12 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
     private void loadAnimations() {
         //Glide.with(this).load(R.raw.keep).asGif().into(imageView);
 //        Glide.with(ActivitySplash.this).asGif().load(R.drawable.splash_img).into(getBinding().imgLogo);
+        Uri video;
+
+             video = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.splash);
 
 
-        Uri video = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.splash);
+
         getBinding().videoView.setVideoURI(video);
 
         getBinding().videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {

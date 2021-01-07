@@ -40,7 +40,7 @@
     <string name="user_not_already_in_watchlist">This asset is not available in this user\'s watchlist</string>
     <string name="user_already_in_watchlist">This asset already exists in this user\'s watchlist​.</string>
     <string name="user_already_liked">This asset is already liked by the user​</string>
-   <string name="user_already_not_liked">This asset is not liked by the user​</string>
+    <string name="user_already_not_liked">This asset is not liked by the user​</string>
     <string name="receipt_validation_url_not_avail">Receipt validation URL not available</string>
     <string name="payment_validation_failed">Payment Validation Failed</string>
     <string name="purchase_token_required">Purchase Token is required under notes</string>
@@ -101,7 +101,7 @@
     <string name="name_validation_profile">Name is required</string>
     <string name="profile_update_successfully">Updated Successfully!</string>
     <string name="profile_registered_successfully">Registered Successfully!</string>
- <string name="forgot_password_response">Thanks for putting the request. If we find the email address in our system, we will send the reset link over the mail</string>
+    <string name="forgot_password_response">Thanks for putting the request. If we find the email address in our system, we will send the reset link over the mail</string>
 
 
     <string name="please_enter_new_password">Please enter New Password</string>
@@ -260,7 +260,7 @@
     <string name="sign_out">Logout</string>
     <string name="redeem_coupon">Redeem Coupon</string>
 
-    <string name="wake_up_connection" >Wake up your connection !</string>
+    <string name="wake_up_connection">Wake up your connection !</string>
 
 
     <string name="episodes">Episodes</string>
@@ -348,7 +348,6 @@
     <string name="half_yearly">Half Yearly Pack</string>
     <string name="annual">Annual Pack</string>
     <string name="purchase_title">Access to premium content is just a click away. Select the package best suited for you to access this content and many more titles brought to you by VIPA exclusively on VIPA</string>
-
 
 
 </resources>
