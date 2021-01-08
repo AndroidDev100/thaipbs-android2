@@ -6,10 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import me.vipa.app.R;
+import me.vipa.app.activities.homeactivity.ui.HomeActivity;
 import me.vipa.app.baseModels.BaseBindingFragment;
 import me.vipa.app.databinding.FragmentStepTwoBinding;
+import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
 
 public class StepTwoFragment extends BaseBindingFragment<FragmentStepTwoBinding> {
     @Override
@@ -18,9 +21,23 @@ public class StepTwoFragment extends BaseBindingFragment<FragmentStepTwoBinding>
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_step_two, container, false);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setClickListeners();
+    }
+
+    private void setClickListeners() {
+        getBinding().skipLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new ActivityLauncher(getActivity()).homeScreen(getActivity(), HomeActivity.class);
+            }
+        });
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
     }
 }
