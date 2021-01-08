@@ -392,8 +392,12 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
         //Glide.with(this).load(R.raw.keep).asGif().into(imageView);
 //        Glide.with(ActivitySplash.this).asGif().load(R.drawable.splash_img).into(getBinding().imgLogo);
         Uri video;
-
-             video = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.splashtab);
+        boolean isTablet = getResources().getBoolean(R.bool.isTablet);
+        if (isTablet) {
+            video = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.splashtab);
+        }else {
+            video = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.splash);
+        }
 
 
 

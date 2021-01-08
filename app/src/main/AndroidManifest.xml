@@ -65,7 +65,8 @@
         <activity
             android:name=".activities.splash.ui.ActivitySplash"
             android:launchMode="singleTop"
-            android:theme="@style/SplashTheme">
+            android:theme="@style/SplashTheme"
+            android:screenOrientation="locked">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
