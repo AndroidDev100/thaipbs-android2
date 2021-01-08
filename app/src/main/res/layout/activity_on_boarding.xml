@@ -13,13 +13,14 @@
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayoutIndicator"
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/NontonSize120"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_margin="56dp"
-            app:tabGravity="center"
+            android:layout_marginBottom="@dimen/_110sdp"
             app:tabIndicatorHeight="0dp"
-            app:tabBackground="@drawable/tab_selector" />
+            android:layout_centerInParent="true"
+            app:tabBackground="@drawable/tab_selector"
+            />
 
     </RelativeLayout>
 </layout>

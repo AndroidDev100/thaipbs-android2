@@ -11,10 +11,85 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:src="@drawable/second"
+            android:src="@drawable/third"
             android:scaleType="fitXY"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/_50sdp"
+            android:gravity="center">
+        <TextView
+            android:id="@+id/movie_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sukhumvittadmai_medium"
+            android:lineHeight="@dimen/movie_title_line_height"
+            android:singleLine="true"
+            android:text="@string/content_preminum"
+            android:textColor="@color/white"
+            android:textSize="@dimen/NontonSize20"
+            android:textAllCaps="true"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            />
 
+        <TextView
+            android:id="@+id/title1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sukhumvittadmai_bold"
+            android:lineHeight="@dimen/movie_title_line_height"
+            android:singleLine="true"
+            android:text="หาแบบนี้เพิ่มเติมอีก"
+            android:textColor="@color/description_title_yellow"
+            android:textSize="@dimen/NontonSize20"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:layout_below="@+id/movie_title"/>
+            <TextView
+                android:id="@+id/title2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sukhumvittadmai_bold"
+                android:lineHeight="@dimen/movie_title_line_height"
+                android:singleLine="true"
+                android:text="หาแบบนี้เพิ่มเติมอีก"
+                android:textColor="@color/description_title_yellow"
+                android:textSize="@dimen/NontonSize20"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:layout_below="@+id/movie_title"/>
+        </LinearLayout>
 
+        <TextView
+            android:id="@+id/skip_login"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/NontonSize45"
+            android:fontFamily="@font/sukhumvittadmai_normal"
+            android:text="@string/start_access"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:textSize="@dimen/NontonSize20"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/NontonSize20"
+            android:background="@drawable/rounded_button_welcome"/>
+        <TextView
+            android:id="@+id/register"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/NontonSize45"
+            android:fontFamily="@font/sukhumvittadmai_normal"
+            android:text="@string/register"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:textSize="@dimen/NontonSize20"
+            android:layout_above="@+id/skip_login"
+            android:layout_marginBottom="@dimen/NontonSize20"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:background="@drawable/rounded_button_gray"/>
 
     </RelativeLayout>
 </layout>

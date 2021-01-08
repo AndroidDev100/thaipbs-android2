@@ -31,7 +31,8 @@
         android:theme="@style/MyMaterialTheme"
         android:usesCleartextTraffic="true"
         tools:replace="allowBackup">
-        <activity android:name=".activities.onBoarding.UI.OnBoarding"></activity>
+        <activity android:name=".activities.onBoarding.UI.OnBoarding"
+            android:screenOrientation="portrait"></activity>
         <activity android:name=".activities.ContactActivity" />
         <activity android:name=".activities.downloads.DownloadedEpisodesActivity" />
         <activity android:name=".activities.settings.downloadsettings.changequality.ui.ChangeDownloadQuality" />

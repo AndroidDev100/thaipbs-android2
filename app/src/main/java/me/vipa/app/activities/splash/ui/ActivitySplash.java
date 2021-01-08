@@ -26,6 +26,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.vectordrawable.graphics.drawable.Animatable2Compat;
 
+import me.vipa.app.activities.onBoarding.UI.OnBoarding;
 import me.vipa.baseClient.BaseClient;
 import me.vipa.baseClient.BaseConfiguration;
 import me.vipa.baseClient.BaseDeviceType;
@@ -254,7 +255,9 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
                     @Override
                     public void run() {
                         Log.w("branchRedirectors", "-->>non" + "");
-                        new ActivityLauncher(ActivitySplash.this).homeScreen(ActivitySplash.this, HomeActivity.class);
+                        //This logic is for now will update later
+//                        new ActivityLauncher(ActivitySplash.this).homeScreen(ActivitySplash.this, HomeActivity.class);
+                        new ActivityLauncher(ActivitySplash.this).onBoardingScreen(ActivitySplash.this, OnBoarding.class);
                         finish();
                     }
                 }, 1);
@@ -267,7 +270,8 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
                         @Override
                         public void run() {
                             Log.w("branchRedirectors", "-->>non" + "");
-                            new ActivityLauncher(ActivitySplash.this).homeScreen(ActivitySplash.this, HomeActivity.class);
+                            //new ActivityLauncher(ActivitySplash.this).homeScreen(ActivitySplash.this, HomeActivity.class);
+                            new ActivityLauncher(ActivitySplash.this).onBoardingScreen(ActivitySplash.this, OnBoarding.class);
                             finish();
                         }
                     }, 1);

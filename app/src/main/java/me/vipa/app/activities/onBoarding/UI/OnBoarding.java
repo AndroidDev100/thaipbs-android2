@@ -16,6 +16,8 @@ import java.util.List;
 import me.vipa.app.baseModels.BaseBindingActivity;
 import me.vipa.app.databinding.ActivityOnBoardingBinding;
 import me.vipa.app.databinding.SettingsActivityBinding;
+import me.vipa.app.utils.commonMethods.AppCommonMethod;
+import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 
 public class OnBoarding extends BaseBindingActivity<ActivityOnBoardingBinding> {
 
