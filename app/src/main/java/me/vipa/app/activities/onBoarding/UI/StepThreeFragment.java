@@ -34,6 +34,12 @@ public class StepThreeFragment extends BaseBindingFragment<FragmentStepThreeBind
                 new ActivityLauncher(getActivity()).homeScreen(getActivity(), HomeActivity.class);
             }
         });
+        getBinding().register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new ActivityLauncher(getActivity()).homeScreen(getActivity(), HomeActivity.class);
+            }
+        });
     }
 
     @Override
