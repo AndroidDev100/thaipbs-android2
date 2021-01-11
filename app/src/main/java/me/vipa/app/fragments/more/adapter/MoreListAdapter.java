@@ -317,8 +317,8 @@ public class MoreListAdapter extends RecyclerView.Adapter<MoreListAdapter.ViewHo
                 mLastClickTime = SystemClock.elapsedRealtime();
                 if (itemsList.get(getLayoutPosition()).equalsIgnoreCase(mContext.getResources().getString(R.string.change_password))) {
                     itemClickListener.onClick(mContext.getResources().getString(R.string.change_password));
-                } else if (itemsList.get(getLayoutPosition()).equalsIgnoreCase(mContext.getResources().getString(R.string.profile))) {
-                    itemClickListener.onClick(mContext.getResources().getString(R.string.profile));
+                } else if (itemsList.get(getLayoutPosition()).equalsIgnoreCase(mContext.getResources().getString(R.string.manage_account))) {
+                    itemClickListener.onClick(mContext.getResources().getString(R.string.manage_account));
                 } else if (itemsList.get(getLayoutPosition()).equalsIgnoreCase(mContext.getResources().getString(R.string.setting_title))) {
                     itemClickListener.onClick(mContext.getResources().getString(R.string.setting_title));
                 } else if (itemsList.get(getLayoutPosition()).equalsIgnoreCase(mContext.getResources().getString(R.string.term_condition))) {

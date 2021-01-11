@@ -262,7 +262,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
     public void onClick(@NotNull String caption) {
         boolean loginStatus = preference.getAppPrefLoginStatus().equalsIgnoreCase(AppConstants.UserStatus.Login.toString());
         String isFacebook = preference.getAppPrefLoginType();
-        if (caption.equals(getString(R.string.profile))) {
+        if (caption.equals(getString(R.string.manage_account))) {
             if (loginStatus)
                 new ActivityLauncher(getActivity()).ProfileActivityNew(getActivity(), ProfileActivityNew.class);
             else

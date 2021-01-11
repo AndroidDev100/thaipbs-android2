@@ -70,6 +70,7 @@
     <string name="new_password">พาสเวิร์ดใหม่</string>
 
     <string name="notification">แจ้งเตือน</string>
+    <string name="manage_account">จัดการบัญชี</string>
     <string name="login_signup">เข้าสู่ระบบ/ลงทะเบียน</string>
     <string name="login_txt">เข้าสู่ระบบ</string>
     <string name="update">อัพเดท</string>
