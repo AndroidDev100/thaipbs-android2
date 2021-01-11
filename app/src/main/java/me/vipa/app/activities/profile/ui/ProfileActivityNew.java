@@ -3,6 +3,8 @@ package me.vipa.app.activities.profile.ui;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
@@ -34,6 +36,9 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
     private RegistrationLoginViewModel viewModel;
     private KsPreferenceKeys preference;
     private boolean isloggedout = false;
+    String spin_val;
+
+    String[] gender = {"Gender", "Male", "Female", "Others"};
 
     @Override
     public ProfileActivityNewBinding inflateBindingLayout(@NonNull LayoutInflater inflater) {
@@ -65,11 +70,11 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
         getBinding().toolbar.titleText.setVisibility(View.VISIBLE);
         getBinding().toolbar.backLayout.setVisibility(View.VISIBLE);
         getBinding().toolbar.screenText.setVisibility(View.VISIBLE);
-        getBinding().toolbar.screenText.setText(getResources().getString(R.string.my_profile));
+        getBinding().toolbar.screenText.setText(getResources().getString(R.string.manage_account));
     }
 
     private void setOfflineData() {
-        getBinding().userNameWords.setText(AppCommonMethod.getUserName(preference.getAppPrefUserName()));
+      //  getBinding().userNameWords.setText(AppCommonMethod.getUserName(preference.getAppPrefUserName()));
         getBinding().etName.setText(preference.getAppPrefUserName());
         getBinding().etEmail.setText(preference.getAppPrefUserEmail());
     }
@@ -167,6 +172,24 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
                 }
             }
         });
+
+
+        getBinding().spinnerId.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                spin_val = gender[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        ArrayAdapter<String> spin_adapter = new ArrayAdapter<String>(ProfileActivityNew.this, R.layout.spinner_item, gender);
+
+// setting adapters to spinners
+
+        getBinding().spinnerId.setAdapter(spin_adapter);
     }
 
     public boolean validateNameEmpty() {
@@ -184,7 +207,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
 
     private void updateUI(UserProfileResponse userProfileResponse) {
         try {
-            getBinding().userNameWords.setText(AppCommonMethod.getUserName(userProfileResponse.getData().getName()));
+           // getBinding().userNameWords.setText(AppCommonMethod.getUserName(userProfileResponse.getData().getName()));
             getBinding().etName.setText(userProfileResponse.getData().getName());
             getBinding().etName.setSelection(getBinding().etName.getText().length());
             getBinding().etEmail.setText(userProfileResponse.getData().getEmail());

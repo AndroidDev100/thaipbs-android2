@@ -9,6 +9,9 @@
     <string name="password">Kata sandi</string>
     <string name="on_enveu">on VIPA!</string>
     <string name="full_name">Name</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="address">Address</string>
+    <string name="dob">Date of Birth</string>
     <string name="signup"><b><u>Daftar</u></b></string>
     <string name="login">Login</string>
     <string name="buy_for">Subscribe now for next</string>
