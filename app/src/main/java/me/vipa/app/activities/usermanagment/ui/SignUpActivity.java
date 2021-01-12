@@ -59,6 +59,8 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
 
     private void callBinding() {
         viewModel = ViewModelProviders.of(SignUpActivity.this).get(RegistrationLoginViewModel.class);
+        getBinding().toolbar.titleToolbar.setVisibility(View.VISIBLE);
+        getBinding().toolbar.titleToolbar.setText(getResources().getString(R.string.signup));
         getBinding().toolbar.backLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
