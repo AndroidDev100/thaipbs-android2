@@ -39,6 +39,7 @@
     <dimen name="NontonSize20">20dp</dimen>
     <dimen name="NontonSize25">25dp</dimen>
     <dimen name="NontonSize30">30dp</dimen>
+    <dimen name="NontonSize28">28dp</dimen>
 
     <dimen name="NontonSize35">35dp</dimen>
     <dimen name="NontonSize40">40dp</dimen>

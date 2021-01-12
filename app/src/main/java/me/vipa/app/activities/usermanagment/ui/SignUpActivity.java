@@ -53,7 +53,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setupUI(getBinding().root);
+       // setupUI(getBinding().root);
         callBinding();
     }
 
