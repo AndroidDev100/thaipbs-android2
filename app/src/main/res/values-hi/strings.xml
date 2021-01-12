@@ -15,6 +15,8 @@
     <string name="check_connection">Check Connection</string>
 
     <string name="full_name">पूरा नाम</string>
+    <string name="display_name">पूरा नाम</string>
+    <string name="enter_email_address">Enter Email Address</string>
     <string name="mobile_number">Mobile Number</string>
     <string name="address">Address</string>
     <string name="dob">Date of Birth</string>
