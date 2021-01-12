@@ -24,7 +24,7 @@
                 android:layout_marginLeft="@dimen/NontonSize4"
                 android:contentDescription="TODO"
                 android:scaleType="centerInside"
-                android:src="@drawable/watch_list" />
+                 />
 
             <TextView
                 android:id="@+id/more_list_title"
