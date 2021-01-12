@@ -4,8 +4,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <include
             android:id="@+id/toolbar"
@@ -30,14 +30,12 @@
 
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                >
+                android:layout_height="match_parent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    >
+                    android:orientation="vertical">
 
                     <RelativeLayout
                         android:id="@+id/parent_layout"
@@ -71,25 +69,24 @@
                                 android:layout_width="@dimen/NontonSize90"
                                 android:layout_height="@dimen/_35sdp"
                                 android:contentDescription="TODO"
-                                android:src="@drawable/vipalogo180"
-                                 />
+                                android:src="@drawable/vipalogo180" />
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:visibility="gone"
                                 android:layout_centerInParent="true"
                                 android:layout_marginTop="@dimen/NontonSize10"
-                                android:gravity="center">
+                                android:gravity="center"
+                                android:visibility="gone">
 
                                 <ImageView
                                     android:id="@+id/home_icon"
                                     android:layout_width="@dimen/toolbar_logo_icon_width"
                                     android:layout_height="@dimen/toolbar_logo_icon_height"
-                                    android:visibility="invisible"
                                     android:layout_toRightOf="@+id/back_layout"
                                     android:background="?attr/app_logo"
-                                    android:contentDescription="TODO" />
+                                    android:contentDescription="TODO"
+                                    android:visibility="invisible" />
 
 
                                 <TextView
@@ -117,222 +114,248 @@
                             android:orientation="vertical">
 
 
-                            <LinearLayout
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingBottom="@dimen/NontonSize5">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginRight="@dimen/NontonSize2"
+                                android:contentDescription="TODO"
+                                android:padding="@dimen/NontonSize4"
+                                android:scaleType="centerInside"
+                                android:src="?attr/profile_icon_background" />
+
+
+                            <EditText
+                                android:id="@+id/etName"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:paddingBottom="@dimen/NontonSize5">
+                                android:layout_gravity="center"
+                                android:background="@null"
+                                android:fontFamily="@font/sukhumvittadmai_normal"
+                                android:hint="@string/display_name"
+                                android:imeOptions="actionDone"
+                                android:maxLength="40"
+                                android:singleLine="true"
+                                android:textColor="?attr/app_edit_text_color"
+                                android:textColorHint="?attr/app_edit_text_color"
+                                android:textSize="@dimen/TextSize14" />
+                        </LinearLayout>
 
-                                <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_marginRight="@dimen/NontonSize2"
-                                    android:contentDescription="TODO"
-                                    android:padding="@dimen/NontonSize4"
-                                    android:scaleType="centerInside"
-                                    android:src="?attr/profile_icon_background" />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:background="?attr/change_password_bottom_line_color" />
+
+                        <TextView
+                            android:id="@+id/errorName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:layout_margin="@dimen/NontonSize5"
+                            android:textColor="@color/inspection_color"
+                            android:textSize="@dimen/TextSize12"
+                            android:visibility="invisible" />
 
 
-                                <EditText
-                                    android:id="@+id/etName"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:background="@null"
-                                    android:fontFamily="@font/sukhumvittadmai_normal"
-                                    android:hint="@string/display_name"
-                                    android:imeOptions="actionDone"
-                                    android:maxLength="40"
-                                    android:singleLine="true"
-                    android:textColor="?attr/app_edit_text_color"
-android:textColorHint="?attr/app_edit_text_color"
-                                    android:textSize="@dimen/TextSize14" />
-                            </LinearLayout>
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_1sdp"
-                                android:background="?attr/change_password_bottom_line_color" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/NontonSize10"
+                            android:orientation="horizontal"
+                            android:paddingBottom="@dimen/NontonSize5">
 
-                            <TextView
-                                android:id="@+id/errorName"
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginRight="@dimen/NontonSize2"
+                                android:contentDescription="TODO"
+                                android:padding="@dimen/NontonSize4"
+                                android:src="?attr/email_icon_background" />
+
+
+                            <EditText
+                                android:id="@+id/etEmail"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="left"
-                                android:layout_margin="@dimen/NontonSize5"
-                                android:textColor="@color/inspection_color"
-                                android:textSize="@dimen/TextSize12"
-                                android:visibility="invisible" />
+                                android:layout_gravity="center"
+                                android:background="@null"
+                                android:fontFamily="@font/sukhumvittadmai_normal"
+                                android:hint="@string/enter_email_address"
+                                android:imeOptions="actionDone"
+                                android:singleLine="true"
+                                android:textColor="?attr/app_edit_text_color"
+                                android:textColorHint="?attr/app_edit_text_color"
+                                android:textSize="@dimen/TextSize14" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:background="?attr/change_password_bottom_line_color" />
+
+                        <TextView
+                            android:id="@+id/errorEmail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:layout_margin="@dimen/NontonSize5"
+                            android:textColor="@color/inspection_color"
+                            android:textSize="@dimen/TextSize12"
+                            android:visibility="invisible" />
 
 
-                            <LinearLayout
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/NontonSize10"
+                            android:orientation="horizontal"
+                            android:paddingBottom="@dimen/NontonSize5">
+
+                            <ImageView
+                                android:id="@+id/lock_icon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentLeft="true"
+                                android:contentDescription="TODO"
+                                android:padding="@dimen/NontonSize1"
+                                android:src="?attr/lock_icon" />
+
+
+                            <EditText
+                                android:id="@+id/etPassword"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:layout_marginTop="@dimen/NontonSize10"
-                                android:paddingBottom="@dimen/NontonSize5">
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="@dimen/NontonSize30"
+                                android:layout_marginRight="@dimen/NontonSize30"
+                                android:background="@null"
+                                android:fontFamily="@font/sukhumvittadmai_normal"
+                                android:hint="@string/create_password"
+                                android:imeOptions="actionDone"
+                                android:inputType="textPassword|textNoSuggestions"
+                                android:singleLine="true"
+                                android:textColor="?attr/app_edit_text_color"
+                                android:textColorHint="?attr/app_edit_text_color"
+                                android:textSize="@dimen/TextSize14" />
 
-                                <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_marginRight="@dimen/NontonSize2"
-                                    android:contentDescription="TODO"
-                                    android:padding="@dimen/NontonSize4"
-                                    android:src="?attr/email_icon_background" />
+                            <androidx.appcompat.widget.SwitchCompat
+                                android:id="@+id/radioPasswordEye"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:background="@null"
+                                android:button="?attr/password_toggle"
+                                android:thumb="@null"
+                                app:track="@null" />
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:background="?attr/change_password_bottom_line_color" />
+
+                        <TextView
+                            android:id="@+id/errorPassword"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:layout_margin="@dimen/suaErrorTopMargin"
+                            android:textColor="@color/inspection_color"
+                            android:textSize="@dimen/TextSize12"
+                            android:visibility="invisible" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/NontonSize10"
+                            android:orientation="horizontal"
+                            android:paddingBottom="@dimen/NontonSize5">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentLeft="true"
+                                android:contentDescription="TODO"
+                                android:padding="@dimen/NontonSize1"
+                                android:src="?attr/lock_icon" />
 
 
-                                <EditText
-                                    android:id="@+id/etEmail"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:background="@null"
-                                    android:fontFamily="@font/sukhumvittadmai_normal"
-                                    android:hint="@string/enter_email_address"
-                                    android:imeOptions="actionDone"
-                                    android:singleLine="true"
-                    android:textColor="?attr/app_edit_text_color"
-android:textColorHint="?attr/app_edit_text_color"
-                                    android:textSize="@dimen/TextSize14" />
-                            </LinearLayout>
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_1sdp"
-                                android:background="?attr/change_password_bottom_line_color" />
-
-                            <TextView
-                                android:id="@+id/errorEmail"
+                            <EditText
+                                android:id="@+id/etCnfPassword"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="left"
-                                android:layout_margin="@dimen/NontonSize5"
-                                android:textColor="@color/inspection_color"
-                                android:textSize="@dimen/TextSize12"
-                                android:visibility="invisible" />
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="@dimen/NontonSize30"
+                                android:layout_marginRight="@dimen/NontonSize30"
+                                android:background="@null"
+                                android:fontFamily="@font/sukhumvittadmai_normal"
+                                android:hint="@string/confirm_password"
+                                android:imeOptions="actionDone"
+                                android:inputType="textPassword|textNoSuggestions"
+                                android:singleLine="true"
+                                android:textColor="?attr/app_edit_text_color"
+                                android:textColorHint="?attr/app_edit_text_color"
+                                android:textSize="@dimen/TextSize14" />
 
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
+                            <androidx.appcompat.widget.SwitchCompat
+                                android:id="@+id/confirmPasswordEye"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:layout_marginTop="@dimen/NontonSize10"
-                                android:paddingBottom="@dimen/NontonSize5">
+                                android:layout_alignParentRight="true"
+                                android:background="@null"
+                                android:button="?attr/password_toggle"
+                                android:thumb="@null"
+                                app:track="@null" />
+                        </RelativeLayout>
 
-                                <ImageView
-                                    android:id="@+id/lock_icon"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:contentDescription="TODO"
-                                    android:padding="@dimen/NontonSize1"
-                                    android:layout_alignParentLeft="true"
-                                    android:src="?attr/lock_icon" />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:background="?attr/change_password_bottom_line_color" />
 
+                        <TextView
+                            android:id="@+id/errorCnfPassword"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:layout_margin="@dimen/suaErrorTopMargin"
+                            android:textColor="@color/inspection_color"
+                            android:textSize="@dimen/TextSize12"
+                            android:visibility="invisible" />
 
-                                <EditText
-                                    android:id="@+id/etPassword"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:background="@null"
-                                    android:layout_marginRight="@dimen/NontonSize30"
-                                    android:layout_marginLeft="@dimen/NontonSize30"
-                                    android:fontFamily="@font/sukhumvittadmai_normal"
-                                    android:hint="@string/create_password"
-                                    android:imeOptions="actionDone"
-                                    android:inputType="textPassword|textNoSuggestions"
-                                    android:singleLine="true"
-                    android:textColor="?attr/app_edit_text_color"
-android:textColorHint="?attr/app_edit_text_color"
-                                    android:textSize="@dimen/TextSize14" />
+                            <CheckBox
+                                android:id="@+id/termsText"
 
-                                <androidx.appcompat.widget.SwitchCompat
-                                    android:id="@+id/radioPasswordEye"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:background="@null"
-                                    android:layout_alignParentRight="true"
-                                    android:button="?attr/password_toggle"
-                                    android:thumb="@null"
-                                    app:track="@null" />
-                            </RelativeLayout>
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_1sdp"
-                                android:background="?attr/change_password_bottom_line_color" />
-
-                            <TextView
-                                android:id="@+id/errorPassword"
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="left"
-                                android:layout_margin="@dimen/suaErrorTopMargin"
-                                android:textColor="@color/inspection_color"
-                                android:textSize="@dimen/TextSize12"
-                                android:visibility="invisible" />
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:layout_marginTop="@dimen/NontonSize10"
-                                android:paddingBottom="@dimen/NontonSize5">
-
-                                <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:contentDescription="TODO"
-                                    android:padding="@dimen/NontonSize1"
-                                    android:src="?attr/lock_icon"
-                                    android:layout_alignParentLeft="true"/>
+                                android:buttonTint="@color/white"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="@dimen/NontonSize10"
+                                android:layout_marginRight="@dimen/NontonSize10"
+                                android:textColor="?attr/app_edit_text_color"
+                                android:fontFamily="@font/sukhumvittadmai_normal"
+                                android:text="I would like to recieve updates from VIPA in future."
+                                android:textSize="@dimen/font_small"
+                               android:layout_marginTop="@dimen/NontonSize10"
+                                android:layout_marginBottom="@dimen/NontonSize10"/>
 
 
-                                <EditText
-                                    android:id="@+id/etCnfPassword"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_marginRight="@dimen/NontonSize30"
-                                    android:layout_marginLeft="@dimen/NontonSize30"
-                                    android:background="@null"
-                                    android:fontFamily="@font/sukhumvittadmai_normal"
-                                    android:hint="@string/confirm_password"
-                                    android:imeOptions="actionDone"
-                                    android:inputType="textPassword|textNoSuggestions"
-                                    android:singleLine="true"
-                                    android:textColor="?attr/app_edit_text_color"
-                                    android:textColorHint="?attr/app_edit_text_color"
-                                    android:textSize="@dimen/TextSize14" />
-                                <androidx.appcompat.widget.SwitchCompat
-                                    android:id="@+id/confirmPasswordEye"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentRight="true"
-                                    android:background="@null"
-                                    android:button="?attr/password_toggle"
-                                    android:thumb="@null"
-                                    app:track="@null" />
-                            </RelativeLayout>
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_1sdp"
-                                android:background="?attr/change_password_bottom_line_color" />
 
-                            <TextView
-                                android:id="@+id/errorCnfPassword"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="left"
-                                android:layout_margin="@dimen/suaErrorTopMargin"
-                                android:textColor="@color/inspection_color"
-                                android:textSize="@dimen/TextSize12"
-                                android:visibility="invisible" />
+
 
                             <LinearLayout
                                 android:id="@+id/llSignUp"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/NontonSize45"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginTop="@dimen/suaSignUpTop"
+                                android:layout_marginTop="@dimen/NontonSize10"
                                 android:background="@drawable/rounded_button"
                                 android:gravity="center">
 
@@ -357,13 +380,57 @@ android:textColorHint="?attr/app_edit_text_color"
                                     android:textSize="@dimen/suaRegisterText" />
                             </LinearLayout>
 
+                            <LinearLayout
+                                android:id="@+id/rlFacebookLogin"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/NontonSize45"
+                                android:layout_gravity="center|center_vertical"
+                                android:layout_marginTop="@dimen/NontonSize20"
+                                android:background="@drawable/rounded_button1"
+                                android:gravity="center">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:layout_width="@dimen/NontonSize20"
+                                    android:layout_height="@dimen/NontonSize20"
+                                    android:layout_marginRight="@dimen/NontonSize5"
+                                    android:contentDescription="TODO"
+                                    android:src="@drawable/facebook_icon"
+                                    android:tint="#FFFFFF"
+                                     />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerInParent="true"
+                                    android:background="@drawable/rounded_button1"
+                                    android:fontFamily="@font/sukhumvittadmai_bold"
+                                    android:text="@string/sign_in_with_facebook"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/TextSize12"
+                                    android:textStyle="bold" />
+
+                                <com.facebook.login.widget.LoginButton
+                                    android:id="@+id/fbButton"
+                                    android:layout_width="1dp"
+                                    android:layout_height="1dp"
+                                    android:layout_centerInParent="true"
+                                    android:layout_gravity="center|center_horizontal"
+                                    android:autofillHints="@null"
+                                    android:gravity="center"
+                                    android:inputType="textNoSuggestions"
+                                    android:padding="@dimen/_10sdp"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/_12sdp"
+                                    android:visibility="invisible" />
+
+                            </LinearLayout>
+
 
                         </LinearLayout>
 
 
-
-
                     </RelativeLayout>
+
                     <LinearLayout
 
                         android:layout_width="wrap_content"
@@ -371,7 +438,7 @@ android:textColorHint="?attr/app_edit_text_color"
                         android:layout_alignParentBottom="true"
                         android:layout_centerHorizontal="true"
                         android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/NontonSize30"
+                        android:layout_marginTop="@dimen/NontonSize10"
                         android:layout_marginBottom="@dimen/NontonSize20"
                         android:gravity="center_horizontal|center">
 
@@ -381,8 +448,7 @@ android:textColorHint="?attr/app_edit_text_color"
                             android:fontFamily="@font/sukhumvittadmai_normal"
                             android:text="@string/already_have_account_sign"
                             android:textColor="?attr/already_have_an_account_text"
-                            android:textSize="@dimen/TextSize12"
-                            />
+                            android:textSize="@dimen/TextSize12" />
 
 
                         <FrameLayout
