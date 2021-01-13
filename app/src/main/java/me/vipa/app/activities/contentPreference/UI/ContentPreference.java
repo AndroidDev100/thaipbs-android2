@@ -1,6 +1,7 @@
 package me.vipa.app.activities.contentPreference.UI;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -8,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
 import com.xiaofeng.flowlayoutmanager.FlowLayoutManager;
 
 import java.util.ArrayList;
@@ -26,6 +28,7 @@ public class ContentPreference extends BaseBindingActivity<ActivityContentPrefer
     private static final int VERTICAL_ITEM_SPACE = 30;
     private static final int HORIONTAL_ITEM_SPACE = 20;
     private ArrayList<PreferenceBean> list;
+    private ArrayList<PreferenceBean> selectedList;
 
     @Override
     public ActivityContentPreferenceBinding inflateBindingLayout(@NonNull LayoutInflater inflater) {
@@ -54,9 +57,23 @@ public class ContentPreference extends BaseBindingActivity<ActivityContentPrefer
             getBinding().noConnectionLayout.setVisibility(View.GONE);
             uiInitialization();
             setAdapter();
+            setClicks();
         } else {
             noConnectionLayout();
         }
+    }
+
+    private void setClicks() {
+        selectedList = new ArrayList<>();
+        getBinding().btnUpdatePreference.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                if(adatperContentPreference.getGenreList() != null && adatperContentPreference.getGenreList().size()>0){
+//                    selectedList = adatperContentPreference.getGenreList();
+//                }
+
+            }
+        });
     }
 
     private void noConnectionLayout() {

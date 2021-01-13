@@ -22,19 +22,30 @@ public class ContentPreferenceAdapter extends RecyclerView.Adapter<ContentPrefer
 
     private final Activity activity;
     //    String type;
-    private final List<PreferenceBean> arrayList;
+    private final ArrayList<PreferenceBean> arrayList;
     private int count = 0;
 
     public ContentPreferenceAdapter(Activity ctx, ArrayList<PreferenceBean> list) {
         activity = ctx;
        this.arrayList = list;
+        //getGenreList();
     }
 
-//    public ContentPreferenceAdapter(Activity ctx, ArrayList<ContentPreference> list/*, String type*/) {
-//        activity = ctx;
-//        this.arrayList = list;
-//
+//    public ArrayList<PreferenceBean> getGenreList() {
+//        return getSelectedList(arrayList);
 //    }
+//
+//    private ArrayList<PreferenceBean> getSelectedList(ArrayList<PreferenceBean> arrayList) {
+//        ArrayList<PreferenceBean> selectedList = new ArrayList<>();
+//        for (int i = 0; i < arrayList.size(); i++) {
+//            if (arrayList.get(i).getChecked()) {
+//                count++;
+//                selectedList.add(arrayList.get(i));
+//            }
+//        }
+//        return selectedList;
+//    }
+
 
 
 
