@@ -79,6 +79,10 @@ public class AppConfig {
     @Expose
     private List<NavScreen> navScreens = null;
 
+    @SerializedName("contentPreferences")
+    @Expose
+    private List<ContentPreference> contentPreferences = null;
+
     public String getBaseUrl() {
         return baseUrl;
     }
@@ -181,6 +185,14 @@ public class AppConfig {
 
     public void setNavScreens(List<NavScreen> navScreens) {
         this.navScreens = navScreens;
+    }
+
+    public List<ContentPreference> getContentPreference() {
+        return contentPreferences;
+    }
+
+    public void setContentPreference(List<ContentPreference> contentPreference) {
+        this.contentPreferences = contentPreference;
     }
 
     public String getPrimaryLanguage() {
