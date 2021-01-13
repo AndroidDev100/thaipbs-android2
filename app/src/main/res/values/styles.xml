@@ -111,6 +111,9 @@
         <item name="menuItemSelector">@drawable/menu_item_selector_light</item>
         <item name="profile_background_color">@color/white</item>
         <item name="profile_icon_background">@drawable/profile_icon_navy_blue</item>
+        <item name="mobile_icon_background">@drawable/mobile_icon_navy_blue</item>
+        <item name="gender_icon_background">@drawable/gender_icon_navy_blue</item>
+        <item name="address_icon_background">@drawable/address_icon_navy_blue</item>
         <item name="email_icon_background">@drawable/email_icon_navy_blue</item>
         <item name="watchlist_background">@color/white</item>
         <item name="watchlist_item_title_color">@color/navy_blue</item>
@@ -232,6 +235,9 @@
         <item name="menuItemSelector">@drawable/menu_item_selector_dark</item>
         <item name="menuItemTextSelector">@drawable/menu_item_text_selector_dark</item>
         <item name="profile_icon_background">@drawable/profile_icon</item>
+        <item name="mobile_icon_background">@drawable/mobile_icon</item>
+        <item name="gender_icon_background">@drawable/gender_icon</item>
+        <item name="address_icon_background">@drawable/address_icon</item>
         <item name="email_icon_background">@drawable/email_icon</item>
         <item name="watchlist_background">@color/black_theme_color</item>
         <item name="watchlist_item_title_color">@color/description_title_white</item>

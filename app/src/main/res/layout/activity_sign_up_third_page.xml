@@ -83,7 +83,7 @@
                                 android:contentDescription="TODO"
                                 android:padding="@dimen/NontonSize4"
                                 android:scaleType="centerInside"
-                                android:src="?attr/profile_icon_background" />
+                                android:src="?attr/mobile_icon_background" />
 
 
                             <EditText
@@ -130,7 +130,7 @@
                                 android:contentDescription="TODO"
                                 android:padding="@dimen/NontonSize4"
                                 android:scaleType="centerInside"
-                                android:src="?attr/profile_icon_background" />
+                                android:src="?attr/gender_icon_background" />
 
 
                             <Spinner
@@ -156,6 +156,7 @@
 
 
                         <LinearLayout
+                            android:id="@+id/dob_layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
@@ -217,7 +218,7 @@
                                 android:contentDescription="TODO"
                                 android:padding="@dimen/NontonSize4"
                                 android:scaleType="centerInside"
-                                android:src="?attr/profile_icon_background" />
+                                android:src="?attr/address_icon_background" />
 
 
                             <EditText

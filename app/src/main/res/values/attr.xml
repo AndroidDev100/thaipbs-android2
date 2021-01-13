@@ -24,6 +24,9 @@
     <attr name="password_toggle" format="reference" />
     <attr name="profile_background_color" format="reference" />
     <attr name="profile_icon_background" format="reference" />
+    <attr name="mobile_icon_background" format="reference" />
+    <attr name="gender_icon_background" format="reference" />
+    <attr name="address_icon_background" format="reference" />
     <attr name="email_icon_background" format="reference" />
     <attr name="watchlist_background" format="reference" />
     <attr name="watchlist_item_title_color" format="reference" />

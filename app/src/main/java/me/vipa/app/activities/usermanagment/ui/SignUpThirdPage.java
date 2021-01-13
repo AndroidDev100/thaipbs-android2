@@ -6,12 +6,15 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 
+import java.util.Calendar;
 import java.util.Objects;
 
 import me.vipa.app.R;
@@ -36,6 +39,7 @@ public class SignUpThirdPage extends BaseBindingActivity<ActivitySignUpThirdPage
     String spin_val;
 
     String[] gender = {"Gender", "Male", "Female", "Others"};
+    private int mYear, mMonth, mDay;
 
     @Override
     public ActivitySignUpThirdPageBinding inflateBindingLayout(@NonNull LayoutInflater inflater) {
@@ -105,6 +109,31 @@ public class SignUpThirdPage extends BaseBindingActivity<ActivitySignUpThirdPage
             @Override
             public void onClick(View v) {
                 onBackPressed();
+            }
+        });
+
+        getBinding().dobLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar c = Calendar.getInstance();
+                c.add(Calendar.YEAR,-18);
+                mYear = c.get(Calendar.YEAR);
+                mMonth = c.get(Calendar.MONTH);
+                mDay = c.get(Calendar.DAY_OF_MONTH);
+
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(SignUpThirdPage.this,
+                        new DatePickerDialog.OnDateSetListener() {
+
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+
+                                getBinding().etDob.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+
+                            }
+                        }, mYear, mMonth, mDay);
+                datePickerDialog.show();
             }
         });
     }
