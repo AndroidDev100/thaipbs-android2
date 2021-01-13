@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import me.vipa.app.R;
+import me.vipa.app.activities.contentPreference.UI.ContentPreference;
 import me.vipa.app.activities.homeactivity.ui.HomeActivity;
 import me.vipa.app.baseModels.BaseBindingFragment;
 import me.vipa.app.databinding.FragmentStepOneBinding;
@@ -38,7 +39,9 @@ public class StepOneFragment extends BaseBindingFragment<FragmentStepOneBinding>
         getBinding().register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new ActivityLauncher(getActivity()).homeScreen(getActivity(), HomeActivity.class);
+
+//                new ActivityLauncher(getActivity()).homeScreen(getActivity(), HomeActivity.class);
+                new ActivityLauncher(getActivity()).onContentScreen(getActivity(), ContentPreference.class);
             }
         });
     }

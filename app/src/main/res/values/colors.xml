@@ -127,6 +127,7 @@
     <color name="login_edittxt_color">#5C5F6C</color>
 
 
-
+    <color name="genre_unselected">#FFD8D8D8</color>
+    <color name="genre_unselected_text">#393939</color>
 
 </resources>

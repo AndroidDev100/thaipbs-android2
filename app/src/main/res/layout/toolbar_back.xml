@@ -39,6 +39,19 @@
                 android:layout_centerInParent="true"
                 />
 
+            <TextView
+                android:id="@+id/title_skip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/toolbarSearchLeft"
+                android:fontFamily="@font/sukhumvittadmai_bold"
+                android:text=""
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/NontonSize20"
+                android:textColor="@color/white"
+                android:textSize="@dimen/headingToolbar"
+                android:layout_centerInParent="true"
+                />
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"

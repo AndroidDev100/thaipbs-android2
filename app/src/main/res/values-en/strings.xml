@@ -355,5 +355,6 @@
     <string name="purchase_title">Access to premium content is just a click away. Select the package best suited for you to access this content and many more titles brought to you by VIPA exclusively on VIPA</string>
     <string name="start_access">Start (Access without Login)</string>
     <string name="content_preminum">Content Premium</string>
+    <string name="select_genre">Select genre as per your interest for best result you can select multiple choices of interest (max 5)</string>
 
 </resources>

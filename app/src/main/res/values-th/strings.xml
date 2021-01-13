@@ -378,5 +378,6 @@
     <string name="purchase_title">เข้าถึงเนื้อหาระดับพรีเมียมได้ในคลิกเดียว เลือกแพ็กเกจที่เหมาะที่สุดสำหรับคุณในการเข้าถึงเนื้อหานี้และเนื้อหาอื่น ๆ อีกมากมายที่ VIPA นำเสนอเฉพาะบน VIPA</string>
     <string name="start_access">เริ่มเข้าใช้งาน</string>
     <string name="content_preminum">Content Premium</string>
+    <string name="select_genre">Select genre as per your interest for best result you can select multiple choices of interest (max 5)</string>
 
 </resources>

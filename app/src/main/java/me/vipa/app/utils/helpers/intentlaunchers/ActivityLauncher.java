@@ -5,6 +5,7 @@ import android.app.TaskStackBuilder;
 import android.content.Intent;
 import android.os.Bundle;
 
+import me.vipa.app.activities.contentPreference.UI.ContentPreference;
 import me.vipa.app.activities.onBoarding.UI.OnBoarding;
 import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
 import me.vipa.app.activities.article.ArticleActivity;
@@ -131,6 +132,11 @@ public class ActivityLauncher {
         TaskStackBuilder.create(source).addNextIntentWithParentStack(intent).startActivities();
     }
     public void onBoardingScreen(Activity source, Class<OnBoarding> destination) {
+        Intent intent = new Intent(source, destination);
+        activity.startActivity(intent);
+    }
+
+    public void onContentScreen(Activity source, Class<ContentPreference> destination) {
         Intent intent = new Intent(source, destination);
         activity.startActivity(intent);
     }

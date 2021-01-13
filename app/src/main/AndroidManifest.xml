@@ -31,8 +31,10 @@
         android:theme="@style/MyMaterialTheme"
         android:usesCleartextTraffic="true"
         tools:replace="allowBackup">
-        <activity android:name=".activities.onBoarding.UI.OnBoarding"
-            android:screenOrientation="portrait"></activity>
+        <activity android:name=".activities.contentPreference.UI.ContentPreference"></activity>
+        <activity
+            android:name=".activities.onBoarding.UI.OnBoarding"
+            android:screenOrientation="portrait" />
         <activity android:name=".activities.ContactActivity" />
         <activity android:name=".activities.downloads.DownloadedEpisodesActivity" />
         <activity android:name=".activities.settings.downloadsettings.changequality.ui.ChangeDownloadQuality" />
@@ -66,8 +68,8 @@
         <activity
             android:name=".activities.splash.ui.ActivitySplash"
             android:launchMode="singleTop"
-            android:theme="@style/SplashTheme"
-            android:screenOrientation="locked">
+            android:screenOrientation="locked"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
