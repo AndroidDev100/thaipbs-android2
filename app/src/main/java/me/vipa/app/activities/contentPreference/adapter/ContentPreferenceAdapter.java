@@ -14,6 +14,7 @@ import java.util.List;
 import me.vipa.app.R;
 import me.vipa.app.databinding.UserPreferenceItemBinding;
 import me.vipa.app.utils.config.bean.ContentPreference;
+import me.vipa.app.utils.config.bean.PreferenceBean;
 
 public class ContentPreferenceAdapter extends RecyclerView.Adapter<ContentPreferenceAdapter.SingleItemRowHolder> {
 
@@ -21,10 +22,10 @@ public class ContentPreferenceAdapter extends RecyclerView.Adapter<ContentPrefer
 
     private final Activity activity;
     //    String type;
-    private final List<ContentPreference> arrayList;
+    private final List<PreferenceBean> arrayList;
     private int count = 0;
 
-    public ContentPreferenceAdapter(Activity ctx, List<ContentPreference> list) {
+    public ContentPreferenceAdapter(Activity ctx, ArrayList<PreferenceBean> list) {
         activity = ctx;
        this.arrayList = list;
     }
@@ -52,43 +53,43 @@ public class ContentPreferenceAdapter extends RecyclerView.Adapter<ContentPrefer
     @Override
     public void onBindViewHolder(@NonNull final SingleItemRowHolder viewHolder, final int position) {
 
-        viewHolder.genreItemBinding.titleText.setText(arrayList.get(position).getName());
 
-//        if (arrayList.get(position).getChecked()) {
-//            viewHolder.genreItemBinding.titleText.setBackgroundResource(R.drawable.genre_selected);
-//            viewHolder.genreItemBinding.titleText.setTextColor(activity.getResources().getColor(R.color.white));
-//        } else {
-//            viewHolder.genreItemBinding.titleText.setBackgroundResource(R.drawable.genre_unselected);
-//            viewHolder.genreItemBinding.titleText.setTextColor(activity.getResources().getColor(R.color.black));
-//        }
-//        viewHolder.genreItemBinding.titleText.setText(arrayList.get(position).getName());
-//        viewHolder.genreItemBinding.titleText.setOnClickListener(view -> {
-//            if (count > 4) {
-//                if (arrayList.get(position).getChecked()) {
-//                    if (arrayList.get(position).getChecked()) {
-//                        count--;
-//                        arrayList.get(position).setChecked(false);
-//                        notifyDataSetChanged();
-//                    } else {
-//                        count++;
-//                        arrayList.get(position).setChecked(true);
-//                        notifyDataSetChanged();
-//                    }
-//                }
-//
-//            } else {
-//                if (arrayList.get(position).getChecked()) {
-//                    count--;
-//                    arrayList.get(position).setChecked(false);
-//                    notifyDataSetChanged();
-//                } else {
-//                    count++;
-//                    arrayList.get(position).setChecked(true);
-//                    notifyDataSetChanged();
-//                }
-//            }
-//
-//        });
+
+        if (arrayList.get(position).getChecked()) {
+            viewHolder.genreItemBinding.titleText.setBackgroundResource(R.drawable.genre_selected);
+            viewHolder.genreItemBinding.titleText.setTextColor(activity.getResources().getColor(R.color.white));
+        } else {
+            viewHolder.genreItemBinding.titleText.setBackgroundResource(R.drawable.genre_unselected);
+            viewHolder.genreItemBinding.titleText.setTextColor(activity.getResources().getColor(R.color.genre_unselected_text));
+        }
+        viewHolder.genreItemBinding.titleText.setText(arrayList.get(position).getName());
+        viewHolder.genreItemBinding.titleText.setOnClickListener(view -> {
+            if (count > 4) {
+                if (arrayList.get(position).getChecked()) {
+                    if (arrayList.get(position).getChecked()) {
+                        count--;
+                        arrayList.get(position).setChecked(false);
+                        notifyDataSetChanged();
+                    } else {
+                        count++;
+                        arrayList.get(position).setChecked(true);
+                        notifyDataSetChanged();
+                    }
+                }
+
+            } else {
+                if (arrayList.get(position).getChecked()) {
+                    count--;
+                    arrayList.get(position).setChecked(false);
+                    notifyDataSetChanged();
+                } else {
+                    count++;
+                    arrayList.get(position).setChecked(true);
+                    notifyDataSetChanged();
+                }
+            }
+
+        });
     }
 
     @Override
