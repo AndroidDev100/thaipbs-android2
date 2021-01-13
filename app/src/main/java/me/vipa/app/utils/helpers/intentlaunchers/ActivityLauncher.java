@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import me.vipa.app.activities.contentPreference.UI.ContentPreference;
 import me.vipa.app.activities.onBoarding.UI.OnBoarding;
+import me.vipa.app.activities.usermanagment.ui.SignUpThirdPage;
 import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
 import me.vipa.app.activities.article.ArticleActivity;
 import me.vipa.app.activities.detail.ui.DetailActivity;
@@ -103,6 +104,11 @@ public class ActivityLauncher {
     }
 
     public void changePassword(Activity source, Class<ChangePasswordActivity> destination) {
+        Intent intent = new Intent(source, destination);
+        activity.startActivity(intent);
+
+    }
+    public void signUpThird(Activity source, Class<SignUpThirdPage> destination) {
         Intent intent = new Intent(source, destination);
         activity.startActivity(intent);
 

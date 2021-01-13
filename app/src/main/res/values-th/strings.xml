@@ -379,5 +379,6 @@
     <string name="start_access">เริ่มเข้าใช้งาน</string>
     <string name="content_preminum">Content Premium</string>
     <string name="select_genre">Select genre as per your interest for best result you can select multiple choices of interest (max 5)</string>
+    <string name="finish">Finish</string>
 
 </resources>
