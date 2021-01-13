@@ -14,7 +14,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.Objects;
 
 import me.vipa.app.R;
@@ -112,28 +114,34 @@ public class SignUpThirdPage extends BaseBindingActivity<ActivitySignUpThirdPage
             }
         });
 
-        getBinding().dobLayout.setOnClickListener(new View.OnClickListener() {
+        getBinding().etDob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Calendar c = Calendar.getInstance();
-                c.add(Calendar.YEAR,-18);
-                mYear = c.get(Calendar.YEAR);
-                mMonth = c.get(Calendar.MONTH);
-                mDay = c.get(Calendar.DAY_OF_MONTH);
+                final Calendar mcurrentDate = Calendar.getInstance();
+                int mYear = mcurrentDate.get(Calendar.YEAR);
+                int mMonth = mcurrentDate.get(Calendar.MONTH);
+                int mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
 
 
-                DatePickerDialog datePickerDialog = new DatePickerDialog(SignUpThirdPage.this,
-                        new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog mDatePicker = new DatePickerDialog(
+                        SignUpThirdPage.this, new DatePickerDialog.OnDateSetListener() {
+                    public void onDateSet(DatePicker datepicker,
+                                          int selectedyear, int selectedmonth,
+                                          int selectedday) {
+                        selectedyear=selectedyear;
+                        mcurrentDate.set(Calendar.YEAR, selectedyear);
+                        mcurrentDate.set(Calendar.MONTH, selectedmonth);
+                        mcurrentDate.set(Calendar.DAY_OF_MONTH, selectedday);
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+                        getBinding().etDob.setText(sdf.format(mcurrentDate.getTime()));
 
-                            @Override
-                            public void onDateSet(DatePicker view, int year,
-                                                  int monthOfYear, int dayOfMonth) {
 
-                                getBinding().etDob.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-
-                            }
-                        }, mYear, mMonth, mDay);
-                datePickerDialog.show();
+                    }
+                }, mYear-18, mMonth, mDay);
+                mcurrentDate.set(mYear-18,mMonth,mDay);
+                long value=mcurrentDate.getTimeInMillis();
+                mDatePicker.getDatePicker().setMaxDate(value);
+                mDatePicker.show();
             }
         });
     }
