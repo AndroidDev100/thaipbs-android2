@@ -140,6 +140,7 @@ public class SignUpThirdPage extends BaseBindingActivity<ActivitySignUpThirdPage
                 }, mYear-18, mMonth, mDay);
                 mcurrentDate.set(mYear-18,mMonth,mDay);
                 long value=mcurrentDate.getTimeInMillis();
+                mDatePicker.getDatePicker().setMinDate(value);
                 mDatePicker.getDatePicker().setMaxDate(value);
                 mDatePicker.show();
             }
