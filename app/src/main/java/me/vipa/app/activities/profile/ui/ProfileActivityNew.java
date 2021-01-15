@@ -38,6 +38,7 @@ import me.vipa.app.utils.helpers.CheckInternetConnection;
 import me.vipa.app.utils.helpers.NetworkConnectivity;
 import me.vipa.app.utils.helpers.StringUtils;
 import me.vipa.app.utils.helpers.ToastHandler;
+import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 
 
@@ -200,7 +201,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
                         galleryIntent();
                     }else if (items[item].equals("Select from avatar")) {
                         // userChoosenTask = "Choose from Library";
-                        galleryIntent();
+                        new ActivityLauncher(ProfileActivityNew.this).avatarActivity(ProfileActivityNew.this, AvatarImageActivity.class);
                     }
                     else if (items[item].equals("Cancel")) {
                         dialog.dismiss();

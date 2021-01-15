@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import me.vipa.app.activities.contentPreference.UI.ContentPreference;
 import me.vipa.app.activities.onBoarding.UI.OnBoarding;
+import me.vipa.app.activities.profile.ui.AvatarImageActivity;
 import me.vipa.app.activities.usermanagment.ui.SignUpThirdPage;
 import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
 import me.vipa.app.activities.article.ArticleActivity;
@@ -92,6 +93,11 @@ public class ActivityLauncher {
     }
 
     public void ProfileActivity(Activity source, Class<ProfileActivity> destination) {
+
+        Intent intent = new Intent(source, destination);
+        activity.startActivity(intent);
+    }
+    public void avatarActivity(Activity source, Class<AvatarImageActivity> destination) {
 
         Intent intent = new Intent(source, destination);
         activity.startActivity(intent);

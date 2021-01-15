@@ -83,6 +83,10 @@ public class AppConfig {
     @Expose
     private List<ContentPreference> contentPreferences = null;
 
+    @SerializedName("avatarImages")
+    @Expose
+    private List<AvatarImages> avatarImages = null;
+
     public String getBaseUrl() {
         return baseUrl;
     }
@@ -193,6 +197,14 @@ public class AppConfig {
 
     public void setContentPreference(List<ContentPreference> contentPreference) {
         this.contentPreferences = contentPreference;
+    }
+
+    public List<AvatarImages> getavatarImages() {
+        return avatarImages;
+    }
+
+    public void setavatarImages(List<AvatarImages> avatarImages) {
+        this.avatarImages = avatarImages;
     }
 
     public String getPrimaryLanguage() {
