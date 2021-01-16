@@ -74,11 +74,7 @@ public class AvatarImageActivity extends BaseBindingActivity<ActivityAvatarImage
         getBinding().btnUpdatePreference.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if(adatperContentPreference.getGenreList() != null && adatperContentPreference.getGenreList().size()>0){
-//                    selectedList = adatperContentPreference.getGenreList();
-//                }
 
-              //  new ActivityLauncher(ContentPreference.this).signUpThird(ContentPreference.this, SignUpThirdPage.class);
             }
         });
 
@@ -95,34 +91,13 @@ public class AvatarImageActivity extends BaseBindingActivity<ActivityAvatarImage
     }
 
     private void uiInitialization() {
-//        getBinding().recyclerView.hasFixedSize();
-//        getBinding().recyclerView.setNestedScrollingEnabled(false);
-//        getBinding().recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
-////      staggeredGridLayoutManager = new StaggeredGridLayoutManager(3,1);
-////      getBinding().recyclerview.setLayoutManager(staggeredGridLayoutManager);
-//        getBinding().recyclerView.addItemDecoration(new VerticalSpaceItemDecoration(VERTICAL_ITEM_SPACE));
-//        getBinding().recyclerView.addItemDecoration(new HorizontalSpaceItemDecoration(HORIONTAL_ITEM_SPACE));
-//        FlowLayoutManager flowLayoutManager = new FlowLayoutManager();
-//        flowLayoutManager.setAutoMeasureEnabled(true);
-////
-//        getBinding().recyclerView.setLayoutManager(flowLayoutManager);
+
         getBinding().recyclerView.hasFixedSize();
         getBinding().recyclerView.setNestedScrollingEnabled(false);
         getBinding().recyclerView.addItemDecoration(new GridSpacingItemDecoration(3, 6, true));
         GridLayoutManager gridLayoutManager = new GridLayoutManager(AvatarImageActivity.this, 3);
 
         getBinding().recyclerView.setLayoutManager(gridLayoutManager);
-
-
-//        final GridLayoutManager layoutManager = new GridLayoutManager(this,3);
-//        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-//        getBinding().recyclerView.setLayoutManager(layoutManager);
-        //recyclerView.setAdapter(adapter);
-
-//        getBinding().recyclerView.hasFixedSize();
-//        getBinding().recyclerView.setNestedScrollingEnabled(false);
-//        getBinding().recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
-     //   getBinding().recyclerView.addItemDecoration(new GridSpacingItemDecoration(3, 5, true));
 
 
     }

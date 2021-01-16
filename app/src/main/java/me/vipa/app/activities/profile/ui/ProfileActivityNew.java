@@ -21,6 +21,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.bumptech.glide.Glide;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -34,6 +35,7 @@ import me.vipa.app.beanModel.userProfile.UserProfileResponse;
 import me.vipa.app.databinding.ProfileActivityNewBinding;
 import me.vipa.app.fragments.dialog.AlertDialogFragment;
 import me.vipa.app.fragments.dialog.AlertDialogSingleButtonFragment;
+import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.helpers.CheckInternetConnection;
 import me.vipa.app.utils.helpers.NetworkConnectivity;
 import me.vipa.app.utils.helpers.StringUtils;
@@ -377,6 +379,19 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
             getBinding().etName.setSelection(getBinding().etName.getText().length());
             getBinding().etEmail.setText(userProfileResponse.getData().getEmail());
             preference.setAppPrefUserName(String.valueOf(userProfileResponse.getData().getName()));
+
+            if (userProfileResponse.getData().getProfilePicURL() != null){
+                Glide.with(ProfileActivityNew.this).load(userProfileResponse.getData().getProfilePicURL())
+                        .placeholder(R.drawable.default_profile_pic)
+                        .error(R.drawable.default_profile_pic)
+                        .into(getBinding().ivProfilePic);
+            }else {
+                Glide.with(ProfileActivityNew.this).load(AppCommonMethod.getConfigResponse().getData().getAppConfig().getavatarImages().get(0).getUrl())
+                        .placeholder(R.drawable.default_profile_pic)
+                        .error(R.drawable.default_profile_pic)
+                        .into(getBinding().ivProfilePic);
+            }
+
         } catch (Exception e) {
 
         }

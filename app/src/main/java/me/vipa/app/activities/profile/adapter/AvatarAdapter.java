@@ -2,6 +2,7 @@ package me.vipa.app.activities.profile.adapter;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -29,6 +30,7 @@ public class AvatarAdapter extends RecyclerView.Adapter<AvatarAdapter.SingleItem
     //    String type;
     private final List<AvatarImages> arrayList;
     private int count = 0;
+    private String  selectedItemId = "";
 
     public AvatarAdapter(Activity ctx, List<AvatarImages> list) {
         activity = ctx;
@@ -58,6 +60,19 @@ public class AvatarAdapter extends RecyclerView.Adapter<AvatarAdapter.SingleItem
                 .placeholder(R.drawable.ic_launcher_background)
                 .error(R.drawable.ic_launcher_background)
                 .into(viewHolder.genreItemBinding.itemImage);
+
+        viewHolder.genreItemBinding.itemImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectedItemId = arrayList.get(position).getIdentifier();
+                notifyDataSetChanged();
+            }
+        });
+
+        if(arrayList.get(position).getIdentifier()== selectedItemId )
+            viewHolder.genreItemBinding.imageSelection.setBackgroundResource(R.drawable.selected_image);
+        else
+            viewHolder.genreItemBinding.imageSelection.setBackgroundResource(R.drawable.unselected_image);
 
 //        if (arrayList.get(position).getChecked()) {
 //            viewHolder.genreItemBinding.titleText.setBackgroundResource(R.drawable.genre_selected);

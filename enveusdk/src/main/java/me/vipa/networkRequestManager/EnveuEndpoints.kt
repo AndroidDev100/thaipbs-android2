@@ -18,28 +18,28 @@ interface EnveuEndpoints {
     fun categoryService(@Header("x-device") device: String, @Header("x-platform") platform: String, @Header("x-api-key") key: String, @Query("screenId") screenId: String): Call<EnveuCategory>
 
     @Headers("x-platform: android")
-    @POST("v2/user/login/manual")
+    @POST("v3/user/login/manual")
     fun getLogin(@Body apiLogin: JsonObject): Call<LoginResponseModel>
 
     @Headers("x-platform: android")
-    @POST("v2/user/register/manual")
+    @POST("v3/user/register/manual")
     fun getSignUp(@Body apiSignUp: JsonObject): Call<LoginResponseModel>
 
 
     @Headers("x-platform: android")
-    @POST("v2/user/login/fb")
+    @POST("v3/user/login/fb")
     fun getFbLogin(@Body user: JsonObject): Call<LoginResponseModel>
 
     @Headers("x-platform: android")
-    @POST("v2/user/login/fb/force")
+    @POST("v3/user/login/fb/force")
     fun getForceFbLogin(@Body user: JsonObject): Call<LoginResponseModel>
 
     @Headers("x-platform: android")
-    @POST("v2/user/logout/false")
+    @POST("v3/user/logout/false")
     fun getLogout(): Call<JsonObject>
 
     @Headers("x-platform: android")
-    @POST("v2/user/changePassword")
+    @POST("v3/user/changePassword")
     fun getChangePassword(@Body user: JsonObject): Call<LoginResponseModel>
 
     @Headers("x-platform: android")
@@ -59,11 +59,11 @@ interface EnveuEndpoints {
     fun getAllBookmarks(@Query("page") pageNumber: Int, @Query("size") pageSize: Int): Call<GetContinueWatchingBean>
 
     @Headers("x-platform: android")
-    @GET("v2/user/profile")
+    @GET("v3/user/profile")
     fun getUserProfile(): Call<UserProfileResponse>
 
     @Headers("x-platform: android")
-    @PATCH("v2/user/profile/update")
+    @PATCH("v3/user/profile/update")
     fun getUserUpdateProfile(@Body user: JsonObject): Call<UserProfileResponse>
 
     @Headers("x-platform: android")
@@ -82,7 +82,7 @@ interface EnveuEndpoints {
     @GET("v2/user/watchlist/get")
     fun getWatchListData(@Query("page") pageNumber: Int, @Query("size") pageSize: Int): Call<ResponseWatchHistoryAssetList>
 
-    @GET("v2/user/forgotPasswordRequest")
+    @GET("v3/user/forgotPasswordRequest")
     fun getForgotPassword(@Query("email") param1: String): Call<JsonObject>
 
 }
