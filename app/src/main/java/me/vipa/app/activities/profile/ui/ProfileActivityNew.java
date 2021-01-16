@@ -1,6 +1,7 @@
 package me.vipa.app.activities.profile.ui;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,9 +29,13 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 import java.util.Objects;
 
 import me.vipa.app.R;
+import me.vipa.app.activities.usermanagment.ui.SignUpThirdPage;
 import me.vipa.app.activities.usermanagment.viewmodel.RegistrationLoginViewModel;
 import me.vipa.app.baseModels.BaseBindingActivity;
 import me.vipa.app.beanModel.userProfile.UserProfileResponse;
@@ -183,6 +189,37 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
                 } else {
                     new ToastHandler(ProfileActivityNew.this).show(ProfileActivityNew.this.getResources().getString(R.string.no_internet_connection));
                 }
+            }
+        });
+
+        getBinding().etDob.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar mcurrentDate = Calendar.getInstance();
+                int mYear = mcurrentDate.get(Calendar.YEAR);
+                int mMonth = mcurrentDate.get(Calendar.MONTH);
+                int mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
+
+
+                DatePickerDialog mDatePicker = new DatePickerDialog(
+                        ProfileActivityNew.this, new DatePickerDialog.OnDateSetListener() {
+                    public void onDateSet(DatePicker datepicker,
+                                          int selectedyear, int selectedmonth,
+                                          int selectedday) {
+                        selectedyear=selectedyear;
+                        mcurrentDate.set(Calendar.YEAR, selectedyear);
+                        mcurrentDate.set(Calendar.MONTH, selectedmonth);
+                        mcurrentDate.set(Calendar.DAY_OF_MONTH, selectedday);
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+                        getBinding().etDob.setText(sdf.format(mcurrentDate.getTime()));
+
+
+                    }
+                }, mYear-18, mMonth, mDay);
+                mcurrentDate.set(mYear-18,mMonth,mDay);
+                long value=mcurrentDate.getTimeInMillis();
+                mDatePicker.getDatePicker().setMinDate(value);
+                mDatePicker.show();
             }
         });
 

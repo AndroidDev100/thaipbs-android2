@@ -265,7 +265,6 @@
                             android:fontFamily="@font/sukhumvittadmai_normal"
                             android:hint="@string/dob"
                             android:imeOptions="actionDone"
-                            android:editable="false"
                             android:singleLine="true"
                             android:textColor="?attr/app_edit_text_color"
                             android:textColorHint="?attr/app_edit_text_color"
