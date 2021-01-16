@@ -234,126 +234,56 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
     }
 
     private void startClapAnimation(JSONObject jsonObject, String updateType) {
+        if (KsPreferenceKeys.getInstance().getfirstTimeUser()){
+            KsPreferenceKeys.getInstance().setfirstTimeUser(false);
+            new ActivityLauncher(ActivitySplash.this).onBoardingScreen(ActivitySplash.this, OnBoarding.class);
+        }else {
 
+            Log.w("branchRedirectors", "onAnimationEnd1");
 
-        Log.w("branchRedirectors", "onAnimationEnd1");
-
-        if (jsonObject != null) {
-            if (updateType != null && updateType.equalsIgnoreCase(ForceUpdateHandler.RECOMMENDED)) {
-                brachRedirections(jsonObject);
-            } else {
-                boolean updateValue = getForceUpdateValue(jsonObject, 1);
-                if (!updateValue) {
+            if (jsonObject != null) {
+                if (updateType != null && updateType.equalsIgnoreCase(ForceUpdateHandler.RECOMMENDED)) {
                     brachRedirections(jsonObject);
-                }
-            }
-        } else {
-            if (updateType != null && updateType.equalsIgnoreCase(ForceUpdateHandler.RECOMMENDED)) {
-                Log.w("branchRedirectors", "-->>config" + "");
-                // homeRedirection();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Log.w("branchRedirectors", "-->>non" + "");
-                        //This logic is for now will update later
-//                        new ActivityLauncher(ActivitySplash.this).homeScreen(ActivitySplash.this, HomeActivity.class);
-                        new ActivityLauncher(ActivitySplash.this).onBoardingScreen(ActivitySplash.this, OnBoarding.class);
-                        finish();
+                } else {
+                    boolean updateValue = getForceUpdateValue(jsonObject, 1);
+                    if (!updateValue) {
+                        brachRedirections(jsonObject);
                     }
-                }, 1);
+                }
             } else {
-                boolean updateValue = getForceUpdateValue(null, 3);
-                if (!updateValue) {
+                if (updateType != null && updateType.equalsIgnoreCase(ForceUpdateHandler.RECOMMENDED)) {
                     Log.w("branchRedirectors", "-->>config" + "");
                     // homeRedirection();
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             Log.w("branchRedirectors", "-->>non" + "");
-                            //new ActivityLauncher(ActivitySplash.this).homeScreen(ActivitySplash.this, HomeActivity.class);
-                            new ActivityLauncher(ActivitySplash.this).onBoardingScreen(ActivitySplash.this, OnBoarding.class);
+                            //This logic is for now will update later
+                        new ActivityLauncher(ActivitySplash.this).homeScreen(ActivitySplash.this, HomeActivity.class);
+
                             finish();
                         }
                     }, 1);
-                }
-            }
+                } else {
+                    boolean updateValue = getForceUpdateValue(null, 3);
+                    if (!updateValue) {
+                        Log.w("branchRedirectors", "-->>config" + "");
+                        // homeRedirection();
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                Log.w("branchRedirectors", "-->>non" + "");
+                                new ActivityLauncher(ActivitySplash.this).homeScreen(ActivitySplash.this, HomeActivity.class);
 
+                                finish();
+                            }
+                        }, 1);
+                    }
+                }
+
+            }
         }
 
-
-//        ObjectAnimator progressAnimator = ObjectAnimator.ofInt(
-//                getBinding().progressHorizontal,
-//                "progress",
-//                getBinding().progressHorizontal.getProgress(),
-//                getBinding().progressHorizontal.getProgress() + 100
-//        );
-//        getBinding().progressHorizontal.setVisibility(View.VISIBLE);
-//        progressAnimator.setDuration(500);
-//        progressAnimator.start();
-//
-//        if (clapanimation==1){
-//            clapanimation=2;
-//            new Handler().postDelayed(() -> {
-//                getBinding().flapView.setVisibility(View.VISIBLE);
-//                getBinding().flapView.startAnimation(rotateAnimation);
-//            }, 550);
-//        }
-//
-//        translateAnimation.setAnimationListener(new Animation.AnimationListener() {
-//            @Override
-//            public void onAnimationStart(Animation animation) {
-//
-//            }
-//
-//            @Override
-//            public void onAnimationEnd(Animation animation) {
-//                Log.w("branchRedirectors", "onAnimationEnd1");
-//
-//                    if (jsonObject != null) {
-//                        if (updateType != null && updateType.equalsIgnoreCase(ForceUpdateHandler.RECOMMENDED)) {
-//                            brachRedirections(jsonObject);
-//                        } else {
-//                            boolean updateValue = getForceUpdateValue(jsonObject, 1);
-//                            if (!updateValue) {
-//                                brachRedirections(jsonObject);
-//                            }
-//                        }
-//                    } else {
-//                        if (updateType != null && updateType.equalsIgnoreCase(ForceUpdateHandler.RECOMMENDED)) {
-//                            Log.w("branchRedirectors", "-->>config" + "");
-//                            // homeRedirection();
-//                            new Handler().postDelayed(new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    Log.w("branchRedirectors", "-->>non" + "");
-//                                    new ActivityLauncher(ActivitySplash.this).homeScreen(ActivitySplash.this, HomeActivity.class);
-//                                    finish();
-//                                }
-//                            }, 1);
-//                        } else {
-//                            boolean updateValue = getForceUpdateValue(null, 3);
-//                            if (!updateValue) {
-//                                Log.w("branchRedirectors", "-->>config" + "");
-//                                // homeRedirection();
-//                                new Handler().postDelayed(new Runnable() {
-//                                    @Override
-//                                    public void run() {
-//                                        Log.w("branchRedirectors", "-->>non" + "");
-//                                        new ActivityLauncher(ActivitySplash.this).homeScreen(ActivitySplash.this, HomeActivity.class);
-//                                        finish();
-//                                    }
-//                                }, 1);
-//                            }
-//                        }
-//
-//                    }
-//
-//            }
-//            @Override
-//            public void onAnimationRepeat(Animation animation) {
-//
-//            }
-//        });
     }
 
     private void notificationCheck() {

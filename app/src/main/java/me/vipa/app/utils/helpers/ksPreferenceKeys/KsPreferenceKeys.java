@@ -153,6 +153,14 @@ public class KsPreferenceKeys extends SharedPrefHelper {
         setBoolean("returnBack", BranchIo);
     }
 
+    public Boolean getfirstTimeUser() {
+        return getBoolean("isFirstTimeUser", true);
+    }
+
+    public void setfirstTimeUser(Boolean firstTimeUser) {
+        setBoolean("isFirstTimeUser", firstTimeUser);
+    }
+
     public int getAppPrefJumpBackId() {
         return getInt("returnBackId", 0);
     }
