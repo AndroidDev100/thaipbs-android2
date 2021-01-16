@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,8 +22,11 @@ import me.vipa.app.R;
 import me.vipa.app.activities.contentPreference.adapter.ContentPreferenceAdapter;
 import me.vipa.app.activities.listing.ui.GridActivity;
 import me.vipa.app.activities.profile.adapter.AvatarAdapter;
+import me.vipa.app.activities.usermanagment.ui.LoginActivity;
+import me.vipa.app.activities.usermanagment.ui.SignUpActivity;
 import me.vipa.app.activities.usermanagment.ui.SignUpThirdPage;
 import me.vipa.app.baseModels.BaseBindingActivity;
+import me.vipa.app.callbacks.commonCallbacks.AvatarImageCallback;
 import me.vipa.app.databinding.ActivityAvatarImageBinding;
 import me.vipa.app.databinding.ActivityContentPreferenceBinding;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
@@ -31,12 +35,9 @@ import me.vipa.app.utils.cropImage.helpers.NetworkConnectivity;
 import me.vipa.app.utils.helpers.GridSpacingItemDecoration;
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
 
-public class AvatarImageActivity extends BaseBindingActivity<ActivityAvatarImageBinding> {
+public class AvatarImageActivity extends BaseBindingActivity<ActivityAvatarImageBinding> implements AvatarImageCallback {
     private AvatarAdapter avatarAdapter;
-    private static final int VERTICAL_ITEM_SPACE = 30;
-    private static final int HORIONTAL_ITEM_SPACE = 20;
     private ArrayList<PreferenceBean> list;
-    private ArrayList<PreferenceBean> selectedList;
 
     @Override
     public ActivityAvatarImageBinding inflateBindingLayout(@NonNull LayoutInflater inflater) {
@@ -70,11 +71,13 @@ public class AvatarImageActivity extends BaseBindingActivity<ActivityAvatarImage
 
 
     private void setClicks() {
-        selectedList = new ArrayList<>();
         getBinding().btnUpdatePreference.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (AppCommonMethod.Url != ""){
+//                    profileNew
+                    onBackPressed();
+                }
             }
         });
 
@@ -84,9 +87,7 @@ public class AvatarImageActivity extends BaseBindingActivity<ActivityAvatarImage
 
 
     private void setAdapter() {
-
-        Log.d("asesededde",new Gson().toJson(AppCommonMethod.getConfigResponse().getData().getAppConfig().getavatarImages()));
-        avatarAdapter = new AvatarAdapter(AvatarImageActivity.this, AppCommonMethod.getConfigResponse().getData().getAppConfig().getavatarImages());
+        avatarAdapter = new AvatarAdapter(AvatarImageActivity.this, AppCommonMethod.getConfigResponse().getData().getAppConfig().getavatarImages(), AvatarImageActivity.this);
         getBinding().recyclerView.setAdapter(avatarAdapter);
     }
 
@@ -100,5 +101,10 @@ public class AvatarImageActivity extends BaseBindingActivity<ActivityAvatarImage
         getBinding().recyclerView.setLayoutManager(gridLayoutManager);
 
 
+    }
+
+    @Override
+    public void onClick(String url) {
+        AppCommonMethod.Url = url;
     }
 }

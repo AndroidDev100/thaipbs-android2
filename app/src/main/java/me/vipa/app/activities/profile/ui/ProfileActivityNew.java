@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -52,6 +53,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
     private KsPreferenceKeys preference;
     private boolean isloggedout = false;
     private String userChoosenTask = "";
+    private String imageUrl = "";
 
     @Override
     public ProfileActivityNewBinding inflateBindingLayout(@NonNull LayoutInflater inflater) {
@@ -61,6 +63,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        imageUrl = getIntent().getStringExtra("url");
         connectionObserver();
     }
 
@@ -340,8 +343,8 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
-
                 Uri resultUri = result.getUri();
+                getBinding().ivProfilePic.setBackgroundResource(0);
                 getBinding().ivProfilePic.setImageURI(resultUri);
 
                 String imagePath = resultUri.getPath();
@@ -422,5 +425,18 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
             onBackPressed();
         }
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (AppCommonMethod.Url!=""){
+            Glide.with(ProfileActivityNew.this).load(AppCommonMethod.Url)
+                    .placeholder(R.drawable.default_profile_pic)
+                    .error(R.drawable.default_profile_pic)
+                    .into(getBinding().ivProfilePic);
+        }
+
+        AppCommonMethod.Url = "";
     }
 }

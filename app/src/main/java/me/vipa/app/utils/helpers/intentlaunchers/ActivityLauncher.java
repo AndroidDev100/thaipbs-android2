@@ -82,6 +82,7 @@ public class ActivityLauncher {
         activity.startActivity(intent);
     }
 
+
     public void skipActivity(Activity source, Class<SkipActivity> destination, DataModel model) {
 
         Bundle args = new Bundle();
