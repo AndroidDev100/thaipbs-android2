@@ -17,8 +17,6 @@ import me.vipa.app.beanModel.userProfile.UserProfileResponse;
 import me.vipa.app.repository.userManagement.RegistrationLoginRepository;
 import com.google.gson.JsonObject;
 
-import me.vipa.app.repository.userManagement.RegistrationLoginRepository;
-
 
 public class RegistrationLoginViewModel extends AndroidViewModel {
 
@@ -70,7 +68,7 @@ public class RegistrationLoginViewModel extends AndroidViewModel {
         return loginRepository.hitApiLogout(session, token);
     }
 
-    public LiveData<UserProfileResponse> hitUserProfile(Context context,String token) {
+    public LiveData<UserProfileResponse> hitUserProfile(Context context, String token) {
         return loginRepository.getUserProfile(context,token);
     }
 

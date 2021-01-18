@@ -11,17 +11,14 @@ import me.vipa.app.beanModel.responseGetWatchlist.ResponseGetIsWatchlist;
 import me.vipa.app.beanModel.responseIsLike.ResponseIsLike;
 import me.vipa.app.beanModel.responseModels.LoginResponse.LoginResponseModel;
 import me.vipa.app.beanModel.responseModels.SignUp.SignupResponseAccessToken;
+import me.vipa.app.beanModel.userProfile.UserProfileResponse;
 import me.vipa.app.redeemcoupon.RedeemCouponResponseModel;
 import me.vipa.app.repository.redeemCoupon.RedeemModel;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
-import me.vipa.app.beanModel.userProfile.UserProfileResponse;
 import me.vipa.app.utils.cropImage.helpers.Logger;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 
 import org.json.JSONObject;
-
-import me.vipa.app.redeemcoupon.RedeemCouponResponseModel;
-import me.vipa.app.repository.redeemCoupon.RedeemModel;
 
 import retrofit2.Response;
 

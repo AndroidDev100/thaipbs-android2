@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import me.vipa.app.beanModel.userProfile.UserProfileResponse;
 import me.vipa.baseCollection.baseCategoryServices.BaseCategoryServices;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.userManagement.callBacks.ForgotPasswordCallBack;
@@ -21,7 +22,6 @@ import me.vipa.app.beanModel.requestParamModel.RequestParamRegisterUser;
 import me.vipa.app.beanModel.responseModels.LoginResponse.LoginResponseModel;
 import me.vipa.app.beanModel.responseModels.RegisterSignUpModels.ResponseRegisteredSignup;
 import me.vipa.app.beanModel.responseModels.SignUp.SignupResponseAccessToken;
-import me.vipa.app.beanModel.userProfile.UserProfileResponse;
 import me.vipa.app.networking.apiendpoints.ApiInterface;
 import me.vipa.app.networking.apiendpoints.RequestConfig;
 import me.vipa.app.networking.intercepter.ErrorCodesIntercepter;
@@ -38,10 +38,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.Objects;
 
-import me.vipa.baseCollection.baseCategoryServices.BaseCategoryServices;
-import me.vipa.userManagement.callBacks.ForgotPasswordCallBack;
-import me.vipa.userManagement.callBacks.LoginCallBack;
-import me.vipa.userManagement.callBacks.UserProfileCallBack;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

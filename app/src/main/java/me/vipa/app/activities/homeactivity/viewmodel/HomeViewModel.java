@@ -7,14 +7,11 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import me.vipa.app.beanModel.userProfile.UserProfileResponse;
 import me.vipa.app.repository.home.HomeRepository;
 import me.vipa.app.beanModel.emptyResponse.ResponseEmpty;
-import me.vipa.app.beanModel.userProfile.UserProfileResponse;
 import me.vipa.app.repository.userManagement.RegistrationLoginRepository;
 import com.google.gson.JsonObject;
-
-import me.vipa.app.repository.home.HomeRepository;
-import me.vipa.app.repository.userManagement.RegistrationLoginRepository;
 
 
 public class HomeViewModel extends AndroidViewModel {

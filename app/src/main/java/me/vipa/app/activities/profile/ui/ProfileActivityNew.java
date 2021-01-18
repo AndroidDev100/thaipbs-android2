@@ -5,11 +5,10 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.Settings;
-import android.util.Log;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -29,6 +28,7 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.File;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -37,7 +37,6 @@ import java.util.Locale;
 import java.util.Objects;
 
 import me.vipa.app.R;
-import me.vipa.app.activities.usermanagment.ui.SignUpThirdPage;
 import me.vipa.app.activities.usermanagment.viewmodel.RegistrationLoginViewModel;
 import me.vipa.app.baseModels.BaseBindingActivity;
 import me.vipa.app.beanModel.userProfile.UserProfileResponse;
@@ -56,16 +55,16 @@ import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBinding> implements AlertDialogFragment.AlertDialogListener {
     private static final int PERMISSION_REQUEST_CODE = 1;
     String spin_val;
-    private String spinnerValue = "";
-    private String dateOfBirth = "";
     String[] gender = {"Gender", "Male", "Female", "Others"};
+    String dateMilliseconds = "";
+    private String spinnerValue = "";
+    private final String dateOfBirth = "";
     private RegistrationLoginViewModel viewModel;
     private KsPreferenceKeys preference;
     private boolean isloggedout = false;
-    private String userChoosenTask = "";
+    private final String userChoosenTask = "";
     private String imageUrlId = "";
     private String via = "";
-    String dateMilliseconds = "";
 
     @Override
     public ProfileActivityNewBinding inflateBindingLayout(@NonNull LayoutInflater inflater) {
@@ -153,7 +152,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
                     if (validateNameEmpty()) {
                         showLoading(getBinding().progressBar, true);
                         String token = preference.getAppPrefAccessToken();
-                        viewModel.hitUpdateProfile(ProfileActivityNew.this, token, getBinding().etName.getText().toString(),getBinding().etMobileNumber.getText().toString(),spinnerValue,dateMilliseconds,getBinding().etAddress.getText().toString(),imageUrlId,via).observe(ProfileActivityNew.this, new Observer<UserProfileResponse>() {
+                        viewModel.hitUpdateProfile(ProfileActivityNew.this, token, getBinding().etName.getText().toString(), getBinding().etMobileNumber.getText().toString(), spinnerValue, dateMilliseconds, getBinding().etAddress.getText().toString(), imageUrlId, via).observe(ProfileActivityNew.this, new Observer<UserProfileResponse>() {
                             @Override
                             public void onChanged(UserProfileResponse userProfileResponse) {
                                 dismissLoading(getBinding().progressBar);
@@ -211,7 +210,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
                     public void onDateSet(DatePicker datepicker,
                                           int selectedyear, int selectedmonth,
                                           int selectedday) {
-                        selectedyear=selectedyear;
+                        selectedyear = selectedyear;
                         mcurrentDate.set(Calendar.YEAR, selectedyear);
                         mcurrentDate.set(Calendar.MONTH, selectedmonth);
                         mcurrentDate.set(Calendar.DAY_OF_MONTH, selectedday);
@@ -226,9 +225,9 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
 
 
                     }
-                }, mYear-18, mMonth, mDay);
-                mcurrentDate.set(mYear-18,mMonth,mDay);
-                long value=mcurrentDate.getTimeInMillis();
+                }, mYear - 18, mMonth, mDay);
+                mcurrentDate.set(mYear - 18, mMonth, mDay);
+                long value = mcurrentDate.getTimeInMillis();
                 mDatePicker.getDatePicker().setMinDate(value);
                 mDatePicker.show();
             }
@@ -245,18 +244,17 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
                 builder.setItems(items, (dialog, item) -> {
 //            boolean result = Utility.checkPermission(MyUploadActivity.this);
                     if (items[item].equals("Take Photo")) {
-                       // userChoosenTask = "Take Photo";
+                        // userChoosenTask = "Take Photo";
 
 //                                cameraIntent();
                         galleryIntent();
                     } else if (items[item].equals("Select from Library")) {
-                       // userChoosenTask = "Choose from Library";
+                        // userChoosenTask = "Choose from Library";
                         galleryIntent();
-                    }else if (items[item].equals("Select from avatar")) {
+                    } else if (items[item].equals("Select from avatar")) {
                         // userChoosenTask = "Choose from Library";
                         new ActivityLauncher(ProfileActivityNew.this).avatarActivity(ProfileActivityNew.this, AvatarImageActivity.class);
-                    }
-                    else if (items[item].equals("Cancel")) {
+                    } else if (items[item].equals("Cancel")) {
                         dialog.dismiss();
                     }
                 });
@@ -376,29 +374,43 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
 
 
     private void updateUI(UserProfileResponse userProfileResponse) {
-        try {
-            // getBinding().userNameWords.setText(AppCommonMethod.getUserName(userProfileResponse.getData().getName()));
-            getBinding().etName.setText(userProfileResponse.getData().getName());
-            getBinding().etName.setSelection(getBinding().etName.getText().length());
-            getBinding().etEmail.setText(userProfileResponse.getData().getEmail());
-            preference.setAppPrefUserName(String.valueOf(userProfileResponse.getData().getName()));
+//        try {
+        // getBinding().userNameWords.setText(AppCommonMethod.getUserName(userProfileResponse.getData().getName()));
+        getBinding().etName.setText(userProfileResponse.getData().getName());
+        getBinding().etName.setSelection(getBinding().etName.getText().length());
+        getBinding().etEmail.setText(userProfileResponse.getData().getEmail());
+        preference.setAppPrefUserName(String.valueOf(userProfileResponse.getData().getName()));
+        // Log.d("sdsdsdsdsd",new Gson().toJson(userProfileResponse.getData().getCustomData().getProfileAvatar()));
 
-
-            if (userProfileResponse.getData().getProfilePicURL() != null){
-                Glide.with(ProfileActivityNew.this).load(userProfileResponse.getData().getProfilePicURL())
-                        .placeholder(R.drawable.default_profile_pic)
-                        .error(R.drawable.default_profile_pic)
-                        .into(getBinding().ivProfilePic);
-            }else {
-                Glide.with(ProfileActivityNew.this).load(AppCommonMethod.getConfigResponse().getData().getAppConfig().getavatarImages().get(0).getUrl())
-                        .placeholder(R.drawable.default_profile_pic)
-                        .error(R.drawable.default_profile_pic)
-                        .into(getBinding().ivProfilePic);
-            }
-
-        } catch (Exception e) {
-
+        if (userProfileResponse.getData().getPhoneNumber() != null) {
+            getBinding().etMobileNumber.setText(userProfileResponse.getData().getPhoneNumber() + "");
         }
+
+        if (userProfileResponse.getData().getDateOfBirth() != null) {
+            double longV = (double) userProfileResponse.getData().getDateOfBirth();
+            DecimalFormat df = new DecimalFormat("#");
+            df.setMaximumFractionDigits(0);
+            long l = Long.parseLong(df.format(longV));
+            String dateString = DateFormat.format("MM/dd/yyyy", new Date(l)).toString();
+            getBinding().etDob.setText(dateString);
+        }
+
+
+        if (userProfileResponse.getData().getProfilePicURL() != null) {
+            Glide.with(ProfileActivityNew.this).load(userProfileResponse.getData().getProfilePicURL())
+                    .placeholder(R.drawable.default_profile_pic)
+                    .error(R.drawable.default_profile_pic)
+                    .into(getBinding().ivProfilePic);
+        } else {
+            Glide.with(ProfileActivityNew.this).load(AppCommonMethod.getConfigResponse().getData().getAppConfig().getavatarImages().get(0).getUrl())
+                    .placeholder(R.drawable.default_profile_pic)
+                    .error(R.drawable.default_profile_pic)
+                    .into(getBinding().ivProfilePic);
+        }
+
+//        } catch (Exception e) {
+//
+//        }
     }
 
     private void showDialog(String title, String message) {
@@ -431,7 +443,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
     @Override
     protected void onStart() {
         super.onStart();
-        if (AppCommonMethod.Url!=""){
+        if (AppCommonMethod.Url != "") {
 
             imageUrlId = AppCommonMethod.UriId;
             via = "Avatar";

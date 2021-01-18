@@ -175,8 +175,8 @@ public class Data{
 			",isFbLinked = '" + isFbLinked + '\'' + 
 			",gender = '" + gender + '\'' + 
 			",verified = '" + verified + '\'' + 
-			",appUserPlans = '" + appUserPlans + '\'' + 
-			",dateOfBirth = '" + dateOfBirth + '\'' + 
+			",appUserPlans = '" + appUserPlans + '\'' +
+			",dateOfBirth = '" + dateOfBirth + '\'' +
 			",verificationDate = '" + verificationDate + '\'' + 
 			",expiryDate = '" + expiryDate + '\'' + 
 			",accountId = '" + accountId + '\'' + 

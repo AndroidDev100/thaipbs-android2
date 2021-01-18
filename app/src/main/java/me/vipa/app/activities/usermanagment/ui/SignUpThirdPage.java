@@ -1,9 +1,7 @@
 package me.vipa.app.activities.usermanagment.ui;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.app.DatePickerDialog;
@@ -20,18 +18,13 @@ import java.util.Locale;
 import java.util.Objects;
 
 import me.vipa.app.R;
-import me.vipa.app.activities.profile.ui.ProfileActivityNew;
 import me.vipa.app.activities.usermanagment.viewmodel.RegistrationLoginViewModel;
 import me.vipa.app.baseModels.BaseBindingActivity;
-import me.vipa.app.beanModel.userProfile.UserProfileResponse;
 import me.vipa.app.databinding.ActivitySignUpThirdPageBinding;
-import me.vipa.app.databinding.ProfileActivityNewBinding;
 import me.vipa.app.fragments.dialog.AlertDialogFragment;
 import me.vipa.app.fragments.dialog.AlertDialogSingleButtonFragment;
 import me.vipa.app.utils.helpers.CheckInternetConnection;
 import me.vipa.app.utils.helpers.NetworkConnectivity;
-import me.vipa.app.utils.helpers.StringUtils;
-import me.vipa.app.utils.helpers.ToastHandler;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 
 public class SignUpThirdPage extends BaseBindingActivity<ActivitySignUpThirdPageBinding> implements AlertDialogFragment.AlertDialogListener {
