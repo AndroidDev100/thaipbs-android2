@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -55,7 +56,7 @@ import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBinding> implements AlertDialogFragment.AlertDialogListener {
     private static final int PERMISSION_REQUEST_CODE = 1;
     String spin_val;
-    String[] gender = {"Gender", "Male", "Female", "Others"};
+    String[] gender = {"Gender", "MALE", "FEMALE", "OTHERS"};
     String dateMilliseconds = "";
     private String spinnerValue = "";
     private final String dateOfBirth = "";
@@ -65,6 +66,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
     private final String userChoosenTask = "";
     private String imageUrlId = "";
     private String via = "";
+    ArrayAdapter<String> spin_adapter;
 
     @Override
     public ProfileActivityNewBinding inflateBindingLayout(@NonNull LayoutInflater inflater) {
@@ -108,6 +110,23 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
 
     private void connectionValidation(boolean connected) {
         if (connected) {
+
+            getBinding().spinnerId.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    spin_val = gender[position];
+                    spinnerValue = spin_val;
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+            spin_adapter = new ArrayAdapter<String>(ProfileActivityNew.this, R.layout.spinner_item, gender);
+            getBinding().spinnerId.setAdapter(spin_adapter);
+
+
             String token = preference.getAppPrefAccessToken();
             viewModel.hitUserProfile(ProfileActivityNew.this, token).observe(ProfileActivityNew.this, new Observer<UserProfileResponse>() {
                 @Override
@@ -263,20 +282,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
             }
         });
 
-        getBinding().spinnerId.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                spin_val = gender[position];
-                spinnerValue = spin_val;
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        ArrayAdapter<String> spin_adapter = new ArrayAdapter<String>(ProfileActivityNew.this, R.layout.spinner_item, gender);
-        getBinding().spinnerId.setAdapter(spin_adapter);
 
     }
 
@@ -395,6 +401,15 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
             getBinding().etDob.setText(dateString);
         }
 
+        if (userProfileResponse.getData().getGender()!=null){
+            String compareValue = userProfileResponse.getData().getGender()+"";
+            if (compareValue != null) {
+                int spinnerPosition = spin_adapter.getPosition(compareValue.toUpperCase());
+                getBinding().spinnerId.setSelection(spinnerPosition);
+                spinnerValue = getBinding().spinnerId.getSelectedItem().toString();
+            }
+        }
+
 
         if (userProfileResponse.getData().getProfilePicURL() != null) {
             Glide.with(ProfileActivityNew.this).load(userProfileResponse.getData().getProfilePicURL())
@@ -402,6 +417,10 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
                     .error(R.drawable.default_profile_pic)
                     .into(getBinding().ivProfilePic);
         } else {
+
+            imageUrlId = AppCommonMethod.getConfigResponse().getData().getAppConfig().getavatarImages().get(0).getIdentifier();
+            via = "Avatar";
+
             Glide.with(ProfileActivityNew.this).load(AppCommonMethod.getConfigResponse().getData().getAppConfig().getavatarImages().get(0).getUrl())
                     .placeholder(R.drawable.default_profile_pic)
                     .error(R.drawable.default_profile_pic)
