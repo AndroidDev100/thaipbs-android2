@@ -113,6 +113,7 @@ import retrofit2.Response;
 @SuppressWarnings({"IntegerDivisionInFloatingPointContext", "StatementWithEmptyBody"})
 public class AppCommonMethod {
     public static String Url = "";
+    public static String UriId = "";
     public static final List<CommonRailData> adsRail = new ArrayList<>();
     public static final int multiRequestLimit = 5;
     public static final RequestOptions options = new RequestOptions()

@@ -19,6 +19,7 @@ import me.vipa.userManagement.callBacks.ForgotPasswordCallBack
 import me.vipa.userManagement.callBacks.LoginCallBack
 import me.vipa.userManagement.callBacks.LogoutCallBack
 import me.vipa.userManagement.callBacks.UserProfileCallBack
+import org.json.JSONException
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -205,10 +206,27 @@ class RequestManager {
         })
     }
 
-    fun userUpdateProfileCall(loginCallBacks: UserProfileCallBack,token: String,name: String) {
+    fun userUpdateProfileCall(loginCallBacks: UserProfileCallBack, token: String, name: String, mobile: String, spinnerValue: String, dob: String, address: String, imageUrl: String, via: String) {
         val endPoint = NetworkSetup().subscriptionClient(token)?.create<EnveuEndpoints>(EnveuEndpoints::class.java)
         val requestParam = JsonObject()
+        val customParam = JsonObject()
+        try {
+
+
+        customParam.addProperty("address", address)
+            if (via.equals("Avatar")) {
+                customParam.addProperty("profileAvatar", imageUrl)
+            }
         requestParam.addProperty("name", name)
+        requestParam.addProperty("phoneNumber", mobile)
+        requestParam.addProperty("gender", spinnerValue.toUpperCase())
+        requestParam.addProperty("dateOfBirth", dob)
+//        requestParam.addProperty("address", address)
+//        requestParam.addProperty("profilePicURL", imageUrl)
+            requestParam.add("customData",customParam)
+        }catch (e : JSONException){
+
+        }
 
         val call = endPoint?.getUserUpdateProfile(requestParam)
         call?.enqueue(object : Callback<UserProfileResponse> {

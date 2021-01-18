@@ -655,9 +655,9 @@ public class RegistrationLoginRepository {
         return mutableLiveData;
     }
 
-    public LiveData<UserProfileResponse> getUpdateProfile(Context context, String token, String name) {
+    public LiveData<UserProfileResponse> getUpdateProfile(Context context, String token, String name, String mobile, String spinnerValue, String dob, String address, String imageUrl, String via) {
         MutableLiveData<UserProfileResponse> mutableLiveData = new MutableLiveData<>();
-        BaseCategoryServices.Companion.getInstance().userUpdateProfileService(token, name, new UserProfileCallBack() {
+        BaseCategoryServices.Companion.getInstance().userUpdateProfileService(token, name,mobile,spinnerValue,dob,address,imageUrl,via, new UserProfileCallBack() {
             @Override
             public void success(boolean status, Response<me.vipa.userManagement.bean.UserProfile.UserProfileResponse> response) {
                 UserProfileResponse cl;

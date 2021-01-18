@@ -29,8 +29,10 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.File;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -54,12 +56,16 @@ import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBinding> implements AlertDialogFragment.AlertDialogListener {
     private static final int PERMISSION_REQUEST_CODE = 1;
     String spin_val;
+    private String spinnerValue = "";
+    private String dateOfBirth = "";
     String[] gender = {"Gender", "Male", "Female", "Others"};
     private RegistrationLoginViewModel viewModel;
     private KsPreferenceKeys preference;
     private boolean isloggedout = false;
     private String userChoosenTask = "";
-    private String imageUrl = "";
+    private String imageUrlId = "";
+    private String via = "";
+    String dateMilliseconds = "";
 
     @Override
     public ProfileActivityNewBinding inflateBindingLayout(@NonNull LayoutInflater inflater) {
@@ -69,7 +75,6 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        imageUrl = getIntent().getStringExtra("url");
         connectionObserver();
     }
 
@@ -148,7 +153,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
                     if (validateNameEmpty()) {
                         showLoading(getBinding().progressBar, true);
                         String token = preference.getAppPrefAccessToken();
-                        viewModel.hitUpdateProfile(ProfileActivityNew.this, token, getBinding().etName.getText().toString()).observe(ProfileActivityNew.this, new Observer<UserProfileResponse>() {
+                        viewModel.hitUpdateProfile(ProfileActivityNew.this, token, getBinding().etName.getText().toString(),getBinding().etMobileNumber.getText().toString(),spinnerValue,dateMilliseconds,getBinding().etAddress.getText().toString(),imageUrlId,via).observe(ProfileActivityNew.this, new Observer<UserProfileResponse>() {
                             @Override
                             public void onChanged(UserProfileResponse userProfileResponse) {
                                 dismissLoading(getBinding().progressBar);
@@ -212,6 +217,12 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
                         mcurrentDate.set(Calendar.DAY_OF_MONTH, selectedday);
                         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
                         getBinding().etDob.setText(sdf.format(mcurrentDate.getTime()));
+                        try {
+                            Date d = sdf.parse(getBinding().etDob.getText().toString());
+                            dateMilliseconds = String.valueOf(d.getTime());
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
 
 
                     }
@@ -251,53 +262,6 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
                 });
                 builder.show();
 
-//                if (Build.VERSION.SDK_INT >= 23) {
-//                    if (checkPermission()) {
-////                Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
-////                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-//
-//                        final CharSequence[] items = {"Take Photo", "Choose from Library",
-//                                "Cancel"};
-//                        AlertDialog.Builder builder = new AlertDialog.Builder(ProfileActivityNew.this);
-//                        builder.setTitle("");
-//                        builder.setItems(items, (dialog, item) -> {
-////            boolean result = Utility.checkPermission(MyUploadActivity.this);
-//                            if (items[item].equals("Take Photo")) {
-//                                userChoosenTask = "Take Photo";
-//
-////                                cameraIntent();
-//                                galleryIntent();
-//                            } else if (items[item].equals("Choose from Library")) {
-//                                userChoosenTask = "Choose from Library";
-//                                galleryIntent();
-//                            } else if (items[item].equals("Cancel")) {
-//                                dialog.dismiss();
-//                            }
-//                        });
-//                        builder.show();
-//                    } else {
-//                        requestPermission(); // Code for permission
-//                    }
-//                } else {
-//
-//                    final CharSequence[] items = {"Take Photo", "Choose from Library",
-//                            "Cancel"};
-//                    AlertDialog.Builder builder = new AlertDialog.Builder(ProfileActivityNew.this);
-//                    builder.setTitle("");
-//                    builder.setItems(items, (dialog, item) -> {
-////            boolean result = Utility.checkPermission(MyUploadActivity.this);
-//                        if (items[item].equals("Take Photo")) {
-//                            userChoosenTask = "Take Photo";
-//                            cameraIntent();
-//                        } else if (items[item].equals("Choose from Library")) {
-//                            userChoosenTask = "Choose from Library";
-//                            galleryIntent();
-//                        } else if (items[item].equals("Cancel")) {
-//                            dialog.dismiss();
-//                        }
-//                    });
-//
-//                }
             }
         });
 
@@ -305,6 +269,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spin_val = gender[position];
+                spinnerValue = spin_val;
             }
 
             @Override
@@ -313,10 +278,8 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
             }
         });
         ArrayAdapter<String> spin_adapter = new ArrayAdapter<String>(ProfileActivityNew.this, R.layout.spinner_item, gender);
-
-// setting adapters to spinners
-
         getBinding().spinnerId.setAdapter(spin_adapter);
+
     }
 
     private void cameraIntent() {
@@ -420,6 +383,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
             getBinding().etEmail.setText(userProfileResponse.getData().getEmail());
             preference.setAppPrefUserName(String.valueOf(userProfileResponse.getData().getName()));
 
+
             if (userProfileResponse.getData().getProfilePicURL() != null){
                 Glide.with(ProfileActivityNew.this).load(userProfileResponse.getData().getProfilePicURL())
                         .placeholder(R.drawable.default_profile_pic)
@@ -468,6 +432,9 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
     protected void onStart() {
         super.onStart();
         if (AppCommonMethod.Url!=""){
+
+            imageUrlId = AppCommonMethod.UriId;
+            via = "Avatar";
             Glide.with(ProfileActivityNew.this).load(AppCommonMethod.Url)
                     .placeholder(R.drawable.default_profile_pic)
                     .error(R.drawable.default_profile_pic)
@@ -475,5 +442,6 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
         }
 
         AppCommonMethod.Url = "";
+        AppCommonMethod.UriId = "";
     }
 }

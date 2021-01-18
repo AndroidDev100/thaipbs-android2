@@ -68,7 +68,7 @@ public class AvatarAdapter extends RecyclerView.Adapter<AvatarAdapter.SingleItem
             @Override
             public void onClick(View v) {
                 selectedItemId = arrayList.get(position).getUrl();
-                imageCallback.onClick(selectedItemId);
+                imageCallback.onClick(selectedItemId,arrayList.get(position).getIdentifier());
                 notifyDataSetChanged();
             }
         });

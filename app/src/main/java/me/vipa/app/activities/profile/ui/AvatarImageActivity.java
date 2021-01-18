@@ -74,7 +74,7 @@ public class AvatarImageActivity extends BaseBindingActivity<ActivityAvatarImage
         getBinding().btnUpdatePreference.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (AppCommonMethod.Url != ""){
+                if (AppCommonMethod.Url != "" && AppCommonMethod.UriId != ""){
 //                    profileNew
                     onBackPressed();
                 }
@@ -104,7 +104,8 @@ public class AvatarImageActivity extends BaseBindingActivity<ActivityAvatarImage
     }
 
     @Override
-    public void onClick(String url) {
+    public void onClick(String url, String Id) {
         AppCommonMethod.Url = url;
+        AppCommonMethod.UriId = Id;
     }
 }

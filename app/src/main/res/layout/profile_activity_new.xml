@@ -179,6 +179,7 @@
                             android:hint="@string/mobile_number"
                             android:imeOptions="actionDone"
                             android:maxLength="10"
+                            android:inputType="number"
                             android:singleLine="true"
                             android:textColor="?attr/app_edit_text_color"
                             android:textColorHint="?attr/app_edit_text_color"
@@ -266,6 +267,8 @@
                             android:hint="@string/dob"
                             android:imeOptions="actionDone"
                             android:singleLine="true"
+                            android:focusable="false"
+                            android:clickable="true"
                             android:textColor="?attr/app_edit_text_color"
                             android:textColorHint="?attr/app_edit_text_color"
                             android:textSize="@dimen/TextSize14" />

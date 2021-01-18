@@ -74,8 +74,8 @@ public class RegistrationLoginViewModel extends AndroidViewModel {
         return loginRepository.getUserProfile(context,token);
     }
 
-    public LiveData<UserProfileResponse> hitUpdateProfile(Context context,String token,String name) {
-        return loginRepository.getUpdateProfile(context,token,name);
+    public LiveData<UserProfileResponse> hitUpdateProfile(Context context, String token, String name, String mobile, String spinnerValue, String dob, String address, String imageUrl, String via) {
+        return loginRepository.getUpdateProfile(context,token,name,mobile,spinnerValue,dob,address,imageUrl,via);
     }
 
 
