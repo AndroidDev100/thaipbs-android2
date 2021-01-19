@@ -499,6 +499,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
             DecimalFormat df = new DecimalFormat("#");
             df.setMaximumFractionDigits(0);
             long l = Long.parseLong(df.format(longV));
+            dateMilliseconds = String.valueOf(l);
             String dateString = DateFormat.format("MM/dd/yyyy", new Date(l)).toString();
             getBinding().etDob.setText(dateString);
         }
