@@ -49,6 +49,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 import me.vipa.app.R;
+import me.vipa.app.SDKConfig;
 import me.vipa.app.activities.usermanagment.viewmodel.RegistrationLoginViewModel;
 import me.vipa.app.baseModels.BaseBindingActivity;
 import me.vipa.app.beanModel.userProfile.UserProfileResponse;
@@ -56,6 +57,7 @@ import me.vipa.app.databinding.ProfileActivityNewBinding;
 import me.vipa.app.fragments.dialog.AlertDialogFragment;
 import me.vipa.app.fragments.dialog.AlertDialogSingleButtonFragment;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
+import me.vipa.app.utils.constants.AppConstants;
 import me.vipa.app.utils.helpers.CheckInternetConnection;
 import me.vipa.app.utils.helpers.NetworkConnectivity;
 import me.vipa.app.utils.helpers.StringUtils;
@@ -419,21 +421,6 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
         return result == PackageManager.PERMISSION_GRANTED;
     }
 
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-//        switch (requestCode) {
-//            case 123:
-//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                    if (userChoosenTask.equals("Take Photo"))
-//                        cameraIntent();
-//                    else if (userChoosenTask.equals("Choose from Library"))
-//                        galleryIntent();
-//                } else {
-//                    //code for deny
-//                }
-//                break;
-//        }
-//    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -524,7 +511,9 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
 
 
         if (userProfileResponse.getData().getProfilePicURL() != null) {
-            Glide.with(ProfileActivityNew.this).load(userProfileResponse.getData().getProfilePicURL())
+            imageUrlId = userProfileResponse.getData().getProfilePicURL().toString();
+            via = "Gallery";
+            Glide.with(ProfileActivityNew.this).load(SDKConfig.getInstance().getCLOUD_FRONT_BASE_URL()+ AppConstants.FOLDER_NAME +userProfileResponse.getData().getProfilePicURL())
                     .placeholder(R.drawable.default_profile_pic)
                     .error(R.drawable.default_profile_pic)
                     .into(getBinding().ivProfilePic);

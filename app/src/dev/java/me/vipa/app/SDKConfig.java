@@ -50,6 +50,9 @@ public class SDKConfig {
     public String getSEARCH_BASE_URL() {
         return configBean == null ? "" : configBean.getData().getAppConfig().getSearchBaseUrl();
     }
+    public String getCLOUD_FRONT_BASE_URL() {
+        return configBean == null ? "" : configBean.getData().getAppConfig().getCloudFrontBaseURL();
+    }
 
     public String getSUBSCRIPTION_BASE_URL() {
         return configBean == null ? "" : configBean.getData().getAppConfig().getSubscriptionBaseUrl();

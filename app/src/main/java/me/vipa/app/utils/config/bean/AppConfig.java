@@ -10,10 +10,12 @@ public class AppConfig {
     @SerializedName("baseUrl")
     @Expose
     private String baseUrl;
-
     @SerializedName("couponBaseUrl")
     @Expose
     private String couponBaseUrl;
+    @SerializedName("cloudFrontBaseURL")
+    @Expose
+    private String cloudFrontBaseURL;
 
     @SerializedName("vastTagUrl")
     @Expose
@@ -117,6 +119,13 @@ public class AppConfig {
 
     public void setSubscriptionBaseUrl(String subscriptionBaseUrl) {
         this.subscriptionBaseUrl = subscriptionBaseUrl;
+    }
+    public String getCloudFrontBaseURL() {
+        return cloudFrontBaseURL;
+    }
+
+    public void setCloudFrontBaseURL(String cloudFrontBaseURL) {
+        this.cloudFrontBaseURL = cloudFrontBaseURL;
     }
 
     public String getSearchBaseUrl() {
