@@ -220,6 +220,8 @@ class RequestManager {
             customParam.addProperty("address", address)
             if (via.equals("Avatar")) {
                 customParam.addProperty("profileAvatar", imageUrl)
+            }else if (via.equals("Gallery")){
+                requestParam.addProperty("profilePicURL", imageUrl)
             }
             requestParam.addProperty("name", name)
             requestParam.addProperty("phoneNumber", mobile)

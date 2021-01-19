@@ -26,6 +26,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
+import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferState;
@@ -79,6 +80,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
     private String via = "";
     private AmazonS3 s3;
     private TransferUtility transferUtility;
+    String imageToUpload = "";
 
     @Override
     public ProfileActivityNewBinding inflateBindingLayout(@NonNull LayoutInflater inflater) {
@@ -122,6 +124,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
 
     private void connectionValidation(boolean connected) {
         if (connected) {
+//            AWSMobileClient.getInstance().initialize(this).execute();
             credentialsProvider();
             setTransferUtility();
 
@@ -186,46 +189,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
             @Override
             public void onClick(View view) {
                 if (NetworkConnectivity.isOnline(ProfileActivityNew.this)) {
-                    if (validateNameEmpty()) {
-                        showLoading(getBinding().progressBar, true);
-                        String token = preference.getAppPrefAccessToken();
-                        viewModel.hitUpdateProfile(ProfileActivityNew.this, token, getBinding().etName.getText().toString(), getBinding().etMobileNumber.getText().toString(), spinnerValue, dateMilliseconds, getBinding().etAddress.getText().toString(), imageUrlId, via).observe(ProfileActivityNew.this, new Observer<UserProfileResponse>() {
-                            @Override
-                            public void onChanged(UserProfileResponse userProfileResponse) {
-                                dismissLoading(getBinding().progressBar);
-                                if (userProfileResponse != null) {
-                                    if (userProfileResponse.getStatus()) {
-                                        showDialog("", ProfileActivityNew.this.getResources().getString(R.string.profile_update_successfully));
-                                        updateUI(userProfileResponse);
-                                    } else {
-                                        if (userProfileResponse.getResponseCode() == 4302) {
-                                            isloggedout = true;
-                                            logoutCall();
-                                            try {
-                                                runOnUiThread(new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        onBackPressed();
-                                                    }
-                                                });
-                                            } catch (Exception e) {
-
-                                            }
-                                            // showDialog(getResources().getString(R.string.logged_out), getResources().getString(R.string.you_are_logged_out));
-
-                                        } else {
-                                            if (userProfileResponse.getDebugMessage() != null) {
-                                                showDialog(ProfileActivityNew.this.getResources().getString(R.string.error), userProfileResponse.getDebugMessage().toString());
-                                            } else {
-                                                showDialog(ProfileActivityNew.this.getResources().getString(R.string.error), ProfileActivityNew.this.getResources().getString(R.string.something_went_wrong));
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        });
-
-                    }
+                    callUpdateApi();
 
                 } else {
                     new ToastHandler(ProfileActivityNew.this).show(ProfileActivityNew.this.getResources().getString(R.string.no_internet_connection));
@@ -303,6 +267,49 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
 
     }
 
+    private void callUpdateApi() {
+        if (validateNameEmpty()) {
+            showLoading(getBinding().progressBar, true);
+            String token = preference.getAppPrefAccessToken();
+            viewModel.hitUpdateProfile(ProfileActivityNew.this, token, getBinding().etName.getText().toString(), getBinding().etMobileNumber.getText().toString(), spinnerValue, dateMilliseconds, getBinding().etAddress.getText().toString(), imageUrlId, via).observe(ProfileActivityNew.this, new Observer<UserProfileResponse>() {
+                @Override
+                public void onChanged(UserProfileResponse userProfileResponse) {
+                    dismissLoading(getBinding().progressBar);
+                    if (userProfileResponse != null) {
+                        if (userProfileResponse.getStatus()) {
+                            showDialog("", ProfileActivityNew.this.getResources().getString(R.string.profile_update_successfully));
+                            updateUI(userProfileResponse);
+                        } else {
+                            if (userProfileResponse.getResponseCode() == 4302) {
+                                isloggedout = true;
+                                logoutCall();
+                                try {
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            onBackPressed();
+                                        }
+                                    });
+                                } catch (Exception e) {
+
+                                }
+                                // showDialog(getResources().getString(R.string.logged_out), getResources().getString(R.string.you_are_logged_out));
+
+                            } else {
+                                if (userProfileResponse.getDebugMessage() != null) {
+                                    showDialog(ProfileActivityNew.this.getResources().getString(R.string.error), userProfileResponse.getDebugMessage().toString());
+                                } else {
+                                    showDialog(ProfileActivityNew.this.getResources().getString(R.string.error), ProfileActivityNew.this.getResources().getString(R.string.something_went_wrong));
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+        }
+    }
+
     private void cameraIntent() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, 0);
@@ -347,7 +354,9 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
 
     private void setFileToUpload(File fileToUpload) {
 //       String videoLink = "Android" + AppCommonMethod.getCurrentTimeStamp() + fileToUpload.getName() +".jpeg";
-        String imageToUpload = "Thumbnail_" + AppCommonMethod.getCurrentTimeStamp() + "Android" + ".jpg";
+         imageToUpload = "Thumbnail_" + AppCommonMethod.getCurrentTimeStamp() + "Android" + ".jpg";
+        imageUrlId = imageToUpload;
+        via = "Gallery";
         Log.d("dedededede",imageToUpload);
         TransferObserver transferObserver = transferUtility.upload(
                 "thai-pbs/profile_picture", imageToUpload,
@@ -363,7 +372,8 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
             @Override
             public void onStateChanged(int id, TransferState state) {
                 if (state == TransferState.COMPLETED) {
-                    Log.d("dedededede",id+"");
+                    dismissLoading(getBinding().progressBar);
+
                     //progressHandler.call();
                     // getBinding().progressBar.setVisibility(View.GONE);
                 }
@@ -440,6 +450,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
                 File imageFilePath = new File(imagePath);
 
                // imageThumbnail = number + imageFilePath.getName();
+                showLoading(getBinding().progressBar, true);
                 setFileToUpload(imageFilePath);
 
 
