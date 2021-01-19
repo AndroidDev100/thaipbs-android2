@@ -1,5 +1,8 @@
 package me.vipa.app.beanModel.userProfile;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class Data{
@@ -21,6 +24,15 @@ public class Data{
 	private String email;
 	private String status;
 	private boolean gplusLinked;
+	private CustomData customData;
+
+	public CustomData getCustomData() {
+		return customData;
+	}
+
+	public void setCustomData(CustomData customData) {
+		this.customData = customData;
+	}
 
 	public void setManualLinked(boolean manualLinked){
 		this.manualLinked = manualLinked;
@@ -179,15 +191,16 @@ public class Data{
 			",dateOfBirth = '" + dateOfBirth + '\'' +
 			",verificationDate = '" + verificationDate + '\'' + 
 			",expiryDate = '" + expiryDate + '\'' + 
-			",accountId = '" + accountId + '\'' + 
-			",password = '" + password + '\'' + 
+			",accountId = '" + accountId + '\'' +
+			",password = '" + password + '\'' +
 			",phoneNumber = '" + phoneNumber + '\'' + 
 			",profilePicURL = '" + profilePicURL + '\'' + 
 			",name = '" + name + '\'' + 
 			",id = '" + id + '\'' + 
 			",email = '" + email + '\'' + 
 			",status = '" + status + '\'' + 
-			",gplusLinked = '" + gplusLinked + '\'' + 
+			",gplusLinked = '" + gplusLinked + '\'' +
+			",customData = '" + customData + '\'' +
 			"}";
 		}
 }

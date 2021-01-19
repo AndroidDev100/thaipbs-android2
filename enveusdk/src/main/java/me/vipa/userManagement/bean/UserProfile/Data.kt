@@ -18,5 +18,8 @@ data class Data(
 	val id: Int? = null,
 	val email: String? = null,
 	val status: String? = null,
-	val gplusLinked: Boolean? = null
+	val gplusLinked: Boolean? = null,
+	val customData: CustomData? = null
 )
+
+

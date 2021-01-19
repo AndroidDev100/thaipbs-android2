@@ -55,18 +55,18 @@ import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 
 public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBinding> implements AlertDialogFragment.AlertDialogListener {
     private static final int PERMISSION_REQUEST_CODE = 1;
+    private final String dateOfBirth = "";
+    private final String userChoosenTask = "";
     String spin_val;
     String[] gender = {"Gender", "MALE", "FEMALE", "OTHERS"};
     String dateMilliseconds = "";
+    ArrayAdapter<String> spin_adapter;
     private String spinnerValue = "";
-    private final String dateOfBirth = "";
     private RegistrationLoginViewModel viewModel;
     private KsPreferenceKeys preference;
     private boolean isloggedout = false;
-    private final String userChoosenTask = "";
     private String imageUrlId = "";
     private String via = "";
-    ArrayAdapter<String> spin_adapter;
 
     @Override
     public ProfileActivityNewBinding inflateBindingLayout(@NonNull LayoutInflater inflater) {
@@ -115,7 +115,11 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     spin_val = gender[position];
-                    spinnerValue = spin_val;
+                    if (spin_val.equalsIgnoreCase("GENDER")) {
+                        spinnerValue = "";
+                    }else {
+                        spinnerValue = spin_val;
+                    }
                 }
 
                 @Override
@@ -283,7 +287,6 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
         });
 
 
-
     }
 
     private void cameraIntent() {
@@ -382,6 +385,10 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
     private void updateUI(UserProfileResponse userProfileResponse) {
 //        try {
         // getBinding().userNameWords.setText(AppCommonMethod.getUserName(userProfileResponse.getData().getName()));
+
+        Log.d("CustomDataDetails", userProfileResponse.getData().getCustomData().getProfileAvatar());
+
+
         getBinding().etName.setText(userProfileResponse.getData().getName());
         getBinding().etName.setSelection(getBinding().etName.getText().length());
         getBinding().etEmail.setText(userProfileResponse.getData().getEmail());
@@ -401,13 +408,22 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
             getBinding().etDob.setText(dateString);
         }
 
-        if (userProfileResponse.getData().getGender()!=null){
-            String compareValue = userProfileResponse.getData().getGender()+"";
+        if (userProfileResponse.getData().getGender() != null) {
+            String compareValue = userProfileResponse.getData().getGender() + "";
             if (compareValue != null) {
                 int spinnerPosition = spin_adapter.getPosition(compareValue.toUpperCase());
                 getBinding().spinnerId.setSelection(spinnerPosition);
-                spinnerValue = getBinding().spinnerId.getSelectedItem().toString();
+                if (getBinding().spinnerId.getSelectedItem().toString().equalsIgnoreCase("GENDER")){
+                    spinnerValue = "";
+                }else {
+                    spinnerValue = getBinding().spinnerId.getSelectedItem().toString();
+                }
             }
+        }
+
+        if (userProfileResponse.getData().getCustomData() != null) {
+            if (userProfileResponse.getData().getCustomData().getAddress() != null)
+                getBinding().etAddress.setText(userProfileResponse.getData().getCustomData().getAddress());
         }
 
 
@@ -418,13 +434,26 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
                     .into(getBinding().ivProfilePic);
         } else {
 
-            imageUrlId = AppCommonMethod.getConfigResponse().getData().getAppConfig().getavatarImages().get(0).getIdentifier();
-            via = "Avatar";
+            if (userProfileResponse.getData().getCustomData().getProfileAvatar() != null) {
+                for (int i = 0; i < AppCommonMethod.getConfigResponse().getData().getAppConfig().getavatarImages().size(); i++) {
+                    if (userProfileResponse.getData().getCustomData().getProfileAvatar().equalsIgnoreCase(AppCommonMethod.getConfigResponse().getData().getAppConfig().getavatarImages().get(i).getIdentifier())) {
+                        imageUrlId = AppCommonMethod.getConfigResponse().getData().getAppConfig().getavatarImages().get(i).getIdentifier();
+                        via = "Avatar";
+                        Glide.with(ProfileActivityNew.this).load(AppCommonMethod.getConfigResponse().getData().getAppConfig().getavatarImages().get(i).getUrl())
+                                .placeholder(R.drawable.default_profile_pic)
+                                .error(R.drawable.default_profile_pic)
+                                .into(getBinding().ivProfilePic);
+                    }
+                }
+            } else {
 
-            Glide.with(ProfileActivityNew.this).load(AppCommonMethod.getConfigResponse().getData().getAppConfig().getavatarImages().get(0).getUrl())
-                    .placeholder(R.drawable.default_profile_pic)
-                    .error(R.drawable.default_profile_pic)
-                    .into(getBinding().ivProfilePic);
+                imageUrlId = AppCommonMethod.getConfigResponse().getData().getAppConfig().getavatarImages().get(0).getIdentifier();
+                via = "Avatar";
+                Glide.with(ProfileActivityNew.this).load(AppCommonMethod.getConfigResponse().getData().getAppConfig().getavatarImages().get(0).getUrl())
+                        .placeholder(R.drawable.default_profile_pic)
+                        .error(R.drawable.default_profile_pic)
+                        .into(getBinding().ivProfilePic);
+            }
         }
 
 //        } catch (Exception e) {

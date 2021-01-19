@@ -219,7 +219,9 @@ class RequestManager {
             }
         requestParam.addProperty("name", name)
         requestParam.addProperty("phoneNumber", mobile)
-        requestParam.addProperty("gender", spinnerValue.toUpperCase())
+        if (!spinnerValue.equals("")) {
+            requestParam.addProperty("gender", spinnerValue.toUpperCase())
+        }
         requestParam.addProperty("dateOfBirth", dob)
 //        requestParam.addProperty("address", address)
 //        requestParam.addProperty("profilePicURL", imageUrl)
