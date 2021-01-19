@@ -24,6 +24,16 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.amazonaws.ClientConfiguration;
+import com.amazonaws.auth.CognitoCachingCredentialsProvider;
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener;
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver;
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferState;
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
+import com.amazonaws.regions.Region;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
 import com.bumptech.glide.Glide;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -58,7 +68,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
     private final String dateOfBirth = "";
     private final String userChoosenTask = "";
     String spin_val;
-    String[] gender = {"Gender", "MALE", "FEMALE", "OTHERS"};
+    String[] gender = {"GENDER", "MALE", "FEMALE", "OTHERS"};
     String dateMilliseconds = "";
     ArrayAdapter<String> spin_adapter;
     private String spinnerValue = "";
@@ -67,6 +77,8 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
     private boolean isloggedout = false;
     private String imageUrlId = "";
     private String via = "";
+    private AmazonS3 s3;
+    private TransferUtility transferUtility;
 
     @Override
     public ProfileActivityNewBinding inflateBindingLayout(@NonNull LayoutInflater inflater) {
@@ -110,6 +122,8 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
 
     private void connectionValidation(boolean connected) {
         if (connected) {
+            credentialsProvider();
+            setTransferUtility();
 
             getBinding().spinnerId.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
@@ -306,6 +320,74 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
                 .start(this);
     }
 
+    private void credentialsProvider() {
+        CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
+                getApplicationContext(),
+                "us-east-1:5e744f74-b37d-42b5-8c0b-cefe9051826d", Regions.US_EAST_1
+
+        );
+        setAmazonS3Client(credentialsProvider);
+    }
+
+    private void setAmazonS3Client(CognitoCachingCredentialsProvider credentialsProvider) {
+        ClientConfiguration clientConfiguration = new ClientConfiguration();
+        clientConfiguration.setMaxErrorRetry(10);
+        clientConfiguration.setConnectionTimeout(50000); // default is 10 secs
+        clientConfiguration.setSocketTimeout(50000);
+        clientConfiguration.setMaxConnections(500);
+        s3 = new AmazonS3Client(credentialsProvider, clientConfiguration);
+        s3.setRegion(Region.getRegion(Regions.US_EAST_1));
+    }
+
+    private void setTransferUtility() {
+//        transferUtility = new TransferUtility(s3, getApplicationContext());
+        transferUtility = TransferUtility.builder().s3Client(s3).context(getApplicationContext()).build();
+
+    }
+
+    private void setFileToUpload(File fileToUpload) {
+//       String videoLink = "Android" + AppCommonMethod.getCurrentTimeStamp() + fileToUpload.getName() +".jpeg";
+        String imageToUpload = "Thumbnail_" + AppCommonMethod.getCurrentTimeStamp() + "Android" + ".jpg";
+        Log.d("dedededede",imageToUpload);
+        TransferObserver transferObserver = transferUtility.upload(
+                "thai-pbs/profile_picture", imageToUpload,
+                fileToUpload
+
+        );
+
+        transferObserverListener(transferObserver);
+    }
+
+    private void transferObserverListener(TransferObserver transferObserver) {
+        transferObserver.setTransferListener(new TransferListener() {
+            @Override
+            public void onStateChanged(int id, TransferState state) {
+                if (state == TransferState.COMPLETED) {
+                    Log.d("dedededede",id+"");
+                    //progressHandler.call();
+                    // getBinding().progressBar.setVisibility(View.GONE);
+                }
+
+            }
+
+            @Override
+            public void onProgressChanged(int id, long bytesCurrent, long bytesTotal) {
+                int progress = (int) ((double) bytesCurrent * 100 / bytesTotal);
+               // PrintLogging.printLog("", +progress + "");
+
+                //getBinding().progressBar.setVisibility(View.VISIBLE);
+
+
+            }
+
+            @Override
+            public void onError(int id, Exception ex) {
+                // Log.e("error", "error");
+            }
+
+        });
+    }
+
 
     private void requestPermission() {
 
@@ -356,6 +438,11 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
 
                 String imagePath = resultUri.getPath();
                 File imageFilePath = new File(imagePath);
+
+               // imageThumbnail = number + imageFilePath.getName();
+                setFileToUpload(imageFilePath);
+
+
 //                imageThumbnail = number + imageFilePath.getName();
 //                setFileToUpload(imageFilePath);
 //                progressHandler.call();
@@ -383,11 +470,8 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
 
 
     private void updateUI(UserProfileResponse userProfileResponse) {
-//        try {
+        try {
         // getBinding().userNameWords.setText(AppCommonMethod.getUserName(userProfileResponse.getData().getName()));
-
-        Log.d("CustomDataDetails", userProfileResponse.getData().getCustomData().getProfileAvatar());
-
 
         getBinding().etName.setText(userProfileResponse.getData().getName());
         getBinding().etName.setSelection(getBinding().etName.getText().length());
@@ -456,9 +540,9 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
             }
         }
 
-//        } catch (Exception e) {
-//
-//        }
+        } catch (Exception e) {
+
+        }
     }
 
     private void showDialog(String title, String message) {
