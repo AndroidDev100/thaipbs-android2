@@ -404,7 +404,6 @@ public class SignUpThirdPage extends BaseBindingActivity<ActivitySignUpThirdPage
             getBinding().errorMobile.setVisibility(View.INVISIBLE);
         } else if (getBinding().etMobileNumber.getText().toString().trim().length() <=11){
             String firstTwoChar = getBinding().etMobileNumber.getText().toString().substring(0,2);
-            Log.d("swswswsw",firstTwoChar+"");
             if (firstTwoChar.equalsIgnoreCase("66")) {
                 check = true;
                 getBinding().errorMobile.setVisibility(View.INVISIBLE);

@@ -269,7 +269,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
     }
 
     private void callUpdateApi() {
-        if (validateNameEmpty()) {
+        if (validateNameEmpty() && validatePhone()) {
             showLoading(getBinding().progressBar, true);
             String token = preference.getAppPrefAccessToken();
             viewModel.hitUpdateProfile(ProfileActivityNew.this, token, getBinding().etName.getText().toString(), getBinding().etMobileNumber.getText().toString(), spinnerValue, dateMilliseconds, getBinding().etAddress.getText().toString(), imageUrlId, via, contentPreference).observe(ProfileActivityNew.this, new Observer<UserProfileResponse>() {
@@ -309,6 +309,29 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
             });
 
         }
+    }
+
+    private boolean validatePhone() {
+        boolean check = false;
+        if (getBinding().etMobileNumber.getText().toString().trim().equalsIgnoreCase("")) {
+            check = true;
+            getBinding().errorMobile.setVisibility(View.INVISIBLE);
+        } else if (getBinding().etMobileNumber.getText().toString().trim().length() <=11){
+            String firstTwoChar = getBinding().etMobileNumber.getText().toString().substring(0,2);
+            if (firstTwoChar.equalsIgnoreCase("66")) {
+                check = true;
+                getBinding().errorMobile.setVisibility(View.INVISIBLE);
+            }else {
+                check = false;
+                getBinding().errorMobile.setVisibility(View.VISIBLE);
+                getBinding().errorMobile.setText(getResources().getString(R.string.mobile_error));
+            }
+        }else {
+            check = false;
+            getBinding().errorMobile.setVisibility(View.VISIBLE);
+            getBinding().errorMobile.setText(getResources().getString(R.string.mobile_error));
+        }
+        return check;
     }
 
     private void cameraIntent() {
