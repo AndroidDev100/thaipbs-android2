@@ -1,14 +1,19 @@
 package me.vipa.app.activities.usermanagment.ui;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -27,6 +32,7 @@ import me.vipa.app.utils.helpers.CheckInternetConnection;
 import me.vipa.app.utils.helpers.NetworkConnectivity;
 
 import me.vipa.app.utils.helpers.StringUtils;
+import me.vipa.app.utils.helpers.ToastHandler;
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -38,12 +44,15 @@ import java.util.regex.Pattern;
 import me.vipa.app.activities.usermanagment.viewmodel.RegistrationLoginViewModel;
 import me.vipa.app.baseModels.BaseBindingActivity;
 
+import static me.vipa.app.R.font.sukhumvittadmai_normal;
+
 public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> implements AlertDialogFragment.AlertDialogListener {
 
     String regex = "(.)*(\\d)(.)*";
     private KsPreferenceKeys preference;
     private RegistrationLoginViewModel viewModel;
     private long mLastClickTime = 0;
+    Typeface font;
 
     @Override
     public SignupActivityBinding inflateBindingLayout(@NonNull LayoutInflater inflater) {
@@ -59,6 +68,9 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
 
     private void callBinding() {
         viewModel = ViewModelProviders.of(SignUpActivity.this).get(RegistrationLoginViewModel.class);
+        getBinding().radioPasswordEye.setChecked(false);
+        getBinding().confirmPasswordEye.setChecked(false);
+        font = ResourcesCompat.getFont(SignUpActivity.this, sukhumvittadmai_normal);
         getBinding().toolbar.titleToolbar.setVisibility(View.VISIBLE);
         getBinding().toolbar.titleToolbar.setText(getResources().getString(R.string.signup));
         getBinding().toolbar.backLayout.setOnClickListener(new View.OnClickListener() {
@@ -126,7 +138,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
             mLastClickTime = SystemClock.elapsedRealtime();
 
             if (CheckInternetConnection.isOnline(SignUpActivity.this)) {
-                if (validateNameEmpty() && validateEmptyEmail() && validateEmail() && passwordCheck(getBinding().etPassword.getText().toString()) && confirmPasswordCheck(getBinding().etPassword.getText().toString(),getBinding().etCnfPassword.getText().toString())) {
+                if (validateNameEmpty() && validateEmptyEmail() && validateEmail() && passwordCheck(getBinding().etPassword.getText().toString()) && confirmPasswordCheck(getBinding().etPassword.getText().toString(),getBinding().etCnfPassword.getText().toString()) && isCheckboxSelected()) {
                     getBinding().errorName.setVisibility(View.INVISIBLE);
                     getBinding().errorEmail.setVisibility(View.INVISIBLE);
                     getBinding().errorPassword.setVisibility(View.INVISIBLE);
@@ -266,6 +278,57 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
 
         getBinding().etCnfPassword.setOnClickListener(view -> getBinding().errorCnfPassword.setVisibility(View.INVISIBLE));
 
+
+        getBinding().radioPasswordEye.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (!b) {
+                getBinding().etPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                getBinding().etPassword.setTypeface(font);
+            } else {
+                getBinding().etPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                getBinding().etPassword.setSelection(getBinding().etPassword.getText().length());
+                getBinding().etPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                hideSoftKeyboard(getBinding().radioPasswordEye);
+                getBinding().etPassword.setTypeface(font);
+            }
+        });
+
+        getBinding().confirmPasswordEye.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (!b) {
+                getBinding().etCnfPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                getBinding().etCnfPassword.setTypeface(font);
+            } else {
+                getBinding().etCnfPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                getBinding().etCnfPassword.setSelection(getBinding().etCnfPassword.getText().length());
+                getBinding().etCnfPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                hideSoftKeyboard(getBinding().confirmPasswordEye);
+                getBinding().etCnfPassword.setTypeface(font);
+            }
+        });
+
+       getBinding().termsText.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               if (!getBinding().termsText.isChecked()){
+                   getBinding().termsText.setChecked(true);
+               }else {
+                   getBinding().termsText.setChecked(false);
+               }
+           }
+       });
+
+    }
+
+    private boolean isCheckboxSelected() {
+        boolean check = false;
+        if (getBinding().termsText.isChecked()){
+            check = true;
+        }else {
+            check = false;
+            new ToastHandler(SignUpActivity.this).show("please select checkbox");
+        }
+
+
+        return check;
     }
 
     public void saveUserDetails(String response, int userID, boolean isManual) {
