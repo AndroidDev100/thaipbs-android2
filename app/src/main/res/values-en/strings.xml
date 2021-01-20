@@ -109,9 +109,9 @@
     <string name="empty_password">Please enter Password</string>
     <string name="empty_string">Please enter Email</string>
     <string name="credential_mismatch">Credentials Mismatch!</string>
-    <string name="strong_password_required">Please enter a password between 8 to 20 characters and must contain at least 1 special character</string>
+    <string name="strong_password_required">Please enter a password between 6 to 20 characters and must contain at least 1 special character</string>
     <string name="email_check_signup">Please enter Email</string>
-
+    <string name="password_match">Password doesn\'t match</string>
     <string name="empty_name">Please enter Name</string>
     <string name="name_validation_profile">Name is required</string>
     <string name="profile_update_successfully">Updated Successfully!</string>

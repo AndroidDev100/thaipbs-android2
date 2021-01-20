@@ -111,6 +111,7 @@
     <string name="credential_mismatch">Credentials Mismatch!</string>
     <string name="strong_password_required">Silakan masukkan kata sandi antara 8 hingga 20 karakter dan harus mengandung setidaknya 1 karakter khusus</string>
     <string name="email_check_signup">Silakan masukkan Email</string>
+    <string name="password_match">Password doesn\'t match</string>
 
     <string name="empty_name">Harap masukkan Nama Lengkap</string>
     <string name="name_validation_profile">Name is required</string>

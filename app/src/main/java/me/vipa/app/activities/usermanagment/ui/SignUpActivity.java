@@ -126,7 +126,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
             mLastClickTime = SystemClock.elapsedRealtime();
 
             if (CheckInternetConnection.isOnline(SignUpActivity.this)) {
-                if (validateNameEmpty() && validateEmptyEmail() && validateEmail() && passwordCheck(getBinding().etPassword.getText().toString())) {
+                if (validateNameEmpty() && validateEmptyEmail() && validateEmail() && passwordCheck(getBinding().etPassword.getText().toString()) && confirmPasswordCheck(getBinding().etPassword.getText().toString(),getBinding().etCnfPassword.getText().toString())) {
                     getBinding().errorName.setVisibility(View.INVISIBLE);
                     getBinding().errorEmail.setVisibility(View.INVISIBLE);
                     getBinding().errorPassword.setVisibility(View.INVISIBLE);
@@ -244,7 +244,27 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
             }
         });
 
-        getBinding().etPassword.setOnClickListener(view -> getBinding().errorPassword.setVisibility(View.INVISIBLE));
+        getBinding().etCnfPassword.setOnClickListener(view -> getBinding().errorPassword.setVisibility(View.INVISIBLE));
+
+        getBinding().etCnfPassword.setLongClickable(false);
+        getBinding().etCnfPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                getBinding().errorCnfPassword.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        getBinding().etCnfPassword.setOnClickListener(view -> getBinding().errorCnfPassword.setVisibility(View.INVISIBLE));
 
     }
 
@@ -335,7 +355,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
 
 
     public boolean passwordCheck(String password) {
-        String passwordRegex="^(?=.*[!&^%$#@()\\_+-])[A-Za-z0-9\\d!&^%$#@()\\_+-]{8,20}$";
+        String passwordRegex="^(?=.*[!&^%$#@()\\_+-])[A-Za-z0-9\\d!&^%$#@()\\_+-]{6,20}$";
         boolean check = false;
         Pattern mPattern = Pattern.compile(passwordRegex);
         Matcher matcher = mPattern.matcher(password.toString());
@@ -346,6 +366,18 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
           //  showDialog(SignUpActivity.this.getResources().getString(R.string.error), getResources().getString(R.string.strong_password_required));
         }else {
             getBinding().errorPassword.setVisibility(View.INVISIBLE);
+            check = true;
+        }
+        return check;
+    }
+
+    public boolean confirmPasswordCheck(String password, String confirmPassword){
+        boolean check = false;
+        if (!password.equalsIgnoreCase(confirmPassword)){
+            getBinding().errorCnfPassword.setVisibility(View.VISIBLE);
+            getBinding().errorCnfPassword.setText(getResources().getString(R.string.password_match));
+        }else {
+            getBinding().errorCnfPassword.setVisibility(View.INVISIBLE);
             check = true;
         }
         return check;
