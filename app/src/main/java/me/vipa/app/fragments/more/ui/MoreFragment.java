@@ -384,6 +384,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                 KsPreferenceKeys.getInstance().setCurrentTheme(strCurrentTheme);
                 KsPreferenceKeys.getInstance().setAppLanguage(strCurrentLanguage);
                 KsPreferenceKeys.getInstance().setAppPrefLanguagePos(languagePosition);
+                KsPreferenceKeys.getInstance().setfirstTimeUser(false);
                 modelCall();
                 Logger.w("currentLang-->>",strCurrentLanguage);
                 if (strCurrentLanguage.equalsIgnoreCase("Thai") || KsPreferenceKeys.getInstance().getAppLanguage().equalsIgnoreCase("हिंदी") ){

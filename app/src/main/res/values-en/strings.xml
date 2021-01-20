@@ -50,7 +50,7 @@
     <string name="redeem_coupon">Redeem Coupon</string>
     <string name="signup"><b><u>Sign Up</u></b></string>
     <string name="login">Login</string>
-    <string name="sign_in_with_enveu">Sign in with VIPA</string>
+    <string name="sign_in_with_enveu">Sign in</string>
     <string name="facebook">Facebook</string>
     <string name="sign_in_with_facebook">Sign in with Facebook</string>
     <string name="google">Google +</string>

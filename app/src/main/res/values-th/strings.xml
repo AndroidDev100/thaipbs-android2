@@ -54,7 +54,7 @@
     <string name="dob">Date of Birth</string>
     <string name="signup"><b><u>ลงทะเบียน</u></b></string>
     <string name="login">เข้าสู่ระบบ</string>
-    <string name="sign_in_with_enveu">เข้าสู่ระบบโดย VIPA</string>
+    <string name="sign_in_with_enveu">เข้าสู่ระบบโ</string>
     <string name="facebook">เฟสบุ๊ค</string>
     <string name="sign_in_with_facebook">เข้าสู่ระบบโดย เฟสบุ๊ค</string>
     <string name="google">กูเกิ้ล</string>

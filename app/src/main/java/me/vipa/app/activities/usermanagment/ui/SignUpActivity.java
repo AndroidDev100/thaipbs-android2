@@ -324,7 +324,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
             check = true;
         }else {
             check = false;
-            new ToastHandler(SignUpActivity.this).show("please select checkbox");
+            new ToastHandler(SignUpActivity.this).show("please select checkbox to register");
         }
 
 

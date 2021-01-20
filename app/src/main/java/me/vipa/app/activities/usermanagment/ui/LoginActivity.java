@@ -536,7 +536,7 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
     }
 
     public boolean passwordCheck(String password) {
-        String passwordRegex = "^(?=.*[!&^%$#@()\\_+-])[A-Za-z0-9\\d!&^%$#@()\\_+-]{8,20}$";
+        String passwordRegex = "^(?=.*[!&^%$#@()\\_+-])[A-Za-z0-9\\d!&^%$#@()\\_+-]{6,20}$";
         boolean check = false;
         Pattern mPattern = Pattern.compile(passwordRegex);
         Matcher matcher = mPattern.matcher(password.toString());

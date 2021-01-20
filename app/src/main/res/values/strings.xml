@@ -55,7 +55,7 @@
     <string name="no_config_found">No config found for this payment provider</string>
     <string name="order_not_found">Order not found</string>
     <string name="order_completed_or_failed">This order has already been completed or failed. Please create a new order</string>
-    <string name="sign_in_with_enveu">Sign in with VIPA</string>
+    <string name="sign_in_with_enveu">Sign in</string>
     <string name="facebook">Facebook</string>
     <string name="sign_in_with_facebook">Sign in with Facebook</string>
     <string name="google">Google +</string>
