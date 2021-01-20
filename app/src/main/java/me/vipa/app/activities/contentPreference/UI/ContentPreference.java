@@ -19,6 +19,7 @@ import me.vipa.app.activities.contentPreference.adapter.ContentPreferenceAdapter
 import me.vipa.app.activities.usermanagment.ui.ChangePasswordActivity;
 import me.vipa.app.activities.usermanagment.ui.SignUpThirdPage;
 import me.vipa.app.baseModels.BaseBindingActivity;
+import me.vipa.app.callbacks.commonCallbacks.ContentPreferenceCallback;
 import me.vipa.app.databinding.ActivityContentPreferenceBinding;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.config.bean.PreferenceBean;
@@ -26,12 +27,13 @@ import me.vipa.app.utils.cropImage.helpers.NetworkConnectivity;
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
 
 
-public class ContentPreference extends BaseBindingActivity<ActivityContentPreferenceBinding> {
+public class ContentPreference extends BaseBindingActivity<ActivityContentPreferenceBinding> implements ContentPreferenceCallback {
     private ContentPreferenceAdapter adatperContentPreference;
     private static final int VERTICAL_ITEM_SPACE = 30;
     private static final int HORIONTAL_ITEM_SPACE = 20;
     private ArrayList<PreferenceBean> list;
     private ArrayList<PreferenceBean> selectedList;
+    private String contentPreference = "";
 
     @Override
     public ActivityContentPreferenceBinding inflateBindingLayout(@NonNull LayoutInflater inflater) {
@@ -75,14 +77,14 @@ public class ContentPreference extends BaseBindingActivity<ActivityContentPrefer
 //                    selectedList = adatperContentPreference.getGenreList();
 //                }
 
-                new ActivityLauncher(ContentPreference.this).signUpThird(ContentPreference.this, SignUpThirdPage.class);
+              new ActivityLauncher(ContentPreference.this).signUpThird(ContentPreference.this, SignUpThirdPage.class,contentPreference);
             }
         });
 
         getBinding().toolbar.titleSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new ActivityLauncher(ContentPreference.this).signUpThird(ContentPreference.this, SignUpThirdPage.class);
+                new ActivityLauncher(ContentPreference.this).signUpThird(ContentPreference.this, SignUpThirdPage.class,contentPreference);
             }
         });
     }
@@ -104,7 +106,7 @@ public class ContentPreference extends BaseBindingActivity<ActivityContentPrefer
         }
 
 
-        adatperContentPreference = new ContentPreferenceAdapter(ContentPreference.this, list);
+        adatperContentPreference = new ContentPreferenceAdapter(ContentPreference.this, list, ContentPreference.this);
         getBinding().recyclerView.setAdapter(adatperContentPreference);
     }
 
@@ -121,5 +123,27 @@ public class ContentPreference extends BaseBindingActivity<ActivityContentPrefer
 //
         getBinding().recyclerView.setLayoutManager(flowLayoutManager);
 
+    }
+
+    @Override
+    public void onClick(ArrayList<PreferenceBean> arrayList) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i<arrayList.size(); i ++){
+            if (arrayList.get(i).getChecked()){
+                stringBuilder.append(arrayList.get(i).getName()).append(", ");
+
+            }
+            if (stringBuilder.length() > 0) {
+                contentPreference = stringBuilder.toString();
+                contentPreference = contentPreference.substring(0, contentPreference.length() - 2);
+            } else {
+                contentPreference = "";
+            }
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
     }
 }

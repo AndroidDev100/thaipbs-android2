@@ -17,6 +17,7 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 
+import me.vipa.app.activities.contentPreference.UI.ContentPreference;
 import me.vipa.app.activities.usermanagment.viewmodel.RegistrationLoginViewModel;
 import me.vipa.app.baseModels.BaseBindingActivity;
 import me.vipa.app.R;
@@ -138,10 +139,11 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
             mLastClickTime = SystemClock.elapsedRealtime();
 
             if (CheckInternetConnection.isOnline(SignUpActivity.this)) {
-                if (validateNameEmpty() && validateEmptyEmail() && validateEmail() && passwordCheck(getBinding().etPassword.getText().toString()) && confirmPasswordCheck(getBinding().etPassword.getText().toString(),getBinding().etCnfPassword.getText().toString()) && isCheckboxSelected()) {
+                if (validateNameEmpty() && validateEmptyEmail() && validateEmail() && passwordCheck(getBinding().etPassword.getText().toString()) && confirmPasswordCheck(getBinding().etPassword.getText().toString(),getBinding().etCnfPassword.getText().toString())) {
                     getBinding().errorName.setVisibility(View.INVISIBLE);
                     getBinding().errorEmail.setVisibility(View.INVISIBLE);
                     getBinding().errorPassword.setVisibility(View.INVISIBLE);
+                    getBinding().errorCnfPassword.setVisibility(View.INVISIBLE);
                     showLoading(getBinding().progressBar, true);
                     preference = KsPreferenceKeys.getInstance();
                     preference.setAppPrefAccessToken("");
@@ -155,7 +157,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
                                 preference.setAppPrefAccessToken(signupResponseAccessToken.getAccessToken());
                                 String stringJson = gson.toJson(signupResponseAccessToken.getResponseModel().getData());
                                 saveUserDetails(stringJson, signupResponseAccessToken.getResponseModel().getData().getId(), true);
-                                onBackPressed();
+                               // onBackPressed();
                                 //new ActivityLauncher(SignUpActivity.this).homeScreen(SignUpActivity.this, HomeActivity.class);
                                 //finish();
 
@@ -316,6 +318,8 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
            }
        });
 
+
+
     }
 
     private boolean isCheckboxSelected() {
@@ -346,7 +350,9 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
         preference.setAppPrefUserName(String.valueOf(fbLoginData.getName()));
         preference.setAppPrefUserEmail(String.valueOf(fbLoginData.getEmail()));
         AppCommonMethod.userId = String.valueOf(fbLoginData.getId());
-        onBackPressed();
+       // onBackPressed();
+        new ActivityLauncher(SignUpActivity.this).onContentScreen(SignUpActivity.this, ContentPreference.class);
+
         //new ActivityLauncher(SignUpActivity.this).homeScreen(SignUpActivity.this, HomeActivity.class);
 
         try {

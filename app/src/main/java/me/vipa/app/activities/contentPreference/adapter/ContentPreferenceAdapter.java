@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.vipa.app.R;
+import me.vipa.app.callbacks.commonCallbacks.ContentPreferenceCallback;
 import me.vipa.app.databinding.UserPreferenceItemBinding;
 import me.vipa.app.utils.config.bean.ContentPreference;
 import me.vipa.app.utils.config.bean.PreferenceBean;
@@ -24,10 +25,12 @@ public class ContentPreferenceAdapter extends RecyclerView.Adapter<ContentPrefer
     //    String type;
     private final ArrayList<PreferenceBean> arrayList;
     private int count = 0;
+    private ContentPreferenceCallback callback;
 
-    public ContentPreferenceAdapter(Activity ctx, ArrayList<PreferenceBean> list) {
+    public ContentPreferenceAdapter(Activity ctx, ArrayList<PreferenceBean> list, ContentPreferenceCallback callback) {
         activity = ctx;
        this.arrayList = list;
+       this.callback = callback;
         //getGenreList();
     }
 
@@ -99,6 +102,8 @@ public class ContentPreferenceAdapter extends RecyclerView.Adapter<ContentPrefer
                     notifyDataSetChanged();
                 }
             }
+
+            callback.onClick(arrayList);
 
         });
     }

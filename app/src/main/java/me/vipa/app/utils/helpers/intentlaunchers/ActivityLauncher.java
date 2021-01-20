@@ -115,8 +115,9 @@ public class ActivityLauncher {
         activity.startActivity(intent);
 
     }
-    public void signUpThird(Activity source, Class<SignUpThirdPage> destination) {
+    public void signUpThird(Activity source, Class<SignUpThirdPage> destination, String contentPreference) {
         Intent intent = new Intent(source, destination);
+        intent.putExtra(AppConstants.CONTENT_PREFERENCE,contentPreference);
         activity.startActivity(intent);
 
     }

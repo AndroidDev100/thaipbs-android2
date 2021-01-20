@@ -23,6 +23,7 @@ import me.vipa.app.baseModels.BaseBindingActivity;
 import me.vipa.app.databinding.ActivitySignUpThirdPageBinding;
 import me.vipa.app.fragments.dialog.AlertDialogFragment;
 import me.vipa.app.fragments.dialog.AlertDialogSingleButtonFragment;
+import me.vipa.app.utils.constants.AppConstants;
 import me.vipa.app.utils.helpers.CheckInternetConnection;
 import me.vipa.app.utils.helpers.NetworkConnectivity;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
@@ -32,7 +33,7 @@ public class SignUpThirdPage extends BaseBindingActivity<ActivitySignUpThirdPage
     private KsPreferenceKeys preference;
     private boolean isloggedout = false;
     String spin_val;
-
+    String contentPreference = "";
     String[] gender = {"Gender", "Male", "Female", "Others"};
     private int mYear, mMonth, mDay;
 
@@ -44,6 +45,7 @@ public class SignUpThirdPage extends BaseBindingActivity<ActivitySignUpThirdPage
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        contentPreference = getIntent().getStringExtra(AppConstants.CONTENT_PREFERENCE);
         connectionObserver();
     }
 

@@ -2,6 +2,7 @@ package me.vipa.app.utils.constants;
 
 public interface AppConstants {
     String FOLDER_NAME = "profile_picture/";
+    String CONTENT_PREFERENCE = "contentPreference";
     String MY_MVHUB_ENCRYPTION_KEY="MYMVHUB$KEY";
     String ENVEU_CONFIG = "enveuConfig";
     String IMAGE_TYPE_THUMBNAIL = "THUMBNAIL";

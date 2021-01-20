@@ -40,8 +40,8 @@ public class StepOneFragment extends BaseBindingFragment<FragmentStepOneBinding>
             @Override
             public void onClick(View v) {
 
-//                new ActivityLauncher(getActivity()).homeScreen(getActivity(), HomeActivity.class);
-                new ActivityLauncher(getActivity()).onContentScreen(getActivity(), ContentPreference.class);
+               new ActivityLauncher(getActivity()).homeScreen(getActivity(), HomeActivity.class);
+
             }
         });
     }
