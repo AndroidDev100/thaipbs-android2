@@ -23,8 +23,10 @@ import me.vipa.app.callbacks.commonCallbacks.ContentPreferenceCallback;
 import me.vipa.app.databinding.ActivityContentPreferenceBinding;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.config.bean.PreferenceBean;
+import me.vipa.app.utils.constants.AppConstants;
 import me.vipa.app.utils.cropImage.helpers.NetworkConnectivity;
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
+import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 
 
 public class ContentPreference extends BaseBindingActivity<ActivityContentPreferenceBinding> implements ContentPreferenceCallback {
@@ -34,6 +36,7 @@ public class ContentPreference extends BaseBindingActivity<ActivityContentPrefer
     private ArrayList<PreferenceBean> list;
     private ArrayList<PreferenceBean> selectedList;
     private String contentPreference = "";
+    private KsPreferenceKeys preference;
 
     @Override
     public ActivityContentPreferenceBinding inflateBindingLayout(@NonNull LayoutInflater inflater) {
@@ -48,6 +51,7 @@ public class ContentPreference extends BaseBindingActivity<ActivityContentPrefer
     }
 
     private void callBinding() {
+        preference = KsPreferenceKeys.getInstance();
         getBinding().toolbar.backLayout.setVisibility(View.GONE);
         getBinding().toolbar.titleToolbar.setVisibility(View.GONE);
         getBinding().toolbar.titleSkip.setText(getResources().getString(R.string.skip));
@@ -60,6 +64,7 @@ public class ContentPreference extends BaseBindingActivity<ActivityContentPrefer
     private void connectionValidation(boolean aBoolean) {
         if (aBoolean) {
             getBinding().noConnectionLayout.setVisibility(View.GONE);
+
             uiInitialization();
             setAdapter();
             setClicks();
@@ -84,6 +89,7 @@ public class ContentPreference extends BaseBindingActivity<ActivityContentPrefer
         getBinding().toolbar.titleSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                contentPreference = "";
                 new ActivityLauncher(ContentPreference.this).signUpThird(ContentPreference.this, SignUpThirdPage.class,contentPreference);
             }
         });
@@ -96,14 +102,16 @@ public class ContentPreference extends BaseBindingActivity<ActivityContentPrefer
 
     private void setAdapter() {
             list = new ArrayList<>();
-        for (int i = 0; i< AppCommonMethod.getConfigResponse().getData().getAppConfig().getContentPreference().size(); i ++){
-            PreferenceBean preferenceBean = new PreferenceBean();
-            preferenceBean.setIdentifier(AppCommonMethod.getConfigResponse().getData().getAppConfig().getContentPreference().get(i).getIdentifier());
-            preferenceBean.setName(AppCommonMethod.getConfigResponse().getData().getAppConfig().getContentPreference().get(i).getName());
-            preferenceBean.setChecked(false);
-            list.add(preferenceBean);
+            if (AppCommonMethod.getConfigResponse().getData()!=null) {
+                for (int i = 0; i < AppCommonMethod.getConfigResponse().getData().getAppConfig().getContentPreference().size(); i++) {
+                    PreferenceBean preferenceBean = new PreferenceBean();
+                    preferenceBean.setIdentifier(AppCommonMethod.getConfigResponse().getData().getAppConfig().getContentPreference().get(i).getIdentifier());
+                    preferenceBean.setName(AppCommonMethod.getConfigResponse().getData().getAppConfig().getContentPreference().get(i).getName());
+                    preferenceBean.setChecked(false);
+                    list.add(preferenceBean);
 
-        }
+                }
+            }
 
 
         adatperContentPreference = new ContentPreferenceAdapter(ContentPreference.this, list, ContentPreference.this);
@@ -144,6 +152,15 @@ public class ContentPreference extends BaseBindingActivity<ActivityContentPrefer
 
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
+        super.onBackPressed();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (preference.getAppPrefRegisterStatus().equalsIgnoreCase(AppConstants.UserStatus.Login.toString())) {
+            onBackPressed();
+        }
+    }
+
 }

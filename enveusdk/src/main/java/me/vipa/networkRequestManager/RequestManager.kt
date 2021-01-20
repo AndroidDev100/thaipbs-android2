@@ -210,13 +210,15 @@ class RequestManager {
         })
     }
 
-    fun userUpdateProfileCall(loginCallBacks: UserProfileCallBack, token: String, name: String, mobile: String, spinnerValue: String, dob: String, address: String, imageUrl: String, via: String) {
+    fun userUpdateProfileCall(loginCallBacks: UserProfileCallBack, token: String, name: String, mobile: String, spinnerValue: String, dob: String, address: String, imageUrl: String, via: String, contentPreference: String) {
         val endPoint = NetworkSetup().subscriptionClient(token).create<EnveuEndpoints>(EnveuEndpoints::class.java)
         val requestParam = JsonObject()
         val customParam = JsonObject()
         try {
 
-
+            if (!contentPreference.equals("")){
+                customParam.addProperty("contentPreferences", contentPreference)
+            }
             customParam.addProperty("address", address)
             if (via.equals("Avatar")) {
                 customParam.addProperty("profileAvatar", imageUrl)
@@ -224,7 +226,9 @@ class RequestManager {
                 requestParam.addProperty("profilePicURL", imageUrl)
             }
             requestParam.addProperty("name", name)
-            requestParam.addProperty("phoneNumber", mobile)
+            if(!mobile.equals("")) {
+                requestParam.addProperty("phoneNumber", mobile)
+            }
             if (!spinnerValue.equals("")) {
                 requestParam.addProperty("gender", spinnerValue.toUpperCase())
             }

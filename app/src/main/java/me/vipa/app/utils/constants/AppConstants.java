@@ -121,6 +121,7 @@ public interface AppConstants {
     String APP_PREF_CONFIG = "appConfig";
     String APP_PREF_ACCESS_TOKEN = "accessToken";
     String APP_PREF_LOGIN_STATUS = "loginStatus";
+    String FINAL_APP_PREF_LOGIN_STATUS = "status";
     String APP_PREF_GET_USER = "geLtUser";
     String APP_PREF_LOGIN_TYPE = "userLoginType";
     String APP_PREF_USER_ID = "userId";

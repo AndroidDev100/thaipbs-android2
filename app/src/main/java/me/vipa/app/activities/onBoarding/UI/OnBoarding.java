@@ -7,19 +7,24 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import me.vipa.app.activities.homeactivity.ui.HomeActivity;
 import me.vipa.app.baseModels.BaseBindingActivity;
 import me.vipa.app.databinding.ActivityOnBoardingBinding;
 import me.vipa.app.databinding.SettingsActivityBinding;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
+import me.vipa.app.utils.constants.AppConstants;
+import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 
 public class OnBoarding extends BaseBindingActivity<ActivityOnBoardingBinding> {
+    private KsPreferenceKeys preference;
 
     @Override
     public ActivityOnBoardingBinding inflateBindingLayout(@NonNull LayoutInflater inflater) {
@@ -29,6 +34,7 @@ public class OnBoarding extends BaseBindingActivity<ActivityOnBoardingBinding> {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        preference = KsPreferenceKeys.getInstance();
 
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
@@ -45,6 +51,14 @@ public class OnBoarding extends BaseBindingActivity<ActivityOnBoardingBinding> {
 
         getBinding().tabLayoutIndicator.setupWithViewPager(getBinding().viewPagerOnBoarding);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (preference.getAppPrefRegisterStatus().equalsIgnoreCase(AppConstants.UserStatus.Login.toString())) {
+            new ActivityLauncher(OnBoarding.this).homeScreen(OnBoarding.this, HomeActivity.class);
+        }
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -66,4 +80,6 @@ public class OnBoarding extends BaseBindingActivity<ActivityOnBoardingBinding> {
             mList.add(fragment);
         }
     }
+
+
 }

@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,7 +25,6 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
-import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferState;
@@ -83,6 +81,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
     private AmazonS3 s3;
     private TransferUtility transferUtility;
     String imageToUpload = "";
+    private String contentPreference = "";
 
     @Override
     public ProfileActivityNewBinding inflateBindingLayout(@NonNull LayoutInflater inflater) {
@@ -273,7 +272,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
         if (validateNameEmpty()) {
             showLoading(getBinding().progressBar, true);
             String token = preference.getAppPrefAccessToken();
-            viewModel.hitUpdateProfile(ProfileActivityNew.this, token, getBinding().etName.getText().toString(), getBinding().etMobileNumber.getText().toString(), spinnerValue, dateMilliseconds, getBinding().etAddress.getText().toString(), imageUrlId, via).observe(ProfileActivityNew.this, new Observer<UserProfileResponse>() {
+            viewModel.hitUpdateProfile(ProfileActivityNew.this, token, getBinding().etName.getText().toString(), getBinding().etMobileNumber.getText().toString(), spinnerValue, dateMilliseconds, getBinding().etAddress.getText().toString(), imageUrlId, via, contentPreference).observe(ProfileActivityNew.this, new Observer<UserProfileResponse>() {
                 @Override
                 public void onChanged(UserProfileResponse userProfileResponse) {
                     dismissLoading(getBinding().progressBar);
@@ -359,7 +358,6 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
          imageToUpload = "Thumbnail_" + AppCommonMethod.getCurrentTimeStamp() + "Android" + ".jpg";
         imageUrlId = imageToUpload;
         via = "Gallery";
-        Log.d("dedededede",imageToUpload);
         TransferObserver transferObserver = transferUtility.upload(
                 "thai-pbs/profile_picture", imageToUpload,
                 fileToUpload
@@ -513,7 +511,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
         if (userProfileResponse.getData().getProfilePicURL() != null) {
             imageUrlId = userProfileResponse.getData().getProfilePicURL().toString();
             via = "Gallery";
-            Glide.with(ProfileActivityNew.this).load(SDKConfig.getInstance().getCLOUD_FRONT_BASE_URL()+ AppConstants.FOLDER_NAME +userProfileResponse.getData().getProfilePicURL())
+            Glide.with(ProfileActivityNew.this).load(userProfileResponse.getData().getProfilePicURL())
                     .placeholder(R.drawable.default_profile_pic)
                     .error(R.drawable.default_profile_pic)
                     .into(getBinding().ivProfilePic);

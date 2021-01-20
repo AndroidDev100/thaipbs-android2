@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 
 import me.vipa.app.R;
 import me.vipa.app.activities.homeactivity.ui.HomeActivity;
+import me.vipa.app.activities.usermanagment.ui.SignUpActivity;
 import me.vipa.app.baseModels.BaseBindingFragment;
 import me.vipa.app.databinding.FragmentStepTwoBinding;
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
@@ -37,7 +38,7 @@ public class StepTwoFragment extends BaseBindingFragment<FragmentStepTwoBinding>
         getBinding().register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new ActivityLauncher(getActivity()).homeScreen(getActivity(), HomeActivity.class);
+                new ActivityLauncher(getActivity()).signUpActivity(getActivity(), SignUpActivity.class, "");
             }
         });
     }

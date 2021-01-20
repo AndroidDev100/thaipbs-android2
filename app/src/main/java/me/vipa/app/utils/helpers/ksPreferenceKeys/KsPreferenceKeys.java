@@ -81,6 +81,14 @@ public class KsPreferenceKeys extends SharedPrefHelper {
         setString(AppConstants.APP_PREF_LOGIN_STATUS, LoginStatus);
     }
 
+    public String getAppPrefRegisterStatus() {
+        return getString(AppConstants.FINAL_APP_PREF_LOGIN_STATUS, "");
+    }
+
+    public void setAppPrefRegisterStatus(String LoginStatus) {
+        setString(AppConstants.FINAL_APP_PREF_LOGIN_STATUS, LoginStatus);
+    }
+
     public String getAppPrefConfigResponse() {
         return getString(AppConstants.APP_PREF_CONFIG_RESPONSE, "");
     }

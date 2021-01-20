@@ -11,6 +11,8 @@ import androidx.annotation.Nullable;
 import me.vipa.app.R;
 import me.vipa.app.activities.contentPreference.UI.ContentPreference;
 import me.vipa.app.activities.homeactivity.ui.HomeActivity;
+import me.vipa.app.activities.usermanagment.ui.LoginActivity;
+import me.vipa.app.activities.usermanagment.ui.SignUpActivity;
 import me.vipa.app.baseModels.BaseBindingFragment;
 import me.vipa.app.databinding.FragmentStepOneBinding;
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
@@ -40,7 +42,7 @@ public class StepOneFragment extends BaseBindingFragment<FragmentStepOneBinding>
             @Override
             public void onClick(View v) {
 
-               new ActivityLauncher(getActivity()).homeScreen(getActivity(), HomeActivity.class);
+                new ActivityLauncher(getActivity()).signUpActivity(getActivity(), SignUpActivity.class, "");
 
             }
         });
@@ -51,4 +53,5 @@ public class StepOneFragment extends BaseBindingFragment<FragmentStepOneBinding>
         super.onActivityCreated(savedInstanceState);
 
     }
+
 }

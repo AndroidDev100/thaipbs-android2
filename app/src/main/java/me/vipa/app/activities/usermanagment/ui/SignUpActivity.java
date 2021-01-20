@@ -69,6 +69,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
 
     private void callBinding() {
         viewModel = ViewModelProviders.of(SignUpActivity.this).get(RegistrationLoginViewModel.class);
+        preference = KsPreferenceKeys.getInstance();
         getBinding().radioPasswordEye.setChecked(false);
         getBinding().confirmPasswordEye.setChecked(false);
         font = ResourcesCompat.getFont(SignUpActivity.this, sukhumvittadmai_normal);
@@ -87,8 +88,13 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
     @Override
     protected void onResume() {
         super.onResume();
+        if (preference.getAppPrefLoginStatus().equalsIgnoreCase(AppConstants.UserStatus.Login.toString())) {
+            onBackPressed();
+        }
         //resetUI();
     }
+
+
 
     private void connectionObserver() {
         if (NetworkConnectivity.isOnline(SignUpActivity.this)) {
@@ -145,7 +151,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
                     getBinding().errorPassword.setVisibility(View.INVISIBLE);
                     getBinding().errorCnfPassword.setVisibility(View.INVISIBLE);
                     showLoading(getBinding().progressBar, true);
-                    preference = KsPreferenceKeys.getInstance();
+
                     preference.setAppPrefAccessToken("");
 
                     viewModel.hitSignUpAPI(getBinding().etName.getText().toString(), getBinding().etEmail.getText().toString(), getBinding().etPassword.getText().toString()).observe(SignUpActivity.this, signupResponseAccessToken -> {

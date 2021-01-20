@@ -49,8 +49,8 @@ class BaseCategoryServices {
         RequestManager.instance.userProfileCall(callBack,token);
     }
 
-    fun userUpdateProfileService(token: String, name: String, mobile: String, spinnerValue: String, dob: String, address: String, imageUrl: String, via: String, callBack: UserProfileCallBack) {
-        RequestManager.instance.userUpdateProfileCall(callBack,token,name,mobile,spinnerValue,dob,address,imageUrl,via);
+    fun userUpdateProfileService(token: String, name: String, mobile: String, spinnerValue: String, dob: String, address: String, imageUrl: String, via: String, contentPreference: String, callBack: UserProfileCallBack) {
+        RequestManager.instance.userUpdateProfileCall(callBack,token,name,mobile,spinnerValue,dob,address,imageUrl,via,contentPreference);
     }
 
     fun bookmarkService(token: String, assetId: Int, position: Int, bookmarkingCallback: BookmarkingCallback) {

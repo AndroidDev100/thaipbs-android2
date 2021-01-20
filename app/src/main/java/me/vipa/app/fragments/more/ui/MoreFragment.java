@@ -380,6 +380,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                 String strCurrentTheme = KsPreferenceKeys.getInstance().getCurrentTheme();
                 String strCurrentLanguage = KsPreferenceKeys.getInstance().getAppLanguage();
                 int languagePosition=KsPreferenceKeys.getInstance().getAppPrefLanguagePos();
+                preference.setAppPrefRegisterStatus(AppConstants.UserStatus.Logout.toString());
                 preference.clear();
                 KsPreferenceKeys.getInstance().setCurrentTheme(strCurrentTheme);
                 KsPreferenceKeys.getInstance().setAppLanguage(strCurrentLanguage);
