@@ -386,6 +386,8 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                 KsPreferenceKeys.getInstance().setAppLanguage(strCurrentLanguage);
                 KsPreferenceKeys.getInstance().setAppPrefLanguagePos(languagePosition);
                 KsPreferenceKeys.getInstance().setfirstTimeUser(false);
+                //TODO Handle Content Preference Data On Logout
+              //  AppCommonMethod.getConfigResponse().getData().getAppConfig().setContentPreference(AppCommonMethod.getConfigResponse().getData().getAppConfig().getContentPreference());
                 modelCall();
                 Logger.w("currentLang-->>",strCurrentLanguage);
                 if (strCurrentLanguage.equalsIgnoreCase("Thai") || KsPreferenceKeys.getInstance().getAppLanguage().equalsIgnoreCase("हिंदी") ){
