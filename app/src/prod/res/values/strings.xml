@@ -1,7 +1,8 @@
 <resources>
 
     <!--Production ID-->
-    <string name="facebook_app_id">1907725549359053</string>
+    <string name="facebook_app_id">3991362660937190</string>
+    <string name="fb_login_protocol_scheme">fb3991362660937190</string>
     <string name="branch_key">key_live_cdJ7zkyRJg31rm79E5t5QkleDAmzOaM7</string>
     <string name="branch_key_test">key_test_gpJ7BfyMRb11xoZ01dyIsjhbwCfwJgWb</string>
     <string name="branch_host">vipa.me</string>
