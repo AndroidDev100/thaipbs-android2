@@ -313,16 +313,15 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
             }
         });
 
-       getBinding().termsText.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               if (!getBinding().termsText.isChecked()){
-                   getBinding().termsText.setChecked(true);
-               }else {
-                   getBinding().termsText.setChecked(false);
-               }
-           }
-       });
+        getBinding().termsText.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                //TODO checkBox Handling
+                Log.d("sesesesese",isChecked+"");
+
+            }
+        });
 
 
 

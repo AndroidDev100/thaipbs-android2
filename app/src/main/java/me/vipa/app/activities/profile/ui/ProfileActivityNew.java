@@ -11,7 +11,6 @@ import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -37,7 +36,6 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -76,6 +74,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
     String[] gender = {"GENDER", "MALE", "FEMALE", "OTHERS"};
     String dateMilliseconds = "";
     ArrayAdapter<String> spin_adapter;
+    String imageToUpload = "";
     private String spinnerValue = "";
     private RegistrationLoginViewModel viewModel;
     private KsPreferenceKeys preference;
@@ -84,8 +83,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
     private String via = "";
     private AmazonS3 s3;
     private TransferUtility transferUtility;
-    String imageToUpload = "";
-    private String contentPreference = "";
+    private final String contentPreference = "";
 
     @Override
     public ProfileActivityNewBinding inflateBindingLayout(@NonNull LayoutInflater inflater) {
@@ -139,7 +137,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
                     spin_val = gender[position];
                     if (spin_val.equalsIgnoreCase("GENDER")) {
                         spinnerValue = "";
-                    }else {
+                    } else {
                         spinnerValue = spin_val;
                     }
                 }
@@ -289,7 +287,6 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
         });
 
 
-
     }
 
     private void callUpdateApi() {
@@ -340,17 +337,17 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
         if (getBinding().etMobileNumber.getText().toString().trim().equalsIgnoreCase("")) {
             check = true;
             getBinding().errorMobile.setVisibility(View.INVISIBLE);
-        } else if (getBinding().etMobileNumber.getText().toString().trim().length() <=11){
-            String firstTwoChar = getBinding().etMobileNumber.getText().toString().substring(0,2);
+        } else if (getBinding().etMobileNumber.getText().toString().trim().length() <= 11) {
+            String firstTwoChar = getBinding().etMobileNumber.getText().toString().substring(0, 2);
             if (firstTwoChar.equalsIgnoreCase("66")) {
                 check = true;
                 getBinding().errorMobile.setVisibility(View.INVISIBLE);
-            }else {
+            } else {
                 check = false;
                 getBinding().errorMobile.setVisibility(View.VISIBLE);
                 getBinding().errorMobile.setText(getResources().getString(R.string.mobile_error));
             }
-        }else {
+        } else {
             check = false;
             getBinding().errorMobile.setVisibility(View.VISIBLE);
             getBinding().errorMobile.setText(getResources().getString(R.string.mobile_error));
@@ -402,7 +399,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
 
     private void setFileToUpload(File fileToUpload) {
 //       String videoLink = "Android" + AppCommonMethod.getCurrentTimeStamp() + fileToUpload.getName() +".jpeg";
-         imageToUpload = "Thumbnail_" + AppCommonMethod.getCurrentTimeStamp() + "Android" + ".jpg";
+        imageToUpload = "Thumbnail_" + AppCommonMethod.getCurrentTimeStamp() + "Android" + ".jpg";
         imageUrlId = imageToUpload;
         via = "Gallery";
         TransferObserver transferObserver = transferUtility.upload(
@@ -430,7 +427,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
             @Override
             public void onProgressChanged(int id, long bytesCurrent, long bytesTotal) {
                 int progress = (int) ((double) bytesCurrent * 100 / bytesTotal);
-               // PrintLogging.printLog("", +progress + "");
+                // PrintLogging.printLog("", +progress + "");
 
                 //getBinding().progressBar.setVisibility(View.VISIBLE);
 
@@ -481,7 +478,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
                 String imagePath = resultUri.getPath();
                 File imageFilePath = new File(imagePath);
 
-               // imageThumbnail = number + imageFilePath.getName();
+                // imageThumbnail = number + imageFilePath.getName();
                 showLoading(getBinding().progressBar, true);
                 setFileToUpload(imageFilePath);
 
@@ -514,80 +511,84 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
 
     private void updateUI(UserProfileResponse userProfileResponse) {
         try {
-        // getBinding().userNameWords.setText(AppCommonMethod.getUserName(userProfileResponse.getData().getName()));
+            // getBinding().userNameWords.setText(AppCommonMethod.getUserName(userProfileResponse.getData().getName()));
 
-        getBinding().etName.setText(userProfileResponse.getData().getName());
-        getBinding().etName.setSelection(getBinding().etName.getText().length());
-        getBinding().etEmail.setText(userProfileResponse.getData().getEmail());
-        preference.setAppPrefUserName(String.valueOf(userProfileResponse.getData().getName()));
-        // Log.d("sdsdsdsdsd",new Gson().toJson(userProfileResponse.getData().getCustomData().getProfileAvatar()));
+            getBinding().etName.setText(userProfileResponse.getData().getName());
+            getBinding().etName.setSelection(getBinding().etName.getText().length());
+            getBinding().etEmail.setText(userProfileResponse.getData().getEmail());
+            preference.setAppPrefUserName(String.valueOf(userProfileResponse.getData().getName()));
+            // Log.d("sdsdsdsdsd",new Gson().toJson(userProfileResponse.getData().getCustomData().getProfileAvatar()));
 
-        if (userProfileResponse.getData().getPhoneNumber() != null) {
-            getBinding().etMobileNumber.setText(userProfileResponse.getData().getPhoneNumber() + "");
-        }
-
-        if (userProfileResponse.getData().getDateOfBirth() != null) {
-            double longV = (double) userProfileResponse.getData().getDateOfBirth();
-            DecimalFormat df = new DecimalFormat("#");
-            df.setMaximumFractionDigits(0);
-            long l = Long.parseLong(df.format(longV));
-            dateMilliseconds = String.valueOf(l);
-            String dateString = DateFormat.format("yyyy/mm/dd", new Date(l)).toString();
-            getBinding().etDob.setText(dateString);
-        }
-
-        if (userProfileResponse.getData().getGender() != null) {
-            String compareValue = userProfileResponse.getData().getGender() + "";
-            if (compareValue != null) {
-                int spinnerPosition = spin_adapter.getPosition(compareValue.toUpperCase());
-                getBinding().spinnerId.setSelection(spinnerPosition);
-                if (getBinding().spinnerId.getSelectedItem().toString().equalsIgnoreCase("GENDER")){
-                    spinnerValue = "";
-                }else {
-                    spinnerValue = getBinding().spinnerId.getSelectedItem().toString();
-                }
+            if (userProfileResponse.getData().getPhoneNumber() != null) {
+                getBinding().etMobileNumber.setText(userProfileResponse.getData().getPhoneNumber() + "");
             }
-        }
 
-        if (userProfileResponse.getData().getCustomData() != null) {
-            if (userProfileResponse.getData().getCustomData().getAddress() != null)
-                getBinding().etAddress.setText(userProfileResponse.getData().getCustomData().getAddress());
-        }
+            if (userProfileResponse.getData().getDateOfBirth() != null) {
+                double longV = (double) userProfileResponse.getData().getDateOfBirth();
+                DecimalFormat df = new DecimalFormat("#");
+                df.setMaximumFractionDigits(0);
+                long l = Long.parseLong(df.format(longV));
+                dateMilliseconds = String.valueOf(l);
+                String dateString = DateFormat.format("yyyy/mm/dd", new Date(l)).toString();
+                getBinding().etDob.setText(dateString);
+            }
 
-
-        if (userProfileResponse.getData().getProfilePicURL() != null) {
-            imageUrlId = userProfileResponse.getData().getProfilePicURL().toString();
-            via = "Gallery";
-            Glide.with(ProfileActivityNew.this).load(SDKConfig.getInstance().getCLOUD_FRONT_BASE_URL()+ AppConstants.FOLDER_NAME +userProfileResponse.getData().getProfilePicURL())
-                    .placeholder(R.drawable.default_profile_pic)
-                    .error(R.drawable.default_profile_pic)
-                    .into(getBinding().ivProfilePic);
-        } else {
-
-            if (userProfileResponse.getData().getCustomData().getProfileAvatar() != null) {
-                for (int i = 0; i < SDKConfig.getInstance().getAvatarImages().size(); i++) {
-                    if (userProfileResponse.getData().getCustomData().getProfileAvatar().equalsIgnoreCase(SDKConfig.getInstance().getAvatarImages().get(i).getIdentifier())) {
-                        imageUrlId = SDKConfig.getInstance().getAvatarImages().get(i).getIdentifier();
-                        via = "Avatar";
-                        Glide.with(ProfileActivityNew.this).load(SDKConfig.getInstance().getAvatarImages().get(i).getUrl())
-                                .placeholder(R.drawable.default_profile_pic)
-                                .error(R.drawable.default_profile_pic)
-                                .into(getBinding().ivProfilePic);
+            if (userProfileResponse.getData().getGender() != null) {
+                String compareValue = userProfileResponse.getData().getGender() + "";
+                if (compareValue != null) {
+                    int spinnerPosition = spin_adapter.getPosition(compareValue.toUpperCase());
+                    getBinding().spinnerId.setSelection(spinnerPosition);
+                    if (getBinding().spinnerId.getSelectedItem().toString().equalsIgnoreCase("GENDER")) {
+                        spinnerValue = "";
+                    } else {
+                        spinnerValue = getBinding().spinnerId.getSelectedItem().toString();
                     }
                 }
-            } else {
-                imageUrlId = SDKConfig.getInstance().getAvatarImages().get(0).getIdentifier();
-                via = "Avatar";
-                Glide.with(ProfileActivityNew.this).load(SDKConfig.getInstance().getAvatarImages().get(0).getUrl())
+            }
+
+            if (userProfileResponse.getData().getCustomData() != null) {
+                if (userProfileResponse.getData().getCustomData().getAddress() != null)
+                    getBinding().etAddress.setText(userProfileResponse.getData().getCustomData().getAddress());
+            }
+
+
+            if (userProfileResponse.getData().getProfilePicURL() != null) {
+                imageUrlId = userProfileResponse.getData().getProfilePicURL().toString();
+                via = "Gallery";
+                Glide.with(ProfileActivityNew.this).load(SDKConfig.getInstance().getCLOUD_FRONT_BASE_URL() + AppConstants.FOLDER_NAME + userProfileResponse.getData().getProfilePicURL())
                         .placeholder(R.drawable.default_profile_pic)
                         .error(R.drawable.default_profile_pic)
                         .into(getBinding().ivProfilePic);
+            } else {
+
+                if (userProfileResponse.getData().getCustomData().getProfileAvatar() != null) {
+                    for (int i = 0; i < SDKConfig.getInstance().getAvatarImages().size(); i++) {
+                        if (userProfileResponse.getData().getCustomData().getProfileAvatar().equalsIgnoreCase(SDKConfig.getInstance().getAvatarImages().get(i).getIdentifier())) {
+                            imageUrlId = SDKConfig.getInstance().getAvatarImages().get(i).getIdentifier();
+                            via = "Avatar";
+
+                            setImage(SDKConfig.getInstance().getAvatarImages().get(i).getUrl());
+
+                        }
+                    }
+                } else {
+                    imageUrlId = SDKConfig.getInstance().getAvatarImages().get(0).getIdentifier();
+                    via = "Avatar";
+                    setImage(SDKConfig.getInstance().getAvatarImages().get(0).getUrl());
+
+                }
             }
-        }
 
         } catch (Exception e) {
 
         }
+    }
+
+    private void setImage(String url) {
+        Glide.with(ProfileActivityNew.this).load(url)
+                .placeholder(R.drawable.default_profile_pic)
+                .error(R.drawable.default_profile_pic)
+                .into(getBinding().ivProfilePic);
     }
 
     private void showDialog(String title, String message) {
