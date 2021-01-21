@@ -80,6 +80,9 @@ public class SDKConfig {
     public List<AvatarImages> getAvatarImages() {
         return configBean == null ? null : configBean.getData().getAppConfig().getavatarImages();
     }
+    public String getProfileFolder() {
+        return configBean == null ? "" : configBean.getData().getAppConfig().getProfilePictureBaseFolder();
+    }
 
     public String getOvpApiKey() {
         if (isTablet){

@@ -25,6 +25,18 @@ public class AppConfig {
     @Expose
     private boolean bingeWatchingEnabled;
 
+    @SerializedName("profilePictureBaseFolder")
+    @Expose
+    private String profilePictureBaseFolder;
+
+    public String getProfilePictureBaseFolder() {
+        return profilePictureBaseFolder;
+    }
+
+    public void setProfilePictureBaseFolder(String profilePictureBaseFolder) {
+        this.profilePictureBaseFolder = profilePictureBaseFolder;
+    }
+
     @SerializedName("timer")
     @Expose
     private int timer;
