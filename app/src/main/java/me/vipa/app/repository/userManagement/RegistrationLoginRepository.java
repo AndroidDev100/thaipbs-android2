@@ -420,7 +420,9 @@ public class RegistrationLoginRepository {
             requestParam.addProperty(AppConstants.API_PARAM_EMAIL_ID, email);
             requestParam.addProperty(AppConstants.API_PARAM_FB_TOKEN, fbToken);
             requestParam.addProperty(AppConstants.API_PARAM_IS_FB_EMAIL, isEmail);
-            requestParam.addProperty(AppConstants.API_PARAM_FB_PIC, profilePic);
+            if (!profilePic.equalsIgnoreCase("")) {
+                requestParam.addProperty(AppConstants.API_PARAM_FB_PIC, profilePic);
+            }
             Call<LoginResponseModel> call = endpoint.getFbLogin(requestParam);
 
             BaseCategoryServices.Companion.getInstance().fbLoginService(requestParam, new LoginCallBack() {
@@ -474,7 +476,9 @@ public class RegistrationLoginRepository {
             requestParam.addProperty(AppConstants.API_PARAM_EMAIL_ID, email);
             requestParam.addProperty(AppConstants.API_PARAM_FB_TOKEN, fbToken);
             requestParam.addProperty(AppConstants.API_PARAM_IS_FB_EMAIL, isEmail);
-            requestParam.addProperty(AppConstants.API_PARAM_FB_PIC, profilePic);
+            if (!profilePic.equalsIgnoreCase("")) {
+                requestParam.addProperty(AppConstants.API_PARAM_FB_PIC, profilePic);
+            }
             Call<LoginResponseModel> call = endpoint.getForceFbLogin(requestParam);
 
             BaseCategoryServices.Companion.getInstance().fbForceLoginService(requestParam, new LoginCallBack() {

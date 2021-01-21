@@ -552,7 +552,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
             }
 
 
-            if (userProfileResponse.getData().getProfilePicURL() != null) {
+            if (userProfileResponse.getData().getProfilePicURL() != null && userProfileResponse.getData().getProfilePicURL() != "") {
                 imageUrlId = userProfileResponse.getData().getProfilePicURL().toString();
                 via = "Gallery";
                 Glide.with(ProfileActivityNew.this).load(SDKConfig.getInstance().getCLOUD_FRONT_BASE_URL() + SDKConfig.getInstance().getProfileFolder() + userProfileResponse.getData().getProfilePicURL())
@@ -567,14 +567,20 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
                             imageUrlId = SDKConfig.getInstance().getAvatarImages().get(i).getIdentifier();
                             via = "Avatar";
 
-                            setImage(SDKConfig.getInstance().getAvatarImages().get(i).getUrl());
+                            Glide.with(ProfileActivityNew.this).load(SDKConfig.getInstance().getAvatarImages().get(i).getUrl())
+                                    .placeholder(R.drawable.default_profile_pic)
+                                    .error(R.drawable.default_profile_pic)
+                                    .into(getBinding().ivProfilePic);
 
                         }
                     }
                 } else {
                     imageUrlId = SDKConfig.getInstance().getAvatarImages().get(0).getIdentifier();
                     via = "Avatar";
-                    setImage(SDKConfig.getInstance().getAvatarImages().get(0).getUrl());
+                    Glide.with(ProfileActivityNew.this).load(SDKConfig.getInstance().getAvatarImages().get(0).getUrl())
+                            .placeholder(R.drawable.default_profile_pic)
+                            .error(R.drawable.default_profile_pic)
+                            .into(getBinding().ivProfilePic);
 
                 }
             }
@@ -584,12 +590,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
         }
     }
 
-    private void setImage(String url) {
-        Glide.with(ProfileActivityNew.this).load(url)
-                .placeholder(R.drawable.default_profile_pic)
-                .error(R.drawable.default_profile_pic)
-                .into(getBinding().ivProfilePic);
-    }
+
 
     private void showDialog(String title, String message) {
         FragmentManager fm = getSupportFragmentManager();
