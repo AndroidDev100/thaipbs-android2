@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 import me.vipa.app.R;
 
+import me.vipa.app.SDKConfig;
 import me.vipa.app.activities.contentPreference.adapter.ContentPreferenceAdapter;
 import me.vipa.app.activities.listing.ui.GridActivity;
 import me.vipa.app.activities.profile.adapter.AvatarAdapter;
@@ -87,7 +88,7 @@ public class AvatarImageActivity extends BaseBindingActivity<ActivityAvatarImage
 
 
     private void setAdapter() {
-        avatarAdapter = new AvatarAdapter(AvatarImageActivity.this, AppCommonMethod.getConfigResponse().getData().getAppConfig().getavatarImages(), AvatarImageActivity.this);
+        avatarAdapter = new AvatarAdapter(AvatarImageActivity.this, SDKConfig.getInstance().getAvatarImages(), AvatarImageActivity.this);
         getBinding().recyclerView.setAdapter(avatarAdapter);
     }
 

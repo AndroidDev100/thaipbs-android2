@@ -8,7 +8,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -34,6 +37,7 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -264,6 +268,26 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
 
             }
         });
+        getBinding().etMobileNumber.setOnClickListener(view -> getBinding().errorMobile.setVisibility(View.INVISIBLE));
+
+        getBinding().etMobileNumber.setLongClickable(false);
+        getBinding().etMobileNumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                getBinding().errorMobile.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
 
 
     }
@@ -541,21 +565,20 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
         } else {
 
             if (userProfileResponse.getData().getCustomData().getProfileAvatar() != null) {
-                for (int i = 0; i < AppCommonMethod.getConfigResponse().getData().getAppConfig().getavatarImages().size(); i++) {
-                    if (userProfileResponse.getData().getCustomData().getProfileAvatar().equalsIgnoreCase(AppCommonMethod.getConfigResponse().getData().getAppConfig().getavatarImages().get(i).getIdentifier())) {
-                        imageUrlId = AppCommonMethod.getConfigResponse().getData().getAppConfig().getavatarImages().get(i).getIdentifier();
+                for (int i = 0; i < SDKConfig.getInstance().getAvatarImages().size(); i++) {
+                    if (userProfileResponse.getData().getCustomData().getProfileAvatar().equalsIgnoreCase(SDKConfig.getInstance().getAvatarImages().get(i).getIdentifier())) {
+                        imageUrlId = SDKConfig.getInstance().getAvatarImages().get(i).getIdentifier();
                         via = "Avatar";
-                        Glide.with(ProfileActivityNew.this).load(AppCommonMethod.getConfigResponse().getData().getAppConfig().getavatarImages().get(i).getUrl())
+                        Glide.with(ProfileActivityNew.this).load(SDKConfig.getInstance().getAvatarImages().get(i).getUrl())
                                 .placeholder(R.drawable.default_profile_pic)
                                 .error(R.drawable.default_profile_pic)
                                 .into(getBinding().ivProfilePic);
                     }
                 }
             } else {
-
-                imageUrlId = AppCommonMethod.getConfigResponse().getData().getAppConfig().getavatarImages().get(0).getIdentifier();
+                imageUrlId = SDKConfig.getInstance().getAvatarImages().get(0).getIdentifier();
                 via = "Avatar";
-                Glide.with(ProfileActivityNew.this).load(AppCommonMethod.getConfigResponse().getData().getAppConfig().getavatarImages().get(0).getUrl())
+                Glide.with(ProfileActivityNew.this).load(SDKConfig.getInstance().getAvatarImages().get(0).getUrl())
                         .placeholder(R.drawable.default_profile_pic)
                         .error(R.drawable.default_profile_pic)
                         .into(getBinding().ivProfilePic);

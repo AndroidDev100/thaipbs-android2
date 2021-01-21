@@ -15,6 +15,7 @@ import com.xiaofeng.flowlayoutmanager.FlowLayoutManager;
 import java.util.ArrayList;
 
 import me.vipa.app.R;
+import me.vipa.app.SDKConfig;
 import me.vipa.app.activities.contentPreference.adapter.ContentPreferenceAdapter;
 import me.vipa.app.activities.usermanagment.ui.ChangePasswordActivity;
 import me.vipa.app.activities.usermanagment.ui.SignUpThirdPage;
@@ -102,11 +103,11 @@ public class ContentPreference extends BaseBindingActivity<ActivityContentPrefer
 
     private void setAdapter() {
             list = new ArrayList<>();
-            if (AppCommonMethod.getConfigResponse().getData()!=null) {
-                for (int i = 0; i < AppCommonMethod.getConfigResponse().getData().getAppConfig().getContentPreference().size(); i++) {
+            if (SDKConfig.getInstance().getContentPreference()!=null) {
+                for (int i = 0; i < SDKConfig.getInstance().getContentPreference().size(); i++) {
                     PreferenceBean preferenceBean = new PreferenceBean();
-                    preferenceBean.setIdentifier(AppCommonMethod.getConfigResponse().getData().getAppConfig().getContentPreference().get(i).getIdentifier());
-                    preferenceBean.setName(AppCommonMethod.getConfigResponse().getData().getAppConfig().getContentPreference().get(i).getName());
+                    preferenceBean.setIdentifier(SDKConfig.getInstance().getContentPreference().get(i).getIdentifier());
+                    preferenceBean.setName(SDKConfig.getInstance().getContentPreference().get(i).getName());
                     preferenceBean.setChecked(false);
                     list.add(preferenceBean);
 
