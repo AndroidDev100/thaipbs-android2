@@ -107,22 +107,22 @@
                                         android:textColor="?attr/user_name_text_color"
                                         android:layout_height="wrap_content" />
 
-                                    <Button
-                                        android:id="@+id/login_btn"
-                                        android:layout_width="@dimen/more_login_btn_width"
-                                        android:layout_height="@dimen/more_login_btn_height"
-                                        android:layout_gravity="center"
-                                        android:background="@drawable/rounded_button"
-                                        android:gravity="center"
-                                        android:fontFamily="@font/sukhumvittadmai_normal"
-                                        android:layout_marginTop="@dimen/_5sdp"
-                                        android:text="@string/login_txt"
-                                        android:textAllCaps="false"
-                                        android:textColor="@color/white"
-                                        android:textSize="@dimen/_12sdp"
-                                        android:visibility="visible"
+<!--                                    <Button-->
+<!--                                        android:id="@+id/login_btn"-->
+<!--                                        android:layout_width="@dimen/more_login_btn_width"-->
+<!--                                        android:layout_height="@dimen/more_login_btn_height"-->
+<!--                                        android:layout_gravity="center"-->
+<!--                                        android:background="@drawable/rounded_button"-->
+<!--                                        android:gravity="center"-->
+<!--                                        android:fontFamily="@font/sukhumvittadmai_normal"-->
+<!--                                        android:layout_marginTop="@dimen/_5sdp"-->
+<!--                                        android:text="@string/login_txt"-->
+<!--                                        android:textAllCaps="false"-->
+<!--                                        android:textColor="@color/white"-->
+<!--                                        android:textSize="@dimen/_12sdp"-->
+<!--                                        android:visibility="visible"-->
 
-                                        />
+<!--                                        />-->
 
 
                                 </LinearLayout>

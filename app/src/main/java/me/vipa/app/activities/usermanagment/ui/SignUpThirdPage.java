@@ -347,7 +347,7 @@ public class SignUpThirdPage extends BaseBindingActivity<ActivitySignUpThirdPage
     private void setFileToUpload(File fileToUpload) {
 //       String videoLink = "Android" + AppCommonMethod.getCurrentTimeStamp() + fileToUpload.getName() +".jpeg";
         imageToUpload = "Thumbnail_" + AppCommonMethod.getCurrentTimeStamp() + "Android" + ".jpg";
-        imageUrlId = SDKConfig.getInstance().getCLOUD_FRONT_BASE_URL()+ AppConstants.FOLDER_NAME +imageToUpload;
+        imageUrlId = imageToUpload;
         via = "Gallery";
         TransferObserver transferObserver = transferUtility.upload(
                 "thai-pbs/profile_picture", imageToUpload,

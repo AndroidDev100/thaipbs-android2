@@ -534,7 +534,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
         if (userProfileResponse.getData().getProfilePicURL() != null) {
             imageUrlId = userProfileResponse.getData().getProfilePicURL().toString();
             via = "Gallery";
-            Glide.with(ProfileActivityNew.this).load(userProfileResponse.getData().getProfilePicURL())
+            Glide.with(ProfileActivityNew.this).load(SDKConfig.getInstance().getCLOUD_FRONT_BASE_URL()+ AppConstants.FOLDER_NAME +userProfileResponse.getData().getProfilePicURL())
                     .placeholder(R.drawable.default_profile_pic)
                     .error(R.drawable.default_profile_pic)
                     .into(getBinding().ivProfilePic);

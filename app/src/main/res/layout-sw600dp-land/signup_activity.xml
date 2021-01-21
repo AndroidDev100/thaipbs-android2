@@ -369,7 +369,6 @@ android:textColorHint="?attr/app_edit_text_color"
                             </LinearLayout>
 
                             <LinearLayout
-                                android:visibility="gone"
                                 android:id="@+id/rlFacebookLogin"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/NontonSize45"
