@@ -11,6 +11,7 @@ import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -337,7 +338,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
         if (getBinding().etMobileNumber.getText().toString().trim().equalsIgnoreCase("")) {
             check = true;
             getBinding().errorMobile.setVisibility(View.INVISIBLE);
-        } else if (getBinding().etMobileNumber.getText().toString().trim().length() <= 11) {
+        } else if (getBinding().etMobileNumber.getText().toString().trim().length() == 11) {
             String firstTwoChar = getBinding().etMobileNumber.getText().toString().substring(0, 2);
             if (firstTwoChar.equalsIgnoreCase("66")) {
                 check = true;
@@ -555,10 +556,20 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
             if (userProfileResponse.getData().getProfilePicURL() != null && userProfileResponse.getData().getProfilePicURL() != "") {
                 imageUrlId = userProfileResponse.getData().getProfilePicURL().toString();
                 via = "Gallery";
-                Glide.with(ProfileActivityNew.this).load(SDKConfig.getInstance().getCLOUD_FRONT_BASE_URL() + SDKConfig.getInstance().getProfileFolder() + userProfileResponse.getData().getProfilePicURL())
-                        .placeholder(R.drawable.default_profile_pic)
-                        .error(R.drawable.default_profile_pic)
-                        .into(getBinding().ivProfilePic);
+
+                String firstFiveChar = imageUrlId.substring(0, 5);
+                if (firstFiveChar.equalsIgnoreCase("https")){
+                    Glide.with(ProfileActivityNew.this).load(SDKConfig.getInstance().getCLOUD_FRONT_BASE_URL() + SDKConfig.getInstance().getProfileFolder() + userProfileResponse.getData().getProfilePicURL())
+                            .placeholder(R.drawable.default_profile_pic)
+                            .error(R.drawable.default_profile_pic)
+                            .into(getBinding().ivProfilePic);
+                }else {
+
+                    Glide.with(ProfileActivityNew.this).load(SDKConfig.getInstance().getCLOUD_FRONT_BASE_URL() + SDKConfig.getInstance().getProfileFolder() + userProfileResponse.getData().getProfilePicURL())
+                            .placeholder(R.drawable.default_profile_pic)
+                            .error(R.drawable.default_profile_pic)
+                            .into(getBinding().ivProfilePic);
+                }
             } else {
 
                 if (userProfileResponse.getData().getCustomData().getProfileAvatar() != null) {

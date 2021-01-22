@@ -402,7 +402,7 @@ public class SignUpThirdPage extends BaseBindingActivity<ActivitySignUpThirdPage
         if (getBinding().etMobileNumber.getText().toString().trim().equalsIgnoreCase("")) {
             check = true;
             getBinding().errorMobile.setVisibility(View.INVISIBLE);
-        } else if (getBinding().etMobileNumber.getText().toString().trim().length() <=11){
+        } else if (getBinding().etMobileNumber.getText().toString().trim().length() ==11){
             String firstTwoChar = getBinding().etMobileNumber.getText().toString().substring(0,2);
             if (firstTwoChar.equalsIgnoreCase("66")) {
                 check = true;
