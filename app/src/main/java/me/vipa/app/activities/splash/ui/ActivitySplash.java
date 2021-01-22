@@ -27,6 +27,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.vectordrawable.graphics.drawable.Animatable2Compat;
 
 import me.vipa.app.activities.onBoarding.UI.OnBoarding;
+import me.vipa.app.activities.onBoarding.UI.OnBoardingTab;
 import me.vipa.baseClient.BaseClient;
 import me.vipa.baseClient.BaseConfiguration;
 import me.vipa.baseClient.BaseDeviceType;
@@ -213,7 +214,7 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
                 updateLanguage(configBean.getData().getAppConfig().getPrimaryLanguage());
 
                 if (configBean != null) {
-                    startClapAnimation(jsonObject, updateType);
+                    startClapAnimation(jsonObject, updateType,isTablet);
 
                 } else {
                     configFailPopup();
@@ -233,10 +234,16 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
 
     }
 
-    private void startClapAnimation(JSONObject jsonObject, String updateType) {
+    private void startClapAnimation(JSONObject jsonObject, String updateType, boolean isTablet) {
         if (KsPreferenceKeys.getInstance().getfirstTimeUser()){
             KsPreferenceKeys.getInstance().setfirstTimeUser(false);
-            new ActivityLauncher(ActivitySplash.this).onBoardingScreen(ActivitySplash.this, OnBoarding.class);
+            if (isTablet){
+                new ActivityLauncher(ActivitySplash.this).onBoardingTab(ActivitySplash.this, OnBoardingTab.class);
+            }else {
+                new ActivityLauncher(ActivitySplash.this).onBoardingScreen(ActivitySplash.this, OnBoarding.class);
+            }
+
+
         }else {
 
             Log.w("branchRedirectors", "onAnimationEnd1");

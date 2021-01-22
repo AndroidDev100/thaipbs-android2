@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import me.vipa.app.activities.contentPreference.UI.ContentPreference;
 import me.vipa.app.activities.onBoarding.UI.OnBoarding;
+import me.vipa.app.activities.onBoarding.UI.OnBoardingTab;
 import me.vipa.app.activities.profile.ui.AvatarImageActivity;
 import me.vipa.app.activities.usermanagment.ui.SignUpThirdPage;
 import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
@@ -146,6 +147,10 @@ public class ActivityLauncher {
         TaskStackBuilder.create(source).addNextIntentWithParentStack(intent).startActivities();
     }
     public void onBoardingScreen(Activity source, Class<OnBoarding> destination) {
+        Intent intent = new Intent(source, destination);
+        activity.startActivity(intent);
+    }
+    public void onBoardingTab(Activity source, Class<OnBoardingTab> destination) {
         Intent intent = new Intent(source, destination);
         activity.startActivity(intent);
     }

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:contentDescription="TODO"
+            android:src="@drawable/welcome_screen_tab">
+
+        </ImageView>
+        <TextView
+            android:id="@+id/skip_login"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/NontonSize45"
+            android:fontFamily="@font/sukhumvittadmai_medium"
+            android:text="เริ่มเข้าใช้งาน"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:textSize="@dimen/NontonSize20"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/NontonSize20"
+            android:background="@drawable/rounded_button_welcome"/>
+        <TextView
+            android:id="@+id/register"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/NontonSize45"
+            android:fontFamily="@font/sukhumvittadmai_medium"
+            android:text="ลงทะเบียนสมัครสมาชิก"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:textSize="@dimen/NontonSize20"
+            android:layout_above="@+id/skip_login"
+            android:layout_marginBottom="@dimen/NontonSize20"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:background="@drawable/rounded_button_gray"/>
+    </RelativeLayout>
+</layout>
