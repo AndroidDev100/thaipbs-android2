@@ -13,8 +13,10 @@ import android.view.View;
 import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import me.vipa.app.activities.contentPreference.UI.ContentPreference;
@@ -22,6 +24,8 @@ import me.vipa.app.activities.usermanagment.viewmodel.RegistrationLoginViewModel
 import me.vipa.app.baseModels.BaseBindingActivity;
 import me.vipa.app.R;
 import me.vipa.app.beanModel.responseModels.LoginResponse.Data;
+import me.vipa.app.beanModel.responseModels.LoginResponse.LoginResponseModel;
+import me.vipa.app.databinding.ActivityMainBinding;
 import me.vipa.app.databinding.SignupActivityBinding;
 import me.vipa.app.fragments.dialog.AlertDialogFragment;
 import me.vipa.app.fragments.dialog.AlertDialogSingleButtonFragment;
@@ -29,16 +33,34 @@ import me.vipa.app.tarcker.EventConstant;
 import me.vipa.app.tarcker.FCMEvents;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.constants.AppConstants;
+import me.vipa.app.utils.cropImage.helpers.Logger;
 import me.vipa.app.utils.helpers.CheckInternetConnection;
 import me.vipa.app.utils.helpers.NetworkConnectivity;
 
 import me.vipa.app.utils.helpers.StringUtils;
 import me.vipa.app.utils.helpers.ToastHandler;
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
+
+import com.facebook.CallbackManager;
+import com.facebook.FacebookAuthorizationException;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+
+import org.json.JSONException;
+
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -54,6 +76,14 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
     private RegistrationLoginViewModel viewModel;
     private long mLastClickTime = 0;
     Typeface font;
+    private CallbackManager callbackManager;
+    private String accessTokenFB;
+    private String name = "", email = "", id = "";
+    private URL profile_pic;
+    boolean isFbLoginClick = false;
+    boolean hasFbEmail;
+    private Data modelLogin;
+    private final List<String> permissionNeeds = Arrays.asList("email", "public_profile");
 
     @Override
     public SignupActivityBinding inflateBindingLayout(@NonNull LayoutInflater inflater) {
@@ -88,6 +118,9 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
     @Override
     protected void onResume() {
         super.onResume();
+        isFbLoginClick = false;
+        getBinding().llFooter.setVisibility(View.VISIBLE);
+        dismissLoading(getBinding().progressBar);
         if (preference.getAppPrefLoginStatus().equalsIgnoreCase(AppConstants.UserStatus.Login.toString())) {
             onBackPressed();
         }
@@ -132,6 +165,11 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
     }
 
     public void connectObservors() {
+
+        FacebookSdk.sdkInitialize(this.getApplicationContext());
+        //  getBinding().fbButton.setLoginBehavior(LoginBehavior.WEB_VIEW_ONLY);
+        callbackManager = CallbackManager.Factory.create();
+        getBinding().fbButton.setReadPermissions(permissionNeeds);
         getBinding().errorName.setVisibility(View.INVISIBLE);
         getBinding().errorEmail.setVisibility(View.INVISIBLE);
         getBinding().errorPassword.setVisibility(View.INVISIBLE);
@@ -323,22 +361,133 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
             }
         });
 
+        getBinding().rlFacebookLogin.setOnClickListener(view -> {
+
+            if (CheckInternetConnection.isOnline(SignUpActivity.this)) {
+
+                if (SystemClock.elapsedRealtime() - mLastClickTime < 1200) {
+                    return;
+                }
+                mLastClickTime = SystemClock.elapsedRealtime();
+                clearEditView();
+                isFbLoginClick = true;
+                getBinding().fbButton.performClick();
+
+            } else
+                connectionObserver();
+        });
+
+        getBinding().fbButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                System.out.println("onSuccess");
+
+                accessTokenFB = loginResult.getAccessToken().getToken();
+                Logger.i("accessToken", accessTokenFB);
+
+                GraphRequest request = GraphRequest.newMeRequest(
+                        loginResult.getAccessToken(),
+                        (object, response) -> {
+
+                            Logger.i("LoginActivity",
+                                    response.toString());
+                            try {
+                                id = object.getString("id");
+                                try {
+                                    profile_pic = new URL(
+                                            "https://graph.facebook.com/" + id + "/picture?type=large");
+
+
+                                    Logger.i("profile_pic",
+                                            profile_pic + "");
+                                } catch (MalformedURLException e) {
+                                    e.printStackTrace();
+                                }
+                                name = object.getString("name");
+                                if (object.has("email")) {
+                                    email = object.getString("email");
+                                    hasFbEmail = true;
+                                } else
+                                    hasFbEmail = false;
+
+                              /*  try {
+                                    final URL imageUrl = new URL(
+                                            "http://graph.facebook.com/" + id + "/picture?type=large");
+                                    bitmap = BitmapFactory.decodeStream(imageUrl.openConnection().getInputStream());
+                                } catch (Exception e) {
+                                    Logger.e("LoginActivity", "" + e.toString());
+
+                                }*/
+                                showHideProgress(getBinding().progressBar);
+                                //  setFileToUpload();
+                                hitApiFBLogin();
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        });
+                Bundle parameters = new Bundle();
+                parameters.putString("fields",
+                        "id,name,email");
+                request.setParameters(parameters);
+                request.executeAsync();
+            }
+
+            @Override
+            public void onCancel() {
+                System.out.println("onCancel");
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                if (error instanceof FacebookAuthorizationException)
+                    LoginManager.getInstance().logOut();
+                // Logger.e("LoginActivity", error.getCause().toString());
+            }
+        });
+
+
 
 
     }
 
-    private boolean isCheckboxSelected() {
-        boolean check = false;
-        if (getBinding().termsText.isChecked()){
-            check = true;
-        }else {
-            check = false;
-            new ToastHandler(SignUpActivity.this).show("please select checkbox to register");
+    private void hitApiFBLogin() {
+        if (CheckInternetConnection.isOnline(SignUpActivity.this)) {
+
+            showLoading(getBinding().progressBar, true);
+
+            viewModel.hitFbLogin(SignUpActivity.this, email, accessTokenFB, name, id, String.valueOf(profile_pic), hasFbEmail).observe(SignUpActivity.this, new Observer<LoginResponseModel>() {
+                @Override
+                public void onChanged(LoginResponseModel loginResponseModelResponse) {
+                    if (Objects.requireNonNull(loginResponseModelResponse).getResponseCode() == 2000) {
+                        Gson gson = new Gson();
+                        modelLogin = loginResponseModelResponse.getData();
+                        String stringJson = gson.toJson(loginResponseModelResponse.getData());
+                        saveUserDetails(stringJson, loginResponseModelResponse.getData().getId(), false);
+                    } else if (loginResponseModelResponse.getResponseCode() == 403) {
+                        new ActivityLauncher(SignUpActivity.this).forceLogin(SignUpActivity.this, ForceLoginFbActivity.class, accessTokenFB, id, name, String.valueOf(profile_pic));
+                    } else {
+                        dismissLoading(getBinding().progressBar);
+                        showDialog(SignUpActivity.this.getResources().getString(R.string.error), loginResponseModelResponse.getDebugMessage().toString());
+                    }
+                }
+            });
+        } else {
+            new ToastHandler(SignUpActivity.this).show(SignUpActivity.this.getResources().getString(R.string.no_internet_connection));
         }
-
-
-        return check;
     }
+
+    private void clearEditView() {
+        getBinding().etName.setText("");
+        getBinding().etEmail.setText("");
+        getBinding().etPassword.setText("");
+        getBinding().etCnfPassword.setText("");
+        getBinding().errorEmail.setVisibility(View.INVISIBLE);
+        getBinding().errorName.setVisibility(View.INVISIBLE);
+        getBinding().errorCnfPassword.setVisibility(View.INVISIBLE);
+        getBinding().errorPassword.setVisibility(View.INVISIBLE);
+    }
+
 
     public void saveUserDetails(String response, int userID, boolean isManual) {
         Data fbLoginData = new Gson().fromJson(response, Data.class);
@@ -471,7 +620,20 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
     @Override
     protected void onPause() {
         super.onPause();
-        getBinding().etPassword.setText("");
+        if (isFbLoginClick)
+            getBinding().llFooter.setVisibility(View.GONE);
+            getBinding().etPassword.setText("");
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        try {
+            callbackManager.onActivityResult(requestCode, resultCode, data);
+        } catch (Exception e) {
+            Logger.e("LoginActivity", "" + e.toString());
+
+        }
+    }
 }

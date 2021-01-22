@@ -45,7 +45,7 @@
                     android:layout_height="match_parent"
                     >
 
-                    <LinearLayout
+                    <RelativeLayout
                         android:id="@+id/profile_layout"
                         android:layout_width="@dimen/new_more_img_size"
                         android:layout_height="@dimen/new_more_img_size"
@@ -58,9 +58,18 @@
                             android:layout_height="@dimen/new_more_img_size"
                             android:src="@drawable/default_profile_pic"
                             civ_border_color="@color/material_grey_400"
-                            civ_border_width="@dimen/NontonSize1" />
-
-                    </LinearLayout>
+                            civ_border_width="@dimen/NontonSize1"
+                            />
+                        <ImageView
+                            android:id="@+id/btnPhotoId"
+                            android:layout_width="@dimen/skipProfileMargin"
+                            android:layout_height="@dimen/skipProfileMargin"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentRight="true"
+                            android:contentDescription="TODO"
+                            android:src="@drawable/camera"
+                            />
+                    </RelativeLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"

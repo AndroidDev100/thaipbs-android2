@@ -75,6 +75,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
@@ -256,7 +257,7 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
                                     response.toString());
                             try {
                                 id = object.getString("id");
-                               /* try {
+                               try {
                                     profile_pic = new URL(
                                             "https://graph.facebook.com/" + id + "/picture?type=large");
 
@@ -265,7 +266,7 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
                                             profile_pic + "");
                                 } catch (MalformedURLException e) {
                                     e.printStackTrace();
-                                }*/
+                                }
                                 name = object.getString("name");
                                 if (object.has("email")) {
                                     email = object.getString("email");
@@ -370,7 +371,7 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
 
             showLoading(getBinding().progressBar, true);
 
-            viewModel.hitFbLogin(LoginActivity.this, email, accessTokenFB, name, id, "", hasFbEmail).observe(LoginActivity.this, new Observer<LoginResponseModel>() {
+            viewModel.hitFbLogin(LoginActivity.this, email, accessTokenFB, name, id, String.valueOf(profile_pic), hasFbEmail).observe(LoginActivity.this, new Observer<LoginResponseModel>() {
                 @Override
                 public void onChanged(LoginResponseModel loginResponseModelResponse) {
                     if (Objects.requireNonNull(loginResponseModelResponse).getResponseCode() == 2000) {
@@ -379,7 +380,7 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
                         String stringJson = gson.toJson(loginResponseModelResponse.getData());
                         saveUserDetails(stringJson, loginResponseModelResponse.getData().getId(), false);
                     } else if (loginResponseModelResponse.getResponseCode() == 403) {
-                        new ActivityLauncher(LoginActivity.this).forceLogin(LoginActivity.this, ForceLoginFbActivity.class, accessTokenFB, id, name, "");
+                        new ActivityLauncher(LoginActivity.this).forceLogin(LoginActivity.this, ForceLoginFbActivity.class, accessTokenFB, id, name, String.valueOf(profile_pic));
                     } else {
                         dismissLoading(getBinding().progressBar);
                         showDialog(LoginActivity.this.getResources().getString(R.string.error), loginResponseModelResponse.getDebugMessage().toString());
