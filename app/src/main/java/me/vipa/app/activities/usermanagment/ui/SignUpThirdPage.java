@@ -292,7 +292,10 @@ public class SignUpThirdPage extends BaseBindingActivity<ActivitySignUpThirdPage
                                 }
                                 // showDialog(getResources().getString(R.string.logged_out), getResources().getString(R.string.you_are_logged_out));
 
-                            } else {
+                            } else if(userProfileResponse.getResponseCode() == 4019){
+                                showDialog(SignUpThirdPage.this.getResources().getString(R.string.error), userProfileResponse.getDebugMessage().toString());
+                            }
+                            else {
                                 if (userProfileResponse.getDebugMessage() != null) {
                                     showDialog(SignUpThirdPage.this.getResources().getString(R.string.error), userProfileResponse.getDebugMessage().toString());
                                 } else {

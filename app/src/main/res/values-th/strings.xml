@@ -161,6 +161,7 @@
     <string name="download_settings">ตั้งค่าดาวน์โหลด</string>
     <string name="delete_from_watchlist">คุณแน่ใจหรือไม่ที่จะลบวีดีโอนี้ออกจากรายการของฉัน?</string>
     <string name="you_are_logged_out">คุณออกจากระบบแล้ว</string>
+    <string name="number_Cannot_change">Phone Number cannot be changed after setting once</string>
     <string name="error">ผิดพลาด</string>
     <string name="forgot_pwd">ลืมพาสเวิร์ด</string>
     <string name="share">แชร์</string>

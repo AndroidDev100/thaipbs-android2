@@ -249,6 +249,10 @@ public class ErrorCodesIntercepter {
                     empty.setStatus(false);
                     empty.setResponseCode(500);
                     empty.setDebugMessage(MvHubPlusApplication.getInstance().getResources().getString(R.string.something_went_wrong_at_our_end));
+                } else if (code == 4019){
+                    empty.setStatus(false);
+                    empty.setResponseCode(4019);
+                    empty.setDebugMessage(MvHubPlusApplication.getInstance().getResources().getString(R.string.number_Cannot_change));
                 }
             }
         } catch (Exception ignored) {

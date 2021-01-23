@@ -291,6 +291,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
     }
 
     private void callUpdateApi() {
+//        {"data":null,"responseCode":4019,"debugMessage":"Phone Number cannot be changed after setting once"}
         if (validateNameEmpty() && validatePhone()) {
             showLoading(getBinding().progressBar, true);
             String token = preference.getAppPrefAccessToken();
@@ -318,7 +319,10 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
                                 }
                                 // showDialog(getResources().getString(R.string.logged_out), getResources().getString(R.string.you_are_logged_out));
 
-                            } else {
+                            } else if(userProfileResponse.getResponseCode() == 4019){
+                                showDialog(ProfileActivityNew.this.getResources().getString(R.string.error), userProfileResponse.getDebugMessage().toString());
+                            }
+                            else {
                                 if (userProfileResponse.getDebugMessage() != null) {
                                     showDialog(ProfileActivityNew.this.getResources().getString(R.string.error), userProfileResponse.getDebugMessage().toString());
                                 } else {
