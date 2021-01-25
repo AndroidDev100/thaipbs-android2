@@ -58,6 +58,7 @@
     <string name="sign_in_with_enveu">เข้าสู่ระบบโ</string>
     <string name="facebook">เฟสบุ๊ค</string>
     <string name="sign_in_with_facebook">เข้าสู่ระบบโดย เฟสบุ๊ค</string>
+    <string name="sign_up_with_facebook">Sign up with Facebook</string>
     <string name="google">กูเกิ้ล</string>
     <string name="register">ลงทะเบียนสมัครสมาชิก</string>
     <string name="sign_in"><b><u>เข้าสู่ระบบ</u></b></string>

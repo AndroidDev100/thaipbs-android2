@@ -53,6 +53,7 @@
     <string name="sign_in_with_enveu">Sign in with VIPA</string>
     <string name="facebook">Facebook</string>
     <string name="sign_in_with_facebook">Sign in with Facebook</string>
+    <string name="sign_up_with_facebook">Sign up with Facebook</string>
     <string name="google">Google +</string>
     <string name="no_result_found_title">No Results Found</string>
 

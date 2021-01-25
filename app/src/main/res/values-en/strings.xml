@@ -54,6 +54,7 @@
     <string name="sign_in_with_enveu">Sign in</string>
     <string name="facebook">Facebook</string>
     <string name="sign_in_with_facebook">Sign in with Facebook</string>
+    <string name="sign_up_with_facebook">Sign up with Facebook</string>
     <string name="google">Google +</string>
     <string name="register">Register</string>
     <string name="sign_in"><b><u>Sign In</u></b></string>
