@@ -51,6 +51,7 @@ import java.util.Objects;
 
 import me.vipa.app.R;
 import me.vipa.app.SDKConfig;
+import me.vipa.app.activities.membershipplans.ui.MemberShipPlanActivity;
 import me.vipa.app.activities.usermanagment.viewmodel.RegistrationLoginViewModel;
 import me.vipa.app.baseModels.BaseBindingActivity;
 import me.vipa.app.beanModel.userProfile.UserProfileResponse;
@@ -219,21 +220,28 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
                         mcurrentDate.set(Calendar.YEAR, selectedyear);
                         mcurrentDate.set(Calendar.MONTH, selectedmonth);
                         mcurrentDate.set(Calendar.DAY_OF_MONTH, selectedday);
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd", Locale.US);
-                        getBinding().etDob.setText(sdf.format(mcurrentDate.getTime()));
-                        try {
-                            Date d = sdf.parse(getBinding().etDob.getText().toString());
-                            dateMilliseconds = String.valueOf(d.getTime());
-                        } catch (ParseException e) {
-                            e.printStackTrace();
+
+                        int difference = mYear-selectedyear;
+                        if (difference>=13) {
+
+                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                            getBinding().etDob.setText(sdf.format(mcurrentDate.getTime()));
+                            try {
+                                Date d = sdf.parse(getBinding().etDob.getText().toString());
+                                dateMilliseconds = String.valueOf(d.getTime());
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                        }else {
+                            new ToastHandler(ProfileActivityNew.this).show(getResources().getString(R.string.date_difference));
                         }
 
 
                     }
-                }, mYear - 18, mMonth, mDay);
-                mcurrentDate.set(mYear - 18, mMonth, mDay);
-                long value = mcurrentDate.getTimeInMillis();
-                mDatePicker.getDatePicker().setMinDate(value);
+                }, mYear, mMonth, mDay);
+//                mcurrentDate.set(mYear, mMonth, mDay);
+//                long value = mcurrentDate.getTimeInMillis();
+              //  mDatePicker.getDatePicker().setMinDate(value);
                 mDatePicker.show();
             }
         });
@@ -526,6 +534,11 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
 
             if (userProfileResponse.getData().getPhoneNumber() != null) {
                 getBinding().etMobileNumber.setText(userProfileResponse.getData().getPhoneNumber() + "");
+                getBinding().etMobileNumber.setEnabled(false);
+                getBinding().etMobileNumber.setFocusable(false);
+            }else {
+                getBinding().etMobileNumber.setEnabled(true);
+                getBinding().etMobileNumber.setFocusable(true);
             }
 
             if (userProfileResponse.getData().getDateOfBirth() != null) {
@@ -534,7 +547,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
                 df.setMaximumFractionDigits(0);
                 long l = Long.parseLong(df.format(longV));
                 dateMilliseconds = String.valueOf(l);
-                String dateString = DateFormat.format("yyyy/mm/dd", new Date(l)).toString();
+                String dateString = DateFormat.format("yyyy/MM/dd", new Date(l)).toString();
                 getBinding().etDob.setText(dateString);
             }
 

@@ -351,5 +351,6 @@
     <string name="content_preminum">Content Premium</string>
     <string name="select_genre">Select genre as per your interest for best result you can select multiple choices of interest (max 5)</string>
     <string name="finish">Finish</string>
+    <string name="date_difference">You must be 13 years old and above.</string>
 
 </resources>

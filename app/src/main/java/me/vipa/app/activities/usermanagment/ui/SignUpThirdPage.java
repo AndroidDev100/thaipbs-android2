@@ -214,21 +214,28 @@ public class SignUpThirdPage extends BaseBindingActivity<ActivitySignUpThirdPage
                         mcurrentDate.set(Calendar.YEAR, selectedyear);
                         mcurrentDate.set(Calendar.MONTH, selectedmonth);
                         mcurrentDate.set(Calendar.DAY_OF_MONTH, selectedday);
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd", Locale.US);
-                        getBinding().etDob.setText(sdf.format(mcurrentDate.getTime()));
-                        try {
-                            Date d = sdf.parse(getBinding().etDob.getText().toString());
-                            dateMilliseconds = String.valueOf(d.getTime());
-                        } catch (ParseException e) {
-                            e.printStackTrace();
+
+                        int difference = mYear-selectedyear;
+                        if (difference>=13) {
+
+                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                            getBinding().etDob.setText(sdf.format(mcurrentDate.getTime()));
+                            try {
+                                Date d = sdf.parse(getBinding().etDob.getText().toString());
+                                dateMilliseconds = String.valueOf(d.getTime());
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                        }else {
+                            new ToastHandler(SignUpThirdPage.this).show(getResources().getString(R.string.date_difference));
                         }
 
 
                     }
-                }, mYear - 18, mMonth, mDay);
-                mcurrentDate.set(mYear - 18, mMonth, mDay);
-                long value = mcurrentDate.getTimeInMillis();
-                mDatePicker.getDatePicker().setMinDate(value);
+                }, mYear, mMonth, mDay);
+//                mcurrentDate.set(mYear, mMonth, mDay);
+//                long value = mcurrentDate.getTimeInMillis();
+                //  mDatePicker.getDatePicker().setMinDate(value);
                 mDatePicker.show();
             }
         });

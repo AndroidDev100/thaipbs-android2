@@ -56,8 +56,8 @@ android {
     productFlavors {
         dev {
             dimension 'default'
-            versionCode 1
-            versionName "1.0"
+            versionCode 3
+            versionName "1.2"
             applicationId "me.vipa.app.dev"
         }
         prod {
