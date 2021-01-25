@@ -141,6 +141,8 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
 
     private void callBinding() {
         viewModel = ViewModelProviders.of(LoginActivity.this).get(RegistrationLoginViewModel.class);
+        getBinding().toolbar.titleToolbar.setVisibility(View.VISIBLE);
+        getBinding().toolbar.titleToolbar.setText(getResources().getString(R.string.sign_in));
         getBinding().toolbar.backLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

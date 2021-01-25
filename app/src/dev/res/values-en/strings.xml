@@ -14,7 +14,7 @@
     <string name="update_has_downloaded">An update has just been downloaded.</string>
     <string name="restart">RESTART APP</string>
 
-    <string name="user_already_exists">User already has an account with this email or credential.​​</string>
+    <string name="user_already_exists">The email already exists. Please input another.​​</string>
     <string name="password_cannot_be_blank">Password cannot be blank</string>
     <string name="please_provide_valid_name">Please provide a valid name</string>
     <string name="server_error">Something went wrong at our end. Please try again.</string>
@@ -23,7 +23,7 @@
     <string name="fb_id_cannot_be_null_or_empty">Fb id cannot be null or empty.</string>
 
     <string name="email_id_cannot_be_blank">Email id cannot be blank</string>
-    <string name="user_does_not_exists">User with this email id does not exist​</string>
+    <string name="user_does_not_exists">Sorry, we can\'t find an account with this email address. Please try again.​</string>
     <string name="user_deactivated">This user has been deactivated. Please contact support​</string>
     <string name="user_can_not_login">User cannot login with this method​</string>
     <string name="username_password_doest_match">Username or Password doesn\'t match​​</string>

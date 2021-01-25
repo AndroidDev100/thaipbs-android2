@@ -130,7 +130,7 @@
     <string name="buy_now">สมัครสมาชิก</string>
     <string name="purhcase_options">ทางเลือกการสั่งซื้อ</string>
     <string name="less">ย่อลง</string>
-    <string name="user_already_exists">ผู้ใช้งานมีบัญชีที่ใช้อีเมลหรือข้อมูลรับรองนี้แล้ว</string>
+    <string name="user_already_exists">บันทึกข้อมูลไม่สำเร็จ มีอีเมลนี้อยู่แล้วในระบบ</string>
     <string name="password_cannot_be_blank">รหัสผ่านไม่รองรับเว้นวรรค</string>
     <string name="please_provide_valid_name">โปรดระบุชื่อที่ถูกต้อง</string>
     <string name="server_error">มีบางอย่างผิดพลาดในตอนท้ายของเรา กรุณาลองอีกครั้ง</string>
@@ -139,7 +139,7 @@
     <string name="fb_id_cannot_be_null_or_empty">รหัส Facebook ไม่รองรับเว้นวรรค หรือปล่อยว่าง</string>
 
     <string name="email_id_cannot_be_blank">รหัสอีเมล์ไม่รองรับเว้นวรรค</string>
-    <string name="user_does_not_exists">ผู้ใช้งานรหัสอีเมล์นี้ไม่อยู่ในระบบ​</string>
+    <string name="user_does_not_exists">กรุณาตรวจสอบชื่อผู้ใช้ หรือรหัสผ่านให้ถูกต้อง และลองใหม่อีกครั้ง​</string>
     <string name="user_deactivated">ผู้ใช้งานรายนี้ถูกปิดใช้งาน โปรดติดต่อฝ่ายสนับสนุน​</string>
     <string name="user_can_not_login">ผู้้ใช้งานไม่สามารถล็อคอินด้วยวีธีการนี้</string>
     <string name="username_password_doest_match">ชื่อผู้ใช้งาน หรือ รหัสผ่าน ไม่ตรงกับข้อมูลในระบบ​​</string>
