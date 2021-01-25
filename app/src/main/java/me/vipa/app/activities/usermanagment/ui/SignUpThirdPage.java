@@ -75,6 +75,7 @@ public class SignUpThirdPage extends BaseBindingActivity<ActivitySignUpThirdPage
     private TransferUtility transferUtility;
     String imageToUpload = "";
     private String spinnerValue = "";
+    private boolean isNotificationEnable = false;
 
     @Override
     public ActivitySignUpThirdPageBinding inflateBindingLayout(@NonNull LayoutInflater inflater) {
@@ -84,6 +85,7 @@ public class SignUpThirdPage extends BaseBindingActivity<ActivitySignUpThirdPage
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        isNotificationEnable = getIntent().getExtras().getBoolean("IsNotiEnabled");
         contentPreference = getIntent().getStringExtra(AppConstants.CONTENT_PREFERENCE);
         connectionObserver();
     }
@@ -268,7 +270,7 @@ public class SignUpThirdPage extends BaseBindingActivity<ActivitySignUpThirdPage
             showLoading(getBinding().progressBar, true);
             String token = preference.getAppPrefAccessToken();
             getBinding().errorMobile.setVisibility(View.INVISIBLE);
-            viewModel.hitUpdateProfile(SignUpThirdPage.this, token, preference.getAppPrefUserName(), getBinding().etMobileNumber.getText().toString(), spinnerValue, dateMilliseconds, getBinding().etAddress.getText().toString(), imageUrlId, via,contentPreference).observe(SignUpThirdPage.this, new Observer<UserProfileResponse>() {
+            viewModel.hitUpdateProfile(SignUpThirdPage.this, token, preference.getAppPrefUserName(), getBinding().etMobileNumber.getText().toString(), spinnerValue, dateMilliseconds, getBinding().etAddress.getText().toString(), imageUrlId, via,contentPreference,isNotificationEnable).observe(SignUpThirdPage.this, new Observer<UserProfileResponse>() {
                 @Override
                 public void onChanged(UserProfileResponse userProfileResponse) {
                     dismissLoading(getBinding().progressBar);

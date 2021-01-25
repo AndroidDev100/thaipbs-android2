@@ -210,12 +210,12 @@ class RequestManager {
         })
     }
 
-    fun userUpdateProfileCall(loginCallBacks: UserProfileCallBack, token: String, name: String, mobile: String, spinnerValue: String, dob: String, address: String, imageUrl: String, via: String, contentPreference: String) {
+    fun userUpdateProfileCall(loginCallBacks: UserProfileCallBack, token: String, name: String, mobile: String, spinnerValue: String, dob: String, address: String, imageUrl: String, via: String, contentPreference: String, notificationEnable: Boolean) {
         val endPoint = NetworkSetup().subscriptionClient(token).create<EnveuEndpoints>(EnveuEndpoints::class.java)
         val requestParam = JsonObject()
         val customParam = JsonObject()
         try {
-
+            customParam.addProperty("NotificationCheck", notificationEnable)
             if (!contentPreference.equals("")){
                 customParam.addProperty("contentPreferences", contentPreference)
             }

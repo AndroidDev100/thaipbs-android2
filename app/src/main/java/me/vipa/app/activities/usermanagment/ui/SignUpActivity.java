@@ -84,6 +84,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
     boolean hasFbEmail;
     private Data modelLogin;
     private final List<String> permissionNeeds = Arrays.asList("email", "public_profile");
+    private boolean isNotificationEnable = false;
 
     @Override
     public SignupActivityBinding inflateBindingLayout(@NonNull LayoutInflater inflater) {
@@ -355,9 +356,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
 
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                //TODO checkBox Handling
-                Log.d("sesesesese",isChecked+"");
-
+                isNotificationEnable = isChecked;
             }
         });
 
@@ -505,7 +504,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
         preference.setAppPrefUserEmail(String.valueOf(fbLoginData.getEmail()));
         AppCommonMethod.userId = String.valueOf(fbLoginData.getId());
        // onBackPressed();
-        new ActivityLauncher(SignUpActivity.this).onContentScreen(SignUpActivity.this, ContentPreference.class);
+        new ActivityLauncher(SignUpActivity.this).onContentScreen(SignUpActivity.this, ContentPreference.class,isNotificationEnable);
 
         //new ActivityLauncher(SignUpActivity.this).homeScreen(SignUpActivity.this, HomeActivity.class);
 

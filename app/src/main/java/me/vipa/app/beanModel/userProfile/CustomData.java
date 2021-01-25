@@ -7,6 +7,17 @@ public class CustomData {
     @SerializedName("address")
     @Expose
     private String address;
+    @SerializedName("NotificationCheck")
+    @Expose
+    private String isNotification;
+
+    public String getIsNotification() {
+        return isNotification;
+    }
+
+    public void setIsNotification(String isNotification) {
+        this.isNotification = isNotification;
+    }
 
     public String getAddress() {
         return address;

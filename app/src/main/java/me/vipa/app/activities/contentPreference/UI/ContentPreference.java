@@ -38,7 +38,7 @@ public class ContentPreference extends BaseBindingActivity<ActivityContentPrefer
     private ArrayList<PreferenceBean> selectedList;
     private String contentPreference = "";
     private KsPreferenceKeys preference;
-
+    private boolean isNotificationEnable = false;
     @Override
     public ActivityContentPreferenceBinding inflateBindingLayout(@NonNull LayoutInflater inflater) {
         return ActivityContentPreferenceBinding.inflate(inflater);
@@ -47,6 +47,7 @@ public class ContentPreference extends BaseBindingActivity<ActivityContentPrefer
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        isNotificationEnable = getIntent().getExtras().getBoolean("IsNotiEnabled");
         callBinding();
         connectObservors();
     }
@@ -83,7 +84,7 @@ public class ContentPreference extends BaseBindingActivity<ActivityContentPrefer
 //                    selectedList = adatperContentPreference.getGenreList();
 //                }
 
-              new ActivityLauncher(ContentPreference.this).signUpThird(ContentPreference.this, SignUpThirdPage.class,contentPreference);
+              new ActivityLauncher(ContentPreference.this).signUpThird(ContentPreference.this, SignUpThirdPage.class,contentPreference,isNotificationEnable);
             }
         });
 
@@ -91,7 +92,7 @@ public class ContentPreference extends BaseBindingActivity<ActivityContentPrefer
             @Override
             public void onClick(View v) {
                 contentPreference = "";
-                new ActivityLauncher(ContentPreference.this).signUpThird(ContentPreference.this, SignUpThirdPage.class,contentPreference);
+                new ActivityLauncher(ContentPreference.this).signUpThird(ContentPreference.this, SignUpThirdPage.class,contentPreference,isNotificationEnable);
             }
         });
     }

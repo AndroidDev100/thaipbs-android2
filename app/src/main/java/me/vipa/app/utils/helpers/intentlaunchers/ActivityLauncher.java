@@ -40,32 +40,6 @@ import me.vipa.app.activities.search.ui.ActivitySearch;
 import me.vipa.app.utils.helpers.StringUtils;
 import com.google.gson.Gson;
 
-import me.vipa.app.activities.article.ArticleActivity;
-import me.vipa.app.activities.detail.ui.DetailActivity;
-import me.vipa.app.activities.detail.ui.EpisodeActivity;
-import me.vipa.app.activities.downloads.MyDownloads;
-import me.vipa.app.activities.homeactivity.ui.HomeActivity;
-import me.vipa.app.activities.listing.listui.ListActivity;
-import me.vipa.app.activities.listing.ui.GridActivity;
-import me.vipa.app.activities.live.LiveActivity;
-import me.vipa.app.activities.notification.ui.NotificationActivity;
-import me.vipa.app.activities.profile.ui.ProfileActivity;
-import me.vipa.app.activities.profile.ui.ProfileActivityNew;
-import me.vipa.app.activities.search.ui.ActivityResults;
-import me.vipa.app.activities.search.ui.ActivitySearch;
-import me.vipa.app.activities.series.ui.SeriesDetailActivity;
-import me.vipa.app.activities.usermanagment.ui.ChangePasswordActivity;
-import me.vipa.app.activities.usermanagment.ui.ForceLoginFbActivity;
-import me.vipa.app.activities.usermanagment.ui.ForgotPasswordActivity;
-import me.vipa.app.activities.usermanagment.ui.LoginActivity;
-import me.vipa.app.activities.usermanagment.ui.SignUpActivity;
-import me.vipa.app.activities.usermanagment.ui.SkipActivity;
-import me.vipa.app.activities.watchList.ui.WatchListActivity;
-import me.vipa.app.beanModel.responseModels.SignUp.DataModel;
-import me.vipa.app.utils.constants.AppConstants;
-import me.vipa.app.utils.cropImage.helpers.Logger;
-import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
-
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
@@ -116,9 +90,10 @@ public class ActivityLauncher {
         activity.startActivity(intent);
 
     }
-    public void signUpThird(Activity source, Class<SignUpThirdPage> destination, String contentPreference) {
+    public void signUpThird(Activity source, Class<SignUpThirdPage> destination, String contentPreference, boolean isNotificationEnable) {
         Intent intent = new Intent(source, destination);
         intent.putExtra(AppConstants.CONTENT_PREFERENCE,contentPreference);
+        intent.putExtra("IsNotiEnabled",isNotificationEnable);
         activity.startActivity(intent);
 
     }
@@ -155,8 +130,9 @@ public class ActivityLauncher {
         activity.startActivity(intent);
     }
 
-    public void onContentScreen(Activity source, Class<ContentPreference> destination) {
+    public void onContentScreen(Activity source, Class<ContentPreference> destination, boolean isNotificationEnable) {
         Intent intent = new Intent(source, destination);
+        intent.putExtra("IsNotiEnabled",isNotificationEnable);
         activity.startActivity(intent);
     }
 

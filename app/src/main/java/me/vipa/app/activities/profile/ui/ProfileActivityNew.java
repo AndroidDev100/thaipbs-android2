@@ -58,7 +58,6 @@ import me.vipa.app.databinding.ProfileActivityNewBinding;
 import me.vipa.app.fragments.dialog.AlertDialogFragment;
 import me.vipa.app.fragments.dialog.AlertDialogSingleButtonFragment;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
-import me.vipa.app.utils.constants.AppConstants;
 import me.vipa.app.utils.helpers.CheckInternetConnection;
 import me.vipa.app.utils.helpers.NetworkConnectivity;
 import me.vipa.app.utils.helpers.StringUtils;
@@ -85,6 +84,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
     private AmazonS3 s3;
     private TransferUtility transferUtility;
     private final String contentPreference = "";
+    private boolean isNotificationEnable;
 
     @Override
     public ProfileActivityNewBinding inflateBindingLayout(@NonNull LayoutInflater inflater) {
@@ -295,7 +295,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
         if (validateNameEmpty() && validatePhone()) {
             showLoading(getBinding().progressBar, true);
             String token = preference.getAppPrefAccessToken();
-            viewModel.hitUpdateProfile(ProfileActivityNew.this, token, getBinding().etName.getText().toString(), getBinding().etMobileNumber.getText().toString(), spinnerValue, dateMilliseconds, getBinding().etAddress.getText().toString(), imageUrlId, via, contentPreference).observe(ProfileActivityNew.this, new Observer<UserProfileResponse>() {
+            viewModel.hitUpdateProfile(ProfileActivityNew.this, token, getBinding().etName.getText().toString(), getBinding().etMobileNumber.getText().toString(), spinnerValue, dateMilliseconds, getBinding().etAddress.getText().toString(), imageUrlId, via, contentPreference, isNotificationEnable).observe(ProfileActivityNew.this, new Observer<UserProfileResponse>() {
                 @Override
                 public void onChanged(UserProfileResponse userProfileResponse) {
                     dismissLoading(getBinding().progressBar);
@@ -552,6 +552,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
             }
 
             if (userProfileResponse.getData().getCustomData() != null) {
+                isNotificationEnable = Boolean.parseBoolean(userProfileResponse.getData().getCustomData().getIsNotification());
                 if (userProfileResponse.getData().getCustomData().getAddress() != null)
                     getBinding().etAddress.setText(userProfileResponse.getData().getCustomData().getAddress());
             }
