@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.SystemClock;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
@@ -49,6 +50,11 @@ public class MoreListAdapter extends RecyclerView.Adapter<MoreListAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int i) {
         holder.moreItemBinding.moreListTitle.setText("" + itemsList.get(i));
         setIcons(holder.moreItemBinding.moreListIcon, i, holder.moreItemBinding);
+        if (i == 3 || i == 7 || i == 11){
+            holder.itemView.findViewById(R.id.view_line).setVisibility(View.VISIBLE);
+        }else {
+            holder.itemView.findViewById(R.id.view_line).setVisibility(View.GONE);
+        }
     }
 
 
