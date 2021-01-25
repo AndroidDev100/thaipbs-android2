@@ -61,7 +61,7 @@
     <string name="or">Or</string>
     <string name="or_caps">- OR -</string>
     <string name="skip">Skip</string>
-    <string name="forgot_password">Forgot Password?</string>
+    <string name="forgot_password">Forgot Password</string>
     <string name="forgot_password_u"><b><u>Forgot Password?</u></b></string>
     <string name="email_id">Email for FB Login </string>
     <string name="dont_have_an_account">Don\'t have an account?</string>

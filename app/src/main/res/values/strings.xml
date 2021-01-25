@@ -66,7 +66,7 @@
     <string name="or">Or</string>
     <string name="or_caps">- OR -</string>
     <string name="skip">Skip</string>
-    <string name="forgot_password">Forgot Password?</string>
+    <string name="forgot_password">Forgot Password</string>
     <string name="forgot_password_u"><b><u>Forgot Password?</u></b></string>
     <string name="email_id">Email for FB Login </string>
     <string name="watchlist_empty_message">Keep track of Movies, TV shows and clips you want to watch</string>
