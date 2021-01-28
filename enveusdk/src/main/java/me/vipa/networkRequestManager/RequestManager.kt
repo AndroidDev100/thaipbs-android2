@@ -80,13 +80,15 @@ class RequestManager {
         })
     }
 
-    fun registerCall(userName: String, email: String, password: String, loginCallBacks: LoginCallBack) {
+    fun registerCall(userName: String, email: String, password: String, notificationEnable: Boolean, loginCallBacks: LoginCallBack) {
         val endPoint = NetworkSetup().userMngmtClient?.create<EnveuEndpoints>(EnveuEndpoints::class.java)
         val requestParam = JsonObject()
+        val customParam = JsonObject()
+        customParam.addProperty("NotificationCheck", notificationEnable)
         requestParam.addProperty("name", userName)
         requestParam.addProperty(UserManagement.email.name, email)
         requestParam.addProperty(UserManagement.password.name, password)
-
+        requestParam.add("customData", customParam)
 
         val call = endPoint?.getSignUp(requestParam)
         call?.enqueue(object : Callback<LoginResponseModel> {
@@ -215,7 +217,7 @@ class RequestManager {
         val requestParam = JsonObject()
         val customParam = JsonObject()
         try {
-            customParam.addProperty("NotificationCheck", notificationEnable)
+//            customParam.addProperty("NotificationCheck", notificationEnable)
             if (!contentPreference.equals("")){
                 customParam.addProperty("contentPreferences", contentPreference)
             }

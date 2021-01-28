@@ -565,7 +565,6 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
             }
 
             if (userProfileResponse.getData().getCustomData() != null) {
-                isNotificationEnable = Boolean.parseBoolean(userProfileResponse.getData().getCustomData().getIsNotification());
                 if (userProfileResponse.getData().getCustomData().getAddress() != null)
                     getBinding().etAddress.setText(userProfileResponse.getData().getCustomData().getAddress());
             }

@@ -104,7 +104,7 @@ public class RegistrationLoginRepository {
     }
 
 
-    public LiveData<SignupResponseAccessToken> getSignupAPIResponse(String name, String email, String pwd) {
+    public LiveData<SignupResponseAccessToken> getSignupAPIResponse(String name, String email, String pwd, boolean isNotificationEnable) {
 
         final MutableLiveData<SignupResponseAccessToken> responseApi;
         {
@@ -116,7 +116,7 @@ public class RegistrationLoginRepository {
             requestParam.addProperty(AppConstants.API_PARAM_EMAIL, "");
             requestParam.addProperty(AppConstants.API_PARAM_PASSWORD, pwd);
 
-            BaseCategoryServices.Companion.getInstance().registerService(name, email, pwd, new LoginCallBack() {
+            BaseCategoryServices.Companion.getInstance().registerService(name, email, pwd,isNotificationEnable, new LoginCallBack() {
                 @Override
                 public void success(boolean status, Response<me.vipa.userManagement.bean.LoginResponse.LoginResponseModel> response) {
                     if (status) {

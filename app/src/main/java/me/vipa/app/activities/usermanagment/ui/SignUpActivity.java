@@ -193,7 +193,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
 
                     preference.setAppPrefAccessToken("");
 
-                    viewModel.hitSignUpAPI(getBinding().etName.getText().toString(), getBinding().etEmail.getText().toString(), getBinding().etPassword.getText().toString()).observe(SignUpActivity.this, signupResponseAccessToken -> {
+                    viewModel.hitSignUpAPI(getBinding().etName.getText().toString(), getBinding().etEmail.getText().toString(), getBinding().etPassword.getText().toString(),isNotificationEnable).observe(SignUpActivity.this, signupResponseAccessToken -> {
                         dismissLoading(getBinding().progressBar);
 
                         try {

@@ -25,8 +25,8 @@ class BaseCategoryServices {
         RequestManager.instance.loginCall(email,password,enveuCallBacks)
     }
 
-    fun registerService(name: String, email:String, password:String, enveuCallBacks: LoginCallBack) {
-        RequestManager.instance.registerCall(name,email,password,enveuCallBacks)
+    fun registerService(name: String, email: String, password: String, isNotificationEnable: Boolean, enveuCallBacks: LoginCallBack) {
+        RequestManager.instance.registerCall(name,email,password,isNotificationEnable,enveuCallBacks)
     }
 
     fun logoutService(token:String, enveuCallBacks: LogoutCallBack) {
