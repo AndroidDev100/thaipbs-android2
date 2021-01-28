@@ -577,7 +577,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
 
                 String firstFiveChar = imageUrlId.substring(0, 5);
                 if (firstFiveChar.equalsIgnoreCase("https")){
-                    Glide.with(ProfileActivityNew.this).load(SDKConfig.getInstance().getCLOUD_FRONT_BASE_URL() + SDKConfig.getInstance().getProfileFolder() + userProfileResponse.getData().getProfilePicURL())
+                    Glide.with(ProfileActivityNew.this).load(userProfileResponse.getData().getProfilePicURL())
                             .placeholder(R.drawable.default_profile_pic)
                             .error(R.drawable.default_profile_pic)
                             .into(getBinding().ivProfilePic);
