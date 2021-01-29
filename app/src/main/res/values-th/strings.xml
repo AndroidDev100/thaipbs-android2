@@ -11,9 +11,9 @@
     <string name="by_email">โดยอีเมล</string>
     <string name="by_line">ทางไลน์</string>
     <string name="guest_user">Guest User</string>
-    <string name="setting_title">ตั้งค่า</string>
+    <string name="setting_title">การตั้งค่า</string>
     <string name="term_condition">ข้อกำหนดและเงื่อนไข</string>
-    <string name="my_watchlist">รายการของฉัน</string>
+    <string name="my_watchlist">รายการโปรดของฉัน</string>
     <string name="my_history">ประวัติการรับชม</string>
     <string name="membership_plan">ข้อมูลสมาชิก</string>
     <string name="profile_update_successfully">อัพเดทสำเร็จ</string>
@@ -37,7 +37,7 @@
     <string name="seasons">ซีซั่น</string>
     <string name="season">ซีซั่น</string>
     <string name="episode">ตอน</string>
-    <string name="my_downloads">ดาวน์โหลด</string>
+    <string name="my_downloads">ดาวน์โหลดของฉัน</string>
     <string name="yes">ใช่</string>
     <string name="no">ไม่</string>
     <string name="language_english">อังกฤษ</string>
@@ -78,7 +78,7 @@
     <string name="new_password">พาสเวิร์ดใหม่</string>
 
     <string name="notification">แจ้งเตือน</string>
-    <string name="manage_account">จัดการบัญชี</string>
+    <string name="manage_account">จัดการโปรไฟล์</string>
     <string name="login_signup">เข้าสู่ระบบ/ลงทะเบียน</string>
     <string name="login_txt">เข้าสู่ระบบ</string>
     <string name="update">อัพเดท</string>

@@ -2,17 +2,17 @@
 <resources>
 
     <string-array name="more_with_login">
-        <item>จัดการบัญชี</item>
+        <item>จัดการโปรไฟล์</item>
         <item>เปลื่ยนพาสเวิร์ด</item>
-        <item>รายการของฉัน</item>
+        <item>รายการโปรดของฉัน</item>
         <item>ประวัติการรับชม</item>
-        <item>ดาวน์โหลด</item>
+        <item>ดาวน์โหลดของฉัน</item>
         <item>ติดต่อเรา</item>
-        <item>คำถามที่ถามบ่อย</item>
-        <item>เกี่ยวกับ VIPA</item>
+        <item>คำถามที่พบบ่อย</item>
+        <item>เกี่ยวกับเรา</item>
         <item>ข้อเสนอแนะ</item>
         <item>แอปพลิเคชันอื่น ๆ</item>
-        <item>ตั้งค่า</item>
+        <item>การตั้งค่า</item>
         <item>ออกจากระบบ</item>
     </string-array>
     <string-array name="more_with_login_fb">
@@ -42,17 +42,17 @@
     </string-array>
 
     <string-array name="more_logout">
-        <item>จัดการบัญชี</item>
+        <item>จัดการโปรไฟล์</item>
         <item>เปลื่ยนพาสเวิร์ด</item>
-        <item>รายการของฉัน</item>
+        <item>รายการโปรดของฉัน</item>
         <item>ประวัติการรับชม</item>
-        <item>ดาวน์โหลด</item>
+        <item>ดาวน์โหลดของฉัน</item>
         <item>ติดต่อเรา</item>
-        <item>คำถามที่ถามบ่อย</item>
-        <item>เกี่ยวกับ VIPA</item>
+        <item>คำถามที่พบบ่อย</item>
+        <item>เกี่ยวกับเรา</item>
         <item>ข้อเสนอแนะ</item>
         <item>แอปพลิเคชันอื่น ๆ</item>
-        <item>ตั้งค่า</item>
+        <item>การตั้งค่า</item>
 
 
     </string-array>
