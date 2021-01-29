@@ -169,7 +169,9 @@ public class BaseActivity extends AppCompatActivity implements BaseActivityAlert
             }
             String strCurrentTheme = KsPreferenceKeys.getInstance().getCurrentTheme();
             String strCurrentLanguage = KsPreferenceKeys.getInstance().getAppLanguage();
+            preference.setAppPrefRegisterStatus(AppConstants.UserStatus.Logout.toString());
             preference.clear();
+            KsPreferenceKeys.getInstance().setfirstTimeUser(false);
             KsPreferenceKeys.getInstance().setCurrentTheme(strCurrentTheme);
             KsPreferenceKeys.getInstance().setAppLanguage(strCurrentLanguage);
             AppCommonMethod.updateLanguage(strCurrentLanguage,this);
