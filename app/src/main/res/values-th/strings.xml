@@ -147,11 +147,11 @@
     ​
     <string name="username_must_be_loggedin">ผู้ใช้งานต้องล็อคอินเข้าสู่ระบบ​​</string>
     <string name="user_not_found">ไม่พบผู้ใช้งาน</string>
-    <string name="title_home">หน้าแรก</string>
+    <string name="title_home">หน้าหลัก</string>
     <string name="title_free">พอดคาสต์</string>
-    <string name="title_premium">โปรแกรม</string>
-    <string name="title_live_tv">ช่องทีวี</string>
-    <string name="title_more1">ข้อมูลส่วนตัว</string>
+    <string name="title_premium">ประเภทรายการ</string>
+    <string name="title_live_tv">รายการสด</string>
+    <string name="title_more1">หน้าโปรไฟล์</string>
     <string name="more">เพิ่มเติม</string>
     <string name="player_error">ไม่สามารถทำตามที่ต้องการได้ กรุณาลองใหม่อีกครั้ง</string>
     <string name="tab_heading_episodes">ตอน</string>
