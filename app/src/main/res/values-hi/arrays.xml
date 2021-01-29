@@ -3,6 +3,7 @@
 
     <string-array name="more_with_login">
         <item>Manage Account</item>
+        <item>Change Password</item>
         <item>My Watchlist</item>
         <item>My Watch History</item>
         <item>My Downloads</item>
@@ -43,6 +44,7 @@
 
     <string-array name="more_logout">
         <item>Manage Account</item>
+        <item>Change Password</item>
         <item>My Watchlist</item>
         <item>My Watch History</item>
         <item>My Downloads</item>

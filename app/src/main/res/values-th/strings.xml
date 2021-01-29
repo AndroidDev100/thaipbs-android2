@@ -306,7 +306,7 @@
     <string name="watchlist_empty_message">ติดตามภาพยนตร์รายการทีวีและคลิปที่คุณต้องการรับชม</string>
     <string name="listing_title_text"><b>ภาพยนตร์</b></string>
     <string name="title_trending">แนวโน้ม</string>
-    <string name="strong_password_required">โปรดป้อนรหัสผ่านระหว่าง 6 ถึง 20 อักขระและต้องมีอักขระพิเศษอย่างน้อย 1 ตัว</string>
+    <string name="strong_password_required">โปรดป้อนรหัสผ่านระหว่าง 6 ถึง 20 อักขระ</string>
     <string name="password_changed_successfully">เปลี่ยนรหัสผ่านสำเร็จแล้ว!</string>
     <string name="password_match">Password doesn\'t match</string>
     <string name="verify_account">ตรวจสอบบัญชี</string>

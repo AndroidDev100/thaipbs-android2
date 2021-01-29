@@ -156,7 +156,7 @@ public class ChangePasswordActivity extends BaseBindingActivity<NewPasswordScree
             if (CheckInternetConnection.isOnline(ChangePasswordActivity.this)) {
                 if (
                         editviewEmpty(getBinding().etNewPassword, getBinding().errorNewPwd, ChangePasswordActivity.this.getResources().getString(R.string.please_enter_new_password)) &&
-                                editViewValidity(getBinding().etNewPassword, getBinding().errorNewPwd, ChangePasswordActivity.this.getResources().getString(R.string.password_length)) &&
+                                editViewValidity(getBinding().etNewPassword, getBinding().errorNewPwd, ChangePasswordActivity.this.getResources().getString(R.string.strong_password_required)) &&
                                 editviewEmpty(getBinding().etConfirmNewPassword, getBinding().errorNewPwdConfirm, ChangePasswordActivity.this.getResources().getString(R.string.please_confirm_password)) &&
                                 compareBothPwd(getBinding().etNewPassword.getText().toString().trim(), getBinding().etConfirmNewPassword.getText().toString().trim())
                 ) {
@@ -218,11 +218,11 @@ public class ChangePasswordActivity extends BaseBindingActivity<NewPasswordScree
 
     private boolean editViewValidity(EditText editText, TextView errorView, String string) {
 
-        String passwordRegex="^(?=.*[!&^%$#@()\\_+-])[A-Za-z0-9\\d!&^%$#@()\\_+-]{8,20}$";
+       // String passwordRegex="^(?=.*[!&^%$#@()\\_+-])[A-Za-z0-9\\d!&^%$#@()\\_+-]{8,20}$";
         boolean check = false;
-        Pattern mPattern = Pattern.compile(passwordRegex);
-        Matcher matcher = mPattern.matcher(editText.getText().toString());
-        if(!matcher.find())
+      //  Pattern mPattern = Pattern.compile(passwordRegex);
+      //  Matcher matcher = mPattern.matcher(editText.getText().toString());
+        if(!(editText.getText().toString().trim().length() >=6))
         {
             errorView.setVisibility(View.VISIBLE);
             errorView.setText(getResources().getString(R.string.strong_password_required));

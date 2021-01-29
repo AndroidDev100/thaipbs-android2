@@ -110,7 +110,7 @@
     <string name="empty_password">कृप्या पास्वर्ड भरो</string>
     <string name="empty_string">कृपया ईमेल दर्ज करें</string>
     <string name="credential_mismatch">क्रेडेंशियल्स मिसमैच!</string>
-    <string name="strong_password_required">कृपया 8 से 20 वर्णों के बीच एक पासवर्ड दर्ज करें और इसमें कम से कम 1 विशेष वर्ण होना चाहिए</string>
+    <string name="strong_password_required">कृपया 8 से 20 वर्णों के बीच एक पासवर्ड दर्ज करें</string>
     <string name="email_check_signup">कृपया ईमेल दर्ज करें</string>
     <string name="password_match">Password doesn\'t match</string>
     <string name="empty_name">कृपया पूरा नाम दर्ज करें</string>

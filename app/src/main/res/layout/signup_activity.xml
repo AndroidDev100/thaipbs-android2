@@ -239,6 +239,7 @@
                                 android:fontFamily="@font/sukhumvittadmai_normal"
                                 android:hint="@string/create_password"
                                 android:imeOptions="actionDone"
+                                android:maxLength="20"
                                 android:inputType="textPassword|textNoSuggestions"
                                 android:singleLine="true"
                                 android:textColor="?attr/app_edit_text_color"
@@ -300,6 +301,7 @@
                                 android:imeOptions="actionDone"
                                 android:inputType="textPassword|textNoSuggestions"
                                 android:singleLine="true"
+                                android:maxLength="20"
                                 android:textColor="?attr/app_edit_text_color"
                                 android:textColorHint="?attr/app_edit_text_color"
                                 android:textSize="@dimen/TextSize14" />

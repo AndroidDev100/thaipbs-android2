@@ -178,6 +178,7 @@
                                     android:hint="@string/password"
                                     android:inputType="textPassword|textNoSuggestions"
                                     android:padding="@dimen/NontonSize5"
+                                    android:maxLength="20"
                                     android:textColor="?attr/app_edit_text_color"
                                     android:textColorHint="?attr/app_edit_text_color"
                                     android:textSize="@dimen/TextSize14"

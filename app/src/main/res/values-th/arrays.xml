@@ -3,6 +3,7 @@
 
     <string-array name="more_with_login">
         <item>จัดการบัญชี</item>
+        <item>เปลื่ยนพาสเวิร์ด</item>
         <item>รายการของฉัน</item>
         <item>ประวัติการรับชม</item>
         <item>ดาวน์โหลด</item>
@@ -42,6 +43,7 @@
 
     <string-array name="more_logout">
         <item>จัดการบัญชี</item>
+        <item>เปลื่ยนพาสเวิร์ด</item>
         <item>รายการของฉัน</item>
         <item>ประวัติการรับชม</item>
         <item>ดาวน์โหลด</item>

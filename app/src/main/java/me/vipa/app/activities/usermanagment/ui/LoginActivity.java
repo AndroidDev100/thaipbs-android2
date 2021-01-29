@@ -539,11 +539,11 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
     }
 
     public boolean passwordCheck(String password) {
-        String passwordRegex = "^(?=.*[!&^%$#@()\\_+-])[A-Za-z0-9\\d!&^%$#@()\\_+-]{6,20}$";
+       // String passwordRegex = "^(?=.*[!&^%$#@()\\_+-])[A-Za-z0-9\\d!&^%$#@()\\_+-]{6,20}$";
         boolean check = false;
-        Pattern mPattern = Pattern.compile(passwordRegex);
-        Matcher matcher = mPattern.matcher(password.toString());
-        if (!matcher.find()) {
+      //  Pattern mPattern = Pattern.compile(passwordRegex);
+      //  Matcher matcher = mPattern.matcher(password.toString());
+        if (!(password.length() >=6)) {
             getBinding().errorPassword.setVisibility(View.VISIBLE);
             getBinding().errorPassword.setText(getResources().getString(R.string.strong_password_required));
             //showDialog(LoginActivity.this.getResources().getString(R.string.error), getResources().getString(R.string.strong_password_required));
