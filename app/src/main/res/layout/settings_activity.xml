@@ -186,7 +186,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/notification"
+                android:text="@string/notification_setting"
                 android:fontFamily="@font/sukhumvittadmai_normal"
                 android:textSize="@dimen/font_medium_large"
                 android:layout_marginLeft="@dimen/NontonSize15"

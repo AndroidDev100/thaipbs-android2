@@ -76,6 +76,7 @@
     <string name="no_result_found_title">No Results Found</string>
 
     <string name="notification">सूचनाएं</string>
+    <string name="notification_setting">Notification Setting</string>
     <string name="manage_account">Manage Account</string>
     <string name="login_signup">Log In / Sign Up</string>
     <string name="login_txt">लॉग इन</string>

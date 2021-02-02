@@ -78,6 +78,7 @@
     <string name="new_password">พาสเวิร์ดใหม่</string>
 
     <string name="notification">แจ้งเตือน</string>
+    <string name="notification_setting">Notification Setting</string>
     <string name="manage_account">จัดการโปรไฟล์</string>
     <string name="login_signup">เข้าสู่ระบบ/ลงทะเบียน</string>
     <string name="login_txt">เข้าสู่ระบบ</string>
