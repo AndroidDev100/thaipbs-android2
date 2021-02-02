@@ -347,6 +347,12 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
 
     }
 
+
+    @Override
+    public void onPlayerInProgress() {
+
+    }
+
     public void removeCommentFragment() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (commentsFragment != null) {

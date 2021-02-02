@@ -31,18 +31,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.brightcove.player.event.EventType;
-import com.vipa.brightcovelibrary.R;
-
 import me.vipa.brightcovelibrary.callBacks.PlayerCallbacks;
 import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.ui.DefaultTimeBar;
 import com.google.android.exoplayer2.ui.TimeBar;
 import com.google.android.gms.cast.framework.CastButtonFactory;
+import com.vipa.brightcovelibrary.R;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import me.vipa.brightcovelibrary.callBacks.PlayerCallbacks;
 
 
 /**
@@ -75,7 +72,7 @@ public class PlayerControlsFragment extends Fragment {
     private ConstraintLayout controlLayout;
     private ConstraintLayout childControl, progressView;
     private RelativeLayout audioTracks, subtitles;
-    private ImageView backArrow;
+    public ImageView backArrow;
     private View seekBarControl, settingControl;
     public ImageView fullscreen;
     private long playbackDuration, playbackCurrentPosition;
@@ -613,6 +610,7 @@ public class PlayerControlsFragment extends Fragment {
     }
 
     private void callHandler() {
+        Log.w("conditionCheck-->>","in");
         timer = true;
         viewHideShowRunnable = () -> ShowAndHideView();
 
@@ -726,6 +724,17 @@ public class PlayerControlsFragment extends Fragment {
         bingeLay.setVisibility(View.VISIBLE);
         bingeBtn.setVisibility(View.VISIBLE);
         backArrow.setVisibility(View.VISIBLE);
+    }
+
+    public void hideBingeWatch() {
+        try {
+            bingeLay.setVisibility(View.GONE);
+            bingeBtn.setVisibility(View.GONE);
+            backArrow.setVisibility(View.GONE);
+        }catch (Exception e){
+
+        }
+
     }
 
     public void isInPip(boolean pipMode) {

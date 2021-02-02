@@ -500,7 +500,7 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
                                             if (i == AUDIOFOCUS_LOSS) {
                                                 Logger.d("AudioFocus", "Loss");
                                                 if (playerFragment != null) {
-                                                    playerFragment.playPause();
+                                                   // playerFragment.playPause();
                                                 }
                                             }
                                         }
@@ -549,6 +549,12 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
         transaction.replace(R.id.fragment_comment, commentsFragment);
         transaction.addToBackStack(null);
         transaction.commit();
+
+    }
+
+
+    @Override
+    public void onPlayerInProgress() {
 
     }
 
@@ -1358,15 +1364,15 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
         super.onWindowFocusChanged(hasFocus);
         if (playerFragment != null) {
             if (!hasFocus) {
-                if (playerFragment.isPlaying()) {
+               /* if (playerFragment.isPlaying()) {
                     playerFragment.playPause();
-                }
+                }*/
             } else {
 
 
-                if (!playerFragment.isPlaying()) {
+                /*if (!playerFragment.isPlaying()) {
                     playerFragment.playPause();
-                }
+                }*/
             }
         }
     }

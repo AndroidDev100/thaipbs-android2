@@ -40,6 +40,10 @@ class DownloadedVideoActivity : BaseBindingActivity<ActivityDownloadedVideoBindi
     override fun onAdStarted() {
     }
 
+    override fun onPlayerInProgress() {
+        TODO("Not yet implemented")
+    }
+
 
     private var TAG = this.javaClass.simpleName
     @SuppressLint("SourceLockedOrientationActivity")

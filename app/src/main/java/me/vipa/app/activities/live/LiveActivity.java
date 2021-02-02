@@ -1334,6 +1334,11 @@ public class LiveActivity extends BaseBindingActivity<LiveDetailBinding> impleme
     }
 
     @Override
+    public void onPlayerInProgress() {
+
+    }
+
+    @Override
     public void onAdStarted() {
         try {
             getBinding().playerImage.setVisibility(View.GONE);
