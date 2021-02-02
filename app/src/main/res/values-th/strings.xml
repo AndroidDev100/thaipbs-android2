@@ -141,6 +141,7 @@
     <string name="fb_id_cannot_be_null_or_empty">รหัส Facebook ไม่รองรับเว้นวรรค หรือปล่อยว่าง</string>
 
     <string name="email_id_cannot_be_blank">รหัสอีเมล์ไม่รองรับเว้นวรรค</string>
+    <string name="invalid_email_id">Invalid email id</string>
     <string name="user_does_not_exists">กรุณาตรวจสอบชื่อผู้ใช้ หรือรหัสผ่านให้ถูกต้อง และลองใหม่อีกครั้ง​</string>
     <string name="user_deactivated">ผู้ใช้งานรายนี้ถูกปิดใช้งาน โปรดติดต่อฝ่ายสนับสนุน​</string>
     <string name="user_can_not_login">ผู้้ใช้งานไม่สามารถล็อคอินด้วยวีธีการนี้</string>

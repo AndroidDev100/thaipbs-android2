@@ -322,6 +322,7 @@
     <string name="fb_id_cannot_be_null_or_empty">Fb id cannot be null or empty.</string>
 
     <string name="email_id_cannot_be_blank">Email id cannot be blank</string>
+    <string name="invalid_email_id">Invalid email id</string>
     <string name="user_does_not_exists">Sorry, we can\'t find an account with this email address. Please try again.​</string>
     <string name="user_deactivated">This user has been deactivated. Please contact support​</string>
     <string name="user_can_not_login">User cannot login with this method​</string>

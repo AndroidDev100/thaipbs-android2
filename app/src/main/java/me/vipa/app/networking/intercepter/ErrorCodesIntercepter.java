@@ -90,6 +90,9 @@ public class ErrorCodesIntercepter {
                     } else if (errorObject.getInt("responseCode") == 4005) {
                         responseModel.setDebugMessage(MvHubPlusApplication.getInstance().getResources().getString(R.string.email_id_cannot_be_blank));
 
+                    }else if (errorObject.getInt("responseCode") == 4017) {
+                        responseModel.setDebugMessage(MvHubPlusApplication.getInstance().getResources().getString(R.string.invalid_email_id));
+
                     } else {
                         responseModel.setDebugMessage(MvHubPlusApplication.getInstance().getResources().getString(R.string.something_went_wrong));
 
