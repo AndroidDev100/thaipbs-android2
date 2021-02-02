@@ -20,6 +20,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.PopupMenu;
@@ -70,6 +71,7 @@ import me.vipa.app.SDKConfig;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.mvhub.enums.RailCardType;
 
 import org.json.JSONObject;
 
@@ -1266,13 +1268,13 @@ public class AppCommonMethod {
     public static void handleTags(String isVIPTag, String isNewS, FrameLayout isVIP, FrameLayout newSeries,FrameLayout newEpisode,FrameLayout newMovie,String assetType) {
        try {
            if (isVIPTag.equalsIgnoreCase("true")){
-               isVIP.setVisibility(View.VISIBLE);
+               isVIP.setVisibility(View.GONE);
            }else {
                isVIP.setVisibility(View.GONE);
            }
            if (assetType.equalsIgnoreCase(MediaTypeConstants.getInstance().getSeries())){
                if (isNewS.equalsIgnoreCase("true")){
-                   newSeries.setVisibility(View.VISIBLE);
+                   newSeries.setVisibility(View.GONE);
                }else {
                    newSeries.setVisibility(View.GONE);
                }
@@ -1282,7 +1284,7 @@ public class AppCommonMethod {
 
            if (assetType.equalsIgnoreCase(MediaTypeConstants.getInstance().getMovie())){
                if (isNewS.equalsIgnoreCase("true")){
-                   newMovie.setVisibility(View.VISIBLE);
+                   newMovie.setVisibility(View.GONE);
                }else {
                    newMovie.setVisibility(View.GONE);
                }
@@ -1291,7 +1293,7 @@ public class AppCommonMethod {
            }
            if (assetType.equalsIgnoreCase(MediaTypeConstants.getInstance().getEpisode())){
                if (isNewS.equalsIgnoreCase("true")){
-                   newEpisode.setVisibility(View.VISIBLE);
+                   newEpisode.setVisibility(View.GONE);
                }else {
                    newEpisode.setVisibility(View.GONE);
                }
@@ -1314,4 +1316,37 @@ public class AppCommonMethod {
 
         return jsonObject;
     }
+
+    public static void handleTitleDesc(RelativeLayout titleLayout, TextView tvTitle, TextView tvDescription, BaseCategory baseCategory) {
+        try {
+            if (baseCategory!=null){
+                if (baseCategory.getRailCardType().equalsIgnoreCase(RailCardType.IMAGE_ONLY.name())){
+                    titleLayout.setVisibility(View.VISIBLE);
+                }else {
+                    //titleLayout.setVisibility(View.VISIBLE);
+                    if (baseCategory.getRailCardType().equalsIgnoreCase(RailCardType.IMAGE_TITLE.name())){
+                        titleLayout.setVisibility(View.VISIBLE);
+                        tvTitle.setVisibility(View.VISIBLE);
+                    }else {
+                        if (baseCategory.getRailCardType().equalsIgnoreCase(RailCardType.IMAGE_TITLE_DESC.name())){
+                            titleLayout.setVisibility(View.VISIBLE);
+                            tvTitle.setVisibility(View.VISIBLE);
+                            tvDescription.setVisibility(View.VISIBLE);
+                        }else {
+                            titleLayout.setVisibility(View.GONE);
+                            tvTitle.setVisibility(View.GONE);
+                            tvDescription.setVisibility(View.GONE);
+                        }
+                    }
+
+                }
+
+            }
+        }catch (Exception ignored){
+            titleLayout.setVisibility(View.GONE);
+            tvTitle.setVisibility(View.GONE);
+            tvDescription.setVisibility(View.GONE);
+        }
+    }
+
 }

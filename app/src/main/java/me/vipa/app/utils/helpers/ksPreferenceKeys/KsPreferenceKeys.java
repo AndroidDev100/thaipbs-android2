@@ -24,6 +24,8 @@ public class KsPreferenceKeys extends SharedPrefHelper {
     private static final String DOB_EMPTY = "DOBEmpty";
     private static final String NOTIFICATION_PAYLOAD = "notification_payload";
     public static final String ENTITLEMENT_STATUS = "entitlement_status";
+    public static final String AUTO_ROTATE = "auto_rotate";
+    public static final String AUTO_DURATION = "auto_rotate_duration";
 
 
 
@@ -366,4 +368,21 @@ public class KsPreferenceKeys extends SharedPrefHelper {
     public Boolean getEntitlementStatus() {
         return getBoolean(ENTITLEMENT_STATUS,false);
     }
+
+    public int getAutoDuration() {
+        return getInt(AUTO_DURATION, 0);
+    }
+
+    public void setAutoDuration(int value) {
+        setInt(AUTO_DURATION, value);
+    }
+
+    public boolean getAutoRotation() {
+        return getBoolean(AUTO_ROTATE, true);
+    }
+
+    public void setAutoRotation(boolean value) {
+        setBoolean(AUTO_ROTATE, value);
+    }
+
 }

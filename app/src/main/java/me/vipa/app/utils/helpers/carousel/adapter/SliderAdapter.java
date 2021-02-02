@@ -39,8 +39,9 @@ public class SliderAdapter extends PagerAdapter {
     private CommonRailtItemClickListner listner;
     private int viewType;
     private List<EnveuVideoItemBean> videos;
+    private int pos;
 
-    public SliderAdapter(@NonNull Context context, RailCommonData items, int viewType, CommonRailtItemClickListner listner) {
+    public SliderAdapter(@NonNull Context context, RailCommonData items, int viewType, CommonRailtItemClickListner listner,int position) {
         this.context = context;
         this.items = items;
         notifyDataSetChanged();
@@ -48,6 +49,7 @@ public class SliderAdapter extends PagerAdapter {
         this.listner = listner;
         this.viewType = viewType;
         this.videos = items.getEnveuVideoItemBeans();
+        this.pos=position;
     }
 
     @Override

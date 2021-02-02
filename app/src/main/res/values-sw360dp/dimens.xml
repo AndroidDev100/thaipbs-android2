@@ -53,7 +53,7 @@
     <dimen name="NontonSize35">35dp</dimen>
     <dimen name="NontonSize40">40dp</dimen>
 
-    <dimen name="NontonSize45">45dp</dimen>
+    <!--<dimen name="NontonSize45">45dp</dimen>
     <dimen name="NontonSize50">50dp</dimen>
     <dimen name="NontonSize55">55dp</dimen>
     <dimen name="NontonSize60">60dp</dimen>
@@ -74,7 +74,41 @@
     <dimen name="NontonSize93">93dp</dimen>
     <dimen name="NontonSize168">168dp</dimen>
     <dimen name="NontonSize177">177dp</dimen>
+    <dimen name="NontonSize186">186dp</dimen>-->
+
+    <dimen name="NontonSize45">45dp</dimen>
+    <dimen name="NontonSize50">50dp</dimen>
+    <dimen name="NontonSize55">55dp</dimen>
+    <dimen name="NontonSize60">60dp</dimen>
+    <dimen name="NontonSize67">67dp</dimen>
+    <dimen name="NontonSize85">85dp</dimen>
+    <dimen name="NontonSize80">80dp</dimen>
+    <dimen name="NontonSize90">90dp</dimen>
+    <dimen name="NontonSize84">84dp</dimen>
+    <dimen name="NontonSize150">150dp</dimen>
+    <dimen name="NontonSize180">180dp</dimen>
+    <dimen name="NontonSize120">120dp</dimen>
+    <dimen name="NontonSize200">200dp</dimen>
+    <dimen name="NontonSize100">100dp</dimen>
+    <dimen name="NontonSize105">105dp</dimen>
+    <dimen name="NontonSize110">110dp</dimen>
+    <dimen name="NontonSize160">160dp</dimen>
+    <dimen name="NontonSize165">165dp</dimen>
+    <dimen name="NontonSize95">95dp</dimen>
+    <dimen name="NontonSize126">126dp</dimen>
+    <dimen name="NontonSize123">123dp</dimen>
+    <dimen name="NontonSize224">224dp</dimen>
+    <dimen name="NontonSize93">93dp</dimen>
+    <dimen name="NontonSize112">112dp</dimen>
+    <dimen name="NontonSize63">63dp</dimen>
+    <dimen name="NontonSize66">66dp</dimen>
+    <dimen name="NontonSize118">118dp</dimen>
+    <dimen name="NontonSize168">168dp</dimen>
+    <dimen name="NontonSize177">177dp</dimen>
     <dimen name="NontonSize186">186dp</dimen>
+    <dimen name="NontonSize240">240dp</dimen>
+    <dimen name="NontonSize133">133dp</dimen>
+    <dimen name="NontonSize236">236dp</dimen>
 
 
     <dimen name="TextSize10">10sp</dimen>

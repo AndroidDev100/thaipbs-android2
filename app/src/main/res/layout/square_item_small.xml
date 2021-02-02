@@ -30,15 +30,15 @@
                     android:layout_height="wrap_content">
 
                     <RelativeLayout
-                        android:layout_width="@dimen/_85sdp"
-                        android:layout_height="@dimen/_85sdp">
+                        android:layout_width="@dimen/_56sdp"
+                        android:layout_height="@dimen/_56sdp">
 
                         <ImageView
                             android:id="@+id/itemImage"
                             errorImage="@{@drawable/placeholder_square}"
                             placeholder="@{@drawable/placeholder_square}"
-                            android:layout_width="@dimen/_85sdp"
-                            android:layout_height="@dimen/_85sdp"
+                            android:layout_width="@dimen/_56sdp"
+                            android:layout_height="@dimen/_56sdp"
                             android:background="@drawable/placeholder_square"
                             android:contentDescription="TODO"
                             android:scaleType="fitXY" />
@@ -49,14 +49,13 @@
                             android:id="@+id/flNew"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="-2dp"
                             android:layout_alignParentBottom="true"
                             android:layout_alignParentRight="true"
                             android:visibility="gone">
 
                             <ImageView
-                                android:layout_width="@dimen/vip_badge_width"
-                                android:layout_height="@dimen/vip_badge_height"
+                                android:layout_width="@dimen/vip_badge_width_small"
+                                android:layout_height="@dimen/vip_badge_height_small"
                                 android:src="@{playlistItem.newSeriesImageDrawable, default=@drawable/series_icon_120}"
                                 tools:ignore="ContentDescription"/>
                         </FrameLayout>
@@ -65,15 +64,13 @@
                             android:id="@+id/flNewMovie"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="-2dp"
-                            android:layout_marginTop="@dimen/NontonSize55"
                             android:layout_alignParentBottom="true"
                             android:layout_alignParentRight="true"
                             android:visibility="gone">
 
                             <ImageView
-                                android:layout_width="@dimen/vip_badge_width"
-                                android:layout_height="@dimen/vip_badge_height"
+                                android:layout_width="@dimen/vip_badge_width_small"
+                                android:layout_height="@dimen/vip_badge_height_small"
                                 android:src="@{playlistItem.newMoviesDrawable, default=@drawable/new_movie_120}"
                                 tools:ignore="ContentDescription"/>
                         </FrameLayout>
@@ -82,7 +79,7 @@
 
                     <RelativeLayout
                         android:id="@+id/titleLayout"
-                        android:layout_width="@dimen/_85sdp"
+                        android:layout_width="@dimen/_56sdp"
                         android:layout_height="wrap_content"
                         android:visibility="gone">
 
@@ -95,7 +92,7 @@
                                 android:id="@+id/tvTitle"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_85sdp"
+                                android:layout_marginTop="@dimen/_56sdp"
                                 android:ellipsize="end"
                                 android:gravity="left"
                                 android:maxLines="1"
@@ -104,7 +101,7 @@
                                 android:paddingTop="@dimen/NontonSize2"
                                 android:paddingLeft="@dimen/_3sdp"
                                 android:textColor="?attr/watchlist_item_title_color"
-                                android:textSize="@dimen/_11sdp" />
+                                android:textSize="@dimen/_8sdp" />
 
                             <TextView
                                 android:id="@+id/tvDescription"
@@ -118,7 +115,7 @@
                                 android:paddingLeft="@dimen/_3sdp"
                                 android:paddingBottom="@dimen/_2sdp"
                                 android:textColor="?attr/watchlist_item_title_color"
-                                android:textSize="@dimen/_9sdp" />
+                                android:textSize="@dimen/_7sdp" />
 
 
                         </LinearLayout>
@@ -135,8 +132,8 @@
                         android:visibility="gone">
 
                         <ImageView
-                            android:layout_width="@dimen/vip_badge_width"
-                            android:layout_height="@dimen/vip_badge_height"
+                            android:layout_width="@dimen/vip_badge_width_small"
+                            android:layout_height="@dimen/vip_badge_height_small"
                             android:layout_gravity="center"
                             android:src="@{playlistItem.vipImageDrawable, default=@drawable/vip_icon_120}"
                             tools:ignore="ContentDescription" />
@@ -148,8 +145,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
                         android:layout_gravity="end"
-                        android:layout_marginTop="-1dp"
-                        android:layout_marginEnd="-2dp"
+                        android:layout_marginTop="-4dp"
                         android:visibility="gone">
 
                         <ImageView

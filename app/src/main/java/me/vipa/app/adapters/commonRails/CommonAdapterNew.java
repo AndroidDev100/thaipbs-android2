@@ -42,6 +42,7 @@ import java.util.List;
 import me.vipa.app.beanModel.enveuCommonRailData.RailCommonData;
 import me.vipa.app.callbacks.commonCallbacks.CommonRailtItemClickListner;
 import me.vipa.app.callbacks.commonCallbacks.MoreClickListner;
+import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 
 import static me.vipa.app.utils.constants.AppConstants.ADS_BANNER;
 import static me.vipa.app.utils.constants.AppConstants.ADS_MREC;
@@ -129,31 +130,31 @@ public class CommonAdapterNew extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     private void posterPotraitRail(PosterPotraitHolder viewHolder, int position) {
         RecyclerView recyclerView = viewHolder.itemBinding.recyclerViewList2;
-        CommonPosterPotrailRailAdapter adapter = new CommonPosterPotrailRailAdapter(mContext, mList.get(position), listner);
+        CommonPosterPotrailRailAdapter adapter = new CommonPosterPotrailRailAdapter(mContext, mList.get(position), position,listner,mList.get(position).getScreenWidget());
         setCommonRailAdapter(viewHolder.itemBinding.titleHeading, recyclerView, position, adapter);
     }
 
     private void LandscapeRail(LandscapeHolder viewHolder, int position) {
         RecyclerView recyclerView = viewHolder.landscapeRecyclerItemBinding.recyclerViewList3;
-        CommonLandscapeRailAdapter adapter = new CommonLandscapeRailAdapter(mContext, mList.get(position), listner);
+        CommonLandscapeRailAdapter adapter = new CommonLandscapeRailAdapter(mContext, mList.get(position),position, listner,mList.get(position).getScreenWidget());
         setCommonRailAdapter(viewHolder.landscapeRecyclerItemBinding.titleHeading, recyclerView, position, adapter);
     }
 
     private void potraitRail(PortraitHolder viewHolder, int position) {
         RecyclerView recyclerView = viewHolder.potraitRecyclerItemBinding.recyclerViewList4;
-        CommonPotraitRailAdapter adapter = new CommonPotraitRailAdapter(mContext, mList.get(position), listner);
+        CommonPotraitRailAdapter adapter = new CommonPotraitRailAdapter(mContext, mList.get(position), position,listner,mList.get(position).getScreenWidget());
         setCommonRailAdapter(viewHolder.potraitRecyclerItemBinding.titleHeading, recyclerView, position, adapter);
     }
 
     private void squareRail(SquareHolder viewHolder, int position) {
         RecyclerView recyclerView = viewHolder.squareRecyclerItemBinding.recyclerViewList2;
-        CommonSquareRailAdapter commonSquareRailAdapter = new CommonSquareRailAdapter(mContext, mList.get(position), listner);
+        CommonSquareRailAdapter commonSquareRailAdapter = new CommonSquareRailAdapter(mContext, mList.get(position), listner,mList.get(position).getScreenWidget());
         setCommonRailAdapter(viewHolder.squareRecyclerItemBinding.titleHeading, recyclerView, position, commonSquareRailAdapter);
     }
 
     private void circularRail(CircleHolder viewHolder, int position) {
         RecyclerView recyclerView = viewHolder.circularRecyclerItemBinding.recyclerViewList1;
-        CommonCircleRailAdapter commonCircleAdapter = new CommonCircleRailAdapter(mContext, mList.get(position), listner);
+        CommonCircleRailAdapter commonCircleAdapter = new CommonCircleRailAdapter(mContext, mList.get(position), position,listner,mList.get(position).getScreenWidget());
         setCommonRailAdapter(viewHolder.circularRecyclerItemBinding.titleHeading, recyclerView, position, commonCircleAdapter);
     }
 
@@ -186,7 +187,9 @@ public class CommonAdapterNew extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     private void carouselLandscape(CarouselViewHolder viewHolder, int position) {
         setTitle(viewHolder.itemBinding.titleHeading, mList.get(position), position);
-        viewHolder.itemBinding.slider.addSlides(mList.get(position), listner, mList.get(position).getRailType(), mList.get(position).getScreenWidget().getContentIndicator());
+        KsPreferenceKeys.getInstance().setAutoDuration(mList.get(position).getScreenWidget().getAutoRotateDuration() == null ? 0 : mList.get(position).getScreenWidget().getAutoRotateDuration());
+        KsPreferenceKeys.getInstance().setAutoRotation(mList.get(position).getScreenWidget().getAutoRotate() == null ? true : mList.get(position).getScreenWidget().getAutoRotate());
+        viewHolder.itemBinding.slider.addSlides(mList.get(position), listner,position, mList.get(position).getRailType(), mList.get(position).getScreenWidget().getContentIndicator(),mList.get(position).getScreenWidget().getAutoRotate() == null ? true : mList.get(position).getScreenWidget().getAutoRotate(),mList.get(position).getScreenWidget().getAutoRotateDuration() == null ? 0 : mList.get(position).getScreenWidget().getAutoRotateDuration());
     }
 
 

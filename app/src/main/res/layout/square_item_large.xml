@@ -30,15 +30,15 @@
                     android:layout_height="wrap_content">
 
                     <RelativeLayout
-                        android:layout_width="@dimen/_85sdp"
-                        android:layout_height="@dimen/_85sdp">
+                        android:layout_width="@dimen/_113sdp"
+                        android:layout_height="@dimen/_113sdp">
 
                         <ImageView
                             android:id="@+id/itemImage"
                             errorImage="@{@drawable/placeholder_square}"
                             placeholder="@{@drawable/placeholder_square}"
-                            android:layout_width="@dimen/_85sdp"
-                            android:layout_height="@dimen/_85sdp"
+                            android:layout_width="@dimen/_113sdp"
+                            android:layout_height="@dimen/_113sdp"
                             android:background="@drawable/placeholder_square"
                             android:contentDescription="TODO"
                             android:scaleType="fitXY" />
@@ -49,7 +49,6 @@
                             android:id="@+id/flNew"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="-2dp"
                             android:layout_alignParentBottom="true"
                             android:layout_alignParentRight="true"
                             android:visibility="gone">
@@ -65,8 +64,6 @@
                             android:id="@+id/flNewMovie"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="-2dp"
-                            android:layout_marginTop="@dimen/NontonSize55"
                             android:layout_alignParentBottom="true"
                             android:layout_alignParentRight="true"
                             android:visibility="gone">
@@ -82,7 +79,7 @@
 
                     <RelativeLayout
                         android:id="@+id/titleLayout"
-                        android:layout_width="@dimen/_85sdp"
+                        android:layout_width="@dimen/_113sdp"
                         android:layout_height="wrap_content"
                         android:visibility="gone">
 
@@ -95,7 +92,7 @@
                                 android:id="@+id/tvTitle"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_85sdp"
+                                android:layout_marginTop="@dimen/_113sdp"
                                 android:ellipsize="end"
                                 android:gravity="left"
                                 android:maxLines="1"
@@ -104,7 +101,7 @@
                                 android:paddingTop="@dimen/NontonSize2"
                                 android:paddingLeft="@dimen/_3sdp"
                                 android:textColor="?attr/watchlist_item_title_color"
-                                android:textSize="@dimen/_11sdp" />
+                                android:textSize="@dimen/_12sdp" />
 
                             <TextView
                                 android:id="@+id/tvDescription"
@@ -118,7 +115,7 @@
                                 android:paddingLeft="@dimen/_3sdp"
                                 android:paddingBottom="@dimen/_2sdp"
                                 android:textColor="?attr/watchlist_item_title_color"
-                                android:textSize="@dimen/_9sdp" />
+                                android:textSize="@dimen/_10sdp" />
 
 
                         </LinearLayout>

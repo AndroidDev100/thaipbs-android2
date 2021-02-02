@@ -31,16 +31,16 @@
                 card_view:cardPreventCornerOverlap="false">
 
                 <RelativeLayout
-                    android:layout_width="@dimen/NontonSize120"
-                    android:layout_height="@dimen/NontonSize180">
+                    android:layout_width="@dimen/NontonSize160"
+                    android:layout_height="@dimen/NontonSize240">
 
                     <ImageView
                         android:id="@+id/itemImage"
                         errorImage="@{@drawable/placeholder_potrait}"
                         imageUrl="@{playlistItem.posterURL}"
                         placeholder="@{@drawable/placeholder_potrait}"
-                        android:layout_width="@dimen/NontonSize120"
-                        android:layout_height="@dimen/NontonSize180"
+                        android:layout_width="@dimen/NontonSize160"
+                        android:layout_height="@dimen/NontonSize240"
                         android:contentDescription="TODO"
                         android:scaleType="fitXY" />
 
@@ -48,7 +48,6 @@
                         android:id="@+id/flNew"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="-2dp"
                         android:layout_marginBottom="-6dp"
                         android:layout_alignParentBottom="true"
                         android:layout_alignParentRight="true"
@@ -65,7 +64,6 @@
                         android:id="@+id/flNewMovie"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="-2dp"
                         android:layout_alignParentBottom="true"
                         android:layout_alignParentRight="true"
                         android:visibility="gone">
@@ -84,7 +82,7 @@
 
                 <RelativeLayout
                     android:id="@+id/titleLayout"
-                    android:layout_width="@dimen/NontonSize120"
+                    android:layout_width="@dimen/NontonSize160"
                     android:layout_height="wrap_content"
                     android:visibility="gone">
 
@@ -97,7 +95,7 @@
                             android:id="@+id/tvTitle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/NontonSize180"
+                            android:layout_marginTop="@dimen/NontonSize240"
                             android:ellipsize="end"
                             android:gravity="left"
                             android:maxLines="1"
@@ -106,7 +104,7 @@
                             android:paddingLeft="@dimen/_3sdp"
                             android:visibility="gone"
                             android:textColor="?attr/watchlist_item_title_color"
-                            android:textSize="@dimen/_11sdp" />
+                            android:textSize="@dimen/_12sdp" />
 
                         <TextView
                             android:id="@+id/tvDescription"
@@ -120,7 +118,7 @@
                             android:paddingBottom="@dimen/_2sdp"
                             android:visibility="gone"
                             android:textColor="?attr/watchlist_item_title_color"
-                            android:textSize="@dimen/_9sdp" />
+                            android:textSize="@dimen/_10sdp" />
 
 
                     </LinearLayout>
@@ -132,7 +130,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:layout_marginTop="-6dp"
                     android:layout_marginStart="-2dp"
                     android:visibility="gone">
 
