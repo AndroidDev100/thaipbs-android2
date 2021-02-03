@@ -1,12 +1,22 @@
 package me.vipa.app.activities.settings;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.NotificationManagerCompat;
+
+import java.util.List;
 
 import me.vipa.app.activities.settings.downloadsettings.DownloadSettings;
 import me.vipa.app.activities.videoquality.ui.ChangeLanguageActivity;
@@ -24,6 +34,7 @@ import me.vipa.app.baseModels.BaseBindingActivity;
 
 
 public class ActivitySettings extends BaseBindingActivity<SettingsActivityBinding> implements View.OnClickListener {
+    private boolean isNotificationEnable;
 
     @Override
     public SettingsActivityBinding inflateBindingLayout(@NonNull LayoutInflater inflater) {
@@ -42,8 +53,9 @@ public class ActivitySettings extends BaseBindingActivity<SettingsActivityBindin
             setTheme(R.style.MyMaterialTheme_Base_Dark);
             getBinding().switchTheme.setChecked(true);
         }
+        isNotificationEnable = areNotificationsEnabled();
 
-
+        setSwitchForNotification();
         toolBar();
         checkLanguage();
 
@@ -85,6 +97,53 @@ public class ActivitySettings extends BaseBindingActivity<SettingsActivityBindin
 
 
         });
+
+        getBinding().notificationSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    intent.setAction(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
+                    intent.putExtra(Settings.EXTRA_APP_PACKAGE, getApplicationContext().getPackageName());
+                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                    intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
+                    intent.putExtra("app_package", getApplicationContext().getPackageName());
+                    intent.putExtra("app_uid", getApplicationContext().getApplicationInfo().uid);
+                } else {
+                    intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                    intent.addCategory(Intent.CATEGORY_DEFAULT);
+                    intent.setData(Uri.parse("package:" + getApplicationContext().getPackageName()));
+                }
+                getApplicationContext().startActivity(intent);
+            }
+        });
+    }
+
+    private void setSwitchForNotification() {
+        if (isNotificationEnable){
+            getBinding().notificationSetting.setChecked(true);
+        }else {
+            getBinding().notificationSetting.setChecked(false);
+        }
+
+    }
+
+    public boolean areNotificationsEnabled() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationManager manager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+            if (!manager.areNotificationsEnabled()) {
+                return false;
+            }
+            List<NotificationChannel> channels = manager.getNotificationChannels();
+            for (NotificationChannel channel : channels) {
+                if (channel.getImportance() == NotificationManager.IMPORTANCE_NONE) {
+                    return false;
+                }
+            }
+            return true;
+        } else {
+            return NotificationManagerCompat.from(getApplicationContext()).areNotificationsEnabled();
+        }
     }
 
     private void toolBar() {
@@ -149,6 +208,13 @@ public class ActivitySettings extends BaseBindingActivity<SettingsActivityBindin
         if (getBinding() != null) {
             setQualityText(KsPreferenceKeys.getInstance().getQualityName());
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isNotificationEnable = areNotificationsEnabled();
+        setSwitchForNotification();
     }
 
     @Override

@@ -77,6 +77,7 @@
     <string name="save">Menyimpan</string>
     <string name="new_password">kata sandi baru</string>
     <string name="notification">Notifikasi</string>
+    <string name="notification_setting">Notification Setting</string>
     <string name="manage_account">Manage Account</string>
     <string name="login_signup">Log In / Sign Up</string>
     <string name="login_txt">Masuk</string>
@@ -322,6 +323,7 @@
     <string name="fb_id_cannot_be_null_or_empty">Fb id cannot be null or empty.</string>
 
     <string name="email_id_cannot_be_blank">Email id cannot be blank</string>
+    <string name="invalid_email_id">Invalid email id</string>
     <string name="user_does_not_exists">Sorry, we can\'t find an account with this email address. Please try again.​</string>
     <string name="user_deactivated">This user has been deactivated. Please contact support​</string>
     <string name="user_can_not_login">User cannot login with this method​</string>
