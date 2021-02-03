@@ -27,16 +27,8 @@ import me.vipa.app.utils.cropImage.helpers.PrintLogging;
 import me.vipa.app.utils.helpers.ImageHelper;
 import me.vipa.app.utils.helpers.StringUtils;
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
-
 import java.util.List;
-
-import me.vipa.app.activities.detail.ui.DetailActivity;
-import me.vipa.app.activities.detail.ui.EpisodeActivity;
-import me.vipa.app.activities.listing.callback.ItemClickListener;
-import me.vipa.app.activities.series.ui.SeriesDetailActivity;
-import me.vipa.app.beanModel.responseModels.landingTabResponses.railData.ContentsItem;
-import me.vipa.app.beanModel.responseModels.series.season.ItemsItem;
-import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
+import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
 
 public class LandscapeListingAdapter extends RecyclerView.Adapter<LandscapeListingAdapter.SingleItemRowHolder> {
 
@@ -49,13 +41,14 @@ public class LandscapeListingAdapter extends RecyclerView.Adapter<LandscapeListi
     private int itemWidth;
     private int itemHeight;
     private ItemClickListener listener;
-
-    public LandscapeListingAdapter(Activity context, List<EnveuVideoItemBean> itemsList, List<ItemsItem> itemsItems, String contentType, ItemClickListener callBack) {
+    BaseCategory baseCategory;
+    public LandscapeListingAdapter(Activity context, List<EnveuVideoItemBean> itemsList, List<ItemsItem> itemsItems, String contentType, ItemClickListener callBack, BaseCategory baseCat) {
         this.itemsList = itemsList;
         this.itemsItems = itemsItems;
         this.mContext = context;
         this.contentType = contentType;
         this.listener = callBack;
+        this.baseCategory=baseCat;
         int num = 2;
         tabletSize = mContext.getResources().getBoolean(R.bool.isTablet);
         if (tabletSize) {
@@ -131,7 +124,13 @@ public class LandscapeListingAdapter extends RecyclerView.Adapter<LandscapeListi
 //                    holder.landscapeItemBinding.flNew.setVisibility(View.GONE);
 //                }
 
-                holder.landscapeItemBinding.tvTitle.setText(itemsList.get(i).getTitle());
+                try {
+                    AppCommonMethod.handleTitleDesc(holder.landscapeItemBinding.titleLayout,holder.landscapeItemBinding.tvTitle,holder.landscapeItemBinding.tvDescription,baseCategory);
+                    holder.landscapeItemBinding.tvTitle.setText(itemsList.get(i).getTitle());
+                    holder.landscapeItemBinding.tvDescription.setText(itemsList.get(i).getDescription());
+                }catch (Exception ignored){
+
+                }
                 if (contentType.equalsIgnoreCase(AppConstants.VOD)) {
                     // Glide.with(mContext).load(itemsList.get(i).getPosterURL()).into(holder.landscapeItemBinding.itemImage);
                     if (itemsList.get(i).getPosterURL() != null && !itemsList.get(i).getPosterURL().equalsIgnoreCase("")) {

@@ -30,6 +30,7 @@ import me.vipa.app.activities.listing.callback.ItemClickListener;
 import me.vipa.app.activities.series.ui.SeriesDetailActivity;
 import me.vipa.app.beanModel.ContinueRailModel.CommonContinueRail;
 import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
+import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
 
 
 public class CommonPotraitAdapter extends RecyclerView.Adapter<CommonPotraitAdapter.SingleItemRowHolder> {
@@ -46,14 +47,15 @@ public class CommonPotraitAdapter extends RecyclerView.Adapter<CommonPotraitAdap
     private boolean isContinueList;
     private String isLogin;
     private KsPreferenceKeys preference;
+    BaseCategory baseCategory;
 
-
-    public CommonPotraitAdapter(Activity context, List<EnveuVideoItemBean> itemsList, String contentType, ArrayList<CommonContinueRail> continuelist, int view, ItemClickListener listener) {
+    public CommonPotraitAdapter(Activity context, List<EnveuVideoItemBean> itemsList, String contentType, ArrayList<CommonContinueRail> continuelist, int view, ItemClickListener listener, BaseCategory baseCat) {
         this.itemsList = itemsList;
         this.mContext = context;
         this.listener = listener;
         this.contentType = contentType;
         this.continuelist = continuelist;
+        this.baseCategory=baseCat;
         if (this.continuelist != null) {
             if (this.continuelist.size() > 0)
                 isContinueList = true;
@@ -108,6 +110,14 @@ public class CommonPotraitAdapter extends RecyclerView.Adapter<CommonPotraitAdap
 
             }
 
+            try {
+                AppCommonMethod.handleTitleDesc(holder.potraitItemBinding.titleLayout,holder.potraitItemBinding.tvTitle,holder.potraitItemBinding.tvDescription,baseCategory);
+                holder.potraitItemBinding.tvTitle.setText(itemsList.get(position).getTitle());
+                holder.potraitItemBinding.tvDescription.setText(itemsList.get(position).getDescription());
+            }catch (Exception ignored){
+
+            }
+
             holder.potraitItemBinding.llContinueProgress.setVisibility(View.GONE);
             holder.potraitItemBinding.ivContinuePlay.setVisibility(View.GONE);
             EnveuVideoItemBean contentsItem = itemsList.get(position);
@@ -144,8 +154,11 @@ public class CommonPotraitAdapter extends RecyclerView.Adapter<CommonPotraitAdap
                     holder.potraitItemBinding.tvTitle.setText(contentsItem.getTitle());*/
 
                     if (contentsItem.getPosterURL() != null && !contentsItem.getPosterURL().equalsIgnoreCase("")) {
+
                         ImageHelper.getInstance(mContext).loadImageTo(holder.potraitItemBinding.itemImage, AppCommonMethod.getListPRImage(contentsItem.getPosterURL(), mContext));
+
                     }
+
 
                     /*holder.potraitItemBinding.tvTitle.setText(contentsItem.getTitle());
                     ImageHelper.getInstance(mContext)
@@ -180,13 +193,27 @@ public class CommonPotraitAdapter extends RecyclerView.Adapter<CommonPotraitAdap
 
                         new ActivityLauncher(mContext).seriesDetailScreen(mContext, SeriesDetailActivity.class, contentsItem.getId());
                     });
-                    holder.potraitItemBinding.tvTitle.setText(contentsItem.getTitle());
+                    //holder.potraitItemBinding.tvTitle.setText(contentsItem.getTitle());
+                    try {
+                        AppCommonMethod.handleTitleDesc(holder.potraitItemBinding.titleLayout,holder.potraitItemBinding.tvTitle,holder.potraitItemBinding.tvDescription,baseCategory);
+                        holder.potraitItemBinding.tvTitle.setText(itemsList.get(position).getTitle());
+                        holder.potraitItemBinding.tvDescription.setText(itemsList.get(position).getDescription());
+                    }catch (Exception ignored){
+
+                    }
                     ImageHelper.getInstance(mContext)
                             .loadImageTo(holder.potraitItemBinding.itemImage, AppCommonMethod.getImageUrl(AppConstants.SERIES, "POTRAIT") + contentsItem.getPosterURL());
 
 
                 } else if (contentType.equalsIgnoreCase(AppConstants.CAST_AND_CREW)) {
-                    holder.potraitItemBinding.tvTitle.setText(contentsItem.getTitle());
+                    // holder.potraitItemBinding.tvTitle.setText(contentsItem.getTitle());
+                    try {
+                        AppCommonMethod.handleTitleDesc(holder.potraitItemBinding.titleLayout,holder.potraitItemBinding.tvTitle,holder.potraitItemBinding.tvDescription,baseCategory);
+                        holder.potraitItemBinding.tvTitle.setText(itemsList.get(position).getTitle());
+                        holder.potraitItemBinding.tvDescription.setText(itemsList.get(position).getDescription());
+                    }catch (Exception ignored){
+
+                    }
                     ImageHelper.getInstance(mContext)
                             .loadImageTo(holder.potraitItemBinding.itemImage, AppCommonMethod.getImageUrl(AppConstants.CAST_AND_CREW, "POTRAIT") + contentsItem.getPosterURL());
 
@@ -221,6 +248,9 @@ public class CommonPotraitAdapter extends RecyclerView.Adapter<CommonPotraitAdap
                                 AppCommonMethod.launchDetailScreen(mContext, 0l, AppConstants.Video, continuelist.get(position).getUserAssetDetail().getId(), String.valueOf(continuelist.get(position).getUserAssetStatus().getPosition()), continuelist.get(position).getUserAssetDetail().isPremium());
                             }*/
                             AppCommonMethod.launchDetailScreen(mContext, 0l, continuelist.get(position).getUserAssetDetail().getAssetType(), continuelist.get(position).getUserAssetDetail().getId(), String.valueOf(continuelist.get(position).getUserAssetStatus().getPosition()), continuelist.get(position).getUserAssetDetail().isPremium());
+
+                            AppCommonMethod.trackFcmEvent("Content Screen","", mContext,0);
+
                         }
                     }
                 });

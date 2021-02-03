@@ -35,31 +35,79 @@
                         android:contentDescription="TODO"
                         android:scaleType="fitXY" />
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
+                    <FrameLayout
+                        android:id="@+id/flNew"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
                         android:layout_alignParentBottom="true"
                         android:visibility="gone">
+
+                        <ImageView
+                            android:layout_width="@dimen/vip_badge_width"
+                            android:layout_height="@dimen/vip_badge_height"
+                            android:src="@{playlistItem.newSeriesImageDrawable, default=@drawable/series_icon_120}"
+                            tools:ignore="ContentDescription"/>
+                    </FrameLayout>
+                    <FrameLayout
+                        android:id="@+id/flNewMovie"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:layout_width="@dimen/vip_badge_width"
+                            android:layout_height="@dimen/vip_badge_height"
+                            android:src="@{playlistItem.newMoviesDrawable, default=@drawable/new_movie_120}"
+                            tools:ignore="ContentDescription"/>
+                    </FrameLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/titleLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
 
                         <TextView
                             android:id="@+id/tvTitle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginTop="@dimen/_30sdp"
-                            android:background="@drawable/above_shado"
-                            android:fontFamily="@font/sukhumvittadmai_normal"
+                            android:layout_marginTop="@dimen/NontonSize120"
+                            android:ellipsize="end"
                             android:gravity="left"
-                            android:paddingLeft="@dimen/_5sdp"
-                            android:paddingBottom="@dimen/_5sdp"
-                            android:singleLine="true"
-                            android:text="Gadis"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/font_small" />
+                            android:maxLines="1"
+                            android:visibility="gone"
+                            android:fontFamily="@font/sukhumvittadmai_normal"
+                            android:paddingTop="@dimen/NontonSize2"
+                            android:paddingLeft="@dimen/_3sdp"
+                            android:textColor="?attr/watchlist_item_title_color"
+                            android:textSize="@dimen/_11sdp" />
 
-                    </RelativeLayout>
+                        <TextView
+                            android:id="@+id/tvDescription"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:gravity="left"
+                            android:maxLines="1"
+                            android:visibility="gone"
+                            android:fontFamily="@font/sukhumvittadmai_normal"
+                            android:paddingLeft="@dimen/_3sdp"
+                            android:paddingBottom="@dimen/_2sdp"
+                            android:textColor="?attr/watchlist_item_title_color"
+                            android:textSize="@dimen/_9sdp" />
 
 
+                    </LinearLayout>
 
                 </RelativeLayout>
 
@@ -98,34 +146,7 @@
                 </FrameLayout>
 
 
-                <FrameLayout
-                    android:id="@+id/flNew"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="-2dp"
-                    android:layout_gravity="end|bottom"
-                    android:visibility="gone">
 
-                    <ImageView
-                        android:layout_width="@dimen/vip_badge_width"
-                        android:layout_height="@dimen/vip_badge_height"
-                        android:src="@{playlistItem.newSeriesImageDrawable, default=@drawable/series_icon_120}"
-                        tools:ignore="ContentDescription"/>
-                </FrameLayout>
-                <FrameLayout
-                    android:id="@+id/flNewMovie"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="-2dp"
-                    android:layout_gravity="end|bottom"
-                    android:visibility="gone">
-
-                    <ImageView
-                        android:layout_width="@dimen/vip_badge_width"
-                        android:layout_height="@dimen/vip_badge_height"
-                        android:src="@{playlistItem.newMoviesDrawable, default=@drawable/new_movie_120}"
-                        tools:ignore="ContentDescription"/>
-                </FrameLayout>
 
             </androidx.cardview.widget.CardView>
         </RelativeLayout>

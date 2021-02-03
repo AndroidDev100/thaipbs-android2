@@ -395,7 +395,7 @@ public class GridActivity extends BaseBindingActivity<ListingActivityBinding> im
     private void setSeasonData(SeasonResponse seasonResponse) {
         if (!isScrolling) {
             PrintLogging.printLog("", isScrolling + "isScrolling");
-            commonLandscapeAdapter = new LandscapeListingAdapter(this, new ArrayList<>(), seasonResponse.getData().getItems(), AppConstants.VOD, this);
+            commonLandscapeAdapter = new LandscapeListingAdapter(this, new ArrayList<>(), seasonResponse.getData().getItems(), AppConstants.VOD, this,baseCategory);
             int num = 2;
             boolean tabletSize = GridActivity.this.getResources().getBoolean(R.bool.isTablet);
             if (tabletSize) {
@@ -430,7 +430,7 @@ public class GridActivity extends BaseBindingActivity<ListingActivityBinding> im
                 if (baseCategory.getReferenceName() != null && (baseCategory.getReferenceName().equalsIgnoreCase(AppConstants.ContentType.CONTINUE_WATCHING.name()) || baseCategory.getReferenceName().equalsIgnoreCase("special_playlist"))) {
                     if (commonPosterLandscapeAdapter == null) {
                         new RecyclerAnimator(this).animate(getBinding().listRecyclerview);
-                        commonPosterLandscapeAdapter = new CommonPosterLandscapeAdapter(this, playlistRailData.getEnveuVideoItemBeans(), new ArrayList<>(), "VIDEO", new ArrayList<>());
+                        commonPosterLandscapeAdapter = new CommonPosterLandscapeAdapter(this, playlistRailData.getEnveuVideoItemBeans(), new ArrayList<>(), "VIDEO", new ArrayList<>(),baseCategory);
                         num = 2;
                         boolean tabletSize = GridActivity.this.getResources().getBoolean(R.bool.isTablet);
                         if (tabletSize) {
@@ -490,7 +490,7 @@ public class GridActivity extends BaseBindingActivity<ListingActivityBinding> im
 
                         if (commonLandscapeAdapter == null) {
                             new RecyclerAnimator(this).animate(getBinding().listRecyclerview);
-                            commonLandscapeAdapter = new LandscapeListingAdapter(this, playlistRailData.getEnveuVideoItemBeans(), new ArrayList<>(), "VIDEO", this);
+                            commonLandscapeAdapter = new LandscapeListingAdapter(this, playlistRailData.getEnveuVideoItemBeans(), new ArrayList<>(), "VIDEO", this,baseCategory);
 
                             num = 2;
                             boolean tabletSize = GridActivity.this.getResources().getBoolean(R.bool.isTablet);
@@ -512,7 +512,7 @@ public class GridActivity extends BaseBindingActivity<ListingActivityBinding> im
 
                         if (commonLandscapeAdapter == null) {
                             new RecyclerAnimator(this).animate(getBinding().listRecyclerview);
-                            commonLandscapeAdapter = new LandscapeListingAdapter(this, playlistRailData.getEnveuVideoItemBeans(), new ArrayList<>(), "VIDEO", this);
+                            commonLandscapeAdapter = new LandscapeListingAdapter(this, playlistRailData.getEnveuVideoItemBeans(), new ArrayList<>(), "VIDEO", this,baseCategory);
 
                             num = 2;
                             boolean tabletSize = GridActivity.this.getResources().getBoolean(R.bool.isTablet);
@@ -534,7 +534,7 @@ public class GridActivity extends BaseBindingActivity<ListingActivityBinding> im
 
                         if (commonPotraitAdapter == null) {
                             new RecyclerAnimator(this).animate(getBinding().listRecyclerview);
-                            commonPotraitAdapter = new CommonPotraitAdapter(this, playlistRailData.getEnveuVideoItemBeans(), "VIDEO", new ArrayList<>(), 0, this);
+                            commonPotraitAdapter = new CommonPotraitAdapter(this, playlistRailData.getEnveuVideoItemBeans(), "VIDEO", new ArrayList<>(), 0, this,baseCategory);
 
                             num = 3;
                             boolean tabletSize = GridActivity.this.getResources().getBoolean(R.bool.isTablet);
@@ -557,7 +557,7 @@ public class GridActivity extends BaseBindingActivity<ListingActivityBinding> im
 
                         if (commonPotraitTwoAdapter == null) {
                             new RecyclerAnimator(this).animate(getBinding().listRecyclerview);
-                            commonPotraitTwoAdapter = new CommonPotraitTwoAdapter(this, playlistRailData.getEnveuVideoItemBeans(), "VIDEO", new ArrayList<>(), 0, this);
+                            commonPotraitTwoAdapter = new CommonPotraitTwoAdapter(this, playlistRailData.getEnveuVideoItemBeans(), "VIDEO", new ArrayList<>(), 0, this,baseCategory);
 
                             num = 3;
                             boolean tabletSize = GridActivity.this.getResources().getBoolean(R.bool.isTablet);
@@ -580,7 +580,7 @@ public class GridActivity extends BaseBindingActivity<ListingActivityBinding> im
 
                         if (commonPosterLandscapeAdapter == null) {
                             new RecyclerAnimator(this).animate(getBinding().listRecyclerview);
-                            commonPosterLandscapeAdapter = new CommonPosterLandscapeAdapter(this, playlistRailData.getEnveuVideoItemBeans(), new ArrayList<>(), "VIDEO", new ArrayList<>());
+                            commonPosterLandscapeAdapter = new CommonPosterLandscapeAdapter(this, playlistRailData.getEnveuVideoItemBeans(), new ArrayList<>(), "VIDEO", new ArrayList<>(),baseCategory);
 
                             num = 2;
                             boolean tabletSize = GridActivity.this.getResources().getBoolean(R.bool.isTablet);
@@ -602,7 +602,7 @@ public class GridActivity extends BaseBindingActivity<ListingActivityBinding> im
                     } else if (baseCategory.getContentImageType().equalsIgnoreCase(ImageType.PR1.name())) {
                         if (commonPosterPotraitAdapter == null) {
                             new RecyclerAnimator(this).animate(getBinding().listRecyclerview);
-                            commonPosterPotraitAdapter = new CommonPosterPotraitAdapter(this, playlistRailData.getEnveuVideoItemBeans(), new ArrayList<>(), "VIDEO", new ArrayList<>(), this);
+                            commonPosterPotraitAdapter = new CommonPosterPotraitAdapter(this, playlistRailData.getEnveuVideoItemBeans(), new ArrayList<>(), "VIDEO", new ArrayList<>(), this,baseCategory);
                             num = 3;
                             boolean tabletSize = GridActivity.this.getResources().getBoolean(R.bool.isTablet);
                             if (tabletSize) {

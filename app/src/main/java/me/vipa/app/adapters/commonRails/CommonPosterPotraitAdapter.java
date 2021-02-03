@@ -36,6 +36,7 @@ import me.vipa.app.activities.series.ui.SeriesDetailActivity;
 import me.vipa.app.beanModel.ContinueRailModel.CommonContinueRail;
 import me.vipa.app.beanModel.responseModels.series.season.ItemsItem;
 import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
+import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
 
 public class CommonPosterPotraitAdapter extends RecyclerView.Adapter<CommonPosterPotraitAdapter.SingleItemRowHolder> {
 
@@ -50,8 +51,8 @@ public class CommonPosterPotraitAdapter extends RecyclerView.Adapter<CommonPoste
     private String isLogin;
     private KsPreferenceKeys preference;
     private ItemClickListener listener;
-
-    public CommonPosterPotraitAdapter(Activity context, List<EnveuVideoItemBean> itemsList, List<ItemsItem> itemsItems, String contentType, ArrayList<CommonContinueRail> continuelist, ItemClickListener callBack) {
+    BaseCategory baseCategory;
+    public CommonPosterPotraitAdapter(Activity context, List<EnveuVideoItemBean> itemsList, List<ItemsItem> itemsItems, String contentType, ArrayList<CommonContinueRail> continuelist, ItemClickListener callBack, BaseCategory baseCat) {
         this.itemsList = itemsList;
         this.mContext = context;
         this.seasonItems = itemsItems;
@@ -60,6 +61,7 @@ public class CommonPosterPotraitAdapter extends RecyclerView.Adapter<CommonPoste
         this.listener = callBack;
         preference = KsPreferenceKeys.getInstance();
         isLogin = preference.getAppPrefLoginStatus();
+        this.baseCategory=baseCat;
         int num = 3;
         boolean tabletSize = mContext.getResources().getBoolean(R.bool.isTablet);
         if (tabletSize) {
@@ -100,6 +102,14 @@ public class CommonPosterPotraitAdapter extends RecyclerView.Adapter<CommonPoste
         if (itemsList.size() > 0) {
             EnveuVideoItemBean contentsItem = itemsList.get(i);
             if (contentsItem != null) {
+
+                try {
+                    AppCommonMethod.handleTitleDesc(holder.itemBinding.titleLayout,holder.itemBinding.tvTitle,holder.itemBinding.tvDescription,baseCategory);
+                    holder.itemBinding.tvTitle.setText(itemsList.get(i).getTitle());
+                    holder.itemBinding.tvDescription.setText(itemsList.get(i).getDescription());
+                }catch (Exception ignored){
+
+                }
 
                 //setContinueWatching(holder.itemBinding.pbProcessing,14180,i*1500);
 
@@ -184,7 +194,7 @@ public class CommonPosterPotraitAdapter extends RecyclerView.Adapter<CommonPoste
                 if (!StringUtils.isNullOrEmptyOrZero(sItem.getVideoType())) {
 
                     if (sItem.getVideoType().equalsIgnoreCase("EPISODE")) {
-                  //      new ActivityLauncher(mContext).episodeScreen(mContext, EpisodeActivity.class, sItem.getId(), "", sItem.isPremium());
+                        //      new ActivityLauncher(mContext).episodeScreen(mContext, EpisodeActivity.class, sItem.getId(), "", sItem.isPremium());
                     } else {
                         new ActivityLauncher(mContext).detailScreen(mContext, DetailActivity.class, sItem.getId(), "", sItem.isPremium());
                     }
@@ -216,8 +226,14 @@ public class CommonPosterPotraitAdapter extends RecyclerView.Adapter<CommonPoste
                             } else {
                                 AppCommonMethod.launchDetailScreen(mContext,0l,AppConstants.Video, continuelist.get(i).getUserAssetDetail().getId(), String.valueOf(continuelist.get(i).getUserAssetStatus().getPosition()), continuelist.get(i).getUserAssetDetail().isPremium());
                             }*/
+
                             AppCommonMethod.launchDetailScreen(mContext,0l,continuelist.get(i).getUserAssetDetail().getAssetType(), continuelist.get(i).getUserAssetDetail().getId(), String.valueOf(continuelist.get(i).getUserAssetStatus().getPosition()), continuelist.get(i).getUserAssetDetail().isPremium());
+
+//                            AppCommonMethod.trackFcmEvent("Content Screen","", mContext,0);
+//                            AppCommonMethod.trackFcmCustomEvent(mContext, AppConstants.CONTENT_SELECT,"Main - Home",itemsList.get(i).getAssetType(),itemsList.get(i).getSeriesId(),itemsList.get(i).getName()+"",i,itemsList.get(i).getTitle(),i,itemsList.get(i).getId()+"",0,0,"","");
+
                         }
+
                     }
                 });
 

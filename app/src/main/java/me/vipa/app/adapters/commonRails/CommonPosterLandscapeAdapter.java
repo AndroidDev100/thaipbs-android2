@@ -37,6 +37,7 @@ import me.vipa.app.activities.series.ui.SeriesDetailActivity;
 import me.vipa.app.beanModel.ContinueRailModel.CommonContinueRail;
 import me.vipa.app.beanModel.responseModels.series.season.ItemsItem;
 import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
+import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
 
 public class CommonPosterLandscapeAdapter extends RecyclerView.Adapter<CommonPosterLandscapeAdapter.SingleItemRowHolder> {
 
@@ -50,13 +51,14 @@ public class CommonPosterLandscapeAdapter extends RecyclerView.Adapter<CommonPos
     private ArrayList<CommonContinueRail> continuelist;
     private String isLogin;
     private KsPreferenceKeys preference;
-
-    public CommonPosterLandscapeAdapter(Activity context, List<EnveuVideoItemBean> itemsList, List<ItemsItem> itemsItems, String contentType, ArrayList<CommonContinueRail> continuelist) {
+    BaseCategory baseCategory;
+    public CommonPosterLandscapeAdapter(Activity context, List<EnveuVideoItemBean> itemsList, List<ItemsItem> itemsItems, String contentType, ArrayList<CommonContinueRail> continuelist, BaseCategory baseCat) {
         this.itemsList = itemsList;
         this.mContext = context;
         this.seasonItems = itemsItems;
         this.contentType = contentType;
         this.continuelist = continuelist;
+        this.baseCategory=baseCat;
         preference = KsPreferenceKeys.getInstance();
         isLogin = preference.getAppPrefLoginStatus();
         int num = 2;
@@ -103,6 +105,14 @@ public class CommonPosterLandscapeAdapter extends RecyclerView.Adapter<CommonPos
                 AppCommonMethod.handleTags(itemsList.get(i).getIsVIP(),itemsList.get(i).getIsNewS(),
                         holder.itemBinding.flExclusive,holder.itemBinding.flNew,holder.itemBinding.flEpisode,holder.itemBinding.flNewMovie,itemsList.get(i).getAssetType());
 
+            }catch (Exception ignored){
+
+            }
+
+            try {
+                AppCommonMethod.handleTitleDesc(holder.itemBinding.titleLayout,holder.itemBinding.tvTitle,holder.itemBinding.tvDescription,baseCategory);
+                holder.itemBinding.tvTitle.setText(itemsList.get(i).getTitle());
+                holder.itemBinding.tvDescription.setText(itemsList.get(i).getDescription());
             }catch (Exception ignored){
 
             }

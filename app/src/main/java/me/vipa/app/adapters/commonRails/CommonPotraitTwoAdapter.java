@@ -30,6 +30,7 @@ import me.vipa.app.activities.listing.callback.ItemClickListener;
 import me.vipa.app.activities.series.ui.SeriesDetailActivity;
 import me.vipa.app.beanModel.ContinueRailModel.CommonContinueRail;
 import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
+import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
 
 public class CommonPotraitTwoAdapter extends RecyclerView.Adapter<CommonPotraitTwoAdapter.SingleItemRowHolder> {
 
@@ -45,14 +46,15 @@ public class CommonPotraitTwoAdapter extends RecyclerView.Adapter<CommonPotraitT
     private boolean isContinueList;
     private String isLogin;
     private KsPreferenceKeys preference;
+    BaseCategory baseCategory;
 
-
-    public CommonPotraitTwoAdapter(Activity context, List<EnveuVideoItemBean> itemsList, String contentType, ArrayList<CommonContinueRail> continuelist, int view, ItemClickListener listener) {
+    public CommonPotraitTwoAdapter(Activity context, List<EnveuVideoItemBean> itemsList, String contentType, ArrayList<CommonContinueRail> continuelist, int view, ItemClickListener listener, BaseCategory baseCat) {
         this.itemsList = itemsList;
         this.mContext = context;
         this.listener = listener;
         this.contentType = contentType;
         this.continuelist = continuelist;
+        this.baseCategory=baseCat;
         if (this.continuelist != null) {
             if (this.continuelist.size() > 0)
                 isContinueList = true;
@@ -103,6 +105,14 @@ public class CommonPotraitTwoAdapter extends RecyclerView.Adapter<CommonPotraitT
                 AppCommonMethod.handleTags(itemsList.get(i).getIsVIP(),itemsList.get(i).getIsNewS(),
                         holder.potraitItemBinding.flExclusive,holder.potraitItemBinding.flNew,holder.potraitItemBinding.flEpisode,holder.potraitItemBinding.flNewMovie,itemsList.get(i).getAssetType());
 
+            }catch (Exception ignored){
+
+            }
+
+            try {
+                AppCommonMethod.handleTitleDesc(holder.potraitItemBinding.titleLayout,holder.potraitItemBinding.tvTitle,holder.potraitItemBinding.tvDescription,baseCategory);
+                holder.potraitItemBinding.tvTitle.setText(itemsList.get(i).getTitle());
+                holder.potraitItemBinding.tvDescription.setText(itemsList.get(i).getDescription());
             }catch (Exception ignored){
 
             }
@@ -252,4 +262,5 @@ public class CommonPotraitTwoAdapter extends RecyclerView.Adapter<CommonPotraitT
 
 
 }
+
 
