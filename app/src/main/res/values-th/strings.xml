@@ -79,6 +79,7 @@
 
     <string name="notification">แจ้งเตือน</string>
     <string name="notification_setting">Notification Setting</string>
+    <string name="binge_setting">Binge Watch</string>
     <string name="manage_account">จัดการโปรไฟล์</string>
     <string name="login_signup">เข้าสู่ระบบ/ลงทะเบียน</string>
     <string name="login_txt">เข้าสู่ระบบ</string>

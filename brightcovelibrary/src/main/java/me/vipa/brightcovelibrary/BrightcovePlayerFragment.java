@@ -173,6 +173,9 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             selected_lang = bundle.getString("selected_lang");
             adRulesURL = bundle.getString("config_vast_tag");
             bingeWatch = bundle.getBoolean("binge_watch");
+
+
+
             bingeWatchTimer = bundle.getInt("binge_watch_timer");
 
 
@@ -1558,10 +1561,12 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
     public void currentEpisodes(int i) {
         runningEpisodes=i;
         Log.w("totalZies",totalEpisodes+" "+runningEpisodes);
-        if (runningEpisodes<totalEpisodes){
-            bingeWatch=true;
-        }else {
-            bingeWatch=false;
+        if (bingeWatch) {
+            if (runningEpisodes < totalEpisodes) {
+                bingeWatch = true;
+            } else {
+                bingeWatch = false;
+            }
         }
     }
 

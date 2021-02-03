@@ -375,6 +375,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                     LoginManager.getInstance().logOut();
                 }
                 String token = preference.getAppPrefAccessToken();
+                boolean bingeWatchEnable = KsPreferenceKeys.getInstance().getBingeWatchEnable();
                 showLoading(getBinding().progressBar, true, getActivity());
                 dismissLoading(getBinding().progressBar, getActivity());
                 String strCurrentTheme = KsPreferenceKeys.getInstance().getCurrentTheme();
@@ -386,6 +387,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                 KsPreferenceKeys.getInstance().setAppLanguage(strCurrentLanguage);
                 KsPreferenceKeys.getInstance().setAppPrefLanguagePos(languagePosition);
                 KsPreferenceKeys.getInstance().setfirstTimeUser(false);
+                KsPreferenceKeys.getInstance().setBingeWatchEnable(bingeWatchEnable);
                 //TODO Handle Content Preference Data On Logout
                // AppCommonMethod.getConfigResponse().getData().getAppConfig().setContentPreference(AppCommonMethod.getConfigResponse().getData().getAppConfig().getContentPreference());
                 modelCall();

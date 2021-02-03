@@ -169,12 +169,14 @@ public class BaseActivity extends AppCompatActivity implements BaseActivityAlert
             }
             String strCurrentTheme = KsPreferenceKeys.getInstance().getCurrentTheme();
             String strCurrentLanguage = KsPreferenceKeys.getInstance().getAppLanguage();
+            boolean isBingeWatchEnable = KsPreferenceKeys.getInstance().getBingeWatchEnable();
             preference.setAppPrefRegisterStatus(AppConstants.UserStatus.Logout.toString());
             preference.clear();
             KsPreferenceKeys.getInstance().setfirstTimeUser(false);
             KsPreferenceKeys.getInstance().setCurrentTheme(strCurrentTheme);
             KsPreferenceKeys.getInstance().setAppLanguage(strCurrentLanguage);
             AppCommonMethod.updateLanguage(strCurrentLanguage,this);
+            KsPreferenceKeys.getInstance().setBingeWatchEnable(isBingeWatchEnable);
            // new ActivityLauncher(this).homeScreen(this, HomeActivity.class);
         }catch (Exception e){
            // new ActivityLauncher(this).homeScreen(this, HomeActivity.class);

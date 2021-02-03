@@ -169,6 +169,15 @@ public class KsPreferenceKeys extends SharedPrefHelper {
         setBoolean("isFirstTimeUser", firstTimeUser);
     }
 
+    public Boolean getBingeWatchEnable() {
+        return getBoolean("isBingeWatchEnable", true);
+    }
+
+    public void setBingeWatchEnable(Boolean isBingeWatchEnable) {
+        setBoolean("isBingeWatchEnable", isBingeWatchEnable);
+    }
+
+
     public int getAppPrefJumpBackId() {
         return getInt("returnBackId", 0);
     }
