@@ -152,6 +152,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
     private FrameLayout container;
     private boolean isAdShowingToUser=true;
     private boolean isBingeWatchTimeCalculate=false;
+    boolean isFirstCalled = true;
 
 
     public BrightcovePlayerFragment() {
@@ -443,7 +444,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                 if (progressBar!=null){
                     progressBar.setVisibility(View.VISIBLE);
                 }
-
+                isFirstCalled = true;
                 VideoDisplayComponent videoDisplayComponent = baseVideoView.getVideoDisplay();
                 if (videoDisplayComponent instanceof ExoPlayerVideoDisplayComponent) {
                     //Get ExoPlayer
@@ -491,7 +492,9 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                     Log.w("progressValuess",bingeWatch+" "+currentPosition + " "+ bingeWatchTimer+"  "+baseVideoView.getDuration());
                     if (bingeWatch && bingeWatchTimer>0){
                         if (currentPosition>=bingeWatchTimer){
-                            playerControlsFragment.showBingeWatch(baseVideoView.getDuration()-baseVideoView.getCurrentPosition());
+
+                            playerControlsFragment.showBingeWatch(baseVideoView.getDuration()-baseVideoView.getCurrentPosition(),isFirstCalled);
+                            isFirstCalled = false;
                         }
                     }
                 }
