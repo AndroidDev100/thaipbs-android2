@@ -575,7 +575,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
         if (videoDetails.getAssetType() != null) {
             args.putString("assetType", videoDetails.getAssetType());
         }
-
+        Log.w("totalZies",KsPreferenceKeys.getInstance().getBingeWatchEnable()+"");
         args.putString("config_vast_tag", SDKConfig.getInstance().getConfigVastTag());
         args.putBoolean("binge_watch", KsPreferenceKeys.getInstance().getBingeWatchEnable());
         args.putInt("binge_watch_timer", SDKConfig.getInstance().getTimer());
@@ -1790,7 +1790,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
                         playerFragment.currentEpisodes(i + 1);
                         break;
                     }else {
-                        playerFragment.bingeWatchStatus(false);
+                       // playerFragment.bingeWatchStatus(false);
                     }
                 }
             }

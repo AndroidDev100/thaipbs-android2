@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
@@ -61,6 +62,7 @@ public class PlayerControlsFragment extends Fragment {
     private ImageView pauseButton, forward, rewind, playerSettingIcon;
     private androidx.mediarouter.app.MediaRouteButton media_route_button;
     private LinearLayout skipBtn, bingeBtn;
+    private TextView skipduration;
     ConstraintLayout bingeLay;
     private FrameLayout replay;
     private TextView currentPosition;
@@ -623,6 +625,7 @@ public class PlayerControlsFragment extends Fragment {
     private void findId(View view) {
         //  controls =(PlayerControlView)view. findViewById(R.id.seek_bar);
         skipBtn = (LinearLayout) view.findViewById(R.id.skipBtn);
+        skipduration = (TextView) view.findViewById(R.id.skip_duration);
         bingeBtn = (LinearLayout) view.findViewById(R.id.bingeBtn);
         bingeLay = (ConstraintLayout) view.findViewById(R.id.bingeLay);
         pauseButton = (ImageView) view.findViewById(R.id.pause_button);
@@ -716,7 +719,7 @@ public class PlayerControlsFragment extends Fragment {
         skipBtn.setVisibility(View.GONE);
     }
 
-    public void showBingeWatch() {
+    public void showBingeWatch(int position) {
         try {
             removeTimer();
         } catch (Exception ignored) {
@@ -725,7 +728,22 @@ public class PlayerControlsFragment extends Fragment {
         childControl.setVisibility(View.GONE);
         bingeLay.setVisibility(View.VISIBLE);
         bingeBtn.setVisibility(View.VISIBLE);
+        skipduration.setVisibility(View.VISIBLE);
         backArrow.setVisibility(View.VISIBLE);
+
+        new CountDownTimer(position, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                skipduration.setText("" + millisUntilFinished / 1000 + "s");
+                //here you can have your logic to set text to edittext
+            }
+
+            public void onFinish() {
+
+               // mTextField.setText("done!");
+            }
+
+        }.start();
     }
 
     public void isInPip(boolean pipMode) {
