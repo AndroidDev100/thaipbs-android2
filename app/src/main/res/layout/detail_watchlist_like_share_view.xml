@@ -202,7 +202,7 @@
                 android:fontFamily="@font/sukhumvittadmai_medium"
                 android:gravity="center"
                 android:text="@string/download"
-                android:textColor="?attr/watchlist_share_like_text_color"
+                android:textColor="?attr/watchlist_icon_text"
                 android:textSize="@dimen/font_medium" />
         </LinearLayout>
 

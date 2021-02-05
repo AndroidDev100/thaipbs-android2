@@ -284,6 +284,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             if (bundle != null) {
                 brightcoveAccountId = bundle.getString("brightcove_account_id");
                 brightcovePolicyKey = bundle.getString("brightcove_policy_key");
+                Log.w("IMATAG", brightcoveAccountId+"  "+brightcovePolicyKey);
 
             }
         } catch (

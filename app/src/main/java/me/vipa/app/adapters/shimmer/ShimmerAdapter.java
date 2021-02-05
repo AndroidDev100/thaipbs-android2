@@ -178,7 +178,7 @@ public class ShimmerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     public void onRowItemClicked(EnveuVideoItemBean itemValue, int position) {
 
                     }
-                });
+                },null);
                 ((ShimmerAdapter.PortrateHolder) holder).recycler_view_list1.setNestedScrollingEnabled(false);
                 ((ShimmerAdapter.PortrateHolder) holder).recycler_view_list1.setHasFixedSize(true);
                 ((ShimmerAdapter.PortrateHolder) holder).recycler_view_list1.showShimmerAdapter();

@@ -211,8 +211,8 @@ class DownloadHelper() {
         private const val DATA_SAVER_BIT_RATE = 500000
         private const val MEGABYTE_IN_BYTES = (1024 * 1024).toLong()
         private const val BUFFER_MB = 500
-        private const val ACCOUNT_ID = "5854923532001"
-        private const val POLICY_KEY = "BCpkADawqM1eQgw1AYFQOUXoNSPw_rzWhyBPlA-s-FXA5HLM5PxfY7B5JA-fgES-HUj3a4WafkLDIiQYmRZMrpe_oOfuY_KGj1EGRz9e-v7a8LI6sKhZmd3s3CAY1VlLNP9eCQz1OAMHAfUi"
+        private const val ACCOUNT_ID = "6075037809001"
+        private const val POLICY_KEY = "BCpkADawqM1WlW0BxzdnOuJQIkB9szS7y4A9AfjlxxhEMc8G3YMWCmnTWCu1FAfNphAUsrm9m3_TpsGpqKhfkqwuudOex-kKY7bWBwav6mMXstHk_mLNKd9ZmEs7aCS__ou8mWhiavcDsxN4"
     }
 
     fun pauseAllVideos() {
