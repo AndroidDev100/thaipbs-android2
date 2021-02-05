@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import me.vipa.app.MvHubPlusApplication;
+import me.vipa.app.activities.OtherApplication.UI.OtherApplication;
 import me.vipa.app.activities.homeactivity.viewmodel.HomeViewModel;
 import me.vipa.app.activities.notification.ui.NotificationActivity;
 import me.vipa.app.activities.profile.ui.ProfileActivityNew;
@@ -273,6 +274,8 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
             Objects.requireNonNull(getActivity()).startActivity(new Intent(getActivity(), HelpActivity.class).putExtra("type", "1"));
         } else if (caption.equals(getString(R.string.privacy_policy))) {
             Objects.requireNonNull(getActivity()).startActivity(new Intent(getActivity(), HelpActivity.class).putExtra("type", "2"));
+        } else if (caption.equals(getString(R.string.other_application))) {
+            new ActivityLauncher(getActivity()).otherActivity(getActivity(), OtherApplication.class);
         } else if (caption.equals(getString(R.string.my_watchlist))) {
 
             if (loginStatus)

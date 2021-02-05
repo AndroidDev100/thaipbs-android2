@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.SystemClock;
 import android.provider.Settings;
 import android.util.DisplayMetrics;
@@ -1314,4 +1315,15 @@ public class AppCommonMethod {
 
         return jsonObject;
     }
+
+    public static void openUrl(Context context, String url) {
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+
+        if (i.resolveActivity(context.getPackageManager()) != null) {
+
+            context.startActivity(i);
+        }
+    }
+
 }

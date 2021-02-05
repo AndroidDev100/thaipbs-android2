@@ -49,6 +49,7 @@
     <string name="user_already_in_watchlist">This asset already exists in this user\'s watchlist​.</string>
     <string name="user_already_liked">This asset is already liked by the user​</string>
     <string name="redeem_coupon">Redeem Coupon</string>
+    <string name="other_application">Other Applications</string>
     <string name="signup"><b><u>Sign Up</u></b></string>
     <string name="login">Login</string>
     <string name="sign_in_with_enveu">Sign in</string>

@@ -10,6 +10,7 @@ import androidx.core.app.ActivityOptionsCompat;
 
 import me.vipa.app.activities.search.ui.ActivitySearch;
 import me.vipa.app.databinding.ActivityHelpBinding;
+import me.vipa.app.databinding.ActivityOtherApplicationBinding;
 import me.vipa.app.utils.cropImage.helpers.Logger;
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
 import me.vipa.app.R;
@@ -235,6 +236,15 @@ public class ToolBarHandler {
     }
 
     public void setHelpAction(ActivityHelpBinding binding, String title) {
+        binding.toolbar.llSearchIcon.setVisibility(View.GONE);
+        binding.toolbar.backLayout.setVisibility(View.VISIBLE);
+        binding.toolbar.homeIcon.setVisibility(View.GONE);
+        binding.toolbar.mediaRouteButton.setVisibility(View.GONE);
+        binding.toolbar.titleText.setVisibility(View.VISIBLE);
+        binding.toolbar.screenText.setText(title);
+    }
+
+    public void setOtherAction(ActivityOtherApplicationBinding binding, String title) {
         binding.toolbar.llSearchIcon.setVisibility(View.GONE);
         binding.toolbar.backLayout.setVisibility(View.VISIBLE);
         binding.toolbar.homeIcon.setVisibility(View.GONE);

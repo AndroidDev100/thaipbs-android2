@@ -54,7 +54,6 @@ public class ActivitySettings extends BaseBindingActivity<SettingsActivityBindin
             getBinding().switchTheme.setChecked(true);
         }
         isNotificationEnable = areNotificationsEnabled();
-        Log.d("ededededed",KsPreferenceKeys.getInstance().getBingeWatchEnable()+"");
         setSwitchForNotification();
         setSwitchForBingeWatch();
         toolBar();
