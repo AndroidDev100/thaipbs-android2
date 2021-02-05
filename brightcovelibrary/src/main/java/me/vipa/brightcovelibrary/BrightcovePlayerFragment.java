@@ -491,7 +491,6 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                     Log.w("progressValuess",bingeWatch+" "+currentPosition + " "+ bingeWatchTimer+"  "+baseVideoView.getDuration());
                     if (bingeWatch && bingeWatchTimer>0){
                         if (currentPosition>=bingeWatchTimer){
-                            Log.d("frfrfrfr","Enter");
                             playerControlsFragment.showBingeWatch(baseVideoView.getDuration()-baseVideoView.getCurrentPosition());
                         }
                     }

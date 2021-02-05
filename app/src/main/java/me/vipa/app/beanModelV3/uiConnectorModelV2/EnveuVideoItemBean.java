@@ -66,6 +66,7 @@ public class EnveuVideoItemBean implements Serializable {
     private String imageType;
 
     private String parentalRating;
+    private String iscomingsoon;
     private String widevineLicence;
     private String getWidevineURL;
     private String country;
@@ -153,6 +154,11 @@ public class EnveuVideoItemBean implements Serializable {
             if (t.containsKey(CustomeFields.parentalRating)) {
                 String parentalRating = t.get((CustomeFields.parentalRating)).toString();
                 this.parentalRating = parentalRating;
+            }
+
+            if (t.containsKey(CustomeFields.isComingSoon)) {
+                String isComingSoon = t.get((CustomeFields.isComingSoon)).toString();
+                this.iscomingsoon = isComingSoon;
             }
 
             if (t.containsKey(CustomeFields.Country)) {
@@ -261,6 +267,11 @@ public class EnveuVideoItemBean implements Serializable {
                     }
                 }
 
+                if (t.containsKey(CustomeFields.isComingSoon)) {
+                    String isComingSoon = t.get((CustomeFields.isComingSoon)).toString();
+                    this.iscomingsoon = isComingSoon;
+                }
+
                 if (t.containsKey(CustomeFields.Country)){
                     String country = t.get((CustomeFields.Country)).toString();
                     this.country = country;
@@ -286,6 +297,11 @@ public class EnveuVideoItemBean implements Serializable {
                 if (t.containsKey(CustomeFields.rating)){
                     String parentalRating = t.get((CustomeFields.rating)).toString();
                     this.parentalRating = parentalRating;
+                }
+
+                if (t.containsKey(CustomeFields.isComingSoon)) {
+                    String isComingSoon = t.get((CustomeFields.isComingSoon)).toString();
+                    this.iscomingsoon = isComingSoon;
                 }
 
                 if (t.containsKey(CustomeFields.Country)){
@@ -397,6 +413,11 @@ public class EnveuVideoItemBean implements Serializable {
                             }
                         }
 
+                        if (t.containsKey(CustomeFields.isComingSoon)) {
+                            String isComingSoon = t.get((CustomeFields.isComingSoon)).toString();
+                            this.iscomingsoon = isComingSoon;
+                        }
+
                         if (t.containsKey(CustomeFields.Country)) {
                             String country = t.get((CustomeFields.Country)).toString();
                             this.country = country;
@@ -422,6 +443,11 @@ public class EnveuVideoItemBean implements Serializable {
                         if (t.containsKey(CustomeFields.rating)) {
                             String parentalRating = t.get((CustomeFields.rating)).toString();
                             this.parentalRating = parentalRating;
+                        }
+
+                        if (t.containsKey(CustomeFields.isComingSoon)) {
+                            String isComingSoon = t.get((CustomeFields.isComingSoon)).toString();
+                            this.iscomingsoon = isComingSoon;
                         }
 
                         if (t.containsKey(CustomeFields.Country)) {
@@ -529,6 +555,11 @@ public class EnveuVideoItemBean implements Serializable {
                     }
                 }
 
+                if (t.containsKey(CustomeFields.isComingSoon)) {
+                    String isComingSoon = t.get((CustomeFields.isComingSoon)).toString();
+                    this.iscomingsoon = isComingSoon;
+                }
+
                 if (t.containsKey(CustomeFields.Country)) {
                     String country = t.get((CustomeFields.Country)).toString();
                     this.country = country;
@@ -554,6 +585,11 @@ public class EnveuVideoItemBean implements Serializable {
                 if (t.containsKey(CustomeFields.rating)) {
                     String parentalRating = t.get((CustomeFields.rating)).toString();
                     this.parentalRating = parentalRating;
+                }
+
+                if (t.containsKey(CustomeFields.isComingSoon)) {
+                    String isComingSoon = t.get((CustomeFields.isComingSoon)).toString();
+                    this.iscomingsoon = isComingSoon;
                 }
 
                 if (t.containsKey(CustomeFields.Country)) {
@@ -923,6 +959,14 @@ public class EnveuVideoItemBean implements Serializable {
 
     public void setParentalRating(String parentalRating) {
         this.parentalRating = parentalRating;
+    }
+
+    public String getComingSoon(){
+        return iscomingsoon;
+    }
+
+    public void setComingSoon(String iscomingsoon) {
+        this.iscomingsoon = iscomingsoon;
     }
 
     public String getCountry() {
