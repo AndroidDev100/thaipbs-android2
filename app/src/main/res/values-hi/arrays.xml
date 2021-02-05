@@ -3,16 +3,16 @@
 
     <string-array name="more_with_login">
         <item>Manage Account</item>
-        <item>Change Password</item>
         <item>My Watchlist</item>
         <item>My Watch History</item>
-        <item>My Downloads</item>
         <item>Contact Us</item>
         <item>Frequently Ask Questions</item>
         <item>About VIPA</item>
         <item>Feedback</item>
         <item>Other Applications</item>
         <item>Settings</item>
+        <item>Terms and Conditions</item>
+        <item>Privacy Policy</item>
         <item>Logout</item>
     </string-array>
 
@@ -44,16 +44,16 @@
 
     <string-array name="more_logout">
         <item>Manage Account</item>
-        <item>Change Password</item>
         <item>My Watchlist</item>
         <item>My Watch History</item>
-        <item>My Downloads</item>
         <item>Contact Us</item>
         <item>Frequently Ask Questions</item>
         <item>About VIPA</item>
         <item>Feedback</item>
         <item>Other Applications</item>
         <item>Settings</item>
+        <item>Terms and Conditions</item>
+        <item>Privacy Policy</item>
 
     </string-array>
 

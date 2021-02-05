@@ -50,6 +50,11 @@
     <string name="user_already_liked">This asset is already liked by the user​</string>
     <string name="redeem_coupon">Redeem Coupon</string>
     <string name="other_application">Other Applications</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="faq">Frequently Ask Questions</string>
+    <string name="about_us">About VIPA</string>
+    <string name="feedback">Feedback</string>
+
     <string name="signup"><b><u>Sign Up</u></b></string>
     <string name="login">Login</string>
     <string name="sign_in_with_enveu">Sign in</string>

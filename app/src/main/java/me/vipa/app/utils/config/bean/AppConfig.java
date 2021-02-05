@@ -53,6 +53,55 @@ public class AppConfig {
     @Expose
     private String privacyPolicyUrl;
 
+
+    @SerializedName("contactUsUrl")
+    @Expose
+    private String contactUsUrl;
+
+    public String getContactUsUrl() {
+        return contactUsUrl;
+    }
+
+    public void setContactUsUrl(String contactUsUrl) {
+        this.contactUsUrl = contactUsUrl;
+    }
+
+    public String getFeedbackUrl() {
+        return feedbackUrl;
+    }
+
+    public void setFeedbackUrl(String feedbackUrl) {
+        this.feedbackUrl = feedbackUrl;
+    }
+
+    public String getFaqUrl() {
+        return faqUrl;
+    }
+
+    public void setFaqUrl(String faqUrl) {
+        this.faqUrl = faqUrl;
+    }
+
+    public String getAboutUsUrl() {
+        return aboutUsUrl;
+    }
+
+    public void setAboutUsUrl(String aboutUsUrl) {
+        this.aboutUsUrl = aboutUsUrl;
+    }
+
+    @SerializedName("feedbackUrl")
+    @Expose
+    private String feedbackUrl;
+
+    @SerializedName("faqUrl")
+    @Expose
+    private String faqUrl;
+
+    @SerializedName("aboutUsUrl")
+    @Expose
+    private String aboutUsUrl;
+
     @SerializedName("subscriptionBaseUrl")
     @Expose
     private String subscriptionBaseUrl;

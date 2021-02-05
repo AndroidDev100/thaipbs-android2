@@ -274,6 +274,14 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
             Objects.requireNonNull(getActivity()).startActivity(new Intent(getActivity(), HelpActivity.class).putExtra("type", "1"));
         } else if (caption.equals(getString(R.string.privacy_policy))) {
             Objects.requireNonNull(getActivity()).startActivity(new Intent(getActivity(), HelpActivity.class).putExtra("type", "2"));
+        } else if (caption.equals(getString(R.string.contact_us))) {
+            Objects.requireNonNull(getActivity()).startActivity(new Intent(getActivity(), HelpActivity.class).putExtra("type", "3"));
+        }else if (caption.equals(getString(R.string.faq))) {
+            Objects.requireNonNull(getActivity()).startActivity(new Intent(getActivity(), HelpActivity.class).putExtra("type", "4"));
+        }else if (caption.equals(getString(R.string.about_us))) {
+            Objects.requireNonNull(getActivity()).startActivity(new Intent(getActivity(), HelpActivity.class).putExtra("type", "5"));
+        }else if (caption.equals(getString(R.string.feedback))) {
+            Objects.requireNonNull(getActivity()).startActivity(new Intent(getActivity(), HelpActivity.class).putExtra("type", "6"));
         } else if (caption.equals(getString(R.string.other_application))) {
             new ActivityLauncher(getActivity()).otherActivity(getActivity(), OtherApplication.class);
         } else if (caption.equals(getString(R.string.my_watchlist))) {

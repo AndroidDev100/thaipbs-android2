@@ -73,6 +73,18 @@ public class SDKConfig {
     public String getPrivay_Policy_URL() {
         return configBean == null ? "" : configBean.getData().getAppConfig().getPrivacyPolicyUrl();
     }
+    public String getFEEDBACK_URL() {
+        return configBean == null ? "" : configBean.getData().getAppConfig().getFeedbackUrl();
+    }
+    public String getFAQ_URL() {
+        return configBean == null ? "" : configBean.getData().getAppConfig().getFaqUrl();
+    }
+    public String getCONTACT_URL() {
+        return configBean == null ? "" : configBean.getData().getAppConfig().getContactUsUrl();
+    }
+    public String getABOUT_US_URL() {
+        return configBean == null ? "" : configBean.getData().getAppConfig().getAboutUsUrl();
+    }
     public List<ContentPreference> getContentPreference() {
         return configBean == null ? null : configBean.getData().getAppConfig().getContentPreference();
     }
