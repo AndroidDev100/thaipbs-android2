@@ -42,6 +42,7 @@ import java.util.List;
 import me.vipa.app.beanModel.enveuCommonRailData.RailCommonData;
 import me.vipa.app.callbacks.commonCallbacks.CommonRailtItemClickListner;
 import me.vipa.app.callbacks.commonCallbacks.MoreClickListner;
+import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 
 import static me.vipa.app.utils.constants.AppConstants.ADS_BANNER;
 import static me.vipa.app.utils.constants.AppConstants.ADS_MREC;
@@ -290,7 +291,14 @@ public class CommonAdapterNew extends RecyclerView.Adapter<RecyclerView.ViewHold
         if (item.getScreenWidget().getShowHeader() != null && item.getScreenWidget().getShowHeader() && item.getEnveuVideoItemBeans().size() > 0) {
             headingRailsBinding.headerTitleLayout.setVisibility(View.VISIBLE);
             headingRailsBinding.headingTitle.bringToFront();
-            headingRailsBinding.headingTitle.setText((String) item.getScreenWidget().getName());
+
+            if (item.isContinueWatching()){
+                headingRailsBinding.headingTitle.setText((String) item.getScreenWidget().getName()+" "+"For"+" "+ KsPreferenceKeys.getInstance().getAppPrefUserName());
+            }else {
+                headingRailsBinding.headingTitle.setText((String) item.getScreenWidget().getName());
+            }
+
+
         } else {
             headingRailsBinding.headerTitleLayout.setVisibility(View.GONE);
         }
