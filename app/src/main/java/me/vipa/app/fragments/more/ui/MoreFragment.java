@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import me.vipa.app.MvHubPlusApplication;
+import me.vipa.app.activities.ManageAccount.UI.ManageAccount;
 import me.vipa.app.activities.OtherApplication.UI.OtherApplication;
 import me.vipa.app.activities.homeactivity.viewmodel.HomeViewModel;
 import me.vipa.app.activities.notification.ui.NotificationActivity;
@@ -252,7 +253,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
         String isFacebook = preference.getAppPrefLoginType();
         if (caption.equals(getString(R.string.manage_account))) {
             if (loginStatus)
-                new ActivityLauncher(getActivity()).ProfileActivityNew(getActivity(), ProfileActivityNew.class);
+                new ActivityLauncher(getActivity()).manageAccount(getActivity(), ManageAccount.class);
             else
                 mListener.onLoginClicked();
         } else if (caption.equals(getString(R.string.change_password))) {

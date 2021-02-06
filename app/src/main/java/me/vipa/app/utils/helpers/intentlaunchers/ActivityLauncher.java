@@ -5,6 +5,7 @@ import android.app.TaskStackBuilder;
 import android.content.Intent;
 import android.os.Bundle;
 
+import me.vipa.app.activities.ManageAccount.UI.ManageAccount;
 import me.vipa.app.activities.OtherApplication.UI.OtherApplication;
 import me.vipa.app.activities.contentPreference.UI.ContentPreference;
 import me.vipa.app.activities.onBoarding.UI.OnBoarding;
@@ -81,6 +82,12 @@ public class ActivityLauncher {
     }
 
     public void ProfileActivityNew(Activity source, Class<ProfileActivityNew> destination) {
+
+        Intent intent = new Intent(source, destination);
+        activity.startActivity(intent);
+    }
+
+    public void manageAccount(Activity source, Class<ManageAccount> destination) {
 
         Intent intent = new Intent(source, destination);
         activity.startActivity(intent);

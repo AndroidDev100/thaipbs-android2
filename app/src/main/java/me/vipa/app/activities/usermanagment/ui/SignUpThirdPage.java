@@ -76,6 +76,7 @@ public class SignUpThirdPage extends BaseBindingActivity<ActivitySignUpThirdPage
     String imageToUpload = "";
     private String spinnerValue = "";
     private boolean isNotificationEnable = false;
+    private boolean isSkipClicked = false;
 
     @Override
     public ActivitySignUpThirdPageBinding inflateBindingLayout(@NonNull LayoutInflater inflater) {
@@ -108,8 +109,14 @@ public class SignUpThirdPage extends BaseBindingActivity<ActivitySignUpThirdPage
         getBinding().toolbar.titleSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                preference.setAppPrefRegisterStatus(AppConstants.UserStatus.Login.toString());
-                onBackPressed();
+                isSkipClicked = true;
+                if (!contentPreference.equalsIgnoreCase("")){
+                    callUpdateApi();
+                }else {
+                    preference.setAppPrefRegisterStatus(AppConstants.UserStatus.Login.toString());
+                    onBackPressed();
+                }
+
             }
         });
     }
@@ -283,7 +290,12 @@ public class SignUpThirdPage extends BaseBindingActivity<ActivitySignUpThirdPage
                     dismissLoading(getBinding().progressBar);
                     if (userProfileResponse != null) {
                         if (userProfileResponse.getStatus()) {
-                            showDialog("", SignUpThirdPage.this.getResources().getString(R.string.profile_update_successfully));
+                            if (isSkipClicked){
+                                preference.setAppPrefRegisterStatus(AppConstants.UserStatus.Login.toString());
+                                onBackPressed();
+                            }else {
+                                showDialog("", SignUpThirdPage.this.getResources().getString(R.string.profile_update_successfully));
+                            }
                             //updateUI(userProfileResponse);
                         } else {
                             if (userProfileResponse.getResponseCode() == 4302) {
