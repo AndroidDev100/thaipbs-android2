@@ -88,6 +88,7 @@ public class PlayerControlsFragment extends Fragment {
     private boolean isPipEnabled = false;
     private boolean isOffline = false;
     private LinearLayout settingLay;
+    private CountDownTimer mTimer;
 
 
     private OnFragmentInteractionListener mListener;
@@ -717,7 +718,7 @@ public class PlayerControlsFragment extends Fragment {
         skipBtn.setVisibility(View.GONE);
     }
 
-    public void showBingeWatch(int position) {
+    public void showBingeWatch(int position, boolean isFirstCalled) {
         try {
             removeTimer();
         } catch (Exception ignored) {
@@ -728,20 +729,19 @@ public class PlayerControlsFragment extends Fragment {
         bingeBtn.setVisibility(View.VISIBLE);
         skipduration.setVisibility(View.VISIBLE);
         backArrow.setVisibility(View.VISIBLE);
+        if (isFirstCalled){
+            mTimer = new CountDownTimer(position, 1000) {
+                public void onTick(long millisUntilFinished) {
+                    skipduration.setText(Long.toString(millisUntilFinished / 1000));
+                }
 
-        new CountDownTimer(position, 1000) {
+                public void onFinish() {
+                    skipduration.setText("");
+                }
+            };
 
-            public void onTick(long millisUntilFinished) {
-                skipduration.setText("" + millisUntilFinished / 1000 + "s");
-                //here you can have your logic to set text to edittext
-            }
-
-            public void onFinish() {
-
-               // mTextField.setText("done!");
-            }
-
-        }.start();
+        mTimer.start();
+    }
     }
 
     public void hideBingeWatch() {

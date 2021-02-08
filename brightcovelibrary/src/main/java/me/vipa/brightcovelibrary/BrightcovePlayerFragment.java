@@ -148,6 +148,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
     private FrameLayout container;
     private boolean isAdShowingToUser=true;
     private boolean isBingeWatchTimeCalculate=false;
+    boolean isFirstCalled = true;
 
 
     public BrightcovePlayerFragment() {
@@ -446,8 +447,10 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                 if (progressBar!=null){
                     progressBar.setVisibility(View.VISIBLE);
                 }
-
+                isFirstCalled = true;
                /* VideoDisplayComponent videoDisplayComponent = baseVideoView.getVideoDisplay();
+
+                VideoDisplayComponent videoDisplayComponent = baseVideoView.getVideoDisplay();
                 if (videoDisplayComponent instanceof ExoPlayerVideoDisplayComponent) {
                     //Get ExoPlayer
                     ExoPlayer exoPlayer = ((ExoPlayerVideoDisplayComponent) videoDisplayComponent).getExoPlayer();
@@ -501,8 +504,10 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                         if (currentPosition>=bingeWatchTimer){
                             willBingWatchShow=true;
                             if (!isInPictureinPicture){
-                                playerControlsFragment.showBingeWatch(baseVideoView.getDuration()-baseVideoView.getCurrentPosition());
+                                playerControlsFragment.showBingeWatch(baseVideoView.getDuration()-baseVideoView.getCurrentPosition(),isFirstCalled);
+                                isFirstCalled = false;
                             }
+
                         }
                     }
                 }
@@ -1518,7 +1523,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                                 playerControlsFragment.sendVideoCompletedState(EventType.COMPLETED);
                             }else {
                                 if (willBingWatchShow){
-                                    playerControlsFragment.showBingeWatch(baseVideoView.getDuration()-baseVideoView.getCurrentPosition());
+                                    playerControlsFragment.showBingeWatch(baseVideoView.getDuration()-baseVideoView.getCurrentPosition(),isFirstCalled);
                                 }else {
                                     playerControlsFragment.sendTapCallBack(true);
                                     playerControlsFragment.startHandler();

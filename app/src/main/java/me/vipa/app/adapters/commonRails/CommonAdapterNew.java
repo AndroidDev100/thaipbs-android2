@@ -293,7 +293,14 @@ public class CommonAdapterNew extends RecyclerView.Adapter<RecyclerView.ViewHold
         if (item.getScreenWidget().getShowHeader() != null && item.getScreenWidget().getShowHeader() && item.getEnveuVideoItemBeans().size() > 0) {
             headingRailsBinding.headerTitleLayout.setVisibility(View.VISIBLE);
             headingRailsBinding.headingTitle.bringToFront();
-            headingRailsBinding.headingTitle.setText((String) item.getScreenWidget().getName());
+
+            if (item.isContinueWatching()){
+                headingRailsBinding.headingTitle.setText((String) item.getScreenWidget().getName()+" "+"for"+" "+ KsPreferenceKeys.getInstance().getAppPrefUserName());
+            }else {
+                headingRailsBinding.headingTitle.setText((String) item.getScreenWidget().getName());
+            }
+
+
         } else {
             headingRailsBinding.headerTitleLayout.setVisibility(View.GONE);
         }
