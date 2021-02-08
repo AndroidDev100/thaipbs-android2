@@ -46,7 +46,7 @@
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/NontonSize95">
+                    android:layout_height="@dimen/splash_logo_width">
 
                     <ImageView
                         android:id="@+id/itemImage"
@@ -80,6 +80,8 @@
                                 android:scaleType="fitXY" />
 
 
+
+
                         </RelativeLayout>
 
 
@@ -100,6 +102,34 @@
                             tools:targetApi="lollipop"
                             android:progress="@{progress}"
                             android:elevation="10dp"/>
+                        <TextView
+                            android:id="@+id/title"
+                            android:layout_width="@dimen/NontonSize168"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="top|left"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/sukhumvittadmai_bold"
+                            android:maxLines="1"
+                            android:text=""
+                            android:layout_marginTop="@dimen/NontonSize5"
+                            android:textColor="?attr/list_circle_item_title_color"
+                            android:textSize="@dimen/itemRowItem"
+                            android:visibility="gone"/>
+
+                        <TextView
+                            android:id="@+id/description_txt"
+                            android:layout_width="@dimen/NontonSize168"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="@dimen/NontonSize3"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/sukhumvittadmai_medium"
+                            android:maxLines="1"
+                            android:text=""
+                            android:visibility="gone"
+                            android:textColor="?attr/list_circle_item_description"
+                            android:textSize="@dimen/font_xsmall" />
+
                     </LinearLayout>
 
 

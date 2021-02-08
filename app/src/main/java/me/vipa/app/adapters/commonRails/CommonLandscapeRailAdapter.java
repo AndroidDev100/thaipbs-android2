@@ -3,6 +3,7 @@ package me.vipa.app.adapters.commonRails;
 import android.content.Context;
 import android.os.SystemClock;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.databinding.DataBindingUtil;
@@ -67,14 +68,24 @@ public class CommonLandscapeRailAdapter extends RecyclerView.Adapter<CommonLands
         }catch (Exception ignored){
 
         }
+
+
         if (videos.get(i).getVideoPosition() > 0) {
             AppCommonMethod.railBadgeVisibility(itemBinding.llContinueProgress, true);
             double totalDuration = videos.get(i).getDuration();
             double currentPosition = videos.get(i).getVideoPosition() * 1000;
             double percentagePlayed = ((currentPosition / totalDuration) * 100L);
             itemBinding.setProgress((int) percentagePlayed);
+
+            holder.itemBinding.title.setVisibility(View.VISIBLE);
+            holder.itemBinding.descriptionTxt.setVisibility(View.VISIBLE);
+            holder.itemBinding.title.setText(videos.get(i).getTitle());
+            holder.itemBinding.descriptionTxt.setText(videos.get(i).getDescription().trim());
+
         } else {
             AppCommonMethod.railBadgeVisibility(itemBinding.llContinueProgress, false);
+            holder.itemBinding.title.setVisibility(View.GONE);
+            holder.itemBinding.descriptionTxt.setVisibility(View.GONE);
         }
 
         try {
