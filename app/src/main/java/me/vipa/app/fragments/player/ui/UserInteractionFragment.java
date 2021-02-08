@@ -749,7 +749,7 @@ public class UserInteractionFragment extends BaseBindingFragment<DetailWatchlist
 
     public void setDownloadable(boolean isDownloadable) {
         if (getBinding() != null)
-            getBinding().setIsDownloadable(isDownloadable);
+            getBinding().setIsDownloadable(false);
     }
 
     public void setDownloadProgress(float progress) {
