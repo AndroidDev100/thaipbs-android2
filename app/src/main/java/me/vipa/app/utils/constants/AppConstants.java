@@ -259,4 +259,10 @@ public interface AppConstants {
 
     String FCM_TOKEN = "fcm_token";
 
+    String THAI_PBS = "https://www.thaipbs.or.th/AppDownload";
+    String CATCHUP = "https://www.thaipbs.or.th/catchupDownload";
+    String PODCAST = "http://www.thaipbs.or.th/RadioApps";
+    String CSITE = "https://www.thaipbs.or.th/CsiteDownload";
+    String MAGAZINE = "https://www.thaipbs.or.th/DigitalMagDownload";
+
 }

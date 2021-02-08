@@ -20,6 +20,15 @@
     <string name="privacy_policy">นโยบายความเป็นส่วนตัว</string>
     <string name="sign_out">ออกจากระบบ</string>
     <string name="redeem_coupon">แลกคูปอง</string>
+    <string name="other_application">แอปพลิเคชันอื่น ๆ</string>
+
+    <string name="contact_us">ติดต่อเรา</string>
+    <string name="faq">คำถามที่พบบ่อย</string>
+    <string name="about_us">เกี่ยวกับเรา</string>
+    <string name="feedback">ข้อเสนอแนะ</string>
+
+
+
     <string name="change_language_message">คุณกำลังเปลี่ยนภาษา</string>
     <string name="change_language">เปลื่ยนภาษา</string>
     <string name="in_case_of_any">ในกรณีที่มีปัญหาใด ๆ</string>
@@ -79,6 +88,7 @@
 
     <string name="notification">แจ้งเตือน</string>
     <string name="notification_setting">Notification Setting</string>
+    <string name="binge_setting">Binge Watch</string>
     <string name="manage_account">จัดการโปรไฟล์</string>
     <string name="login_signup">เข้าสู่ระบบ/ลงทะเบียน</string>
     <string name="login_txt">เข้าสู่ระบบ</string>

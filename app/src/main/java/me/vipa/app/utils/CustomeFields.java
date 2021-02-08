@@ -11,6 +11,7 @@ public interface CustomeFields {
     String Rating = "rating";
     String Country = "country";
     String parentalRating = "parental_rating";
+    String isComingSoon = "iscomingsoon";
     String rating = "parental_rating";
     String company="company";
     String year="year";

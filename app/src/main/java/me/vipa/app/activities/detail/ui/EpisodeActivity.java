@@ -581,9 +581,9 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
         if (videoDetails.getAssetType() != null) {
             args.putString("assetType", videoDetails.getAssetType());
         }
-
+        Log.w("totalZies",KsPreferenceKeys.getInstance().getBingeWatchEnable()+"");
         args.putString("config_vast_tag", SDKConfig.getInstance().getConfigVastTag());
-        args.putBoolean("binge_watch", SDKConfig.getInstance().getBingeWatchingEnabled());
+        args.putBoolean("binge_watch", KsPreferenceKeys.getInstance().getBingeWatchEnable());
         args.putInt("binge_watch_timer", SDKConfig.getInstance().getTimer());
         args.putBoolean("from_binge", fromBingWatch);
         args.putInt("player_orientation", playerOrientation);
@@ -910,15 +910,48 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
         dismissLoading(getBinding().progressBar);
         sharingClick(videoDetails);
         ImageHelper.getInstance(EpisodeActivity.this).loadListImage(getBinding().playerImage, videoDetails.getPosterURL());
-        if (videoDetails.isPremium()) {
-            getBinding().tvPurchased.setVisibility(View.GONE);
-            getBinding().tvPremium.setVisibility(View.GONE);
-            getBinding().tvBuyNow.setVisibility(View.VISIBLE);
-            getBinding().mPremiumStatus.setVisibility(View.VISIBLE);
-            getBinding().backButton.setVisibility(View.VISIBLE);
-            hitApiEntitlement(videoDetails.getSku());
+//        if (videoDetails.isPremium()) {
+//            getBinding().tvPurchased.setVisibility(View.GONE);
+//            getBinding().tvPremium.setVisibility(View.GONE);
+//            getBinding().tvBuyNow.setVisibility(View.VISIBLE);
+//            getBinding().mPremiumStatus.setVisibility(View.VISIBLE);
+//            getBinding().backButton.setVisibility(View.VISIBLE);
+//            hitApiEntitlement(videoDetails.getSku());
+//
+//        }
 
-        } else {
+//        else {
+//            if (AppCommonMethod.getCheckBCID(videoDetails.getBrightcoveVideoId())) {
+//                isLogin = preference.getAppPrefLoginStatus();
+//                if (isLogin.equalsIgnoreCase(AppConstants.UserStatus.Login.toString())) {
+//                    if (!preference.getEntitlementStatus()) {
+//                        GetPlansLayer.getInstance().getEntitlementStatus(preference, token, new EntitlementStatus() {
+//                            @Override
+//                            public void entitlementStatus(boolean entitlementStatus, boolean apiStatus) {
+//                                if (entitlementStatus && apiStatus) {
+//                                    isAdShowingToUser = false;
+//                                }
+//                                brightCoveVideoId = Long.parseLong(videoDetails.getBrightcoveVideoId());
+//                                playPlayerWhenShimmer();
+//                            }
+//                        });
+//                    } else {
+//                        getBinding().pBar.setVisibility(View.GONE);
+//                        brightCoveVideoId = Long.parseLong(videoDetails.getBrightcoveVideoId());
+//                        playPlayerWhenShimmer();
+//                    }
+//
+//                } else {
+//                    brightCoveVideoId = Long.parseLong(videoDetails.getBrightcoveVideoId());
+//                    playPlayerWhenShimmer();
+//                }
+//
+//            }
+//
+//        }
+
+        if (fromBingWatch){
+            getBinding().playIcon.setVisibility(View.GONE);
             if (AppCommonMethod.getCheckBCID(videoDetails.getBrightcoveVideoId())) {
                 isLogin = preference.getAppPrefLoginStatus();
                 if (isLogin.equalsIgnoreCase(AppConstants.UserStatus.Login.toString())) {
@@ -945,8 +978,41 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
                 }
 
             }
-
         }
+
+        getBinding().playIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getBinding().playIcon.setVisibility(View.GONE);
+                getBinding().backButton.setVisibility(View.GONE);
+                if (AppCommonMethod.getCheckBCID(videoDetails.getBrightcoveVideoId())) {
+                    isLogin = preference.getAppPrefLoginStatus();
+                    if (isLogin.equalsIgnoreCase(AppConstants.UserStatus.Login.toString())) {
+                        if (!preference.getEntitlementStatus()) {
+                            GetPlansLayer.getInstance().getEntitlementStatus(preference, token, new EntitlementStatus() {
+                                @Override
+                                public void entitlementStatus(boolean entitlementStatus, boolean apiStatus) {
+                                    if (entitlementStatus && apiStatus) {
+                                        isAdShowingToUser = false;
+                                    }
+                                    brightCoveVideoId = Long.parseLong(videoDetails.getBrightcoveVideoId());
+                                    playPlayerWhenShimmer();
+                                }
+                            });
+                        } else {
+                            getBinding().pBar.setVisibility(View.GONE);
+                            brightCoveVideoId = Long.parseLong(videoDetails.getBrightcoveVideoId());
+                            playPlayerWhenShimmer();
+                        }
+
+                    } else {
+                        brightCoveVideoId = Long.parseLong(videoDetails.getBrightcoveVideoId());
+                        playPlayerWhenShimmer();
+                    }
+
+                }
+            }
+        });
 
         if (StringUtils.isNullOrEmptyOrZero(videoDetails.getSeries())) {
             seriesId = -1;
@@ -1247,6 +1313,23 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
             if (getBinding().tag.getText().toString().trim().equalsIgnoreCase("")) {
                 // getBinding().customeFieldView.setVisibility(View.GONE);
             }
+
+            if (fromBingWatch){
+                getBinding().playIcon.setVisibility(View.GONE);
+                getBinding().backButton.setVisibility(View.GONE);
+            }else {
+                if (responseDetailPlayer.getComingSoon() != null && !responseDetailPlayer.getComingSoon().equalsIgnoreCase("") && responseDetailPlayer.getComingSoon().equalsIgnoreCase("true")) {
+                    getBinding().playIcon.setVisibility(View.GONE);
+                    getBinding().backButton.setVisibility(View.VISIBLE);
+
+                }else {
+                    getBinding().playIcon.setVisibility(View.VISIBLE);
+                    getBinding().backButton.setVisibility(View.GONE);
+                }
+            }
+
+
+
         } catch (Exception ignored) {
 
         }
@@ -1796,7 +1879,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
                         playerFragment.currentEpisodes(i + 1);
                         break;
                     }else {
-                        playerFragment.bingeWatchStatus(false);
+                       // playerFragment.bingeWatchStatus(false);
                     }
                 }
             }

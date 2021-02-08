@@ -688,6 +688,7 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
 
         response = new ResponseDetailPlayer();
         setExpandable();
+        setPlayIconClick();
         preference.setAppPrefAssetId(assestId);
         watchList = 0;
         likeCounter = 0;
@@ -713,51 +714,12 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
         BuyNowClick();
     }
 
-    public void getAssetDetails() {
-        isHitPlayerApi = true;
-        railInjectionHelper = ViewModelProviders.of(this).get(RailInjectionHelper.class);
-        railInjectionHelper.getAssetDetailsV2(String.valueOf(assestId)).observe(DetailActivity.this, assetResponse -> {
-            if (assetResponse != null) {
-                if (assetResponse.getStatus().equalsIgnoreCase(APIStatus.START.name())) {
+    private void setPlayIconClick() {
 
-                } else if (assetResponse.getStatus().equalsIgnoreCase(APIStatus.SUCCESS.name())) {
-                    parseAssetDetails(assetResponse);
-                } else if (assetResponse.getStatus().equalsIgnoreCase(APIStatus.ERROR.name())) {
-                    if (assetResponse.getErrorModel() != null && assetResponse.getErrorModel().getErrorCode() != 0) {
-                        showDialog(DetailActivity.this.getResources().getString(R.string.error), getResources().getString(R.string.something_went_wrong));
-                    }
-
-                } else if (assetResponse.getStatus().equalsIgnoreCase(APIStatus.FAILURE.name())) {
-                    showDialog(DetailActivity.this.getResources().getString(R.string.error), getResources().getString(R.string.something_went_wrong));
-                }
-            }
-
-        });
-    }
-
-    boolean isAdShowingToUser = true;
-
-    private void parseAssetDetails(ResponseModel assetResponse) {
-        RailCommonData enveuCommonResponse = (RailCommonData) assetResponse.getBaseCategory();
-
-        if (enveuCommonResponse != null && enveuCommonResponse.getEnveuVideoItemBeans().size() > 0) {
-            videoDetails = enveuCommonResponse.getEnveuVideoItemBeans().get(0);
-            getBinding().descriptionText.setEllipsize(TextUtils.TruncateAt.END);
-            ImageHelper.getInstance(DetailActivity.this).loadListImage(getBinding().playerImage, videoDetails.getPosterURL());
-            if (videoDetails.isPremium()) {
-                ImageHelper.getInstance(DetailActivity.this).loadListImage(getBinding().playerImage, videoDetails.getPosterURL());
-                getBinding().tvPurchased.setVisibility(View.GONE);
-                getBinding().tvPremium.setVisibility(View.GONE);
-
-                getBinding().mPremiumStatus.setVisibility(View.VISIBLE);
-                getBinding().backButton.setVisibility(View.VISIBLE);
-                //hitApiEntitlement(enveuCommonResponse.getEnveuVideoItemBeans().get(0).getSku());
-                if (isLogin.equalsIgnoreCase(AppConstants.UserStatus.Login.toString())) {
-                    hitApiEntitlement(enveuCommonResponse.getEnveuVideoItemBeans().get(0).getSku());
-                } else {
-                    getBinding().tvBuyNow.setVisibility(View.VISIBLE);
-                }
-            } else {
+        getBinding().playIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getBinding().playIcon.setVisibility(View.GONE);
                 getBinding().pBar.setVisibility(View.VISIBLE);
                 if (AppCommonMethod.getCheckBCID(videoDetails.getBrightcoveVideoId())) {
                     isLogin = preference.getAppPrefLoginStatus();
@@ -791,9 +753,96 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
                     getBinding().pBar.setVisibility(View.GONE);
                 }
             }
+        });
+    }
+
+    public void getAssetDetails() {
+        isHitPlayerApi = true;
+        railInjectionHelper = ViewModelProviders.of(this).get(RailInjectionHelper.class);
+        railInjectionHelper.getAssetDetailsV2(String.valueOf(assestId)).observe(DetailActivity.this, assetResponse -> {
+            if (assetResponse != null) {
+                if (assetResponse.getStatus().equalsIgnoreCase(APIStatus.START.name())) {
+
+                } else if (assetResponse.getStatus().equalsIgnoreCase(APIStatus.SUCCESS.name())) {
+                    parseAssetDetails(assetResponse);
+                } else if (assetResponse.getStatus().equalsIgnoreCase(APIStatus.ERROR.name())) {
+                    if (assetResponse.getErrorModel() != null && assetResponse.getErrorModel().getErrorCode() != 0) {
+                        showDialog(DetailActivity.this.getResources().getString(R.string.error), getResources().getString(R.string.something_went_wrong));
+                    }
+
+                } else if (assetResponse.getStatus().equalsIgnoreCase(APIStatus.FAILURE.name())) {
+                    showDialog(DetailActivity.this.getResources().getString(R.string.error), getResources().getString(R.string.something_went_wrong));
+                }
+            }
+
+        });
+    }
+
+    boolean isAdShowingToUser = true;
+
+    private void parseAssetDetails(ResponseModel assetResponse) {
+        RailCommonData enveuCommonResponse = (RailCommonData) assetResponse.getBaseCategory();
+
+        if (enveuCommonResponse != null && enveuCommonResponse.getEnveuVideoItemBeans().size() > 0) {
+            videoDetails = enveuCommonResponse.getEnveuVideoItemBeans().get(0);
+            getBinding().descriptionText.setEllipsize(TextUtils.TruncateAt.END);
+            ImageHelper.getInstance(DetailActivity.this).loadListImage(getBinding().playerImage, videoDetails.getPosterURL());
+//            if (videoDetails.isPremium()) {
+//                ImageHelper.getInstance(DetailActivity.this).loadListImage(getBinding().playerImage, videoDetails.getPosterURL());
+//                getBinding().tvPurchased.setVisibility(View.GONE);
+//                getBinding().tvPremium.setVisibility(View.GONE);
+//
+//                getBinding().mPremiumStatus.setVisibility(View.VISIBLE);
+//                getBinding().backButton.setVisibility(View.VISIBLE);
+//                //hitApiEntitlement(enveuCommonResponse.getEnveuVideoItemBeans().get(0).getSku());
+//                if (isLogin.equalsIgnoreCase(AppConstants.UserStatus.Login.toString())) {
+//                    hitApiEntitlement(enveuCommonResponse.getEnveuVideoItemBeans().get(0).getSku());
+//                } else {
+//                    getBinding().tvBuyNow.setVisibility(View.VISIBLE);
+//                }
+//            }
+
+//            else {
+//                getBinding().pBar.setVisibility(View.VISIBLE);
+//                if (AppCommonMethod.getCheckBCID(videoDetails.getBrightcoveVideoId())) {
+//                    isLogin = preference.getAppPrefLoginStatus();
+//
+//
+//                    if (isLogin.equalsIgnoreCase(AppConstants.UserStatus.Login.toString())) {
+//                        if (!preference.getEntitlementStatus()) {
+//                            GetPlansLayer.getInstance().getEntitlementStatus(preference, token, new EntitlementStatus() {
+//                                @Override
+//                                public void entitlementStatus(boolean entitlementStatus, boolean apiStatus) {
+//                                    getBinding().pBar.setVisibility(View.GONE);
+//                                    if (entitlementStatus && apiStatus) {
+//                                        isAdShowingToUser = false;
+//                                    }
+//                                    brightCoveVideoId = Long.parseLong(videoDetails.getBrightcoveVideoId());
+//                                    playPlayerWhenShimmer();
+//                                }
+//                            });
+//                        } else {
+//                            getBinding().pBar.setVisibility(View.GONE);
+//                            brightCoveVideoId = Long.parseLong(videoDetails.getBrightcoveVideoId());
+//                            playPlayerWhenShimmer();
+//                        }
+//
+//                    } else {
+//                        getBinding().pBar.setVisibility(View.GONE);
+//                        brightCoveVideoId = Long.parseLong(videoDetails.getBrightcoveVideoId());
+//                        playPlayerWhenShimmer();
+//                    }
+//                } else {
+//                    getBinding().pBar.setVisibility(View.GONE);
+//                }
+//            }
+
+
             setUserInteractionFragment(assestId);
             stopShimmer();
             setUI(videoDetails);
+
+
         }
     }
 
@@ -998,6 +1047,14 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
             if (getBinding().tag.getText().toString().trim().equalsIgnoreCase("")) {
                 // getBinding().customeFieldView.setVisibility(View.GONE);
             }
+
+            if (responseDetailPlayer.getComingSoon() != null && !responseDetailPlayer.getComingSoon().equalsIgnoreCase("") && responseDetailPlayer.getComingSoon().equalsIgnoreCase("true")) {
+                getBinding().playIcon.setVisibility(View.GONE);
+                getBinding().backButton.setVisibility(View.VISIBLE);
+            }else {
+                getBinding().playIcon.setVisibility(View.VISIBLE);
+            }
+
         } catch (Exception ignored) {
 
         }

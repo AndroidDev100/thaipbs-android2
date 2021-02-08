@@ -46,8 +46,16 @@ public class HelpActivity extends BaseBindingActivity<ActivityHelpBinding> {
         type = getIntent().getStringExtra("type");
         if (type.equalsIgnoreCase("1")) {
             new ToolBarHandler(this).setHelpAction(getBinding(), HelpActivity.this.getResources().getString(R.string.term_condition));
-        } else {
+        } else if (type.equalsIgnoreCase("2")){
             new ToolBarHandler(this).setHelpAction(getBinding(), HelpActivity.this.getResources().getString(R.string.privacy_policy));
+        }else if (type.equalsIgnoreCase("3")){
+            new ToolBarHandler(this).setHelpAction(getBinding(), HelpActivity.this.getResources().getString(R.string.contact_us));
+        }else if (type.equalsIgnoreCase("4")){
+            new ToolBarHandler(this).setHelpAction(getBinding(), HelpActivity.this.getResources().getString(R.string.faq));
+        }else if (type.equalsIgnoreCase("5")){
+            new ToolBarHandler(this).setHelpAction(getBinding(), HelpActivity.this.getResources().getString(R.string.about_us));
+        }else if (type.equalsIgnoreCase("6")){
+            new ToolBarHandler(this).setHelpAction(getBinding(), HelpActivity.this.getResources().getString(R.string.feedback));
         }
         getBinding().toolbar.backLayout.setOnClickListener(v -> {
             onBackPressed();
@@ -72,6 +80,18 @@ public class HelpActivity extends BaseBindingActivity<ActivityHelpBinding> {
         } else if (type.equalsIgnoreCase("2")) {
 
             url = SDKConfig.getInstance().getPrivay_Policy_URL();
+        }else if (type.equalsIgnoreCase("3")) {
+
+            url = SDKConfig.getInstance().getCONTACT_URL();
+        }else if (type.equalsIgnoreCase("4")) {
+
+            url = SDKConfig.getInstance().getFAQ_URL();
+        }else if (type.equalsIgnoreCase("5")) {
+
+            url = SDKConfig.getInstance().getABOUT_US_URL();
+        }else if (type.equalsIgnoreCase("6")) {
+
+            url = SDKConfig.getInstance().getFEEDBACK_URL();
         } else {
             url = "https://www.google.co.in/";
         }

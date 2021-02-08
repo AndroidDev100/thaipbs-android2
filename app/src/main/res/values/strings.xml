@@ -82,6 +82,7 @@
     <string name="new_password">New Password</string>
     <string name="notification">Notifications</string>
     <string name="notification_setting">Notification Setting</string>
+    <string name="binge_setting">Binge Watch</string>
     <string name="manage_account">Manage Account</string>
     <string name="login_signup">Log In / Sign Up</string>
     <string name="login_txt">Login</string>
@@ -272,6 +273,11 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="sign_out">Logout</string>
     <string name="redeem_coupon">Redeem Coupon</string>
+    <string name="other_application">Other Applications</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="faq">Frequently Ask Questions</string>
+    <string name="about_us">About VIPA</string>
+    <string name="feedback">Feedback</string>
 
     <string name="wake_up_connection">Wake up your connection !</string>
 

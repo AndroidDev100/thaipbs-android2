@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.SystemClock;
 import android.provider.Settings;
 import android.util.DisplayMetrics;
@@ -1268,13 +1269,13 @@ public class AppCommonMethod {
     public static void handleTags(String isVIPTag, String isNewS, FrameLayout isVIP, FrameLayout newSeries,FrameLayout newEpisode,FrameLayout newMovie,String assetType) {
        try {
            if (isVIPTag.equalsIgnoreCase("true")){
-               isVIP.setVisibility(View.GONE);
+               isVIP.setVisibility(View.VISIBLE);
            }else {
                isVIP.setVisibility(View.GONE);
            }
            if (assetType.equalsIgnoreCase(MediaTypeConstants.getInstance().getSeries())){
                if (isNewS.equalsIgnoreCase("true")){
-                   newSeries.setVisibility(View.GONE);
+                   newSeries.setVisibility(View.VISIBLE);
                }else {
                    newSeries.setVisibility(View.GONE);
                }
@@ -1284,7 +1285,7 @@ public class AppCommonMethod {
 
            if (assetType.equalsIgnoreCase(MediaTypeConstants.getInstance().getMovie())){
                if (isNewS.equalsIgnoreCase("true")){
-                   newMovie.setVisibility(View.GONE);
+                   newMovie.setVisibility(View.VISIBLE);
                }else {
                    newMovie.setVisibility(View.GONE);
                }
@@ -1293,7 +1294,7 @@ public class AppCommonMethod {
            }
            if (assetType.equalsIgnoreCase(MediaTypeConstants.getInstance().getEpisode())){
                if (isNewS.equalsIgnoreCase("true")){
-                   newEpisode.setVisibility(View.GONE);
+                   newEpisode.setVisibility(View.VISIBLE);
                }else {
                    newEpisode.setVisibility(View.GONE);
                }
@@ -1315,6 +1316,16 @@ public class AppCommonMethod {
         }
 
         return jsonObject;
+    }
+
+    public static void openUrl(Context context, String url) {
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+
+        if (i.resolveActivity(context.getPackageManager()) != null) {
+
+            context.startActivity(i);
+        }
     }
 
     public static void handleTitleDesc(RelativeLayout titleLayout, TextView tvTitle, TextView tvDescription, BaseCategory baseCategory) {

@@ -5,6 +5,7 @@ import android.app.TaskStackBuilder;
 import android.content.Intent;
 import android.os.Bundle;
 
+import me.vipa.app.activities.OtherApplication.UI.OtherApplication;
 import me.vipa.app.activities.contentPreference.UI.ContentPreference;
 import me.vipa.app.activities.onBoarding.UI.OnBoarding;
 import me.vipa.app.activities.onBoarding.UI.OnBoardingTab;
@@ -294,6 +295,10 @@ public class ActivityLauncher {
     }
 
     public void forgotPasswordActivity(Activity source, Class<ForgotPasswordActivity> destination) {
+        Intent intent = new Intent(source, destination);
+        activity.startActivity(intent);
+    }
+    public void otherActivity(Activity source, Class<OtherApplication> destination) {
         Intent intent = new Intent(source, destination);
         activity.startActivity(intent);
     }

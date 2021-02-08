@@ -54,8 +54,8 @@ public class ActivitySettings extends BaseBindingActivity<SettingsActivityBindin
             getBinding().switchTheme.setChecked(true);
         }
         isNotificationEnable = areNotificationsEnabled();
-
         setSwitchForNotification();
+        setSwitchForBingeWatch();
         toolBar();
         checkLanguage();
 
@@ -93,30 +93,71 @@ public class ActivitySettings extends BaseBindingActivity<SettingsActivityBindin
                 recreate();
             }
         });
+
+        getBinding().bingeSetting.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+
+
+
+                if (isChecked){
+                    KsPreferenceKeys.getInstance().setBingeWatchEnable(true);
+                    setSwitchForBingeWatch();
+                }else {
+                    KsPreferenceKeys.getInstance().setBingeWatchEnable(false);
+                    setSwitchForBingeWatch();
+                }
+
+
+            }
+        });
+
+
+
+
         getBinding().switchTheme.setOnClickListener(v -> {
 
 
         });
 
-        getBinding().notificationSetting.setOnClickListener(new View.OnClickListener() {
+
+        getBinding().notificationSetting.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    intent.setAction(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
-                    intent.putExtra(Settings.EXTRA_APP_PACKAGE, getApplicationContext().getPackageName());
-                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
-                    intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
-                    intent.putExtra("app_package", getApplicationContext().getPackageName());
-                    intent.putExtra("app_uid", getApplicationContext().getApplicationInfo().uid);
-                } else {
-                    intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                    intent.addCategory(Intent.CATEGORY_DEFAULT);
-                    intent.setData(Uri.parse("package:" + getApplicationContext().getPackageName()));
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (buttonView.isPressed()) {
+                    Intent intent = new Intent();
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        intent.setAction(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                        intent.putExtra(Settings.EXTRA_APP_PACKAGE, getApplicationContext().getPackageName());
+                    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
+                        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                        intent.putExtra("app_package", getApplicationContext().getPackageName());
+                        intent.putExtra("app_uid", getApplicationContext().getApplicationInfo().uid);
+                    } else {
+                        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                        intent.addCategory(Intent.CATEGORY_DEFAULT);
+                        intent.setData(Uri.parse("package:" + getApplicationContext().getPackageName()));
+                    }
+                    getApplicationContext().startActivity(intent);
                 }
-                getApplicationContext().startActivity(intent);
+
             }
+
         });
+    }
+
+    private void setSwitchForBingeWatch() {
+        if (KsPreferenceKeys.getInstance().getBingeWatchEnable()){
+            getBinding().bingeSetting.setChecked(true);
+
+        }else {
+            getBinding().bingeSetting.setChecked(false);
+
+        }
     }
 
     private void setSwitchForNotification() {
@@ -215,6 +256,7 @@ public class ActivitySettings extends BaseBindingActivity<SettingsActivityBindin
         super.onResume();
         isNotificationEnable = areNotificationsEnabled();
         setSwitchForNotification();
+       // getBinding().notificationSetting.setOnCheckedChangeListener(this);
     }
 
     @Override
@@ -232,4 +274,24 @@ public class ActivitySettings extends BaseBindingActivity<SettingsActivityBindin
             break;
         }
     }
+
+//    @Override
+//    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//        getBinding().notificationSetting.setOnCheckedChangeListener(null);
+//        getBinding().bingeSetting.setOnCheckedChangeListener(null);
+//        Intent intent = new Intent();
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            intent.setAction(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
+//            intent.putExtra(Settings.EXTRA_APP_PACKAGE, getApplicationContext().getPackageName());
+//        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+//            intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
+//            intent.putExtra("app_package", getApplicationContext().getPackageName());
+//            intent.putExtra("app_uid", getApplicationContext().getApplicationInfo().uid);
+//        } else {
+//            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+//            intent.addCategory(Intent.CATEGORY_DEFAULT);
+//            intent.setData(Uri.parse("package:" + getApplicationContext().getPackageName()));
+//        }
+//        getApplicationContext().startActivity(intent);
+//    }
 }

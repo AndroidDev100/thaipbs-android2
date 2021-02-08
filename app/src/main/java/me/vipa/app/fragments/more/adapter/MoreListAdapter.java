@@ -50,7 +50,7 @@ public class MoreListAdapter extends RecyclerView.Adapter<MoreListAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int i) {
         holder.moreItemBinding.moreListTitle.setText("" + itemsList.get(i));
         setIcons(holder.moreItemBinding.moreListIcon, i, holder.moreItemBinding);
-        if (i == 3 || i == 7 || i == 11){
+        if (i == 2 || i == 7 || i == 12){
             holder.itemView.findViewById(R.id.view_line).setVisibility(View.VISIBLE);
         }else {
             holder.itemView.findViewById(R.id.view_line).setVisibility(View.GONE);
@@ -74,16 +74,10 @@ public class MoreListAdapter extends RecyclerView.Adapter<MoreListAdapter.ViewHo
                         callDrawableHelper(mContext, R.color.more_icon_color, R.drawable.profile_icon, v);
                         break;
                     case 1:
-                        callDrawableHelper(mContext, R.color.more_icon_color, R.drawable.change_password, v);
-                        break;
-                    case 2:
                         callDrawableHelper(mContext, R.color.more_icon_color, R.drawable.watch_list, v);
                         break;
-                    case 3:
+                    case 2:
                         callDrawableHelper(mContext, R.color.more_icon_color, R.drawable.watchhistory_icon, v);
-                        break;
-                    case 4:
-                        callDrawableHelper(mContext, R.color.more_icon_color, R.drawable.my_downloads_icon_more_new, v);
                         break;
                     /*case 4:
                         callDrawableHelper(mContext, R.color.icons_color, R.drawable.ic_save_alt, v);
@@ -91,25 +85,31 @@ public class MoreListAdapter extends RecyclerView.Adapter<MoreListAdapter.ViewHo
 //                    case 4:
 //                        callDrawableHelper(mContext, R.color.more_icon_color, R.drawable.vipa_kids, v);
 //                        break;
-                    case 5:
+                    case 3:
                         callDrawableHelper(mContext, R.color.more_icon_color, R.drawable.contact_us, v);
                         break;
-                    case 6:
+                    case 4:
                         callDrawableHelper(mContext, R.color.more_icon_color, R.drawable.frequently_ask_question, v);
                         break;
-                    case 7:
+                    case 5:
                         //callDrawableHelper1(mContext, R.color.more_icon_color, R.drawable.about_vipa, v);
                         v.setBackgroundResource(R.drawable.about_vipa);
                         break;
 
-                    case 8:
+                    case 6:
                         callDrawableHelper(mContext, R.color.more_icon_color, R.drawable.feedback, v);
                         break;
-                    case 9:
+                    case 7:
                         callDrawableHelper(mContext, R.color.more_icon_color, R.drawable.other_application, v);
                         break;
-                    case 10:
+                    case 8:
                         callDrawableHelper(mContext, R.color.more_icon_color, R.drawable.setting_icon, v);
+                        break;
+                    case 9:
+                        callDrawableHelper(mContext, R.color.more_icon_color, R.drawable.t_and_c_more, v);
+                        break;
+                    case 10:
+                        callDrawableHelper(mContext, R.color.more_icon_color, R.drawable.privacy, v);
                         break;
                     case 11:
                         callDrawableHelper(mContext, R.color.more_icon_color, R.drawable.log_out, v);
@@ -135,42 +135,42 @@ public class MoreListAdapter extends RecyclerView.Adapter<MoreListAdapter.ViewHo
                         callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.profile_icon, v);
                         break;
                     case 1:
-                        callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.change_password, v);
-                        break;
-                    case 2:
                         callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.watch_list, v);
                         break;
-                    case 3:
+                    case 2:
                         callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.watchhistory_icon, v);
-                        break;
-                    case 4:
-                        callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.my_downloads_icon_more_new, v);
                         break;
                     /*case 4:
                         callDrawableHelper(mContext, R.color.icons_color, R.drawable.ic_save_alt, v);
                         break;*/
 //                    case 4:
-//                        callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.vipa_kids, v);
+//                        callDrawableHelper(mContext, R.color.more_icon_color, R.drawable.vipa_kids, v);
 //                        break;
-                    case 5:
+                    case 3:
                         callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.contact_us, v);
                         break;
-                    case 6:
+                    case 4:
                         callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.frequently_ask_question, v);
                         break;
-                    case 7:
-                       // callDrawableHelper1(mContext, R.color.icons_color_dark, R.drawable.about_vipa, v);
+                    case 5:
+                        //callDrawableHelper1(mContext, R.color.more_icon_color, R.drawable.about_vipa, v);
                         v.setBackgroundResource(R.drawable.about_vipa);
                         break;
 
-                    case 8:
+                    case 6:
                         callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.feedback, v);
                         break;
-                    case 9:
+                    case 7:
                         callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.other_application, v);
                         break;
-                    case 10:
+                    case 8:
                         callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.setting_icon, v);
+                        break;
+                    case 9:
+                        callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.t_and_c_more, v);
+                        break;
+                    case 10:
+                        callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.privacy, v);
                         break;
                     case 11:
                         callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.log_out, v);
@@ -197,16 +197,10 @@ public class MoreListAdapter extends RecyclerView.Adapter<MoreListAdapter.ViewHo
                         callDrawableHelper(mContext, R.color.more_icon_color, R.drawable.profile_icon, v);
                         break;
                     case 1:
-                        callDrawableHelper(mContext, R.color.more_icon_color, R.drawable.change_password, v);
-                        break;
-                    case 2:
                         callDrawableHelper(mContext, R.color.more_icon_color, R.drawable.watch_list, v);
                         break;
-                    case 3:
+                    case 2:
                         callDrawableHelper(mContext, R.color.more_icon_color, R.drawable.watchhistory_icon, v);
-                        break;
-                    case 4:
-                        callDrawableHelper(mContext, R.color.more_icon_color, R.drawable.my_downloads_icon_more_new, v);
                         break;
                     /*case 4:
                         callDrawableHelper(mContext, R.color.icons_color, R.drawable.ic_save_alt, v);
@@ -214,25 +208,31 @@ public class MoreListAdapter extends RecyclerView.Adapter<MoreListAdapter.ViewHo
 //                    case 4:
 //                        callDrawableHelper(mContext, R.color.more_icon_color, R.drawable.vipa_kids, v);
 //                        break;
-                    case 5:
+                    case 3:
                         callDrawableHelper(mContext, R.color.more_icon_color, R.drawable.contact_us, v);
                         break;
-                    case 6:
+                    case 4:
                         callDrawableHelper(mContext, R.color.more_icon_color, R.drawable.frequently_ask_question, v);
                         break;
-                    case 7:
-                      //  callDrawableHelper1(mContext, R.color.more_icon_color, R.drawable.about_vipa, v);
+                    case 5:
+                        //callDrawableHelper1(mContext, R.color.more_icon_color, R.drawable.about_vipa, v);
                         v.setBackgroundResource(R.drawable.about_vipa);
                         break;
 
-                    case 8:
+                    case 6:
                         callDrawableHelper(mContext, R.color.more_icon_color, R.drawable.feedback, v);
                         break;
-                    case 9:
+                    case 7:
                         callDrawableHelper(mContext, R.color.more_icon_color, R.drawable.other_application, v);
                         break;
-                    case 10:
+                    case 8:
                         callDrawableHelper(mContext, R.color.more_icon_color, R.drawable.setting_icon, v);
+                        break;
+                    case 9:
+                        callDrawableHelper(mContext, R.color.more_icon_color, R.drawable.t_and_c_more, v);
+                        break;
+                    case 10:
+                        callDrawableHelper(mContext, R.color.more_icon_color, R.drawable.privacy, v);
                         break;
 //                    case 15:
 //                        callDrawableHelper(mContext, R.color.icons_color, R.drawable.veryfy_user, v);
@@ -254,44 +254,43 @@ public class MoreListAdapter extends RecyclerView.Adapter<MoreListAdapter.ViewHo
                         callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.profile_icon, v);
                         break;
                     case 1:
-                        callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.change_password, v);
-                        break;
-                    case 2:
                         callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.watch_list, v);
                         break;
-                    case 3:
+                    case 2:
                         callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.watchhistory_icon, v);
-                        break;
-                    case 4:
-                        callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.my_downloads_icon_more_new, v);
                         break;
                     /*case 4:
                         callDrawableHelper(mContext, R.color.icons_color, R.drawable.ic_save_alt, v);
                         break;*/
 //                    case 4:
-//                        callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.vipa_kids, v);
+//                        callDrawableHelper(mContext, R.color.more_icon_color, R.drawable.vipa_kids, v);
 //                        break;
-                    case 5:
+                    case 3:
                         callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.contact_us, v);
                         break;
-                    case 6:
+                    case 4:
                         callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.frequently_ask_question, v);
                         break;
-                    case 7:
-                       // callDrawableHelper1(mContext, R.color.icons_color_dark, R.drawable.about_vipa, v);
+                    case 5:
+                        //callDrawableHelper1(mContext, R.color.more_icon_color, R.drawable.about_vipa, v);
                         v.setBackgroundResource(R.drawable.about_vipa);
                         break;
 
-                    case 8:
+                    case 6:
                         callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.feedback, v);
                         break;
-                    case 9:
+                    case 7:
                         callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.other_application, v);
                         break;
-                    case 10:
+                    case 8:
                         callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.setting_icon, v);
                         break;
-
+                    case 9:
+                        callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.t_and_c_more, v);
+                        break;
+                    case 10:
+                        callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.privacy, v);
+                        break;
 //                    case 15:
 //                        callDrawableHelper(mContext, R.color.icons_color, R.drawable.veryfy_user, v);
 //                        binding.verifyAccount.setVisibility(View.VISIBLE);
@@ -364,6 +363,16 @@ public class MoreListAdapter extends RecyclerView.Adapter<MoreListAdapter.ViewHo
                     itemClickListener.onClick(mContext.getResources().getString(R.string.membership_plan));
                 } else if (itemsList.get(getLayoutPosition()).equalsIgnoreCase(mContext.getResources().getString(R.string.redeem_coupon))) {
                     itemClickListener.onClick(mContext.getResources().getString(R.string.redeem_coupon));
+                }else if(itemsList.get(getLayoutPosition()).equalsIgnoreCase(mContext.getResources().getString(R.string.other_application))){
+                    itemClickListener.onClick(mContext.getResources().getString(R.string.other_application));
+                }else if(itemsList.get(getLayoutPosition()).equalsIgnoreCase(mContext.getResources().getString(R.string.contact_us))){
+                    itemClickListener.onClick(mContext.getResources().getString(R.string.contact_us));
+                }else if(itemsList.get(getLayoutPosition()).equalsIgnoreCase(mContext.getResources().getString(R.string.faq))){
+                    itemClickListener.onClick(mContext.getResources().getString(R.string.faq));
+                }else if(itemsList.get(getLayoutPosition()).equalsIgnoreCase(mContext.getResources().getString(R.string.about_us))){
+                    itemClickListener.onClick(mContext.getResources().getString(R.string.about_us));
+                }else if(itemsList.get(getLayoutPosition()).equalsIgnoreCase(mContext.getResources().getString(R.string.feedback))){
+                    itemClickListener.onClick(mContext.getResources().getString(R.string.feedback));
                 }
 
             });

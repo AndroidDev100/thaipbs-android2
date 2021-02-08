@@ -169,6 +169,9 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             selected_lang = bundle.getString("selected_lang");
             adRulesURL = bundle.getString("config_vast_tag");
             bingeWatch = bundle.getBoolean("binge_watch");
+
+
+
             bingeWatchTimer = bundle.getInt("binge_watch_timer");
 
 
@@ -498,7 +501,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                         if (currentPosition>=bingeWatchTimer){
                             willBingWatchShow=true;
                             if (!isInPictureinPicture){
-                                playerControlsFragment.showBingeWatch();
+                                playerControlsFragment.showBingeWatch(baseVideoView.getDuration()-baseVideoView.getCurrentPosition());
                             }
                         }
                     }
@@ -1515,7 +1518,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                                 playerControlsFragment.sendVideoCompletedState(EventType.COMPLETED);
                             }else {
                                 if (willBingWatchShow){
-                                    playerControlsFragment.showBingeWatch();
+                                    playerControlsFragment.showBingeWatch(baseVideoView.getDuration()-baseVideoView.getCurrentPosition());
                                 }else {
                                     playerControlsFragment.sendTapCallBack(true);
                                     playerControlsFragment.startHandler();
@@ -1626,10 +1629,12 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
     public void currentEpisodes(int i) {
         runningEpisodes=i;
         Log.w("totalZies",totalEpisodes+" "+runningEpisodes);
-        if (runningEpisodes<totalEpisodes){
-            bingeWatch=true;
-        }else {
-            bingeWatch=false;
+        if (bingeWatch) {
+            if (runningEpisodes < totalEpisodes) {
+                bingeWatch = true;
+            } else {
+                bingeWatch = false;
+            }
         }
     }
 

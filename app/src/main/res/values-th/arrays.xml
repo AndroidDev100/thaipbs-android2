@@ -3,17 +3,18 @@
 
     <string-array name="more_with_login">
         <item>จัดการโปรไฟล์</item>
-        <item>เปลื่ยนพาสเวิร์ด</item>
         <item>รายการโปรดของฉัน</item>
         <item>ประวัติการรับชม</item>
-        <item>ดาวน์โหลดของฉัน</item>
         <item>ติดต่อเรา</item>
         <item>คำถามที่พบบ่อย</item>
         <item>เกี่ยวกับเรา</item>
         <item>ข้อเสนอแนะ</item>
         <item>แอปพลิเคชันอื่น ๆ</item>
         <item>การตั้งค่า</item>
+        <item>ข้อกำหนดและเงื่อนไข</item>
+        <item>นโยบายความเป็นส่วนตัว</item>
         <item>ออกจากระบบ</item>
+
     </string-array>
     <string-array name="more_with_login_fb">
         <item>ข้อมูลของฉัน</item>
@@ -43,16 +44,16 @@
 
     <string-array name="more_logout">
         <item>จัดการโปรไฟล์</item>
-        <item>เปลื่ยนพาสเวิร์ด</item>
         <item>รายการโปรดของฉัน</item>
         <item>ประวัติการรับชม</item>
-        <item>ดาวน์โหลดของฉัน</item>
         <item>ติดต่อเรา</item>
         <item>คำถามที่พบบ่อย</item>
         <item>เกี่ยวกับเรา</item>
         <item>ข้อเสนอแนะ</item>
         <item>แอปพลิเคชันอื่น ๆ</item>
         <item>การตั้งค่า</item>
+        <item>ข้อกำหนดและเงื่อนไข</item>
+        <item>นโยบายความเป็นส่วนตัว</item>
 
 
     </string-array>
