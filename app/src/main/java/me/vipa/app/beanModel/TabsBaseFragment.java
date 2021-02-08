@@ -53,28 +53,6 @@ import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.vipa.app.SDKConfig;
-import me.vipa.app.activities.listing.listui.ListActivity;
-import me.vipa.app.activities.listing.ui.GridActivity;
-import me.vipa.app.activities.privacypolicy.ui.WebViewActivity;
-import me.vipa.app.activities.search.ui.ActivitySearch;
-import me.vipa.app.activities.usermanagment.ui.LoginActivity;
-import me.vipa.app.activities.watchList.ui.WatchListActivity;
-import me.vipa.app.baseModels.BaseBindingFragment;
-import me.vipa.app.baseModels.HomeBaseViewModel;
-import me.vipa.app.beanModel.enveuCommonRailData.RailCommonData;
-import me.vipa.app.callbacks.commonCallbacks.CommonApiCallBack;
-import me.vipa.app.callbacks.commonCallbacks.CommonRailtItemClickListner;
-import me.vipa.app.callbacks.commonCallbacks.MoreClickListner;
-import me.vipa.app.fragments.home.viewModel.HomeFragmentViewModel;
-import me.vipa.app.fragments.movies.viewModel.MovieFragmentViewModel;
-import me.vipa.app.fragments.news.viewModel.NewsFragmentViewModel;
-import me.vipa.app.fragments.shows.viewModel.ShowsFragmentViewModel;
-import me.vipa.enums.LandingPageType;
-import me.vipa.enums.Layouts;
-import me.vipa.enums.ListingLayoutType;
-import me.vipa.enums.PDFTarget;
-
 
 public class TabsBaseFragment<T extends HomeBaseViewModel> extends BaseBindingFragment<FragmentHomeBinding> implements CommonRailtItemClickListner, MoreClickListner {
 
@@ -487,7 +465,7 @@ public class TabsBaseFragment<T extends HomeBaseViewModel> extends BaseBindingFr
                 playListId = data.getScreenWidget().getLandingPagePlayListId();
 
             if (data.getScreenWidget().getName() != null && data.getScreenWidget().getReferenceName() != null && (data.getScreenWidget().getReferenceName().equalsIgnoreCase(AppConstants.ContentType.CONTINUE_WATCHING.name()) || data.getScreenWidget().getReferenceName().equalsIgnoreCase("special_playlist"))) {
-                new ActivityLauncher(getActivity()).portraitListing(getActivity(), GridActivity.class, playListId, data.getScreenWidget().getName().toString(), 0, 0, data.getScreenWidget());
+                new ActivityLauncher(getActivity()).portraitListing(getActivity(), GridActivity.class, playListId, data.getScreenWidget().getName().toString(), 0, 0, data.getScreenWidget(),data.isContinueWatching());
             } else if (data.getScreenWidget().getName() != null && data.getScreenWidget().getReferenceName() != null && (data.getScreenWidget().getReferenceName().equalsIgnoreCase(AppConstants.ContentType.MY_WATCHLIST.name()))) {
                 new ActivityLauncher(getActivity()).watchHistory(getActivity(), WatchListActivity.class, data.getScreenWidget().getName().toString(), false);
             } else {
@@ -500,16 +478,16 @@ public class TabsBaseFragment<T extends HomeBaseViewModel> extends BaseBindingFr
                 } else if (data.getScreenWidget().getContentListinglayout() != null && !data.getScreenWidget().getContentListinglayout().equalsIgnoreCase("") && data.getScreenWidget().getContentListinglayout().equalsIgnoreCase(ListingLayoutType.GRD.name())) {
                     Logger.e("getRailData", "GRD");
                     if (data.getScreenWidget().getName() != null) {
-                        new ActivityLauncher(getActivity()).portraitListing(getActivity(), GridActivity.class, playListId, data.getScreenWidget().getName().toString(), 0, 0, data.getScreenWidget());
+                        new ActivityLauncher(getActivity()).portraitListing(getActivity(), GridActivity.class, playListId, data.getScreenWidget().getName().toString(), 0, 0, data.getScreenWidget(), data.isContinueWatching());
                     } else {
-                        new ActivityLauncher(getActivity()).portraitListing(getActivity(), GridActivity.class, playListId, "", 0, 0, data.getScreenWidget());
+                        new ActivityLauncher(getActivity()).portraitListing(getActivity(), GridActivity.class, playListId, "", 0, 0, data.getScreenWidget(), data.isContinueWatching());
                     }
                 } else {
                     Logger.e("getRailData", "PDF");
                     if (data.getScreenWidget().getName() != null) {
-                        new ActivityLauncher(getActivity()).portraitListing(getActivity(), GridActivity.class, playListId, data.getScreenWidget().getName().toString(), 0, 0, data.getScreenWidget());
+                        new ActivityLauncher(getActivity()).portraitListing(getActivity(), GridActivity.class, playListId, data.getScreenWidget().getName().toString(), 0, 0, data.getScreenWidget(), data.isContinueWatching());
                     } else {
-                        new ActivityLauncher(getActivity()).portraitListing(getActivity(), GridActivity.class, playListId, "", 0, 0, data.getScreenWidget());
+                        new ActivityLauncher(getActivity()).portraitListing(getActivity(), GridActivity.class, playListId, "", 0, 0, data.getScreenWidget(), data.isContinueWatching());
                     }
                 }
             }

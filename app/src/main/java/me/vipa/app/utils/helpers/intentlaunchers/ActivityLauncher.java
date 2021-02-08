@@ -276,13 +276,14 @@ public class ActivityLauncher {
     }
 
 
-    public void portraitListing(Activity source, Class<GridActivity> destination, String i, String title, int flag, int type, BaseCategory baseCategory) {
+    public void portraitListing(Activity source, Class<GridActivity> destination, String i, String title, int flag, int type, BaseCategory baseCategory, boolean continueWatching) {
         Intent intent = new Intent(source, destination);
         intent.putExtra("playListId", i);
         intent.putExtra("title", title);
         intent.putExtra("flag", flag);
         intent.putExtra("shimmerType", type);
         intent.putExtra("baseCategory", baseCategory);
+        intent.putExtra("isContinueWatching",continueWatching);
         activity.startActivity(intent);
     }
 

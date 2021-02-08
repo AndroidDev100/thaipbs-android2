@@ -293,7 +293,7 @@ public class CommonAdapterNew extends RecyclerView.Adapter<RecyclerView.ViewHold
             headingRailsBinding.headingTitle.bringToFront();
 
             if (item.isContinueWatching()){
-                headingRailsBinding.headingTitle.setText((String) item.getScreenWidget().getName()+" "+"For"+" "+ KsPreferenceKeys.getInstance().getAppPrefUserName());
+                headingRailsBinding.headingTitle.setText((String) item.getScreenWidget().getName()+" "+"for"+" "+ KsPreferenceKeys.getInstance().getAppPrefUserName());
             }else {
                 headingRailsBinding.headingTitle.setText((String) item.getScreenWidget().getName());
             }

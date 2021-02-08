@@ -86,6 +86,7 @@ public class GridActivity extends BaseBindingActivity<ListingActivityBinding> im
     private List<ContentsItem> contentsItems;
     private SquareListingAdapter squareCommonAdapter;
     private String title;
+    private boolean isContinueWatchingEnable = false;
     private boolean mIsLoading = true, isScrolling = false;
     private int mScrollY;
     private int shimmerType;
@@ -102,6 +103,7 @@ public class GridActivity extends BaseBindingActivity<ListingActivityBinding> im
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         title = getIntent().getStringExtra("title");
+        isContinueWatchingEnable = getIntent().getExtras().getBoolean("isContinueWatching");
         playListId = getIntent().getStringExtra("playListId");
         flag = getIntent().getIntExtra("flag", 0);
         shimmerType = getIntent().getIntExtra("shimmerType", 0);
@@ -186,7 +188,11 @@ public class GridActivity extends BaseBindingActivity<ListingActivityBinding> im
     private void UiIntilization() {
         getBinding().toolbar.backLayout.setOnClickListener(view -> GridActivity.this.finish());
         getBinding().toolbar.titleText.setVisibility(View.VISIBLE);
-        getBinding().toolbar.screenText.setText(title);
+        if (isContinueWatchingEnable){
+            getBinding().toolbar.screenText.setText(title+" "+"for"+" "+ KsPreferenceKeys.getInstance().getAppPrefUserName());
+        }else {
+            getBinding().toolbar.screenText.setText(title);
+        }
         getBinding().toolbar.homeIcon.setVisibility(View.GONE);
         getBinding().toolbar.mediaRouteButton.setVisibility(View.GONE);
         getBinding().toolbar.backLayout.setVisibility(View.VISIBLE);
