@@ -257,7 +257,11 @@ public class PlayerControlsFragment extends Fragment {
     void sendLandscapeCallback() {
         try {
             fullscreen.setBackgroundResource(R.drawable.exit_full_screen);
-            playerSettingIcon.setVisibility(View.VISIBLE);
+            if (videoType.equalsIgnoreCase("1")){
+                playerSettingIcon.setVisibility(View.INVISIBLE);
+            }else {
+                playerSettingIcon.setVisibility(View.VISIBLE);
+            }
 //            media_route_button.setVsibility(View.VISIBLE);
             if (isCaptionAvailable) {
                 Log.w("captionHide", "sendLandscapeCallbackif");
@@ -286,7 +290,7 @@ public class PlayerControlsFragment extends Fragment {
     }
 
     void showControls() {
-        Log.w("IMATAG", "showControls");
+        Log.w("CONTROLSVIDEO", videoType);
         childControl.setVisibility(View.VISIBLE);
         backArrow.setVisibility(View.VISIBLE);
         if (videoType.equalsIgnoreCase("1")) {
@@ -305,6 +309,7 @@ public class PlayerControlsFragment extends Fragment {
         seekBar.setVisibility(View.INVISIBLE);
         audioTracks.setVisibility(View.GONE);
         subtitles.setVisibility(View.GONE);
+        pauseButton.setVisibility(View.GONE);
         Log.w("captionHide", "hideControlsForLive");
         settingControl.setVisibility(View.GONE);
     }
@@ -343,7 +348,11 @@ public class PlayerControlsFragment extends Fragment {
         }
         if (type.equalsIgnoreCase(EventType.COMPLETED)) {
             backArrow.setVisibility(View.VISIBLE);
-            replay.setVisibility(View.VISIBLE);
+            if (videoType.equalsIgnoreCase("1")){
+                replay.setVisibility(View.GONE);
+            }else {
+                replay.setVisibility(View.VISIBLE);
+            }
         }
     }
 
