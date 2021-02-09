@@ -629,7 +629,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             public void processEvent(Event event) {
                 Exception exception = (Exception) event.properties.get(Event.ERROR);
                 Log.w("IMATAG", exception + "");
-                if (assetType != null && assetType.equalsIgnoreCase("LIVE")) {
+                if (assetType != null && assetType.equalsIgnoreCase("LIVETV")) {
 
                 } else {
                     if (exception != null) {
