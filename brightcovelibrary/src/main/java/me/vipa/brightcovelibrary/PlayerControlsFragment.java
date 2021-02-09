@@ -77,6 +77,7 @@ public class PlayerControlsFragment extends Fragment {
     public ImageView backArrow;
     private View seekBarControl, settingControl;
     public ImageView fullscreen;
+    private TextView liveTag;
     private long playbackDuration, playbackCurrentPosition;
     private String playerState = "";
     private Activity activity;
@@ -254,7 +255,11 @@ public class PlayerControlsFragment extends Fragment {
     void sendLandscapeCallback() {
         try {
             fullscreen.setBackgroundResource(R.drawable.exit_full_screen);
-            playerSettingIcon.setVisibility(View.VISIBLE);
+            if (videoType.equalsIgnoreCase("1")){
+                playerSettingIcon.setVisibility(View.INVISIBLE);
+            }else {
+                playerSettingIcon.setVisibility(View.VISIBLE);
+            }
 //            media_route_button.setVsibility(View.VISIBLE);
             if (isCaptionAvailable) {
                 Log.w("captionHide", "sendLandscapeCallbackif");
@@ -283,7 +288,7 @@ public class PlayerControlsFragment extends Fragment {
     }
 
     void showControls() {
-        Log.w("IMATAG", "showControls");
+        Log.w("CONTROLSVIDEO", videoType);
         childControl.setVisibility(View.VISIBLE);
         backArrow.setVisibility(View.VISIBLE);
         if (videoType.equalsIgnoreCase("1")) {
@@ -302,8 +307,10 @@ public class PlayerControlsFragment extends Fragment {
         seekBar.setVisibility(View.INVISIBLE);
         audioTracks.setVisibility(View.GONE);
         subtitles.setVisibility(View.GONE);
+        pauseButton.setVisibility(View.GONE);
         Log.w("captionHide", "hideControlsForLive");
         settingControl.setVisibility(View.GONE);
+        liveTag.setVisibility(View.VISIBLE);
     }
 
     void hideControls() {
@@ -340,7 +347,11 @@ public class PlayerControlsFragment extends Fragment {
         }
         if (type.equalsIgnoreCase(EventType.COMPLETED)) {
             backArrow.setVisibility(View.VISIBLE);
-            replay.setVisibility(View.VISIBLE);
+            if (videoType.equalsIgnoreCase("1")){
+                replay.setVisibility(View.GONE);
+            }else {
+                replay.setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -637,6 +648,7 @@ public class PlayerControlsFragment extends Fragment {
         totalDuration = (TextView) view.findViewById(R.id.exo_duration);
         skipTxt = (TextView) view.findViewById(R.id.skipTxt);
         seekBar = (DefaultTimeBar) view.findViewById(R.id.exo_progress);
+        liveTag = (TextView) view.findViewById(R.id.tag);
         controlLayout = view.findViewById(R.id.controlslayout);
         childControl = (ConstraintLayout) view.findViewById(R.id.childControl);
         audioTracks = (RelativeLayout) view.findViewById(R.id.audio_tracks);

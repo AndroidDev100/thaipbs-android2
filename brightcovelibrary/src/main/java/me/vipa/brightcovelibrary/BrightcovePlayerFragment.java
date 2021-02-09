@@ -368,7 +368,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             return;
         }
 
-        if (assetType != null && assetType.equalsIgnoreCase("LIVE")) {
+        if (assetType != null && assetType.equalsIgnoreCase("LIVETV")) {
             //videoId="6125432335001";
             videoType = "1";
         } else {

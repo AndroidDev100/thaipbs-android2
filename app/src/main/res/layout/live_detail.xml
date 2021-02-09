@@ -70,8 +70,25 @@
                     android:id="@+id/playerImage"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:visibility="visible"
                     android:scaleType="fitXY"
-                    android:visibility="visible" />
+                    />
+
+<!--                <FrameLayout-->
+<!--                    android:id="@+id/player_frame"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:background="@color/black_theme_color">-->
+
+
+<!--                </FrameLayout>-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/playerImage"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:scaleType="fitXY"-->
+<!--                    android:visibility="visible" />-->
 
                 <me.vipa.app.utils.CustomProgressBar
                     android:id="@+id/pBar"
