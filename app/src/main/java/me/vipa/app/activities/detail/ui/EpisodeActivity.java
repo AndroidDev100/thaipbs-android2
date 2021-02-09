@@ -959,6 +959,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
                         GetPlansLayer.getInstance().getEntitlementStatus(preference, token, new EntitlementStatus() {
                             @Override
                             public void entitlementStatus(boolean entitlementStatus, boolean apiStatus) {
+                                getBinding().pBar.setVisibility(View.GONE);
                                 if (entitlementStatus && apiStatus) {
                                     isAdShowingToUser = false;
                                 }
