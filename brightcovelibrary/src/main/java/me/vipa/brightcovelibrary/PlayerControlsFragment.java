@@ -80,6 +80,7 @@ public class PlayerControlsFragment extends Fragment {
     private ImageView backArrow;
     private View seekBarControl, settingControl;
     public ImageView fullscreen;
+    private TextView liveTag;
     private long playbackDuration, playbackCurrentPosition;
     private String playerState = "";
     private Activity activity;
@@ -312,6 +313,7 @@ public class PlayerControlsFragment extends Fragment {
         pauseButton.setVisibility(View.GONE);
         Log.w("captionHide", "hideControlsForLive");
         settingControl.setVisibility(View.GONE);
+        liveTag.setVisibility(View.VISIBLE);
     }
 
     void hideControls() {
@@ -648,6 +650,7 @@ public class PlayerControlsFragment extends Fragment {
         totalDuration = (TextView) view.findViewById(R.id.exo_duration);
         skipTxt = (TextView) view.findViewById(R.id.skipTxt);
         seekBar = (DefaultTimeBar) view.findViewById(R.id.exo_progress);
+        liveTag = (TextView) view.findViewById(R.id.tag);
         controlLayout = view.findViewById(R.id.controlslayout);
         childControl = (ConstraintLayout) view.findViewById(R.id.childControl);
         audioTracks = (RelativeLayout) view.findViewById(R.id.audio_tracks);
