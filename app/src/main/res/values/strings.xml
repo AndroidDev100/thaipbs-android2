@@ -83,6 +83,7 @@
     <string name="notification">Notifications</string>
     <string name="notification_setting">Notification Setting</string>
     <string name="binge_setting">Binge Watch Setting</string>
+    <string name="invalid_email_id">Invalid email id</string>
     <string name="manage_account">Manage Account</string>
     <string name="login_signup">Log In / Sign Up</string>
     <string name="login_txt">Login</string>

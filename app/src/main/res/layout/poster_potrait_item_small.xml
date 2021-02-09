@@ -117,7 +117,7 @@
                             android:paddingLeft="@dimen/_3sdp"
                             android:paddingBottom="@dimen/_2sdp"
                             android:visibility="gone"
-                            android:textColor="?attr/watchlist_item_title_color"
+                            android:textColor="?attr/list_circle_item_description"
                             android:textSize="@dimen/_7sdp" />
 
 

@@ -2,7 +2,9 @@ package me.vipa.app;
 
 import me.vipa.app.utils.MediaTypeConstants;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
+import me.vipa.app.utils.config.bean.AvatarImages;
 import me.vipa.app.utils.config.bean.ConfigBean;
+import me.vipa.app.utils.config.bean.ContentPreference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -176,6 +178,16 @@ public class SDKConfig {
 
     public int getTimer() {
         return configBean == null ? 0 : configBean.getData().getAppConfig().getTimer();
+    }
+
+    public List<ContentPreference> getContentPreference() {
+        return configBean == null ? null : configBean.getData().getAppConfig().getContentPreference();
+    }
+    public List<AvatarImages> getAvatarImages() {
+        return configBean == null ? null : configBean.getData().getAppConfig().getavatarImages();
+    }
+    public String getProfileFolder() {
+        return configBean == null ? "" : configBean.getData().getAppConfig().getProfilePictureBaseFolder();
     }
 
 
