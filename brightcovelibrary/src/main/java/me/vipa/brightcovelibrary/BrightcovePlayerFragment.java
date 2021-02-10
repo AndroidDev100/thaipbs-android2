@@ -168,7 +168,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             Log.e("Selectedtrack",selected_track);
             //Log.d("asasasasas",selected_track);
             selected_lang = bundle.getString("selected_lang");
-            adRulesURL = bundle.getString("config_vast_tag");
+            adRulesURL = "https://pubads.g.doubleclick.net/gampad/ads?sz=640x480&iu=/124319096/external/single_ad_samples&ciu_szs=300x250&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&cust_params=deployment%3Ddevsite%26sample_ct%3Dlinear&correlator=";
             bingeWatch = bundle.getBoolean("binge_watch");
 
 
@@ -1696,6 +1696,8 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             public void processEvent(Event event) {
                 Log.w("IMATAG", (Source) event.properties.get(Event.SOURCE) + "");
                 Log.w("IMATAG", event.properties + "");
+
+                Log.d("gygyygygy","Enter");
                 // setupCuePoints((Source) event.properties.get(Event.SOURCE),0);
             }
         });
@@ -1708,6 +1710,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             @Override
             public void processEvent(Event event) {
                 Log.w("IMATAG", "AD_STARTED");
+                Log.d("gygyygygy","Enter1");
                 if (playerControlsFragment != null) {
                     progressBar.setVisibility(View.GONE);
                     adStarted = true;
@@ -1732,6 +1735,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             @Override
             public void processEvent(Event event) {
                 Log.w("IMATAG", "AD_ERROR");
+                Log.d("gygyygygy","Enter2");
                 if (playerControlsFragment != null) {
                     progressBar.setVisibility(View.GONE);
                     adRunning=false;
@@ -1745,6 +1749,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             @Override
             public void processEvent(Event event) {
                 Log.w("IMATAG", "DID_FAIL_TO_PLAY_AD");
+                Log.d("gygyygygy","Enter3");
 //                 playerControlsFragment.showControls();
             }
         });
@@ -1754,6 +1759,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             @Override
             public void processEvent(Event event) {
                 Log.w("IMATAG", "AD_COMPLETED");
+                Log.d("gygyygygy","Enter4");
                 adRunning=false;
 //                 playerControlsFragment.showControls();
             }
@@ -1767,6 +1773,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             public void processEvent(Event event) {
                 Log.w("IMATAG", event.properties + "");
                 Log.w("IMATAG", "ADS_REQUEST_FOR_VIDEO");
+                Log.d("gygyygygy","Enter5");
                 progressBar.setVisibility(View.VISIBLE);
                 if (playerControlsFragment != null) {
                     playerControlsFragment.removeTimer();
