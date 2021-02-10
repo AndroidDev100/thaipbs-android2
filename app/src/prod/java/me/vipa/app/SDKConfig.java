@@ -30,8 +30,8 @@ public class SDKConfig {
      */
 
     public static String CONFIG_BASE_URL = "https://api.enveu.com/experience-manager-fe-api/app/api/v1/config/";
-    public static String API_KEY_MOB = "oorgebfpjudysyrtdhwmlaqlavglgmtlvplaodpt";
-    public static String API_KEY_TAB = "zzmnptygwjeybngjnumcrhcmwchszfjgkbeieflw";
+    public static String API_KEY_MOB = "noxjwrcihimbdvmgwxaneuwrpmouvuttuznwpawz";
+    public static String API_KEY_TAB = "tvimibcpspcmalxxokijcuzepwvhksbtajhwuzpj";
     /* UAT keys*/
    /* public static String CONFIG_BASE_URL = "https://experience-manager-fe-api.uat.enveu.com/app/api/v1/config/";
     public static String API_KEY_MOB = "spkuaohqsngqcrvfrgforegkooveiobspgwwbmce";
@@ -112,32 +112,33 @@ public class SDKConfig {
         }
     }
 
+
     public String getFirstTabId() {
         return AppCommonMethod.getHomeTabId(configBean, "HOME");
     }
 
     public String getSecondTabId() {
-        return AppCommonMethod.getHomeTabId(configBean, "PREMIUM");
+        return AppCommonMethod.getHomeTabId(configBean, "PROGRAM");
     }
 
     public String getThirdTabId() {
-        return AppCommonMethod.getHomeTabId(configBean, "FREE");
+        return AppCommonMethod.getHomeTabId(configBean, "PODCAST");
     }
 
     public String getFourthTabId() {
-        return AppCommonMethod.getHomeTabId(configBean, "LIVE TV");
+        return AppCommonMethod.getHomeTabId(configBean, "LIVE");
     }
 
     public String getMovieDetailId() {
-        return AppCommonMethod.getHomeTabId(configBean, "MOVIES DETAIL");
+        return AppCommonMethod.getHomeTabId(configBean, "MOVIE DETAIL");
     }
 
     public String getShowDetailId() {
-        return AppCommonMethod.getHomeTabId(configBean, "SHOWS DETAIL");
+        return AppCommonMethod.getHomeTabId(configBean, "SHOW DETAIL");
     }
 
     public String getEpisodeDetailId() {
-        return AppCommonMethod.getHomeTabId(configBean, "EPISODES DETAIL");
+        return AppCommonMethod.getHomeTabId(configBean, "EPISODE DETAIL");
     }
 
     public String getSeriesDetailId() {
