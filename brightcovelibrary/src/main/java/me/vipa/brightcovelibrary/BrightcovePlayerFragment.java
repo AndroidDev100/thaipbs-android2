@@ -168,7 +168,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             Log.e("Selectedtrack",selected_track);
             //Log.d("asasasasas",selected_track);
             selected_lang = bundle.getString("selected_lang");
-            adRulesURL = "https://pubads.g.doubleclick.net/gampad/ads?sz=640x480&iu=/124319096/external/single_ad_samples&ciu_szs=300x250&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&cust_params=deployment%3Ddevsite%26sample_ct%3Dlinear&correlator=";
+            adRulesURL = bundle.getString("config_vast_tag");;
             bingeWatch = bundle.getBoolean("binge_watch");
 
 
