@@ -32,7 +32,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.brightcove.player.event.EventType;
+
 import me.vipa.brightcovelibrary.callBacks.PlayerCallbacks;
+
 import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.ui.DefaultTimeBar;
 import com.google.android.exoplayer2.ui.TimeBar;
@@ -153,14 +155,13 @@ public class PlayerControlsFragment extends Fragment {
     }
 
     void SendPlayerPauseState(String type) {
-        if (type == "pause") {
-
+        if (type == "pause" && pauseButton != null) {
             pauseButton.setBackgroundResource(R.drawable.play);
         }
     }
 
     void sendPlayerPlayState(String type) {
-        if (type == "play") {
+        if (type == "play" && pauseButton != null) {
             pauseButton.setBackgroundResource(R.drawable.pause);
         }
     }
@@ -624,7 +625,7 @@ public class PlayerControlsFragment extends Fragment {
     }
 
     private void callHandler() {
-        Log.w("conditionCheck-->>","in");
+        Log.w("conditionCheck-->>", "in");
         timer = true;
         viewHideShowRunnable = () -> ShowAndHideView();
 
@@ -741,7 +742,7 @@ public class PlayerControlsFragment extends Fragment {
         bingeBtn.setVisibility(View.VISIBLE);
         skipduration.setVisibility(View.VISIBLE);
         backArrow.setVisibility(View.VISIBLE);
-        if (isFirstCalled){
+        if (isFirstCalled) {
             mTimer = new CountDownTimer(position, 1000) {
                 public void onTick(long millisUntilFinished) {
                     skipduration.setText(Long.toString(millisUntilFinished / 1000));
@@ -752,8 +753,8 @@ public class PlayerControlsFragment extends Fragment {
                 }
             };
 
-        mTimer.start();
-    }
+            mTimer.start();
+        }
     }
 
     public void hideBingeWatch() {
@@ -761,7 +762,7 @@ public class PlayerControlsFragment extends Fragment {
             bingeLay.setVisibility(View.GONE);
             bingeBtn.setVisibility(View.GONE);
             backArrow.setVisibility(View.GONE);
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
 

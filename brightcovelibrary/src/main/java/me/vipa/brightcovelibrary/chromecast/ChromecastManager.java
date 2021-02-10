@@ -50,16 +50,14 @@ public class ChromecastManager {
     private CastStateListener mCastStateListener;
     private ChromeCastCallback chromecastCallBack;
     private ChromecastStateCallback chromecastStateCallback;
-    private boolean isOnceEnded=false;
+    private boolean isOnceEnded = false;
     private RemoteMediaClient remoteMediaClient;
     DefaultTimeBar seekBar;
-    TextView currentTime,totalDuration;
+    TextView currentTime, totalDuration;
     private final Handler mHandler = new Handler();
-    private boolean isChromecastConnected,isIntentCalled;
+    private boolean isChromecastConnected, isIntentCalled;
     ChromeCastConnectionListener chromeCastConnectionListener;
-    public long runningPosition=0;
-
-
+    public long runningPosition = 0;
 
 
     public synchronized static ChromecastManager getInstance() {
@@ -68,14 +66,14 @@ public class ChromecastManager {
         return mInstance;
     }
 
-    public void init(Context context, AppCompatActivity playerActivitys, MediaRouteButton mediaRouteButton, CastContextAttachedListner castContextAttachedListner,ChromeCastConnectionListener connectionListener) {
+    public void init(Context context, AppCompatActivity playerActivitys, MediaRouteButton mediaRouteButton, CastContextAttachedListner castContextAttachedListner, ChromeCastConnectionListener connectionListener) {
         isChromecastConnected = false;
         isIntentCalled = true;
 
         mContext = context;
         mMediaRouteButton = mediaRouteButton;
         playerActivity = playerActivitys;
-        chromeCastConnectionListener=connectionListener;
+        chromeCastConnectionListener = connectionListener;
 
         mCastStateListener = newState -> {
             if (newState != CastState.NO_DEVICES_AVAILABLE) {
@@ -133,14 +131,14 @@ public class ChromecastManager {
         mSessionManagerListener = new SessionManagerListener<CastSession>() {
             @Override
             public void onSessionEnded(CastSession session, int error) {
-                Log.w("onSessionManager-->>","onSessionEnded");
+                Log.w("onSessionManager-->>", "onSessionEnded");
                 onApplicationDisconnected();
                 playerActivity.invalidateOptionsMenu();
             }
 
             @Override
             public void onSessionResumed(CastSession session, boolean wasSuspended) {
-                Log.w("onSessionManager-->>","onSessionResumed");
+                Log.w("onSessionManager-->>", "onSessionResumed");
                 onApplicationConnected(session);
                 mCastSession = session;
                 playerActivity.invalidateOptionsMenu();
@@ -149,13 +147,13 @@ public class ChromecastManager {
 
             @Override
             public void onSessionResumeFailed(CastSession session, int error) {
-                Log.w("onSessionManager-->>","onSessionResumeFailed");
+                Log.w("onSessionManager-->>", "onSessionResumeFailed");
                 onApplicationDisconnected();
             }
 
             @Override
             public void onSessionStarted(CastSession session, String sessionId) {
-                Log.w("onSessionManager-->>","onSessionStarted");
+                Log.w("onSessionManager-->>", "onSessionStarted");
                 mCastSession = session;
                 onApplicationConnected(session);
                 playerActivity.invalidateOptionsMenu();
@@ -164,22 +162,22 @@ public class ChromecastManager {
 
             @Override
             public void onSessionStartFailed(CastSession session, int error) {
-                Log.w("onSessionManager-->>","onSessionStartFailed");
+                Log.w("onSessionManager-->>", "onSessionStartFailed");
                 onApplicationDisconnected();
                 playerActivity.invalidateOptionsMenu();
             }
 
             @Override
             public void onSessionStarting(CastSession session) {
-                Log.w("onSessionManager-->>","onSessionStarting");
-                if(chromecastCallBack != null)
+                Log.w("onSessionManager-->>", "onSessionStarting");
+                if (chromecastCallBack != null)
                     chromecastCallBack.onChromeCastConnecting();
             }
 
             @Override
             public void onSessionEnding(CastSession session) {
-                Log.w("onSessionManager-->>","onSessionEnding");
-                runningVideoId="";
+                Log.w("onSessionManager-->>", "onSessionEnding");
+                runningVideoId = "";
             }
 
             @Override
@@ -188,13 +186,13 @@ public class ChromecastManager {
 
             @Override
             public void onSessionSuspended(CastSession session, int reason) {
-                runningVideoId="";
+                runningVideoId = "";
             }
 
             private void onApplicationConnected(CastSession castSession) {
-                Log.w("onSessionManager-->>","onApplicationConnected");
+                Log.w("onSessionManager-->>", "onApplicationConnected");
                 mCastSession = castSession;
-                if (chromecastCallBack != null){
+                if (chromecastCallBack != null) {
                     chromecastCallBack.onChromeCastConnected();
                 }
                 chromeCastConnectionListener.onSessionStarted();
@@ -202,13 +200,13 @@ public class ChromecastManager {
             }
 
             private void onApplicationDisconnected() {
-                Log.w("onSessionManager-->>","onApplicationDisconnected");
-                runningVideoId="";
+                Log.w("onSessionManager-->>", "onApplicationDisconnected");
+                runningVideoId = "";
                 updatePlaybackLocation(PlaybackLocation.LOCAL);
                 mLocation = PlaybackLocation.LOCAL;
                 isIntentCalled = true;
 
-                if(chromecastCallBack != null)
+                if (chromecastCallBack != null)
                     chromecastCallBack.onChromeCastDisconnected();
 
                 playerActivity.supportInvalidateOptionsMenu();
@@ -221,10 +219,10 @@ public class ChromecastManager {
 
     private void updatePlaybackLocation(PlaybackLocation location) {
         mLocation = location;
-        if(mLocation==PlaybackLocation.REMOTE){
-            Log.e("Location","Remote");
-        }else{
-            Log.e("Location","Local");
+        if (mLocation == PlaybackLocation.REMOTE) {
+            Log.e("Location", "Remote");
+        } else {
+            Log.e("Location", "Local");
         }
     }
 
@@ -239,27 +237,28 @@ public class ChromecastManager {
             mCastContext.removeCastStateListener(mCastStateListener);
     }
 
-    String runningVideoId="";
-    String videoID="";
+    String runningVideoId = "";
+    String videoID = "";
+
     public void loadRemoteMediaOtt(String videoId) {
         if (mCastSession == null) {
-            Log.w("CastSession-->",mCastSession.getSessionId());
+            Log.w("CastSession-->", mCastSession.getSessionId());
             return;
-        }else {
-            Log.w("CastSession-->>",mCastSession.toString());
-            runningVideoId=videoId;
+        } else {
+            Log.w("CastSession-->>", mCastSession.toString());
+            runningVideoId = videoId;
             remoteMediaClient = mCastSession.getRemoteMediaClient();
-            if (remoteMediaClient!=null){
-                Log.w("mediaClient-->>",remoteMediaClient.toString());
-                Log.w("runningPosition-->>",remoteMediaClient.getApproximateStreamPosition()+" "+remoteMediaClient.getMediaInfo());
-                if (remoteMediaClient.getApproximateStreamPosition()>0){
+            if (remoteMediaClient != null) {
+                Log.w("mediaClient-->>", remoteMediaClient.toString());
+                Log.w("runningPosition-->>", remoteMediaClient.getApproximateStreamPosition() + " " + remoteMediaClient.getMediaInfo());
+                if (remoteMediaClient.getApproximateStreamPosition() > 0) {
                     // Log.w("runningPosition-->>",remoteMediaClient.getApproximateStreamPosition()+" "+remoteMediaClient.getMediaInfo());
                 }
                 remoteMediaClient.addListener(mRemoteMediaClientListener);
 
                 addListeners(remoteMediaClient);
-            }else {
-                Log.w("mediaClient-->",remoteMediaClient.toString());
+            } else {
+                Log.w("mediaClient-->", remoteMediaClient.toString());
             }
         }
     }
@@ -279,55 +278,57 @@ public class ChromecastManager {
     public RemoteMediaClient.Listener mRemoteMediaClientListener = new RemoteMediaClient.Listener() {
         @Override
         public void onStatusUpdated() {
-            Log.w("Chromecast-->>","onStatusUpdated");
+            Log.w("Chromecast-->>", "onStatusUpdated");
             if (remoteMediaClient == null) {
                 return;
             }
-            Log.w("Chromecast-->>","onStatusUpdated"+"  "+isIntentCalled);
-            if(isIntentCalled) {
+            Log.w("Chromecast-->>", "onStatusUpdated" + "  " + isIntentCalled);
+            if (isIntentCalled) {
                 isIntentCalled = false;
-                if(chromecastCallBack != null) {
+                if (chromecastCallBack != null) {
                     chromecastCallBack.onStatusUpdate();
                 }
 
             }
             MediaStatus mediaStatus = remoteMediaClient.getMediaStatus();
-            int mIdleReason=MediaStatus.IDLE_REASON_NONE;
+            int mIdleReason = MediaStatus.IDLE_REASON_NONE;
 
             if (mediaStatus != null) {
                 int playerStatus = mediaStatus.getPlayerState();
                 // Log.d("PlayerState", "onStatusUpdated() called, progress= "+mSeekBar.getProgress() +", stream duration= "+ mRemoteMediaClient.getStreamDuration()+" mSeekBar.getProgress() == mRemoteMediaClient.getStreamDuration()="+(mSeekBar.getProgress() == mRemoteMediaClient.getStreamDuration()));
-                Log.d("PlayerState", "onStatusUpdated() called playerStatus="+playerStatus+", idleReason="+mediaStatus.getIdleReason());
+                Log.d("PlayerState", "onStatusUpdated() called playerStatus=" + playerStatus + ", idleReason=" + mediaStatus.getIdleReason());
 
                 if (playerStatus == MediaStatus.PLAYER_STATE_PLAYING) {
                     mIdleReason = MediaStatus.IDLE_REASON_FINISHED;
                    /* exo_duration.setText(stringForTime(mediaClient.getStreamDuration())+"");
                     seekBar.setDuration(mediaClient.getStreamDuration());*/
-                    Log.w("mediaClient-->>>>",remoteMediaClient.getStreamDuration()+"");
+                    Log.w("mediaClient-->>>>", remoteMediaClient.getStreamDuration() + "");
                    /* new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             mediaClient.pause();
                         }
                     },2000);*/
-                    playPauseButton.setBackgroundResource(R.drawable.pause);
-                    if(chromecastStateCallback != null) {
+                    if (playPauseButton != null)
+                        playPauseButton.setBackgroundResource(R.drawable.pause);
+                    if (chromecastStateCallback != null) {
                         chromecastStateCallback.onPlaying();
                     }
 
                 } else if (playerStatus == MediaStatus.PLAYER_STATE_BUFFERING) {
-                    if(chromecastStateCallback != null) {
+                    if (chromecastStateCallback != null) {
                         chromecastStateCallback.onBuffering();
                     }
 
                 } else if (playerStatus == MediaStatus.PLAYER_STATE_PAUSED) {
-                    playPauseButton.setBackgroundResource(R.drawable.play);
+                    if (playPauseButton != null)
+                        playPauseButton.setBackgroundResource(R.drawable.play);
                 } else if (playerStatus == MediaStatus.IDLE_REASON_INTERRUPTED) {
 
                 } else if (playerStatus == MediaStatus.IDLE_REASON_ERROR) {
 
-                }else if(playerStatus == MediaStatus.PLAYER_STATE_IDLE && mediaStatus.getIdleReason() == MediaStatus.IDLE_REASON_FINISHED&& mIdleReason == MediaStatus.IDLE_REASON_FINISHED){
-                    Log.d("PlayerState-->>", "onStatusUpdated() called playerStatus="+playerStatus+", idleReason="+mediaStatus.getIdleReason()+"  "+mIdleReason);
+                } else if (playerStatus == MediaStatus.PLAYER_STATE_IDLE && mediaStatus.getIdleReason() == MediaStatus.IDLE_REASON_FINISHED && mIdleReason == MediaStatus.IDLE_REASON_FINISHED) {
+                    Log.d("PlayerState-->>", "onStatusUpdated() called playerStatus=" + playerStatus + ", idleReason=" + mediaStatus.getIdleReason() + "  " + mIdleReason);
                 }
             }
 
@@ -364,13 +365,13 @@ public class ChromecastManager {
         mediaClient.addProgressListener(new RemoteMediaClient.ProgressListener() {
             @Override
             public void onProgressUpdated(long l, long l1) {
-                Log.w("onProgressUpdated",l+"   "+l1);
-                if (mediaClient!=null && mediaClient.isPlaying()){
+                Log.w("onProgressUpdated", l + "   " + l1);
+                if (mediaClient != null && mediaClient.isPlaying()) {
                     //   exo_position.setText(stringForTime(l));
                 }
                 //  seekBar.setPosition(l);
             }
-        },0);
+        }, 0);
 
 
        /* PlayerActivity.this.runOnUiThread(new Runnable() {
@@ -388,16 +389,17 @@ public class ChromecastManager {
     }
 
     public void setChromecastStateCallBacks(ChromecastStateCallback chromecastStateCallback) {
-        this.chromecastStateCallback =chromecastStateCallback;
+        this.chromecastStateCallback = chromecastStateCallback;
     }
 
     ImageButton playPauseButton;
-    public void setPlaybackDuration(TextView totalDuration, TextView currentPosition, DefaultTimeBar seekBar,ImageButton button) {
+
+    public void setPlaybackDuration(TextView totalDuration, TextView currentPosition, DefaultTimeBar seekBar, ImageButton button) {
         this.seekBar = seekBar;
         this.currentTime = currentPosition;
         this.totalDuration = totalDuration;
-        this.playPauseButton=button;
-        if(remoteMediaClient  !=null){
+        this.playPauseButton = button;
+        if (remoteMediaClient != null) {
 
 
 //            Handler handler =new Handler();
@@ -414,7 +416,7 @@ public class ChromecastManager {
     }
 
     private void updateProgressBar() {
-        if(mHandler != null)
+        if (mHandler != null)
             mHandler.postDelayed(updateTimeTask, 100);
     }
 
@@ -425,8 +427,8 @@ public class ChromecastManager {
             String position = stringForTime(remoteMediaClient.getApproximateStreamPosition());
             currentTime.setText(position);
             totalDuration.setText(totalTimeOfContent(remoteMediaClient.getStreamDuration()));
-            Log.w("chromacastposition", remoteMediaClient.getApproximateStreamPosition()+"");
-            runningPosition=remoteMediaClient.getApproximateStreamPosition();
+            Log.w("chromacastposition", remoteMediaClient.getApproximateStreamPosition() + "");
+            runningPosition = remoteMediaClient.getApproximateStreamPosition();
             seekBar.setPosition((int) remoteMediaClient.getApproximateStreamPosition());
             seekBar.setDuration((int) remoteMediaClient.getStreamDuration());
 
@@ -457,6 +459,7 @@ public class ChromecastManager {
 
     private StringBuilder formatBuilder;
     private Formatter formatter;
+
     private String totalTimeOfContent(long timeMs) {
         formatBuilder = new StringBuilder();
         formatter = new Formatter(formatBuilder, Locale.getDefault());
@@ -471,11 +474,11 @@ public class ChromecastManager {
 
     public void playPauseToggle(ImageButton imageButton) {
 
-        if(remoteMediaClient  !=null){
-            if(remoteMediaClient.isPlaying() || remoteMediaClient.isBuffering()){
+        if (remoteMediaClient != null) {
+            if (remoteMediaClient.isPlaying() || remoteMediaClient.isBuffering()) {
                 remoteMediaClient.pause();
                 imageButton.setBackgroundResource(R.drawable.play);
-            }else if(remoteMediaClient.isPaused()){
+            } else if (remoteMediaClient.isPaused()) {
                 remoteMediaClient.play();
                 imageButton.setBackgroundResource(R.drawable.pause);
             }
@@ -483,7 +486,7 @@ public class ChromecastManager {
     }
 
     public void setCallBacks(ChromeCastCallback chromeCastCallback) {
-        this.chromecastCallBack= chromeCastCallback;
+        this.chromecastCallBack = chromeCastCallback;
     }
 
     public void remoteMediClientUpdate(long i) {

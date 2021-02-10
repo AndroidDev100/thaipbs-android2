@@ -37,9 +37,7 @@ public abstract class BaseBindingActivity<B extends ViewDataBinding> extends Bas
                 ChromecastManager.getInstance().addCastListener();
 
                 if(mediaRouteButton!=null){
-//                    mediaRouteButton.setVisibility(View.VISIBLE);
-                }else {
-
+                    mediaRouteButton.setVisibility(View.VISIBLE);
                 }
 
             }
