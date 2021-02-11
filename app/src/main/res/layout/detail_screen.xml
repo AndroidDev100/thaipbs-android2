@@ -265,7 +265,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginEnd="6dp"
                                     android:ellipsize="end"
-                                    android:fontFamily="@font/sukhumvittadmai_normal"
+                                    android:fontFamily="@font/sukhumvittadmai_medium"
                                     android:lineSpacingExtra="2dp"
                                     android:maxLines="2"
                                     android:text="@{responseApi.description.trim()}"
