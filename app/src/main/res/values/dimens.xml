@@ -54,7 +54,7 @@
     <dimen name="descriptionRowItem">12sp</dimen>
     <dimen name="headingSearch">12sp</dimen>
 
-    <dimen name="railTitle">18sp</dimen>
+    <dimen name="railTitle">16sp</dimen>
     <dimen name="railMore">14sp</dimen>
 
 
