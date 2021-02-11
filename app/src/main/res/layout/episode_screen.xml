@@ -302,7 +302,7 @@
                                                     android:fontFamily="@font/sukhumvittadmai_bold"
                                                     android:text="@string/cast"
                                                     android:textColor="?attr/cast_title_color"
-                                                    android:textSize="@dimen/font_medium" />
+                                                    android:textSize="@dimen/detailMore" />
 
                                                 <TextView
                                                     android:id="@+id/cast_text"
@@ -325,7 +325,7 @@
                                                     android:fontFamily="@font/sukhumvittadmai_bold"
                                                     android:text="@string/crew"
                                                     android:textColor="?attr/cast_title_color"
-                                                    android:textSize="@dimen/font_medium" />
+                                                    android:textSize="@dimen/detailMore" />
 
                                                 <TextView
                                                     android:id="@+id/crew_text"
