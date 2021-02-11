@@ -151,7 +151,7 @@
     <string name="image_upload_fail">Image upload failed</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
-    <string name="search_mv_hub">Search VIPA (min 3 char)</string>
+    <string name="search_mv_hub">Search VIPA</string>
     <string name="show_all_results">Show All</string>
     <string name="series">Series</string>
     <string name="article">Article</string>

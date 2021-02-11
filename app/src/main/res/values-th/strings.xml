@@ -4,7 +4,7 @@
     <string name="something_went_wrong">มีปัญหาในระบบ</string>
 
     <string name="female">หญิง</string>
-    <string name="search_mv_hub">ค้นหา VIPA (อย่างน้อย 3 ตัวอักษร)</string>
+    <string name="search_mv_hub">ค้นหา VIPA</string>
     <string name="show_all_results">ดูทั้งหมด</string>
     <string name="change_password">เปลื่ยนพาสเวิร์ด</string>
     <string name="my_profile">ข้อมูลของฉัน</string>
