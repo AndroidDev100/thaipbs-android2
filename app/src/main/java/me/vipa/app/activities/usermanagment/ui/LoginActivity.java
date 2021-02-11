@@ -29,6 +29,7 @@ import androidx.lifecycle.ViewModelProviders;
 //import com.amazonaws.regions.Regions;
 //import com.amazonaws.services.s3.AmazonS3;
 //import com.amazonaws.services.s3.AmazonS3Client;
+import me.vipa.app.activities.homeactivity.ui.HomeActivity;
 import me.vipa.app.activities.purchase.callBack.EntitlementStatus;
 import me.vipa.app.activities.purchase.planslayer.GetPlansLayer;
 import me.vipa.app.activities.usermanagment.viewmodel.RegistrationLoginViewModel;
@@ -142,11 +143,20 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
     private void callBinding() {
         viewModel = ViewModelProviders.of(LoginActivity.this).get(RegistrationLoginViewModel.class);
         getBinding().toolbar.titleToolbar.setVisibility(View.VISIBLE);
+        getBinding().toolbar.titleSkip.setVisibility(View.VISIBLE);
+        getBinding().toolbar.titleSkip.setVisibility(View.VISIBLE);
+        getBinding().toolbar.titleSkip.setText(getResources().getString(R.string.skip));
         getBinding().toolbar.titleToolbar.setText(getResources().getString(R.string.sign_in));
         getBinding().toolbar.backLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onBackPressed();
+            }
+        });
+        getBinding().toolbar.titleSkip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new ActivityLauncher(LoginActivity.this).homeScreen(LoginActivity.this, HomeActivity.class);
             }
         });
         connectObservors();

@@ -344,7 +344,7 @@
                                 android:checked="false"
                                 android:textColor="?attr/app_edit_text_color"
                                 android:fontFamily="@font/sukhumvittadmai_normal"
-                                android:text="I would like to recieve updates from VIPA in future."
+                                android:text="@string/recieve_updates"
                                 android:textSize="@dimen/font_small"
                                android:layout_marginTop="@dimen/NontonSize10"
                                 android:layout_marginBottom="@dimen/NontonSize10"/>

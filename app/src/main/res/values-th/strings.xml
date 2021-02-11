@@ -53,11 +53,11 @@
     <string name="no_connection">ไม่มีสัญญาณอินเตอร์เน็ต.</string>
 
     <string name="email">อีเมล</string>
-    <string name="password">พาสเวิร์ด</string>
+    <string name="password">รหัสผ่าน</string>
     <string name="full_name">ชื่อ</string>
-    <string name="display_name">Enter your display Name</string>
-    <string name="enter_email_address">Enter Email Address</string>
-    <string name="create_password">Create Password minimum 6 characters</string>
+    <string name="display_name">ใส่ชื่อที่ต้องการแสดง</string>
+    <string name="enter_email_address">ใส่อีเมล</string>
+    <string name="create_password">สร้างรหัสผ่านอย่างน้อย 6 ตัวอักษร</string>
     <string name="mobile_number">Mobile Number</string>
     <string name="mobile_error">Please enter a 11 digit phone number and must starts with 66</string>
     <string name="address">Address</string>
@@ -67,10 +67,10 @@
     <string name="sign_in_with_enveu">เข้าสู่ระบบโ</string>
     <string name="facebook">เฟสบุ๊ค</string>
     <string name="sign_in_with_facebook">เข้าสู่ระบบโดย เฟสบุ๊ค</string>
-    <string name="sign_up_with_facebook">Sign up with Facebook</string>
+    <string name="sign_up_with_facebook">ลงทะเบียนด้วยเฟซบุ๊ก</string>
     <string name="google">กูเกิ้ล</string>
     <string name="register">ลงทะเบียนสมัครสมาชิก</string>
-    <string name="sign_in"><b><u>เข้าสู่ระบบ</u></b></string>
+    <string name="sign_in"><b><u>สมัครสมาชิก</u></b></string>
     <string name="or_login_with">หรือเข้าระบบด้วย</string>
     <string name="or">หรือ</string>
     <string name="or_caps">- หรือ -</string>
@@ -95,7 +95,7 @@
     <string name="update">อัพเดท</string>
     <string name="connct_facebbook">เชื่อมต่อโดย เฟสบุ๊ค</string>
     <string name="detail_title">กรุณาใส่ อีเมลที่ลงทะเบียนไว้ด้านล่าง ระบบจะจัดส่งวิธีการ รีเซ็ตพาสเวิรด์ไปให้ ตามอีเมลที่ลงทะเบียนไว้.</string>
-    <string name="already_have_account_sign">มีบัญชีผู้ใช้หรือยัง?</string>
+    <string name="already_have_account_sign">มีบัญชีผู้ใช้งานหรือไม่?</string>
 
     <string name="cancel">ยกเลิก</string>
 
@@ -396,5 +396,6 @@
     <string name="select_genre">Select genre as per your interest for best result you can select multiple choices of interest (max 5)</string>
     <string name="finish">Finish</string>
     <string name="date_difference">You must be 13 years old and above.</string>
+    <string name="recieve_updates">ฉันต้องการรับข้อมูลจาก VIPA ในอนาคต</string>
 
 </resources>

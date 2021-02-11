@@ -335,7 +335,7 @@ android:textColorHint="?attr/app_edit_text_color"
                                 android:checked="false"
                                 android:textColor="?attr/app_edit_text_color"
                                 android:fontFamily="@font/sukhumvittadmai_medium"
-                                android:text="I would like to recieve updates from VIPA in future."
+                                android:text="@string/recieve_updates"
                                 android:textSize="@dimen/font_small"
                                 />
                             <LinearLayout
