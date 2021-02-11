@@ -58,4 +58,12 @@
 
     </string-array>
 
+    <string-array name="gender_array">
+        <item>เพศ</item>
+        <item>ชาย</item>
+        <item>หญิง</item>
+        <item>อื่น ๆ</item>
+
+    </string-array>
+
 </resources>

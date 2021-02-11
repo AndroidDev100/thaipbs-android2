@@ -3,6 +3,7 @@
     <string name="no_connection">इंटरनेट नहीं है</string>
     <string name="check_connection_text">Check your connection.</string>
     <string name="change_password">अपना पासवर्ड बदलें</string>
+    <string name="update_pref">Update Preferences</string>
     <string name="checkout">Checkout</string>
     <string name="email">ईमेल</string>
     <string name="password">पासवर्ड</string>
@@ -140,8 +141,7 @@
 
     <string name="something_went_wrong">Something went wrong</string>
     <string name="image_upload_fail">Image upload failed</string>
-    <string name="male">Male</string>
-    <string name="female">Female</string>
+
     <string name="search_mv_hub">खोजें VIPA</string>
     <string name="show_all_results">Show All</string>
     <string name="series">सीरीज</string>
@@ -356,5 +356,9 @@
     <string name="finish">Finish</string>
     <string name="date_difference">You must be 13 years old and above.</string>
     <string name="recieve_updates">I would like to recieve updates from VIPA in future.</string>
+    <string name="gender">GENDER</string>
+    <string name="male">MALE</string>
+    <string name="female">FEMALE</string>
+    <string name="others">OTHERS</string>
 
 </resources>

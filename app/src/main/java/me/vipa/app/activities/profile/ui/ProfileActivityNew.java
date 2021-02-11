@@ -114,7 +114,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
         getBinding().toolbar.titleText.setVisibility(View.VISIBLE);
         getBinding().toolbar.backLayout.setVisibility(View.VISIBLE);
         getBinding().toolbar.screenText.setVisibility(View.VISIBLE);
-        getBinding().toolbar.screenText.setText(getResources().getString(R.string.manage_account));
+        getBinding().toolbar.screenText.setText(getResources().getString(R.string.my_profile));
     }
 
     private void setOfflineData() {
