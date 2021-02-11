@@ -451,7 +451,8 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
         } else {
             railFragment = new RecommendationRailFragment();
             seasonTabFragment = new SeasonTabFragment();
-            getBinding().tabLayout.setSelectedTabIndicatorGravity(INDICATOR_GRAVITY_BOTTOM);
+          //  getBinding().tabLayout.setSelectedTabIndicatorGravity(INDICATOR_GRAVITY_BOTTOM);
+            getBinding().tabLayout.setSelectedTabIndicatorGravity(TabLayout.INDICATOR_GRAVITY_TOP);
             episodeTabAdapter = new EpisodeTabAdapter(getSupportFragmentManager());
 
             Bundle args = new Bundle();

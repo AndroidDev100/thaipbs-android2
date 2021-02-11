@@ -380,7 +380,8 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
             downloadHelper = new DownloadHelper(this, this, seriesDetailBean.getBrightcoveVideoId(), seriesDetailBean.getTitle(), MediaTypeConstants.getInstance().getEpisode(), videoDetails);
             downloadHelper.findVideo(videoDetails.getBrightcoveVideoId());
         }
-        getBinding().tabLayout.setSelectedTabIndicatorGravity(INDICATOR_GRAVITY_BOTTOM);
+       // getBinding().tabLayout.setSelectedTabIndicatorGravity(INDICATOR_GRAVITY_BOTTOM);
+        getBinding().tabLayout.setSelectedTabIndicatorGravity(TabLayout.INDICATOR_GRAVITY_TOP);
         if (episodeTabAdapter == null) {
             episodeTabAdapter = new EpisodeTabAdapter(getSupportFragmentManager());
             railFragment = new RecommendationRailFragment();
