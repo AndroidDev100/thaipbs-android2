@@ -992,7 +992,7 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
     public void setUI(EnveuVideoItemBean responseDetailPlayer) {
         recommendationRailFragment();
 
-        if (responseDetailPlayer.getAssetCast().size() > 0) {
+        if (responseDetailPlayer.getAssetCast().size() > 0 && !responseDetailPlayer.getAssetCast().get(0).equalsIgnoreCase("")) {
             StringBuilder stringBuilder = new StringBuilder();
             for (int i = 0; i < responseDetailPlayer.getAssetCast().size(); i++) {
                 if (i == responseDetailPlayer.getAssetCast().size() - 1) {
@@ -1005,7 +1005,7 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
         } else {
             getBinding().llCastView.setVisibility(View.GONE);
         }
-        if (responseDetailPlayer.getAssetGenres().size() > 0) {
+        if (responseDetailPlayer.getAssetGenres().size() > 0 && !responseDetailPlayer.getAssetGenres().get(0).equalsIgnoreCase("")) {
             StringBuilder stringBuilder = new StringBuilder();
             for (int i = 0; i < responseDetailPlayer.getAssetGenres().size(); i++) {
                 if (i == responseDetailPlayer.getAssetGenres().size() - 1) {

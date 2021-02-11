@@ -58,6 +58,7 @@ import me.vipa.app.beanModel.entitle.EntitledAs;
 import me.vipa.app.utils.helpers.CheckInternetConnection;
 import me.vipa.app.utils.helpers.ImageHelper;
 
+import com.google.gson.Gson;
 import com.mmtv.utils.helpers.downloads.DownloadHelper;
 
 import me.vipa.app.Bookmarking.BookmarkingViewModel;
@@ -1225,7 +1226,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
 
 
     public void setUI(EnveuVideoItemBean responseDetailPlayer) {
-        if (responseDetailPlayer.getAssetCast().size() > 0) {
+        if (responseDetailPlayer.getAssetCast().size() > 0 && !responseDetailPlayer.getAssetCast().get(0).equalsIgnoreCase("")) {
             StringBuilder stringBuilder = new StringBuilder();
             for (int i = 0; i < responseDetailPlayer.getAssetCast().size(); i++) {
                 if (i == responseDetailPlayer.getAssetCast().size() - 1) {
@@ -1238,7 +1239,8 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
         } else {
             getBinding().llCastView.setVisibility(View.GONE);
         }
-        if (responseDetailPlayer.getAssetGenres().size() > 0) {
+        if (responseDetailPlayer.getAssetGenres().size() > 0 && !responseDetailPlayer.getAssetGenres().get(0).equalsIgnoreCase("")) {
+
             StringBuilder stringBuilder = new StringBuilder();
             for (int i = 0; i < responseDetailPlayer.getAssetGenres().size(); i++) {
                 if (i == responseDetailPlayer.getAssetGenres().size() - 1) {
