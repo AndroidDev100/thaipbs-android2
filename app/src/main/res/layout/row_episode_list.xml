@@ -179,7 +179,7 @@
                         android:fontFamily="@font/sukhumvittadmai_bold"
                         android:maxLines="1"
                         android:textColor="?attr/title_color"
-                        android:textSize="@dimen/header_title" />
+                        android:textSize="@dimen/font_medium_small" />
 
 
                 </LinearLayout>
