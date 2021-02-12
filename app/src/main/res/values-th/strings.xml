@@ -12,6 +12,7 @@
     <string name="by_email">โดยอีเมล</string>
     <string name="by_line">ทางไลน์</string>
     <string name="guest_user">ผู้ใช้งานทั่วไป</string>
+    <string name="guest_user1">Guest User</string>
     <string name="setting_title">การตั้งค่า</string>
     <string name="term_condition">ข้อกำหนดและเงื่อนไข</string>
     <string name="my_watchlist">รายการโปรดของฉัน</string>

@@ -11,6 +11,7 @@
     <string name="by_email">By Email</string>
     <string name="by_line">By Line</string>
     <string name="guest_user">Guest User</string>
+    <string name="guest_user1">Guest User</string>
     <string name="no_internet">No internet connection found.</string>
     <string name="wake_up_connection">Wake up your connection !</string>
     <string name="check_connection">Check Connection</string>

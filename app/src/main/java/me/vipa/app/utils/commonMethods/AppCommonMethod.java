@@ -1129,7 +1129,7 @@ public class AppCommonMethod {
 
     public static void guestTitle(Context context,TextView userNameWords, TextView usernameTv, KsPreferenceKeys preference) {
         if (preference != null) {
-            userNameWords.setText(AppCommonMethod.getUserName(context.getResources().getString(R.string.guest_user)));
+            userNameWords.setText(AppCommonMethod.getUserName(context.getResources().getString(R.string.guest_user1)));
             usernameTv.setText(context.getResources().getString(R.string.guest_user));
         }
     }

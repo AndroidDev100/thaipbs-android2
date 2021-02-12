@@ -10,6 +10,7 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="guest_user">Guest User</string>
+    <string name="guest_user1">Guest User</string>
     <string name="in_case_of_any">In case of any issues</string>
     <string name="subscribed_already">This user is already subscribed to this plan.</string>
     <string name="redeem_code_already_used">Redeem code is already used.</string>
