@@ -67,7 +67,7 @@ public class SignUpThirdPage extends BaseBindingActivity<ActivitySignUpThirdPage
     private boolean isloggedout = false;
     String spin_val;
     String contentPreference = "";
-    String[] gender = {"GENDER", "MALE", "FEMALE", "OTHERS"};
+    String[] gender;
     String dateMilliseconds = "";
     private String imageUrlId = "";
     private String via = "";
@@ -86,6 +86,7 @@ public class SignUpThirdPage extends BaseBindingActivity<ActivitySignUpThirdPage
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        gender = getApplicationContext().getResources().getStringArray(R.array.gender_array);
         isNotificationEnable = getIntent().getExtras().getBoolean("IsNotiEnabled");
         contentPreference = getIntent().getStringExtra(AppConstants.CONTENT_PREFERENCE);
         connectionObserver();
@@ -144,10 +145,19 @@ public class SignUpThirdPage extends BaseBindingActivity<ActivitySignUpThirdPage
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spin_val = gender[position];
-                if (spin_val.equalsIgnoreCase("GENDER")) {
-                    spinnerValue = "";
+                if (KsPreferenceKeys.getInstance().getAppLanguage().equalsIgnoreCase("Thai")){
+                    if (spin_val.equalsIgnoreCase(getResources().getString(R.string.gender))) {
+                        spinnerValue = "";
+                    } else {
+                        spinnerValue = spin_val;
+                        spinnerValue = setSpinnerValue(spinnerValue);
+                    }
                 }else {
-                    spinnerValue = spin_val;
+                    if (spin_val.equalsIgnoreCase("GENDER")) {
+                        spinnerValue = "";
+                    } else {
+                        spinnerValue = spin_val;
+                    }
                 }
             }
 
@@ -161,6 +171,17 @@ public class SignUpThirdPage extends BaseBindingActivity<ActivitySignUpThirdPage
 // setting adapters to spinners
 
         getBinding().spinnerId.setAdapter(spin_adapter);
+    }
+
+    private String setSpinnerValue(String value) {
+        if (value.equalsIgnoreCase(getResources().getString(R.string.male))){
+            spinnerValue = "MALE";
+        }else if (value.equalsIgnoreCase(getResources().getString(R.string.female))){
+            spinnerValue = "FEMALE";
+        }else if (value.equalsIgnoreCase(getResources().getString(R.string.others))){
+            spinnerValue = "OTHERS";
+        }
+        return spinnerValue;
     }
 
     private void setClicks() {
