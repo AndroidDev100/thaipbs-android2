@@ -685,7 +685,7 @@ public class LiveActivity extends BaseBindingActivity<LiveDetailBinding> impleme
             getAssetDetails();
         }
         //postCommentClick();
-        BuyNowClick();
+      //  BuyNowClick();
     }
 
     public void getAssetDetails() {
@@ -723,21 +723,21 @@ public class LiveActivity extends BaseBindingActivity<LiveDetailBinding> impleme
 
             ImageHelper.getInstance(LiveActivity.this).loadListImage(getBinding().playerImage, videoDetails.getPosterURL());
             ImageHelper.getInstance(LiveActivity.this).loadListSQRImage(getBinding().channelLogo, videoDetails.getPosterURL());
-            if (videoDetails.isPremium()) {
-                getBinding().pBar.setVisibility(View.GONE);
-                ImageHelper.getInstance(LiveActivity.this).loadListImage(getBinding().playerImage, videoDetails.getPosterURL());
-                getBinding().tvPurchased.setVisibility(View.GONE);
-                getBinding().tvPremium.setVisibility(View.GONE);
-
-                getBinding().mPremiumStatus.setVisibility(View.VISIBLE);
-                getBinding().backButton.setVisibility(View.VISIBLE);
-                //hitApiEntitlement(enveuCommonResponse.getEnveuVideoItemBeans().get(0).getSku());
-                if (isLogin.equalsIgnoreCase(AppConstants.UserStatus.Login.toString())) {
-                    hitApiEntitlement(enveuCommonResponse.getEnveuVideoItemBeans().get(0).getSku());
-                } else {
-                    getBinding().tvBuyNow.setVisibility(View.VISIBLE);
-                }
-            } else {
+//            if (videoDetails.isPremium()) {
+//                getBinding().pBar.setVisibility(View.GONE);
+//                ImageHelper.getInstance(LiveActivity.this).loadListImage(getBinding().playerImage, videoDetails.getPosterURL());
+//                getBinding().tvPurchased.setVisibility(View.GONE);
+//                getBinding().tvPremium.setVisibility(View.GONE);
+//
+//                getBinding().mPremiumStatus.setVisibility(View.VISIBLE);
+//                getBinding().backButton.setVisibility(View.VISIBLE);
+//                //hitApiEntitlement(enveuCommonResponse.getEnveuVideoItemBeans().get(0).getSku());
+//                if (isLogin.equalsIgnoreCase(AppConstants.UserStatus.Login.toString())) {
+//                    hitApiEntitlement(enveuCommonResponse.getEnveuVideoItemBeans().get(0).getSku());
+//                } else {
+//                    getBinding().tvBuyNow.setVisibility(View.VISIBLE);
+//                }
+//            } else {
                 getBinding().pBar.setVisibility(View.VISIBLE);
                 if (AppCommonMethod.getCheckBCID(videoDetails.getBrightcoveVideoId())) {
                     isLogin = preference.getAppPrefLoginStatus();
@@ -770,7 +770,7 @@ public class LiveActivity extends BaseBindingActivity<LiveDetailBinding> impleme
                 } else {
                     getBinding().pBar.setVisibility(View.GONE);
                 }
-            }
+           // }
             setUserInteractionFragment(assestId);
             stopShimmer();
             setUI(videoDetails);

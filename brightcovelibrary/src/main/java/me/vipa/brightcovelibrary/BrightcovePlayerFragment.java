@@ -118,7 +118,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
     private NetworkChangeReceiver receiver = null;
     private Activity mActivity;
     private boolean enable = true;
-    private boolean imaEnable = true;
+    private boolean imaEnable = false;
     private boolean bingeWatch = false;
     private int bingeWatchTimer = 0;
     private GoogleIMAComponent googleIMAComponent;

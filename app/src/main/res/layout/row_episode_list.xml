@@ -145,10 +145,10 @@
                         android:layout_marginBottom="2dp"
                         android:background="@drawable/badge_background"
                         android:fontFamily="@font/sukhumvittadmai_normal"
-                        android:padding="2dp"
+                        android:padding="4dp"
                         android:text="@string/now_playing"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/premiumSize"
+                        android:textSize="@dimen/TextSize12"
                         android:visibility="visible" />
                 </LinearLayout>
 
