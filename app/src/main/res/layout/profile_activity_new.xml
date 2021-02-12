@@ -93,7 +93,7 @@
                             android:layout_gravity="center"
                             android:background="@null"
                             android:fontFamily="@font/sukhumvittadmai_normal"
-                            android:hint="@string/full_name"
+                            android:hint="@string/display_name"
                             android:imeOptions="actionDone"
                             android:maxLength="40"
                             android:singleLine="true"
