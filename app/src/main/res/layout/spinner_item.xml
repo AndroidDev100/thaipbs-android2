@@ -7,6 +7,5 @@
     android:gravity="left"
     android:textColor="?attr/app_edit_text_color"
     android:padding="5dip"
-    android:textAllCaps="true"
     android:textSize="@dimen/TextSize14"
     />

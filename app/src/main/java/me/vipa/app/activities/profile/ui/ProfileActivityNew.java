@@ -11,7 +11,6 @@ import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -51,7 +50,6 @@ import java.util.Objects;
 
 import me.vipa.app.R;
 import me.vipa.app.SDKConfig;
-import me.vipa.app.activities.membershipplans.ui.MemberShipPlanActivity;
 import me.vipa.app.activities.usermanagment.viewmodel.RegistrationLoginViewModel;
 import me.vipa.app.baseModels.BaseBindingActivity;
 import me.vipa.app.beanModel.userProfile.UserProfileResponse;
@@ -72,7 +70,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
     private final String dateOfBirth = "";
     private final String userChoosenTask = "";
     String spin_val;
-    String[] gender = getResources().getStringArray(R.array.more_with_verify);
+    String[] gender;
     String dateMilliseconds = "";
     ArrayAdapter<String> spin_adapter;
     String imageToUpload = "";
@@ -86,6 +84,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
     private TransferUtility transferUtility;
     private final String contentPreference = "";
     private boolean isNotificationEnable;
+    String compareValue="";
 
     @Override
     public ProfileActivityNewBinding inflateBindingLayout(@NonNull LayoutInflater inflater) {
@@ -95,6 +94,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        gender = getApplicationContext().getResources().getStringArray(R.array.gender_array);
         connectionObserver();
     }
 
@@ -142,10 +142,10 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
                             spinnerValue = "";
                         } else {
                             spinnerValue = spin_val;
-                            setSpinnerValue(spinnerValue);
+                            spinnerValue = setSpinnerValue(spinnerValue);
                         }
                     }else {
-                        if (spin_val.equalsIgnoreCase("GENDER")) {
+                        if (spin_val.equalsIgnoreCase("Gender")) {
                             spinnerValue = "";
                         } else {
                             spinnerValue = spin_val;
@@ -307,7 +307,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
 
     }
 
-    private void setSpinnerValue(String value) {
+    private String setSpinnerValue(String value) {
         if (value.equalsIgnoreCase(getResources().getString(R.string.male))){
             spinnerValue = "MALE";
         }else if (value.equalsIgnoreCase(getResources().getString(R.string.female))){
@@ -315,6 +315,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
         }else if (value.equalsIgnoreCase(getResources().getString(R.string.others))){
             spinnerValue = "OTHERS";
         }
+        return spinnerValue;
     }
 
     private void callUpdateApi() {
@@ -571,21 +572,23 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
             }
 
             if (userProfileResponse.getData().getGender() != null) {
-                String compareValue = userProfileResponse.getData().getGender() + "";
+                 compareValue = userProfileResponse.getData().getGender() + "";
                 if (compareValue != null) {
-                    int spinnerPosition = spin_adapter.getPosition(compareValue.toUpperCase());
-                    if (KsPreferenceKeys.getInstance().getAppLanguage().equalsIgnoreCase("Thai")){
 
+                    if (KsPreferenceKeys.getInstance().getAppLanguage().equalsIgnoreCase("Thai")){
+                        String value = setSpinnerValueForThai(compareValue);
+                        int spinnerPosition = spin_adapter.getPosition(value);
                         getBinding().spinnerId.setSelection(spinnerPosition);
                         if (getBinding().spinnerId.getSelectedItem().toString().equalsIgnoreCase(getResources().getString(R.string.gender))) {
                             spinnerValue = "";
                         } else {
-                            spinnerValue = getBinding().spinnerId.getSelectedItem().toString();
+                            spinnerValue = setSpinnerValue(getBinding().spinnerId.getSelectedItem().toString());
                         }
 
                     }else {
+                        int spinnerPosition = spin_adapter.getPosition(compareValue);
                         getBinding().spinnerId.setSelection(spinnerPosition);
-                        if (getBinding().spinnerId.getSelectedItem().toString().equalsIgnoreCase("GENDER")) {
+                        if (getBinding().spinnerId.getSelectedItem().toString().equalsIgnoreCase("Gender")) {
                             spinnerValue = "";
                         } else {
                             spinnerValue = getBinding().spinnerId.getSelectedItem().toString();
@@ -648,6 +651,16 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
         }
     }
 
+    private String setSpinnerValueForThai(String compareValue) {
+      if (compareValue.equalsIgnoreCase("MALE")){
+          compareValue = getResources().getString(R.string.male);
+      }else if (compareValue.equalsIgnoreCase("FEMALE")){
+          compareValue = getResources().getString(R.string.female);
+      }else if (compareValue.equalsIgnoreCase("OTHERS")){
+          compareValue = getResources().getString(R.string.others);
+      }
+      return compareValue;
+    }
 
 
     private void showDialog(String title, String message) {
