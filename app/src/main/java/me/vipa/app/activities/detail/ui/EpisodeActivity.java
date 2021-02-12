@@ -49,6 +49,7 @@ import com.brightcove.player.model.Video;
 import com.brightcove.player.network.DownloadStatus;
 import com.brightcove.player.offline.MediaDownloadable;
 import com.brightcove.player.pictureinpicture.PictureInPictureManager;
+
 import me.vipa.bookmarking.bean.GetBookmarkResponse;
 
 import me.vipa.app.activities.purchase.callBack.EntitlementStatus;
@@ -56,7 +57,10 @@ import me.vipa.app.activities.purchase.planslayer.GetPlansLayer;
 import me.vipa.app.beanModel.entitle.EntitledAs;
 import me.vipa.app.utils.helpers.CheckInternetConnection;
 import me.vipa.app.utils.helpers.ImageHelper;
+
+import com.google.gson.Gson;
 import com.mmtv.utils.helpers.downloads.DownloadHelper;
+
 import me.vipa.app.Bookmarking.BookmarkingViewModel;
 import me.vipa.app.activities.chromecast.ExpandedControlsActivity;
 import me.vipa.app.activities.detail.adapter.AllCommentAdapter;
@@ -112,8 +116,10 @@ import me.vipa.app.utils.helpers.StringUtils;
 import me.vipa.app.utils.helpers.ToastHandler;
 import me.vipa.app.utils.helpers.ToolBarHandler;
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
+
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.tabs.TabLayout;
+
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 
 import org.jetbrains.annotations.NotNull;
@@ -210,6 +216,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
     private UserInteractionFragment userInteractionFragment;
     Bundle extras;
     private boolean isOfflineAvailable = false;
+    private boolean isCastConnected = false;
 
     public static void closeActivity() {
     }
@@ -220,8 +227,9 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
     }
 
     boolean isLoggedIn = false;
+
     private void setFullScreen() {
-        Log.e("Tag", "Inset: "+Build.VERSION.SDK_INT );
+        Log.e("Tag", "Inset: " + Build.VERSION.SDK_INT);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             final WindowInsetsController insetsController = getWindow().getInsetsController();
             if (insetsController != null) {
@@ -372,7 +380,8 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
             downloadHelper = new DownloadHelper(this, this, seriesDetailBean.getBrightcoveVideoId(), seriesDetailBean.getTitle(), MediaTypeConstants.getInstance().getEpisode(), videoDetails);
             downloadHelper.findVideo(videoDetails.getBrightcoveVideoId());
         }
-        getBinding().tabLayout.setSelectedTabIndicatorGravity(INDICATOR_GRAVITY_BOTTOM);
+       // getBinding().tabLayout.setSelectedTabIndicatorGravity(INDICATOR_GRAVITY_BOTTOM);
+        getBinding().tabLayout.setSelectedTabIndicatorGravity(TabLayout.INDICATOR_GRAVITY_TOP);
         if (episodeTabAdapter == null) {
             episodeTabAdapter = new EpisodeTabAdapter(getSupportFragmentManager());
             railFragment = new RecommendationRailFragment();
@@ -581,7 +590,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
         if (videoDetails.getAssetType() != null) {
             args.putString("assetType", videoDetails.getAssetType());
         }
-        Log.w("totalZies",KsPreferenceKeys.getInstance().getBingeWatchEnable()+"");
+        Log.w("totalZies", KsPreferenceKeys.getInstance().getBingeWatchEnable() + "");
         args.putString("config_vast_tag", SDKConfig.getInstance().getConfigVastTag());
         args.putBoolean("binge_watch", KsPreferenceKeys.getInstance().getBingeWatchEnable());
         args.putInt("binge_watch_timer", SDKConfig.getInstance().getTimer());
@@ -639,9 +648,9 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
                 AppCommonMethod.isPurchase = false;
                 seriesId = AppCommonMethod.seriesId;
                 isHitPlayerApi = false;
-                fromBingWatch=false;
-              //  seasonTabFragment=null;
-               seasonTabFragment.setSeasonAdapter(null);
+                fromBingWatch = false;
+                //  seasonTabFragment=null;
+                seasonTabFragment.setSeasonAdapter(null);
                 refreshDetailPage(assestId);
             }
         }
@@ -871,9 +880,9 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
     public void getEpisodeDetails() {
 
         isHitPlayerApi = true;
-        if (fromBingWatch){
+        if (fromBingWatch) {
             parseVideoDetails(nextEpisode);
-        }else {
+        } else {
             railInjectionHelper.getSeriesDetailsV2(String.valueOf(assestId)).observe(EpisodeActivity.this, new Observer<ResponseModel>() {
                 @Override
                 public void onChanged(ResponseModel response) {
@@ -950,7 +959,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
 //
 //        }
 
-        if (fromBingWatch){
+        if (fromBingWatch) {
             getBinding().playIcon.setVisibility(View.GONE);
             if (AppCommonMethod.getCheckBCID(videoDetails.getBrightcoveVideoId())) {
                 isLogin = preference.getAppPrefLoginStatus();
@@ -959,6 +968,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
                         GetPlansLayer.getInstance().getEntitlementStatus(preference, token, new EntitlementStatus() {
                             @Override
                             public void entitlementStatus(boolean entitlementStatus, boolean apiStatus) {
+                                getBinding().pBar.setVisibility(View.GONE);
                                 if (entitlementStatus && apiStatus) {
                                     isAdShowingToUser = false;
                                 }
@@ -992,6 +1002,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
                             GetPlansLayer.getInstance().getEntitlementStatus(preference, token, new EntitlementStatus() {
                                 @Override
                                 public void entitlementStatus(boolean entitlementStatus, boolean apiStatus) {
+                                    getBinding().pBar.setVisibility(View.GONE);
                                     if (entitlementStatus && apiStatus) {
                                         isAdShowingToUser = false;
                                     }
@@ -1006,10 +1017,13 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
                         }
 
                     } else {
+                        getBinding().pBar.setVisibility(View.GONE);
                         brightCoveVideoId = Long.parseLong(videoDetails.getBrightcoveVideoId());
                         playPlayerWhenShimmer();
                     }
 
+                }else {
+                    getBinding().pBar.setVisibility(View.GONE);
                 }
             }
         });
@@ -1023,14 +1037,14 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
                 seriesId = -1;
             }
         }
-        if (!fromBingWatch){
-             if (videoDetails.getSeasonNumber() != null && !videoDetails.getSeasonNumber().equalsIgnoreCase("")) {
-            getSeriesDetail(seriesId, videoDetails.getSeasonNumber());
+        if (!fromBingWatch) {
+            if (videoDetails.getSeasonNumber() != null && !videoDetails.getSeasonNumber().equalsIgnoreCase("")) {
+                getSeriesDetail(seriesId, videoDetails.getSeasonNumber());
+            } else {
+                getSeriesDetail(seriesId, "1");
+            }
         } else {
-            getSeriesDetail(seriesId, "1");
-        }
-        }else {
-            if (seasonTabFragment!=null){
+            if (seasonTabFragment != null) {
                 seasonTabFragment.updateCurrentAsset(videoDetails.getId());
             }
 
@@ -1213,7 +1227,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
 
 
     public void setUI(EnveuVideoItemBean responseDetailPlayer) {
-        if (responseDetailPlayer.getAssetCast().size() > 0) {
+        if (responseDetailPlayer.getAssetCast().size() > 0 && !responseDetailPlayer.getAssetCast().get(0).equalsIgnoreCase("")) {
             StringBuilder stringBuilder = new StringBuilder();
             for (int i = 0; i < responseDetailPlayer.getAssetCast().size(); i++) {
                 if (i == responseDetailPlayer.getAssetCast().size() - 1) {
@@ -1226,7 +1240,8 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
         } else {
             getBinding().llCastView.setVisibility(View.GONE);
         }
-        if (responseDetailPlayer.getAssetGenres().size() > 0) {
+        if (responseDetailPlayer.getAssetGenres().size() > 0 && !responseDetailPlayer.getAssetGenres().get(0).equalsIgnoreCase("")) {
+
             StringBuilder stringBuilder = new StringBuilder();
             for (int i = 0; i < responseDetailPlayer.getAssetGenres().size(); i++) {
                 if (i == responseDetailPlayer.getAssetGenres().size() - 1) {
@@ -1276,7 +1291,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
             setCustomeFields(responseDetailPlayer, "");
             new ToastHandler(EpisodeActivity.this).show(EpisodeActivity.this.getResources().getString(R.string.can_not_play_error));
         }
-        if (responseDetailPlayer.getDescription()!=null && responseDetailPlayer.getDescription().equalsIgnoreCase("")) {
+        if (responseDetailPlayer.getDescription() != null && responseDetailPlayer.getDescription().equalsIgnoreCase("")) {
             getBinding().descriptionText.setVisibility(View.GONE);
         }
         getBinding().setResponseApi(responseDetailPlayer);
@@ -1314,20 +1329,19 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
                 // getBinding().customeFieldView.setVisibility(View.GONE);
             }
 
-            if (fromBingWatch){
+            if (fromBingWatch) {
                 getBinding().playIcon.setVisibility(View.GONE);
                 getBinding().backButton.setVisibility(View.GONE);
-            }else {
+            } else {
                 if (responseDetailPlayer.getComingSoon() != null && !responseDetailPlayer.getComingSoon().equalsIgnoreCase("") && responseDetailPlayer.getComingSoon().equalsIgnoreCase("true")) {
                     getBinding().playIcon.setVisibility(View.GONE);
                     getBinding().backButton.setVisibility(View.VISIBLE);
 
-                }else {
+                } else {
                     getBinding().playIcon.setVisibility(View.VISIBLE);
                     getBinding().backButton.setVisibility(View.GONE);
                 }
             }
-
 
 
         } catch (Exception ignored) {
@@ -1514,16 +1528,15 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        boolean isTablet = EpisodeActivity.this.getResources().getBoolean(R.bool.isTablet);
-        AppCommonMethod.isOrientationChanged = true;
-        //if (isTablet) {
-        if (newConfig.orientation == 2) {
-            hideVideoDetail();
-        } else {
-            showVideoDetail();
+        if (!isCastConnected) {
+            super.onConfigurationChanged(newConfig);
+            AppCommonMethod.isOrientationChanged = true;
+            if (newConfig.orientation == 2) {
+                hideVideoDetail();
+            } else {
+                showVideoDetail();
+            }
         }
-        // }
     }
 
     public void showVideoDetail() {
@@ -1585,30 +1598,31 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
     }
 
     boolean fromBingWatch = false;
-    int playerOrientation=-1;
-    EnveuVideoItemBean nextEpisode=null;
+    int playerOrientation = -1;
+    EnveuVideoItemBean nextEpisode = null;
+
     @Override
     public void bingeWatchCall(String brightcoveId) {
-        int nextEpisdoeId=0;
-        int iValue=-1;
-        if (seasonEpisodesList!=null && seasonEpisodesList.size()>0){
-            for (int i = 0; i< seasonEpisodesList.size(); i++){
-                int id=seasonEpisodesList.get(i).getId();
-                if (id==assestId){
-                    nextEpisdoeId=seasonEpisodesList.get(i+1).getId();
-                    iValue=i+1;
+        int nextEpisdoeId = 0;
+        int iValue = -1;
+        if (seasonEpisodesList != null && seasonEpisodesList.size() > 0) {
+            for (int i = 0; i < seasonEpisodesList.size(); i++) {
+                int id = seasonEpisodesList.get(i).getId();
+                if (id == assestId) {
+                    nextEpisdoeId = seasonEpisodesList.get(i + 1).getId();
+                    iValue = i + 1;
                     break;
                 }
             }
-            if (iValue>-1){
-                nextEpisode=seasonEpisodesList.get(iValue);
+            if (iValue > -1) {
+                nextEpisode = seasonEpisodesList.get(iValue);
                 getBinding().backButton.setVisibility(View.VISIBLE);
                 getBinding().playerImage.setVisibility(View.VISIBLE);
                 ImageHelper.getInstance(EpisodeActivity.this).loadListImage(getBinding().playerImage, seasonEpisodesList.get(iValue).getPosterURL());
                 AppCommonMethod.isPurchase = false;
                 seriesId = AppCommonMethod.seriesId;
                 isHitPlayerApi = false;
-                fromBingWatch=true;
+                fromBingWatch = true;
                 //playerOrientation=playerFragment.getCurrentOrientation();
                 refreshDetailPage(nextEpisdoeId);
             }
@@ -1618,19 +1632,20 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
     }
 
     List<EnveuVideoItemBean> seasonEpisodesList;
+
     public void episodesList(List<EnveuVideoItemBean> seasonEpisodes) {
         try {
-                        if (brightCoveVideoId>0){
+            if (brightCoveVideoId > 0) {
                 seasonEpisodesList = new ArrayList<>();
                 if (seasonEpisodes != null && seasonEpisodes.size() > 0) {
-                    for (int i = 0; i< seasonEpisodes.size(); i++) {
-                        if (seasonEpisodes.get(i).getBrightcoveVideoId()!=null){
-                            String id =  seasonEpisodes.get(i).getBrightcoveVideoId();
-                            if (id.equalsIgnoreCase(String.valueOf(brightCoveVideoId))){
+                    for (int i = 0; i < seasonEpisodes.size(); i++) {
+                        if (seasonEpisodes.get(i).getBrightcoveVideoId() != null) {
+                            String id = seasonEpisodes.get(i).getBrightcoveVideoId();
+                            if (id.equalsIgnoreCase(String.valueOf(brightCoveVideoId))) {
                                 seasonEpisodesList.addAll(seasonEpisodes);
-                                if (playerFragment!=null){
+                                if (playerFragment != null) {
                                     playerFragment.totalEpisodes(seasonEpisodesList.size());
-                                    playerFragment.currentEpisodes(i+1);
+                                    playerFragment.currentEpisodes(i + 1);
                                 }
 
                                 break;
@@ -1638,10 +1653,10 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
                         }
                     }
 
-            }
+                }
             }
 
-        }catch (Exception ignored){
+        } catch (Exception ignored) {
 
         }
 
@@ -1856,7 +1871,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
     @Override
     public void onPlayerStart() {
         try {
-            Log.w("onPlayerStart","");
+            Log.w("onPlayerStart", "");
             getBinding().backButton.setVisibility(View.GONE);
             getBinding().playerImage.setVisibility(View.GONE);
             getBinding().pBar.setVisibility(View.GONE);
@@ -1869,7 +1884,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
                 mediaType = videoDetails.getAssetType();
             }
             AppCommonMethod.trackFcmEvent(name, mediaType, EpisodeActivity.this, 0);
-            if (playerFragment != null && seasonEpisodesList!=null && seasonEpisodesList.size() > 0) {
+            if (playerFragment != null && seasonEpisodesList != null && seasonEpisodesList.size() > 0) {
                 playerFragment.totalEpisodes(seasonEpisodesList.size());
                 for (int i = 0; i < seasonEpisodesList.size(); i++) {
 
@@ -1878,15 +1893,15 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
                     if (id == assestId) {
                         playerFragment.currentEpisodes(i + 1);
                         break;
-                    }else {
-                       // playerFragment.bingeWatchStatus(false);
+                    } else {
+                        // playerFragment.bingeWatchStatus(false);
                     }
                 }
             }
-            if (seasonEpisodesList.size()>0){
+            if (seasonEpisodesList.size() > 0) {
 
-            }else {
-                if (playerFragment!=null){
+            } else {
+                if (playerFragment != null) {
                     playerFragment.bingeWatchStatus(false);
                 }
             }
@@ -2186,18 +2201,12 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
 
     @Override
     public void chromeCastViewConnected(boolean status) {
-        Log.w("Chromecast-->>", "chromeCastViewConnected");
-        if (!EpisodeActivity.this.isFinishing()) {
-            Log.w("Chromecast-->>", "chromeCastViewConnected");
-            RailCommonData railCommonData = new RailCommonData();
-            Intent intent = new Intent(EpisodeActivity.this, ExpandedControlsActivity.class);
-            if (videoDetails != null) {
-                intent.putExtra("image_url", videoDetails.getPosterURL());
-            }
-            /*intent.putExtra(AppConstants.RAIL_DATA_OBJECT, image_url);
-            intent.putExtra(AppConstants.ASSET, railCommonData);*/
+        if (status) {
+            Intent intent = new Intent(this, ExpandedControlsActivity.class);
+            intent.putExtra("Asset", videoDetails);
             startActivity(intent);
             finish();
+            isCastConnected = true;
         }
     }
 

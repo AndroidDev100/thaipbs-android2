@@ -4,6 +4,7 @@
     <string name="no_connection">Tidak ada internet.</string>
     <string name="check_connection_text">Check your connection.</string>
     <string name="change_password">Ganti kata sandi</string>
+    <string name="update_pref">Update Preferences</string>
     <string name="checkout">Checkout</string>
     <string name="email">Surel</string>
     <string name="password">Kata sandi</string>
@@ -29,6 +30,7 @@
     <string name="by_email">By Email</string>
     <string name="by_line">By Line</string>
     <string name="guest_user">Guest User</string>
+    <string name="guest_user1">Guest User</string>
     <string name="no_internet">No internet connection found.</string>
     <string name="wake_up_connection" >Wake up your connection !</string>
     <string name="check_connection">Check Connection</string>
@@ -142,9 +144,8 @@
 
     <string name="something_went_wrong">Something went wrong</string>
     <string name="image_upload_fail">Image upload failed</string>
-    <string name="male">Male</string>
-    <string name="female">Female</string>
-    <string name="search_mv_hub">Cari VIPA (min 3 karakter)</string>
+
+    <string name="search_mv_hub">Cari VIPA</string>
     <string name="show_all_results">Show All</string>
     <string name="series">Series</string>
     <string name="article">Article</string>
@@ -356,5 +357,10 @@
     <string name="select_genre">Select genre as per your interest for best result you can select multiple choices of interest (max 5)</string>
     <string name="finish">Finish</string>
     <string name="date_difference">You must be 13 years old and above.</string>
+    <string name="recieve_updates">I would like to recieve updates from VIPA in future.</string>
+    <string name="gender">GENDER</string>
+    <string name="male">MALE</string>
+    <string name="female">FEMALE</string>
+    <string name="others">OTHERS</string>
 
 </resources>

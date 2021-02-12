@@ -451,7 +451,8 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
         } else {
             railFragment = new RecommendationRailFragment();
             seasonTabFragment = new SeasonTabFragment();
-            getBinding().tabLayout.setSelectedTabIndicatorGravity(INDICATOR_GRAVITY_BOTTOM);
+          //  getBinding().tabLayout.setSelectedTabIndicatorGravity(INDICATOR_GRAVITY_BOTTOM);
+            getBinding().tabLayout.setSelectedTabIndicatorGravity(TabLayout.INDICATOR_GRAVITY_TOP);
             episodeTabAdapter = new EpisodeTabAdapter(getSupportFragmentManager());
 
             Bundle args = new Bundle();
@@ -567,7 +568,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
     private void setUiComponents(EnveuVideoItemBean seriesResponse) {
         if (seriesResponse != null) {
             setCustomeFields(seriesDetailBean, 0, getResources().getString(R.string.episode));
-            if (seriesResponse.getAssetCast().size() > 0) {
+            if (seriesResponse.getAssetCast().size() > 0 && !seriesResponse.getAssetCast().get(0).equalsIgnoreCase("")) {
                 StringBuilder stringBuilder = new StringBuilder();
                 for (int i = 0; i < seriesResponse.getAssetCast().size(); i++) {
                     if (i == seriesResponse.getAssetCast().size() - 1) {
@@ -580,7 +581,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
             } else {
                 getBinding().llCastView.setVisibility(View.GONE);
             }
-            if (seriesResponse.getAssetGenres().size() > 0) {
+            if (seriesResponse.getAssetGenres().size() > 0 && !seriesResponse.getAssetGenres().get(0).equalsIgnoreCase("")) {
                 StringBuilder stringBuilder = new StringBuilder();
                 for (int i = 0; i < seriesResponse.getAssetGenres().size(); i++) {
                     if (i == seriesResponse.getAssetGenres().size() - 1) {

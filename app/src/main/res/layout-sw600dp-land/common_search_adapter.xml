@@ -131,7 +131,7 @@
                     android:layout_gravity="top|left"
                     android:ellipsize="end"
                     android:fontFamily="@font/sukhumvittadmai_bold"
-                    android:maxLines="1"
+                    android:maxLines="2"
                     android:text=""
                     android:textColor="?attr/watchlist_item_title_color"
                     android:textSize="@dimen/search_title" />

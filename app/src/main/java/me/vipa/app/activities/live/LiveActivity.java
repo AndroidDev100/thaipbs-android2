@@ -144,7 +144,7 @@ public class LiveActivity extends BaseBindingActivity<LiveDetailBinding> impleme
     private String tabId;
     private RailInjectionHelper railInjectionHelper;
     private FragmentTransaction transaction;
-    private LivePlayerFragment playerFragment;
+    private BrightcovePlayerFragment playerFragment;
     private String sharingUrl;
     private String detailType;
     private AlertDialogSingleButtonFragment errorDialog;
@@ -268,94 +268,131 @@ public class LiveActivity extends BaseBindingActivity<LiveDetailBinding> impleme
 
 
     public void playPlayerWhenShimmer() {
-
-        getBinding().pBar.setVisibility(View.VISIBLE);
-        getBinding().backButton.setVisibility(View.GONE);
+        transaction = getSupportFragmentManager().beginTransaction();
+        playerFragment = new BrightcovePlayerFragment();
         long bookmarkPosition = 0l;
 
-        transaction = getSupportFragmentManager().beginTransaction();
-        playerFragment = new LivePlayerFragment();
         Bundle args = new Bundle();
-        args.putString(AppConstants.BUNDLE_VIDEO_ID_BRIGHTCOVE, String.valueOf(brightCoveVideoId));
-        args.putString(AppConstants.ASSETTYPE, MediaTypeConstants.getInstance().getLive());
+//        if (isOffline) {
+//            args.putBoolean("isOffline", isOfflineAvailable);
+//            args.putParcelable(AppConstants.BUNDLE_VIDEO_ID_BRIGHTCOVE, video);
+//        } else {
+            args.putString(AppConstants.BUNDLE_VIDEO_ID_BRIGHTCOVE, String.valueOf(brightCoveVideoId));
+      //  }
         args.putLong(AppConstants.BOOKMARK_POSITION, bookmarkPosition);
-
-        String isLiveDrm = videoDetails.getIslivedrm();
-        if (isLiveDrm != null && !isLiveDrm.equalsIgnoreCase("")) {
-
-
-            if (isLiveDrm.equalsIgnoreCase("true")) {
-                if (videoDetails.getWidevineLicence() != null && !videoDetails.getWidevineLicence().equalsIgnoreCase("") &&
-                        videoDetails.getGetWidevineURL() != null && !videoDetails.getGetWidevineURL().equalsIgnoreCase("")) {
-                    args.putString("isLivedrm", videoDetails.getIslivedrm());
-                    args.putString("widevine_licence", videoDetails.getWidevineLicence());
-                    args.putString("widevine_url", videoDetails.getGetWidevineURL());
-
-                    if (videoDetails.getThumbnailImage() != null) {
-                        // ImageHelper.getInstance(LiveActivity.this).loadListImage(getBinding().channelLogo, videoDetails.getThumbnailImage());
-                    } else if (videoDetails.getPosterURL() != null) {
-                        // ImageHelper.getInstance(LiveActivity.this).loadListImage(getBinding().channelLogo, videoDetails.getPosterURL());
-                    }
-
-                    if (videoDetails.isPremium() && videoDetails.getThumbnailImage() != null) {
-                        args.putString(AppConstants.BUNDLE_BANNER_IMAGE, videoDetails.getThumbnailImage());
-                    }
-                    playerFragment.setArguments(args);
-                    transaction.replace(R.id.player_frame, playerFragment);
-                    transaction.commit();
-                } else {
-                    getBinding().pBar.setVisibility(View.GONE);
-                    getBinding().backButton.setVisibility(View.VISIBLE);
-                    showErrorDialog();
-                }
-            } else {
-                if (videoDetails.getGetWidevineURL() != null && !videoDetails.getGetWidevineURL().equalsIgnoreCase("")) {
-                    // args.putString("widevine_licence",videoDetails.getWidevineLicence());
-                    args.putString("isLivedrm", videoDetails.getIslivedrm());
-                    args.putString("widevine_url", videoDetails.getGetWidevineURL());
-
-                    if (videoDetails.getThumbnailImage() != null) {
-                        // ImageHelper.getInstance(LiveActivity.this).loadListImage(getBinding().channelLogo, videoDetails.getThumbnailImage());
-                    } else if (videoDetails.getPosterURL() != null) {
-                        // ImageHelper.getInstance(LiveActivity.this).loadListImage(getBinding().channelLogo, videoDetails.getPosterURL());
-                    }
-
-                    if (videoDetails.isPremium() && videoDetails.getThumbnailImage() != null) {
-                        args.putString(AppConstants.BUNDLE_BANNER_IMAGE, videoDetails.getThumbnailImage());
-                    }
-                    playerFragment.setArguments(args);
-                    transaction.replace(R.id.player_frame, playerFragment);
-                    transaction.commit();
-                } else {
-                    getBinding().pBar.setVisibility(View.GONE);
-                    getBinding().backButton.setVisibility(View.VISIBLE);
-                    showErrorDialog();
-                }
-            }
-        } else {
-            if (videoDetails.getGetWidevineURL() != null && !videoDetails.getGetWidevineURL().equalsIgnoreCase("")) {
-                // args.putString("widevine_licence",videoDetails.getWidevineLicence());
-                args.putString("isLivedrm", videoDetails.getIslivedrm());
-                args.putString("widevine_url", videoDetails.getGetWidevineURL());
-
-                if (videoDetails.getThumbnailImage() != null) {
-                    // ImageHelper.getInstance(LiveActivity.this).loadListImage(getBinding().channelLogo, videoDetails.getThumbnailImage());
-                } else if (videoDetails.getPosterURL() != null) {
-                    // ImageHelper.getInstance(LiveActivity.this).loadListImage(getBinding().channelLogo, videoDetails.getPosterURL());
-                }
-
-                if (videoDetails.isPremium() && videoDetails.getThumbnailImage() != null) {
-                    args.putString(AppConstants.BUNDLE_BANNER_IMAGE, videoDetails.getThumbnailImage());
-                }
-                playerFragment.setArguments(args);
-                transaction.replace(R.id.player_frame, playerFragment);
-                transaction.commit();
-            } else {
-                getBinding().pBar.setVisibility(View.GONE);
-                getBinding().backButton.setVisibility(View.VISIBLE);
-                showErrorDialog();
-            }
+        args.putString("selected_track", KsPreferenceKeys.getInstance().getQualityName());
+        args.putBoolean("ads_visibility", isAdShowingToUser);
+        args.putString("selected_lang", KsPreferenceKeys.getInstance().getAppLanguage());
+        if (videoDetails != null) {
+            args.putString("vast_tag", videoDetails.getVastTag());
         }
+        if (videoDetails.getAssetType() != null) {
+            args.putString("assetType", videoDetails.getAssetType());
+        }
+
+        args.putString("config_vast_tag", SDKConfig.getInstance().getConfigVastTag());
+
+        setArgsForEvent(args);
+
+        if (videoDetails.isPremium() && videoDetails.getThumbnailImage() != null) {
+            args.putString(AppConstants.BUNDLE_BANNER_IMAGE, videoDetails.getThumbnailImage());
+        }
+        playerFragment.setArguments(args);
+        transaction.replace(R.id.player_frame, playerFragment, "PlayerFragment");
+        transaction.addToBackStack(null);
+        transaction.commit();
+        getBinding().pBar.setVisibility(View.VISIBLE);
+
+
+
+
+//        getBinding().pBar.setVisibility(View.VISIBLE);
+//        getBinding().backButton.setVisibility(View.GONE);
+//        long bookmarkPosition = 0l;
+//
+//        transaction = getSupportFragmentManager().beginTransaction();
+//        playerFragment = new LivePlayerFragment();
+//        Bundle args = new Bundle();
+//        args.putString(AppConstants.BUNDLE_VIDEO_ID_BRIGHTCOVE, String.valueOf(brightCoveVideoId));
+//        args.putString(AppConstants.ASSETTYPE, MediaTypeConstants.getInstance().getLive());
+//        args.putLong(AppConstants.BOOKMARK_POSITION, bookmarkPosition);
+//
+//        String isLiveDrm = videoDetails.getIslivedrm();
+//        if (isLiveDrm != null && !isLiveDrm.equalsIgnoreCase("")) {
+//
+//
+//            if (isLiveDrm.equalsIgnoreCase("true")) {
+//                if (videoDetails.getWidevineLicence() != null && !videoDetails.getWidevineLicence().equalsIgnoreCase("") &&
+//                        videoDetails.getGetWidevineURL() != null && !videoDetails.getGetWidevineURL().equalsIgnoreCase("")) {
+//                    args.putString("isLivedrm", videoDetails.getIslivedrm());
+//                    args.putString("widevine_licence", videoDetails.getWidevineLicence());
+//                    args.putString("widevine_url", videoDetails.getGetWidevineURL());
+//
+//                    if (videoDetails.getThumbnailImage() != null) {
+//                        // ImageHelper.getInstance(LiveActivity.this).loadListImage(getBinding().channelLogo, videoDetails.getThumbnailImage());
+//                    } else if (videoDetails.getPosterURL() != null) {
+//                        // ImageHelper.getInstance(LiveActivity.this).loadListImage(getBinding().channelLogo, videoDetails.getPosterURL());
+//                    }
+//
+//                    if (videoDetails.isPremium() && videoDetails.getThumbnailImage() != null) {
+//                        args.putString(AppConstants.BUNDLE_BANNER_IMAGE, videoDetails.getThumbnailImage());
+//                    }
+//                    playerFragment.setArguments(args);
+//                    transaction.replace(R.id.player_frame, playerFragment);
+//                    transaction.commit();
+//                } else {
+//                    getBinding().pBar.setVisibility(View.GONE);
+//                    getBinding().backButton.setVisibility(View.VISIBLE);
+//                    showErrorDialog();
+//                }
+//            } else {
+//                if (videoDetails.getGetWidevineURL() != null && !videoDetails.getGetWidevineURL().equalsIgnoreCase("")) {
+//                    // args.putString("widevine_licence",videoDetails.getWidevineLicence());
+//                    args.putString("isLivedrm", videoDetails.getIslivedrm());
+//                    args.putString("widevine_url", videoDetails.getGetWidevineURL());
+//
+//                    if (videoDetails.getThumbnailImage() != null) {
+//                        // ImageHelper.getInstance(LiveActivity.this).loadListImage(getBinding().channelLogo, videoDetails.getThumbnailImage());
+//                    } else if (videoDetails.getPosterURL() != null) {
+//                        // ImageHelper.getInstance(LiveActivity.this).loadListImage(getBinding().channelLogo, videoDetails.getPosterURL());
+//                    }
+//
+//                    if (videoDetails.isPremium() && videoDetails.getThumbnailImage() != null) {
+//                        args.putString(AppConstants.BUNDLE_BANNER_IMAGE, videoDetails.getThumbnailImage());
+//                    }
+//                    playerFragment.setArguments(args);
+//                    transaction.replace(R.id.player_frame, playerFragment);
+//                    transaction.commit();
+//                } else {
+//                    getBinding().pBar.setVisibility(View.GONE);
+//                    getBinding().backButton.setVisibility(View.VISIBLE);
+//                    showErrorDialog();
+//                }
+//            }
+//        } else {
+//            if (videoDetails.getGetWidevineURL() != null && !videoDetails.getGetWidevineURL().equalsIgnoreCase("")) {
+//                // args.putString("widevine_licence",videoDetails.getWidevineLicence());
+//                args.putString("isLivedrm", videoDetails.getIslivedrm());
+//                args.putString("widevine_url", videoDetails.getGetWidevineURL());
+//
+//                if (videoDetails.getThumbnailImage() != null) {
+//                    // ImageHelper.getInstance(LiveActivity.this).loadListImage(getBinding().channelLogo, videoDetails.getThumbnailImage());
+//                } else if (videoDetails.getPosterURL() != null) {
+//                    // ImageHelper.getInstance(LiveActivity.this).loadListImage(getBinding().channelLogo, videoDetails.getPosterURL());
+//                }
+//
+//                if (videoDetails.isPremium() && videoDetails.getThumbnailImage() != null) {
+//                    args.putString(AppConstants.BUNDLE_BANNER_IMAGE, videoDetails.getThumbnailImage());
+//                }
+//                playerFragment.setArguments(args);
+//                transaction.replace(R.id.player_frame, playerFragment);
+//                transaction.commit();
+//            } else {
+//                getBinding().pBar.setVisibility(View.GONE);
+//                getBinding().backButton.setVisibility(View.VISIBLE);
+//                showErrorDialog();
+//            }
+//        }
 
 
     }
@@ -648,7 +685,7 @@ public class LiveActivity extends BaseBindingActivity<LiveDetailBinding> impleme
             getAssetDetails();
         }
         //postCommentClick();
-        BuyNowClick();
+      //  BuyNowClick();
     }
 
     public void getAssetDetails() {
@@ -686,21 +723,21 @@ public class LiveActivity extends BaseBindingActivity<LiveDetailBinding> impleme
 
             ImageHelper.getInstance(LiveActivity.this).loadListImage(getBinding().playerImage, videoDetails.getPosterURL());
             ImageHelper.getInstance(LiveActivity.this).loadListSQRImage(getBinding().channelLogo, videoDetails.getPosterURL());
-            if (videoDetails.isPremium()) {
-                getBinding().pBar.setVisibility(View.GONE);
-                ImageHelper.getInstance(LiveActivity.this).loadListImage(getBinding().playerImage, videoDetails.getPosterURL());
-                getBinding().tvPurchased.setVisibility(View.GONE);
-                getBinding().tvPremium.setVisibility(View.GONE);
-
-                getBinding().mPremiumStatus.setVisibility(View.VISIBLE);
-                getBinding().backButton.setVisibility(View.VISIBLE);
-                //hitApiEntitlement(enveuCommonResponse.getEnveuVideoItemBeans().get(0).getSku());
-                if (isLogin.equalsIgnoreCase(AppConstants.UserStatus.Login.toString())) {
-                    hitApiEntitlement(enveuCommonResponse.getEnveuVideoItemBeans().get(0).getSku());
-                } else {
-                    getBinding().tvBuyNow.setVisibility(View.VISIBLE);
-                }
-            } else {
+//            if (videoDetails.isPremium()) {
+//                getBinding().pBar.setVisibility(View.GONE);
+//                ImageHelper.getInstance(LiveActivity.this).loadListImage(getBinding().playerImage, videoDetails.getPosterURL());
+//                getBinding().tvPurchased.setVisibility(View.GONE);
+//                getBinding().tvPremium.setVisibility(View.GONE);
+//
+//                getBinding().mPremiumStatus.setVisibility(View.VISIBLE);
+//                getBinding().backButton.setVisibility(View.VISIBLE);
+//                //hitApiEntitlement(enveuCommonResponse.getEnveuVideoItemBeans().get(0).getSku());
+//                if (isLogin.equalsIgnoreCase(AppConstants.UserStatus.Login.toString())) {
+//                    hitApiEntitlement(enveuCommonResponse.getEnveuVideoItemBeans().get(0).getSku());
+//                } else {
+//                    getBinding().tvBuyNow.setVisibility(View.VISIBLE);
+//                }
+//            } else {
                 getBinding().pBar.setVisibility(View.VISIBLE);
                 if (AppCommonMethod.getCheckBCID(videoDetails.getBrightcoveVideoId())) {
                     isLogin = preference.getAppPrefLoginStatus();
@@ -733,7 +770,7 @@ public class LiveActivity extends BaseBindingActivity<LiveDetailBinding> impleme
                 } else {
                     getBinding().pBar.setVisibility(View.GONE);
                 }
-            }
+           // }
             setUserInteractionFragment(assestId);
             stopShimmer();
             setUI(videoDetails);

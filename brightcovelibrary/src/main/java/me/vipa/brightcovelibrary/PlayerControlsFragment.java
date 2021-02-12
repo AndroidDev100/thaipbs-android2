@@ -32,7 +32,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.brightcove.player.event.EventType;
+
 import me.vipa.brightcovelibrary.callBacks.PlayerCallbacks;
+
 import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.ui.DefaultTimeBar;
 import com.google.android.exoplayer2.ui.TimeBar;
@@ -77,6 +79,7 @@ public class PlayerControlsFragment extends Fragment {
     public ImageView backArrow;
     private View seekBarControl, settingControl;
     public ImageView fullscreen;
+    private TextView liveTag;
     private long playbackDuration, playbackCurrentPosition;
     private String playerState = "";
     private Activity activity;
@@ -152,14 +155,13 @@ public class PlayerControlsFragment extends Fragment {
     }
 
     void SendPlayerPauseState(String type) {
-        if (type == "pause") {
-
+        if (type == "pause" && pauseButton != null) {
             pauseButton.setBackgroundResource(R.drawable.play);
         }
     }
 
     void sendPlayerPlayState(String type) {
-        if (type == "play") {
+        if (type == "play" && pauseButton != null) {
             pauseButton.setBackgroundResource(R.drawable.pause);
         }
     }
@@ -254,7 +256,11 @@ public class PlayerControlsFragment extends Fragment {
     void sendLandscapeCallback() {
         try {
             fullscreen.setBackgroundResource(R.drawable.exit_full_screen);
-            playerSettingIcon.setVisibility(View.VISIBLE);
+            if (videoType.equalsIgnoreCase("1")){
+                playerSettingIcon.setVisibility(View.INVISIBLE);
+            }else {
+                playerSettingIcon.setVisibility(View.VISIBLE);
+            }
 //            media_route_button.setVsibility(View.VISIBLE);
             if (isCaptionAvailable) {
                 Log.w("captionHide", "sendLandscapeCallbackif");
@@ -283,7 +289,7 @@ public class PlayerControlsFragment extends Fragment {
     }
 
     void showControls() {
-        Log.w("IMATAG", "showControls");
+        Log.w("CONTROLSVIDEO", videoType);
         childControl.setVisibility(View.VISIBLE);
         backArrow.setVisibility(View.VISIBLE);
         if (videoType.equalsIgnoreCase("1")) {
@@ -302,8 +308,10 @@ public class PlayerControlsFragment extends Fragment {
         seekBar.setVisibility(View.INVISIBLE);
         audioTracks.setVisibility(View.GONE);
         subtitles.setVisibility(View.GONE);
+        pauseButton.setVisibility(View.GONE);
         Log.w("captionHide", "hideControlsForLive");
         settingControl.setVisibility(View.GONE);
+        liveTag.setVisibility(View.VISIBLE);
     }
 
     void hideControls() {
@@ -340,7 +348,11 @@ public class PlayerControlsFragment extends Fragment {
         }
         if (type.equalsIgnoreCase(EventType.COMPLETED)) {
             backArrow.setVisibility(View.VISIBLE);
-            replay.setVisibility(View.VISIBLE);
+            if (videoType.equalsIgnoreCase("1")){
+                replay.setVisibility(View.GONE);
+            }else {
+                replay.setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -613,7 +625,7 @@ public class PlayerControlsFragment extends Fragment {
     }
 
     private void callHandler() {
-        Log.w("conditionCheck-->>","in");
+        Log.w("conditionCheck-->>", "in");
         timer = true;
         viewHideShowRunnable = () -> ShowAndHideView();
 
@@ -637,6 +649,7 @@ public class PlayerControlsFragment extends Fragment {
         totalDuration = (TextView) view.findViewById(R.id.exo_duration);
         skipTxt = (TextView) view.findViewById(R.id.skipTxt);
         seekBar = (DefaultTimeBar) view.findViewById(R.id.exo_progress);
+        liveTag = (TextView) view.findViewById(R.id.tag);
         controlLayout = view.findViewById(R.id.controlslayout);
         childControl = (ConstraintLayout) view.findViewById(R.id.childControl);
         audioTracks = (RelativeLayout) view.findViewById(R.id.audio_tracks);
@@ -729,7 +742,7 @@ public class PlayerControlsFragment extends Fragment {
         bingeBtn.setVisibility(View.VISIBLE);
         skipduration.setVisibility(View.VISIBLE);
         backArrow.setVisibility(View.VISIBLE);
-        if (isFirstCalled){
+        if (isFirstCalled) {
             mTimer = new CountDownTimer(position, 1000) {
                 public void onTick(long millisUntilFinished) {
                     skipduration.setText(Long.toString(millisUntilFinished / 1000));
@@ -740,8 +753,8 @@ public class PlayerControlsFragment extends Fragment {
                 }
             };
 
-        mTimer.start();
-    }
+            mTimer.start();
+        }
     }
 
     public void hideBingeWatch() {
@@ -749,7 +762,7 @@ public class PlayerControlsFragment extends Fragment {
             bingeLay.setVisibility(View.GONE);
             bingeBtn.setVisibility(View.GONE);
             backArrow.setVisibility(View.GONE);
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
 

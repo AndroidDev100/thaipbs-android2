@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.databinding.DataBindingUtil;
@@ -137,8 +138,14 @@ public class CommonLandscapeRailAdapter extends RecyclerView.Adapter<RecyclerVie
             double currentPosition = videos.get(i).getVideoPosition() * 1000;
             double percentagePlayed = ((currentPosition / totalDuration) * 100L);
             itemBinding.setProgress((int) percentagePlayed);
+//            itemBinding.title.setVisibility(View.VISIBLE);
+//            itemBinding.descriptionTxt.setVisibility(View.VISIBLE);
+//            itemBinding.title.setText(videos.get(i).getTitle());
+//            itemBinding.descriptionTxt.setText(videos.get(i).getDescription().trim());
         } else {
             AppCommonMethod.railBadgeVisibility(itemBinding.llContinueProgress, false);
+//            itemBinding.title.setVisibility(View.GONE);
+//            itemBinding.descriptionTxt.setVisibility(View.GONE);
         }
 
         try {
@@ -172,14 +179,24 @@ public class CommonLandscapeRailAdapter extends RecyclerView.Adapter<RecyclerVie
         }catch (Exception ignored){
 
         }
+
+
         if (videos.get(i).getVideoPosition() > 0) {
             AppCommonMethod.railBadgeVisibility(itemBinding.llContinueProgress, true);
             double totalDuration = videos.get(i).getDuration();
             double currentPosition = videos.get(i).getVideoPosition() * 1000;
             double percentagePlayed = ((currentPosition / totalDuration) * 100L);
             itemBinding.setProgress((int) percentagePlayed);
+
+//            itemBinding.title.setVisibility(View.VISIBLE);
+//            itemBinding.descriptionTxt.setVisibility(View.VISIBLE);
+//            itemBinding.title.setText(videos.get(i).getTitle());
+//            itemBinding.descriptionTxt.setText(videos.get(i).getDescription().trim());
+
         } else {
             AppCommonMethod.railBadgeVisibility(itemBinding.llContinueProgress, false);
+//            itemBinding.title.setVisibility(View.GONE);
+//            itemBinding.descriptionTxt.setVisibility(View.GONE);
         }
 
         try {
@@ -219,8 +236,14 @@ public class CommonLandscapeRailAdapter extends RecyclerView.Adapter<RecyclerVie
             double currentPosition = videos.get(i).getVideoPosition() * 1000;
             double percentagePlayed = ((currentPosition / totalDuration) * 100L);
             itemBinding.setProgress((int) percentagePlayed);
+//            itemBinding.title.setVisibility(View.VISIBLE);
+//            itemBinding.descriptionTxt.setVisibility(View.VISIBLE);
+//            itemBinding.title.setText(videos.get(i).getTitle());
+//            itemBinding.descriptionTxt.setText(videos.get(i).getDescription().trim());
         } else {
             AppCommonMethod.railBadgeVisibility(itemBinding.llContinueProgress, false);
+//            itemBinding.title.setVisibility(View.GONE);
+//            itemBinding.descriptionTxt.setVisibility(View.GONE);
         }
 
         try {

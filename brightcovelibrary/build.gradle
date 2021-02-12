@@ -52,7 +52,7 @@ dependencies {
     api "com.brightcove.player:android-appcompat-plugin:6.13.3"
     implementation "com.brightcove.player:android-ima-plugin:6.13.3"
     implementation 'com.google.ads.interactivemedia.v3:interactivemedia:3.11.2'
-    implementation "com.brightcove.player:android-cast-plugin:6.13.3"
+    implementation "com.brightcove.player:android-cast-plugin:6.16.0"
     //s
     implementation 'com.google.android.gms:play-services-ads:19.3.0'
     implementation 'androidx.core:core-ktx:+'

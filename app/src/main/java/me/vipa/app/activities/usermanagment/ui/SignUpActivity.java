@@ -20,6 +20,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import me.vipa.app.activities.contentPreference.UI.ContentPreference;
+import me.vipa.app.activities.homeactivity.ui.HomeActivity;
+import me.vipa.app.activities.onBoarding.UI.OnBoarding;
 import me.vipa.app.activities.usermanagment.viewmodel.RegistrationLoginViewModel;
 import me.vipa.app.baseModels.BaseBindingActivity;
 import me.vipa.app.R;
@@ -85,6 +87,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
     private Data modelLogin;
     private final List<String> permissionNeeds = Arrays.asList("email", "public_profile");
     private boolean isNotificationEnable = false;
+    String loginCallingFrom="";
 
     @Override
     public SignupActivityBinding inflateBindingLayout(@NonNull LayoutInflater inflater) {
@@ -104,12 +107,26 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
         getBinding().radioPasswordEye.setChecked(false);
         getBinding().confirmPasswordEye.setChecked(false);
         font = ResourcesCompat.getFont(SignUpActivity.this, sukhumvittadmai_normal);
+        loginCallingFrom=getIntent().getStringExtra("loginFrom");
+        if(loginCallingFrom.equalsIgnoreCase("OnBoarding")){
+            getBinding().toolbar.backLayout.setVisibility(View.INVISIBLE);
+        }else {
+            getBinding().toolbar.backLayout.setVisibility(View.VISIBLE);
+        }
         getBinding().toolbar.titleToolbar.setVisibility(View.VISIBLE);
+        getBinding().toolbar.titleSkip.setVisibility(View.VISIBLE);
         getBinding().toolbar.titleToolbar.setText(getResources().getString(R.string.signup));
+        getBinding().toolbar.titleSkip.setText(getResources().getString(R.string.skip));
         getBinding().toolbar.backLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onBackPressed();
+            }
+        });
+        getBinding().toolbar.titleSkip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new ActivityLauncher(SignUpActivity.this).homeScreen(SignUpActivity.this, HomeActivity.class);
             }
         });
         connectObservors();
@@ -154,9 +171,9 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
         getBinding().connection.retryTxt.setOnClickListener(view -> connectionObserver());
     }
 
-    String loginCallingFrom="";
+
     public void resetUI() {
-        loginCallingFrom=getIntent().getStringExtra("loginFrom");
+
         getBinding().errorName.setVisibility(View.INVISIBLE);
         getBinding().errorEmail.setVisibility(View.INVISIBLE);
         getBinding().errorPassword.setVisibility(View.INVISIBLE);

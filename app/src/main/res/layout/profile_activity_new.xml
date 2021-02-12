@@ -93,7 +93,7 @@
                             android:layout_gravity="center"
                             android:background="@null"
                             android:fontFamily="@font/sukhumvittadmai_normal"
-                            android:hint="@string/full_name"
+                            android:hint="@string/display_name"
                             android:imeOptions="actionDone"
                             android:maxLength="40"
                             android:singleLine="true"
@@ -257,8 +257,8 @@
                         android:layout_marginTop="@dimen/NontonSize10">
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="@dimen/splash_logo_height"
+                            android:layout_height="@dimen/splash_logo_height"
                             android:layout_gravity="center"
                             android:layout_marginRight="@dimen/NontonSize2"
                             android:contentDescription="TODO"

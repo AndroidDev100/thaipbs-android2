@@ -275,7 +275,7 @@
                                         android:maxLines="2"
                                         android:text="@{responseApi.description.trim()}"
                                         android:textColor="?attr/title_color"
-                                        android:textSize="@dimen/font_small" />
+                                        android:textSize="@dimen/font_xsmall" />
 
                                     <me.vipa.app.utils.helpers.ExpandableCardLayout
                                         android:id="@+id/expandable_layout"
@@ -302,7 +302,7 @@
                                                     android:fontFamily="@font/sukhumvittadmai_bold"
                                                     android:text="@string/cast"
                                                     android:textColor="?attr/cast_title_color"
-                                                    android:textSize="@dimen/font_medium" />
+                                                    android:textSize="@dimen/detailMore" />
 
                                                 <TextView
                                                     android:id="@+id/cast_text"
@@ -325,7 +325,7 @@
                                                     android:fontFamily="@font/sukhumvittadmai_bold"
                                                     android:text="@string/crew"
                                                     android:textColor="?attr/cast_title_color"
-                                                    android:textSize="@dimen/font_medium" />
+                                                    android:textSize="@dimen/detailMore" />
 
                                                 <TextView
                                                     android:id="@+id/crew_text"

@@ -226,9 +226,9 @@
             android:name=".activities.detail.ui.EpisodeActivity"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:resizeableActivity="true"
-            android:screenOrientation="locked"
             android:supportsPictureInPicture="true"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+            android:screenOrientation="locked"
+            android:theme="@style/MyMaterialTheme" />
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"

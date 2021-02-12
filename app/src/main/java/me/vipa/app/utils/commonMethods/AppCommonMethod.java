@@ -132,6 +132,10 @@ public class AppCommonMethod {
     public static final RequestOptions optionsPlayer = new RequestOptions()
             .fitCenter()
             .diskCacheStrategy(DiskCacheStrategy.NONE);
+    public static final RequestOptions castOptions = new RequestOptions()
+            .placeholder(R.drawable.placeholder_landscape)
+            .error(R.drawable.placeholder_landscape)
+            .diskCacheStrategy(DiskCacheStrategy.NONE);
     public static final String PASSWORD_PATTERN = "/^(?=.*[!&^%$#@()\\\\_+-])[A-Za-z0-9\\\\d!&^%$#@()\\\\_+-]{8,20}$/";
     public static boolean afterLogin = false;
     public static boolean hasContinueRail = false;
@@ -1125,7 +1129,7 @@ public class AppCommonMethod {
 
     public static void guestTitle(Context context,TextView userNameWords, TextView usernameTv, KsPreferenceKeys preference) {
         if (preference != null) {
-            userNameWords.setText(AppCommonMethod.getUserName(context.getResources().getString(R.string.guest_user)));
+            userNameWords.setText(AppCommonMethod.getUserName(context.getResources().getString(R.string.guest_user1)));
             usernameTv.setText(context.getResources().getString(R.string.guest_user));
         }
     }

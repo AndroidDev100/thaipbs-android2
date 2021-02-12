@@ -42,7 +42,7 @@ public class StepOneFragment extends BaseBindingFragment<FragmentStepOneBinding>
             @Override
             public void onClick(View v) {
 
-                new ActivityLauncher(getActivity()).signUpActivity(getActivity(), SignUpActivity.class, "");
+                new ActivityLauncher(getActivity()).signUpActivity(getActivity(), SignUpActivity.class, "OnBoarding");
 
             }
         });

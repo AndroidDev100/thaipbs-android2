@@ -40,13 +40,16 @@ import com.brightcove.player.offline.MediaDownloadable;
 import com.brightcove.player.pictureinpicture.PictureInPictureManager;
 
 import me.vipa.app.utils.helpers.downloads.MediaTypeCheck;
+
 import me.vipa.bookmarking.bean.GetBookmarkResponse;
 import me.vipa.app.SDKConfig;
 import me.vipa.app.activities.purchase.callBack.EntitlementStatus;
 import me.vipa.app.activities.purchase.planslayer.GetPlansLayer;
 import me.vipa.app.beanModel.entitle.EntitledAs;
+
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.mmtv.utils.helpers.downloads.DownloadHelper;
+
 import me.vipa.app.Bookmarking.BookmarkingViewModel;
 import me.vipa.app.activities.chromecast.ExpandedControlsActivity;
 import me.vipa.app.activities.downloads.NetworkHelper;
@@ -174,6 +177,7 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
     private UserInteractionFragment userInteractionFragment;
     public static boolean isBackStacklost = false;
     private boolean isOfflineAvailable = false;
+    private boolean isCastConnected = false;
 
     @Override
     public DetailScreenBinding inflateBindingLayout(@NonNull LayoutInflater inflater) {
@@ -421,7 +425,7 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
     }
 
     private void setFullScreen() {
-        Log.e("Tag", "Inset: "+Build.VERSION.SDK_INT );
+        Log.e("Tag", "Inset: " + Build.VERSION.SDK_INT);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             final WindowInsetsController insetsController = getWindow().getInsetsController();
             if (insetsController != null) {
@@ -502,7 +506,7 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
                                             if (i == AUDIOFOCUS_LOSS) {
                                                 Logger.d("AudioFocus", "Loss");
                                                 if (playerFragment != null) {
-                                                   // playerFragment.playPause();
+                                                    // playerFragment.playPause();
                                                 }
                                             }
                                         }
@@ -990,7 +994,7 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
     public void setUI(EnveuVideoItemBean responseDetailPlayer) {
         recommendationRailFragment();
 
-        if (responseDetailPlayer.getAssetCast().size() > 0) {
+        if (responseDetailPlayer.getAssetCast().size() > 0 && !responseDetailPlayer.getAssetCast().get(0).equalsIgnoreCase("")) {
             StringBuilder stringBuilder = new StringBuilder();
             for (int i = 0; i < responseDetailPlayer.getAssetCast().size(); i++) {
                 if (i == responseDetailPlayer.getAssetCast().size() - 1) {
@@ -1003,7 +1007,7 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
         } else {
             getBinding().llCastView.setVisibility(View.GONE);
         }
-        if (responseDetailPlayer.getAssetGenres().size() > 0) {
+        if (responseDetailPlayer.getAssetGenres().size() > 0 && !responseDetailPlayer.getAssetGenres().get(0).equalsIgnoreCase("")) {
             StringBuilder stringBuilder = new StringBuilder();
             for (int i = 0; i < responseDetailPlayer.getAssetGenres().size(); i++) {
                 if (i == responseDetailPlayer.getAssetGenres().size() - 1) {
@@ -1053,7 +1057,7 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
             if (responseDetailPlayer.getComingSoon() != null && !responseDetailPlayer.getComingSoon().equalsIgnoreCase("") && responseDetailPlayer.getComingSoon().equalsIgnoreCase("true")) {
                 getBinding().playIcon.setVisibility(View.GONE);
                 getBinding().backButton.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 getBinding().playIcon.setVisibility(View.VISIBLE);
             }
 
@@ -1320,16 +1324,17 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        boolean isTablet = DetailActivity.this.getResources().getBoolean(R.bool.isTablet);
-        AppCommonMethod.isOrientationChanged = true;
+        if (!isCastConnected) {
+            super.onConfigurationChanged(newConfig);
+            boolean isTablet = DetailActivity.this.getResources().getBoolean(R.bool.isTablet);
+            AppCommonMethod.isOrientationChanged = true;
 
-        if (newConfig.orientation == 2) {
-            hideVideoDetail();
-        } else {
-            showVideoDetail();
+            if (newConfig.orientation == 2) {
+                hideVideoDetail();
+            } else {
+                showVideoDetail();
+            }
         }
-
     }
 
     public void showVideoDetail() {
@@ -1802,18 +1807,12 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
 
     @Override
     public void chromeCastViewConnected(boolean status) {
-        Log.w("Chromecast-->>", "chromeCastViewConnected");
-        if (!DetailActivity.this.isFinishing()) {
-            Log.w("Chromecast-->>", "chromeCastViewConnected");
-            RailCommonData railCommonData = new RailCommonData();
-            Intent intent = new Intent(DetailActivity.this, ExpandedControlsActivity.class);
-            if (videoDetails != null) {
-                intent.putExtra("image_url", videoDetails.getPosterURL());
-            }
-            /*intent.putExtra(AppConstants.RAIL_DATA_OBJECT, image_url);
-            intent.putExtra(AppConstants.ASSET, railCommonData);*/
+        if (status) {
+            Intent intent = new Intent(this, ExpandedControlsActivity.class);
+            intent.putExtra("Asset", videoDetails);
             startActivity(intent);
             finish();
+            isCastConnected = true;
         }
     }
 }

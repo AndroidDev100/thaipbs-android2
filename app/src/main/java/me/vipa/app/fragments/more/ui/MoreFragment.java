@@ -192,7 +192,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                 setVerifyApi(tempResponseApi);
             }
         } else {
-           // getBinding().loginBtn.setVisibility(View.VISIBLE);
+            getBinding().loginBtn.setVisibility(View.VISIBLE);
             AppCommonMethod.guestTitle(getBaseActivity(),getBinding().userNameWords, getBinding().usernameTv, preference);
             getBinding().usernameTv.setVisibility(View.VISIBLE);
             setUIComponets(mListLogOut, false);
@@ -207,10 +207,10 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
         getBinding().recyclerViewMore.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
         getBinding().recyclerViewMore.setAdapter(adapter);
 
-//        getBinding().loginBtn.setOnClickListener(v -> );
-//        getBinding().loginBtn.setOnClickListener(v -> {
-//            mListener.onLoginClicked();
-//        });
+      //  getBinding().loginBtn.setOnClickListener(v -> );
+        getBinding().loginBtn.setOnClickListener(v -> {
+            mListener.onLoginClicked();
+        });
     }
 
     public void clickEvent() {
@@ -515,7 +515,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
         String tempResponse = preference.getAppPrefUser();
         if (!StringUtils.isNullOrEmptyOrZero(tempResponse)) {
             AppUserModel dataModel = new Gson().fromJson(tempResponse, AppUserModel.class);
-          //  getBinding().loginBtn.setVisibility(View.GONE);
+            getBinding().loginBtn.setVisibility(View.GONE);
             getBinding().usernameTv.setVisibility(View.VISIBLE);
             getBinding().userNameWords.setText(AppCommonMethod.getUserName(dataModel.getName()));
             getBinding().usernameTv.setText(dataModel.getName());
@@ -544,7 +544,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
         ddModel = new Gson().fromJson(tempResponse, DataResponseRegister.class);
 
         if (!StringUtils.isNullOrEmptyOrZero(tempResponse)) {
-          //  getBinding().loginBtn.setVisibility(View.GONE);
+            getBinding().loginBtn.setVisibility(View.GONE);
             getBinding().usernameTv.setVisibility(View.VISIBLE);
             getBinding().userNameWords.setText(AppCommonMethod.getUserName(preference.getAppPrefUserName()));
             getBinding().usernameTv.setText(preference.getAppPrefUserName());

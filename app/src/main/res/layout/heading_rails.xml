@@ -43,7 +43,7 @@
                 android:text="@string/title_more"
                 android:textColor="?attr/more_text_color"
                 android:textSize="@dimen/railMore"
-                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginTop="@dimen/NontonSize3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
