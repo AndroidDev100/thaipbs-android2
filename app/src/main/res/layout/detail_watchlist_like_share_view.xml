@@ -193,6 +193,8 @@
                 android:id="@+id/loading_download"
                 android:layout_width="@dimen/watch_ListWidth"
                 android:layout_height="@dimen/watch_ListWidth"
+                android:layout_margin="@dimen/NontonSize5"
+                android:layout_gravity="center"
                 android:visibility='@{downloadStatus==DownloadStatus.REQUESTED ? View.VISIBLE : View.GONE, default="gone"}' />
 
             <TextView
@@ -203,7 +205,7 @@
                 android:gravity="center"
                 android:text="@string/download"
                 android:textColor="?attr/watchlist_icon_text"
-                android:textSize="@dimen/font_medium" />
+                android:textSize="@dimen/font_small" />
         </LinearLayout>
 
 

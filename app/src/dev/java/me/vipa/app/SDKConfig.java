@@ -35,6 +35,8 @@ public class SDKConfig {
     public static String TERMCONDITION = "https://www.mvhub.com/term.php";
     public static String PRIVACYPOLICY = "https://www.mvhub.com/privacy.php";
     public static String WEBP_QUALITY="filters:format(webp):quality(60)/";
+    public static int DOWNLOAD_EXPIRY_DAYS=30;
+    public static boolean DOWNLOAD_ENABLE=true;
 
     public void setConfigObject(ConfigBean configResponse,boolean isTablet) {
         this.configBean=configResponse;
@@ -168,5 +170,13 @@ public class SDKConfig {
 
     public int getTimer() {
         return configBean == null ? 0 : configBean.getData().getAppConfig().getTimer();
+    }
+
+    public int getDownloadExpiryDays() {
+        return DOWNLOAD_EXPIRY_DAYS;
+    }
+
+    public static boolean isDownloadEnable() {
+        return DOWNLOAD_ENABLE;
     }
 }

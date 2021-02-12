@@ -135,7 +135,7 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
         }
 
         session = KsPreferenceKeys.getInstance();
-        session.setDownloadOverWifi(1);
+        //session.setDownloadOverWifi(1);
         AppCommonMethod.getPushToken(this);
         updateAndroidSecurityProvider(ActivitySplash.this);
 

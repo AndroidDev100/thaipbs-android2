@@ -46,6 +46,7 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
                     downloadHelper.deleteVideo(downloadedVideo.videoId)
                     downloadedVideos.remove(downloadedVideo)
                     notifyItemRemoved(position)
+                    Logger.e("VideoSize", downloadedVideos.size.toString())
                     notifyItemRangeChanged(position, downloadedVideos.size)
                     buildIndexMap()
                 }
@@ -335,9 +336,11 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
     }
 
     override fun onDownloadFailed(p0: Video, p1: DownloadStatus) {
+        Logger.e(TAG, "onDownloadFailed-->>f" + p0.id)
     }
 
     override fun onDownloadRequested(p0: Video) {
+        Logger.e(TAG, "onDownloadFailed-->>r" + p0.id)
     }
 
     override fun onDownloadCanceled(p0: Video) {

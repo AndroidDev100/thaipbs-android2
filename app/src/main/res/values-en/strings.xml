@@ -280,6 +280,7 @@
     <string name="term_condition">Terms and Conditions</string>
     <string name="my_watchlist">My Watchlist</string>
     <string name="my_history">My Watch History</string>
+    <string name="my_download">My Downloads</string>
     <string name="membership_plan">Membership and Plans</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="sign_out">Logout</string>

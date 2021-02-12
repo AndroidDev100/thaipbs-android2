@@ -5,6 +5,7 @@ import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -737,6 +738,7 @@ public class UserInteractionFragment extends BaseBindingFragment<DetailWatchlist
             }
             break;
             case R.id.pause_download: {
+                Log.w("pauseClicked","in");
                 onDownloadClickInteraction.onPauseClicked(null, this);
             }
         }
@@ -749,7 +751,7 @@ public class UserInteractionFragment extends BaseBindingFragment<DetailWatchlist
 
     public void setDownloadable(boolean isDownloadable) {
         if (getBinding() != null)
-            getBinding().setIsDownloadable(false);
+            getBinding().setIsDownloadable(isDownloadable);
     }
 
     public void setDownloadProgress(float progress) {

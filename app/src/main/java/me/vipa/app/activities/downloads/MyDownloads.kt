@@ -94,7 +94,7 @@ class MyDownloads : BaseBindingActivity<ActivityMyDownloadsBinding>(), MediaDown
     }
 
     override fun deleteVideo(video: Video) {
-
+        Logger.e(TAG, "deleteVideo")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -102,11 +102,18 @@ class MyDownloads : BaseBindingActivity<ActivityMyDownloadsBinding>(), MediaDown
         var counter = 0
         downloadHelper = DownloadHelper(this, this)
         downloadHelper.getAllVideosFromDatabase().observe(this, Observer {
-            downloadsAdapter = DownloadsAdapter(this, it)
-            downloaded_recycler_view.layoutManager = LinearLayoutManager(this)
-            downloaded_recycler_view.setHasFixedSize(true)
-            downloaded_recycler_view.itemAnimator = DefaultItemAnimator()
-            downloaded_recycler_view.adapter = downloadsAdapter
+            if (it.downloadVideos.size>0){
+                downloadsAdapter = DownloadsAdapter(this, it)
+                downloaded_recycler_view.layoutManager = LinearLayoutManager(this)
+                downloaded_recycler_view.setHasFixedSize(true)
+                downloaded_recycler_view.itemAnimator = DefaultItemAnimator()
+                downloaded_recycler_view.adapter = downloadsAdapter
+                nodatafounmd.visibility = View.GONE
+            }else{
+                nodatafounmd.visibility = View.VISIBLE
+                Logger.e(TAG, "blankActivity")
+            }
+
         })
         setupToolbar()
     }

@@ -38,6 +38,8 @@ import com.brightcove.player.model.Video;
 import com.brightcove.player.network.DownloadStatus;
 import com.brightcove.player.offline.MediaDownloadable;
 import com.brightcove.player.pictureinpicture.PictureInPictureManager;
+
+import me.vipa.app.utils.helpers.downloads.MediaTypeCheck;
 import me.vipa.bookmarking.bean.GetBookmarkResponse;
 import me.vipa.app.SDKConfig;
 import me.vipa.app.activities.purchase.callBack.EntitlementStatus;
@@ -1529,6 +1531,7 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
                 if (KsPreferenceKeys.getInstance().getDownloadOverWifi() == 1) {
                     if (NetworkHelper.INSTANCE.isWifiEnabled(this)) {
                         if (videoQuality != 4) {
+                            userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.REQUESTED);
                             downloadHelper.startVideoDownload(downloadAbleVideo, videoQuality);
                         } else {
                             selectDownloadVideoQuality();
@@ -1540,6 +1543,7 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
                     }
                 } else {
                     if (videoQuality != 4) {
+                        userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.REQUESTED);
                         downloadHelper.startVideoDownload(downloadAbleVideo, videoQuality);
                     } else {
                         selectDownloadVideoQuality();
@@ -1570,6 +1574,7 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
     private void selectDownloadVideoQuality() {
         downloadHelper.selectVideoQuality(position -> {
             String[] array = getResources().getStringArray(R.array.download_quality);
+            userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.REQUESTED);
             downloadHelper.startVideoDownload(downloadAbleVideo, position);
         });
     }
@@ -1589,7 +1594,9 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
                     downloadHelper.cancelVideo(downloadAbleVideo.getId());
                     break;
                 case R.id.pause_download:
-                    downloadHelper.pauseVideo();
+                    Log.w("pauseVideo","pop");
+                    userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.REQUESTED);
+                    downloadHelper.pauseVideo(downloadAbleVideo.getId());
                     break;
             }
             return false;
@@ -1613,29 +1620,37 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
 
     @Override
     public void onPauseClicked(String videoId, Object source) {
-        if (KsPreferenceKeys.getInstance().getDownloadOverWifi() == 1) {
+        Log.w("pauseClicked","in2");
+        if (NetworkConnectivity.isOnline(this)) {
+            if (KsPreferenceKeys.getInstance().getDownloadOverWifi() == 1) {
             if (NetworkHelper.INSTANCE.isWifiEnabled(this)) {
+                Log.w("pauseClicked","in3");
+                userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.REQUESTED);
                 downloadHelper.resumeDownload(downloadAbleVideo.getId());
             } else {
-                Toast.makeText(this, "NoWifi", Toast.LENGTH_LONG).show();
+                //Toast.makeText(this, "NoWifi", Toast.LENGTH_LONG).show();
             }
         } else {
+            userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.REQUESTED);
+            Log.w("pauseClicked","in4");
             downloadHelper.resumeDownload(downloadAbleVideo.getId());
         }
+        }else {
+            Toast.makeText(this, getResources().getString(R.string.no_internet_connection), Toast.LENGTH_LONG).show();
+        }
+
     }
 
     @Override
     public void onDownloadRequested(@androidx.annotation.NonNull Video video) {
-        Logger.i(TAG, String.format(
-                "Starting to process '%s' video download request", video.getName()));
+        Logger.e(TAG, "onDownloadRequested");
     }
 
 
     @Override
     public void onDownloadStarted(@androidx.annotation.NonNull Video video, long l,
                                   @androidx.annotation.NonNull Map<String, Serializable> map) {
-        Logger.e(TAG, "onDownloadStarted" + l);
-
+        Logger.e(TAG, "onDownloadStarted");
     }
 
     @Override
@@ -1708,7 +1723,14 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
     public void onDownloadFailed(@androidx.annotation.NonNull Video
                                          video, @androidx.annotation.NonNull com.brightcove.player.network.DownloadStatus
                                          downloadStatus) {
-        Logger.e(TAG, "onDownloadFailed");
+        Log.w("downloadFailed", "onDownloadFailed");
+        try {
+            if (downloadHelper!=null){
+            downloadHelper.cancelVideo(downloadAbleVideo.getId());
+            }
+        }catch (Exception ignored){
+
+        }
     }
 
     @Override
@@ -1718,6 +1740,7 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
 
     @Override
     public void pauseVideoDownload(Video video) {
+        Log.w("pauseVideo","pop2");
         if (userInteractionFragment != null) {
             userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.DOWNLOADING);
         }
@@ -1750,13 +1773,20 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
 
     }
 
+
     @Override
     public void videoFound(Video video) {
         this.downloadAbleVideo = video;
         if (userInteractionFragment != null) {
-            Log.e("Download", "Video Found=>" + video.isClearContent());
-            userInteractionFragment.setDownloadable(downloadAbleVideo.isOfflinePlaybackAllowed());
-            userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.START);
+            Log.e("Download", "Video Found=>" + video.toString());
+            if (SDKConfig.isDownloadEnable()){
+                if (videoDetails!=null){
+                    if (MediaTypeCheck.isMediaTypeSupported(videoDetails.getAssetType())){
+                        userInteractionFragment.setDownloadable(downloadAbleVideo.isOfflinePlaybackAllowed());
+                        userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.START);
+                    }
+                }
+            }
         }
     }
 

@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide;
 import me.vipa.app.MvHubPlusApplication;
 import me.vipa.app.activities.ManageAccount.UI.ManageAccount;
 import me.vipa.app.activities.OtherApplication.UI.OtherApplication;
+import me.vipa.app.activities.downloads.MyDownloads;
 import me.vipa.app.activities.homeactivity.viewmodel.HomeViewModel;
 import me.vipa.app.activities.notification.ui.NotificationActivity;
 import me.vipa.app.activities.profile.ui.ProfileActivityNew;
@@ -292,7 +293,16 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
             else
                 mListener.onLoginClicked();
 
-        } else if (caption.equals(getString(R.string.my_history))) {
+        }
+        else if (caption.equals(getString(R.string.my_download))) {
+
+            if (loginStatus)
+                new ActivityLauncher(getActivity()).launchMyDownloads();
+            else
+                mListener.onLoginClicked();
+
+        }
+        else if (caption.equals(getString(R.string.my_history))) {
             if (loginStatus)
                 new ActivityLauncher(getActivity()).watchHistory(getActivity(), WatchListActivity.class, Objects.requireNonNull(getActivity()).getResources().getString(R.string.my_history), true);
             else

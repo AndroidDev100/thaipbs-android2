@@ -383,7 +383,7 @@ public class APIServiceLayer {
                 // keyword= URLEncoder.encode(keyword, "UTF-8");
                 //String searchValue=
 
-                Observable<ResponseSearch> call = endpoint.getSearch(keyword, MediaTypeConstants.getInstance().getMovie(), size, page, languageCode)
+                Observable<ResponseSearch> call = endpoint.getSearch(keyword, "MOVIES", size, page, languageCode)
                         .subscribeOn(Schedulers.io())
                         .observeOn(Schedulers.io());
                 Observable<ResponseSearch> call1 = endpoint.getSearch(keyword, MediaTypeConstants.getInstance().getSeries(), size, page, languageCode)

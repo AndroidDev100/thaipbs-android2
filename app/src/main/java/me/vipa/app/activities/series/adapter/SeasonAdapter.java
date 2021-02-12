@@ -117,7 +117,7 @@ public class SeasonAdapter extends RecyclerView.Adapter<SeasonAdapter.SeasonView
                 @Override
                 public void onVideo(Video video) {
                     if (video.isOfflinePlaybackAllowed()) {
-                        holder.itemBinding.setIsDownloadable(false);
+                        holder.itemBinding.setIsDownloadable(true);
                         updateDownloadStatus(holder, position);
                     } else {
                         holder.itemBinding.setIsDownloadable(false);

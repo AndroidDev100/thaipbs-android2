@@ -7,6 +7,7 @@ import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Environment.getExternalStorageDirectory
 import android.os.StatFs
+import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
@@ -156,6 +157,7 @@ class DownloadHelper() {
             allowedMobileDownload()
             getAllVideosFromDatabase()
         }
+
     }
 
     fun allowedMobileDownload() {
@@ -164,7 +166,7 @@ class DownloadHelper() {
     }
 
     fun findVideo(videoId: String): Video? {
-        Logger.e(TAG, "VideoId$videoId")
+        Logger.e("findVideo", "VideoId$videoId")
         catalog.findVideoByID(videoId, object : VideoListener() {
             override fun onVideo(video: Video) {
                 this@DownloadHelper.video = video
@@ -173,31 +175,37 @@ class DownloadHelper() {
             }
 
             override fun onError(error: String) {
-                Logger.e(TAG, error)
+                Logger.e("findVideo", error.toString())
             }
         })
         return video
     }
 
     fun findVideo(videoId: String, videoListener: VideoListener) {
+        Logger.e("videoFound", videoId)
         catalog.findVideoByID(videoId, object : VideoListener() {
             override fun onVideo(video: Video) {
+                Logger.e("videoFound", video.toString())
                 videoListener.onVideo(video)
             }
 
             override fun onError(error: String) {
+                Logger.e("videoFound", error.toString())
                 videoListener.onError(error)
             }
         })
     }
 
     fun findOfflineVideoById(videoId: String, videoListener: OfflineCallback<Video>) {
+        Logger.e("videoOffline", videoId)
         catalog.findOfflineVideoById(videoId, object : OfflineCallback<Video> {
             override fun onSuccess(p0: Video?) {
+                Logger.e("videoNotFound", p0.toString())
                 videoListener.onSuccess(p0)
             }
 
             override fun onFailure(p0: Throwable?) {
+                Logger.e("videoNotFound", p0.toString())
                 videoListener.onFailure(p0)
             }
 
@@ -260,19 +268,23 @@ class DownloadHelper() {
     }
 
     fun startVideoDownload(video: Video, videoQuality: Int) {
+        Logger.w("valuePrint", video.isClearContent.toString())
         if (video.isClearContent) {
             downloadVideo(video, videoQuality)
         } else {
             acquireLicense(video, object : CommonApiCallBack {
                 override fun onSuccess(item: Any?) {
+                    Logger.e("licenceAq", item.toString())
                     downloadVideo(item as Video, videoQuality)
                 }
 
                 override fun onFailure(throwable: Throwable?) {
+                    Logger.e("licenceAq", throwable.toString())
                     Logger.e(TAG, throwable?.message)
                 }
 
                 override fun onFinish() {
+                    Logger.e("licenceAq", "onfinish")
                 }
             })
         }
@@ -288,14 +300,17 @@ class DownloadHelper() {
         } else {
             acquireLicense(video, object : CommonApiCallBack {
                 override fun onSuccess(item: Any?) {
+                    Logger.e("licenceAq", item.toString())
                     downloadVideo(item as Video, videoQuality)
                 }
 
                 override fun onFailure(throwable: Throwable?) {
+                    Logger.e("licenceAq", throwable.toString())
                    Logger.e(TAG, throwable?.message)
                 }
 
                 override fun onFinish() {
+                    Logger.e("licenceAq", "onfinish")
                 }
             })
         }
@@ -459,6 +474,7 @@ class DownloadHelper() {
     }
 
     private fun downloadVideo(video: Video, videoQuality: Int) {
+        Logger.e("licenceAq d", video.toString())
         addVideotoDatabase(video, seriesId)
 
         when (videoQuality) {
@@ -480,58 +496,68 @@ class DownloadHelper() {
             }
         }
         if (assetType != MediaTypeConstants.getInstance().series) {
-            catalog.getMediaFormatTracksAvailable(video) { mediaDownloadable, bundle ->
-                BrightcoveDownloadUtil.selectMediaFormatTracksAvailable(mediaDownloadable, bundle)
-                when (videoQuality) {
-                    0 -> {
-                        Logger.e("Download", BEST_BIT_RATE.toString())
-                        mediaDownloadable.setVideoBitrate(BEST_BIT_RATE)
+            try {
+                Logger.e("licenceAq in", video.toString())
+                catalog.getMediaFormatTracksAvailable(video) { mediaDownloadable, bundle ->
+                    Logger.e("licenceAq in2", video.toString())
+                    BrightcoveDownloadUtil.selectMediaFormatTracksAvailable(mediaDownloadable, bundle)
+                    Logger.e("licenceAq in3", video.toString())
+                    when (videoQuality) {
+                        0 -> {
+                            Logger.e("Download", BEST_BIT_RATE.toString())
+                            mediaDownloadable.setVideoBitrate(BEST_BIT_RATE)
+                        }
+                        1 -> {
+                            Logger.e("Download", BETTER_BIT_RATE.toString())
+                            mediaDownloadable.setVideoBitrate(BETTER_BIT_RATE)
+                        }
+                        2 -> {
+                            Logger.e("Download", GOOD_BIT_RATE.toString())
+                            mediaDownloadable.setVideoBitrate(GOOD_BIT_RATE)
+                        }
+                        3 -> {
+                            Logger.e("Download", DATA_SAVER_BIT_RATE.toString())
+                            mediaDownloadable.setVideoBitrate(DATA_SAVER_BIT_RATE)
+                        }
                     }
-                    1 -> {
-                        Logger.e("Download", BETTER_BIT_RATE.toString())
-                        mediaDownloadable.setVideoBitrate(BETTER_BIT_RATE)
+                    val videos = ArrayList<MediaFormat>()
+                    val audios = ArrayList<MediaFormat>()
+                    val roles = ArrayList<String>()
+                    val captions = ArrayList<MediaFormat>()
+                    if (bundle.containsKey(MediaDownloadable.VIDEO_RENDITIONS)) {
+                        videos.addAll(bundle.getParcelableArrayList(MediaDownloadable.VIDEO_RENDITIONS)!!)
                     }
-                    2 -> {
-                        Logger.e("Download", GOOD_BIT_RATE.toString())
-                        mediaDownloadable.setVideoBitrate(GOOD_BIT_RATE)
+                    if (bundle.containsKey(MediaDownloadable.AUDIO_LANGUAGES)) {
+                        audios.addAll(bundle.getParcelableArrayList(MediaDownloadable.AUDIO_LANGUAGES)!!)
                     }
-                    3 -> {
-                        Logger.e("Download", DATA_SAVER_BIT_RATE.toString())
-                        mediaDownloadable.setVideoBitrate(DATA_SAVER_BIT_RATE)
+                    if(bundle.containsKey(MediaDownloadable.AUDIO_LANGUAGE_ROLES)) {
+                        roles.addAll(bundle.getStringArrayList(MediaDownloadable.AUDIO_LANGUAGE_ROLES)!!)
                     }
-                }
-                val videos = ArrayList<MediaFormat>()
-                val audios = ArrayList<MediaFormat>()
-                val roles = ArrayList<String>()
-                val captions = ArrayList<MediaFormat>()
-                if (bundle.containsKey(MediaDownloadable.VIDEO_RENDITIONS)) {
-                    videos.addAll(bundle.getParcelableArrayList(MediaDownloadable.VIDEO_RENDITIONS)!!)
-                }
-                if (bundle.containsKey(MediaDownloadable.AUDIO_LANGUAGES)) {
-                    audios.addAll(bundle.getParcelableArrayList(MediaDownloadable.AUDIO_LANGUAGES)!!)
-                }
-                if(bundle.containsKey(MediaDownloadable.AUDIO_LANGUAGE_ROLES)) {
-                    roles.addAll(bundle.getStringArrayList(MediaDownloadable.AUDIO_LANGUAGE_ROLES)!!)
-                }
-                if(bundle.containsKey(MediaDownloadable.CAPTIONS)) {
-                    captions.addAll(bundle.getParcelableArrayList(MediaDownloadable.CAPTIONS)!!)
-                }
-                val filteredBundle = Bundle()
-                filteredBundle.putParcelableArrayList(MediaDownloadable.VIDEO_RENDITIONS,videos)
-                filteredBundle.putParcelableArrayList(MediaDownloadable.AUDIO_LANGUAGES,audios)
-                filteredBundle.putStringArrayList(MediaDownloadable.AUDIO_LANGUAGE_ROLES,roles)
-                filteredBundle.putParcelableArrayList(MediaDownloadable.CAPTIONS,captions)
-                mediaDownloadable.configurationBundle = filteredBundle
-                Logger.e("Bundle", Gson().toJson(filteredBundle))
-                catalog.downloadVideo(video, object : OfflineCallback<DownloadStatus> {
-                    override fun onSuccess(downloadStatus: DownloadStatus) {
-                        updateDownloadStatus(downloadStatus)
+                    if(bundle.containsKey(MediaDownloadable.CAPTIONS)) {
+                        captions.addAll(bundle.getParcelableArrayList(MediaDownloadable.CAPTIONS)!!)
                     }
+                    val filteredBundle = Bundle()
+                    filteredBundle.putParcelableArrayList(MediaDownloadable.VIDEO_RENDITIONS,videos)
+                    filteredBundle.putParcelableArrayList(MediaDownloadable.AUDIO_LANGUAGES,audios)
+                    filteredBundle.putStringArrayList(MediaDownloadable.AUDIO_LANGUAGE_ROLES,roles)
+                    filteredBundle.putParcelableArrayList(MediaDownloadable.CAPTIONS,captions)
+                    mediaDownloadable.configurationBundle = filteredBundle
+                    Logger.e("Bundle", Gson().toJson(filteredBundle))
+                    catalog.downloadVideo(video, object : OfflineCallback<DownloadStatus> {
+                        override fun onSuccess(downloadStatus: DownloadStatus) {
+                            updateDownloadStatus(downloadStatus)
+                        }
 
-                    override fun onFailure(throwable: Throwable) {
-                        Logger.e(TAG, "onFailure====>" + throwable.message)
-                    }
-                })
+                        override fun onFailure(throwable: Throwable) {
+                            Logger.e("licenceAq in5", video.toString())
+                            Logger.e(TAG, "onFailure====>" + throwable.message)
+                        }
+                    })
+                }
+
+            }catch (e : Exception){
+                Logger.e("licenceAq in4", video.toString())
+                Logger.e(TAG, "onFailure====>" + e.message)
             }
         }
     }
@@ -693,6 +719,7 @@ class DownloadHelper() {
                 }
 
                 override fun onFailure(p0: Throwable?) {
+                    Logger.e(TAG, "pauseDownload$p0")
                 }
             })
         }
@@ -705,6 +732,7 @@ class DownloadHelper() {
             }
 
             override fun onFailure(p0: Throwable?) {
+
             }
         })
     }
@@ -724,8 +752,10 @@ class DownloadHelper() {
     }
 
     fun resumeDownload(videoId: String) {
+        Log.w("pauseClicked", "in5"+videoId)
         findVideo(videoId, object : VideoListener() {
             override fun onVideo(p0: Video?) {
+                Log.w("pauseClicked", "in5"+p0?.isClearContent)
                 if (p0?.isClearContent!!) {
                     videoDownloadResume(p0)
                 } else {
@@ -752,6 +782,7 @@ class DownloadHelper() {
             }
 
             override fun onFailure(p0: Throwable?) {
+                Log.w("pauseClicked", "in6"+p0.toString())
             }
         })
     }
@@ -978,4 +1009,5 @@ class DownloadHelper() {
     interface AsyncResponse<T> {
         fun processFinish(result: T)
     }
+
 }
