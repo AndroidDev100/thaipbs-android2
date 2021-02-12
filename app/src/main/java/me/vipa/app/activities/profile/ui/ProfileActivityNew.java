@@ -242,6 +242,8 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
                                 e.printStackTrace();
                             }
                         }else {
+                            getBinding().etDob.setText("");
+                            dateMilliseconds = "";
                             new ToastHandler(ProfileActivityNew.this).show(getResources().getString(R.string.date_difference));
                         }
 

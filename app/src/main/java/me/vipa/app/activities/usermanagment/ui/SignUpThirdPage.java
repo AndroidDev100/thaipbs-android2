@@ -255,6 +255,8 @@ public class SignUpThirdPage extends BaseBindingActivity<ActivitySignUpThirdPage
                                 e.printStackTrace();
                             }
                         }else {
+                            getBinding().etDob.setText("");
+                            dateMilliseconds = "";
                             new ToastHandler(SignUpThirdPage.this).show(getResources().getString(R.string.date_difference));
                         }
 
