@@ -166,7 +166,6 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         Bundle bundle = getArguments();
         if (bundle != null) {
             videoId = bundle.getString("videoId");
-            Log.w("IMATAG", videoId);
             assetType = bundle.getString("assetType");
             selected_track = bundle.getString("selected_track");
             Log.e("Selectedtrack", selected_track);

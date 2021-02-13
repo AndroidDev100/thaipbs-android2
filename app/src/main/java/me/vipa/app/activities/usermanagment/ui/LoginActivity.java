@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -450,6 +451,7 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
     }
 
     public void saveUserDetails(String response, int userID, boolean isManual) {
+        try {
         Data fbLoginData = new Gson().fromJson(response, Data.class);
         Gson gson = new Gson();
         String stringJson = gson.toJson(fbLoginData);
@@ -475,6 +477,9 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
             });
         } else {
             onBackPressed();
+        }
+        }catch (Exception e){
+            Log.d("Exception",e.getMessage());
         }
 
         //new ActivityLauncher(LoginActivity.this).homeScreen(LoginActivity.this, HomeActivity.class);
