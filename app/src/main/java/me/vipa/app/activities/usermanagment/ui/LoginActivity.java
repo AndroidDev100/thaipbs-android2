@@ -478,17 +478,20 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
         } else {
             onBackPressed();
         }
+
+            trackEvent(String.valueOf(fbLoginData.getName()), isManual);
+
         }catch (Exception e){
             Log.d("Exception",e.getMessage());
         }
 
         //new ActivityLauncher(LoginActivity.this).homeScreen(LoginActivity.this, HomeActivity.class);
 
-        try {
-            trackEvent(String.valueOf(fbLoginData.getName()), isManual);
-        } catch (Exception e) {
-
-        }
+//        try {
+//            trackEvent(String.valueOf(fbLoginData.getName()), isManual);
+//        } catch (Exception e) {
+//
+//        }
     }
 
     private void trackEvent(String name, boolean type) {
@@ -529,15 +532,19 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
     }
 
     private boolean validateEmptyPassword() {
+        // String passwordRegex="^(?=.*[!&^%$#@()\\_+-])[A-Za-z0-9\\d!&^%$#@()\\_+-]{6,20}$";
         boolean check = false;
-        if (StringUtils.isNullOrEmptyOrZero(getBinding().etPassword.getText().toString().trim())) {
-            getBinding().errorPassword.setText(getResources().getString(R.string.empty_password));
+        // Pattern mPattern = Pattern.compile(passwordRegex);
+        // Matcher matcher = mPattern.matcher(password.toString());
+        if(!(getBinding().etPassword.length() >=6))
+        {
             getBinding().errorPassword.setVisibility(View.VISIBLE);
-        } else {
-            check = true;
+            getBinding().errorPassword.setText(getResources().getString(R.string.strong_password_required));
+            //  showDialog(SignUpActivity.this.getResources().getString(R.string.error), getResources().getString(R.string.strong_password_required));
+        }else {
             getBinding().errorPassword.setVisibility(View.INVISIBLE);
+            check = true;
         }
-
         return check;
     }
 

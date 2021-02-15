@@ -614,7 +614,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
         boolean check = false;
         if (!password.equalsIgnoreCase(confirmPassword)){
             getBinding().errorCnfPassword.setVisibility(View.VISIBLE);
-            getBinding().errorCnfPassword.setText(getResources().getString(R.string.password_match));
+            getBinding().errorCnfPassword.setText(getResources().getString(R.string.confirm_pwd_not_match));
         }else {
             getBinding().errorCnfPassword.setVisibility(View.INVISIBLE);
             check = true;
