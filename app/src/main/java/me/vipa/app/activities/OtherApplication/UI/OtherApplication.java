@@ -62,6 +62,6 @@ public class OtherApplication extends BaseBindingActivity<ActivityOtherApplicati
 }
 
     private void openUrl(String url) {
-        AppCommonMethod.openUrl(getApplicationContext(), url);
+        AppCommonMethod.openUrl(OtherApplication.this, url);
     }
 }

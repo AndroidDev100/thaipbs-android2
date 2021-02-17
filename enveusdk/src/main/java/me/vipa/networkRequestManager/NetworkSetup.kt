@@ -27,11 +27,13 @@ class NetworkSetup {
                     .build()
 
             if (retrofitApi == null) {
-                retrofitApi = Retrofit.Builder()
-                        .baseUrl(BaseConfiguration.instance.clients.getBaseUrl())
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .client(okHttpClient)
-                        .build()
+                if (BaseConfiguration.instance.clients.getBaseUrl()!=null && BaseConfiguration.instance.clients.getBaseUrl()!="") {
+                    retrofitApi = Retrofit.Builder()
+                            .baseUrl(BaseConfiguration.instance.clients.getBaseUrl())
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .client(okHttpClient)
+                            .build()
+                }
             }
             return retrofitApi
         }
