@@ -510,8 +510,8 @@ public class BaseActivity extends AppCompatActivity implements BaseActivityAlert
     protected void onStart() {
         super.onStart();
         if(DetailActivity.isBackStacklost){
-            getApplicationContext().startActivity(new Intent(this, getClass())
-                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+           /* getApplicationContext().startActivity(new Intent(this, getClass())
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));*/
         }
     }
 

@@ -1,6 +1,7 @@
 package me.vipa.app.beanModelV3.uiConnectorModelV2;
 
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 import androidx.core.content.ContextCompat;
 
@@ -241,6 +242,7 @@ public class EnveuVideoItemBean implements Serializable {
           //  this.tvod = details.getTvod() == null ? "" : details.getTvod();
             this.episodeNo = details.getEpisodeNumber() == null ? "" : details.getEpisodeNumber();
             this.assetType = details.getContentType() == null ? "" : details.getContentType();
+                Log.w("assetType",assetType);
             this.brightcoveVideoId = details.getBrightcoveContentId() == null ? "" : details.getBrightcoveContentId();
 
             this.series = "";

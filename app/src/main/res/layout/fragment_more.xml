@@ -69,6 +69,8 @@
                                     android:orientation="vertical">
 
                                     <LinearLayout
+                                        android:id="@+id/titleLayout"
+                                        android:visibility="visible"
                                         android:layout_width="@dimen/new_more_img_size"
                                         android:layout_height="@dimen/new_more_img_size"
                                         android:gravity="center"
@@ -83,17 +85,18 @@
                                             android:textColor="@color/white"
                                             android:layout_height="wrap_content" />
 
-                                        <de.hdodenhof.circleimageview.CircleImageView
-                                            android:id="@+id/ivProfilePic"
-                                            android:visibility="gone"
-                                            android:layout_width="@dimen/_75sdp"
-                                            android:layout_height="@dimen/_75sdp"
-                                            android:src="@drawable/default_profile_pic"
-                                            app:civ_border_color="@color/material_grey_400"
-                                            app:civ_border_width="@dimen/NontonSize1" />
 
                                     </LinearLayout>
 
+
+                                    <de.hdodenhof.circleimageview.CircleImageView
+                                        android:id="@+id/ivProfilePic"
+                                        android:visibility="gone"
+                                        android:layout_width="@dimen/_70sdp"
+                                        android:layout_height="@dimen/_70sdp"
+                                        android:src="@drawable/default_profile_pic"
+                                        app:civ_border_color="@color/material_grey_400"
+                                        app:civ_border_width="@dimen/NontonSize1" />
 
 
                                     <TextView

@@ -81,7 +81,7 @@
     <string name="forgot_password_u"><b><u>ลืมรหัสผ่าน?</u></b></string>
 
     <string name="dont_have_an_account">ไม่มีบัญชีผู้ใช้?</string>
-    <string name="title_more">อื่น ๆ</string>
+    <string name="title_more">เพิ่มเติม</string>
 
     <string name="email_address">อีเมล</string>
     <string name="send_email">ส่งอีเมล</string>
@@ -96,7 +96,7 @@
     <string name="login_txt">เข้าสู่ระบบ</string>
     <string name="update">อัพเดท</string>
     <string name="connct_facebbook">เชื่อมต่อโดย เฟสบุ๊ค</string>
-    <string name="detail_title">กรุณาใส่ อีเมลที่ลงทะเบียนไว้ด้านล่าง ระบบจะจัดส่งวิธีการ รีเซ็ตพาสเวิรด์ไปให้ ตามอีเมลที่ลงทะเบียนไว้.</string>
+    <string name="detail_title">ขอขอบคุณที่ส่งคำขอ หากเราพบที่อยู่อีเมลในระบบของเรา เราจะส่งลิงก์รีเซ็ตไปทางอีเมล โปรดป้อนรหัสผ่านใหม่</string>
     <string name="already_have_account_sign">มีบัญชีผู้ใช้งานหรือไม่?</string>
 
     <string name="cancel">ยกเลิก</string>
@@ -128,7 +128,7 @@
     <string name="popular_search">ค้นหาจากความนิยม</string>
 
     <string name="no_result">ไม่พบผลลัพธ์</string>
-    <string name="no_result1">ลองค้นหาตอนอื่นๆ</string>
+    <string name="no_result1">ไม่พบผลลัพธ์</string>
 
 
     <string name="recent_searches">การค้นหาล่าสุด</string>
@@ -166,7 +166,7 @@
     <string name="title_premium">ประเภทรายการ</string>
     <string name="title_live_tv">รายการสด</string>
     <string name="title_more1">หน้าโปรไฟล์</string>
-    <string name="more">อื่น ๆ</string>
+    <string name="more">เพิ่มเติม</string>
     <string name="player_error">เราไม่สามารถดำเนินการตามคำขอของคุณได้,โปรดลองอีกครั้งใ</string>
     <string name="tab_heading_episodes">ตอน</string>
     <string name="all_episode">ตอนทั้งหมด</string>

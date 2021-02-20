@@ -250,7 +250,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
             }
             mLastClickTime = SystemClock.elapsedRealtime();
             finish();
-            startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
+            startActivity(new Intent(SignUpActivity.this, LoginActivity.class).putExtra("loginFrom",""));
         });
 
         getBinding().etName.setOnClickListener(view -> getBinding().errorName.setVisibility(View.INVISIBLE));

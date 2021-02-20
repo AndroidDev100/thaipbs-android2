@@ -374,29 +374,22 @@
 
                     </LinearLayout>
 
-                    <RelativeLayout
-                        android:orientation="vertical"
-                        android:layout_width="match_parent"
-                        android:layout_marginTop="@dimen/tab_top_margin"
-                        android:layout_height="wrap_content">
 
                         <com.google.android.material.tabs.TabLayout
                             android:id="@+id/tabLayout"
-                            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                            android:layout_marginTop="@dimen/tab_top_margin"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="left"
+                            android:layout_marginLeft="@dimen/rail_top_margin"
                             android:background="?attr/backgroundColor"
                             android:minHeight="?actionBarSize"
                             app:tabGravity="fill"
                             app:tabIndicatorColor="@color/description_title_yellow"
                             app:tabMode="fixed"
-                            android:tabStripEnabled="true"
                             app:tabSelectedTextColor="@color/white"
                             app:tabTextColor="?attr/cancel_text_color"
-                            >
-
-                        </com.google.android.material.tabs.TabLayout>
+                            />
                         <View
                             android:background="@color/description_grey"
                             android:layout_width="match_parent"
@@ -404,7 +397,6 @@
                             android:layout_height="1dp"
                             />
 
-                    </RelativeLayout>
 
 
                     <me.vipa.app.utils.helpers.WrappingViewPager

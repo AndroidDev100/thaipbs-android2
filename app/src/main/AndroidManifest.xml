@@ -214,6 +214,7 @@
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:resizeableActivity="true"
             android:screenOrientation="locked"
+            android:launchMode="singleTask"
             android:supportsPictureInPicture="true"
             android:theme="@style/MyMaterialTheme" />
         <activity
@@ -227,6 +228,7 @@
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:resizeableActivity="true"
             android:supportsPictureInPicture="true"
+            android:launchMode="singleTask"
             android:screenOrientation="locked"
             android:theme="@style/MyMaterialTheme" />
 
