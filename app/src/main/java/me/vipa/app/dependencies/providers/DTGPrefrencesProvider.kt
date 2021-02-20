@@ -16,4 +16,6 @@ class DTGPrefrencesProvider(mContext: Context) {
     fun getExpiryDays(): Int {
         return dtgSharePrefs.getInt("expiryDays", 0)
     }
+
+
 }

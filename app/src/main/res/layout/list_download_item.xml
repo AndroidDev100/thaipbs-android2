@@ -154,6 +154,15 @@
                 android:visibility='@{downloadStatus==DownloadStatus.PAUSE ? View.VISIBLE : View.GONE, default="gone"}'
                 app:srcCompat="?attr/pause_download"
                 android:id="@+id/pause_download"/>
+
+            <ProgressBar
+                android:id="@+id/loading_download"
+                android:layout_width="@dimen/watch_ListWidth"
+                android:layout_height="@dimen/watch_ListWidth"
+                android:layout_margin="@dimen/NontonSize8"
+                android:visibility='@{downloadStatus==DownloadStatus.REQUESTED ? View.VISIBLE : View.GONE, default="gone"}' />
+
+
         </FrameLayout>
 
         <View

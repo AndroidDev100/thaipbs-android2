@@ -918,7 +918,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
     private void parseVideoDetails(EnveuVideoItemBean videoDetails) {
         dismissLoading(getBinding().progressBar);
         sharingClick(videoDetails);
-        ImageHelper.getInstance(EpisodeActivity.this).loadListImage(getBinding().playerImage, videoDetails.getPosterURL());
+        ImageHelper.getInstance(EpisodeActivity.this).loadListImage(getBinding().playerImage, videoDetails.getPosterURL());Log.w("videoPrimium",videoDetails.getBrightcoveVideoId());
 //        if (videoDetails.isPremium()) {
 //            getBinding().tvPurchased.setVisibility(View.GONE);
 //            getBinding().tvPremium.setVisibility(View.GONE);
@@ -1929,7 +1929,8 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
 
     @Override
     public void onDownloadClicked(String videoId, Object position, Object source) {
-        boolean loginStatus = preference.getAppPrefLoginStatus().equalsIgnoreCase(AppConstants.UserStatus.Login.toString());
+        try {
+             boolean loginStatus = preference.getAppPrefLoginStatus().equalsIgnoreCase(AppConstants.UserStatus.Login.toString());
         if (!loginStatus)
             new ActivityLauncher(this).loginActivity(this, LoginActivity.class);
         else {
@@ -1937,18 +1938,60 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
             if (KsPreferenceKeys.getInstance().getDownloadOverWifi() == 1 && NetworkHelper.INSTANCE.isWifiEnabled(this)) {
                 if (source instanceof UserInteractionFragment) {
                     if (videoQuality != 4) {
-                        downloadHelper.startEpisodeDownload(downloadAbleVideo, String.valueOf(seriesDetailBean.getBrightcoveVideoId()), Integer.parseInt(videoDetails.getSeasonNumber()), (String) videoDetails.getEpisodeNo(), videoQuality);
+                        if (AppCommonMethod.getCheckBCID(videoDetails.getBrightcoveVideoId())){
+                            if (videoDetails.getSeasonNumber().equalsIgnoreCase("")){
+                                userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.REQUESTED);
+                                downloadHelper.startEpisodeDownload(downloadAbleVideo, String.valueOf(videoDetails.getBrightcoveVideoId()), 1, (String) videoDetails.getEpisodeNo(), videoQuality);
+
+                            }else {
+                                userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.REQUESTED);
+                                downloadHelper.startEpisodeDownload(downloadAbleVideo, String.valueOf(videoDetails.getBrightcoveVideoId()), Integer.parseInt(videoDetails.getSeasonNumber()), (String) videoDetails.getEpisodeNo(), videoQuality);
+
+                            }
+                        }
                     } else {
-                        selectDownloadVideoQuality(downloadAbleVideo, String.valueOf(seriesDetailBean.getBrightcoveVideoId()), Integer.parseInt(videoDetails.getSeasonNumber()), (String) videoDetails.getEpisodeNo());
+                        if (AppCommonMethod.getCheckBCID(videoDetails.getBrightcoveVideoId())){
+                            if (videoDetails.getSeasonNumber().equalsIgnoreCase("")){
+                                userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.REQUESTED);
+                                selectDownloadVideoQuality(downloadAbleVideo, String.valueOf(videoDetails.getBrightcoveVideoId()), 1, (String) videoDetails.getEpisodeNo());
+
+                            }else {
+                                userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.REQUESTED);
+                                selectDownloadVideoQuality(downloadAbleVideo, String.valueOf(videoDetails.getBrightcoveVideoId()), Integer.parseInt(videoDetails.getSeasonNumber()), (String) videoDetails.getEpisodeNo());
+
+                            }
+                        }
                     }
                 } else {
                     downloadHelper.findVideo(String.valueOf(videoId), new VideoListener() {
                         @Override
                         public void onVideo(Video video) {
                             if (videoQuality != 4) {
-                                downloadHelper.startEpisodeDownload(downloadAbleVideo, String.valueOf(seriesDetailBean.getBrightcoveVideoId()), Integer.parseInt(videoDetails.getSeasonNumber()), (String) videoDetails.getEpisodeNo(), videoQuality);
+                                if (AppCommonMethod.getCheckBCID(videoDetails.getBrightcoveVideoId())){
+                                    if (videoDetails.getSeasonNumber().equalsIgnoreCase("")){
+                                        userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.REQUESTED);
+                                        downloadHelper.startEpisodeDownload(downloadAbleVideo, String.valueOf(videoDetails.getBrightcoveVideoId()), 1, (String) videoDetails.getEpisodeNo(), videoQuality);
+
+                                    }else {
+                                        userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.REQUESTED);
+                                        downloadHelper.startEpisodeDownload(downloadAbleVideo, String.valueOf(videoDetails.getBrightcoveVideoId()), Integer.parseInt(videoDetails.getSeasonNumber()), (String) videoDetails.getEpisodeNo(), videoQuality);
+
+                                    }
+                                }
+
                             } else {
-                                selectDownloadVideoQuality(video, String.valueOf(seriesDetailBean.getBrightcoveVideoId()), Integer.parseInt(videoDetails.getSeasonNumber()), position.toString());
+                                if (AppCommonMethod.getCheckBCID(videoDetails.getBrightcoveVideoId())){
+                                    if (videoDetails.getSeasonNumber().equalsIgnoreCase("")){
+                                        userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.REQUESTED);
+                                        selectDownloadVideoQuality(video, String.valueOf(videoDetails.getBrightcoveVideoId()), 1, position.toString());
+
+                                    }else {
+                                        userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.REQUESTED);
+                                        selectDownloadVideoQuality(video, String.valueOf(videoDetails.getBrightcoveVideoId()), Integer.parseInt(videoDetails.getSeasonNumber()), position.toString());
+
+                                    }
+                                }
+
                             }
                         }
                     });
@@ -1959,32 +2002,78 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
                 if (KsPreferenceKeys.getInstance().getDownloadOverWifi() == 0) {
                     if (source instanceof UserInteractionFragment) {
                         if (videoQuality != 4) {
-                            downloadHelper.startEpisodeDownload(downloadAbleVideo, String.valueOf(seriesDetailBean.getBrightcoveVideoId()), Integer.parseInt(videoDetails.getSeasonNumber()), (String) videoDetails.getEpisodeNo(), videoQuality);
+                            if (AppCommonMethod.getCheckBCID(videoDetails.getBrightcoveVideoId())){
+                                if (videoDetails.getSeasonNumber().equalsIgnoreCase("")){
+                                    downloadHelper.startEpisodeDownload(downloadAbleVideo, String.valueOf(videoDetails.getBrightcoveVideoId()), 1, (String) videoDetails.getEpisodeNo(), videoQuality);
+                                }else {
+                                    downloadHelper.startEpisodeDownload(downloadAbleVideo, String.valueOf(videoDetails.getBrightcoveVideoId()), Integer.parseInt(videoDetails.getSeasonNumber()), (String) videoDetails.getEpisodeNo(), videoQuality);
+                                }
+
+                            }
+
                         } else {
-                            selectDownloadVideoQuality(downloadAbleVideo, String.valueOf(seriesDetailBean.getBrightcoveVideoId()), Integer.parseInt(videoDetails.getSeasonNumber()), videoDetails.getEpisodeNo() + "");
+                            if (AppCommonMethod.getCheckBCID(videoDetails.getBrightcoveVideoId())){
+                                if (videoDetails.getSeasonNumber().equalsIgnoreCase("")){
+                                    selectDownloadVideoQuality(downloadAbleVideo, String.valueOf(videoDetails.getBrightcoveVideoId()), 1, videoDetails.getEpisodeNo() + "");
+                                }else {
+                                    selectDownloadVideoQuality(downloadAbleVideo, String.valueOf(videoDetails.getBrightcoveVideoId()), Integer.parseInt(videoDetails.getSeasonNumber()), videoDetails.getEpisodeNo() + "");
+                                }
+
+                            }
+
                         }
                     } else {
                         downloadHelper.findVideo(String.valueOf(videoId), new VideoListener() {
                             @Override
                             public void onVideo(Video video) {
                                 if (videoQuality != 4) {
-                                    downloadHelper.startEpisodeDownload(downloadAbleVideo, String.valueOf(seriesDetailBean.getBrightcoveVideoId()), Integer.parseInt(videoDetails.getSeasonNumber()), videoDetails.getEpisodeNo() + "", videoQuality);
+                                    if (AppCommonMethod.getCheckBCID(videoDetails.getBrightcoveVideoId())){
+                                        if (videoDetails.getSeasonNumber().equalsIgnoreCase("")){
+                                            downloadHelper.startEpisodeDownload(downloadAbleVideo, String.valueOf(videoDetails.getBrightcoveVideoId()), 1, videoDetails.getEpisodeNo() + "", videoQuality);
+                                        }else {
+                                            downloadHelper.startEpisodeDownload(downloadAbleVideo, String.valueOf(videoDetails.getBrightcoveVideoId()), Integer.parseInt(videoDetails.getSeasonNumber()), videoDetails.getEpisodeNo() + "", videoQuality);
+                                        }
+
+                                    }
+
                                 } else {
-                                    selectDownloadVideoQuality(video, String.valueOf(seriesDetailBean.getBrightcoveVideoId()), Integer.parseInt(videoDetails.getSeasonNumber()), position.toString());
+                                    if (AppCommonMethod.getCheckBCID(videoDetails.getBrightcoveVideoId())){
+                                        if (videoDetails.getSeasonNumber().equalsIgnoreCase("")){
+                                            selectDownloadVideoQuality(video, String.valueOf(videoDetails.getBrightcoveVideoId()), 1, position.toString());
+                                        }else {
+                                            selectDownloadVideoQuality(video, String.valueOf(videoDetails.getBrightcoveVideoId()), Integer.parseInt(videoDetails.getSeasonNumber()), position.toString());
+                                        }
+
+                                    }
+
                                 }
                             }
                         });
                     }
 
                 } else {
-                    showWifiSettings(downloadAbleVideo,
-                            String.valueOf(seriesDetailBean.getBrightcoveVideoId()),
-                            Integer.parseInt(videoDetails.getSeasonNumber()),
-                            videoDetails.getEpisodeNo() + "", videoQuality);
+                    if (AppCommonMethod.getCheckBCID(videoDetails.getBrightcoveVideoId())){
+                        if (videoDetails.getSeasonNumber().equalsIgnoreCase("")){
+                            showWifiSettings(downloadAbleVideo,
+                                    String.valueOf(videoDetails.getBrightcoveVideoId()),
+                                    1,
+                                    videoDetails.getEpisodeNo() + "", videoQuality);
+                        }else {
+                            showWifiSettings(downloadAbleVideo,
+                                    String.valueOf(videoDetails.getBrightcoveVideoId()),
+                                    Integer.parseInt(videoDetails.getSeasonNumber()),
+                                    videoDetails.getEpisodeNo() + "", videoQuality);
+                        }
+
+                    }
                 }
-                Toast.makeText(this, "NoWifi", Toast.LENGTH_LONG).show();
+               // Toast.makeText(this, "NoWifi", Toast.LENGTH_LONG).show();
             }
         }
+        }catch (Exception ignored){
+            Log.w("downloadCrash",ignored.toString());
+        }
+
     }
 
     private void showWifiSettings(Video video, String brightcoveVideoId, int seasonNumber, String episodeNumber, int videoQuality) {
@@ -2010,6 +2099,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
             String[] array = getResources().getStringArray(R.array.download_quality);
             Logger.e("SeriesId", String.valueOf(seriesDetailBean.getBrightcoveVideoId()));
             Logger.e("SeasonNumber", String.valueOf(videoDetails.getSeasonNumber()));
+            userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.REQUESTED);
             downloadHelper.startEpisodeDownload(video, brightcoveVideoId, seasonNumber, episodeNumber, position);
         });
     }
@@ -2023,6 +2113,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
                         downloadHelper.cancelVideo(downloadAbleVideo.getId());
                         break;
                     case R.id.pause_download:
+                        userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.REQUESTED);
                         downloadHelper.pauseVideo();
                         break;
                 }
@@ -2070,9 +2161,47 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
     @Override
     public void onPauseClicked(String videoId, Object source) {
         if (source instanceof UserInteractionFragment) {
-            downloadHelper.resumeDownload(downloadAbleVideo.getId());
+           // downloadHelper.resumeDownload(downloadAbleVideo.getId());
+
+            Log.w("pauseClicked","in2");
+            if (NetworkConnectivity.isOnline(this)) {
+                if (KsPreferenceKeys.getInstance().getDownloadOverWifi() == 1) {
+                    if (NetworkHelper.INSTANCE.isWifiEnabled(this)) {
+                        Log.w("pauseClicked","in3");
+                        userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.REQUESTED);
+                        downloadHelper.resumeDownload(downloadAbleVideo.getId());
+                    } else {
+                        //Toast.makeText(this, "NoWifi", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.REQUESTED);
+                    Log.w("pauseClicked","in4");
+                    downloadHelper.resumeDownload(downloadAbleVideo.getId());
+                }
+            }else {
+                Toast.makeText(this, getResources().getString(R.string.no_internet_connection), Toast.LENGTH_LONG).show();
+            }
+
         } else {
-            downloadHelper.resumeDownload(videoId);
+            //downloadHelper.resumeDownload(videoId);
+            Log.w("pauseClicked","in2");
+            if (NetworkConnectivity.isOnline(this)) {
+                if (KsPreferenceKeys.getInstance().getDownloadOverWifi() == 1) {
+                    if (NetworkHelper.INSTANCE.isWifiEnabled(this)) {
+                        Log.w("pauseClicked","in3");
+                        userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.REQUESTED);
+                        downloadHelper.resumeDownload(downloadAbleVideo.getId());
+                    } else {
+                        //Toast.makeText(this, "NoWifi", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.REQUESTED);
+                    Log.w("pauseClicked","in4");
+                    downloadHelper.resumeDownload(downloadAbleVideo.getId());
+                }
+            }else {
+                Toast.makeText(this, getResources().getString(R.string.no_internet_connection), Toast.LENGTH_LONG).show();
+            }
         }
     }
 

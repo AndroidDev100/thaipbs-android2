@@ -1067,79 +1067,19 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
 
     @Override
     public void onDownloadClicked(String videoId, Object position, Object source) {
-        boolean loginStatus = preference.getAppPrefLoginStatus().equalsIgnoreCase(AppConstants.UserStatus.Login.toString());
-        if (!loginStatus)
-            new ActivityLauncher(this).loginActivity(this, LoginActivity.class);
-        else {
-            int videoQuality = new SharedPrefHelper(this).getInt(SharedPrefesConstants.DOWNLOAD_QUALITY_INDEX, 4);
-            if (source instanceof UserInteractionFragment) {
-                if (KsPreferenceKeys.getInstance().getDownloadOverWifi() == 1 && NetworkHelper.INSTANCE.isWifiEnabled(this)) {
-                    downloadHelper.findVideo(seriesDetailBean.getBrightcoveVideoId(), new VideoListener() {
-                        @Override
-                        public void onVideo(Video video) {
-                            downloadHelper.startSeriesDownload(seriesDetailBean.getBrightcoveVideoId(), seasonTabFragment.getSelectedSeason(), seasonTabFragment.getSeasonAdapter().getSeasonEpisodes(), videoQuality);
-                        }
+        try {
 
-                        @Override
-                        public void onError(String error) {
-                            super.onError(error);
-                            Logger.e(TAG, error);
-                        }
-                    });
-                } else {
-                    Toast.makeText(SeriesDetailActivity.this, "NoWifi", Toast.LENGTH_LONG).show();
-                }
-
-            } else {
-                if (KsPreferenceKeys.getInstance().getDownloadOverWifi() == 1 && NetworkHelper.INSTANCE.isWifiEnabled(this)) {
-                    downloadHelper.findVideo(String.valueOf(videoId), new VideoListener() {
-                        @Override
-                        public void onVideo(Video video) {
-                            if ((KsPreferenceKeys.getInstance().getDownloadOverWifi() == 1)) {
-                                if (NetworkHelper.INSTANCE.isWifiEnabled(SeriesDetailActivity.this)) {
-                                    if (videoQuality != 4) {
-                                        downloadHelper.startEpisodeDownload(video, String.valueOf(seriesDetailBean.getBrightcoveVideoId()), seasonTabFragment.getSelectedSeason(), seasonTabFragment.getSeasonAdapter().getEpisodeNumber(videoId), videoQuality);
-                                    } else {
-                                        selectDownloadVideoQuality(video, videoId);
-                                    }
-                                } else {
-                                    Toast.makeText(SeriesDetailActivity.this, "NoWifi", Toast.LENGTH_LONG).show();
-                                }
-                            } else {
-                                if (videoQuality != 4) {
-                                    downloadHelper.startEpisodeDownload(video, String.valueOf(seriesDetailBean.getBrightcoveVideoId()), seasonTabFragment.getSelectedSeason(), seasonTabFragment.getSeasonAdapter().getEpisodeNumber(videoId), videoQuality);
-                                } else {
-                                    selectDownloadVideoQuality(video, videoId);
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onError(String error) {
-                            super.onError(error);
-                            Logger.e(TAG, error);
-                        }
-                    });
-                } else {
-                    if (KsPreferenceKeys.getInstance().getDownloadOverWifi() == 1) {
-                        showWifiSettings(videoId, videoQuality);
-                    } else {
-                        downloadHelper.findVideo(String.valueOf(videoId), new VideoListener() {
+            boolean loginStatus = preference.getAppPrefLoginStatus().equalsIgnoreCase(AppConstants.UserStatus.Login.toString());
+            if (!loginStatus)
+                new ActivityLauncher(this).loginActivity(this, LoginActivity.class);
+            else {
+                int videoQuality = new SharedPrefHelper(this).getInt(SharedPrefesConstants.DOWNLOAD_QUALITY_INDEX, 4);
+                if (source instanceof UserInteractionFragment) {
+                    if (KsPreferenceKeys.getInstance().getDownloadOverWifi() == 1 && NetworkHelper.INSTANCE.isWifiEnabled(this)) {
+                        downloadHelper.findVideo(seriesDetailBean.getBrightcoveVideoId(), new VideoListener() {
                             @Override
                             public void onVideo(Video video) {
-                                if (videoQuality != 4) {
-                                    if (downloadHelper.getCatalog() != null) {
-                                        downloadHelper.allowedMobileDownload();
-                                        downloadHelper.startEpisodeDownload(video, String.valueOf(seriesDetailBean.getBrightcoveVideoId()), seasonTabFragment.getSelectedSeason(), seasonTabFragment.getSeasonAdapter().getEpisodeNumber(videoId), videoQuality);
-                                    }
-                                } else {
-                                    if (downloadHelper.getCatalog() != null) {
-                                        downloadHelper.allowedMobileDownload();
-                                        selectDownloadVideoQuality(video, videoId);
-                                    }
-
-                                }
-
+                                downloadHelper.startSeriesDownload(seriesDetailBean.getBrightcoveVideoId(), seasonTabFragment.getSelectedSeason(), seasonTabFragment.getSeasonAdapter().getSeasonEpisodes(), videoQuality);
                             }
 
                             @Override
@@ -1148,12 +1088,77 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
                                 Logger.e(TAG, error);
                             }
                         });
+                    } else {
+                        Toast.makeText(SeriesDetailActivity.this, "NoWifi", Toast.LENGTH_LONG).show();
+                    }
+
+                } else {
+                    if (KsPreferenceKeys.getInstance().getDownloadOverWifi() == 1 && NetworkHelper.INSTANCE.isWifiEnabled(this)) {
+                        downloadHelper.findVideo(String.valueOf(videoId), new VideoListener() {
+                            @Override
+                            public void onVideo(Video video) {
+                                if ((KsPreferenceKeys.getInstance().getDownloadOverWifi() == 1)) {
+                                    if (NetworkHelper.INSTANCE.isWifiEnabled(SeriesDetailActivity.this)) {
+                                        if (videoQuality != 4) {
+                                            downloadHelper.startEpisodeDownload(video, String.valueOf(seriesDetailBean.getBrightcoveVideoId()), seasonTabFragment.getSelectedSeason(), seasonTabFragment.getSeasonAdapter().getEpisodeNumber(videoId), videoQuality);
+                                        } else {
+                                            selectDownloadVideoQuality(video, videoId);
+                                        }
+                                    } else {
+                                        Toast.makeText(SeriesDetailActivity.this, "NoWifi", Toast.LENGTH_LONG).show();
+                                    }
+                                } else {
+                                    if (videoQuality != 4) {
+                                        downloadHelper.startEpisodeDownload(video, String.valueOf(seriesDetailBean.getBrightcoveVideoId()), seasonTabFragment.getSelectedSeason(), seasonTabFragment.getSeasonAdapter().getEpisodeNumber(videoId), videoQuality);
+                                    } else {
+                                        selectDownloadVideoQuality(video, videoId);
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onError(String error) {
+                                super.onError(error);
+                                Logger.e(TAG, error);
+                            }
+                        });
+                    } else {
+                        if (KsPreferenceKeys.getInstance().getDownloadOverWifi() == 1) {
+                            showWifiSettings(videoId, videoQuality);
+                        } else {
+                            downloadHelper.findVideo(String.valueOf(videoId), new VideoListener() {
+                                @Override
+                                public void onVideo(Video video) {
+                                    if (videoQuality != 4) {
+                                        if (downloadHelper.getCatalog() != null) {
+                                            downloadHelper.allowedMobileDownload();
+                                            downloadHelper.startEpisodeDownload(video, String.valueOf(seriesDetailBean.getBrightcoveVideoId()), seasonTabFragment.getSelectedSeason(), seasonTabFragment.getSeasonAdapter().getEpisodeNumber(videoId), videoQuality);
+                                        }
+                                    } else {
+                                        if (downloadHelper.getCatalog() != null) {
+                                            downloadHelper.allowedMobileDownload();
+                                            selectDownloadVideoQuality(video, videoId);
+                                        }
+
+                                    }
+
+                                }
+
+                                @Override
+                                public void onError(String error) {
+                                    super.onError(error);
+                                    Logger.e(TAG, error);
+                                }
+                            });
+
+                        }
 
                     }
 
                 }
-
             }
+        }catch (Exception exception){
+
         }
     }
 

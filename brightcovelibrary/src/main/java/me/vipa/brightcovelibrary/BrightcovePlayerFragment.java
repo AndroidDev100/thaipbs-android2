@@ -166,10 +166,10 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         Bundle bundle = getArguments();
         if (bundle != null) {
             videoId = bundle.getString("videoId");
-            Log.w("IMATAG", videoId);
+           // Log.w("IMATAG", videoId);
             assetType = bundle.getString("assetType");
             selected_track = bundle.getString("selected_track");
-            Log.e("Selectedtrack", selected_track);
+          //  Log.e("Selectedtrack", selected_track);
             //Log.d("asasasasas",selected_track);
             selected_lang = bundle.getString("selected_lang");
             adRulesURL = bundle.getString("config_vast_tag");
@@ -283,7 +283,12 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         super.onActivityCreated(savedInstanceState);
         mActivity = getActivity();
         mListener = (OnPlayerInteractionListener) mActivity;
-        chromeCastStartedListener = (ChromeCastStartedCallBack) mActivity;
+        try {
+            chromeCastStartedListener = (ChromeCastStartedCallBack) mActivity;
+        }catch (Exception e){
+
+        }
+
 
         try {
             ApplicationInfo ai = mActivity.getPackageManager().getApplicationInfo(mActivity.getPackageName(), PackageManager.GET_META_DATA);
@@ -308,7 +313,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             setPlayerWithCallBacks(false);
         }
 
-        try {
+        /*try {
             int orientation = getResources().getConfiguration().orientation;
             if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
                 mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
@@ -321,7 +326,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             }
         } catch (Exception ignored) {
 
-        }
+        }*/
     }
 
     @Override
@@ -452,9 +457,8 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                     progressBar.setVisibility(View.VISIBLE);
                 }
                 isFirstCalled = true;
-               /* VideoDisplayComponent videoDisplayComponent = baseVideoView.getVideoDisplay();
-
                 VideoDisplayComponent videoDisplayComponent = baseVideoView.getVideoDisplay();
+
                 if (videoDisplayComponent instanceof ExoPlayerVideoDisplayComponent) {
                     //Get ExoPlayer
                     ExoPlayer exoPlayer = ((ExoPlayerVideoDisplayComponent) videoDisplayComponent).getExoPlayer();
@@ -476,7 +480,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
 
 
                     }
-                }*/
+                }
             }
 
         });
@@ -1052,8 +1056,11 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         }
         try {
             if (baseVideoView != null) {
-                baseVideoView.stopPlayback();
-                baseVideoView.removeListeners();
+                if(!isOfflineVideo){
+                    baseVideoView.stopPlayback();
+                    baseVideoView.removeListeners();
+                }
+
             }
         } catch (Exception ignored) {
             Log.w("IMATAG", ignored.toString());

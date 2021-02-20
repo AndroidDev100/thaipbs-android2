@@ -1,11 +1,15 @@
 package me.vipa.app.activities.downloads
 
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.brightcove.player.edge.OfflineCallback
 import com.brightcove.player.model.Video
 import com.brightcove.player.network.DownloadStatus
 import com.brightcove.player.offline.MediaDownloadable
@@ -16,11 +20,13 @@ import me.vipa.app.databinding.ActivityMyDownloadsBinding
 import me.vipa.app.utils.helpers.downloads.room.DownloadModel
 import kotlinx.android.synthetic.main.activity_my_downloads.*
 import me.vipa.app.baseModels.BaseBindingActivity
+import me.vipa.app.utils.MediaTypeConstants
 import me.vipa.app.utils.cropImage.helpers.Logger
+import me.vipa.app.utils.helpers.downloads.DownloadedVideoActivity
 import me.vipa.app.utils.helpers.downloads.VideoListListener
 import java.io.Serializable
 
-class MyDownloads : BaseBindingActivity<ActivityMyDownloadsBinding>(), MediaDownloadable.DownloadEventListener, VideoListListener {
+class MyDownloads : BaseBindingActivity<ActivityMyDownloadsBinding>(), MediaDownloadable.DownloadEventListener, VideoListListener,NoDataCallBack {
     override fun inflateBindingLayout(inflater: LayoutInflater): ActivityMyDownloadsBinding {
         return ActivityMyDownloadsBinding.inflate(inflater)
     }
@@ -70,6 +76,14 @@ class MyDownloads : BaseBindingActivity<ActivityMyDownloadsBinding>(), MediaDown
 
     override fun onDownloadCanceled(video: Video) {
         Logger.e(TAG, "onDownloadCanceled")
+        if (downloadHelper!=null){
+            Handler(Looper.getMainLooper()).postDelayed({
+                downloadHelper.getAllVideosFromDatabase().observe(this, Observer {
+                    checkOffline(it)
+                })
+            }, 300)
+
+        }
 
     }
 
@@ -102,8 +116,56 @@ class MyDownloads : BaseBindingActivity<ActivityMyDownloadsBinding>(), MediaDown
         var counter = 0
         downloadHelper = DownloadHelper(this, this)
         downloadHelper.getAllVideosFromDatabase().observe(this, Observer {
+            checkOffline(it)
+        })
+        setupToolbar()
+    }
+
+    private fun checkOffline(it: DownloadModel?) {
+        it!!.downloadVideos.forEach { downloadedVideo ->
+            Logger.e("DownloadedVideo1", Gson().toJson(downloadedVideo))
+            val downloadStatus=downloadHelper.getCatalog().getVideoDownloadStatus(downloadedVideo.videoId)
+            Logger.e("status", downloadStatus.toString())
+            if (!downloadedVideo.downloadType.equals(MediaTypeConstants.getInstance().series,ignoreCase = true) && downloadStatus.code!=DownloadStatus.STATUS_COMPLETE
+                    && downloadStatus.code!=DownloadStatus.STATUS_PAUSED && downloadStatus.code!=DownloadStatus.STATUS_DOWNLOADING) {
+                downloadHelper.findOfflineVideoById(downloadedVideo.videoId, object : OfflineCallback<Video> {
+                    override fun onSuccess(video: Video?) {
+                        if (video!=null){
+                         //   downloadHelper.deleteVideoFromDatabase(downloadedVideo.videoId)
+                        }
+                       // Logger.e("DBDatabase", video!!.name)
+                    }
+
+                    override fun onFailure(p0: Throwable?) {
+                       // Logger.e("DBDatabase", p0!!.toString())
+                        downloadHelper.deleteVideoFromDatabase(downloadedVideo.videoId)
+                    }
+                })
+            }else{
+                if (downloadedVideo.downloadType.equals(MediaTypeConstants.getInstance().series,ignoreCase = true)) {
+                    downloadHelper.findOfflineVideoById(downloadedVideo.videoId, object : OfflineCallback<Video> {
+                        override fun onSuccess(video: Video?) {
+                            if (video!=null){
+                                Logger.e("DownloadedVideo1", "notnull")
+                                //   downloadHelper.deleteVideoFromDatabase(downloadedVideo.videoId)
+                            }else{
+                                Logger.e("DownloadedVideo1", "null")
+                            }
+                            // Logger.e("DBDatabase", video!!.name)
+                        }
+
+                        override fun onFailure(p0: Throwable?) {
+                            Logger.e("DBDatabase", p0!!.toString())
+                           // Logger.e("DownloadedVideo1", "notnull")
+                            downloadHelper.deleteVideoFromDatabase(downloadedVideo.videoId)
+                        }
+                    })
+                }
+            }
+        }
+        downloadHelper.getAllVideosFromDatabase().observe(this, Observer {
             if (it.downloadVideos.size>0){
-                downloadsAdapter = DownloadsAdapter(this, it)
+                downloadsAdapter = DownloadsAdapter(this, it,this)
                 downloaded_recycler_view.layoutManager = LinearLayoutManager(this)
                 downloaded_recycler_view.setHasFixedSize(true)
                 downloaded_recycler_view.itemAnimator = DefaultItemAnimator()
@@ -115,7 +177,8 @@ class MyDownloads : BaseBindingActivity<ActivityMyDownloadsBinding>(), MediaDown
             }
 
         })
-        setupToolbar()
+
+
     }
 
 
@@ -130,5 +193,43 @@ class MyDownloads : BaseBindingActivity<ActivityMyDownloadsBinding>(), MediaDown
 
     private fun setData(it: DownloadModel?) {
         Logger.e(TAG, "Videos: => " + Gson().toJson(it))
+    }
+
+    override fun dataNotAvailable() {
+       /* if (downloadHelper!=null){
+            Handler(Looper.getMainLooper()).postDelayed({
+                downloadHelper.getAllVideosFromDatabase().observe(this, Observer {
+                    checkOffline(it)
+                })
+            }, 300)
+
+        }*/
+        /*if (downloadsAdapter!=null){
+            var size=downloadsAdapter!!.itemCount
+            if (size>0){
+
+            }else{
+                downloaded_recycler_view.visibility= View.GONE
+
+            }
+        }*/
+        nodatafounmd.visibility = View.VISIBLE
+       // val downloadedVideoIntent = Intent(this, MyDownloads::class.java)
+        //startActivity(downloadedVideoIntent)
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+        try {
+            Handler(Looper.getMainLooper()).postDelayed({
+                downloadHelper.getAllVideosFromDatabase().observe(this, Observer {
+                    checkOffline(it)
+                })
+            }, 300)
+        }catch (exception:Exception){
+
+        }
+
     }
 }

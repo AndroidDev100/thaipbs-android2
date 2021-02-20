@@ -30,6 +30,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
 import me.vipa.app.MvHubPlusApplication
 import me.vipa.app.R
+import me.vipa.app.SDKConfig
 import me.vipa.app.activities.downloads.SelectDownloadQualityAdapter
 import me.vipa.app.activities.downloads.VideoQualitySelectedListener
 import me.vipa.app.activities.downloads.WifiPreferenceListener
@@ -459,23 +460,27 @@ class DownloadHelper() {
     }
 
     fun deleteVideo(videoId: String) {
+        Logger.e("ValueOfDe", videoId)
         catalog.deleteVideo(videoId, object : OfflineCallback<Boolean> {
             override fun onSuccess(aBoolean: Boolean?) {
+                Logger.e("ValueOfDe", aBoolean.toString())
                 if (aBoolean!!) {
                     checkDownloadStatus()
+                    deleteVideoFromDatabase(videoId)
+                }else{
                     deleteVideoFromDatabase(videoId)
                 }
             }
 
             override fun onFailure(throwable: Throwable) {
-
+                Logger.e("ValueOfDe", throwable.message)
             }
         })
     }
 
     private fun downloadVideo(video: Video, videoQuality: Int) {
         Logger.e("licenceAq d", video.toString())
-        addVideotoDatabase(video, seriesId)
+
 
         when (videoQuality) {
             0 -> {
@@ -545,6 +550,7 @@ class DownloadHelper() {
                     Logger.e("Bundle", Gson().toJson(filteredBundle))
                     catalog.downloadVideo(video, object : OfflineCallback<DownloadStatus> {
                         override fun onSuccess(downloadStatus: DownloadStatus) {
+                            addVideotoDatabase(video, seriesId)
                             updateDownloadStatus(downloadStatus)
                         }
 
@@ -594,7 +600,7 @@ class DownloadHelper() {
                 }
             })
         } else {
-            var downloadedVideo = DownloadedVideo(video.id, assetType, seriesId, "", "", video.name, AppCommonMethod.expiryDate(3))
+            var downloadedVideo = DownloadedVideo(video.id, assetType, seriesId, "", "", video.name, AppCommonMethod.expiryDate(SDKConfig.DOWNLOAD_EXPIRY_DAYS))
             insertVideo(downloadedVideo, null)
         }
 
@@ -626,7 +632,7 @@ class DownloadHelper() {
         }
     }
 
-    private fun deleteVideoFromDatabase(videoId: String) {
+    public fun deleteVideoFromDatabase(videoId: String) {
         Logger.e("DeleteVideo",videoId)
         try {
             AsyncTask.execute {
@@ -887,7 +893,7 @@ class DownloadHelper() {
         getAllVideosFromDatabase().observe(activity as LifecycleOwner, androidx.lifecycle.Observer {
             it.downloadVideos.forEach { downloadedVideo ->
                 Logger.e("DownloadedVideo1", Gson().toJson(downloadedVideo))
-                if (downloadedVideo.downloadType != MediaTypeConstants.getInstance().series) {
+                if (downloadedVideo.downloadType.equals(MediaTypeConstants.getInstance().series,ignoreCase = true)) {
                     findOfflineVideoById(downloadedVideo.videoId, object : OfflineCallback<Video> {
                         override fun onSuccess(video: Video?) {
                             if (video != null) {
@@ -898,7 +904,7 @@ class DownloadHelper() {
                                         deleteVideo(video)
                                     }
                                 }else{
-                                   // deleteExpireVideoFromDB(downloadedVideo)
+                                    deleteExpireVideoFromDB(downloadedVideo)
                                   //  Logger.e("License", "Expiry" + video.licenseExpiryDate)
                                 }
                             } else {

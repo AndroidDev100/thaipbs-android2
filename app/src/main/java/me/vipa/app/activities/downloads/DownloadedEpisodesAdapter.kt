@@ -20,6 +20,7 @@ import me.vipa.app.utils.cropImage.helpers.Logger
 import me.vipa.app.utils.helpers.downloads.DownloadedVideoActivity
 import me.vipa.app.utils.helpers.downloads.VideoListListener
 import me.vipa.app.utils.helpers.downloads.room.DownloadedEpisodes
+import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys
 import java.io.Serializable
 import java.text.DecimalFormat
 import java.util.HashMap
@@ -37,6 +38,11 @@ class DownloadedEpisodesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>,
                     notifyItemRemoved(position)
                     notifyItemRangeChanged(position, downloadedVideos.size)
                     buildIndexMap()
+                    if (downloadedVideos.size>0){
+
+                    }else{
+                        context!!.onBackPressed()
+                    }
                 }
                 R.id.my_Download -> {
 
@@ -58,8 +64,17 @@ class DownloadedEpisodesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>,
                     notifyItemRemoved(position)
                     notifyItemRangeChanged(position, downloadedVideos.size)
                     buildIndexMap()
+                    if (downloadedVideos.size>0){
+
+                    }else{
+                        context!!.onBackPressed()
+                    }
                 }
-                R.id.pause_download -> downloadHelper.pauseVideo(video.videoId)
+                R.id.pause_download -> {
+                    downloadHelper.pauseVideo(video.videoId)
+                    buildIndexMap()
+                }
+
             }
             false
         }
@@ -162,6 +177,7 @@ class DownloadedEpisodesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>,
             showPauseCancelPopUpMenu(v!!, currentVideoItem, position)
         }
         viewHolder.itemBinding.pauseDownload.setOnClickListener {
+            viewHolder.itemBinding.downloadStatus = me.vipa.app.enums.DownloadStatus.REQUESTED
             downloadHelper.resumeDownload(currentVideoItem.videoId)
         }
         viewHolder.itemBinding.root.setOnClickListener {

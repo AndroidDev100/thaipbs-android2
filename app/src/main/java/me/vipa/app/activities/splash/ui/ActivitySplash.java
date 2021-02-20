@@ -145,7 +145,7 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
         currentLanguage = KsPreferenceKeys.getInstance().getAppLanguage();
 
         MvHubPlusApplication.getApplicationContext(this).getEnveuComponent().inject(this);
-        dtgPrefrencesProvider.saveExpiryDays(3);
+        //dtgPrefrencesProvider.saveExpiryDays(3);
         DownloadHelper downloadHelper = new DownloadHelper(this);
         downloadHelper.deleteAllExpiredVideos();
 

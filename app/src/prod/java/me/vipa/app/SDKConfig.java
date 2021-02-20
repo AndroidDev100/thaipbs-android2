@@ -41,7 +41,7 @@ public class SDKConfig {
     public static String TERMCONDITION = "https://www.mvhub.com/term.php";
     public static String PRIVACYPOLICY = "https://www.mvhub.com/privacy.php";
     public static String WEBP_QUALITY = "filters:format(webp):quality(60)/";
-    public static int DOWNLOAD_EXPIRY_DAYS=30;
+    public static int DOWNLOAD_EXPIRY_DAYS=3;
     public static boolean DOWNLOAD_ENABLE=true;
 
     /*uat keys*//*

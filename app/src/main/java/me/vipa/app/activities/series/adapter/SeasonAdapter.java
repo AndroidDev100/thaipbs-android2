@@ -193,6 +193,7 @@ public class SeasonAdapter extends RecyclerView.Adapter<SeasonAdapter.SeasonView
         holder.itemBinding.pauseDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                holder.itemBinding.setDownloadStatus(me.vipa.app.enums.DownloadStatus.REQUESTED);
                 onDownloadClickInteraction.onPauseClicked(videoItemBeans.get(position).getBrightcoveVideoId(), this);
 
             }

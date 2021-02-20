@@ -348,6 +348,7 @@ public class SeasonTabFragment extends BaseBindingFragment<SeasonFragmentLayoutB
                     new RecyclerAnimator(getActivity()).animate(getBinding().seriesRecyclerView);
                     seasonAdapter = new SeasonAdapter(getActivity(), seasonEpisodes, seriesId, currentAssetId, this);
                     getBinding().seriesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
+                    ((SimpleItemAnimator) getBinding().seriesRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
                     getBinding().seriesRecyclerView.setAdapter(seasonAdapter);
                 } else {
 

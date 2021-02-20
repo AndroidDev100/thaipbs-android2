@@ -1,6 +1,8 @@
 package me.vipa.app.activities.downloads
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import androidx.lifecycle.Observer
@@ -15,7 +17,10 @@ import kotlinx.android.synthetic.main.activity_my_downloads.*
 import me.vipa.app.baseModels.BaseBindingActivity
 import me.vipa.app.utils.cropImage.helpers.Logger
 import me.vipa.app.utils.helpers.downloads.VideoListListener
+import me.vipa.app.utils.helpers.downloads.room.DownloadModel
+import me.vipa.app.utils.helpers.downloads.room.DownloadedEpisodes
 import java.io.Serializable
+import java.util.ArrayList
 
 class DownloadedEpisodesActivity() : BaseBindingActivity<ActivityDownloadedEpisodesBinding>(), MediaDownloadable.DownloadEventListener, VideoListListener {
     override fun inflateBindingLayout(inflater: LayoutInflater): ActivityDownloadedEpisodesBinding {
@@ -36,12 +41,22 @@ class DownloadedEpisodesActivity() : BaseBindingActivity<ActivityDownloadedEpiso
         setupToolbar(seriesName)
         downloadHelper = DownloadHelper(this, this)
         downloadHelper.getAllEpisodesOfSeries(seriesId, seasonNumber).observe(this, Observer {
+           checkOffline(it)
+        })
+    }
+
+    private fun checkOffline(it: ArrayList<DownloadedEpisodes>?) {
+        if (it!!.size>0){
             downloadsAdapter = DownloadedEpisodesAdapter(this@DownloadedEpisodesActivity, it)
             downloaded_recycler_view.layoutManager = LinearLayoutManager(this)
             downloaded_recycler_view.setHasFixedSize(true)
             downloaded_recycler_view.itemAnimator = DefaultItemAnimator()
             downloaded_recycler_view.adapter = downloadsAdapter
-        })
+        }else{
+            nodatafounmd.visibility = View.VISIBLE
+            Logger.e(TAG, "blankActivity")
+        }
+
     }
 
 
@@ -96,8 +111,17 @@ class DownloadedEpisodesActivity() : BaseBindingActivity<ActivityDownloadedEpiso
 
     override fun onDownloadCanceled(video: Video) {
         Logger.e(TAG, "onDownloadCanceled")
+        if (downloadHelper!=null){
+            Handler(Looper.getMainLooper()).postDelayed({
+                downloadHelper.getAllEpisodesOfSeries(seriesId, seasonNumber).observe(this, Observer {
+                    checkOffline(it)
+                })
+            }, 300)
+
+        }
 
     }
+
 
     override fun onDownloadDeleted(video: Video) {
         Logger.e(TAG, "onDownloadDeleted")

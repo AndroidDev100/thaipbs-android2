@@ -1544,7 +1544,7 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
                     } else {
                         showWifiSettings(videoQuality);
                         downloadHelper.checkDownloadStatus(downloadAbleVideo);
-                        Toast.makeText(this, "NoWifi", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(this, "NoWifi", Toast.LENGTH_LONG).show();
                     }
                 } else {
                     if (videoQuality != 4) {
