@@ -358,6 +358,11 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
 
     @Override
     public void onPlayerInProgress() {
+        try {
+            getBinding().playIcon.setVisibility(View.GONE);
+        }catch (Exception ignored){
+
+        }
 
     }
 

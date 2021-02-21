@@ -559,7 +559,11 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
 
     @Override
     public void onPlayerInProgress() {
+        try {
+            getBinding().playIcon.setVisibility(View.GONE);
+        }catch (Exception ignored){
 
+        }
     }
 
     public void removeCommentFragment() {

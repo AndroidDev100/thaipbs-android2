@@ -139,6 +139,8 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                 getBinding().userNameWords.setText(AppCommonMethod.getUserName(preference.getAppPrefUserName()));
                 getBinding().usernameTv.setText(preference.getAppPrefUserName());
                 clickEvent();
+                //getBinding().titleLayout.setVisibility(View.VISIBLE);
+                //getBinding().ivProfilePic.setVisibility(View.GONE);
             }else {
                 getBinding().titleLayout.setVisibility(View.VISIBLE);
                 getBinding().ivProfilePic.setVisibility(View.GONE);
@@ -258,6 +260,8 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
             preference.setAppPrefUserEmail(String.valueOf(userProfileResponse.getData().getEmail()));
             getBinding().userNameWords.setText(AppCommonMethod.getUserName(preference.getAppPrefUserName()));
             getBinding().usernameTv.setText(preference.getAppPrefUserName());
+            getBinding().titleLayout.setVisibility(View.VISIBLE);
+            getBinding().ivProfilePic.setVisibility(View.GONE);
             setUserImage(userProfileResponse);
         } catch (Exception e) {
 
