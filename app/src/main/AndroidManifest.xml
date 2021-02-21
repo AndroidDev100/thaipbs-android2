@@ -214,6 +214,7 @@
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:resizeableActivity="true"
             android:screenOrientation="locked"
+            android:launchMode="singleTask"
             android:supportsPictureInPicture="true"
             android:theme="@style/MyMaterialTheme" />
         <activity
@@ -224,9 +225,9 @@
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".activities.detail.ui.EpisodeActivity"
-            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
-            android:resizeableActivity="true"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
             android:supportsPictureInPicture="true"
+            android:launchMode="singleTask"
             android:screenOrientation="locked"
             android:theme="@style/MyMaterialTheme" />
 

@@ -509,10 +509,10 @@ public class BaseActivity extends AppCompatActivity implements BaseActivityAlert
     @Override
     protected void onStart() {
         super.onStart();
-        if(DetailActivity.isBackStacklost){
+        /*if(DetailActivity.isBackStacklost){
             getApplicationContext().startActivity(new Intent(this, getClass())
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-        }
+        }*/
     }
 
     /* Displays the snackbar notification and call to action. */

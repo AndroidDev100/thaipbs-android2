@@ -50,6 +50,7 @@ import com.brightcove.player.network.DownloadStatus;
 import com.brightcove.player.offline.MediaDownloadable;
 import com.brightcove.player.pictureinpicture.PictureInPictureManager;
 
+import me.vipa.app.utils.helpers.ADHelper;
 import me.vipa.bookmarking.bean.GetBookmarkResponse;
 
 import me.vipa.app.activities.purchase.callBack.EntitlementStatus;
@@ -633,6 +634,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
     @Override
     protected void onResume() {
         super.onResume();
+        Logger.e("EpisodeActivity", "onResume");
         requestAudioFocus();
         boolean isTablet = EpisodeActivity.this.getResources().getBoolean(R.bool.isTablet);
         if (isTablet) {
@@ -1801,6 +1803,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
         super.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig);
         if (supportsPiPMode()) {
             PictureInPictureManager.getInstance().onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig);
+            ADHelper.getInstance(EpisodeActivity.this).pipActivity(EpisodeActivity.this);
             playerFragment.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig);
         }
     }
