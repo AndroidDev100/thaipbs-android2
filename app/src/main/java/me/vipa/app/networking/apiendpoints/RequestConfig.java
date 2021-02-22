@@ -68,13 +68,14 @@ public class RequestConfig {
                     .addInterceptor(loggingInterceptor);
 
             OkHttpClient client = httpClient.build();
-
-            enveuRetrofit = new Retrofit.Builder()
-                    .baseUrl(SDKConfig.getInstance().getOVP_BASE_URL())
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                    .client(client)
-                    .build();
+            if (SDKConfig.getInstance().getOVP_BASE_URL()!=null && SDKConfig.getInstance().getOVP_BASE_URL()!="") {
+                enveuRetrofit = new Retrofit.Builder()
+                        .baseUrl(SDKConfig.getInstance().getOVP_BASE_URL())
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                        .client(client)
+                        .build();
+            }
         }
         return enveuRetrofit;
     }

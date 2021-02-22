@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import me.vipa.app.MvHubPlusApplication;
+import me.vipa.app.SDKConfig;
 import me.vipa.app.activities.ManageAccount.UI.ManageAccount;
 import me.vipa.app.activities.OtherApplication.UI.OtherApplication;
 import me.vipa.app.activities.downloads.MyDownloads;
@@ -133,8 +135,16 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
         if (preference != null) {
             isLogin = preference.getAppPrefLoginStatus();
             if (isLogin.equalsIgnoreCase(AppConstants.UserStatus.Login.toString())) {
+                getBinding().titleLayout.setVisibility(View.GONE);
+                getBinding().ivProfilePic.setVisibility(View.VISIBLE);
                 getBinding().userNameWords.setText(AppCommonMethod.getUserName(preference.getAppPrefUserName()));
                 getBinding().usernameTv.setText(preference.getAppPrefUserName());
+                clickEvent();
+                //getBinding().titleLayout.setVisibility(View.VISIBLE);
+                //getBinding().ivProfilePic.setVisibility(View.GONE);
+            }else {
+                getBinding().titleLayout.setVisibility(View.VISIBLE);
+                getBinding().ivProfilePic.setVisibility(View.GONE);
             }
         }
 
@@ -216,23 +226,31 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
     public void clickEvent() {
         try {
             preference = KsPreferenceKeys.getInstance();
-            String token = preference.getAppPrefAccessToken();
-            viewModel.hitUserProfile(getContext(), token).observe(getActivity(), userProfileResponse -> {
-                if (userProfileResponse != null) {
-                    if (userProfileResponse.getStatus()) {
-                        updateUI(userProfileResponse);
-                    } else {
-                        if (userProfileResponse.getDebugMessage() != null) {
-
+            isLogin = preference.getAppPrefLoginStatus();
+            if (isLogin.equalsIgnoreCase(AppConstants.UserStatus.Login.toString())) {
+                preference = KsPreferenceKeys.getInstance();
+                String token = preference.getAppPrefAccessToken();
+                viewModel.hitUserProfile(getContext(), token).observe(getActivity(), userProfileResponse -> {
+                    if (userProfileResponse != null) {
+                        if (userProfileResponse.getStatus()) {
+                            updateUI(userProfileResponse);
                         } else {
+                            if (userProfileResponse.getDebugMessage() != null) {
 
+                            } else {
+
+                            }
                         }
                     }
-                }
-            });
+                });
+            }else {
+                getBinding().titleLayout.setVisibility(View.VISIBLE);
+                getBinding().ivProfilePic.setVisibility(View.GONE);
+            }
+
 
         }catch (Exception ignored){
-
+            Log.w("ProfileClick",ignored.toString());
         }
 
     }
@@ -243,7 +261,68 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
             preference.setAppPrefUserEmail(String.valueOf(userProfileResponse.getData().getEmail()));
             getBinding().userNameWords.setText(AppCommonMethod.getUserName(preference.getAppPrefUserName()));
             getBinding().usernameTv.setText(preference.getAppPrefUserName());
+            getBinding().titleLayout.setVisibility(View.VISIBLE);
+            getBinding().ivProfilePic.setVisibility(View.GONE);
+            setUserImage(userProfileResponse);
         } catch (Exception e) {
+
+        }
+    }
+
+    private String imageUrlId = "";
+    private String via = "";
+    private void setUserImage(UserProfileResponse userProfileResponse) {
+        try {
+            if (userProfileResponse.getData().getProfilePicURL() != null && userProfileResponse.getData().getProfilePicURL() != "") {
+               getBinding().titleLayout.setVisibility(View.GONE);
+                getBinding().ivProfilePic.setVisibility(View.VISIBLE);
+                imageUrlId = userProfileResponse.getData().getProfilePicURL().toString();
+                via = "Gallery";
+
+                String firstFiveChar = imageUrlId.substring(0, 5);
+                if (firstFiveChar.equalsIgnoreCase("https")){
+                    Glide.with(getActivity()).load(userProfileResponse.getData().getProfilePicURL())
+                            .placeholder(R.drawable.default_profile_pic)
+                            .error(R.drawable.default_profile_pic)
+                            .into(getBinding().ivProfilePic);
+                }else {
+
+                    Glide.with(getActivity()).load(SDKConfig.getInstance().getCLOUD_FRONT_BASE_URL() + SDKConfig.getInstance().getProfileFolder() + userProfileResponse.getData().getProfilePicURL())
+                            .placeholder(R.drawable.default_profile_pic)
+                            .error(R.drawable.default_profile_pic)
+                            .into(getBinding().ivProfilePic);
+                }
+            } else {
+
+                if (userProfileResponse.getData().getCustomData().getProfileAvatar() != null) {
+                    getBinding().titleLayout.setVisibility(View.GONE);
+                    getBinding().ivProfilePic.setVisibility(View.VISIBLE);
+                    for (int i = 0; i < SDKConfig.getInstance().getAvatarImages().size(); i++) {
+                        if (userProfileResponse.getData().getCustomData().getProfileAvatar().equalsIgnoreCase(SDKConfig.getInstance().getAvatarImages().get(i).getIdentifier())) {
+                            imageUrlId = SDKConfig.getInstance().getAvatarImages().get(i).getIdentifier();
+                            via = "Avatar";
+
+                            Glide.with(getActivity()).load(SDKConfig.getInstance().getAvatarImages().get(i).getUrl())
+                                    .placeholder(R.drawable.default_profile_pic)
+                                    .error(R.drawable.default_profile_pic)
+                                    .into(getBinding().ivProfilePic);
+
+                        }
+                    }
+                } else {
+                    getBinding().titleLayout.setVisibility(View.GONE);
+                    getBinding().ivProfilePic.setVisibility(View.VISIBLE);
+                    imageUrlId = SDKConfig.getInstance().getAvatarImages().get(0).getIdentifier();
+                    via = "Avatar";
+                    Glide.with(getActivity()).load(SDKConfig.getInstance().getAvatarImages().get(0).getUrl())
+                            .placeholder(R.drawable.default_profile_pic)
+                            .error(R.drawable.default_profile_pic)
+                            .into(getBinding().ivProfilePic);
+
+                }
+            }
+
+        }catch (Exception ignored){
 
         }
     }
@@ -410,6 +489,8 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                 KsPreferenceKeys.getInstance().setAppPrefLanguagePos(languagePosition);
                 KsPreferenceKeys.getInstance().setfirstTimeUser(false);
                 KsPreferenceKeys.getInstance().setBingeWatchEnable(bingeWatchEnable);
+                getBinding().titleLayout.setVisibility(View.VISIBLE);
+                getBinding().ivProfilePic.setVisibility(View.GONE);
                 //TODO Handle Content Preference Data On Logout
                // AppCommonMethod.getConfigResponse().getData().getAppConfig().setContentPreference(AppCommonMethod.getConfigResponse().getData().getAppConfig().getContentPreference());
                 modelCall();

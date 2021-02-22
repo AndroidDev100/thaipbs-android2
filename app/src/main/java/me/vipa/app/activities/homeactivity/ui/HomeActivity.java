@@ -2,6 +2,7 @@ package me.vipa.app.activities.homeactivity.ui;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -135,6 +136,13 @@ public class HomeActivity extends BaseBindingActivity<ActivityMainBinding> imple
                         moreFragment = new MoreFragment();
                         fragmentManager.beginTransaction().add(R.id.content_frame, moreFragment, "5").hide(moreFragment).commit();
                         switchToMoreFragment();
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                ((MoreFragment)moreFragment).clickEvent();
+                            }
+                        },200);
+
                     } else {
                         ((MoreFragment)moreFragment).clickEvent();
                         switchToMoreFragment();

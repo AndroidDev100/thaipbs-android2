@@ -41,6 +41,7 @@ import com.brightcove.player.pictureinpicture.PictureInPictureManager;
 
 import me.vipa.app.utils.helpers.downloads.MediaTypeCheck;
 
+import me.vipa.app.utils.helpers.ADHelper;
 import me.vipa.bookmarking.bean.GetBookmarkResponse;
 import me.vipa.app.SDKConfig;
 import me.vipa.app.activities.purchase.callBack.EntitlementStatus;
@@ -561,7 +562,11 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
 
     @Override
     public void onPlayerInProgress() {
+        try {
+            getBinding().playIcon.setVisibility(View.GONE);
+        }catch (Exception ignored){
 
+        }
     }
 
     public void removeCommentFragment() {
@@ -1403,6 +1408,7 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
         super.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig);
         if (supportsPiPMode()) {
             PictureInPictureManager.getInstance().onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig);
+            ADHelper.getInstance(DetailActivity.this).pipActivity(DetailActivity.this);
             playerFragment.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig);
         }
     }

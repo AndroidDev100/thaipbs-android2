@@ -313,7 +313,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             setPlayerWithCallBacks(false);
         }
 
-        /*try {
+        try {
             int orientation = getResources().getConfiguration().orientation;
             if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
                 mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
@@ -326,7 +326,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             }
         } catch (Exception ignored) {
 
-        }*/
+        }
     }
 
     @Override

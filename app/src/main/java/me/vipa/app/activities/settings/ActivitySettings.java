@@ -142,7 +142,7 @@ public class ActivitySettings extends BaseBindingActivity<SettingsActivityBindin
                         intent.addCategory(Intent.CATEGORY_DEFAULT);
                         intent.setData(Uri.parse("package:" + getApplicationContext().getPackageName()));
                     }
-                    getApplicationContext().startActivity(intent);
+                    ActivitySettings.this.startActivity(intent);
                 }
 
             }

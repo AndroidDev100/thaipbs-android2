@@ -50,6 +50,7 @@ import com.brightcove.player.network.DownloadStatus;
 import com.brightcove.player.offline.MediaDownloadable;
 import com.brightcove.player.pictureinpicture.PictureInPictureManager;
 
+import me.vipa.app.utils.helpers.ADHelper;
 import me.vipa.bookmarking.bean.GetBookmarkResponse;
 
 import me.vipa.app.activities.purchase.callBack.EntitlementStatus;
@@ -358,6 +359,11 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
 
     @Override
     public void onPlayerInProgress() {
+        try {
+            getBinding().playIcon.setVisibility(View.GONE);
+        }catch (Exception ignored){
+
+        }
 
     }
 
@@ -494,7 +500,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
         if (getBinding().tabLayout.getTabCount() >= 1 && position <= getBinding().tabLayout.getTabCount()) {
             episodeTabAdapter.removeTabPage(position);
             ViewGroup.LayoutParams params = getBinding().tabLayout.getLayoutParams();
-            params.width = params.MATCH_PARENT;//(int) getResources().getDimension(R.dimen.tab_layout_single);
+            params.width = (int) getResources().getDimension(R.dimen.tab_layout_single);//(int) getResources().getDimension(R.dimen.tab_layout_single);
             getBinding().tabLayout.setLayoutParams(params);
             //  getBinding().tabLayout.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,height));
 
@@ -628,6 +634,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
     @Override
     protected void onResume() {
         super.onResume();
+        Logger.e("EpisodeActivity", "onResume");
         requestAudioFocus();
         boolean isTablet = EpisodeActivity.this.getResources().getBoolean(R.bool.isTablet);
         if (isTablet) {
@@ -1796,6 +1803,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
         super.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig);
         if (supportsPiPMode()) {
             PictureInPictureManager.getInstance().onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig);
+            ADHelper.getInstance(EpisodeActivity.this).pipActivity(EpisodeActivity.this);
             playerFragment.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig);
         }
     }

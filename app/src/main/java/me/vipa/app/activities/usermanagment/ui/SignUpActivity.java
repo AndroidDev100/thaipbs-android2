@@ -250,7 +250,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
             }
             mLastClickTime = SystemClock.elapsedRealtime();
             finish();
-            startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
+            startActivity(new Intent(SignUpActivity.this, LoginActivity.class).putExtra("loginFrom",""));
         });
 
         getBinding().etName.setOnClickListener(view -> getBinding().errorName.setVisibility(View.INVISIBLE));
@@ -614,7 +614,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
         boolean check = false;
         if (!password.equalsIgnoreCase(confirmPassword)){
             getBinding().errorCnfPassword.setVisibility(View.VISIBLE);
-            getBinding().errorCnfPassword.setText(getResources().getString(R.string.password_match));
+            getBinding().errorCnfPassword.setText(getResources().getString(R.string.confirm_pwd_not_match));
         }else {
             getBinding().errorCnfPassword.setVisibility(View.INVISIBLE);
             check = true;
