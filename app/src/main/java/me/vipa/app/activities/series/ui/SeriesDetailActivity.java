@@ -1208,6 +1208,9 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
 
     private void selectDownloadVideoQuality(Video video, String videoId) {
         downloadHelper.selectVideoQuality(position -> {
+            if (seasonTabFragment!=null){
+                seasonTabFragment.updateStatus();
+            }
             downloadHelper.startEpisodeDownload(video, String.valueOf(seriesDetailBean.getBrightcoveVideoId()), seasonTabFragment.getSelectedSeason(), seasonTabFragment.getSeasonAdapter().getEpisodeNumber(videoId), position);
         });
     }
@@ -1308,6 +1311,9 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
             userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.DOWNLOADING);
         if (seasonTabFragment.getSeasonAdapter() != null) {
             seasonTabFragment.getSeasonAdapter().onDownloadStarted(video, l, map);
+        }
+        if (seasonTabFragment!=null){
+            seasonTabFragment.updateStatus();
         }
     }
 

@@ -107,6 +107,7 @@ public class SeasonAdapter extends RecyclerView.Adapter<SeasonAdapter.SeasonView
         return new SeasonAdapter.SeasonViewHolder(itemBinding);
     }
 
+    RowEpisodeListBinding clickBinding;
     @Override
     public void onBindViewHolder(@NonNull SeasonAdapter.SeasonViewHolder holder, int position) {
         if (videoItemBeans.get(position) != null) {
@@ -173,6 +174,7 @@ public class SeasonAdapter extends RecyclerView.Adapter<SeasonAdapter.SeasonView
         holder.itemBinding.downloadVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                clickBinding=holder.itemBinding;
                 onDownloadClickInteraction.onDownloadClicked(videoItemBeans.get(position).getBrightcoveVideoId(), videoItemBeans.get(position).getEpisodeNo(), this);
             }
         });
@@ -198,6 +200,12 @@ public class SeasonAdapter extends RecyclerView.Adapter<SeasonAdapter.SeasonView
 
             }
         });
+    }
+
+    public void holdHolder() {
+        if (clickBinding!=null){
+            clickBinding.setDownloadStatus(me.vipa.app.enums.DownloadStatus.REQUESTED);
+        }
     }
 
     private void deleteDownloadedVideo(View view, EnveuVideoItemBean enveuVideoItemBean, int position) {

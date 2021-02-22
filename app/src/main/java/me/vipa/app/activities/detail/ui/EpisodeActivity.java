@@ -2104,6 +2104,9 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
 
     private void selectDownloadVideoQuality(Video video, String brightcoveVideoId, int seasonNumber, String episodeNumber) {
         downloadHelper.selectVideoQuality(position -> {
+            if (seasonTabFragment!=null){
+                seasonTabFragment.updateStatus();
+            }
             String[] array = getResources().getStringArray(R.array.download_quality);
             Logger.e("SeriesId", String.valueOf(seriesDetailBean.getBrightcoveVideoId()));
             Logger.e("SeasonNumber", String.valueOf(videoDetails.getSeasonNumber()));
@@ -2229,6 +2232,10 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
             userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.DOWNLOADING);
         if (seasonTabFragment.getSeasonAdapter() != null) {
             seasonTabFragment.getSeasonAdapter().onDownloadStarted(video, l, map);
+        }
+
+        if (seasonTabFragment!=null){
+            seasonTabFragment.updateStatus();
         }
     }
 

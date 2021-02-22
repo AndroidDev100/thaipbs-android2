@@ -1662,6 +1662,9 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
     public void onDownloadStarted(@androidx.annotation.NonNull Video video, long l,
                                   @androidx.annotation.NonNull Map<String, Serializable> map) {
         Logger.e(TAG, "onDownloadStarted");
+        if (userInteractionFragment != null) {
+            userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.DOWNLOADING);
+        }
     }
 
     @Override

@@ -331,6 +331,14 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
                                     viewHolder.itemBinding.videoDownloading.progress = p0.progress.toFloat()
                                     viewHolder.itemBinding.descriptionTxt.text = "Downloading"
                                 }
+                                DownloadStatus.STATUS_PENDING -> {
+                                    viewHolder.itemBinding.downloadStatus = me.vipa.app.enums.DownloadStatus.DOWNLOADING
+                                    viewHolder.itemBinding.descriptionTxt.text = "Downloading"
+                                }
+                                DownloadStatus.PAUSED_WAITING_TO_RETRY -> {
+                                    viewHolder.itemBinding.downloadStatus = me.vipa.app.enums.DownloadStatus.DOWNLOADING
+                                    viewHolder.itemBinding.descriptionTxt.text = "Downloading"
+                                }
                                 DownloadStatus.STATUS_PAUSED -> {
                                     viewHolder.itemBinding.downloadStatus = me.vipa.app.enums.DownloadStatus.PAUSE
                                     viewHolder.itemBinding.descriptionTxt.text = "Paused"

@@ -245,6 +245,14 @@ class DownloadedEpisodesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>,
                                 viewHolder.itemBinding.downloadStatus = me.vipa.app.enums.DownloadStatus.PAUSE
                                 viewHolder.itemBinding.descriptionTxt.text = "Paused"
                             }
+                            DownloadStatus.STATUS_PENDING -> {
+                                viewHolder.itemBinding.downloadStatus = me.vipa.app.enums.DownloadStatus.DOWNLOADING
+                                viewHolder.itemBinding.descriptionTxt.text = "Downloading"
+                            }
+                            DownloadStatus.PAUSED_WAITING_TO_RETRY -> {
+                                viewHolder.itemBinding.downloadStatus = me.vipa.app.enums.DownloadStatus.DOWNLOADING
+                                viewHolder.itemBinding.descriptionTxt.text = "Downloading"
+                            }
                             DownloadStatus.STATUS_NOT_QUEUED->{
                                 downloadedVideos.remove(currentVideoItem)
                                 notifyItemRemoved(position)
@@ -302,6 +310,7 @@ class DownloadedEpisodesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>,
     }
 
     override fun onDownloadCompleted(p0: Video, p1: DownloadStatus) {
+        notifyVideoChanged(p0.id, p1)
     }
 
     override fun onDownloadProgress(p0: Video, p1: DownloadStatus) {

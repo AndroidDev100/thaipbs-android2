@@ -432,4 +432,10 @@ public class SeasonTabFragment extends BaseBindingFragment<SeasonFragmentLayoutB
     public void setSeasonAdapter(SeasonAdapter seasonAdapter) {
         this.seasonAdapter = seasonAdapter;
     }
+
+    public void updateStatus() {
+        if (seasonAdapter!=null){
+            seasonAdapter.holdHolder();
+        }
+    }
 }
