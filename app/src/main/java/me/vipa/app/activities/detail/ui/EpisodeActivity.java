@@ -43,6 +43,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.brightcove.cast.DefaultExpandedControllerActivity;
 import com.brightcove.player.edge.OfflineCallback;
 import com.brightcove.player.edge.VideoListener;
 import com.brightcove.player.model.Video;
@@ -2194,8 +2195,8 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
     @Override
     public void chromeCastViewConnected(boolean status) {
         if (status) {
-            Intent intent = new Intent(this, ExpandedControlsActivity.class);
-            intent.putExtra("Asset", videoDetails);
+            Intent intent = new Intent(this, DefaultExpandedControllerActivity.class);
+            intent.putExtra("Asset",videoDetails);
             startActivity(intent);
             finish();
             isCastConnected = true;

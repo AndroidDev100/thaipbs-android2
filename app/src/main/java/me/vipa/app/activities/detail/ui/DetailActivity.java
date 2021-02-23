@@ -33,6 +33,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.brightcove.cast.DefaultExpandedControllerActivity;
 import com.brightcove.player.edge.OfflineCallback;
 import com.brightcove.player.model.Video;
 import com.brightcove.player.network.DownloadStatus;
@@ -1778,8 +1779,8 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
     @Override
     public void chromeCastViewConnected(boolean status) {
         if (status) {
-            Intent intent = new Intent(this, ExpandedControlsActivity.class);
-            intent.putExtra("Asset", videoDetails);
+            Intent intent = new Intent(this, DefaultExpandedControllerActivity.class);
+            intent.putExtra("Asset",videoDetails);
             startActivity(intent);
             finish();
             isCastConnected = true;
