@@ -1089,7 +1089,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
                             }
                         });
                     } else {
-                        Toast.makeText(SeriesDetailActivity.this, "NoWifi", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(SeriesDetailActivity.this, "NoWifi", Toast.LENGTH_LONG).show();
                     }
 
                 } else {
@@ -1105,7 +1105,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
                                             selectDownloadVideoQuality(video, videoId);
                                         }
                                     } else {
-                                        Toast.makeText(SeriesDetailActivity.this, "NoWifi", Toast.LENGTH_LONG).show();
+                                      //  Toast.makeText(SeriesDetailActivity.this, "NoWifi", Toast.LENGTH_LONG).show();
                                     }
                                 } else {
                                     if (videoQuality != 4) {
@@ -1132,6 +1132,9 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
                                     if (videoQuality != 4) {
                                         if (downloadHelper.getCatalog() != null) {
                                             downloadHelper.allowedMobileDownload();
+                                            if (seasonTabFragment!=null){
+                                                seasonTabFragment.updateStatus();
+                                            }
                                             downloadHelper.startEpisodeDownload(video, String.valueOf(seriesDetailBean.getBrightcoveVideoId()), seasonTabFragment.getSelectedSeason(), seasonTabFragment.getSeasonAdapter().getEpisodeNumber(videoId), videoQuality);
                                         }
                                     } else {

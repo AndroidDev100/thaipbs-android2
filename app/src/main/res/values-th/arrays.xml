@@ -68,4 +68,12 @@
 
     </string-array>
 
+    <string-array name="download_quality">
+        <item>สูง</item>
+        <item>ปานกลาง</item>
+        <item>ต่ำ</item>
+        <item>โปรแกรมประหยัดอินเทอร์เน็ต</item>
+        <item>มักจะถาม</item>
+    </string-array>
+
 </resources>

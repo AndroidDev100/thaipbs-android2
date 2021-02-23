@@ -30,6 +30,8 @@ import androidx.annotation.NonNull;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+
+import me.vipa.app.utils.helpers.downloads.room.DownloadedVideo;
 import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
 import me.vipa.enums.ImageType;
 import me.vipa.enums.WidgetImageType;
@@ -72,8 +74,10 @@ import me.vipa.app.SDKConfig;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.mmtv.utils.helpers.downloads.DownloadHelper;
 import com.mvhub.enums.RailCardType;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
@@ -1367,5 +1371,22 @@ public class AppCommonMethod {
     public static String checkSeasonNumber(String seasonNumber) {
 
         return null;
+    }
+
+    @NotNull
+    public static ArrayList<DownloadedVideo> removeDownloadedSeries(@NotNull ArrayList<DownloadedVideo> downloadVideos,DownloadHelper downloadHelper) {
+        ArrayList<DownloadedVideo> downloadedVideos=new ArrayList<>();
+        downloadedVideos.addAll(downloadVideos);
+        for (int i= 0 ;i< downloadVideos.size();i++){
+            if (downloadVideos.get(i).getDownloadType().equalsIgnoreCase(MediaTypeConstants.getInstance().getSeries()) || downloadVideos.get(i).getDownloadType().equalsIgnoreCase(MediaTypeConstants.getInstance().getEpisode())){
+                if (Integer.parseInt(downloadVideos.get(i).getEpisodeCount())>0){
+
+                }else {
+                    downloadedVideos.remove(i);
+                    downloadHelper.deleteVideo(downloadVideos.get(i).getVideoId());
+                }
+            }
+        }
+        return downloadedVideos;
     }
 }

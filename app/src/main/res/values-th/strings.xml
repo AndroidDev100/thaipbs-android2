@@ -405,4 +405,9 @@
     <string name="female">หญิง</string>
     <string name="others">อื่น ๆ</string>
 
+    <string name="waiting_for_wifi">กำลังรอ WI-Fi</string>
+    <string name="download_will_begin">การดาวน์โหลดของคุณจะเริ่มขึ้นเมื่อคุณใช้ Wi-Fi หรือคุณสามารถเปลี่ยนการตั้งค่าด้านล่าง:</string>
+    <string name="download_over_wifi">ดาวน์โหลดผ่าน Wi-Fi</string>
+    <string name="you_can_change">*คุณสามารถเปลี่ยนได้จากการตั้งค่า</string>
+
 </resources>

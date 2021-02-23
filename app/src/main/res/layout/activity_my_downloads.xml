@@ -6,14 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?attr/my_downloads_background">
-        <me.vipa.app.utils.CustomProgressBar
-            android:id="@+id/progress_bar"
-            style="@style/Widget.AppCompat.ProgressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"
-            android:visibility="gone" />
+
         <RelativeLayout
             android:id="@+id/nodatafounmd"
             android:layout_width="match_parent"
@@ -41,7 +34,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <include
@@ -49,15 +42,17 @@
                 layout="@layout/toolbar" />
 
             <LinearLayout
+                android:id="@+id/rec_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:background="?attr/my_downloads_background"
                 android:orientation="vertical">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/downloaded_recycler_view"
                     style="@style/Custom.Widget.CardView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center_vertical|center"
                     android:nestedScrollingEnabled="false"
                     android:numColumns="auto_fit"
@@ -67,6 +62,15 @@
             </LinearLayout>
 
         </LinearLayout>
+
+        <me.vipa.app.utils.CustomProgressBar
+            android:id="@+id/progress_bar"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:visibility="visible" />
     </RelativeLayout>
 
 </layout>

@@ -367,7 +367,7 @@ public class KsPreferenceKeys extends SharedPrefHelper {
     }
 
     public int getDownloadOverWifi() {
-        return getInt(SharedPrefesConstants.DOWNLOAD_OVER_WIFI, 0);
+        return getInt(SharedPrefesConstants.DOWNLOAD_OVER_WIFI, 1);
     }
 
     public void setEntitlementState(boolean status) {

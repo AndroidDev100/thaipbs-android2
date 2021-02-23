@@ -44,4 +44,10 @@
     <string name="high">High</string>
     <string name="enter_coupon_code">Enter a coupon code</string>
     <string name="coupon_code">Coupon Code</string>
+
+    <string name="waiting_for_wifi">waiting for wifi</string>
+    <string name="download_will_begin">Your download will begin once you are come on WiFi. Or you can change the setting below:</string>
+    <string name="download_over_wifi">Download over WiFi</string>
+    <string name="you_can_change">*You can chnage this from settings</string>
+
 </resources>

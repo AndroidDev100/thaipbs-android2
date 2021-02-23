@@ -1943,6 +1943,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
             new ActivityLauncher(this).loginActivity(this, LoginActivity.class);
         else {
             int videoQuality = new SharedPrefHelper(this).getInt(SharedPrefesConstants.DOWNLOAD_QUALITY_INDEX, 4);
+            Log.w("downloadClick",videoQuality+"");
             if (KsPreferenceKeys.getInstance().getDownloadOverWifi() == 1 && NetworkHelper.INSTANCE.isWifiEnabled(this)) {
                 if (source instanceof UserInteractionFragment) {
                     if (videoQuality != 4) {
@@ -1978,9 +1979,15 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
                                 if (AppCommonMethod.getCheckBCID(videoDetails.getBrightcoveVideoId())){
                                     if (videoDetails.getSeasonNumber().equalsIgnoreCase("")){
                                         userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.REQUESTED);
+                                        if (seasonTabFragment!=null){
+                                            seasonTabFragment.updateStatus();
+                                        }
                                         downloadHelper.startEpisodeDownload(downloadAbleVideo, String.valueOf(videoDetails.getBrightcoveVideoId()), 1, (String) videoDetails.getEpisodeNo(), videoQuality);
 
                                     }else {
+                                        if (seasonTabFragment!=null){
+                                            seasonTabFragment.updateStatus();
+                                        }
                                         userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.REQUESTED);
                                         downloadHelper.startEpisodeDownload(downloadAbleVideo, String.valueOf(videoDetails.getBrightcoveVideoId()), Integer.parseInt(videoDetails.getSeasonNumber()), (String) videoDetails.getEpisodeNo(), videoQuality);
 
@@ -2006,15 +2013,17 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
                 }
 
             } else {
-
+                //Log.w("downloadClick 2",videoQuality+" "+KsPreferenceKeys.getInstance().getDownloadOverWifi()+" "+AppCommonMethod.getCheckBCID(videoDetails.getBrightcoveVideoId()));
                 if (KsPreferenceKeys.getInstance().getDownloadOverWifi() == 0) {
                     if (source instanceof UserInteractionFragment) {
                         if (videoQuality != 4) {
                             if (AppCommonMethod.getCheckBCID(videoDetails.getBrightcoveVideoId())){
                                 if (videoDetails.getSeasonNumber().equalsIgnoreCase("")){
-                                    downloadHelper.startEpisodeDownload(downloadAbleVideo, String.valueOf(videoDetails.getBrightcoveVideoId()), 1, (String) videoDetails.getEpisodeNo(), videoQuality);
+                                    userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.REQUESTED);
+                                    downloadHelper.startEpisodeDownload(downloadAbleVideo, String.valueOf(videoDetails.getBrightcoveVideoId()), 1, String.valueOf(videoDetails.getEpisodeNo()), videoQuality);
                                 }else {
-                                    downloadHelper.startEpisodeDownload(downloadAbleVideo, String.valueOf(videoDetails.getBrightcoveVideoId()), Integer.parseInt(videoDetails.getSeasonNumber()), (String) videoDetails.getEpisodeNo(), videoQuality);
+                                    userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.REQUESTED);
+                                    downloadHelper.startEpisodeDownload(downloadAbleVideo, String.valueOf(videoDetails.getBrightcoveVideoId()), Integer.parseInt(videoDetails.getSeasonNumber()), String.valueOf(videoDetails.getEpisodeNo()), videoQuality);
                                 }
 
                             }
@@ -2022,6 +2031,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
                         } else {
                             if (AppCommonMethod.getCheckBCID(videoDetails.getBrightcoveVideoId())){
                                 if (videoDetails.getSeasonNumber().equalsIgnoreCase("")){
+
                                     selectDownloadVideoQuality(downloadAbleVideo, String.valueOf(videoDetails.getBrightcoveVideoId()), 1, videoDetails.getEpisodeNo() + "");
                                 }else {
                                     selectDownloadVideoQuality(downloadAbleVideo, String.valueOf(videoDetails.getBrightcoveVideoId()), Integer.parseInt(videoDetails.getSeasonNumber()), videoDetails.getEpisodeNo() + "");
@@ -2037,8 +2047,14 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
                                 if (videoQuality != 4) {
                                     if (AppCommonMethod.getCheckBCID(videoDetails.getBrightcoveVideoId())){
                                         if (videoDetails.getSeasonNumber().equalsIgnoreCase("")){
+                                            if (seasonTabFragment!=null){
+                                                seasonTabFragment.updateStatus();
+                                            }
                                             downloadHelper.startEpisodeDownload(downloadAbleVideo, String.valueOf(videoDetails.getBrightcoveVideoId()), 1, videoDetails.getEpisodeNo() + "", videoQuality);
                                         }else {
+                                            if (seasonTabFragment!=null){
+                                                seasonTabFragment.updateStatus();
+                                            }
                                             downloadHelper.startEpisodeDownload(downloadAbleVideo, String.valueOf(videoDetails.getBrightcoveVideoId()), Integer.parseInt(videoDetails.getSeasonNumber()), videoDetails.getEpisodeNo() + "", videoQuality);
                                         }
 

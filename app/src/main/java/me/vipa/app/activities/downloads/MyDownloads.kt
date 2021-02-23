@@ -21,6 +21,7 @@ import me.vipa.app.utils.helpers.downloads.room.DownloadModel
 import kotlinx.android.synthetic.main.activity_my_downloads.*
 import me.vipa.app.baseModels.BaseBindingActivity
 import me.vipa.app.utils.MediaTypeConstants
+import me.vipa.app.utils.commonMethods.AppCommonMethod
 import me.vipa.app.utils.cropImage.helpers.Logger
 import me.vipa.app.utils.helpers.downloads.DownloadedVideoActivity
 import me.vipa.app.utils.helpers.downloads.VideoListListener
@@ -79,7 +80,11 @@ class MyDownloads : BaseBindingActivity<ActivityMyDownloadsBinding>(), MediaDown
         if (downloadHelper!=null){
             Handler(Looper.getMainLooper()).postDelayed({
                 downloadHelper.getAllVideosFromDatabase().observe(this, Observer {
-                    checkOffline(it)
+
+                        var downloadedVideos = AppCommonMethod.removeDownloadedSeries(it.downloadVideos, downloadHelper)
+                        checkOffline(it)
+
+
                 })
             }, 300)
 
@@ -116,53 +121,15 @@ class MyDownloads : BaseBindingActivity<ActivityMyDownloadsBinding>(), MediaDown
         var counter = 0
         downloadHelper = DownloadHelper(this, this)
         downloadHelper.getAllVideosFromDatabase().observe(this, Observer {
-            checkOffline(it)
+
+                var downloadedVideos = AppCommonMethod.removeDownloadedSeries(it.downloadVideos, downloadHelper)
+                checkOffline(it)
+
         })
         setupToolbar()
     }
 
     private fun checkOffline(it: DownloadModel?) {
-        it!!.downloadVideos.forEach { downloadedVideo ->
-            Logger.e("DownloadedVideo1", Gson().toJson(downloadedVideo))
-            val downloadStatus=downloadHelper.getCatalog().getVideoDownloadStatus(downloadedVideo.videoId)
-            Logger.e("status", downloadStatus.toString())
-            if (!downloadedVideo.downloadType.equals(MediaTypeConstants.getInstance().series,ignoreCase = true) && downloadStatus.code!=DownloadStatus.STATUS_COMPLETE
-                    && downloadStatus.code!=DownloadStatus.STATUS_PAUSED && downloadStatus.code!=DownloadStatus.STATUS_DOWNLOADING) {
-                downloadHelper.findOfflineVideoById(downloadedVideo.videoId, object : OfflineCallback<Video> {
-                    override fun onSuccess(video: Video?) {
-                        if (video!=null){
-                         //   downloadHelper.deleteVideoFromDatabase(downloadedVideo.videoId)
-                        }
-                       // Logger.e("DBDatabase", video!!.name)
-                    }
-
-                    override fun onFailure(p0: Throwable?) {
-                       // Logger.e("DBDatabase", p0!!.toString())
-                        downloadHelper.deleteVideoFromDatabase(downloadedVideo.videoId)
-                    }
-                })
-            }else{
-                if (downloadedVideo.downloadType.equals(MediaTypeConstants.getInstance().series,ignoreCase = true)) {
-                    downloadHelper.findOfflineVideoById(downloadedVideo.videoId, object : OfflineCallback<Video> {
-                        override fun onSuccess(video: Video?) {
-                            if (video!=null){
-                                Logger.e("DownloadedVideo1", "notnull")
-                                //   downloadHelper.deleteVideoFromDatabase(downloadedVideo.videoId)
-                            }else{
-                                Logger.e("DownloadedVideo1", "null")
-                            }
-                            // Logger.e("DBDatabase", video!!.name)
-                        }
-
-                        override fun onFailure(p0: Throwable?) {
-                            Logger.e("DBDatabase", p0!!.toString())
-                           // Logger.e("DownloadedVideo1", "notnull")
-                            downloadHelper.deleteVideoFromDatabase(downloadedVideo.videoId)
-                        }
-                    })
-                }
-            }
-        }
         downloadHelper.getAllVideosFromDatabase().observe(this, Observer {
             if (it.downloadVideos.size>0){
                 downloadsAdapter = DownloadsAdapter(this, it,this)
@@ -171,8 +138,14 @@ class MyDownloads : BaseBindingActivity<ActivityMyDownloadsBinding>(), MediaDown
                 downloaded_recycler_view.itemAnimator = DefaultItemAnimator()
                 downloaded_recycler_view.adapter = downloadsAdapter
                 nodatafounmd.visibility = View.GONE
+                downloaded_recycler_view.visibility = View.VISIBLE
+                rec_layout.visibility = View.VISIBLE
+                progress_bar.visibility = View.GONE
             }else{
                 nodatafounmd.visibility = View.VISIBLE
+                downloaded_recycler_view.visibility = View.GONE
+                rec_layout.visibility = View.GONE
+                progress_bar.visibility = View.GONE
                 Logger.e(TAG, "blankActivity")
             }
 
@@ -222,11 +195,13 @@ class MyDownloads : BaseBindingActivity<ActivityMyDownloadsBinding>(), MediaDown
     override fun onStart() {
         super.onStart()
         try {
+            progress_bar.visibility = View.VISIBLE
             Handler(Looper.getMainLooper()).postDelayed({
                 downloadHelper.getAllVideosFromDatabase().observe(this, Observer {
+                    var downloadedVideos = AppCommonMethod.removeDownloadedSeries(it.downloadVideos, downloadHelper)
                     checkOffline(it)
                 })
-            }, 300)
+            }, 1000)
         }catch (exception:Exception){
 
         }

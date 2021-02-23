@@ -1274,7 +1274,7 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
 
     @Override
     public void onNetworkConnectionChanged(boolean isConnected) {
-        if ((new SharedPrefHelper(this).getInt(SharedPrefesConstants.DOWNLOAD_OVER_WIFI, 0) == 1)) {
+        if ((KsPreferenceKeys.getInstance().getDownloadOverWifi() == 1)) {
             if (!NetworkHelper.INSTANCE.isWifiEnabled(this)) {
                 downloadHelper.pauseAllVideos();
                 if (downloadAbleVideo != null)
