@@ -302,7 +302,7 @@ public class SignUpThirdPage extends BaseBindingActivity<ActivitySignUpThirdPage
     }
 
     private void callUpdateApi() {
-        if (validateNameEmpty()) {
+        if (validateNameEmpty() && validatePhone()) {
             preference.setAppPrefRegisterStatus(AppConstants.UserStatus.Login.toString());
             showLoading(getBinding().progressBar, true);
             String token = preference.getAppPrefAccessToken();
@@ -467,6 +467,28 @@ public class SignUpThirdPage extends BaseBindingActivity<ActivitySignUpThirdPage
        return check;
     }
 
+    private boolean validatePhone() {
+        boolean check = false;
+        if (getBinding().etMobileNumber.getText().toString().trim().equalsIgnoreCase("")) {
+            check = true;
+            getBinding().errorMobile.setVisibility(View.INVISIBLE);
+        } else if (getBinding().etMobileNumber.getText().toString().trim().length() == 11) {
+            String firstTwoChar = getBinding().etMobileNumber.getText().toString().substring(0, 2);
+            if (firstTwoChar.equalsIgnoreCase("66")) {
+                check = true;
+                getBinding().errorMobile.setVisibility(View.INVISIBLE);
+            } else {
+                check = false;
+                getBinding().errorMobile.setVisibility(View.VISIBLE);
+                getBinding().errorMobile.setText(getResources().getString(R.string.mobile_error));
+            }
+        } else {
+            check = false;
+            getBinding().errorMobile.setVisibility(View.VISIBLE);
+            getBinding().errorMobile.setText(getResources().getString(R.string.mobile_error));
+        }
+        return check;
+    }
 
 
     private void showDialog(String title, String message) {

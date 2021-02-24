@@ -374,7 +374,8 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
             getBinding().errorMobile.setVisibility(View.INVISIBLE);
         } else if (getBinding().etMobileNumber.getText().toString().trim().length() == 11) {
             String firstTwoChar = getBinding().etMobileNumber.getText().toString().substring(0, 2);
-            if (firstTwoChar.equalsIgnoreCase("66")) {
+            String firstChar = getBinding().etMobileNumber.getText().toString().substring(0, 1);
+            if (firstTwoChar.equalsIgnoreCase("66") || firstChar.equalsIgnoreCase("0")) {
                 check = true;
                 getBinding().errorMobile.setVisibility(View.INVISIBLE);
             } else {
