@@ -16,6 +16,7 @@ import com.brightcove.player.offline.MediaDownloadable
 import com.mmtv.utils.helpers.downloads.DownloadHelper
 import me.vipa.app.R
 import me.vipa.app.databinding.ListDownloadItemBinding
+import me.vipa.app.utils.commonMethods.AppCommonMethod
 import me.vipa.app.utils.cropImage.helpers.Logger
 import me.vipa.app.utils.helpers.downloads.DownloadedVideoActivity
 import me.vipa.app.utils.helpers.downloads.VideoListListener
@@ -41,6 +42,7 @@ class DownloadedEpisodesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>,
                     if (downloadedVideos.size>0){
 
                     }else{
+                        AppCommonMethod.isDownloadDeleted=true
                         context!!.onBackPressed()
                     }
                 }
@@ -67,6 +69,7 @@ class DownloadedEpisodesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>,
                     if (downloadedVideos.size>0){
 
                     }else{
+                        AppCommonMethod.isDownloadDeleted=true
                         context!!.onBackPressed()
                     }
                 }
@@ -239,19 +242,19 @@ class DownloadedEpisodesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>,
                             DownloadStatus.STATUS_DOWNLOADING -> {
                                 viewHolder.itemBinding.downloadStatus = me.vipa.app.enums.DownloadStatus.DOWNLOADING
                                 viewHolder.itemBinding.videoDownloading.progress = p0.progress.toFloat()
-                                viewHolder.itemBinding.descriptionTxt.text = "Downloading"
+                                viewHolder.itemBinding.descriptionTxt.text = context.getString(R.string.Downloading)
                             }
                             DownloadStatus.STATUS_PAUSED -> {
                                 viewHolder.itemBinding.downloadStatus = me.vipa.app.enums.DownloadStatus.PAUSE
-                                viewHolder.itemBinding.descriptionTxt.text = "Paused"
+                                viewHolder.itemBinding.descriptionTxt.text = context.getString(R.string.Paused)
                             }
                             DownloadStatus.STATUS_PENDING -> {
                                 viewHolder.itemBinding.downloadStatus = me.vipa.app.enums.DownloadStatus.DOWNLOADING
-                                viewHolder.itemBinding.descriptionTxt.text = "Downloading"
+                                viewHolder.itemBinding.descriptionTxt.text = context.getString(R.string.Downloading)
                             }
                             DownloadStatus.PAUSED_WAITING_TO_RETRY -> {
                                 viewHolder.itemBinding.downloadStatus = me.vipa.app.enums.DownloadStatus.DOWNLOADING
-                                viewHolder.itemBinding.descriptionTxt.text = "Downloading"
+                                viewHolder.itemBinding.descriptionTxt.text = context.getString(R.string.Downloading)
                             }
                             DownloadStatus.STATUS_NOT_QUEUED->{
                                 downloadedVideos.remove(currentVideoItem)

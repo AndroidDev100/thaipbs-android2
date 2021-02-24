@@ -80,6 +80,11 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
                     notifyItemRemoved(position)
                     notifyItemRangeChanged(position, downloadedVideos.size)
                     buildIndexMap()
+                    if (downloadedVideos.size>0){
+
+                    }else{
+                        noDataCallBac!!.dataNotAvailable()
+                    }
                 }
                 R.id.pause_download -> {
                     downloadHelper.pauseVideo(video.videoId)
@@ -117,7 +122,7 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
 
                     }else{
                         downloadHelper.deleteVideo(downloadedVideo.videoId)
-                        //noDataCallBac!!.dataNotAvailable();
+                      //  noDataCallBac!!.dataNotAvailable();
                     }
                    //
                     //fetchVideos(downloadedVideo);
@@ -329,19 +334,19 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
                                 DownloadStatus.STATUS_DOWNLOADING -> {
                                     viewHolder.itemBinding.downloadStatus = me.vipa.app.enums.DownloadStatus.DOWNLOADING
                                     viewHolder.itemBinding.videoDownloading.progress = p0.progress.toFloat()
-                                    viewHolder.itemBinding.descriptionTxt.text = "Downloading"
+                                    viewHolder.itemBinding.descriptionTxt.text = context.getString(R.string.Downloading)
                                 }
                                 DownloadStatus.STATUS_PENDING -> {
                                     viewHolder.itemBinding.downloadStatus = me.vipa.app.enums.DownloadStatus.DOWNLOADING
-                                    viewHolder.itemBinding.descriptionTxt.text = "Downloading"
+                                    viewHolder.itemBinding.descriptionTxt.text = context.getString(R.string.Downloading)
                                 }
                                 DownloadStatus.PAUSED_WAITING_TO_RETRY -> {
                                     viewHolder.itemBinding.downloadStatus = me.vipa.app.enums.DownloadStatus.DOWNLOADING
-                                    viewHolder.itemBinding.descriptionTxt.text = "Downloading"
+                                    viewHolder.itemBinding.descriptionTxt.text = context.getString(R.string.Downloading)
                                 }
                                 DownloadStatus.STATUS_PAUSED -> {
                                     viewHolder.itemBinding.downloadStatus = me.vipa.app.enums.DownloadStatus.PAUSE
-                                    viewHolder.itemBinding.descriptionTxt.text = "Paused"
+                                    viewHolder.itemBinding.descriptionTxt.text = context.getString(R.string.Paused)
                                 }
                             }
                         }

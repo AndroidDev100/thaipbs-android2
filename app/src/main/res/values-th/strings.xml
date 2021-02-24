@@ -410,4 +410,7 @@
     <string name="download_over_wifi">ดาวน์โหลดผ่าน Wi-Fi</string>
     <string name="you_can_change">*คุณสามารถเปลี่ยนได้จากการตั้งค่า</string>
 
+    <string name="Downloading">กำลังดาวน์โหลด</string>
+    <string name="Paused">หยุดชั่วคราว</string>
+
 </resources>

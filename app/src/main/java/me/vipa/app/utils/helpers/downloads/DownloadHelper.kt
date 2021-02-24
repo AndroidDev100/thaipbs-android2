@@ -325,7 +325,7 @@ class DownloadHelper() {
         val currentDate = sdf.format(Date())
         val calender = Calendar.getInstance()
         calender.time = sdf.parse(currentDate)
-        calender.add(Calendar.DATE, 3)
+        calender.add(Calendar.DATE, SDKConfig.DOWNLOAD_EXPIRY_DAYS)
         val httpRequestConfigBuilder = HttpRequestConfig.Builder()
         httpRequestConfigBuilder.setBrightcoveAuthorizationToken("AEnTxTh1tfn_PqonTvZXtqKaLZbZeAM3wLlN2OIPcKXOYKFhlHISivLU98g0R5fOoMddEIzPnC9bm9BK7X27H3nNcJHDtMgCMw2fwJpyWxxwfvzJhTd3Npk")
         httpRequestConfig = httpRequestConfigBuilder.build()

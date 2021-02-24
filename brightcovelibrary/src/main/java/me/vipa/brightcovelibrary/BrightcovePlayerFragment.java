@@ -1450,11 +1450,14 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         }
         baseVideoView.stopPlayback();
         if (mActivity != null && !mActivity.isFinishing()) {
-            if (assetType.equalsIgnoreCase("EPISODES") || assetType.equalsIgnoreCase("EPISODE")) {
+            if (assetType!=null){
+                if (assetType.equalsIgnoreCase("EPISODES") || assetType.equalsIgnoreCase("EPISODE")) {
 
-            } else {
-                finishPlayer();
+                } else {
+                    finishPlayer();
+                }
             }
+
         }
 
 

@@ -387,4 +387,8 @@
     <string name="you_can_change">*You can chnage this from settings</string>
 
 
+    <string name="Downloading">Downloading</string>
+    <string name="Paused">Paused</string>
+
+
 </resources>

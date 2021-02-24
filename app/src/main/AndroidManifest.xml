@@ -64,7 +64,7 @@
             android:theme="@style/FullscreenTheme" />
         <activity
             android:name=".activities.downloads.MyDownloads"
-            android:launchMode="singleTop"
+            android:screenOrientation="locked"
             android:theme="@style/MyMaterialTheme" />
 
         <provider

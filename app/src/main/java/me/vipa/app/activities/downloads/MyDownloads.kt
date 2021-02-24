@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.lifecycle.Observer
@@ -186,7 +187,11 @@ class MyDownloads : BaseBindingActivity<ActivityMyDownloadsBinding>(), MediaDown
 
             }
         }*/
+        Logger.e(TAG, "dataNotAvailable")
         nodatafounmd.visibility = View.VISIBLE
+        downloaded_recycler_view.visibility = View.GONE
+        rec_layout.visibility = View.GONE
+        progress_bar.visibility = View.GONE
        // val downloadedVideoIntent = Intent(this, MyDownloads::class.java)
         //startActivity(downloadedVideoIntent)
 
@@ -195,13 +200,24 @@ class MyDownloads : BaseBindingActivity<ActivityMyDownloadsBinding>(), MediaDown
     override fun onStart() {
         super.onStart()
         try {
-            progress_bar.visibility = View.VISIBLE
-            Handler(Looper.getMainLooper()).postDelayed({
-                downloadHelper.getAllVideosFromDatabase().observe(this, Observer {
-                    var downloadedVideos = AppCommonMethod.removeDownloadedSeries(it.downloadVideos, downloadHelper)
-                    checkOffline(it)
-                })
-            }, 1000)
+
+            Logger.w("sdva",AppCommonMethod.isDownloadDeleted.toString())
+            if (AppCommonMethod.isDownloadDeleted){
+                progress_bar.visibility = View.VISIBLE
+                AppCommonMethod.isDownloadDeleted=false;
+                Handler(Looper.getMainLooper()).postDelayed({
+
+                    val downloadedVideoIntent = Intent(this, MyDownloads::class.java)
+                    startActivity(downloadedVideoIntent)
+                    finish()
+                }, 1500)
+
+            }
+           /* downloadHelper.getAllVideosFromDatabase().observe(this, Observer {
+                var downloadedVideos = AppCommonMethod.removeDownloadedSeries(it.downloadVideos, downloadHelper)
+
+            })*/
+
         }catch (exception:Exception){
 
         }

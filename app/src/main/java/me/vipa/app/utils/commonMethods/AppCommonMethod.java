@@ -151,6 +151,7 @@ public class AppCommonMethod {
     public static String userId;
     public static boolean isOrientationChanged = false;
     public static boolean isResumeDetail = false;
+    public static boolean isDownloadDeleted = false;
     public static boolean isSeasonCount = false;
     public static boolean isSeriesPage = false;
     public static boolean isInternet = false;
@@ -1379,6 +1380,7 @@ public class AppCommonMethod {
         downloadedVideos.addAll(downloadVideos);
         for (int i= 0 ;i< downloadVideos.size();i++){
             if (downloadVideos.get(i).getDownloadType().equalsIgnoreCase(MediaTypeConstants.getInstance().getSeries()) || downloadVideos.get(i).getDownloadType().equalsIgnoreCase(MediaTypeConstants.getInstance().getEpisode())){
+                Logger.e("AppCommon", downloadVideos.get(i).getDownloadType()+"  "+Integer.parseInt(downloadVideos.get(i).getEpisodeCount()));
                 if (Integer.parseInt(downloadVideos.get(i).getEpisodeCount())>0){
 
                 }else {
