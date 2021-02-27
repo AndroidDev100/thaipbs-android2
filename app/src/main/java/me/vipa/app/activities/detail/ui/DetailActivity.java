@@ -1793,7 +1793,7 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
         this.downloadAbleVideo = video;
         if (userInteractionFragment != null) {
             Log.e("Download", "Video Found=>" + video.toString());
-            if (SDKConfig.isDownloadEnable()){
+            if (SDKConfig.getInstance().isDownloadEnable()){
                 if (videoDetails!=null){
                     if (MediaTypeCheck.isMediaTypeSupported(videoDetails.getAssetType())){
                         userInteractionFragment.setDownloadable(downloadAbleVideo.isOfflinePlaybackAllowed());

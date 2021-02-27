@@ -58,6 +58,11 @@ public class AppConfig {
     @Expose
     private String contactUsUrl;
 
+
+    @SerializedName("downloadEnable")
+    @Expose
+    private boolean downloadEnable;
+
     public String getContactUsUrl() {
         return contactUsUrl;
     }
@@ -331,5 +336,13 @@ public class AppConfig {
 
     public int getTimer() {
         return timer;
+    }
+
+    public void setDownloadEnable(boolean downloadEnable) {
+        this.downloadEnable = downloadEnable;
+    }
+
+    public boolean isDownloadEnable() {
+        return downloadEnable;
     }
 }

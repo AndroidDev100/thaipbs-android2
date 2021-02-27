@@ -17,7 +17,10 @@ import com.brightcove.player.model.Video;
 import com.brightcove.player.network.DownloadStatus;
 import com.brightcove.player.offline.MediaDownloadable;
 import com.mmtv.utils.helpers.downloads.DownloadHelper;
+
+import me.vipa.app.SDKConfig;
 import me.vipa.app.utils.cropImage.helpers.Logger;
+import me.vipa.app.utils.helpers.downloads.MediaTypeCheck;
 import me.vipa.app.utils.helpers.downloads.OnDownloadClickInteraction;
 import me.vipa.app.utils.helpers.downloads.VideoListListener;
 import me.vipa.app.R;
@@ -117,12 +120,18 @@ public class SeasonAdapter extends RecyclerView.Adapter<SeasonAdapter.SeasonView
             downloadHelper.findVideo(videoItemBeans.get(position).getBrightcoveVideoId(), new VideoListener() {
                 @Override
                 public void onVideo(Video video) {
-                    if (video.isOfflinePlaybackAllowed()) {
-                        holder.itemBinding.setIsDownloadable(true);
-                        updateDownloadStatus(holder, position);
-                    } else {
-                        holder.itemBinding.setIsDownloadable(false);
+                    if (SDKConfig.getInstance().isDownloadEnable()){
+                        if (MediaTypeCheck.isMediaTypeSupported(videoItemBeans.get(position).getAssetType())){
+                            if (video.isOfflinePlaybackAllowed()) {
+                                holder.itemBinding.setIsDownloadable(true);
+                                updateDownloadStatus(holder, position);
+                            } else {
+                                holder.itemBinding.setIsDownloadable(false);
+                            }
+                        }
+
                     }
+
                 }
             });
         }

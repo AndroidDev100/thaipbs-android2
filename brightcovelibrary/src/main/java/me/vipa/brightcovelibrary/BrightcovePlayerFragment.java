@@ -153,6 +153,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
     private boolean isBingeWatchTimeCalculate = false;
     boolean isFirstCalled = true;
     private boolean isCastConnected = false;
+    int from=0;
 
 
     public BrightcovePlayerFragment() {
@@ -194,10 +195,12 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             bookmarkPosition = bundle.getLong("bookmarkPosition");
             if (bundle.containsKey("isOffline")) {
                 isOfflineVideo = bundle.getBoolean("isOffline");
+                from=bundle.getInt("from");
                 currentVideo = bundle.getParcelable("videoId");
                 if (isOfflineVideo && mActivity != null) {
-                    mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
-
+                    if (from==1){
+                        mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+                    }
                 }
             } else {
                 if (mActivity != null) {
@@ -306,8 +309,10 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         if (isOfflineVideo) {
             setPlayerWithCallBacks(true);
             if (mActivity != null) {
-                mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-                mActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                if (from==1){
+                    mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                    mActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                }
             }
         } else {
             setPlayerWithCallBacks(false);

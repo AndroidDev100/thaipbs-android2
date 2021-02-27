@@ -18,6 +18,9 @@ import androidx.core.app.NotificationManagerCompat;
 
 import java.util.List;
 
+import me.vipa.app.SDKConfig;
+import me.vipa.app.activities.contentPreference.UI.ContentPreference;
+import me.vipa.app.activities.contentPreference.UI.SettingContentPreferences;
 import me.vipa.app.activities.settings.downloadsettings.DownloadSettings;
 import me.vipa.app.activities.videoquality.ui.ChangeLanguageActivity;
 import me.vipa.app.activities.videoquality.ui.VideoQualityActivity;
@@ -59,7 +62,18 @@ public class ActivitySettings extends BaseBindingActivity<SettingsActivityBindin
         toolBar();
         checkLanguage();
 
+        if (SDKConfig.getInstance().isDownloadEnable()){
+            getBinding().downloadLayout.setVisibility(View.VISIBLE);
+        }else {
+            getBinding().downloadLayout.setVisibility(View.GONE);
+        }
+        if (KsPreferenceKeys.getInstance().getAppPrefLoginStatus().equalsIgnoreCase(AppConstants.UserStatus.Login.toString())){
+            getBinding().contentPreLayout.setVisibility(View.VISIBLE);
+        }else {
+            getBinding().contentPreLayout.setVisibility(View.GONE);
+        }
         getBinding().downloadSettings.setOnClickListener(this);
+        getBinding().contentPrefrenceTxt.setOnClickListener(this);
         getBinding().parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -264,6 +278,12 @@ public class ActivitySettings extends BaseBindingActivity<SettingsActivityBindin
         switch (v.getId()) {
             case R.id.download_settings: {
                 Intent intent = new Intent(ActivitySettings.this, DownloadSettings.class);
+                startActivity(intent);
+            }
+            break;
+            case R.id.content_prefrence_txt: {
+                Log.w("savedata3","-->>click");
+                Intent intent = new Intent(ActivitySettings.this, SettingContentPreferences.class);
                 startActivity(intent);
             }
             break;

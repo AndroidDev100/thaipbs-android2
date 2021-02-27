@@ -41,6 +41,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import me.vipa.app.R;
 import me.vipa.app.SDKConfig;
@@ -468,7 +470,7 @@ public class SignUpThirdPage extends BaseBindingActivity<ActivitySignUpThirdPage
     }
 
     private boolean validatePhone() {
-        boolean check = false;
+       /* boolean check = false;
         if (getBinding().etMobileNumber.getText().toString().trim().equalsIgnoreCase("")) {
             check = true;
             getBinding().errorMobile.setVisibility(View.INVISIBLE);
@@ -487,8 +489,74 @@ public class SignUpThirdPage extends BaseBindingActivity<ActivitySignUpThirdPage
             getBinding().errorMobile.setVisibility(View.VISIBLE);
             getBinding().errorMobile.setText(getResources().getString(R.string.mobile_error));
         }
+        return check;*/
+
+        boolean check = false;
+        if (getBinding().etMobileNumber.getText().toString().trim().equalsIgnoreCase("")) {
+            check = true;
+            getBinding().errorMobile.setVisibility(View.INVISIBLE);
+        }
+        else {
+            if(validateRegex(getBinding().etMobileNumber.getText().toString())){
+                check = true;
+                getBinding().errorMobile.setVisibility(View.INVISIBLE);
+            }else {
+                check = false;
+                getBinding().errorMobile.setVisibility(View.VISIBLE);
+                getBinding().errorMobile.setText(getResources().getString(R.string.mobile_error));
+            }
+        }
+
+       /* else if (inputLenth>0){
+            String firstChar = getBinding().etMobileNumber.getText().toString().substring(0, 1);
+            if (firstChar.equalsIgnoreCase("0") && validateRegex(getBinding().etMobileNumber.getText().toString())){
+                check = true;
+                getBinding().errorMobile.setVisibility(View.INVISIBLE);
+            }else {
+                check = false;
+                getBinding().errorMobile.setVisibility(View.VISIBLE);
+                getBinding().errorMobile.setText(getResources().getString(R.string.mobile_error));
+            }
+        }
+        else if (inputLenth>1){
+            String firstTwoChar = getBinding().etMobileNumber.getText().toString().substring(0, 2);
+            if (firstTwoChar.equalsIgnoreCase("66") && getBinding().etMobileNumber.getText().toString().trim().length() == 11){
+                check = true;
+                getBinding().errorMobile.setVisibility(View.INVISIBLE);
+            }else {
+                check = false;
+                getBinding().errorMobile.setVisibility(View.VISIBLE);
+                getBinding().errorMobile.setText(getResources().getString(R.string.mobile_error));
+            }
+        }
+        else {
+            check = false;
+            getBinding().errorMobile.setVisibility(View.VISIBLE);
+            getBinding().errorMobile.setText(getResources().getString(R.string.mobile_error));
+        }*/
         return check;
     }
+
+    private boolean validateRegex(String number) {
+        String mobileRegex66="^(?=66)(?=.*?[0-9]).{11,11}$";
+        String mobileRegex0="^(?=0)(?=.*?[0-9]).{10,10}$";
+
+        Pattern pattern = Pattern.compile(mobileRegex66);
+        Matcher matcher = pattern.matcher(number);
+
+        Pattern pattern2 = Pattern.compile(mobileRegex0);
+        Matcher matcher2 = pattern2.matcher(number);
+
+        if (matcher.find()){
+            return true;
+        }else if (matcher2.find()){
+            return true;
+        }else {
+            return false;
+        }
+
+    }
+
 
 
     private void showDialog(String title, String message) {

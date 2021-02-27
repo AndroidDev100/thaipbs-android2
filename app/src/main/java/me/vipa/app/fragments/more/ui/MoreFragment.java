@@ -264,6 +264,16 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
             getBinding().titleLayout.setVisibility(View.VISIBLE);
             getBinding().ivProfilePic.setVisibility(View.GONE);
             setUserImage(userProfileResponse);
+
+            Gson gson = new Gson();
+            String userProfileData = gson.toJson(userProfileResponse);
+            KsPreferenceKeys.getInstance().setUserProfileData(userProfileData);
+            Log.w("savedata1",userProfileData);
+            Log.w("savedata2",KsPreferenceKeys.getInstance().getUserProfileData());
+            String json = KsPreferenceKeys.getInstance().getUserProfileData();
+            UserProfileResponse newObject = gson.fromJson(json, UserProfileResponse.class);
+            Log.w("savedata3",newObject.toString());
+
         } catch (Exception e) {
 
         }

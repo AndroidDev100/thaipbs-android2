@@ -11,6 +11,10 @@ public class CustomData {
     @Expose
     private String isNotification;
 
+    @SerializedName("contentPreferences")
+    @Expose
+    private String contentPreferences;
+
     public String getIsNotification() {
         return isNotification;
     }
@@ -33,6 +37,14 @@ public class CustomData {
 
     public void setProfileAvatar(String profileAvatar) {
         this.profileAvatar = profileAvatar;
+    }
+
+    public void setContentPreferences(String contentPreferences) {
+        this.contentPreferences = contentPreferences;
+    }
+
+    public String getContentPreferences() {
+        return contentPreferences;
     }
 
     @SerializedName("profileAvatar")

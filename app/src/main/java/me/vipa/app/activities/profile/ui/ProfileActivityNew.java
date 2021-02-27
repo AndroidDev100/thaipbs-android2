@@ -9,8 +9,10 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -36,6 +38,7 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -43,10 +46,14 @@ import java.io.File;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import me.vipa.app.R;
 import me.vipa.app.SDKConfig;
@@ -82,7 +89,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
     private String via = "";
     private AmazonS3 s3;
     private TransferUtility transferUtility;
-    private final String contentPreference = "";
+    private String contentPreference = "";
     private boolean isNotificationEnable;
     String compareValue="";
 
@@ -101,9 +108,30 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
     private void connectionObserver() {
         preference = KsPreferenceKeys.getInstance();
         callModel();
+        parseProfile();
         setToolbar();
         setOfflineData();
         connectionValidation(NetworkConnectivity.isOnline(ProfileActivityNew.this));
+    }
+
+    UserProfileResponse newObject;
+    List<String> saved;
+    private void parseProfile() {
+        try {
+            saved=new ArrayList<>();
+            Gson gson = new Gson();
+            String json = KsPreferenceKeys.getInstance().getUserProfileData();
+            newObject = gson.fromJson(json, UserProfileResponse.class);
+            Log.w("savedata3",newObject.getData().getCustomData().getContentPreferences());
+            if (newObject.getData().getCustomData()!=null && newObject.getData().getCustomData().getContentPreferences()!=null
+            ){
+                contentPreference=newObject.getData().getCustomData().getContentPreferences();
+            }
+
+        }catch (Exception ignored){
+            Log.w("savedata3",ignored.toString());
+        }
+
     }
 
     private void setToolbar() {
@@ -331,6 +359,9 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
                     dismissLoading(getBinding().progressBar);
                     if (userProfileResponse != null) {
                         if (userProfileResponse.getStatus()) {
+                            Gson gson = new Gson();
+                            String userProfileData = gson.toJson(userProfileResponse);
+                            KsPreferenceKeys.getInstance().setUserProfileData(userProfileData);
                             showDialog("", ProfileActivityNew.this.getResources().getString(R.string.profile_update_successfully));
                             updateUI(userProfileResponse);
                         } else {
@@ -368,27 +399,72 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
     }
 
     private boolean validatePhone() {
+
+        int inputLenth=getBinding().etMobileNumber.getText().toString().trim().length();
         boolean check = false;
         if (getBinding().etMobileNumber.getText().toString().trim().equalsIgnoreCase("")) {
             check = true;
             getBinding().errorMobile.setVisibility(View.INVISIBLE);
-        } else if (getBinding().etMobileNumber.getText().toString().trim().length() == 11) {
-            String firstTwoChar = getBinding().etMobileNumber.getText().toString().substring(0, 2);
-            String firstChar = getBinding().etMobileNumber.getText().toString().substring(0, 1);
-            if (firstTwoChar.equalsIgnoreCase("66") || firstChar.equalsIgnoreCase("0")) {
+        }
+        else {
+            if(validateRegex(getBinding().etMobileNumber.getText().toString())){
                 check = true;
                 getBinding().errorMobile.setVisibility(View.INVISIBLE);
-            } else {
+            }else {
                 check = false;
                 getBinding().errorMobile.setVisibility(View.VISIBLE);
                 getBinding().errorMobile.setText(getResources().getString(R.string.mobile_error));
             }
-        } else {
+        }
+
+       /* else if (inputLenth>0){
+            String firstChar = getBinding().etMobileNumber.getText().toString().substring(0, 1);
+            if (firstChar.equalsIgnoreCase("0") && validateRegex(getBinding().etMobileNumber.getText().toString())){
+                check = true;
+                getBinding().errorMobile.setVisibility(View.INVISIBLE);
+            }else {
+                check = false;
+                getBinding().errorMobile.setVisibility(View.VISIBLE);
+                getBinding().errorMobile.setText(getResources().getString(R.string.mobile_error));
+            }
+        }
+        else if (inputLenth>1){
+            String firstTwoChar = getBinding().etMobileNumber.getText().toString().substring(0, 2);
+            if (firstTwoChar.equalsIgnoreCase("66") && getBinding().etMobileNumber.getText().toString().trim().length() == 11){
+                check = true;
+                getBinding().errorMobile.setVisibility(View.INVISIBLE);
+            }else {
+                check = false;
+                getBinding().errorMobile.setVisibility(View.VISIBLE);
+                getBinding().errorMobile.setText(getResources().getString(R.string.mobile_error));
+            }
+        }
+        else {
             check = false;
             getBinding().errorMobile.setVisibility(View.VISIBLE);
             getBinding().errorMobile.setText(getResources().getString(R.string.mobile_error));
-        }
+        }*/
         return check;
+    }
+
+    private boolean validateRegex(String number) {
+        String mobileRegex66="^(?=66)(?=.*?[0-9]).{11,11}$";
+        String mobileRegex0="^(?=0)(?=.*?[0-9]).{10,10}$";
+
+        Pattern pattern = Pattern.compile(mobileRegex66);
+        Matcher matcher = pattern.matcher(number);
+
+        Pattern pattern2 = Pattern.compile(mobileRegex0);
+        Matcher matcher2 = pattern2.matcher(number);
+
+        if (matcher.find()){
+            return true;
+         }else if (matcher2.find()){
+            return true;
+        }else {
+            return false;
+        }
+
     }
 
     private void cameraIntent() {

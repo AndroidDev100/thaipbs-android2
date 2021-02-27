@@ -31,6 +31,7 @@ import androidx.annotation.NonNull;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 
+import me.vipa.app.beanModel.userProfile.UserProfileResponse;
 import me.vipa.app.utils.helpers.downloads.room.DownloadedVideo;
 import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
 import me.vipa.enums.ImageType;
@@ -84,6 +85,7 @@ import java.lang.ref.WeakReference;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -1277,6 +1279,7 @@ public class AppCommonMethod {
 
     public static void handleTags(String isVIPTag, String isNewS, FrameLayout isVIP, FrameLayout newSeries,FrameLayout newEpisode,FrameLayout newMovie,String assetType) {
        try {
+           newEpisode.setVisibility(View.GONE);
            if (isVIPTag.equalsIgnoreCase("true")){
                isVIP.setVisibility(View.VISIBLE);
            }else {
@@ -1303,9 +1306,9 @@ public class AppCommonMethod {
            }
            if (assetType.equalsIgnoreCase(MediaTypeConstants.getInstance().getEpisode())){
                if (isNewS.equalsIgnoreCase("true")){
-                   newEpisode.setVisibility(View.VISIBLE);
+                   newMovie.setVisibility(View.VISIBLE);
                }else {
-                   newEpisode.setVisibility(View.GONE);
+                   newMovie.setVisibility(View.GONE);
                }
            }else {
                newEpisode.setVisibility(View.GONE);
@@ -1390,5 +1393,69 @@ public class AppCommonMethod {
             }
         }
         return downloadedVideos;
+    }
+
+    public static String getProfileUserName(UserProfileResponse userProfileResponse) {
+        String name="";
+        if (userProfileResponse!=null && userProfileResponse.getData().getName()!=null && !userProfileResponse.getData().getName().equalsIgnoreCase("")){
+            name=userProfileResponse.getData().getName();
+        }
+        return name;
+    }
+
+    public static String getProfileUserNumber(UserProfileResponse userProfileResponse) {
+        String number="";
+        if (userProfileResponse!=null && userProfileResponse.getData().getPhoneNumber()!=null && !((String)userProfileResponse.getData().getPhoneNumber()).equalsIgnoreCase("")){
+            number=(String)userProfileResponse.getData().getPhoneNumber();
+        }
+        return number;
+    }
+
+    public static String getProfileUserGender(UserProfileResponse userProfileResponse) {
+        String gender="";
+        if (userProfileResponse!=null && userProfileResponse.getData().getGender()!=null && !((String)userProfileResponse.getData().getGender()).equalsIgnoreCase("")){
+            gender=(String)userProfileResponse.getData().getGender();
+        }
+        return gender;
+    }
+
+    public static String getProfileUserDOB(UserProfileResponse userProfileResponse) {
+        String gender="";
+        if (userProfileResponse!=null && userProfileResponse.getData().getDateOfBirth()!=null && !((String)userProfileResponse.getData().getDateOfBirth()).equalsIgnoreCase("")){
+            gender=(String) userProfileResponse.getData().getDateOfBirth();
+        }
+        return gender;
+    }
+
+    public static String getProfileUserAddress(UserProfileResponse userProfileResponse) {
+        String address="";
+        if (userProfileResponse!=null && userProfileResponse.getData().getCustomData()!=null && userProfileResponse.getData().getCustomData().getAddress()!=null && !((String)userProfileResponse.getData().getCustomData().getAddress()).equalsIgnoreCase("")){
+            address=(String) userProfileResponse.getData().getCustomData().getAddress();
+        }
+        return address;
+    }
+
+    public static List<String> createPrefrenceList(UserProfileResponse newObject) {
+        List<String> strings=new ArrayList<>();
+        if (newObject.getData().getCustomData()!=null && newObject.getData().getCustomData().getContentPreferences()!=null
+        ){
+           strings  = Arrays.asList(newObject.getData().getCustomData().getContentPreferences().split("\\s*,\\s*"));
+        }
+
+        return strings;
+    }
+
+    public static boolean check(String identifier, List<String> saved) {
+        boolean contains=false;
+        for (int i=0;i<saved.size();i++){
+            Log.w("savedata6",saved.get(i)+"-"+identifier+"    "+i);
+            if (saved.get(i).equalsIgnoreCase(identifier)){
+                contains=true;
+                break;
+            }else {
+                contains=false;
+            }
+        }
+        return contains;
     }
 }

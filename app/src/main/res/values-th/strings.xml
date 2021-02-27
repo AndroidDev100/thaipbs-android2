@@ -62,7 +62,7 @@
     <string name="enter_email_address">ใส่อีเมล</string>
     <string name="create_password">สร้างรหัสผ่านอย่างน้อย 6 ตัวอักษร</string>
     <string name="mobile_number">เบอร์โทรศัพท์มือถือ</string>
-    <string name="mobile_error">โปรดใส่เบอร์โทรศัพท์ 11 หลัก และต้องเริ่มต้นด้วย 66 หรือ 0</string>
+    <string name="mobile_error">โปรดใส่เบอร์โทรศัพท์ หลัก และต้องเริ่มต้นด้วย 66 หรือ 0</string>
     <string name="address">ที่อยู่</string>
     <string name="dob">วันเกิด</string>
     <string name="signup"><b><u>สมัครสมาชิก</u></b></string>
@@ -413,4 +413,5 @@
     <string name="Downloading">กำลังดาวน์โหลด</string>
     <string name="Paused">หยุดชั่วคราว</string>
 
+    <string name="content_prefrences">Content Preferences</string>
 </resources>

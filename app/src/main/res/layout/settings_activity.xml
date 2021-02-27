@@ -275,15 +275,16 @@
 
 
         <RelativeLayout
+            android:id="@+id/downloadLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/toolbarBackLeft"
             android:orientation="horizontal">
             <ImageView
                 android:id="@+id/download"
-                android:layout_width="wrap_content"
-                android:background="@drawable/my_downloads_icon_more_new"
-                android:layout_height="wrap_content"
+                android:layout_width="25dp"
+                android:background="@drawable/download_setting"
+                android:layout_height="25dp"
                 android:layout_alignParentLeft="true"
                 android:layout_centerInParent="true"/>
 
@@ -332,5 +333,55 @@
             android:layout_marginTop="@dimen/_5sdp"
             android:background="?attr/more_item_bottom_line_color"
             android:visibility="gone"/>
+
+        <RelativeLayout
+            android:id="@+id/contentPreLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/toolbarBackLeft"
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/content_prefrence"
+                android:layout_width="wrap_content"
+                android:background="@drawable/content_preferences"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"/>
+
+            <TextView
+                android:id="@+id/content_prefrence_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/content_prefrences"
+                android:fontFamily="@font/sukhumvittadmai_normal"
+                android:textSize="@dimen/font_medium_large"
+                android:layout_marginLeft="@dimen/NontonSize15"
+                android:paddingRight="@dimen/NontonSize10"
+                android:textColor="?attr/change_language_text"
+                android:layout_centerInParent="true"
+                android:layout_toRightOf="@+id/content_prefrence"/>
+
+
+
+
+
+
+
+
+            <Switch
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
+                android:layout_height="64dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="10dp"
+                android:gravity="center"
+                android:theme="@style/SwitchTheme"
+                />
+
+
+
+        </RelativeLayout>
     </LinearLayout>
 </layout>

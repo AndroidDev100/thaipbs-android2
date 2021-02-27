@@ -25,8 +25,8 @@ android {
         applicationId "me.vipa.app"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 8
-        versionName "1.1.1"
+        versionCode 9
+        versionName "1.1.2"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         compileOptions {
@@ -62,8 +62,8 @@ android {
         }
         prod {
             dimension 'default'
-            versionCode 8
-            versionName "1.1.1"
+            versionCode 9
+            versionName "1.1.2"
             applicationId "me.vipa.app"
         }
     }

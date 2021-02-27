@@ -51,6 +51,7 @@ import com.brightcove.player.offline.MediaDownloadable;
 import com.brightcove.player.pictureinpicture.PictureInPictureManager;
 
 import me.vipa.app.utils.helpers.ADHelper;
+import me.vipa.app.utils.helpers.downloads.MediaTypeCheck;
 import me.vipa.bookmarking.bean.GetBookmarkResponse;
 
 import me.vipa.app.activities.purchase.callBack.EntitlementStatus;
@@ -2349,9 +2350,15 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
 
     @Override
     public void videoFound(Video video) {
-        this.downloadAbleVideo = video;
-        // userInteractionFragment.setDownloadable(true);
-        userInteractionFragment.setDownloadable(downloadAbleVideo.isOfflinePlaybackAllowed());
+        if (SDKConfig.getInstance().isDownloadEnable()){
+            if (video!=null) {
+                if (MediaTypeCheck.isMediaTypeSupported(videoDetails.getAssetType())) {
+                    this.downloadAbleVideo = video;
+                    // userInteractionFragment.setDownloadable(true);
+                    userInteractionFragment.setDownloadable(downloadAbleVideo.isOfflinePlaybackAllowed());
+                }
+            }
+        }
     }
 
     @Override

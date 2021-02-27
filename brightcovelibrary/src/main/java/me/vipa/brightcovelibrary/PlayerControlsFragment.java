@@ -228,7 +228,7 @@ public class PlayerControlsFragment extends Fragment {
         subtitles.setVisibility(View.GONE);
         Log.w("captionHide", "sendPortraitCallback");
         playerSettingIcon.setVisibility(View.GONE);
-        media_route_button.setVisibility(View.GONE);
+        media_route_button.setVisibility(View.VISIBLE);
         audioTracks.setVisibility(View.GONE);
         fullscreen.setBackgroundResource(R.drawable.full_screen);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -247,6 +247,18 @@ public class PlayerControlsFragment extends Fragment {
         params1.setMargins(0, 0, 0, 0);
         backArrow.setLayoutParams(params1);
         //settingLay.setLayoutParams(params1);
+
+        try {
+                       RelativeLayout.LayoutParams params2 = new RelativeLayout.LayoutParams(
+                                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                                        LinearLayout.LayoutParams.WRAP_CONTENT
+                                       );
+                        params2.setMargins(0, 10, 60, 0);
+                       params2.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                       settingLay.setLayoutParams(params2);
+                  }catch (Exception ignored){
+
+                            }
 
         Utils.setParamsResetSkipButton(skipBtn);
         //  Utils.setParamstoSettinIcon(playerSettingIcon);

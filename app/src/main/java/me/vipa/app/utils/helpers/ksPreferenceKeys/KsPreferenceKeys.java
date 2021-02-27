@@ -26,6 +26,7 @@ public class KsPreferenceKeys extends SharedPrefHelper {
     public static final String ENTITLEMENT_STATUS = "entitlement_status";
     public static final String AUTO_ROTATE = "auto_rotate";
     public static final String AUTO_DURATION = "auto_rotate_duration";
+    public static final String USER_DATA = "user_data_new";
 
 
 
@@ -392,6 +393,14 @@ public class KsPreferenceKeys extends SharedPrefHelper {
 
     public void setAutoRotation(boolean value) {
         setBoolean(AUTO_ROTATE, value);
+    }
+
+    public void setUserProfileData(String profileData) {
+        setString(USER_DATA, profileData);
+    }
+
+    public String getUserProfileData() {
+        return getString(USER_DATA, "");
     }
 
 }

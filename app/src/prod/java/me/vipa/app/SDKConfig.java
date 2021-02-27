@@ -28,7 +28,6 @@ public class SDKConfig {
 
     /*PROD keys*//*
      */
-
     public static String CONFIG_BASE_URL = "https://api.enveu.com/experience-manager-fe-api/app/api/v1/config/";
     public static String API_KEY_MOB = "noxjwrcihimbdvmgwxaneuwrpmouvuttuznwpawz";
     public static String API_KEY_TAB = "tvimibcpspcmalxxokijcuzepwvhksbtajhwuzpj";
@@ -41,7 +40,7 @@ public class SDKConfig {
     public static String TERMCONDITION = "https://www.mvhub.com/term.php";
     public static String PRIVACYPOLICY = "https://www.mvhub.com/privacy.php";
     public static String WEBP_QUALITY = "filters:format(webp):quality(60)/";
-    public static int DOWNLOAD_EXPIRY_DAYS=3;
+    public static int DOWNLOAD_EXPIRY_DAYS=90;
     public static boolean DOWNLOAD_ENABLE=true;
 
     /*uat keys*//*
@@ -187,8 +186,8 @@ public class SDKConfig {
         return DOWNLOAD_EXPIRY_DAYS;
     }
 
-    public static boolean isDownloadEnable() {
-        return DOWNLOAD_ENABLE;
+    public boolean isDownloadEnable() {
+        return configBean == null ? false : configBean.getData().getAppConfig().isDownloadEnable();
     }
     public List<ContentPreference> getContentPreference() {
         return configBean == null ? null : configBean.getData().getAppConfig().getContentPreference();
