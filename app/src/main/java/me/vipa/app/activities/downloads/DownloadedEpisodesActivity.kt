@@ -31,6 +31,7 @@ class DownloadedEpisodesActivity() : BaseBindingActivity<ActivityDownloadedEpiso
     private lateinit var seriesId: String
     private lateinit var seriesName: String
     private lateinit var seasonNumber: String
+    private var index: Int = -1
     private lateinit var downloadHelper: DownloadHelper
     private val TAG = "DownloadedEpisodeActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +39,8 @@ class DownloadedEpisodesActivity() : BaseBindingActivity<ActivityDownloadedEpiso
         this.seriesId = intent?.getStringExtra("SeriesId")!!
         this.seriesName = intent?.getStringExtra("SeriesName")!!
         this.seasonNumber = intent?.getStringExtra("SeasonNumber")!!
+        this.index = intent?.getIntExtra("index",-1)!!
+
         setupToolbar(seriesName)
         downloadHelper = DownloadHelper(this, this)
         downloadHelper.getAllEpisodesOfSeries(seriesId, seasonNumber).observe(this, Observer {
@@ -47,7 +50,7 @@ class DownloadedEpisodesActivity() : BaseBindingActivity<ActivityDownloadedEpiso
 
     private fun checkOffline(it: ArrayList<DownloadedEpisodes>?) {
         if (it!!.size>0){
-            downloadsAdapter = DownloadedEpisodesAdapter(this@DownloadedEpisodesActivity, it)
+            downloadsAdapter = DownloadedEpisodesAdapter(this@DownloadedEpisodesActivity, it,index)
             downloaded_recycler_view.layoutManager = LinearLayoutManager(this)
             downloaded_recycler_view.setHasFixedSize(true)
             downloaded_recycler_view.itemAnimator = DefaultItemAnimator()

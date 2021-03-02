@@ -43,6 +43,9 @@ class DownloadedEpisodesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>,
 
                     }else{
                         AppCommonMethod.isDownloadDeleted=true
+                        if (index>-1){
+                            AppCommonMethod.isDownloadIndex=index
+                        }
                         context!!.onBackPressed()
                     }
                 }
@@ -70,6 +73,9 @@ class DownloadedEpisodesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>,
 
                     }else{
                         AppCommonMethod.isDownloadDeleted=true
+                        if (index>-1){
+                            AppCommonMethod.isDownloadIndex=index
+                        }
                         context!!.onBackPressed()
                     }
                 }
@@ -93,9 +99,11 @@ class DownloadedEpisodesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>,
     private val indexMap = HashMap<String, Int>()
     private val downloadHelper: DownloadHelper
     private var downloadStatus: Int=0
+    private var index: Int=-1
 
-    constructor(activity: Activity, downloadedEpisodes: ArrayList<DownloadedEpisodes>) {
+    constructor(activity: Activity, downloadedEpisodes: ArrayList<DownloadedEpisodes>,inde : Int) {
         context = activity
+        index=inde
         downloadHelper = DownloadHelper(activity, this)
         downloadedEpisodes.forEachIndexed { index, downloadedEpisode ->
             downloadHelper.findOfflineVideoById(downloadedEpisode.videoId, object : OfflineCallback<Video> {

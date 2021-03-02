@@ -127,7 +127,12 @@ public class GridActivity extends BaseBindingActivity<ListingActivityBinding> im
             if (counter == 0)
                 callShimmer();
             setClicks();
-            getRailData();
+            try {
+                getRailData();
+            }catch (Exception ignored){
+
+            }
+
         } else {
             noConnectionLayout();
         }
@@ -272,62 +277,68 @@ public class GridActivity extends BaseBindingActivity<ListingActivityBinding> im
     }
 
     private void getRailData() {
-        if (flag == 0) {
-            if (baseCategory.getReferenceName() != null && (baseCategory.getReferenceName().equalsIgnoreCase(AppConstants.ContentType.CONTINUE_WATCHING.name()) || baseCategory.getReferenceName().equalsIgnoreCase("special_playlist"))) {
-                KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
-                String isLogin = preference.getAppPrefLoginStatus();
-                if (isLogin.equalsIgnoreCase(AppConstants.UserStatus.Login.toString())) {
-                    String token = preference.getAppPrefAccessToken();
-                    BookmarkingViewModel bookmarkingViewModel = ViewModelProviders.of(this).get(BookmarkingViewModel.class);
-                    bookmarkingViewModel.getContinueWatchingData(token, counter, AppConstants.PAGE_SIZE).observe(this, getContinueWatchingBean -> {
-                        getBinding().transparentLayout.setVisibility(View.GONE);
-                        String videoIds = "";
-                        List<ContinueWatchingBookmark> continueWatchingBookmarkLists = getContinueWatchingBean.getData().getContinueWatchingBookmarks();
-                        List<ContinueWatchingBookmark> continueWatchingBookmarkList =  removeDuplicates(continueWatchingBookmarkLists);
-                        for (ContinueWatchingBookmark continueWatchingBookmark : continueWatchingBookmarkList
-                        ) {
-                            videoIds = videoIds.concat(String.valueOf(continueWatchingBookmark.getAssetId())).concat(",");
-                        }
-                        Logger.w("assetIds",videoIds);
-
-                        ContinueWatchingLayer.getInstance().getContinueWatchingVideos(continueWatchingBookmarkList, videoIds, new CommonApiCallBack() {
-                            @Override
-                            public void onSuccess(Object item) {
-                                getBinding().transparentLayout.setVisibility(View.GONE);
-                                if (item instanceof List) {
-                                    ArrayList<DataItem> enveuVideoDetails = (ArrayList<DataItem>) item;
-                                    RailCommonData railCommonData = new RailCommonData();
-                                    railCommonData.setContinueWatchingData(baseCategory, enveuVideoDetails, new CommonApiCallBack() {
-                                        @Override
-                                        public void onSuccess(Object item) {
-                                            setRail(railCommonData);
-                                        }
-
-                                        @Override
-                                        public void onFailure(Throwable throwable) {
-                                        }
-
-                                        @Override
-                                        public void onFinish() {
-
-                                        }
-                                    });
+        try {
+            if (flag == 0) {
+                if (baseCategory.getReferenceName() != null && (baseCategory.getReferenceName().equalsIgnoreCase(AppConstants.ContentType.CONTINUE_WATCHING.name()) || baseCategory.getReferenceName().equalsIgnoreCase("special_playlist"))) {
+                    KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
+                    String isLogin = preference.getAppPrefLoginStatus();
+                    if (isLogin.equalsIgnoreCase(AppConstants.UserStatus.Login.toString())) {
+                        String token = preference.getAppPrefAccessToken();
+                        BookmarkingViewModel bookmarkingViewModel = ViewModelProviders.of(this).get(BookmarkingViewModel.class);
+                        bookmarkingViewModel.getContinueWatchingData(token, counter, AppConstants.PAGE_SIZE).observe(this, getContinueWatchingBean -> {
+                            getBinding().transparentLayout.setVisibility(View.GONE);
+                            String videoIds = "";
+                            try {
+                                List<ContinueWatchingBookmark> continueWatchingBookmarkLists = getContinueWatchingBean.getData().getContinueWatchingBookmarks();
+                                List<ContinueWatchingBookmark> continueWatchingBookmarkList =  removeDuplicates(continueWatchingBookmarkLists);
+                                for (ContinueWatchingBookmark continueWatchingBookmark : continueWatchingBookmarkList
+                                ) {
+                                    videoIds = videoIds.concat(String.valueOf(continueWatchingBookmark.getAssetId())).concat(",");
                                 }
+                                Logger.w("assetIds",videoIds);
+
+                                ContinueWatchingLayer.getInstance().getContinueWatchingVideos(continueWatchingBookmarkList, videoIds, new CommonApiCallBack() {
+                                    @Override
+                                    public void onSuccess(Object item) {
+                                        getBinding().transparentLayout.setVisibility(View.GONE);
+                                        if (item instanceof List) {
+                                            ArrayList<DataItem> enveuVideoDetails = (ArrayList<DataItem>) item;
+                                            RailCommonData railCommonData = new RailCommonData();
+                                            railCommonData.setContinueWatchingData(baseCategory, enveuVideoDetails, new CommonApiCallBack() {
+                                                @Override
+                                                public void onSuccess(Object item) {
+                                                    setRail(railCommonData);
+                                                }
+
+                                                @Override
+                                                public void onFailure(Throwable throwable) {
+                                                }
+
+                                                @Override
+                                                public void onFinish() {
+
+                                                }
+                                            });
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Throwable throwable) {
+                                    }
+
+                                    @Override
+                                    public void onFinish() {
+
+                                    }
+                                });
+                            }catch (Exception ignored){
+
                             }
 
-                            @Override
-                            public void onFailure(Throwable throwable) {
-                            }
-
-                            @Override
-                            public void onFinish() {
-
-                            }
                         });
-                    });
-                }
-            } else {
-                RailInjectionHelper railInjectionHelper = ViewModelProviders.of(this).get(RailInjectionHelper.class);
+                    }
+                } else {
+                    RailInjectionHelper railInjectionHelper = ViewModelProviders.of(this).get(RailInjectionHelper.class);
                 /*railInjectionHelper.getPlayListDetailsWithPagination(this, playListId, counter, AppConstants.PAGE_SIZE, baseCategory).observe(this, playlistRailData -> {
                     getBinding().transparentLayout.setVisibility(View.GONE);
                     if (Objects.requireNonNull(playlistRailData) != null) {
@@ -342,38 +353,42 @@ public class GridActivity extends BaseBindingActivity<ListingActivityBinding> im
                         setRail(playlistRailData);
                     }
                 });*/
-                railInjectionHelper.getPlayListDetailsWithPaginationV2(this, playListId, counter, AppConstants.PAGE_SIZE, baseCategory).observe(this, playlistRailData -> {
-                    if (playlistRailData.getStatus().equalsIgnoreCase(APIStatus.START.name())) {
+                    railInjectionHelper.getPlayListDetailsWithPaginationV2(this, playListId, counter, AppConstants.PAGE_SIZE, baseCategory).observe(this, playlistRailData -> {
+                        if (playlistRailData.getStatus().equalsIgnoreCase(APIStatus.START.name())) {
 
-                    } else if (playlistRailData.getStatus().equalsIgnoreCase(APIStatus.SUCCESS.name())) {
-                        if (Objects.requireNonNull(playlistRailData) != null) {
-                            if (playlistRailData.getBaseCategory() != null) {
-                                RailCommonData railCommonData = (RailCommonData) playlistRailData.getBaseCategory();
-                                try {
-                                    if (title == null || title.equalsIgnoreCase("")) {
-                                        getBinding().toolbar.screenText.setText(railCommonData.getDisplayName());
+                        } else if (playlistRailData.getStatus().equalsIgnoreCase(APIStatus.SUCCESS.name())) {
+                            if (Objects.requireNonNull(playlistRailData) != null) {
+                                if (playlistRailData.getBaseCategory() != null) {
+                                    RailCommonData railCommonData = (RailCommonData) playlistRailData.getBaseCategory();
+                                    try {
+                                        if (title == null || title.equalsIgnoreCase("")) {
+                                            getBinding().toolbar.screenText.setText(railCommonData.getDisplayName());
+                                        }
+                                    } catch (Exception e) {
+
                                     }
-                                } catch (Exception e) {
-
+                                    listData = railCommonData;
+                                    setRail(railCommonData);
+                                    Logger.e("RAIL DATA", String.valueOf(listData.isSeries()));
                                 }
-                                listData = railCommonData;
-                                setRail(railCommonData);
-                                Logger.e("RAIL DATA", String.valueOf(listData.isSeries()));
                             }
+                        } else if (playlistRailData.getStatus().equalsIgnoreCase(APIStatus.ERROR.name())) {
+
+                        } else if (playlistRailData.getStatus().equalsIgnoreCase(APIStatus.FAILURE.name())) {
+
                         }
-                    } else if (playlistRailData.getStatus().equalsIgnoreCase(APIStatus.ERROR.name())) {
 
-                    } else if (playlistRailData.getStatus().equalsIgnoreCase(APIStatus.FAILURE.name())) {
+                    });
 
-                    }
+                }
 
-                });
+            } else {
 
             }
-
-        } else {
+        }catch (Exception ignored){
 
         }
+
     }
 
     private List<ContinueWatchingBookmark> removeDuplicates(List<ContinueWatchingBookmark> continueWatchingBookmarkList) {

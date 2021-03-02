@@ -1,6 +1,7 @@
 package me.vipa.app.activities.series.adapter;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -184,6 +185,7 @@ public class SeasonAdapter extends RecyclerView.Adapter<SeasonAdapter.SeasonView
             @Override
             public void onClick(View v) {
                 clickBinding=holder.itemBinding;
+                Log.w("itemCliked",videoItemBeans.get(position).getAssetType()+"   "+videoItemBeans.get(position).getSeasonNumber());
                 onDownloadClickInteraction.onDownloadClicked(videoItemBeans.get(position).getBrightcoveVideoId(), videoItemBeans.get(position).getEpisodeNo(), this);
             }
         });

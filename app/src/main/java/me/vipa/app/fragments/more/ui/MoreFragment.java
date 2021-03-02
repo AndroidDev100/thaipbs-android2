@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,8 +63,11 @@ import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -264,15 +268,14 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
             getBinding().titleLayout.setVisibility(View.VISIBLE);
             getBinding().ivProfilePic.setVisibility(View.GONE);
             setUserImage(userProfileResponse);
-
             Gson gson = new Gson();
             String userProfileData = gson.toJson(userProfileResponse);
             KsPreferenceKeys.getInstance().setUserProfileData(userProfileData);
-            Log.w("savedata1",userProfileData);
             Log.w("savedata2",KsPreferenceKeys.getInstance().getUserProfileData());
             String json = KsPreferenceKeys.getInstance().getUserProfileData();
             UserProfileResponse newObject = gson.fromJson(json, UserProfileResponse.class);
             Log.w("savedata3",newObject.toString());
+
 
         } catch (Exception e) {
 

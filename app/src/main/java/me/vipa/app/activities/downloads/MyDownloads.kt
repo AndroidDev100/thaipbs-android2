@@ -196,21 +196,46 @@ class MyDownloads : BaseBindingActivity<ActivityMyDownloadsBinding>(), MediaDown
         //startActivity(downloadedVideoIntent)
 
     }
-
+    var dataCount: Int = 1
     override fun onStart() {
         super.onStart()
         try {
-
             Logger.w("sdva",AppCommonMethod.isDownloadDeleted.toString())
             if (AppCommonMethod.isDownloadDeleted){
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                downloadHelper.getAllVideosFromDatabase().observe(this, Observer {
+                    if (it.downloadVideos.size>0){
+
+                            it.downloadVideos.forEachIndexed { index, downloadedVideo ->
+                                val b = downloadedVideo.downloadType == MediaTypeConstants.getInstance().series || downloadedVideo.downloadType ==  MediaTypeConstants.getInstance().episode
+                                Logger.e("inCondition", b.toString() +" "+Integer.parseInt(downloadedVideo.episodeCount))
+                                if (b) {
+                                    if (Integer.parseInt(downloadedVideo.episodeCount) != 0){
+
+                                    }else{
+                                        Logger.e("inCondition", downloadedVideo.videoId)
+                                        downloadHelper.deleteVideo(downloadedVideo.videoId)
+                                    }
+                                }
+                            }
+
+
+
+
+                    }
+                })
+                }, 1000)
+
                 progress_bar.visibility = View.VISIBLE
                 AppCommonMethod.isDownloadDeleted=false;
                 Handler(Looper.getMainLooper()).postDelayed({
-
                     val downloadedVideoIntent = Intent(this, MyDownloads::class.java)
                     startActivity(downloadedVideoIntent)
                     finish()
-                }, 1500)
+
+                }, 2500)
+
 
             }
            /* downloadHelper.getAllVideosFromDatabase().observe(this, Observer {
@@ -219,7 +244,7 @@ class MyDownloads : BaseBindingActivity<ActivityMyDownloadsBinding>(), MediaDown
             })*/
 
         }catch (exception:Exception){
-
+            Logger.e("inCondition", exception.message)
         }
 
     }

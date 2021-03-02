@@ -3,10 +3,8 @@ package com.mmtv.utils.helpers.downloads
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
-import android.os.AsyncTask
-import android.os.Bundle
+import android.os.*
 import android.os.Environment.getExternalStorageDirectory
-import android.os.StatFs
 import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
@@ -100,6 +98,8 @@ class DownloadHelper() {
 
     constructor(activity: Activity, videoListener: MediaDownloadable.DownloadEventListener, assetType: String) : this(activity, videoListener) {
         this.assetType = assetType
+        this.videoListener = videoListener
+        this.activity = activity
     }
 
     constructor(activity: Activity, videoListener: MediaDownloadable.DownloadEventListener, seriesId: String, seriesName: String, assetType: String, enveuVideoItemBean: EnveuVideoItemBean) : this(activity, videoListener) {

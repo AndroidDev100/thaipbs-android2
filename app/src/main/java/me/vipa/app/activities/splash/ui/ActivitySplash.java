@@ -149,6 +149,13 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
         DownloadHelper downloadHelper = new DownloadHelper(this);
         downloadHelper.deleteAllExpiredVideos();
 
+        /*new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                downloadHelper.getCatalog().removeListeners();
+            }
+        },1000);*/
+
         notificationCheck();
 
         connectionObserver();

@@ -311,6 +311,7 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
                 downloadedEpisodesIntent.putExtra("SeriesId", currentVideoItem.seriesId)
                 downloadedEpisodesIntent.putExtra("SeriesName", currentVideoItem.seriesName)
                 downloadedEpisodesIntent.putExtra("SeasonNumber", currentVideoItem.seasonNumber)
+                downloadedEpisodesIntent.putExtra("index", position)
                 context.startActivity(downloadedEpisodesIntent)
             }
         }

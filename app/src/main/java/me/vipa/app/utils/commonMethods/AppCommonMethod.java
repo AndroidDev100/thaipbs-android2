@@ -83,6 +83,8 @@ import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -154,6 +156,7 @@ public class AppCommonMethod {
     public static boolean isOrientationChanged = false;
     public static boolean isResumeDetail = false;
     public static boolean isDownloadDeleted = false;
+    public static int isDownloadIndex = -1;
     public static boolean isSeasonCount = false;
     public static boolean isSeriesPage = false;
     public static boolean isInternet = false;
@@ -1421,8 +1424,15 @@ public class AppCommonMethod {
 
     public static String getProfileUserDOB(UserProfileResponse userProfileResponse) {
         String gender="";
-        if (userProfileResponse!=null && userProfileResponse.getData().getDateOfBirth()!=null && !((String)userProfileResponse.getData().getDateOfBirth()).equalsIgnoreCase("")){
-            gender=(String) userProfileResponse.getData().getDateOfBirth();
+
+        if (userProfileResponse!=null && userProfileResponse.getData().getDateOfBirth()!=null){
+            double longVv = (double) userProfileResponse.getData().getDateOfBirth();
+            DecimalFormat df = new DecimalFormat("#");
+            df.setMaximumFractionDigits(0);
+            long ll = Long.parseLong(df.format(longVv));
+            gender = String.valueOf(ll);
+            String dateStrings = android.text.format.DateFormat.format("yyyy/MM/dd", new Date(ll)).toString();
+            Log.w("dateOfBirth",gender+"------"+dateStrings);
         }
         return gender;
     }
