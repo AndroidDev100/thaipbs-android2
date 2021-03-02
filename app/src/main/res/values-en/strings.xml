@@ -387,4 +387,6 @@
     <string name="Paused">Paused</string>
 
     <string name="content_prefrences">Content Preferences</string>
+
+    <string name="minutes">minutes</string>
 </resources>

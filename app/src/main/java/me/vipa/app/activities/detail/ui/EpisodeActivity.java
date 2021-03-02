@@ -1288,7 +1288,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
         if (responseDetailPlayer.getAssetType() != null && responseDetailPlayer.getDuration() > 0) {
             String tempTag1 = responseDetailPlayer.getAssetType();
             String bullet = "\u2022";
-            String tempTag2 = AppCommonMethod.calculateTimein_hh_mm_format(responseDetailPlayer.getDuration());
+            String tempTag2 = AppCommonMethod.calculateTimein_hh_mm_format(responseDetailPlayer.getDuration())+" "+getResources().getString(R.string.minutes);
 
             Spannable WordtoSpan = new SpannableString(bullet);
             WordtoSpan.setSpan(new ForegroundColorSpan(Color.BLUE), 0, WordtoSpan.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);

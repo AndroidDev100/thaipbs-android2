@@ -414,4 +414,6 @@
     <string name="Paused">หยุดชั่วคราว</string>
 
     <string name="content_prefrences">Content Preferences</string>
+
+    <string name="minutes">นาที</string>
 </resources>

@@ -548,35 +548,23 @@ public class AppCommonMethod {
 
     public static String calculateTimein_hh_mm_format(long milliseconds) {
 
-        if (milliseconds % 1000 > 0) {
-            milliseconds = milliseconds + (milliseconds % 1000);
-        }
-
-        long hours = TimeUnit.MILLISECONDS.toHours(milliseconds);
-        long minute = TimeUnit.MILLISECONDS.toMinutes(milliseconds) % TimeUnit.HOURS.toMinutes(1);
-        long second = TimeUnit.MILLISECONDS.toSeconds(milliseconds) % TimeUnit.MINUTES.toSeconds(1);
-
-
-        String strHour = String.format("%02d", hours);
-        String strSecond = String.format("%02d", second);
-        if (second >= 30) {
-            minute = minute + 1;
-        }
-        String strMinute = String.format("%02d", minute);
-
-        String showTime = minute + ":" + strSecond;
-
-        if (hours > 0)
-            showTime = strHour + ":" + strMinute;
-        else if (minute > 0)
-            if (second > 0) {
-                showTime = "00:" + strMinute;
-            } else {
-                showTime = "00:" + strMinute;
+        String minutes="";
+        try {
+            if (milliseconds % 1000 > 0) {
+                milliseconds = milliseconds + (milliseconds % 1000);
             }
-        else if (second >= 0)
-            showTime = "00:" + "01";
-        return showTime;
+
+            long hours = TimeUnit.MILLISECONDS.toHours(milliseconds);
+            long minute = TimeUnit.MILLISECONDS.toMinutes(milliseconds);
+            long second = TimeUnit.MILLISECONDS.toSeconds(milliseconds) % TimeUnit.MINUTES.toSeconds(1);
+
+            Log.w("episodeTiming",minute+"   ---   "+milliseconds);
+            minutes=String.format("%02d", minute);
+
+        }catch (Exception ignored){
+
+        }
+        return minutes;
     }
 
     public static String calculateTime(long milliseconds) {

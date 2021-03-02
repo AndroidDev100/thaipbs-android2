@@ -153,7 +153,7 @@ public class SeasonAdapter extends RecyclerView.Adapter<SeasonAdapter.SeasonView
 
             double d = (double) videoItemBeans.get(position).getDuration();
             long x = (long) d; // x = 1234
-            holder.itemBinding.duration.setText(AppCommonMethod.calculateTimein_hh_mm_format((x)));
+            holder.itemBinding.duration.setText(AppCommonMethod.calculateTimein_hh_mm_format((x))+" "+context.getResources().getString(R.string.minutes));
         } else {
             holder.itemBinding.duration.setText("00:00");
         }

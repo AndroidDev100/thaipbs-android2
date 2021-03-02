@@ -392,5 +392,7 @@
 
     <string name="content_prefrences">Content Preferences</string>
 
+    <string name="minutes">minutes</string>
+
 
 </resources>
