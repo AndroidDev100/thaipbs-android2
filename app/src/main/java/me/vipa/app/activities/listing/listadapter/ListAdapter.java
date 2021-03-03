@@ -169,12 +169,17 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         viewHolder.itemBinding.tvTitle.setText(list.get(position).getTitle());
         viewHolder.itemBinding.clRoot.setOnClickListener(view -> listener.onRowItemClicked(list.get(position), position));
 
-        if (list.get(position).getPosterURL() != null && !list.get(position).getPosterURL().equalsIgnoreCase("")) {
-            //ImageHelper.getInstance(context).loadListSQRImage(viewHolder.itemBinding.itemImage, AppCommonMethod.getListCIRCLEImage(list.get(position).getPosterURL(), context));
-            Logger.w("valuesFinal",AppCommonMethod.getListCIRCLEImage(list.get(position).getPosterURL(),context));
-            ImageHelper.getInstance(context).loadCIRImage(viewHolder.itemBinding.itemImage, AppCommonMethod.getListCIRCLEImage(list.get(position).getPosterURL(), context), null);
+        try {
+            if (list.get(position).getPosterURL() != null && !list.get(position).getPosterURL().equalsIgnoreCase("")) {
+                //ImageHelper.getInstance(context).loadListSQRImage(viewHolder.itemBinding.itemImage, AppCommonMethod.getListCIRCLEImage(list.get(position).getPosterURL(), context));
+                Logger.w("valuesFinal",AppCommonMethod.getListCIRCLEImage(list.get(position).getPosterURL(),context));
+                ImageHelper.getInstance(context).loadCIRImage(viewHolder.itemBinding.itemImage, AppCommonMethod.getListCIRCLEImage(list.get(position).getPosterURL(), context), null);
+
+            }
+        }catch (Exception e){
 
         }
+
         viewHolder.itemBinding.tvGenre.setVisibility(View.VISIBLE);
         viewHolder.itemBinding.tvGenre.setText(AppCommonMethod.getGenre(list.get(position)));
         if (list.get(position).getDescription() != null && !list.get(position).getDescription().equalsIgnoreCase("")) {
@@ -211,6 +216,8 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (list.get(position).getPosterURL() != null && !list.get(position).getPosterURL().equalsIgnoreCase("")) {
             Logger.w("valuesFinal",AppCommonMethod.getListCIRCLEImage(list.get(position).getPosterURL(),context)+" "+list.get(position).getTitle());
             ImageHelper.getInstance(context).loadListImage(viewHolder.itemBinding.itemImage, AppCommonMethod.getListLDSImage(list.get(position).getPosterURL(), context));
+        }else {
+            viewHolder.itemBinding.itemImage.setImageResource(R.drawable.placeholder_landscape);
         }
         viewHolder.itemBinding.tvGenre.setText(AppCommonMethod.getGenre(list.get(position)));
         if (list.get(position).getDescription() != null && !list.get(position).getDescription().equalsIgnoreCase("")) {

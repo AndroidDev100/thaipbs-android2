@@ -124,8 +124,8 @@ public class SeasonAdapter extends RecyclerView.Adapter<SeasonAdapter.SeasonView
                     if (SDKConfig.getInstance().isDownloadEnable()){
                         if (MediaTypeCheck.isMediaTypeSupported(videoItemBeans.get(position).getAssetType())){
                             if (video.isOfflinePlaybackAllowed()) {
-                                holder.itemBinding.setIsDownloadable(true);
-                                updateDownloadStatus(holder, position);
+                                holder.itemBinding.setIsDownloadable(false);
+                                //updateDownloadStatus(holder, position);
                             } else {
                                 holder.itemBinding.setIsDownloadable(false);
                             }
