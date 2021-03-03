@@ -411,7 +411,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                         playerControlsFragment.sendTapCallBack(false);*/
                     if (playerControlsFragment != null) {
                         playerControlsFragment.sendTapCallBack(false);
-                        playerControlsFragment.setIsOffline(false);
+                        playerControlsFragment.setIsOffline(false,from);
                     }
 
                     Log.w("videoFound", "inUp");
@@ -450,7 +450,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             callPlayerControlsFragment();
             if (playerControlsFragment != null) {
                 playerControlsFragment.sendTapCallBack(false);
-                playerControlsFragment.setIsOffline(true);
+                playerControlsFragment.setIsOffline(true,from);
             }
         }
 

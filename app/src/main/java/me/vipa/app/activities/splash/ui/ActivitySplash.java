@@ -552,9 +552,15 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
     @Override
     protected void onResume() {
         super.onResume();
-        boolean isTablet = ActivitySplash.this.getResources().getBoolean(R.bool.isTablet);
-        if (!isTablet)
+        try {
+            boolean isTablet = ActivitySplash.this.getResources().getBoolean(R.bool.isTablet);
+            getBinding().buildNumber.setVisibility(View.GONE);
+            if (!isTablet)
                 getBinding().buildNumber.setText(getResources().getString(R.string.app_name) + "  V " + BuildConfig.VERSION_NAME);
+        }catch (Exception ignored){
+
+        }
+
     }
 
     @Override

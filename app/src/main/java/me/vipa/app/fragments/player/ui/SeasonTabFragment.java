@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SimpleItemAnimator;
@@ -248,6 +249,7 @@ public class SeasonTabFragment extends BaseBindingFragment<SeasonFragmentLayoutB
                                     new RecyclerAnimator(getActivity()).animate(getBinding().seriesRecyclerView);
                                     seasonAdapter = new SeasonAdapter(getActivity(), allEpiosdes, seriesId, currentAssetId, SeasonTabFragment.this);
                                     getBinding().seriesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
+                                    ((SimpleItemAnimator) getBinding().seriesRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
                                     getBinding().seriesRecyclerView.setAdapter(seasonAdapter);
                                     hideProgressBar();
 
