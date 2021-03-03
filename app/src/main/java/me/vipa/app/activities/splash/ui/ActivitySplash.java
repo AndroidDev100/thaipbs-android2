@@ -3,6 +3,9 @@ package me.vipa.app.activities.splash.ui;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -11,6 +14,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.DisplayCutout;
 import android.view.LayoutInflater;
@@ -28,6 +32,7 @@ import androidx.vectordrawable.graphics.drawable.Animatable2Compat;
 
 import me.vipa.app.activities.onBoarding.UI.OnBoarding;
 import me.vipa.app.activities.onBoarding.UI.OnBoardingTab;
+import me.vipa.app.utils.cropImage.helpers.PrintLogging;
 import me.vipa.baseClient.BaseClient;
 import me.vipa.baseClient.BaseConfiguration;
 import me.vipa.baseClient.BaseDeviceType;
@@ -79,6 +84,9 @@ import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;
@@ -162,6 +170,40 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
         getBinding().noConnectionLayout.retryTxt.setOnClickListener(view -> connectionObserver());
         getBinding().noConnectionLayout.btnMyDownloads.setOnClickListener(view -> new ActivityLauncher(this).launchMyDownloads());
         Logger.e("IntentData", new Gson().toJson(this.getIntent().getData()));
+
+        /*try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    "me.vipa.app",
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+        } catch (NoSuchAlgorithmException e) {
+        }*/
+
+        //printHashKey();
+
+    }
+
+
+    private void printHashKey() {
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    "me.vipa.app",
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                PrintLogging.printLog("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            PrintLogging.printLog("Exception", "" + e);
+        } catch (NoSuchAlgorithmException e) {
+            PrintLogging.printLog("Exception", "" + e);
+        }
     }
 
     private void setFullScreen() {
