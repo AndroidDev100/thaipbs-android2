@@ -208,6 +208,7 @@ public class SeasonTabFragment extends BaseBindingFragment<SeasonFragmentLayoutB
     private void getEpisodeList() {
         getBinding().seriesRecyclerView.addItemDecoration(new SpacingItemDecoration(8, SpacingItemDecoration.HORIZONTAL));
         railInjectionHelper = ViewModelProviders.of(this).get(RailInjectionHelper.class);
+       Log.w("seasonCount-->>",seasonCount+"");
         if (seasonCount > 0) {
             getSeasonEpisodes();
         } else {
@@ -221,6 +222,7 @@ public class SeasonTabFragment extends BaseBindingFragment<SeasonFragmentLayoutB
         railInjectionHelper.getEpisodeNoSeasonV2(seriesId, totalPages, 50, -1).observe(getActivity(), new Observer<ResponseModel>() {
             @Override
             public void onChanged(ResponseModel response) {
+                hideProgressBar();
                 if (response != null) {
                     if (response.getStatus().equalsIgnoreCase(APIStatus.START.name())) {
 
