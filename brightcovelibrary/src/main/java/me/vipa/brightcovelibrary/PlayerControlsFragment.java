@@ -671,7 +671,7 @@ public class PlayerControlsFragment extends Fragment {
         settingControl = (View) view.findViewById(R.id.playerSetting);
         fullscreen = (ImageView) view.findViewById(R.id.fullscreen);
         settingLay = (LinearLayout) view.findViewById(R.id.settingLay);
-        if (isOffline)
+        if (isOffline && from==1)
             fullscreen.setVisibility(View.GONE);
         else
             fullscreen.setVisibility(View.VISIBLE);
@@ -683,13 +683,18 @@ public class PlayerControlsFragment extends Fragment {
         hideControls();
     }
 
-    public void setIsOffline(boolean isOffline) {
+    int from=0;
+    public void setIsOffline(boolean isOffline,int from) {
         this.isOffline = isOffline;
+        this.from=from;
         if (fullscreen != null) {
-            if (isOffline)
-                fullscreen.setVisibility(View.GONE);
-            else
+            if (isOffline){
+                if (from==1){
+                    fullscreen.setVisibility(View.GONE);
+                }
+            } else{
                 fullscreen.setVisibility(View.VISIBLE);
+            }
         }
     }
 

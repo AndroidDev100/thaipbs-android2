@@ -296,6 +296,7 @@ class DownloadHelper() {
         this.seriesId = seriesId
         this.seasonNumber = seasonNumber.toString()
         this.episodeNumber = episodeNumber
+        Logger.e("episodedownload", video.isClearContent.toString())
         if (video.isClearContent) {
             downloadVideo(video, videoQuality)
         } else {
@@ -479,7 +480,7 @@ class DownloadHelper() {
     }
 
     private fun downloadVideo(video: Video, videoQuality: Int) {
-        Logger.e("licenceAq d", video.toString())
+        Logger.e("licenceAq d", video.toString()+" "+assetType)
 
 
         when (videoQuality) {
@@ -570,35 +571,40 @@ class DownloadHelper() {
 
 
     private fun addVideotoDatabase(video: Video, seriesId: String) {
+        Logger.e("addVideoData", video.toString())
         if (assetType == MediaTypeConstants.getInstance().series || assetType == MediaTypeConstants.getInstance().episode) {
-            findVideo(seriesId, object : VideoListener() {
-                override fun onVideo(p0: Video?) {
-                    var downloadedVideo = DownloadedVideo(p0!!.id, MediaTypeConstants.getInstance().series, seriesId)
-                    downloadedVideo.seriesName = seriesName
-                    downloadedVideo.seasonNumber = seasonNumber!!
-                    val downloadedEpisodes = DownloadedEpisodes(video.id, seasonNumber!!, episodeNumber!!, seriesId)
-                    ImageDownloadHelper(activity as Context, seriesId, object : CommonApiCallBack {
-                        override fun onSuccess(item: Any?) {
-                            insertVideo(downloadedVideo, downloadedEpisodes)
-                        }
+            Logger.e("addVideoData 2", assetType)
+            var downloadedVideo = DownloadedVideo(video!!.id, MediaTypeConstants.getInstance().series, seriesId)
+            downloadedVideo.seriesName = seriesName
+            downloadedVideo.seasonNumber = seasonNumber!!
+            val downloadedEpisodes = DownloadedEpisodes(video.id, seasonNumber!!, episodeNumber!!, seriesId)
+            ImageDownloadHelper(activity as Context, seriesId, object : CommonApiCallBack {
+                override fun onSuccess(item: Any?) {
+                    Logger.e("addVideoData 4", item.toString())
+                    insertVideo(downloadedVideo, downloadedEpisodes)
+                }
 
-                        override fun onFailure(throwable: Throwable?) {
-                            Logger.e(TAG, "Unable to save image")
-                            insertVideo(downloadedVideo, downloadedEpisodes)
+                override fun onFailure(throwable: Throwable?) {
+                    Logger.e(TAG, "Unable to save image")
+                    Logger.e("addVideoData 3", throwable!!.message)
+                    insertVideo(downloadedVideo, downloadedEpisodes)
 
-                        }
+                }
 
-                        override fun onFinish() {
-                        }
+                override fun onFinish() {
+                }
 
-                    }).execute(p0.posterImage.toString())
+            }).execute(video.posterImage.toString())
+           /* findVideo(seriesId, object : VideoListener() {
+                override fun onVideo(p: Video?) {
+
                 }
 
                 override fun onError(error: String) {
                     super.onError(error)
                     Logger.e(TAG, error)
                 }
-            })
+            })*/
         } else {
             var downloadedVideo = DownloadedVideo(video.id, assetType, seriesId, "", "", video.name, AppCommonMethod.expiryDate(SDKConfig.DOWNLOAD_EXPIRY_DAYS))
             insertVideo(downloadedVideo, null)
@@ -811,7 +817,9 @@ class DownloadHelper() {
     }
 
     fun startSeriesDownload(seriesId: String, selectedSeason: Int, seasonEpisodes: MutableList<out EnveuVideoItemBean>, videoQuality: Int) {
+        Logger.w("valuePrint", seasonEpisodes.toString())
         for (enveuVideoItem in seasonEpisodes) {
+            Logger.w("valuePrint", enveuVideoItem.brightcoveVideoId)
             enveuVideoItemBean = enveuVideoItem
             this.seriesId = seriesId
             this.seasonNumber = enveuVideoItem.season.toString()
