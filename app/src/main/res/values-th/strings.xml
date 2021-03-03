@@ -56,7 +56,8 @@
     <string name="no_connection">ไม่มีสัญญาณอินเตอร์เน็ต.</string>
 
     <string name="email">อีเมล</string>
-    <string name="password">รหัสผ่าน</string>
+    <string name="password">รหัสผ่าน</string>รหัสผ่าน
+
     <string name="full_name">ชื่อ</string>
     <string name="display_name">ใส่ชื่อที่ต้องการแสดง</string>
     <string name="enter_email_address">ใส่อีเมล</string>

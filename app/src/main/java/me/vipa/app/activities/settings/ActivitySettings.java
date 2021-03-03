@@ -61,9 +61,12 @@ public class ActivitySettings extends BaseBindingActivity<SettingsActivityBindin
         setSwitchForBingeWatch();
         toolBar();
         checkLanguage();
-
-        if (SDKConfig.getInstance().isDownloadEnable()){
-            getBinding().downloadLayout.setVisibility(View.VISIBLE);
+        if (KsPreferenceKeys.getInstance().getAppPrefLoginStatus().equalsIgnoreCase(AppConstants.UserStatus.Login.toString())) {
+            if (SDKConfig.getInstance().isDownloadEnable()) {
+                getBinding().downloadLayout.setVisibility(View.VISIBLE);
+            } else {
+                getBinding().downloadLayout.setVisibility(View.GONE);
+            }
         }else {
             getBinding().downloadLayout.setVisibility(View.GONE);
         }
@@ -72,8 +75,8 @@ public class ActivitySettings extends BaseBindingActivity<SettingsActivityBindin
         }else {
             getBinding().contentPreLayout.setVisibility(View.GONE);
         }
-        getBinding().downloadSettings.setOnClickListener(this);
-        getBinding().contentPrefrenceTxt.setOnClickListener(this);
+        getBinding().downloadLayout.setOnClickListener(this);
+        getBinding().contentPreLayout.setOnClickListener(this);
         getBinding().parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -276,12 +279,12 @@ public class ActivitySettings extends BaseBindingActivity<SettingsActivityBindin
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.download_settings: {
+            case R.id.downloadLayout: {
                 Intent intent = new Intent(ActivitySettings.this, DownloadSettings.class);
                 startActivity(intent);
             }
             break;
-            case R.id.content_prefrence_txt: {
+            case R.id.contentPreLayout: {
                 Log.w("savedata3","-->>click");
                 Intent intent = new Intent(ActivitySettings.this, SettingContentPreferences.class);
                 startActivity(intent);
