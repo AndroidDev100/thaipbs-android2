@@ -304,7 +304,7 @@ public class GridActivity extends BaseBindingActivity<ListingActivityBinding> im
                                         if (item instanceof List) {
                                             ArrayList<DataItem> enveuVideoDetails = (ArrayList<DataItem>) item;
                                             RailCommonData railCommonData = new RailCommonData();
-                                            railCommonData.setContinueWatchingData(baseCategory, enveuVideoDetails, new CommonApiCallBack() {
+                                            railCommonData.setContinueWatchingData(baseCategory,true, enveuVideoDetails, new CommonApiCallBack() {
                                                 @Override
                                                 public void onSuccess(Object item) {
                                                     setRail(railCommonData);
