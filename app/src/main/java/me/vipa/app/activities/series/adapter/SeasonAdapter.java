@@ -185,7 +185,7 @@ public class SeasonAdapter extends RecyclerView.Adapter<SeasonAdapter.SeasonView
             @Override
             public void onClick(View v) {
                 clickBinding=holder.itemBinding;
-                Log.w("itemCliked",videoItemBeans.get(position).getAssetType()+"   "+videoItemBeans.get(position).getSeasonNumber());
+               // Log.w("itemCliked",videoItemBeans.get(position).getAssetType()+"   "+videoItemBeans.get(position).getSeasonNumber());
                 onDownloadClickInteraction.onDownloadClicked(videoItemBeans.get(position).getBrightcoveVideoId(), videoItemBeans.get(position).getEpisodeNo(), this);
             }
         });
