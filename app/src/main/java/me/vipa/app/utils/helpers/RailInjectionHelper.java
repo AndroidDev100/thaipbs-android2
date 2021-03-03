@@ -213,7 +213,7 @@ public class RailInjectionHelper extends AndroidViewModel {
                             if (item instanceof List) {
                                 ArrayList<DataItem> enveuVideoDetails = (ArrayList<DataItem>) item;
                                 RailCommonData railCommonData = new RailCommonData();
-                                railCommonData.setContinueWatchingData(screenWidget, enveuVideoDetails, new CommonApiCallBack() {
+                                railCommonData.setContinueWatchingData(screenWidget,false, enveuVideoDetails, new CommonApiCallBack() {
                                     @Override
                                     public void onSuccess(Object item) {
                                         commonApiCallBack.onSuccess(railCommonData);
@@ -281,7 +281,7 @@ public class RailInjectionHelper extends AndroidViewModel {
                             if (item instanceof List) {
                                 ArrayList<DataItem> enveuVideoDetails = (ArrayList<DataItem>) item;
                                 RailCommonData railCommonData = new RailCommonData();
-                                railCommonData.setContinueWatchingData(screenWidget, enveuVideoDetails, new CommonApiCallBack() {
+                                railCommonData.setContinueWatchingData(screenWidget,true, enveuVideoDetails, new CommonApiCallBack() {
                                     @Override
                                     public void onSuccess(Object item) {
                                         commonApiCallBack.onSuccess(railCommonData);
