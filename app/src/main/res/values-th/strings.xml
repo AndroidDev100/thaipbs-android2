@@ -95,7 +95,8 @@
     <string name="binge_setting">รับชมต่อเนื่อง</string>
     <string name="manage_account">จัดการโปรไฟล์</string>
     <string name="login_signup">เข้าสู่ระบบ/ลงทะเบียน</string>
-    <string name="login_txt">เข้าสู่ระบบ</string>
+    <string name="login_txt">เข้าสู่ระบบ</string>เข้าสู่ระบบ
+
     <string name="update">อัพเดท</string>
     <string name="connct_facebbook">เชื่อมต่อโดย เฟสบุ๊ค</string>
     <string name="detail_title">ขอขอบคุณที่ส่งคำขอ หากเราพบที่อยู่อีเมลในระบบของเรา เราจะส่งลิงก์รีเซ็ตไปทางอีเมล โปรดป้อนรหัสผ่านใหม่</string>

@@ -20,8 +20,10 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import me.vipa.app.activities.contentPreference.UI.ContentPreference;
+import me.vipa.app.activities.contentPreference.UI.SettingContentPreferences;
 import me.vipa.app.activities.homeactivity.ui.HomeActivity;
 import me.vipa.app.activities.onBoarding.UI.OnBoarding;
+import me.vipa.app.activities.settings.ActivitySettings;
 import me.vipa.app.activities.usermanagment.viewmodel.RegistrationLoginViewModel;
 import me.vipa.app.baseModels.BaseBindingActivity;
 import me.vipa.app.R;
@@ -522,6 +524,14 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
         AppCommonMethod.userId = String.valueOf(fbLoginData.getId());
        // onBackPressed();
         new ActivityLauncher(SignUpActivity.this).onContentScreen(SignUpActivity.this, ContentPreference.class,isNotificationEnable);
+//            isFbLoginClick = true;
+//        if (isFbLoginClick){
+//            Intent intent = new Intent(SignUpActivity.this, SettingContentPreferences.class);
+//            startActivity(intent);
+//        }else {
+//            new ActivityLauncher(SignUpActivity.this).onContentScreen(SignUpActivity.this, ContentPreference.class, isNotificationEnable);
+//        }
+
 
         //new ActivityLauncher(SignUpActivity.this).homeScreen(SignUpActivity.this, HomeActivity.class);
 
