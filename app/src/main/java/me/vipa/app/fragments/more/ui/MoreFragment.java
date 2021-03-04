@@ -30,6 +30,7 @@ import me.vipa.app.activities.notification.ui.NotificationActivity;
 import me.vipa.app.activities.profile.ui.ProfileActivityNew;
 import me.vipa.app.activities.redeemcoupon.RedeemCouponActivity;
 import me.vipa.app.activities.settings.ActivitySettings;
+import me.vipa.app.activities.splash.ui.ActivitySplash;
 import me.vipa.app.activities.usermanagment.ui.ChangePasswordActivity;
 import me.vipa.app.activities.watchList.ui.WatchListActivity;
 import me.vipa.app.baseModels.BaseBindingFragment;
@@ -59,6 +60,8 @@ import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.google.gson.Gson;
+import com.mmtv.utils.helpers.downloads.DownloadHelper;
+
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 
 import org.jetbrains.annotations.NotNull;
@@ -504,6 +507,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                 KsPreferenceKeys.getInstance().setBingeWatchEnable(bingeWatchEnable);
                 getBinding().titleLayout.setVisibility(View.VISIBLE);
                 getBinding().ivProfilePic.setVisibility(View.GONE);
+                deleteDownloadedVideos();
                 //TODO Handle Content Preference Data On Logout
                // AppCommonMethod.getConfigResponse().getData().getAppConfig().setContentPreference(AppCommonMethod.getConfigResponse().getData().getAppConfig().getContentPreference());
                 modelCall();
@@ -529,6 +533,18 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
 
                 new ToastHandler(getActivity()).show(getActivity().getResources().getString(R.string.no_internet_connection));
             }
+    }
+
+    private void deleteDownloadedVideos() {
+        try {
+            if (getActivity()!=null){
+                DownloadHelper downloadHelper = new DownloadHelper(getActivity());
+                downloadHelper.deleteAllVideos(getActivity());
+            }
+
+        }catch (Exception ignored){
+
+        }
     }
 
     public void hitApiConfig() {

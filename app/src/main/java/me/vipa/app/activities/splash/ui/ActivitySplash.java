@@ -28,11 +28,13 @@ import android.view.animation.AnimationUtils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.lifecycle.Observer;
 import androidx.vectordrawable.graphics.drawable.Animatable2Compat;
 
 import me.vipa.app.activities.onBoarding.UI.OnBoarding;
 import me.vipa.app.activities.onBoarding.UI.OnBoardingTab;
 import me.vipa.app.utils.cropImage.helpers.PrintLogging;
+import me.vipa.app.utils.helpers.downloads.room.DownloadModel;
 import me.vipa.baseClient.BaseClient;
 import me.vipa.baseClient.BaseConfiguration;
 import me.vipa.baseClient.BaseDeviceType;
@@ -131,6 +133,7 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
         return ActivitySplashBinding.inflate(inflater);
     }
 
+    DownloadHelper downloadHelper;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -154,7 +157,7 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
 
         MvHubPlusApplication.getApplicationContext(this).getEnveuComponent().inject(this);
         //dtgPrefrencesProvider.saveExpiryDays(3);
-        DownloadHelper downloadHelper = new DownloadHelper(this);
+        downloadHelper = new DownloadHelper(this);
         downloadHelper.deleteAllExpiredVideos();
 
         /*new Handler().postDelayed(new Runnable() {
@@ -786,6 +789,22 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
             connectionValidation(true);
         } else {
             connectionValidation(false);
+            try {
+
+                    DownloadHelper downloadHelper = new DownloadHelper(ActivitySplash.this);
+                    downloadHelper.getAllVideosFromDatabase().observe(ActivitySplash.this, new Observer<DownloadModel>() {
+                        @Override
+                        public void onChanged(DownloadModel downloadModel) {
+                            if (downloadModel.getDownloadVideos().size()>0){
+                                getBinding().noConnectionLayout.btnMyDownloads.setVisibility(View.VISIBLE);
+                            }else {
+                                getBinding().noConnectionLayout.btnMyDownloads.setVisibility(View.GONE);
+                            }
+                        }
+                    });
+            }catch (Exception ignored){
+                getBinding().noConnectionLayout.btnMyDownloads.setVisibility(View.GONE);
+            }
         }
     }
 
