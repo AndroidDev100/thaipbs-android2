@@ -42,6 +42,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.brightcove.cast.GoogleCastComponent;
 import com.brightcove.cast.GoogleCastEventType;
+import com.brightcove.cast.model.BrightcoveCastCustomData;
+import com.brightcove.cast.model.CustomData;
 import com.brightcove.ima.GoogleIMAComponent;
 import com.brightcove.ima.GoogleIMAEventType;
 import com.brightcove.player.captioning.BrightcoveCaptionFormat;
@@ -109,7 +111,7 @@ import static android.content.Context.TELEPHONY_SERVICE;
 import static android.media.AudioManager.AUDIOFOCUS_LOSS;
 
 public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.BrightcovePlayerFragment implements PlayerControlsFragment.OnFragmentInteractionListener, PlayerCallbacks, NetworkChangeReceiver.ConnectivityReceiverListener, PhoneListenerCallBack, BackPressCallBack, ChromeCastCallback {
-
+    private static final String PROPERTY_APPLICATION_ID = "com.vipa.app";
     private static final String TAG = "BrightcovePlayer";
     private OnPlayerInteractionListener mListener;
     private ChromeCastStartedCallBack chromeCastStartedListener;
@@ -839,11 +841,24 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
 
             }
         });
+        CustomData customData = new BrightcoveCastCustomData.Builder(getActivity())
+                .setAccountId(brightcoveAccountId)
+                // Set your account’s policy key
+                .setPolicyKey(brightcovePolicyKey)
+                // Optional: Set your Edge Playback Authorization (EPA) JWT token here
+                // Note that if you set the EPA token, you will not need to set the Policy Key
+                .setBrightcoveAuthorizationToken(null)
+                // Optional: For SSAI videos, set your adConfigId here
+                // Set your Analytics application ID here
+                .setApplicationId(PROPERTY_APPLICATION_ID)
+                .build();
 
-
-        googleCastComponent = new GoogleCastComponent(eventEmitter, getActivity());
+        googleCastComponent = new GoogleCastComponent.Builder(eventEmitter, getActivity())
+                .setAutoPlay(true)
+                .setEnableCustomData(true)
+                .setCustomData(customData)
+                .build();
         googleCastComponent.isSessionAvailable();
-
 
     }
 

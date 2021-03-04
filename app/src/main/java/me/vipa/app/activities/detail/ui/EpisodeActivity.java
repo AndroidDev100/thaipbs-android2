@@ -22,6 +22,7 @@ import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.DisplayCutout;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -44,6 +45,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.brightcove.cast.DefaultExpandedControllerActivity;
+import com.brightcove.cast.GoogleCastComponent;
 import com.brightcove.player.edge.OfflineCallback;
 import com.brightcove.player.edge.VideoListener;
 import com.brightcove.player.model.Video;
@@ -2379,4 +2381,10 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        GoogleCastComponent.setUpMediaRouteButton(this, menu);
+        return true;
+    }
 }

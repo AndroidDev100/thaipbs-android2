@@ -21,6 +21,7 @@ import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.DisplayCutout;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.WindowInsets;
 import android.view.WindowInsetsController;
@@ -34,6 +35,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.brightcove.cast.DefaultExpandedControllerActivity;
+import com.brightcove.cast.GoogleCastComponent;
 import com.brightcove.player.edge.OfflineCallback;
 import com.brightcove.player.model.Video;
 import com.brightcove.player.network.DownloadStatus;
@@ -1824,5 +1826,12 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
             finish();
             isCastConnected = true;
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        GoogleCastComponent.setUpMediaRouteButton(this, menu);
+        return true;
     }
 }
