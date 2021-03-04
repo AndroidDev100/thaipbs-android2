@@ -323,9 +323,9 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
                     override fun onSuccess(p0: DownloadStatus?) {
                         if (currentVideoItem.downloadType == MediaTypeConstants.getInstance().series) {
                             if (currentVideoItem.episodeCount.toInt() == 1)
-                                viewHolder.itemBinding.descriptionTxt.text = context.getString(R.string.season) + currentVideoItem.seasonNumber + " | " + currentVideoItem.episodeCount + context.getString(R.string.episode)
+                                viewHolder.itemBinding.descriptionTxt.text = context.getString(R.string.season) +" "+ currentVideoItem.seasonNumber + " | " + currentVideoItem.episodeCount +" "+ context.getString(R.string.episode)
                             else
-                                viewHolder.itemBinding.descriptionTxt.text = context.getString(R.string.season) + currentVideoItem.seasonNumber + " | " + currentVideoItem.episodeCount + context.getString(R.string.episodes)
+                                viewHolder.itemBinding.descriptionTxt.text = context.getString(R.string.season) +" "+ currentVideoItem.seasonNumber + " | " + currentVideoItem.episodeCount +" "+ context.getString(R.string.episodes)
                         } else {
                             when (p0?.code) {
                                 DownloadStatus.STATUS_COMPLETE -> {

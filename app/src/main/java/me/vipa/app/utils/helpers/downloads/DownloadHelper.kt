@@ -240,32 +240,39 @@ class DownloadHelper() {
         }
     }
 
+    @SuppressLint("WrongConstant")
     fun deleteAllVideos(activity: Activity) {
-        if (!::catalog.isInitialized) {
-            init(activity)
-        }
-        if (!::db.isInitialized) {
-            db = Room.databaseBuilder(
-                    MvHubPlusApplication.getApplicationContext(activity),
-                    DownloadDatabase::class.java, "enveu.db").build()
-        }
-        val videosList = ArrayList<Video>()
-        videosList.addAll(catalog.findAllVideoDownload(DownloadStatus.STATUS_COMPLETE))
-        videosList.addAll(catalog.findAllVideoDownload(DownloadStatus.STATUS_PENDING))
-        videosList.addAll(catalog.findAllVideoDownload(DownloadStatus.STATUS_PAUSED))
-        videosList.addAll(catalog.findAllVideoDownload(DownloadStatus.STATUS_DOWNLOADING))
-        videosList.addAll(catalog.findAllQueuedVideoDownload())
+        try {
+            if (!::catalog.isInitialized) {
+                init(activity)
+            }
+            if (!::db.isInitialized) {
+                db = Room.databaseBuilder(
+                        MvHubPlusApplication.getApplicationContext(activity),
+                        DownloadDatabase::class.java, "enveu.db").build()
+            }
+            val videosList = ArrayList<Video>()
+            videosList.addAll(catalog.findAllVideoDownload(DownloadStatus.STATUS_COMPLETE))
+            videosList.addAll(catalog.findAllVideoDownload(DownloadStatus.STATUS_PENDING))
+            videosList.addAll(catalog.findAllVideoDownload(DownloadStatus.STATUS_PAUSED))
+            videosList.addAll(catalog.findAllVideoDownload(DownloadStatus.STATUS_DOWNLOADING))
+            videosList.addAll(catalog.findAllVideoDownload(DownloadStatus.PAUSED_WAITING_TO_RETRY))
+            videosList.addAll(catalog.findAllQueuedVideoDownload())
 
-        for (video in videosList) {
-            catalog.findVideoByID(video.id, object : VideoListener() {
-                override fun onVideo(p0: Video?) {
-                    p0?.let {
-                        deleteVideo(it)
+            for (video in videosList) {
+                catalog.findVideoByID(video.id, object : VideoListener() {
+                    override fun onVideo(p0: Video?) {
+                        p0?.let {
+                            deleteVideo(it)
+                        }
                     }
-                }
-            })
+                })
+            }
+            deleteAllVideosFromDatabase()
+        }catch (ignored : Exception){
+
         }
-        deleteAllVideosFromDatabase()
+
     }
 
     fun startVideoDownload(video: Video, videoQuality: Int) {
