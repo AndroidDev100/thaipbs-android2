@@ -47,7 +47,7 @@ public class ContentPreference extends BaseBindingActivity<ActivityContentPrefer
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        isNotificationEnable = getIntent().getExtras().getBoolean("IsNotiEnabled");
+       // isNotificationEnable = getIntent().getExtras().getBoolean("IsNotiEnabled");
         callBinding();
         connectObservors();
     }
@@ -140,7 +140,7 @@ public class ContentPreference extends BaseBindingActivity<ActivityContentPrefer
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i<arrayList.size(); i ++){
             if (arrayList.get(i).getChecked()){
-                stringBuilder.append(arrayList.get(i).getName()).append(", ");
+                stringBuilder.append(arrayList.get(i).getIdentifier()).append(", ");
 
             }
             if (stringBuilder.length() > 0) {

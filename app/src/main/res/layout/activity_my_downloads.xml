@@ -6,26 +6,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?attr/my_downloads_background">
-        <me.vipa.app.utils.CustomProgressBar
-            android:id="@+id/progress_bar"
-            style="@style/Widget.AppCompat.ProgressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"
-            android:visibility="gone" />
+
         <RelativeLayout
             android:id="@+id/nodatafounmd"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/empty_background"
-            android:visibility="gone"
+            android:visibility="visible"
             android:gravity="center">
                 <ImageView
                     android:id="@+id/no_data"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/empty_logo_dark"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:background="@drawable/ic_no_data"
                     android:contentDescription="TODO"
                     android:layout_centerInParent="true"/>
             <TextView
@@ -34,14 +26,18 @@
                 android:layout_below="@id/no_data"
                 android:text="@string/no_downloads"
                 android:textColor="?attr/no_download_video_background_color"
-                android:textSize="24sp"
+                android:textSize="15sp"
+                android:gravity="center"
+                android:layout_marginLeft="@dimen/_4sdp"
+                android:layout_marginRight="@dimen/_4sdp"
+                android:fontFamily="@font/sukhumvittadmai_normal"
                 android:layout_centerInParent="true"/>
 
         </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <include
@@ -49,15 +45,17 @@
                 layout="@layout/toolbar" />
 
             <LinearLayout
+                android:id="@+id/rec_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:background="?attr/my_downloads_background"
                 android:orientation="vertical">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/downloaded_recycler_view"
                     style="@style/Custom.Widget.CardView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center_vertical|center"
                     android:nestedScrollingEnabled="false"
                     android:numColumns="auto_fit"
@@ -67,6 +65,15 @@
             </LinearLayout>
 
         </LinearLayout>
+
+        <me.vipa.app.utils.CustomProgressBar
+            android:id="@+id/progress_bar"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:visibility="visible" />
     </RelativeLayout>
 
 </layout>

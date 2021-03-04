@@ -3,6 +3,9 @@ package me.vipa.app.activities.splash.ui;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -11,6 +14,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.DisplayCutout;
 import android.view.LayoutInflater;
@@ -24,10 +28,13 @@ import android.view.animation.AnimationUtils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.lifecycle.Observer;
 import androidx.vectordrawable.graphics.drawable.Animatable2Compat;
 
 import me.vipa.app.activities.onBoarding.UI.OnBoarding;
 import me.vipa.app.activities.onBoarding.UI.OnBoardingTab;
+import me.vipa.app.utils.cropImage.helpers.PrintLogging;
+import me.vipa.app.utils.helpers.downloads.room.DownloadModel;
 import me.vipa.baseClient.BaseClient;
 import me.vipa.baseClient.BaseConfiguration;
 import me.vipa.baseClient.BaseDeviceType;
@@ -80,6 +87,9 @@ import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import javax.inject.Inject;
 import javax.sql.DataSource;
 
@@ -123,6 +133,7 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
         return ActivitySplashBinding.inflate(inflater);
     }
 
+    DownloadHelper downloadHelper;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -135,7 +146,7 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
         }
 
         session = KsPreferenceKeys.getInstance();
-        session.setDownloadOverWifi(1);
+        //session.setDownloadOverWifi(1);
         AppCommonMethod.getPushToken(this);
         updateAndroidSecurityProvider(ActivitySplash.this);
 
@@ -145,9 +156,16 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
         currentLanguage = KsPreferenceKeys.getInstance().getAppLanguage();
 
         MvHubPlusApplication.getApplicationContext(this).getEnveuComponent().inject(this);
-        dtgPrefrencesProvider.saveExpiryDays(3);
-        DownloadHelper downloadHelper = new DownloadHelper(this);
+        //dtgPrefrencesProvider.saveExpiryDays(3);
+        downloadHelper = new DownloadHelper(this);
         downloadHelper.deleteAllExpiredVideos();
+
+        /*new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                downloadHelper.getCatalog().removeListeners();
+            }
+        },1000);*/
 
         notificationCheck();
 
@@ -155,6 +173,40 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
         getBinding().noConnectionLayout.retryTxt.setOnClickListener(view -> connectionObserver());
         getBinding().noConnectionLayout.btnMyDownloads.setOnClickListener(view -> new ActivityLauncher(this).launchMyDownloads());
         Logger.e("IntentData", new Gson().toJson(this.getIntent().getData()));
+
+        /*try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    "me.vipa.app",
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+        } catch (NoSuchAlgorithmException e) {
+        }*/
+
+        //printHashKey();
+
+    }
+
+
+    private void printHashKey() {
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    "me.vipa.app",
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                PrintLogging.printLog("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            PrintLogging.printLog("Exception", "" + e);
+        } catch (NoSuchAlgorithmException e) {
+            PrintLogging.printLog("Exception", "" + e);
+        }
     }
 
     private void setFullScreen() {
@@ -503,9 +555,15 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
     @Override
     protected void onResume() {
         super.onResume();
-        boolean isTablet = ActivitySplash.this.getResources().getBoolean(R.bool.isTablet);
-        if (!isTablet)
+        try {
+            boolean isTablet = ActivitySplash.this.getResources().getBoolean(R.bool.isTablet);
+            getBinding().buildNumber.setVisibility(View.GONE);
+            if (!isTablet)
                 getBinding().buildNumber.setText(getResources().getString(R.string.app_name) + "  V " + BuildConfig.VERSION_NAME);
+        }catch (Exception ignored){
+
+        }
+
     }
 
     @Override
@@ -731,6 +789,22 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
             connectionValidation(true);
         } else {
             connectionValidation(false);
+            try {
+
+                    DownloadHelper downloadHelper = new DownloadHelper(ActivitySplash.this);
+                    downloadHelper.getAllVideosFromDatabase().observe(ActivitySplash.this, new Observer<DownloadModel>() {
+                        @Override
+                        public void onChanged(DownloadModel downloadModel) {
+                            if (downloadModel.getDownloadVideos().size()>0){
+                                getBinding().noConnectionLayout.btnMyDownloads.setVisibility(View.VISIBLE);
+                            }else {
+                                getBinding().noConnectionLayout.btnMyDownloads.setVisibility(View.GONE);
+                            }
+                        }
+                    });
+            }catch (Exception ignored){
+                getBinding().noConnectionLayout.btnMyDownloads.setVisibility(View.GONE);
+            }
         }
     }
 

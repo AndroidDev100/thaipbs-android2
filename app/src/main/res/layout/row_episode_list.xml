@@ -145,10 +145,10 @@
                         android:layout_marginBottom="2dp"
                         android:background="@drawable/badge_background"
                         android:fontFamily="@font/sukhumvittadmai_normal"
-                        android:padding="2dp"
+                        android:padding="4dp"
                         android:text="@string/now_playing"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/premiumSize"
+                        android:textSize="@dimen/TextSize12"
                         android:visibility="visible" />
                 </LinearLayout>
 
@@ -179,7 +179,7 @@
                         android:fontFamily="@font/sukhumvittadmai_bold"
                         android:maxLines="1"
                         android:textColor="?attr/title_color"
-                        android:textSize="@dimen/detail_rail_episode_title" />
+                        android:textSize="@dimen/font_medium_small" />
 
 
                 </LinearLayout>
@@ -193,7 +193,7 @@
                     android:fontFamily="@font/sukhumvittadmai_medium"
                     android:text="duration"
                     android:textColor="?attr/cast_text_color"
-                    android:textSize="@dimen/detail_rail_episode_duration"
+                    android:textSize="@dimen/TextSize12"
                     android:visibility="visible" />
 
             </LinearLayout>
@@ -204,6 +204,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:orientation="vertical"
+                android:gravity="center"
                 android:layout_weight="1"
                 android:visibility='@{isDownloadable ? View.VISIBLE : View.GONE,default="visible"}'>
 
@@ -225,7 +226,7 @@
                     android:layout_margin="@dimen/NontonSize8"
                     android:visibility='@{downloadStatus==DownloadStatus.DOWNLOADING ? View.VISIBLE : View.GONE, default="gone"}'
                     app:background_progressbar_color="@android:color/darker_gray"
-                    app:progressbar_color="@color/blue" />
+                    app:progressbar_color="@color/description_title_yellow" />
 
                 <ImageView
                     android:id="@+id/video_downloaded"
@@ -292,12 +293,12 @@
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/rail_top_margin"
             android:ellipsize="end"
-            android:fontFamily="@font/sukhumvittadmai_medium"
+            android:fontFamily="@font/sukhumvittadmai_normal"
             android:lineSpacingExtra="2sp"
-            android:maxLines="2"
             android:paddingLeft="@dimen/rail_top_margin"
+            android:paddingRight="@dimen/rail_top_margin"
             android:textColor="?attr/more_item_text_color"
-            android:textSize="@dimen/detail_rail_episode_desc"
+            android:textSize="@dimen/font_xsmall"
             android:visibility="visible" />
 
     </LinearLayout>

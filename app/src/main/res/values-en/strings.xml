@@ -4,12 +4,14 @@
     <string name="no_connection">No internet connection found.</string>
     <string name="check_connection_text">Check your connection.</string>
     <string name="change_password">Change Password</string>
+    <string name="update_pref">Update Preferences</string>
     <string name="checkout">Checkout</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="by_email">By Email</string>
     <string name="by_line">By Line</string>
     <string name="guest_user">Guest User</string>
+    <string name="guest_user1">Guest User</string>
     <string name="no_internet">No internet connection found.</string>
     <string name="wake_up_connection">Wake up your connection !</string>
     <string name="check_connection">Check Connection</string>
@@ -20,7 +22,7 @@
     <string name="enter_email_address">Enter Email Address</string>
     <string name="create_password">Create Password minimum 6 characters</string>
     <string name="mobile_number">Mobile Number</string>
-    <string name="mobile_error">Please enter a 11 digit phone number and must starts with 66</string>
+    <string name="mobile_error">Please enter a valid phone number and must starts with 66 or 0</string>
     <string name="address">Address</string>
     <string name="dob">Date of Birth</string>
     <string name="buy_for">Subscribe now for next</string>
@@ -91,6 +93,7 @@
     <string name="notification">Notifications</string>
     <string name="notification_setting">Notification Setting</string>
     <string name="binge_setting">Binge Watch</string>
+    <string name="invalid_email_id">Invalid email id</string>
     <string name="manage_account">Manage Account</string>
     <string name="login_signup">Log In / Sign Up</string>
     <string name="login_txt">Login</string>
@@ -148,9 +151,8 @@
 
     <string name="something_went_wrong">Something went wrong</string>
     <string name="image_upload_fail">Image upload failed</string>
-    <string name="male">Male</string>
-    <string name="female">Female</string>
-    <string name="search_mv_hub">Search VIPA (min 3 char)</string>
+
+    <string name="search_mv_hub">Search VIPA</string>
     <string name="show_all_results">Show All</string>
     <string name="series">Series</string>
     <string name="article">Article</string>
@@ -280,6 +282,7 @@
     <string name="term_condition">Terms and Conditions</string>
     <string name="my_watchlist">My Watchlist</string>
     <string name="my_history">My Watch History</string>
+    <string name="my_download">My Downloads</string>
     <string name="membership_plan">Membership and Plans</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="sign_out">Logout</string>
@@ -299,7 +302,7 @@
     <string name="language_thai">Thai</string>
     <string name="language_indonesia">bahasa Indonesia</string>
     <string name="go_to_my_downloads">View My Downloads</string>
-    <string name="no_downloads">No Downloaded Videos Found</string>
+    <string name="no_downloads">Films and TV programmes that you download appear here.</string>
     <string name="delete_download">Delete Download</string>
 
     <string name="title_activity_downloaded_video">DownloadedVideoActivity</string>
@@ -369,4 +372,22 @@
     <string name="select_genre">Select genre as per your interest for best result you can select multiple choices of interest (max 5)</string>
     <string name="finish">Finish</string>
     <string name="date_difference">You must be 13 years old and above.</string>
+    <string name="recieve_updates">I would like to recieve updates from VIPA in future.</string>
+    <string name="gender">GENDER</string>
+    <string name="male">MALE</string>
+    <string name="female">FEMALE</string>
+    <string name="others">OTHERS</string>
+
+    <string name="waiting_for_wifi">waiting for wifi</string>
+    <string name="download_will_begin">Your download will begin once you are come on WiFi. Or you can change the setting below:</string>
+    <string name="download_over_wifi">Download over WiFi</string>
+    <string name="you_can_change">*You can chnage this from settings</string>
+
+    <string name="Downloading">Downloading</string>
+    <string name="Paused">Paused</string>
+
+    <string name="content_prefrences">Content Preferences</string>
+
+    <string name="minutes">minutes</string>
+    <string name="For">For</string>
 </resources>

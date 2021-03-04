@@ -143,6 +143,12 @@ public class RecommendationRailFragment extends BaseBindingFragment<DetailFooter
 
             @Override
             public void onFinish() {
+                if (railCommonDataList.size()>0){
+                }else {
+                    getBinding().progressBar.setVisibility(View.GONE);
+                    removeTab();
+                    hideProgressBar();
+                }
             }
         });
 

@@ -5,6 +5,7 @@
         <item>Manage Account</item>
         <item>My Watchlist</item>
         <item>My Watch History</item>
+        <item>My Downloads</item>
         <item>Contact Us</item>
         <item>Frequently Ask Questions</item>
         <item>About VIPA</item>
@@ -46,6 +47,7 @@
         <item>Manage Account</item>
         <item>My Watchlist</item>
         <item>My Watch History</item>
+        <item>My Downloads</item>
         <item>Contact Us</item>
         <item>Frequently Ask Questions</item>
         <item>About VIPA</item>
@@ -63,4 +65,14 @@
         <item>Data Saver</item>
         <item>Always ask</item>
     </string-array>
+
+
+    <string-array name="gender_array">
+        <item>Gender</item>
+        <item>MALE</item>
+        <item>FEMALE</item>
+        <item>OTHERS</item>
+
+    </string-array>
+
 </resources>

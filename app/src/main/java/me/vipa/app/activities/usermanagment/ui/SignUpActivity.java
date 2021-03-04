@@ -20,11 +20,17 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import me.vipa.app.activities.contentPreference.UI.ContentPreference;
+import me.vipa.app.activities.contentPreference.UI.SettingContentPreferences;
+import me.vipa.app.activities.homeactivity.ui.HomeActivity;
+import me.vipa.app.activities.onBoarding.UI.OnBoarding;
+import me.vipa.app.activities.profile.ui.ProfileActivityNew;
+import me.vipa.app.activities.settings.ActivitySettings;
 import me.vipa.app.activities.usermanagment.viewmodel.RegistrationLoginViewModel;
 import me.vipa.app.baseModels.BaseBindingActivity;
 import me.vipa.app.R;
 import me.vipa.app.beanModel.responseModels.LoginResponse.Data;
 import me.vipa.app.beanModel.responseModels.LoginResponse.LoginResponseModel;
+import me.vipa.app.beanModel.userProfile.UserProfileResponse;
 import me.vipa.app.databinding.ActivityMainBinding;
 import me.vipa.app.databinding.SignupActivityBinding;
 import me.vipa.app.fragments.dialog.AlertDialogFragment;
@@ -85,6 +91,8 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
     private Data modelLogin;
     private final List<String> permissionNeeds = Arrays.asList("email", "public_profile");
     private boolean isNotificationEnable = false;
+    String loginCallingFrom="";
+    private boolean isloggedout = false;
 
     @Override
     public SignupActivityBinding inflateBindingLayout(@NonNull LayoutInflater inflater) {
@@ -104,12 +112,26 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
         getBinding().radioPasswordEye.setChecked(false);
         getBinding().confirmPasswordEye.setChecked(false);
         font = ResourcesCompat.getFont(SignUpActivity.this, sukhumvittadmai_normal);
+        loginCallingFrom=getIntent().getStringExtra("loginFrom");
+        if(loginCallingFrom.equalsIgnoreCase("OnBoarding")){
+            getBinding().toolbar.backLayout.setVisibility(View.INVISIBLE);
+        }else {
+            getBinding().toolbar.backLayout.setVisibility(View.VISIBLE);
+        }
         getBinding().toolbar.titleToolbar.setVisibility(View.VISIBLE);
+        getBinding().toolbar.titleSkip.setVisibility(View.VISIBLE);
         getBinding().toolbar.titleToolbar.setText(getResources().getString(R.string.signup));
+        getBinding().toolbar.titleSkip.setText(getResources().getString(R.string.skip));
         getBinding().toolbar.backLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onBackPressed();
+            }
+        });
+        getBinding().toolbar.titleSkip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new ActivityLauncher(SignUpActivity.this).homeScreen(SignUpActivity.this, HomeActivity.class);
             }
         });
         connectObservors();
@@ -119,7 +141,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
     @Override
     protected void onResume() {
         super.onResume();
-        isFbLoginClick = false;
+       // isFbLoginClick = false;
         getBinding().llFooter.setVisibility(View.VISIBLE);
         dismissLoading(getBinding().progressBar);
         if (preference.getAppPrefLoginStatus().equalsIgnoreCase(AppConstants.UserStatus.Login.toString())) {
@@ -154,9 +176,9 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
         getBinding().connection.retryTxt.setOnClickListener(view -> connectionObserver());
     }
 
-    String loginCallingFrom="";
+
     public void resetUI() {
-        loginCallingFrom=getIntent().getStringExtra("loginFrom");
+
         getBinding().errorName.setVisibility(View.INVISIBLE);
         getBinding().errorEmail.setVisibility(View.INVISIBLE);
         getBinding().errorPassword.setVisibility(View.INVISIBLE);
@@ -233,7 +255,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
             }
             mLastClickTime = SystemClock.elapsedRealtime();
             finish();
-            startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
+            startActivity(new Intent(SignUpActivity.this, LoginActivity.class).putExtra("loginFrom",""));
         });
 
         getBinding().etName.setOnClickListener(view -> getBinding().errorName.setVisibility(View.INVISIBLE));
@@ -369,7 +391,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
                 }
                 mLastClickTime = SystemClock.elapsedRealtime();
                 clearEditView();
-                isFbLoginClick = true;
+
                 getBinding().fbButton.performClick();
 
             } else
@@ -452,7 +474,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
 
     private void hitApiFBLogin() {
         if (CheckInternetConnection.isOnline(SignUpActivity.this)) {
-
+            isFbLoginClick = true;
             showLoading(getBinding().progressBar, true);
 
             viewModel.hitFbLogin(SignUpActivity.this, email, accessTokenFB, name, id, String.valueOf(profile_pic), hasFbEmail).observe(SignUpActivity.this, new Observer<LoginResponseModel>() {
@@ -504,7 +526,14 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
         preference.setAppPrefUserEmail(String.valueOf(fbLoginData.getEmail()));
         AppCommonMethod.userId = String.valueOf(fbLoginData.getId());
        // onBackPressed();
-        new ActivityLauncher(SignUpActivity.this).onContentScreen(SignUpActivity.this, ContentPreference.class,isNotificationEnable);
+      //  new ActivityLauncher(SignUpActivity.this).onContentScreen(SignUpActivity.this, ContentPreference.class,isNotificationEnable);
+//
+        if (isFbLoginClick){
+            callUpdateApi();
+        }else {
+            new ActivityLauncher(SignUpActivity.this).onContentScreen(SignUpActivity.this, ContentPreference.class, isNotificationEnable);
+        }
+
 
         //new ActivityLauncher(SignUpActivity.this).homeScreen(SignUpActivity.this, HomeActivity.class);
 
@@ -512,6 +541,59 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
             trackEvent(String.valueOf(fbLoginData.getName()),String.valueOf(fbLoginData.getEmail()));
         }catch (Exception e){
 
+        }
+    }
+
+    private void callUpdateApi() {
+        viewModel.hitUserProfile(SignUpActivity.this, KsPreferenceKeys.getInstance().getAppPrefAccessToken()).observe(SignUpActivity.this, new Observer<UserProfileResponse>() {
+            @Override
+            public void onChanged(UserProfileResponse userProfileResponse) {
+                if (userProfileResponse != null) {
+                    if (userProfileResponse.getStatus()) {
+                        updateUI(userProfileResponse);
+                    } else {
+                        if (userProfileResponse.getResponseCode() == 4302) {
+                            isloggedout = true;
+                            logoutCall();
+                            try {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        onBackPressed();
+                                    }
+                                });
+                            } catch (Exception e) {
+
+                            }
+
+                            // showDialog(getResources().getString(R.string.logged_out), getResources().getString(R.string.you_are_logged_out));
+                        }
+                        if (userProfileResponse.getDebugMessage() != null) {
+                            showDialog(SignUpActivity.this.getResources().getString(R.string.error), userProfileResponse.getDebugMessage().toString());
+                        } else {
+                            showDialog(SignUpActivity.this.getResources().getString(R.string.error), SignUpActivity.this.getResources().getString(R.string.something_went_wrong));
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    private void updateUI(UserProfileResponse userProfileResponse) {
+
+        if (userProfileResponse.getData().getCustomData().getContentPreferences()!=null && userProfileResponse.getData().getCustomData().getContentPreferences()!=""){
+            onBackPressed();
+        }else {
+            new ActivityLauncher(SignUpActivity.this).onContentScreen(SignUpActivity.this, ContentPreference.class, isNotificationEnable);
+        }
+    }
+
+    private void logoutCall() {
+        if (CheckInternetConnection.isOnline(Objects.requireNonNull(this))) {
+            clearCredientials(preference);
+            hitApiLogout(this, preference.getAppPrefAccessToken());
+        } else {
+            // new ToastHandler(this).show(getResources().getString(R.string.no_internet_connection));
         }
     }
 
@@ -597,7 +679,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
         boolean check = false;
         if (!password.equalsIgnoreCase(confirmPassword)){
             getBinding().errorCnfPassword.setVisibility(View.VISIBLE);
-            getBinding().errorCnfPassword.setText(getResources().getString(R.string.password_match));
+            getBinding().errorCnfPassword.setText(getResources().getString(R.string.confirm_pwd_not_match));
         }else {
             getBinding().errorCnfPassword.setVisibility(View.INVISIBLE);
             check = true;

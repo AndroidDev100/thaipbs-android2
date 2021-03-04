@@ -1,6 +1,7 @@
 package me.vipa.app.activities.watchList.ui;
 
 import android.content.Context;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;

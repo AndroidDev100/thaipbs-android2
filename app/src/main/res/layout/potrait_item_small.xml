@@ -44,7 +44,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
                         android:layout_alignParentRight="true"
-                        android:visibility="visible">
+                        android:visibility="gone">
 
                         <ImageView
                             android:layout_width="@dimen/vip_badge_width_small"
@@ -59,7 +59,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
                         android:layout_alignParentRight="true"
-                        android:visibility="visible">
+                        android:visibility="gone">
 
                         <ImageView
                             android:layout_width="@dimen/vip_badge_width_small"
@@ -110,7 +110,7 @@
                             android:fontFamily="@font/sukhumvittadmai_normal"
                             android:paddingLeft="@dimen/_3sdp"
                             android:paddingBottom="@dimen/_2sdp"
-                            android:textColor="?attr/watchlist_item_title_color"
+                            android:textColor="?attr/list_circle_item_description"
                             android:textSize="@dimen/_9sdp" />
 
 
@@ -124,7 +124,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <ImageView
                         android:layout_width="@dimen/vip_badge_width_small"
@@ -140,7 +140,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_gravity="end"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <ImageView
                         android:layout_width="@dimen/episode_badge_width"

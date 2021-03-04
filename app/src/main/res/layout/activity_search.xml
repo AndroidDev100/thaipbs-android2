@@ -120,7 +120,8 @@
                                         android:text="@string/recent_searches"
                                         android:textAllCaps="true"
                                         android:textSize="@dimen/TextSize13"
-                                        android:textStyle="bold" />
+                                        android:textStyle="bold"
+                                        android:textColor="?attr/cast_text_color"/>
 
                                     <FrameLayout
                                         android:id="@+id/delete_keywords"

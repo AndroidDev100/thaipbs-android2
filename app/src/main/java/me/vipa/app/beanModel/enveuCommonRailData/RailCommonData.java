@@ -332,7 +332,7 @@ public class RailCommonData {
         }
     }
 
-    public void setContinueWatchingData(BaseCategory screenWidget, ArrayList<DataItem> enveuVideoDetails, CommonApiCallBack commonApiCallBack) {
+    public void setContinueWatchingData(BaseCategory screenWidget,boolean isContinueWatching, ArrayList<DataItem> enveuVideoDetails, CommonApiCallBack commonApiCallBack) {
        // this.identifier = screenWidget.getReferenceName();
         this.displayName = (String) screenWidget.getName();
         this.screenWidget = screenWidget;
@@ -359,7 +359,7 @@ public class RailCommonData {
                 enveuVideoItemBeans.add(enveuVideoItemBean);
             }
             setRailType(Layouts.HOR.name(), ImageType.LDS.name());
-            railCommonData.setIsContinueWatching(true);
+            railCommonData.setIsContinueWatching(isContinueWatching);
             commonApiCallBack.onSuccess(RailCommonData.this);
         } else {
             commonApiCallBack.onFailure(new Throwable("No Data Found"));

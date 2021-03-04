@@ -10,6 +10,7 @@ import me.vipa.app.baseModels.BaseBindingActivity
 import me.vipa.app.databinding.ActivityDownloadSettingsBinding
 import me.vipa.app.utils.constants.SharedPrefesConstants
 import me.vipa.app.utils.helpers.SharedPrefHelper
+import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys
 
 class DownloadSettings : BaseBindingActivity<ActivityDownloadSettingsBinding>(), View.OnClickListener {
     companion object {
@@ -22,7 +23,7 @@ class DownloadSettings : BaseBindingActivity<ActivityDownloadSettingsBinding>(),
 
         binding.selectedQualityText.text = resources.getStringArray(R.array.download_quality)[SharedPrefHelper(this).getInt(SharedPrefesConstants.DOWNLOAD_QUALITY_INDEX, 4)]
         binding.textDownloadQuality.setOnClickListener(this)
-        binding.switchTheme.isChecked = SharedPrefHelper(this).getInt(SharedPrefesConstants.DOWNLOAD_OVER_WIFI, 0) == 1
+        binding.switchTheme.isChecked = KsPreferenceKeys.getInstance().getDownloadOverWifi() == 1
 
         binding.switchTheme.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {

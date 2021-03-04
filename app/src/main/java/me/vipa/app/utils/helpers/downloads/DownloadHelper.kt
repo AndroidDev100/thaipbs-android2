@@ -3,10 +3,9 @@ package com.mmtv.utils.helpers.downloads
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
-import android.os.AsyncTask
-import android.os.Bundle
+import android.os.*
 import android.os.Environment.getExternalStorageDirectory
-import android.os.StatFs
+import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
@@ -29,6 +28,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
 import me.vipa.app.MvHubPlusApplication
 import me.vipa.app.R
+import me.vipa.app.SDKConfig
 import me.vipa.app.activities.downloads.SelectDownloadQualityAdapter
 import me.vipa.app.activities.downloads.VideoQualitySelectedListener
 import me.vipa.app.activities.downloads.WifiPreferenceListener
@@ -98,6 +98,8 @@ class DownloadHelper() {
 
     constructor(activity: Activity, videoListener: MediaDownloadable.DownloadEventListener, assetType: String) : this(activity, videoListener) {
         this.assetType = assetType
+        this.videoListener = videoListener
+        this.activity = activity
     }
 
     constructor(activity: Activity, videoListener: MediaDownloadable.DownloadEventListener, seriesId: String, seriesName: String, assetType: String, enveuVideoItemBean: EnveuVideoItemBean) : this(activity, videoListener) {
@@ -156,6 +158,7 @@ class DownloadHelper() {
             allowedMobileDownload()
             getAllVideosFromDatabase()
         }
+
     }
 
     fun allowedMobileDownload() {
@@ -164,7 +167,7 @@ class DownloadHelper() {
     }
 
     fun findVideo(videoId: String): Video? {
-        Logger.e(TAG, "VideoId$videoId")
+        Logger.e("findVideo", "VideoId$videoId")
         catalog.findVideoByID(videoId, object : VideoListener() {
             override fun onVideo(video: Video) {
                 this@DownloadHelper.video = video
@@ -173,31 +176,37 @@ class DownloadHelper() {
             }
 
             override fun onError(error: String) {
-                Logger.e(TAG, error)
+                Logger.e("findVideo", error.toString())
             }
         })
         return video
     }
 
     fun findVideo(videoId: String, videoListener: VideoListener) {
+        Logger.e("videoFound", videoId)
         catalog.findVideoByID(videoId, object : VideoListener() {
             override fun onVideo(video: Video) {
+                Logger.e("videoFound", video.toString())
                 videoListener.onVideo(video)
             }
 
             override fun onError(error: String) {
+                Logger.e("videoFound", error.toString())
                 videoListener.onError(error)
             }
         })
     }
 
     fun findOfflineVideoById(videoId: String, videoListener: OfflineCallback<Video>) {
+        Logger.e("videoOffline", videoId)
         catalog.findOfflineVideoById(videoId, object : OfflineCallback<Video> {
             override fun onSuccess(p0: Video?) {
+                Logger.e("videoNotFound", p0.toString())
                 videoListener.onSuccess(p0)
             }
 
             override fun onFailure(p0: Throwable?) {
+                Logger.e("videoNotFound", p0.toString())
                 videoListener.onFailure(p0)
             }
 
@@ -231,48 +240,59 @@ class DownloadHelper() {
         }
     }
 
+    @SuppressLint("WrongConstant")
     fun deleteAllVideos(activity: Activity) {
-        if (!::catalog.isInitialized) {
-            init(activity)
-        }
-        if (!::db.isInitialized) {
-            db = Room.databaseBuilder(
-                    MvHubPlusApplication.getApplicationContext(activity),
-                    DownloadDatabase::class.java, "enveu.db").build()
-        }
-        val videosList = ArrayList<Video>()
-        videosList.addAll(catalog.findAllVideoDownload(DownloadStatus.STATUS_COMPLETE))
-        videosList.addAll(catalog.findAllVideoDownload(DownloadStatus.STATUS_PENDING))
-        videosList.addAll(catalog.findAllVideoDownload(DownloadStatus.STATUS_PAUSED))
-        videosList.addAll(catalog.findAllVideoDownload(DownloadStatus.STATUS_DOWNLOADING))
-        videosList.addAll(catalog.findAllQueuedVideoDownload())
+        try {
+            if (!::catalog.isInitialized) {
+                init(activity)
+            }
+            if (!::db.isInitialized) {
+                db = Room.databaseBuilder(
+                        MvHubPlusApplication.getApplicationContext(activity),
+                        DownloadDatabase::class.java, "enveu.db").build()
+            }
+            val videosList = ArrayList<Video>()
+            videosList.addAll(catalog.findAllVideoDownload(DownloadStatus.STATUS_COMPLETE))
+            videosList.addAll(catalog.findAllVideoDownload(DownloadStatus.STATUS_PENDING))
+            videosList.addAll(catalog.findAllVideoDownload(DownloadStatus.STATUS_PAUSED))
+            videosList.addAll(catalog.findAllVideoDownload(DownloadStatus.STATUS_DOWNLOADING))
+            videosList.addAll(catalog.findAllVideoDownload(DownloadStatus.PAUSED_WAITING_TO_RETRY))
+            videosList.addAll(catalog.findAllQueuedVideoDownload())
 
-        for (video in videosList) {
-            catalog.findVideoByID(video.id, object : VideoListener() {
-                override fun onVideo(p0: Video?) {
-                    p0?.let {
-                        deleteVideo(it)
+            for (video in videosList) {
+                catalog.findVideoByID(video.id, object : VideoListener() {
+                    override fun onVideo(p0: Video?) {
+                        p0?.let {
+                            deleteVideo(it)
+                        }
                     }
-                }
-            })
+                })
+            }
+            deleteAllVideosFromDatabase()
+        }catch (ignored : Exception){
+
         }
-        deleteAllVideosFromDatabase()
+
     }
 
     fun startVideoDownload(video: Video, videoQuality: Int) {
+        Logger.w("valuePrint", video.isClearContent.toString())
         if (video.isClearContent) {
             downloadVideo(video, videoQuality)
         } else {
             acquireLicense(video, object : CommonApiCallBack {
                 override fun onSuccess(item: Any?) {
+                    Logger.e("licenceAq", item.toString())
                     downloadVideo(item as Video, videoQuality)
                 }
 
                 override fun onFailure(throwable: Throwable?) {
+                    Logger.e("licenceAq", throwable.toString())
                     Logger.e(TAG, throwable?.message)
                 }
 
                 override fun onFinish() {
+                    Logger.e("licenceAq", "onfinish")
                 }
             })
         }
@@ -283,19 +303,23 @@ class DownloadHelper() {
         this.seriesId = seriesId
         this.seasonNumber = seasonNumber.toString()
         this.episodeNumber = episodeNumber
+        Logger.e("episodedownload", video.isClearContent.toString())
         if (video.isClearContent) {
             downloadVideo(video, videoQuality)
         } else {
             acquireLicense(video, object : CommonApiCallBack {
                 override fun onSuccess(item: Any?) {
+                    Logger.e("licenceAq", item.toString())
                     downloadVideo(item as Video, videoQuality)
                 }
 
                 override fun onFailure(throwable: Throwable?) {
+                    Logger.e("licenceAq", throwable.toString())
                    Logger.e(TAG, throwable?.message)
                 }
 
                 override fun onFinish() {
+                    Logger.e("licenceAq", "onfinish")
                 }
             })
         }
@@ -309,7 +333,7 @@ class DownloadHelper() {
         val currentDate = sdf.format(Date())
         val calender = Calendar.getInstance()
         calender.time = sdf.parse(currentDate)
-        calender.add(Calendar.DATE, 3)
+        calender.add(Calendar.DATE, SDKConfig.DOWNLOAD_EXPIRY_DAYS)
         val httpRequestConfigBuilder = HttpRequestConfig.Builder()
         httpRequestConfigBuilder.setBrightcoveAuthorizationToken("AEnTxTh1tfn_PqonTvZXtqKaLZbZeAM3wLlN2OIPcKXOYKFhlHISivLU98g0R5fOoMddEIzPnC9bm9BK7X27H3nNcJHDtMgCMw2fwJpyWxxwfvzJhTd3Npk")
         httpRequestConfig = httpRequestConfigBuilder.build()
@@ -444,22 +468,27 @@ class DownloadHelper() {
     }
 
     fun deleteVideo(videoId: String) {
+        Logger.e("ValueOfDe", videoId)
         catalog.deleteVideo(videoId, object : OfflineCallback<Boolean> {
             override fun onSuccess(aBoolean: Boolean?) {
+                Logger.e("ValueOfDe", aBoolean.toString())
                 if (aBoolean!!) {
                     checkDownloadStatus()
+                    deleteVideoFromDatabase(videoId)
+                }else{
                     deleteVideoFromDatabase(videoId)
                 }
             }
 
             override fun onFailure(throwable: Throwable) {
-
+                Logger.e("ValueOfDe", throwable.message)
             }
         })
     }
 
     private fun downloadVideo(video: Video, videoQuality: Int) {
-        addVideotoDatabase(video, seriesId)
+        Logger.e("licenceAq d", video.toString()+" "+assetType)
+
 
         when (videoQuality) {
             0 -> {
@@ -480,95 +509,111 @@ class DownloadHelper() {
             }
         }
         if (assetType != MediaTypeConstants.getInstance().series) {
-            catalog.getMediaFormatTracksAvailable(video) { mediaDownloadable, bundle ->
-                BrightcoveDownloadUtil.selectMediaFormatTracksAvailable(mediaDownloadable, bundle)
-                when (videoQuality) {
-                    0 -> {
-                        Logger.e("Download", BEST_BIT_RATE.toString())
-                        mediaDownloadable.setVideoBitrate(BEST_BIT_RATE)
+            try {
+                Logger.e("licenceAq in", video.toString())
+                catalog.getMediaFormatTracksAvailable(video) { mediaDownloadable, bundle ->
+                    Logger.e("licenceAq in2", video.toString())
+                    BrightcoveDownloadUtil.selectMediaFormatTracksAvailable(mediaDownloadable, bundle)
+                    Logger.e("licenceAq in3", video.toString())
+                    when (videoQuality) {
+                        0 -> {
+                            Logger.e("Download", BEST_BIT_RATE.toString())
+                            mediaDownloadable.setVideoBitrate(BEST_BIT_RATE)
+                        }
+                        1 -> {
+                            Logger.e("Download", BETTER_BIT_RATE.toString())
+                            mediaDownloadable.setVideoBitrate(BETTER_BIT_RATE)
+                        }
+                        2 -> {
+                            Logger.e("Download", GOOD_BIT_RATE.toString())
+                            mediaDownloadable.setVideoBitrate(GOOD_BIT_RATE)
+                        }
+                        3 -> {
+                            Logger.e("Download", DATA_SAVER_BIT_RATE.toString())
+                            mediaDownloadable.setVideoBitrate(DATA_SAVER_BIT_RATE)
+                        }
                     }
-                    1 -> {
-                        Logger.e("Download", BETTER_BIT_RATE.toString())
-                        mediaDownloadable.setVideoBitrate(BETTER_BIT_RATE)
+                    val videos = ArrayList<MediaFormat>()
+                    val audios = ArrayList<MediaFormat>()
+                    val roles = ArrayList<String>()
+                    val captions = ArrayList<MediaFormat>()
+                    if (bundle.containsKey(MediaDownloadable.VIDEO_RENDITIONS)) {
+                        videos.addAll(bundle.getParcelableArrayList(MediaDownloadable.VIDEO_RENDITIONS)!!)
                     }
-                    2 -> {
-                        Logger.e("Download", GOOD_BIT_RATE.toString())
-                        mediaDownloadable.setVideoBitrate(GOOD_BIT_RATE)
+                    if (bundle.containsKey(MediaDownloadable.AUDIO_LANGUAGES)) {
+                        audios.addAll(bundle.getParcelableArrayList(MediaDownloadable.AUDIO_LANGUAGES)!!)
                     }
-                    3 -> {
-                        Logger.e("Download", DATA_SAVER_BIT_RATE.toString())
-                        mediaDownloadable.setVideoBitrate(DATA_SAVER_BIT_RATE)
+                    if(bundle.containsKey(MediaDownloadable.AUDIO_LANGUAGE_ROLES)) {
+                        roles.addAll(bundle.getStringArrayList(MediaDownloadable.AUDIO_LANGUAGE_ROLES)!!)
                     }
-                }
-                val videos = ArrayList<MediaFormat>()
-                val audios = ArrayList<MediaFormat>()
-                val roles = ArrayList<String>()
-                val captions = ArrayList<MediaFormat>()
-                if (bundle.containsKey(MediaDownloadable.VIDEO_RENDITIONS)) {
-                    videos.addAll(bundle.getParcelableArrayList(MediaDownloadable.VIDEO_RENDITIONS)!!)
-                }
-                if (bundle.containsKey(MediaDownloadable.AUDIO_LANGUAGES)) {
-                    audios.addAll(bundle.getParcelableArrayList(MediaDownloadable.AUDIO_LANGUAGES)!!)
-                }
-                if(bundle.containsKey(MediaDownloadable.AUDIO_LANGUAGE_ROLES)) {
-                    roles.addAll(bundle.getStringArrayList(MediaDownloadable.AUDIO_LANGUAGE_ROLES)!!)
-                }
-                if(bundle.containsKey(MediaDownloadable.CAPTIONS)) {
-                    captions.addAll(bundle.getParcelableArrayList(MediaDownloadable.CAPTIONS)!!)
-                }
-                val filteredBundle = Bundle()
-                filteredBundle.putParcelableArrayList(MediaDownloadable.VIDEO_RENDITIONS,videos)
-                filteredBundle.putParcelableArrayList(MediaDownloadable.AUDIO_LANGUAGES,audios)
-                filteredBundle.putStringArrayList(MediaDownloadable.AUDIO_LANGUAGE_ROLES,roles)
-                filteredBundle.putParcelableArrayList(MediaDownloadable.CAPTIONS,captions)
-                mediaDownloadable.configurationBundle = filteredBundle
-                Logger.e("Bundle", Gson().toJson(filteredBundle))
-                catalog.downloadVideo(video, object : OfflineCallback<DownloadStatus> {
-                    override fun onSuccess(downloadStatus: DownloadStatus) {
-                        updateDownloadStatus(downloadStatus)
+                    if(bundle.containsKey(MediaDownloadable.CAPTIONS)) {
+                        captions.addAll(bundle.getParcelableArrayList(MediaDownloadable.CAPTIONS)!!)
                     }
+                    val filteredBundle = Bundle()
+                    filteredBundle.putParcelableArrayList(MediaDownloadable.VIDEO_RENDITIONS,videos)
+                    filteredBundle.putParcelableArrayList(MediaDownloadable.AUDIO_LANGUAGES,audios)
+                    filteredBundle.putStringArrayList(MediaDownloadable.AUDIO_LANGUAGE_ROLES,roles)
+                    filteredBundle.putParcelableArrayList(MediaDownloadable.CAPTIONS,captions)
+                    mediaDownloadable.configurationBundle = filteredBundle
+                    Logger.e("Bundle", Gson().toJson(filteredBundle))
+                    catalog.downloadVideo(video, object : OfflineCallback<DownloadStatus> {
+                        override fun onSuccess(downloadStatus: DownloadStatus) {
+                            addVideotoDatabase(video, seriesId)
+                            updateDownloadStatus(downloadStatus)
+                        }
 
-                    override fun onFailure(throwable: Throwable) {
-                        Logger.e(TAG, "onFailure====>" + throwable.message)
-                    }
-                })
+                        override fun onFailure(throwable: Throwable) {
+                            Logger.e("licenceAq in5", video.toString())
+                            Logger.e(TAG, "onFailure====>" + throwable.message)
+                        }
+                    })
+                }
+
+            }catch (e : Exception){
+                Logger.e("licenceAq in4", video.toString())
+                Logger.e(TAG, "onFailure====>" + e.message)
             }
         }
     }
 
 
     private fun addVideotoDatabase(video: Video, seriesId: String) {
+        Logger.e("addVideoData", video.toString())
         if (assetType == MediaTypeConstants.getInstance().series || assetType == MediaTypeConstants.getInstance().episode) {
-            findVideo(seriesId, object : VideoListener() {
-                override fun onVideo(p0: Video?) {
-                    var downloadedVideo = DownloadedVideo(p0!!.id, MediaTypeConstants.getInstance().series, seriesId)
-                    downloadedVideo.seriesName = seriesName
-                    downloadedVideo.seasonNumber = seasonNumber!!
-                    val downloadedEpisodes = DownloadedEpisodes(video.id, seasonNumber!!, episodeNumber!!, seriesId)
-                    ImageDownloadHelper(activity as Context, seriesId, object : CommonApiCallBack {
-                        override fun onSuccess(item: Any?) {
-                            insertVideo(downloadedVideo, downloadedEpisodes)
-                        }
+            Logger.e("addVideoData 2", assetType)
+            var downloadedVideo = DownloadedVideo(video!!.id, MediaTypeConstants.getInstance().series, seriesId)
+            downloadedVideo.seriesName = seriesName
+            downloadedVideo.seasonNumber = seasonNumber!!
+            val downloadedEpisodes = DownloadedEpisodes(video.id, seasonNumber!!, episodeNumber!!, seriesId)
+            ImageDownloadHelper(activity as Context, seriesId, object : CommonApiCallBack {
+                override fun onSuccess(item: Any?) {
+                    Logger.e("addVideoData 4", item.toString())
+                    insertVideo(downloadedVideo, downloadedEpisodes)
+                }
 
-                        override fun onFailure(throwable: Throwable?) {
-                            Logger.e(TAG, "Unable to save image")
-                            insertVideo(downloadedVideo, downloadedEpisodes)
+                override fun onFailure(throwable: Throwable?) {
+                    Logger.e(TAG, "Unable to save image")
+                    Logger.e("addVideoData 3", throwable!!.message)
+                    insertVideo(downloadedVideo, downloadedEpisodes)
 
-                        }
+                }
 
-                        override fun onFinish() {
-                        }
+                override fun onFinish() {
+                }
 
-                    }).execute(p0.posterImage.toString())
+            }).execute(video.posterImage.toString())
+           /* findVideo(seriesId, object : VideoListener() {
+                override fun onVideo(p: Video?) {
+
                 }
 
                 override fun onError(error: String) {
                     super.onError(error)
                     Logger.e(TAG, error)
                 }
-            })
+            })*/
         } else {
-            var downloadedVideo = DownloadedVideo(video.id, assetType, seriesId, "", "", video.name, AppCommonMethod.expiryDate(3))
+            var downloadedVideo = DownloadedVideo(video.id, assetType, seriesId, "", "", video.name, AppCommonMethod.expiryDate(SDKConfig.DOWNLOAD_EXPIRY_DAYS))
             insertVideo(downloadedVideo, null)
         }
 
@@ -600,7 +645,7 @@ class DownloadHelper() {
         }
     }
 
-    private fun deleteVideoFromDatabase(videoId: String) {
+    public fun deleteVideoFromDatabase(videoId: String) {
         Logger.e("DeleteVideo",videoId)
         try {
             AsyncTask.execute {
@@ -693,6 +738,7 @@ class DownloadHelper() {
                 }
 
                 override fun onFailure(p0: Throwable?) {
+                    Logger.e(TAG, "pauseDownload$p0")
                 }
             })
         }
@@ -705,6 +751,7 @@ class DownloadHelper() {
             }
 
             override fun onFailure(p0: Throwable?) {
+
             }
         })
     }
@@ -724,8 +771,10 @@ class DownloadHelper() {
     }
 
     fun resumeDownload(videoId: String) {
+        Log.w("pauseClicked", "in5"+videoId)
         findVideo(videoId, object : VideoListener() {
             override fun onVideo(p0: Video?) {
+                Log.w("pauseClicked", "in5"+p0?.isClearContent)
                 if (p0?.isClearContent!!) {
                     videoDownloadResume(p0)
                 } else {
@@ -752,6 +801,7 @@ class DownloadHelper() {
             }
 
             override fun onFailure(p0: Throwable?) {
+                Log.w("pauseClicked", "in6"+p0.toString())
             }
         })
     }
@@ -774,7 +824,9 @@ class DownloadHelper() {
     }
 
     fun startSeriesDownload(seriesId: String, selectedSeason: Int, seasonEpisodes: MutableList<out EnveuVideoItemBean>, videoQuality: Int) {
+        Logger.w("valuePrint", seasonEpisodes.toString())
         for (enveuVideoItem in seasonEpisodes) {
+            Logger.w("valuePrint", enveuVideoItem.brightcoveVideoId)
             enveuVideoItemBean = enveuVideoItem
             this.seriesId = seriesId
             this.seasonNumber = enveuVideoItem.season.toString()
@@ -856,7 +908,7 @@ class DownloadHelper() {
         getAllVideosFromDatabase().observe(activity as LifecycleOwner, androidx.lifecycle.Observer {
             it.downloadVideos.forEach { downloadedVideo ->
                 Logger.e("DownloadedVideo1", Gson().toJson(downloadedVideo))
-                if (downloadedVideo.downloadType != MediaTypeConstants.getInstance().series) {
+                if (downloadedVideo.downloadType.equals(MediaTypeConstants.getInstance().series,ignoreCase = true)) {
                     findOfflineVideoById(downloadedVideo.videoId, object : OfflineCallback<Video> {
                         override fun onSuccess(video: Video?) {
                             if (video != null) {
@@ -867,7 +919,7 @@ class DownloadHelper() {
                                         deleteVideo(video)
                                     }
                                 }else{
-                                   // deleteExpireVideoFromDB(downloadedVideo)
+                                    deleteExpireVideoFromDB(downloadedVideo)
                                   //  Logger.e("License", "Expiry" + video.licenseExpiryDate)
                                 }
                             } else {
@@ -978,4 +1030,5 @@ class DownloadHelper() {
     interface AsyncResponse<T> {
         fun processFinish(result: T)
     }
+
 }

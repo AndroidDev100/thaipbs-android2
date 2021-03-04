@@ -10,5 +10,6 @@
     <string name="playstore_subscription_weekly">weekly</string>
     <string name="enter_valid_coupon_code">Please enter a coupon code</string>
 
+    <string name="minutes">minutes</string>
 
 </resources>

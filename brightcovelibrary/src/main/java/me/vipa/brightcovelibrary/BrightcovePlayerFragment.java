@@ -118,7 +118,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
     private NetworkChangeReceiver receiver = null;
     private Activity mActivity;
     private boolean enable = true;
-    private boolean imaEnable = true;
+    private boolean imaEnable = false;
     private boolean bingeWatch = false;
     private int bingeWatchTimer = 0;
     private GoogleIMAComponent googleIMAComponent;
@@ -153,6 +153,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
     private boolean isBingeWatchTimeCalculate = false;
     boolean isFirstCalled = true;
     private boolean isCastConnected = false;
+    int from=0;
 
 
     public BrightcovePlayerFragment() {
@@ -166,10 +167,10 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         Bundle bundle = getArguments();
         if (bundle != null) {
             videoId = bundle.getString("videoId");
-            Log.w("IMATAG", videoId);
+           // Log.w("IMATAG", videoId);
             assetType = bundle.getString("assetType");
             selected_track = bundle.getString("selected_track");
-            Log.e("Selectedtrack", selected_track);
+          //  Log.e("Selectedtrack", selected_track);
             //Log.d("asasasasas",selected_track);
             selected_lang = bundle.getString("selected_lang");
             adRulesURL = bundle.getString("config_vast_tag");
@@ -194,10 +195,12 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             bookmarkPosition = bundle.getLong("bookmarkPosition");
             if (bundle.containsKey("isOffline")) {
                 isOfflineVideo = bundle.getBoolean("isOffline");
+                from=bundle.getInt("from");
                 currentVideo = bundle.getParcelable("videoId");
                 if (isOfflineVideo && mActivity != null) {
-                    mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
-
+                    if (from==1){
+                        mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+                    }
                 }
             } else {
                 if (mActivity != null) {
@@ -283,7 +286,12 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         super.onActivityCreated(savedInstanceState);
         mActivity = getActivity();
         mListener = (OnPlayerInteractionListener) mActivity;
-        chromeCastStartedListener = (ChromeCastStartedCallBack) mActivity;
+        try {
+            chromeCastStartedListener = (ChromeCastStartedCallBack) mActivity;
+        }catch (Exception e){
+
+        }
+
 
         try {
             ApplicationInfo ai = mActivity.getPackageManager().getApplicationInfo(mActivity.getPackageName(), PackageManager.GET_META_DATA);
@@ -301,8 +309,10 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         if (isOfflineVideo) {
             setPlayerWithCallBacks(true);
             if (mActivity != null) {
-                mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-                mActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                if (from==1){
+                    mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                    mActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                }
             }
         } else {
             setPlayerWithCallBacks(false);
@@ -372,7 +382,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             return;
         }
 
-        if (assetType != null && assetType.equalsIgnoreCase("LIVE")) {
+        if (assetType != null && assetType.equalsIgnoreCase("LIVETV")) {
             //videoId="6125432335001";
             videoType = "1";
         } else {
@@ -401,7 +411,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                         playerControlsFragment.sendTapCallBack(false);*/
                     if (playerControlsFragment != null) {
                         playerControlsFragment.sendTapCallBack(false);
-                        playerControlsFragment.setIsOffline(false);
+                        playerControlsFragment.setIsOffline(false,from);
                     }
 
                     Log.w("videoFound", "inUp");
@@ -440,7 +450,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             callPlayerControlsFragment();
             if (playerControlsFragment != null) {
                 playerControlsFragment.sendTapCallBack(false);
-                playerControlsFragment.setIsOffline(true);
+                playerControlsFragment.setIsOffline(true,from);
             }
         }
 
@@ -452,9 +462,8 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                     progressBar.setVisibility(View.VISIBLE);
                 }
                 isFirstCalled = true;
-               /* VideoDisplayComponent videoDisplayComponent = baseVideoView.getVideoDisplay();
-
                 VideoDisplayComponent videoDisplayComponent = baseVideoView.getVideoDisplay();
+
                 if (videoDisplayComponent instanceof ExoPlayerVideoDisplayComponent) {
                     //Get ExoPlayer
                     ExoPlayer exoPlayer = ((ExoPlayerVideoDisplayComponent) videoDisplayComponent).getExoPlayer();
@@ -476,7 +485,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
 
 
                     }
-                }*/
+                }
             }
 
         });
@@ -633,7 +642,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             public void processEvent(Event event) {
                 Exception exception = (Exception) event.properties.get(Event.ERROR);
                 Log.w("IMATAG", exception + "");
-                if (assetType != null && assetType.equalsIgnoreCase("LIVE")) {
+                if (assetType != null && assetType.equalsIgnoreCase("LIVETV")) {
 
                 } else {
                     if (exception != null) {
@@ -1052,8 +1061,11 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         }
         try {
             if (baseVideoView != null) {
-                baseVideoView.stopPlayback();
-                baseVideoView.removeListeners();
+                if(!isOfflineVideo){
+                    baseVideoView.stopPlayback();
+                    baseVideoView.removeListeners();
+                }
+
             }
         } catch (Exception ignored) {
             Log.w("IMATAG", ignored.toString());
@@ -1443,11 +1455,14 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         }
         baseVideoView.stopPlayback();
         if (mActivity != null && !mActivity.isFinishing()) {
-            if (assetType.equalsIgnoreCase("EPISODES") || assetType.equalsIgnoreCase("EPISODE")) {
+            if (assetType!=null){
+                if (assetType.equalsIgnoreCase("EPISODES") || assetType.equalsIgnoreCase("EPISODE")) {
 
-            } else {
-                finishPlayer();
+                } else {
+                    finishPlayer();
+                }
             }
+
         }
 
 

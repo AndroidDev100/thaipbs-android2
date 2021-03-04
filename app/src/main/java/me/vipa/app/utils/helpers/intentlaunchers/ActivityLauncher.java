@@ -12,6 +12,7 @@ import me.vipa.app.activities.onBoarding.UI.OnBoarding;
 import me.vipa.app.activities.onBoarding.UI.OnBoardingTab;
 import me.vipa.app.activities.profile.ui.AvatarImageActivity;
 import me.vipa.app.activities.usermanagment.ui.SignUpThirdPage;
+import me.vipa.app.utils.helpers.ADHelper;
 import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
 import me.vipa.app.activities.article.ArticleActivity;
 import me.vipa.app.activities.detail.ui.DetailActivity;
@@ -161,6 +162,10 @@ public class ActivityLauncher {
         intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
         KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
         preference.setAppPrefAssetId(0);
+        if (ADHelper.getInstance(activity).getPipAct()!=null){
+            ADHelper.getInstance(activity).getPipAct().moveTaskToBack(false);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        }
         activity.startActivity(intent);
     }
 
@@ -205,7 +210,11 @@ public class ActivityLauncher {
         KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
         preference.setAppPrefAssetId(0);
         Logger.e("JSON SENT",new Gson().toJson(args));
-
+        if (ADHelper.getInstance(activity).getPipAct()!=null){
+            ADHelper.getInstance(activity).getPipAct().moveTaskToBack(false);
+            ADHelper.getInstance(activity).getPipAct().finish();
+            //intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        }
         activity.startActivity(intent);
 
 
@@ -251,7 +260,12 @@ public class ActivityLauncher {
         intent.putExtra(AppConstants.BUNDLE_ASSET_BUNDLE, args);
         intent.setFlags(FLAG_ACTIVITY_CLEAR_TOP);
         preference.setAppPrefAssetId(0);
-
+        if (ADHelper.getInstance(activity).getPipAct()!=null){
+            ADHelper.getInstance(activity).getPipAct().moveTaskToBack(false);
+            ADHelper.getInstance(activity).getPipAct().finish();
+            //intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        }
         activity.startActivity(intent);
     }
 
@@ -271,7 +285,10 @@ public class ActivityLauncher {
         intent.putExtra(AppConstants.BUNDLE_ASSET_BUNDLE, args);
         intent.setFlags(FLAG_ACTIVITY_CLEAR_TOP);
         preference.setAppPrefAssetId(0);
-
+        if (ADHelper.getInstance(activity).getPipAct()!=null){
+            ADHelper.getInstance(activity).getPipAct().moveTaskToBack(false);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        }
         activity.startActivity(intent);
     }
 

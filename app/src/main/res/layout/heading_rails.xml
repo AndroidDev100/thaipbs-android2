@@ -25,7 +25,7 @@
                 android:layout_gravity="center_vertical"
                 android:fontFamily="@font/sukhumvittadmai_medium"
                 android:maxLines="1"
-                android:text="ABCCCCC"
+                android:text=""
                 android:textColor="?header_text_color"
                 android:textSize="@dimen/railTitle"
                 app:layout_constraintEnd_toStartOf="@id/moreText"
@@ -43,7 +43,7 @@
                 android:text="@string/title_more"
                 android:textColor="?attr/more_text_color"
                 android:textSize="@dimen/railMore"
-                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginTop="@dimen/NontonSize3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

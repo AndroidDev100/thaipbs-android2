@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -37,6 +38,7 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -44,14 +46,17 @@ import java.io.File;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import me.vipa.app.R;
 import me.vipa.app.SDKConfig;
-import me.vipa.app.activities.membershipplans.ui.MemberShipPlanActivity;
 import me.vipa.app.activities.usermanagment.viewmodel.RegistrationLoginViewModel;
 import me.vipa.app.baseModels.BaseBindingActivity;
 import me.vipa.app.beanModel.userProfile.UserProfileResponse;
@@ -72,7 +77,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
     private final String dateOfBirth = "";
     private final String userChoosenTask = "";
     String spin_val;
-    String[] gender = {"GENDER", "MALE", "FEMALE", "OTHERS"};
+    String[] gender;
     String dateMilliseconds = "";
     ArrayAdapter<String> spin_adapter;
     String imageToUpload = "";
@@ -84,8 +89,9 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
     private String via = "";
     private AmazonS3 s3;
     private TransferUtility transferUtility;
-    private final String contentPreference = "";
+    private String contentPreference = "";
     private boolean isNotificationEnable;
+    String compareValue="";
 
     @Override
     public ProfileActivityNewBinding inflateBindingLayout(@NonNull LayoutInflater inflater) {
@@ -95,15 +101,37 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        gender = getApplicationContext().getResources().getStringArray(R.array.gender_array);
         connectionObserver();
     }
 
     private void connectionObserver() {
         preference = KsPreferenceKeys.getInstance();
         callModel();
+        parseProfile();
         setToolbar();
         setOfflineData();
         connectionValidation(NetworkConnectivity.isOnline(ProfileActivityNew.this));
+    }
+
+    UserProfileResponse newObject;
+    List<String> saved;
+    private void parseProfile() {
+        try {
+            saved=new ArrayList<>();
+            Gson gson = new Gson();
+            String json = KsPreferenceKeys.getInstance().getUserProfileData();
+            newObject = gson.fromJson(json, UserProfileResponse.class);
+            Log.w("savedata3",newObject.getData().getCustomData().getContentPreferences());
+            if (newObject.getData().getCustomData()!=null && newObject.getData().getCustomData().getContentPreferences()!=null
+            ){
+                contentPreference=newObject.getData().getCustomData().getContentPreferences();
+            }
+
+        }catch (Exception ignored){
+            Log.w("savedata3",ignored.toString());
+        }
+
     }
 
     private void setToolbar() {
@@ -114,7 +142,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
         getBinding().toolbar.titleText.setVisibility(View.VISIBLE);
         getBinding().toolbar.backLayout.setVisibility(View.VISIBLE);
         getBinding().toolbar.screenText.setVisibility(View.VISIBLE);
-        getBinding().toolbar.screenText.setText(getResources().getString(R.string.manage_account));
+        getBinding().toolbar.screenText.setText(getResources().getString(R.string.my_profile));
     }
 
     private void setOfflineData() {
@@ -137,10 +165,19 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     spin_val = gender[position];
-                    if (spin_val.equalsIgnoreCase("GENDER")) {
-                        spinnerValue = "";
-                    } else {
-                        spinnerValue = spin_val;
+                    if (KsPreferenceKeys.getInstance().getAppLanguage().equalsIgnoreCase("Thai")){
+                        if (spin_val.equalsIgnoreCase(getResources().getString(R.string.gender))) {
+                            spinnerValue = "";
+                        } else {
+                            spinnerValue = spin_val;
+                            spinnerValue = setSpinnerValue(spinnerValue);
+                        }
+                    }else {
+                        if (spin_val.equalsIgnoreCase("Gender")) {
+                            spinnerValue = "";
+                        } else {
+                            spinnerValue = spin_val;
+                        }
                     }
                 }
 
@@ -233,6 +270,8 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
                                 e.printStackTrace();
                             }
                         }else {
+                            getBinding().etDob.setText("");
+                            dateMilliseconds = "";
                             new ToastHandler(ProfileActivityNew.this).show(getResources().getString(R.string.date_difference));
                         }
 
@@ -298,6 +337,17 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
 
     }
 
+    private String setSpinnerValue(String value) {
+        if (value.equalsIgnoreCase(getResources().getString(R.string.male))){
+            spinnerValue = "MALE";
+        }else if (value.equalsIgnoreCase(getResources().getString(R.string.female))){
+            spinnerValue = "FEMALE";
+        }else if (value.equalsIgnoreCase(getResources().getString(R.string.others))){
+            spinnerValue = "OTHERS";
+        }
+        return spinnerValue;
+    }
+
     private void callUpdateApi() {
 //        {"data":null,"responseCode":4019,"debugMessage":"Phone Number cannot be changed after setting once"}
         if (validateNameEmpty() && validatePhone()) {
@@ -309,6 +359,9 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
                     dismissLoading(getBinding().progressBar);
                     if (userProfileResponse != null) {
                         if (userProfileResponse.getStatus()) {
+                            Gson gson = new Gson();
+                            String userProfileData = gson.toJson(userProfileResponse);
+                            KsPreferenceKeys.getInstance().setUserProfileData(userProfileData);
                             showDialog("", ProfileActivityNew.this.getResources().getString(R.string.profile_update_successfully));
                             updateUI(userProfileResponse);
                         } else {
@@ -346,26 +399,72 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
     }
 
     private boolean validatePhone() {
+
+        int inputLenth=getBinding().etMobileNumber.getText().toString().trim().length();
         boolean check = false;
         if (getBinding().etMobileNumber.getText().toString().trim().equalsIgnoreCase("")) {
             check = true;
             getBinding().errorMobile.setVisibility(View.INVISIBLE);
-        } else if (getBinding().etMobileNumber.getText().toString().trim().length() == 11) {
-            String firstTwoChar = getBinding().etMobileNumber.getText().toString().substring(0, 2);
-            if (firstTwoChar.equalsIgnoreCase("66")) {
+        }
+        else {
+            if(validateRegex(getBinding().etMobileNumber.getText().toString())){
                 check = true;
                 getBinding().errorMobile.setVisibility(View.INVISIBLE);
-            } else {
+            }else {
                 check = false;
                 getBinding().errorMobile.setVisibility(View.VISIBLE);
                 getBinding().errorMobile.setText(getResources().getString(R.string.mobile_error));
             }
-        } else {
+        }
+
+       /* else if (inputLenth>0){
+            String firstChar = getBinding().etMobileNumber.getText().toString().substring(0, 1);
+            if (firstChar.equalsIgnoreCase("0") && validateRegex(getBinding().etMobileNumber.getText().toString())){
+                check = true;
+                getBinding().errorMobile.setVisibility(View.INVISIBLE);
+            }else {
+                check = false;
+                getBinding().errorMobile.setVisibility(View.VISIBLE);
+                getBinding().errorMobile.setText(getResources().getString(R.string.mobile_error));
+            }
+        }
+        else if (inputLenth>1){
+            String firstTwoChar = getBinding().etMobileNumber.getText().toString().substring(0, 2);
+            if (firstTwoChar.equalsIgnoreCase("66") && getBinding().etMobileNumber.getText().toString().trim().length() == 11){
+                check = true;
+                getBinding().errorMobile.setVisibility(View.INVISIBLE);
+            }else {
+                check = false;
+                getBinding().errorMobile.setVisibility(View.VISIBLE);
+                getBinding().errorMobile.setText(getResources().getString(R.string.mobile_error));
+            }
+        }
+        else {
             check = false;
             getBinding().errorMobile.setVisibility(View.VISIBLE);
             getBinding().errorMobile.setText(getResources().getString(R.string.mobile_error));
-        }
+        }*/
         return check;
+    }
+
+    private boolean validateRegex(String number) {
+        String mobileRegex66="^(?=66)(?=.*?[0-9]).{11,11}$";
+        String mobileRegex0="^(?=0)(?=.*?[0-9]).{10,10}$";
+
+        Pattern pattern = Pattern.compile(mobileRegex66);
+        Matcher matcher = pattern.matcher(number);
+
+        Pattern pattern2 = Pattern.compile(mobileRegex0);
+        Matcher matcher2 = pattern2.matcher(number);
+
+        if (matcher.find()){
+            return true;
+         }else if (matcher2.find()){
+            return true;
+        }else {
+            return false;
+        }
+
     }
 
     private void cameraIntent() {
@@ -552,14 +651,27 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
             }
 
             if (userProfileResponse.getData().getGender() != null) {
-                String compareValue = userProfileResponse.getData().getGender() + "";
+                 compareValue = userProfileResponse.getData().getGender() + "";
                 if (compareValue != null) {
-                    int spinnerPosition = spin_adapter.getPosition(compareValue.toUpperCase());
-                    getBinding().spinnerId.setSelection(spinnerPosition);
-                    if (getBinding().spinnerId.getSelectedItem().toString().equalsIgnoreCase("GENDER")) {
-                        spinnerValue = "";
-                    } else {
-                        spinnerValue = getBinding().spinnerId.getSelectedItem().toString();
+
+                    if (KsPreferenceKeys.getInstance().getAppLanguage().equalsIgnoreCase("Thai")){
+                        String value = setSpinnerValueForThai(compareValue);
+                        int spinnerPosition = spin_adapter.getPosition(value);
+                        getBinding().spinnerId.setSelection(spinnerPosition);
+                        if (getBinding().spinnerId.getSelectedItem().toString().equalsIgnoreCase(getResources().getString(R.string.gender))) {
+                            spinnerValue = "";
+                        } else {
+                            spinnerValue = setSpinnerValue(getBinding().spinnerId.getSelectedItem().toString());
+                        }
+
+                    }else {
+                        int spinnerPosition = spin_adapter.getPosition(compareValue);
+                        getBinding().spinnerId.setSelection(spinnerPosition);
+                        if (getBinding().spinnerId.getSelectedItem().toString().equalsIgnoreCase("Gender")) {
+                            spinnerValue = "";
+                        } else {
+                            spinnerValue = getBinding().spinnerId.getSelectedItem().toString();
+                        }
                     }
                 }
             }
@@ -618,6 +730,16 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
         }
     }
 
+    private String setSpinnerValueForThai(String compareValue) {
+      if (compareValue.equalsIgnoreCase("MALE")){
+          compareValue = getResources().getString(R.string.male);
+      }else if (compareValue.equalsIgnoreCase("FEMALE")){
+          compareValue = getResources().getString(R.string.female);
+      }else if (compareValue.equalsIgnoreCase("OTHERS")){
+          compareValue = getResources().getString(R.string.others);
+      }
+      return compareValue;
+    }
 
 
     private void showDialog(String title, String message) {

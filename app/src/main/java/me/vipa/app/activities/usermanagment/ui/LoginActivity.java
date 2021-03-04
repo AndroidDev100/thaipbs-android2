@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +30,7 @@ import androidx.lifecycle.ViewModelProviders;
 //import com.amazonaws.regions.Regions;
 //import com.amazonaws.services.s3.AmazonS3;
 //import com.amazonaws.services.s3.AmazonS3Client;
+import me.vipa.app.activities.homeactivity.ui.HomeActivity;
 import me.vipa.app.activities.purchase.callBack.EntitlementStatus;
 import me.vipa.app.activities.purchase.planslayer.GetPlansLayer;
 import me.vipa.app.activities.usermanagment.viewmodel.RegistrationLoginViewModel;
@@ -142,11 +144,20 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
     private void callBinding() {
         viewModel = ViewModelProviders.of(LoginActivity.this).get(RegistrationLoginViewModel.class);
         getBinding().toolbar.titleToolbar.setVisibility(View.VISIBLE);
+        getBinding().toolbar.titleSkip.setVisibility(View.VISIBLE);
+        getBinding().toolbar.titleSkip.setVisibility(View.VISIBLE);
+        getBinding().toolbar.titleSkip.setText(getResources().getString(R.string.skip));
         getBinding().toolbar.titleToolbar.setText(getResources().getString(R.string.sign_in));
         getBinding().toolbar.backLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onBackPressed();
+            }
+        });
+        getBinding().toolbar.titleSkip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new ActivityLauncher(LoginActivity.this).homeScreen(LoginActivity.this, HomeActivity.class);
             }
         });
         connectObservors();
@@ -440,6 +451,7 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
     }
 
     public void saveUserDetails(String response, int userID, boolean isManual) {
+        try {
         Data fbLoginData = new Gson().fromJson(response, Data.class);
         Gson gson = new Gson();
         String stringJson = gson.toJson(fbLoginData);
@@ -467,13 +479,19 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
             onBackPressed();
         }
 
+            trackEvent(String.valueOf(fbLoginData.getName()), isManual);
+
+        }catch (Exception e){
+            Log.d("Exception",e.getMessage());
+        }
+
         //new ActivityLauncher(LoginActivity.this).homeScreen(LoginActivity.this, HomeActivity.class);
 
-        try {
-            trackEvent(String.valueOf(fbLoginData.getName()), isManual);
-        } catch (Exception e) {
-
-        }
+//        try {
+//            trackEvent(String.valueOf(fbLoginData.getName()), isManual);
+//        } catch (Exception e) {
+//
+//        }
     }
 
     private void trackEvent(String name, boolean type) {
@@ -514,15 +532,19 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
     }
 
     private boolean validateEmptyPassword() {
+        // String passwordRegex="^(?=.*[!&^%$#@()\\_+-])[A-Za-z0-9\\d!&^%$#@()\\_+-]{6,20}$";
         boolean check = false;
-        if (StringUtils.isNullOrEmptyOrZero(getBinding().etPassword.getText().toString().trim())) {
-            getBinding().errorPassword.setText(getResources().getString(R.string.empty_password));
+        // Pattern mPattern = Pattern.compile(passwordRegex);
+        // Matcher matcher = mPattern.matcher(password.toString());
+        if(!(getBinding().etPassword.length() >=6))
+        {
             getBinding().errorPassword.setVisibility(View.VISIBLE);
-        } else {
-            check = true;
+            getBinding().errorPassword.setText(getResources().getString(R.string.strong_password_required));
+            //  showDialog(SignUpActivity.this.getResources().getString(R.string.error), getResources().getString(R.string.strong_password_required));
+        }else {
             getBinding().errorPassword.setVisibility(View.INVISIBLE);
+            check = true;
         }
-
         return check;
     }
 

@@ -44,71 +44,67 @@
                         android:layout_gravity="center"
                         android:visibility="gone" />
 
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/NontonSize95">
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/NontonSize95">
 
-                        <ImageView
-                            android:id="@+id/itemImage"
-                            errorImage="@{@drawable/placeholder_landscape}"
-                            placeholder="@{@drawable/placeholder_landscape}"
+                    <ImageView
+                        android:id="@+id/itemImage"
+                        errorImage="@{@drawable/placeholder_landscape}"
+                        placeholder="@{@drawable/placeholder_landscape}"
+                        android:layout_width="@dimen/NontonSize168"
+                        android:layout_height="@dimen/NontonSize95"
+                        android:background="@drawable/placeholder_landscape"
+                        android:contentDescription="TODO"
+                        android:scaleType="fitXY" />
+
+                    <LinearLayout
+                        android:id="@+id/llContinueProgress"
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:layout_alignParentBottom="true"
+                        android:layout_height="match_parent"
+                        android:visibility="gone">
+
+
+                        <RelativeLayout
                             android:layout_width="@dimen/NontonSize168"
-                            android:layout_height="@dimen/NontonSize95"
-                            android:background="@drawable/placeholder_landscape"
-                            android:contentDescription="TODO"
-                            android:scaleType="fitXY" />
+                            android:layout_height="@dimen/NontonSize93">
+
+                            <ImageView
+                                android:layout_centerInParent="true"
+                                android:layout_width="@dimen/NontonSize30"
+                                android:layout_height="@dimen/NontonSize30"
+                                android:background="@drawable/play_icon_ios"
+                                android:contentDescription="TODO"
+                                android:scaleType="fitXY" />
 
 
+                        </RelativeLayout>
 
-                        <LinearLayout
-                            android:id="@+id/llContinueProgress"
+
+                        <SeekBar
+                            android:id="@+id/progressBar"
                             android:layout_width="match_parent"
-                            android:orientation="vertical"
+                            android:layout_height="2dp"
                             android:layout_alignParentBottom="true"
-                            android:layout_height="match_parent"
-                            android:visibility="gone">
-
-
-                            <RelativeLayout
-                                android:layout_width="@dimen/NontonSize168"
-                                android:layout_height="@dimen/NontonSize93">
-
-                                <ImageView
-                                    android:layout_centerInParent="true"
-                                    android:layout_width="@dimen/NontonSize30"
-                                    android:layout_height="@dimen/NontonSize30"
-                                    android:background="@drawable/play_icon_ios"
-                                    android:contentDescription="TODO"
-                                    android:scaleType="fitXY" />
-
-
-                            </RelativeLayout>
-
-
-                            <SeekBar
-                                android:id="@+id/progressBar"
-                                android:layout_width="match_parent"
-                                android:layout_height="2dp"
-                                android:layout_alignParentBottom="true"
-                                android:layout_gravity="bottom"
-                                android:background="@color/bottom_navigation_bg_dark"
-                                android:minHeight="0dp"
-                                android:paddingStart="0dp"
-                                android:paddingEnd="0dp"
-                                android:paddingBottom="0dp"
-                                android:progressDrawable="@drawable/progress_background"
-                                android:thumb="@color/gray"
-                                android:thumbTint="@android:color/transparent"
-                                tools:targetApi="lollipop"
-                                android:progress="@{progress}"
-                                android:elevation="10dp"/>
-                        </LinearLayout>
-
+                            android:layout_gravity="bottom"
+                            android:background="@color/bottom_navigation_bg_dark"
+                            android:minHeight="0dp"
+                            android:paddingStart="0dp"
+                            android:paddingEnd="0dp"
+                            android:paddingBottom="0dp"
+                            android:progressDrawable="@drawable/progress_background"
+                            android:thumb="@color/gray"
+                            android:thumbTint="@android:color/transparent"
+                            tools:targetApi="lollipop"
+                            android:progress="@{progress}"
+                            android:elevation="10dp"/>
+                    </LinearLayout>
                         <FrameLayout
                             android:id="@+id/flNew"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="-2dp"
                             android:layout_alignParentBottom="true"
                             android:layout_alignParentRight="true"
                             android:visibility="gone">
@@ -119,13 +115,10 @@
                                 android:src="@{playlistItem.newSeriesImageDrawable, default=@drawable/series_icon_120}"
                                 tools:ignore="ContentDescription"/>
                         </FrameLayout>
-
                         <FrameLayout
                             android:id="@+id/flNewMovie"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="-2dp"
-                            android:layout_marginTop="@dimen/NontonSize55"
                             android:layout_alignParentBottom="true"
                             android:layout_alignParentRight="true"
                             android:visibility="gone">
@@ -138,10 +131,8 @@
                         </FrameLayout>
 
 
-                    </RelativeLayout>
 
-
-
+                </RelativeLayout>
 
                     <RelativeLayout
                         android:id="@+id/titleLayout"
@@ -180,7 +171,7 @@
                                 android:fontFamily="@font/sukhumvittadmai_normal"
                                 android:paddingLeft="@dimen/_3sdp"
                                 android:paddingBottom="@dimen/_2sdp"
-                                android:textColor="?attr/watchlist_item_title_color"
+                                android:textColor="?attr/list_circle_item_description"
                                 android:textSize="@dimen/_9sdp" />
 
 
@@ -188,56 +179,55 @@
 
                     </RelativeLayout>
 
-                    <FrameLayout
-                        android:id="@+id/flExclusive"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginStart="-2dp"
-                        android:layout_marginTop="-2dp"
-                        android:visibility="gone">
-
-                        <ImageView
-                            android:layout_width="@dimen/vip_badge_width"
-                            android:layout_height="@dimen/vip_badge_height"
-                            android:layout_gravity="center"
-                            android:src="@{playlistItem.vipImageDrawable, default=@drawable/vip_icon_120}"
-                            tools:ignore="ContentDescription" />
-                    </FrameLayout>
-
-                    <FrameLayout
-                        android:id="@+id/flEpisode"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_gravity="end"
-                        android:layout_marginTop="-1dp"
-                        android:layout_marginEnd="-2dp"
-                        android:visibility="gone">
-
-                        <ImageView
-                            android:layout_width="@dimen/episode_badge_width"
-                            android:layout_height="@dimen/episode_badge_height"
-                            android:layout_gravity="center"
-                            android:src="@{playlistItem.episodeImageDrawable, default=@drawable/episode_icon_120}"
-                            tools:ignore="ContentDescription"/>
-                    </FrameLayout>
-
-
-
-
+                <FrameLayout
+                    android:id="@+id/flExclusive"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="-2dp"
+                    android:layout_marginTop="-2dp"
+                    android:visibility="gone">
 
                     <ImageView
-                        android:id="@+id/ivContinuePlay"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/vip_badge_width"
+                        android:layout_height="@dimen/vip_badge_height"
                         android:layout_gravity="center"
-                        android:contentDescription="continue_watching_play_icon"
-                        android:visibility="gone"
-                        app:srcCompat="@drawable/play_icon_rounded_blue" />
+                        android:src="@{playlistItem.vipImageDrawable, default=@drawable/vip_icon_120}"
+                        tools:ignore="ContentDescription" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/flEpisode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="-1dp"
+                    android:layout_marginEnd="-2dp"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="@dimen/episode_badge_width"
+                        android:layout_height="@dimen/episode_badge_height"
+                        android:layout_gravity="center"
+                        android:src="@{playlistItem.episodeImageDrawable, default=@drawable/episode_icon_120}"
+                        tools:ignore="ContentDescription"/>
+                </FrameLayout>
 
 
-                    <!--<SeekBar-->
+
+
+                <ImageView
+                    android:id="@+id/ivContinuePlay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:contentDescription="continue_watching_play_icon"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/play_icon_rounded_blue" />
+
+
+                <!--<SeekBar-->
                     <!--android:id="@+id/progressBar"-->
                     <!--android:layout_width="match_parent"-->
                     <!--android:layout_height="2dp"-->
@@ -256,14 +246,14 @@
                     <!--android:visibility="gone"-->
                     <!--android:elevation="10dp"/>-->
 
-                </androidx.cardview.widget.CardView>
-
-            </LinearLayout>
-
-
-
+            </androidx.cardview.widget.CardView>
 
         </LinearLayout>
+
+
+
+
+    </LinearLayout>
 
     </me.vipa.app.utils.thirdparty.RippleView>
 

@@ -114,10 +114,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/sukhumvittadmai_normal"
                     android:text="@string/cancel"
                     android:textColor="?attr/cancel_text_color"
-                    android:textSize="@dimen/NontonSize14" />
+                    android:textSize="@dimen/_16sdp" />
             </LinearLayout>
         </RelativeLayout>
 

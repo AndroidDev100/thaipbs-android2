@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -295,7 +296,7 @@ public class CommonAdapterNew extends RecyclerView.Adapter<RecyclerView.ViewHold
             headingRailsBinding.headingTitle.bringToFront();
 
             if (item.isContinueWatching()){
-                headingRailsBinding.headingTitle.setText((String) item.getScreenWidget().getName()+" "+"for"+" "+ KsPreferenceKeys.getInstance().getAppPrefUserName());
+                headingRailsBinding.headingTitle.setText((String) item.getScreenWidget().getName()+" "+mContext.getResources().getString(R.string.For)+" "+ KsPreferenceKeys.getInstance().getAppPrefUserName());
             }else {
                 headingRailsBinding.headingTitle.setText((String) item.getScreenWidget().getName());
             }

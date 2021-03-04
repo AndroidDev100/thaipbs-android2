@@ -16,10 +16,12 @@ import com.brightcove.player.offline.MediaDownloadable
 import com.mmtv.utils.helpers.downloads.DownloadHelper
 import me.vipa.app.R
 import me.vipa.app.databinding.ListDownloadItemBinding
+import me.vipa.app.utils.commonMethods.AppCommonMethod
 import me.vipa.app.utils.cropImage.helpers.Logger
 import me.vipa.app.utils.helpers.downloads.DownloadedVideoActivity
 import me.vipa.app.utils.helpers.downloads.VideoListListener
 import me.vipa.app.utils.helpers.downloads.room.DownloadedEpisodes
+import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys
 import java.io.Serializable
 import java.text.DecimalFormat
 import java.util.HashMap
@@ -37,6 +39,15 @@ class DownloadedEpisodesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>,
                     notifyItemRemoved(position)
                     notifyItemRangeChanged(position, downloadedVideos.size)
                     buildIndexMap()
+                    if (downloadedVideos.size>0){
+
+                    }else{
+                        AppCommonMethod.isDownloadDeleted=true
+                        if (index>-1){
+                            AppCommonMethod.isDownloadIndex=index
+                        }
+                        context!!.onBackPressed()
+                    }
                 }
                 R.id.my_Download -> {
 
@@ -58,8 +69,21 @@ class DownloadedEpisodesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>,
                     notifyItemRemoved(position)
                     notifyItemRangeChanged(position, downloadedVideos.size)
                     buildIndexMap()
+                    if (downloadedVideos.size>0){
+
+                    }else{
+                        AppCommonMethod.isDownloadDeleted=true
+                        if (index>-1){
+                            AppCommonMethod.isDownloadIndex=index
+                        }
+                        context!!.onBackPressed()
+                    }
                 }
-                R.id.pause_download -> downloadHelper.pauseVideo(video.videoId)
+                R.id.pause_download -> {
+                    downloadHelper.pauseVideo(video.videoId)
+                    buildIndexMap()
+                }
+
             }
             false
         }
@@ -75,9 +99,11 @@ class DownloadedEpisodesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>,
     private val indexMap = HashMap<String, Int>()
     private val downloadHelper: DownloadHelper
     private var downloadStatus: Int=0
+    private var index: Int=-1
 
-    constructor(activity: Activity, downloadedEpisodes: ArrayList<DownloadedEpisodes>) {
+    constructor(activity: Activity, downloadedEpisodes: ArrayList<DownloadedEpisodes>,inde : Int) {
         context = activity
+        index=inde
         downloadHelper = DownloadHelper(activity, this)
         downloadedEpisodes.forEachIndexed { index, downloadedEpisode ->
             downloadHelper.findOfflineVideoById(downloadedEpisode.videoId, object : OfflineCallback<Video> {
@@ -162,6 +188,7 @@ class DownloadedEpisodesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>,
             showPauseCancelPopUpMenu(v!!, currentVideoItem, position)
         }
         viewHolder.itemBinding.pauseDownload.setOnClickListener {
+            viewHolder.itemBinding.downloadStatus = me.vipa.app.enums.DownloadStatus.REQUESTED
             downloadHelper.resumeDownload(currentVideoItem.videoId)
         }
         viewHolder.itemBinding.root.setOnClickListener {
@@ -223,11 +250,19 @@ class DownloadedEpisodesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>,
                             DownloadStatus.STATUS_DOWNLOADING -> {
                                 viewHolder.itemBinding.downloadStatus = me.vipa.app.enums.DownloadStatus.DOWNLOADING
                                 viewHolder.itemBinding.videoDownloading.progress = p0.progress.toFloat()
-                                viewHolder.itemBinding.descriptionTxt.text = "Downloading"
+                                viewHolder.itemBinding.descriptionTxt.text = context.getString(R.string.Downloading)
                             }
                             DownloadStatus.STATUS_PAUSED -> {
                                 viewHolder.itemBinding.downloadStatus = me.vipa.app.enums.DownloadStatus.PAUSE
-                                viewHolder.itemBinding.descriptionTxt.text = "Paused"
+                                viewHolder.itemBinding.descriptionTxt.text = context.getString(R.string.Paused)
+                            }
+                            DownloadStatus.STATUS_PENDING -> {
+                                viewHolder.itemBinding.downloadStatus = me.vipa.app.enums.DownloadStatus.DOWNLOADING
+                                viewHolder.itemBinding.descriptionTxt.text = context.getString(R.string.Downloading)
+                            }
+                            DownloadStatus.PAUSED_WAITING_TO_RETRY -> {
+                                viewHolder.itemBinding.downloadStatus = me.vipa.app.enums.DownloadStatus.DOWNLOADING
+                                viewHolder.itemBinding.descriptionTxt.text = context.getString(R.string.Downloading)
                             }
                             DownloadStatus.STATUS_NOT_QUEUED->{
                                 downloadedVideos.remove(currentVideoItem)
@@ -286,6 +321,7 @@ class DownloadedEpisodesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>,
     }
 
     override fun onDownloadCompleted(p0: Video, p1: DownloadStatus) {
+        notifyVideoChanged(p0.id, p1)
     }
 
     override fun onDownloadProgress(p0: Video, p1: DownloadStatus) {

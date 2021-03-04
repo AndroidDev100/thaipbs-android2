@@ -37,8 +37,8 @@
     <dimen name="descriptionRowItem">13sp</dimen>
     <dimen name="headingSearch">12sp</dimen>
 
-    <dimen name="railTitle">21sp</dimen>
-    <dimen name="railMore">17sp</dimen>
+    <dimen name="railTitle">19sp</dimen>
+    <dimen name="railMore">15sp</dimen>
 
 
     <dimen name="headingToolbar">18sp</dimen>

@@ -46,8 +46,21 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
                     downloadHelper.deleteVideo(downloadedVideo.videoId)
                     downloadedVideos.remove(downloadedVideo)
                     notifyItemRemoved(position)
+                    Logger.e("VideoSize", downloadedVideos.size.toString())
                     notifyItemRangeChanged(position, downloadedVideos.size)
                     buildIndexMap()
+                    if (downloadedVideos.size>0){
+
+                    }else{
+                        noDataCallBac!!.dataNotAvailable()
+                    }
+                    /*if (downloadedVideos.size>0){
+
+                    }else{
+                        if (noDataCallBac!=null){
+                            noDataCallBac!!.dataNotAvailable()
+                        }
+                    }*/
                 }
             }
             false
@@ -67,8 +80,16 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
                     notifyItemRemoved(position)
                     notifyItemRangeChanged(position, downloadedVideos.size)
                     buildIndexMap()
+                    if (downloadedVideos.size>0){
+
+                    }else{
+                        noDataCallBac!!.dataNotAvailable()
+                    }
                 }
-                R.id.pause_download -> downloadHelper.pauseVideo(video.videoId)
+                R.id.pause_download -> {
+                    downloadHelper.pauseVideo(video.videoId)
+                    buildIndexMap()
+                }
             }
             false
         }
@@ -83,16 +104,27 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
     private val downloadedVideos = ArrayList<DownloadedVideo>()
     private val indexMap = HashMap<String, Int>()
     private val downloadHelper: DownloadHelper
+    var noDataCallBac: NoDataCallBack?=null
 
-    constructor(activity: Activity, downloadsList: DownloadModel) {
+    constructor(activity: Activity, downloadsList: DownloadModel,noDataCallBack: NoDataCallBack) {
         context = activity
         downloadHelper = DownloadHelper(activity, this)
+        noDataCallBac=noDataCallBack
         downloadsList.downloadVideos.forEachIndexed { index, downloadedVideo ->
             val b = downloadedVideo.downloadType == MediaTypeConstants.getInstance().series || downloadedVideo.downloadType ==  MediaTypeConstants.getInstance().episode
+            Logger.e("ValueOfB", b.toString())
             if (b) {
                 if (Integer.parseInt(downloadedVideo.episodeCount) != 0){
                     downloadedVideos.add(downloadedVideo)
                 }else{
+                    Logger.e("ValueOfB", downloadedVideo.episodeCount)
+                    if (Integer.parseInt(downloadedVideo.episodeCount) != 0){
+
+                    }else{
+                        downloadHelper.deleteVideo(downloadedVideo.videoId)
+                      //  noDataCallBac!!.dataNotAvailable();
+                    }
+                   //
                     //fetchVideos(downloadedVideo);
 /*
                     downloadHelper.findOfflineVideoById(downloadedVideo.videoId, object : OfflineCallback<Video> {
@@ -134,30 +166,39 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
                 downloadHelper.findOfflineVideoById(downloadedVideo.videoId, object : OfflineCallback<Video> {
                     override fun onSuccess(video: Video) {
                         Logger.e("Video Found", "true")
-                        if (!video.isClearContent) {
-                            if (video.licenseExpiryDate!!.time >= System.currentTimeMillis()) {
-                                Logger.e("License", "Expiry" + video.licenseExpiryDate)
+                        val status=downloadHelper.getCatalog().getVideoDownloadStatus(downloadedVideo.videoId)
+                        Logger.e("Video Found", status.code.toString())
+                        /*if (status.code== DownloadStatus.ERROR_NONE || status.code== DownloadStatus.STATUS_NOT_QUEUED){
+                            downloadHelper.deleteVideo(video)
+                       }else{*/
+                       // downloadHelper.deleteVideo(video)
+                            if (!video.isClearContent) {
+                                if (video.licenseExpiryDate!!.time >= System.currentTimeMillis()) {
+                                    Logger.e("License", "Expiry" + video.licenseExpiryDate)
+                                    downloadedVideos.add(downloadedVideo)
+                                    if (index == downloadsList.downloadVideos.size - 1) {
+                                        buildIndexMap()
+                                    }
+                                } else {
+                                    downloadHelper.deleteVideo(video)
+                                    if (index == downloadsList.downloadVideos.size - 1) {
+                                        buildIndexMap()
+                                    }
+                                }
+                            } else {
                                 downloadedVideos.add(downloadedVideo)
                                 if (index == downloadsList.downloadVideos.size - 1) {
                                     buildIndexMap()
-                                }
-                            } else {
-                                downloadHelper.deleteVideo(video)
-                                if (index == downloadsList.downloadVideos.size - 1) {
+                                }else{
                                     buildIndexMap()
                                 }
                             }
-                        } else {
-                            downloadedVideos.add(downloadedVideo)
-                            if (index == downloadsList.downloadVideos.size - 1) {
-                                buildIndexMap()
-                            }else{
-                                buildIndexMap()
-                            }
+
                         }
-                    }
+                   // }
 
                     override fun onFailure(p0: Throwable?) {
+                        Logger.e("License", "failure" + video.licenseExpiryDate)
                         downloadHelper.deleteVideo(video)
                         if (index == downloadsList.downloadVideos.size - 1) {
                             buildIndexMap()
@@ -168,6 +209,7 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
 
 
         }
+
     }
 
     private fun fetchVideos(downloadedVideo: DownloadedVideo) {
@@ -194,6 +236,8 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
     }
 
     override fun getItemCount(): Int {
+       // Logger.e("ValueOfB", downloadedVideos.size.toString())
+
         return downloadedVideos.size
     }
 
@@ -234,6 +278,7 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
         viewHolder.itemBinding.videoDownloaded.setOnClickListener { v -> deleteVideo(v!!, currentVideoItem, position) }
         viewHolder.itemBinding.videoDownloading.setOnClickListener { v ->
             if (currentVideoItem.downloadStatus==DownloadStatus.STATUS_PAUSED){
+                viewHolder.itemBinding.downloadStatus = me.vipa.app.enums.DownloadStatus.REQUESTED
                 downloadHelper.resumeDownload(currentVideoItem.videoId)
             }else{
                 showPauseCancelPopUpMenu(v!!, currentVideoItem, position)
@@ -247,7 +292,7 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
             if (currentVideoItem.downloadType != MediaTypeConstants.getInstance().series) {
                 val downloadedVideoIntent = Intent(context, DownloadedVideoActivity::class.java)
                 val status=downloadHelper.getCatalog().getVideoDownloadStatus(currentVideoItem.videoId)
-
+                Logger.e("isParcelable", status.code.toString())
                 downloadHelper.findOfflineVideoById(currentVideoItem.videoId, object : OfflineCallback<Video> {
                     override fun onSuccess(p0: Video?) {
                         if (status.code== DownloadStatus.STATUS_COMPLETE){
@@ -266,6 +311,7 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
                 downloadedEpisodesIntent.putExtra("SeriesId", currentVideoItem.seriesId)
                 downloadedEpisodesIntent.putExtra("SeriesName", currentVideoItem.seriesName)
                 downloadedEpisodesIntent.putExtra("SeasonNumber", currentVideoItem.seasonNumber)
+                downloadedEpisodesIntent.putExtra("index", position)
                 context.startActivity(downloadedEpisodesIntent)
             }
         }
@@ -277,9 +323,9 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
                     override fun onSuccess(p0: DownloadStatus?) {
                         if (currentVideoItem.downloadType == MediaTypeConstants.getInstance().series) {
                             if (currentVideoItem.episodeCount.toInt() == 1)
-                                viewHolder.itemBinding.descriptionTxt.text = context.getString(R.string.season) + currentVideoItem.seasonNumber + " | " + currentVideoItem.episodeCount + context.getString(R.string.episode)
+                                viewHolder.itemBinding.descriptionTxt.text = context.getString(R.string.season) +" "+ currentVideoItem.seasonNumber + " | " + currentVideoItem.episodeCount +" "+ context.getString(R.string.episode)
                             else
-                                viewHolder.itemBinding.descriptionTxt.text = context.getString(R.string.season) + currentVideoItem.seasonNumber + " | " + currentVideoItem.episodeCount + context.getString(R.string.episodes)
+                                viewHolder.itemBinding.descriptionTxt.text = context.getString(R.string.season) +" "+ currentVideoItem.seasonNumber + " | " + currentVideoItem.episodeCount +" "+ context.getString(R.string.episodes)
                         } else {
                             when (p0?.code) {
                                 DownloadStatus.STATUS_COMPLETE -> {
@@ -289,11 +335,19 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
                                 DownloadStatus.STATUS_DOWNLOADING -> {
                                     viewHolder.itemBinding.downloadStatus = me.vipa.app.enums.DownloadStatus.DOWNLOADING
                                     viewHolder.itemBinding.videoDownloading.progress = p0.progress.toFloat()
-                                    viewHolder.itemBinding.descriptionTxt.text = "Downloading"
+                                    viewHolder.itemBinding.descriptionTxt.text = context.getString(R.string.Downloading)
+                                }
+                                DownloadStatus.STATUS_PENDING -> {
+                                    viewHolder.itemBinding.downloadStatus = me.vipa.app.enums.DownloadStatus.DOWNLOADING
+                                    viewHolder.itemBinding.descriptionTxt.text = context.getString(R.string.Downloading)
+                                }
+                                DownloadStatus.PAUSED_WAITING_TO_RETRY -> {
+                                    viewHolder.itemBinding.downloadStatus = me.vipa.app.enums.DownloadStatus.DOWNLOADING
+                                    viewHolder.itemBinding.descriptionTxt.text = context.getString(R.string.Downloading)
                                 }
                                 DownloadStatus.STATUS_PAUSED -> {
                                     viewHolder.itemBinding.downloadStatus = me.vipa.app.enums.DownloadStatus.PAUSE
-                                    viewHolder.itemBinding.descriptionTxt.text = "Paused"
+                                    viewHolder.itemBinding.descriptionTxt.text = context.getString(R.string.Paused)
                                 }
                             }
                         }
@@ -335,9 +389,11 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
     }
 
     override fun onDownloadFailed(p0: Video, p1: DownloadStatus) {
+        Logger.e(TAG, "onDownloadFailed-->>f" + p0.id)
     }
 
     override fun onDownloadRequested(p0: Video) {
+        Logger.e(TAG, "onDownloadFailed-->>r" + p0.id)
     }
 
     override fun onDownloadCanceled(p0: Video) {
@@ -345,7 +401,7 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
     }
 
     override fun onDownloadDeleted(p0: Video) {
-
+        Logger.e(TAG, "deleteVideoDownload1")
     }
 
     override fun onDownloadCompleted(p0: Video, p1: DownloadStatus) {
@@ -370,6 +426,7 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
     }
 
     override fun deleteVideo(video: Video) {
+        Logger.e(TAG, "deleteVideoDownload")
     }
 
     override fun alreadyDownloaded(video: Video) {

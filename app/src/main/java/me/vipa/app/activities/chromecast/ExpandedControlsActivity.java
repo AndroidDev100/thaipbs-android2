@@ -46,11 +46,13 @@ public class ExpandedControlsActivity extends DefaultExpandedControllerActivity 
         if (asset != null)
             ((TextView) findViewById(R.id.asset_title)).setText(asset.getTitle());
         findViewById(R.id.blurred_background_image_view).setVisibility(View.GONE);
-        Glide.with(this)
-                .asBitmap()
-                .load(asset.getPosterURL())
-                .apply(AppCommonMethod.castOptions)
-                .into((ImageView) findViewById(R.id.background_place_holder_image_view));
+        if (asset.getPosterURL()!=null && asset.getPosterURL()!="") {
+            Glide.with(this)
+                    .asBitmap()
+                    .load(asset.getPosterURL())
+                    .apply(AppCommonMethod.castOptions)
+                    .into((ImageView) findViewById(R.id.background_place_holder_image_view));
+        }
     }
 
     @Override

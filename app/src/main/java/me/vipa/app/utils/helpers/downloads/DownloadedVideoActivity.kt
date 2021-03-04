@@ -41,7 +41,7 @@ class DownloadedVideoActivity : BaseBindingActivity<ActivityDownloadedVideoBindi
     }
 
     override fun onPlayerInProgress() {
-        TODO("Not yet implemented")
+       // TODO("Not yet implemented")
     }
 
 
@@ -59,6 +59,7 @@ class DownloadedVideoActivity : BaseBindingActivity<ActivityDownloadedVideoBindi
         var playerFragment = BrightcovePlayerFragment()
         val args = Bundle()
         args.putBoolean("isOffline", true)
+        args.putInt("from", 1)
         args.putParcelable(AppConstants.BUNDLE_VIDEO_ID_BRIGHTCOVE, intentData as Parcelable)
         playerFragment.arguments = args
         transaction.add(R.id.playerFragmentFrame, playerFragment).commit()

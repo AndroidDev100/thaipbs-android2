@@ -134,7 +134,7 @@
                 android:layout_margin="@dimen/NontonSize8"
                 android:visibility='@{downloadStatus==DownloadStatus.DOWNLOADING ? View.VISIBLE : View.GONE, default="gone"}'
                 app:background_progressbar_color="@android:color/darker_gray"
-                app:progressbar_color="@color/blue"
+                app:progressbar_color="@color/description_title_yellow"
                 />
             <ImageView
                 android:layout_width="@dimen/watchListWidth"
@@ -154,6 +154,15 @@
                 android:visibility='@{downloadStatus==DownloadStatus.PAUSE ? View.VISIBLE : View.GONE, default="gone"}'
                 app:srcCompat="?attr/pause_download"
                 android:id="@+id/pause_download"/>
+
+            <ProgressBar
+                android:id="@+id/loading_download"
+                android:layout_width="@dimen/watch_ListWidth"
+                android:layout_height="@dimen/watch_ListWidth"
+                android:layout_margin="@dimen/NontonSize8"
+                android:visibility='@{downloadStatus==DownloadStatus.REQUESTED ? View.VISIBLE : View.GONE, default="gone"}' />
+
+
         </FrameLayout>
 
         <View

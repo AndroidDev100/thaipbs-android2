@@ -51,6 +51,6 @@
             android:padding="8dp"
             android:text="@string/cancel"
             android:layout_below="@+id/recycleview"
-            android:textColor="#009FFF" />
+            android:textColor="#f68b1f" />
     </RelativeLayout>
 </layout>

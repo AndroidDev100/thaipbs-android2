@@ -323,6 +323,11 @@ android:textColorHint="?attr/app_edit_text_color"
                                 android:textColor="@color/inspection_color"
                                 android:textSize="@dimen/TextSize12"
                                 android:visibility="invisible" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="left"
+                            android:layout_gravity="left">
                             <CheckBox
                                 android:id="@+id/termsText"
 
@@ -330,14 +335,14 @@ android:textColorHint="?attr/app_edit_text_color"
                                 android:layout_height="wrap_content"
                                 android:buttonTint="@color/white"
                                 android:layout_gravity="center"
-                                android:layout_marginLeft="@dimen/NontonSize10"
                                 android:layout_marginRight="@dimen/NontonSize10"
                                 android:checked="false"
                                 android:textColor="?attr/app_edit_text_color"
                                 android:fontFamily="@font/sukhumvittadmai_medium"
-                                android:text="I would like to recieve updates from VIPA in future."
+                                android:text="@string/recieve_updates"
                                 android:textSize="@dimen/font_small"
                                 />
+                        </LinearLayout>
                             <LinearLayout
                                 android:id="@+id/llSignUp"
                                 android:layout_width="match_parent"

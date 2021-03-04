@@ -8,10 +8,12 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import me.vipa.app.utils.helpers.downloads.room.DownloadModel;
 import me.vipa.enums.LandingPageType;
 import me.vipa.enums.Layouts;
 import me.vipa.enums.ListingLayoutType;
@@ -48,6 +50,8 @@ import me.vipa.app.utils.helpers.RecyclerAnimator;
 
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
 import com.google.gson.Gson;
+import com.mmtv.utils.helpers.downloads.DownloadHelper;
+
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 
 import java.util.ArrayList;
@@ -159,6 +163,23 @@ public class TabsBaseFragment<T extends HomeBaseViewModel> extends BaseBindingFr
             loadDataFromModel();
         } else {
             noConnectionLayout();
+            try {
+                if (getActivity()!=null){
+                    DownloadHelper downloadHelper = new DownloadHelper(getActivity());
+                    downloadHelper.getAllVideosFromDatabase().observe(getActivity(), new Observer<DownloadModel>() {
+                        @Override
+                        public void onChanged(DownloadModel downloadModel) {
+                            if (downloadModel.getDownloadVideos().size()>0){
+                                getBinding().connection.btnMyDownloads.setVisibility(View.VISIBLE);
+                            }else {
+                                getBinding().connection.btnMyDownloads.setVisibility(View.GONE);
+                            }
+                        }
+                    });
+                }
+            }catch (Exception ignored){
+                getBinding().connection.btnMyDownloads.setVisibility(View.GONE);
+            }
         }
     }
 

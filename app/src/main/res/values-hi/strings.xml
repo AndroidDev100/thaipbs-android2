@@ -3,6 +3,7 @@
     <string name="no_connection">इंटरनेट नहीं है</string>
     <string name="check_connection_text">Check your connection.</string>
     <string name="change_password">अपना पासवर्ड बदलें</string>
+    <string name="update_pref">Update Preferences</string>
     <string name="checkout">Checkout</string>
     <string name="email">ईमेल</string>
     <string name="password">पासवर्ड</string>
@@ -10,6 +11,7 @@
     <string name="by_email">By Email</string>
     <string name="by_line">By Line</string>
     <string name="guest_user">Guest User</string>
+    <string name="guest_user1">Guest User</string>
     <string name="no_internet">No internet connection found.</string>
     <string name="wake_up_connection" >Wake up your connection !</string>
     <string name="check_connection">Check Connection</string>
@@ -19,7 +21,7 @@
     <string name="enter_email_address">Enter Email Address</string>
     <string name="create_password">Create Password minimum 6 characters</string>
     <string name="mobile_number">Mobile Number</string>
-    <string name="mobile_error">Please enter a 11 digit phone number and must starts with 66</string>
+    <string name="mobile_error">Please enter a valid phone number and must starts with 66 or 0</string>
     <string name="address">Address</string>
     <string name="dob">Date of Birth</string>
     <string name="signup"><b><u>साइन अप करें</u></b></string>
@@ -140,9 +142,8 @@
 
     <string name="something_went_wrong">Something went wrong</string>
     <string name="image_upload_fail">Image upload failed</string>
-    <string name="male">Male</string>
-    <string name="female">Female</string>
-    <string name="search_mv_hub">खोजें VIPA(न्यूनतम 3 वर्ण)</string>
+
+    <string name="search_mv_hub">खोजें VIPA</string>
     <string name="show_all_results">Show All</string>
     <string name="series">सीरीज</string>
     <string name="article">Article</string>
@@ -271,6 +272,7 @@
     <string name="term_condition">नियम और शर्तें</string>
     <string name="my_watchlist">आपकी वॉचलिस्‍ट</string>
     <string name="my_history">देखे हुए वीडियो</string>
+    <string name="my_download">My Downloads</string>
     <string name="membership_plan">सदस्यता और योजनाएँ</string>
     <string name="privacy_policy">गोपनीयता नीति</string>
     <string name="sign_out">लॉग आउट</string>
@@ -288,7 +290,7 @@
     <string name="language_thai">Thai</string>
     <string name="language_indonesia">bahasa Indonesia</string>
     <string name="download">Download</string>
-    <string name="no_downloads">No Downloaded Videos Found</string>
+    <string name="no_downloads">Films and TV programmes that you download appear here.</string>
     <string name="cancel_download">Cancel Download</string>
     <string name="pause_download">Pause Download</string>
     <string name="delete_download">Delete Download</string>
@@ -355,5 +357,22 @@
     <string name="select_genre">Select genre as per your interest for best result you can select multiple choices of interest (max 5)</string>
     <string name="finish">Finish</string>
     <string name="date_difference">You must be 13 years old and above.</string>
+    <string name="recieve_updates">I would like to recieve updates from VIPA in future.</string>
+    <string name="gender">GENDER</string>
+    <string name="male">MALE</string>
+    <string name="female">FEMALE</string>
+    <string name="others">OTHERS</string>
 
+    <string name="waiting_for_wifi">waiting for wifi</string>
+    <string name="download_will_begin">Your download will begin once you are come on WiFi. Or you can change the setting below:</string>
+    <string name="download_over_wifi">Download over WiFi</string>
+    <string name="you_can_change">*You can chnage this from settings</string>
+
+    <string name="Downloading">Downloading</string>
+    <string name="Paused">Paused</string>
+
+    <string name="content_prefrences">Content Preferences</string>
+
+    <string name="minutes">minutes</string>
+    <string name="For">For</string>
 </resources>

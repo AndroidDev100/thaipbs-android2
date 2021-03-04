@@ -1,6 +1,7 @@
 package me.vipa.app.activities.series.adapter;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,7 +18,10 @@ import com.brightcove.player.model.Video;
 import com.brightcove.player.network.DownloadStatus;
 import com.brightcove.player.offline.MediaDownloadable;
 import com.mmtv.utils.helpers.downloads.DownloadHelper;
+
+import me.vipa.app.SDKConfig;
 import me.vipa.app.utils.cropImage.helpers.Logger;
+import me.vipa.app.utils.helpers.downloads.MediaTypeCheck;
 import me.vipa.app.utils.helpers.downloads.OnDownloadClickInteraction;
 import me.vipa.app.utils.helpers.downloads.VideoListListener;
 import me.vipa.app.R;
@@ -107,6 +111,7 @@ public class SeasonAdapter extends RecyclerView.Adapter<SeasonAdapter.SeasonView
         return new SeasonAdapter.SeasonViewHolder(itemBinding);
     }
 
+    RowEpisodeListBinding clickBinding;
     @Override
     public void onBindViewHolder(@NonNull SeasonAdapter.SeasonViewHolder holder, int position) {
         if (videoItemBeans.get(position) != null) {
@@ -116,12 +121,18 @@ public class SeasonAdapter extends RecyclerView.Adapter<SeasonAdapter.SeasonView
             downloadHelper.findVideo(videoItemBeans.get(position).getBrightcoveVideoId(), new VideoListener() {
                 @Override
                 public void onVideo(Video video) {
-                    if (video.isOfflinePlaybackAllowed()) {
-                        holder.itemBinding.setIsDownloadable(false);
-                        updateDownloadStatus(holder, position);
-                    } else {
-                        holder.itemBinding.setIsDownloadable(false);
+                    if (SDKConfig.getInstance().isDownloadEnable()){
+                        if (MediaTypeCheck.isMediaTypeSupported(videoItemBeans.get(position).getAssetType())){
+                            if (video.isOfflinePlaybackAllowed()) {
+                                holder.itemBinding.setIsDownloadable(false);
+                                //updateDownloadStatus(holder, position);
+                            } else {
+                                holder.itemBinding.setIsDownloadable(false);
+                            }
+                        }
+
                     }
+
                 }
             });
         }
@@ -142,7 +153,7 @@ public class SeasonAdapter extends RecyclerView.Adapter<SeasonAdapter.SeasonView
 
             double d = (double) videoItemBeans.get(position).getDuration();
             long x = (long) d; // x = 1234
-            holder.itemBinding.duration.setText(AppCommonMethod.calculateTimein_hh_mm_format((x)));
+            holder.itemBinding.duration.setText(AppCommonMethod.calculateTimein_hh_mm_format((x))+" "+context.getResources().getString(R.string.minutes));
         } else {
             holder.itemBinding.duration.setText("00:00");
         }
@@ -173,6 +184,8 @@ public class SeasonAdapter extends RecyclerView.Adapter<SeasonAdapter.SeasonView
         holder.itemBinding.downloadVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                clickBinding=holder.itemBinding;
+               // Log.w("itemCliked",videoItemBeans.get(position).getAssetType()+"   "+videoItemBeans.get(position).getSeasonNumber());
                 onDownloadClickInteraction.onDownloadClicked(videoItemBeans.get(position).getBrightcoveVideoId(), videoItemBeans.get(position).getEpisodeNo(), this);
             }
         });
@@ -193,10 +206,17 @@ public class SeasonAdapter extends RecyclerView.Adapter<SeasonAdapter.SeasonView
         holder.itemBinding.pauseDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                holder.itemBinding.setDownloadStatus(me.vipa.app.enums.DownloadStatus.REQUESTED);
                 onDownloadClickInteraction.onPauseClicked(videoItemBeans.get(position).getBrightcoveVideoId(), this);
 
             }
         });
+    }
+
+    public void holdHolder() {
+        if (clickBinding!=null){
+            clickBinding.setDownloadStatus(me.vipa.app.enums.DownloadStatus.REQUESTED);
+        }
     }
 
     private void deleteDownloadedVideo(View view, EnveuVideoItemBean enveuVideoItemBean, int position) {

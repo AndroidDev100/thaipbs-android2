@@ -222,15 +222,21 @@ public class APIServiceLayer {
 
     private void parseResponseAsRailCommonData(Response<EnveuCommonResponse> response) {
         if (response.body() != null && response.body().getData() != null) {
-            RailCommonData railCommonData = new RailCommonData(response.body().getData());
-            railCommonData.setStatus(true);
-            try {
-                railCommonData.setTotalCount(response.body().getData().getTotalElements());
-                railCommonData.setPageTotal(response.body().getData().getTotalPages());
-            } catch (Exception ignore) {
+            if (response.body() != null && response.body().getData().getPageNumber()==0 && response.body() != null && response.body().getData().getTotalElements()==0){
+                ApiErrorModel errorModel = new ApiErrorModel(500, "");
+                callBack.onError(errorModel);
+            }else {
+                RailCommonData railCommonData = new RailCommonData(response.body().getData());
+                railCommonData.setStatus(true);
+                try {
+                    railCommonData.setTotalCount(response.body().getData().getTotalElements());
+                    railCommonData.setPageTotal(response.body().getData().getTotalPages());
+                } catch (Exception ignore) {
 
+                }
+                callBack.onSuccess(railCommonData);
             }
-            callBack.onSuccess(railCommonData);
+
         } else {
             ApiErrorModel errorModel = new ApiErrorModel(response.code(), response.message());
             callBack.onError(errorModel);
@@ -383,7 +389,7 @@ public class APIServiceLayer {
                 // keyword= URLEncoder.encode(keyword, "UTF-8");
                 //String searchValue=
 
-                Observable<ResponseSearch> call = endpoint.getSearch(keyword, MediaTypeConstants.getInstance().getMovie(), size, page, languageCode)
+                Observable<ResponseSearch> call = endpoint.getSearch(keyword, "MOVIES", size, page, languageCode)
                         .subscribeOn(Schedulers.io())
                         .observeOn(Schedulers.io());
                 Observable<ResponseSearch> call1 = endpoint.getSearch(keyword, MediaTypeConstants.getInstance().getSeries(), size, page, languageCode)

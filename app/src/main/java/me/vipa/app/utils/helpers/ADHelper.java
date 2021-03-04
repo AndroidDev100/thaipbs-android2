@@ -1,8 +1,11 @@
 package me.vipa.app.utils.helpers;
 
+import android.app.Activity;
 import android.content.Context;
 
 import com.google.android.gms.ads.doubleclick.PublisherAdView;
+
+import me.vipa.app.activities.detail.ui.EpisodeActivity;
 
 public class ADHelper {
 
@@ -17,5 +20,14 @@ public class ADHelper {
 
     public PublisherAdView getPublisherView() {
         return adView;
+    }
+
+    Activity pipAct;
+    public void pipActivity(Activity episodeActivity) {
+        this.pipAct=episodeActivity;
+    }
+
+    public Activity getPipAct() {
+        return pipAct;
     }
 }

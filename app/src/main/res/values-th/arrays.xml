@@ -5,6 +5,7 @@
         <item>จัดการโปรไฟล์</item>
         <item>รายการโปรดของฉัน</item>
         <item>ประวัติการรับชม</item>
+        <item>ดาวน์โหลดของฉัน</item>
         <item>ติดต่อเรา</item>
         <item>คำถามที่พบบ่อย</item>
         <item>เกี่ยวกับเรา</item>
@@ -46,6 +47,7 @@
         <item>จัดการโปรไฟล์</item>
         <item>รายการโปรดของฉัน</item>
         <item>ประวัติการรับชม</item>
+        <item>ดาวน์โหลดของฉัน</item>
         <item>ติดต่อเรา</item>
         <item>คำถามที่พบบ่อย</item>
         <item>เกี่ยวกับเรา</item>
@@ -56,6 +58,22 @@
         <item>นโยบายความเป็นส่วนตัว</item>
 
 
+    </string-array>
+
+    <string-array name="gender_array">
+        <item>เพศ</item>
+        <item>ชาย</item>
+        <item>หญิง</item>
+        <item>อื่น ๆ</item>
+
+    </string-array>
+
+    <string-array name="download_quality">
+        <item>สูง</item>
+        <item>ปานกลาง</item>
+        <item>ต่ำ</item>
+        <item>โปรแกรมประหยัดอินเทอร์เน็ต</item>
+        <item>มักจะถาม</item>
     </string-array>
 
 </resources>

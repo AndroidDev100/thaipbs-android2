@@ -1,22 +1,25 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
-    <string name="male">ชาย</string>
+
     <string name="something_went_wrong">มีปัญหาในระบบ</string>
 
-    <string name="female">หญิง</string>
-    <string name="search_mv_hub">ค้นหา VIPA (อย่างน้อย 3 ตัวอักษร)</string>
-    <string name="show_all_results">ดูทั้งหมด</string>
-    <string name="change_password">เปลื่ยนพาสเวิร์ด</string>
-    <string name="my_profile">ข้อมูลของฉัน</string>
+
+    <string name="search_mv_hub">ค้นหา VIPA</string>
+    <string name="show_all_results">แสดงทั้งหมด</string>
+    <string name="change_password">เปลี่ยนรหัสผ่าน</string>
+    <string name="update_pref">อัปเดตค่าอ้างอิง</string>
+    <string name="my_profile">โปรไฟล์ของฉัน</string>
     <string name="by_email">โดยอีเมล</string>
     <string name="by_line">ทางไลน์</string>
-    <string name="guest_user">Guest User</string>
+    <string name="guest_user">ผู้ใช้งานทั่วไป</string>
+    <string name="guest_user1">Guest User</string>
     <string name="setting_title">การตั้งค่า</string>
     <string name="term_condition">ข้อกำหนดและเงื่อนไข</string>
     <string name="my_watchlist">รายการโปรดของฉัน</string>
     <string name="my_history">ประวัติการรับชม</string>
+    <string name="my_download">ดาวน์โหลดของฉัน</string>
     <string name="membership_plan">ข้อมูลสมาชิก</string>
-    <string name="profile_update_successfully">อัพเดทสำเร็จ</string>
+    <string name="profile_update_successfully">อัปเดตสำเร็จ</string>
     <string name="privacy_policy">นโยบายความเป็นส่วนตัว</string>
     <string name="sign_out">ออกจากระบบ</string>
     <string name="redeem_coupon">แลกคูปอง</string>
@@ -29,8 +32,8 @@
 
 
 
-    <string name="change_language_message">คุณกำลังเปลี่ยนภาษา</string>
-    <string name="change_language">เปลื่ยนภาษา</string>
+    <string name="change_language_message">คุณกำลังทำการเปลี่ยนภาษา การดำเนินการนี้จะเปลี่ยนแปลงเป็นภาษาที่คุณเลือก คุณสามารถเลือกกลับได้ในการตั้งค่า</string>
+    <string name="change_language">เปลี่ยนภาษา</string>
     <string name="in_case_of_any">ในกรณีที่มีปัญหาใด ๆ</string>
     <string name="no_internet">ไม่พบการเชื่อมต่ออินเทอร์เน็ต</string>
     <string name="wake_up_connection" >ปลุกการเชื่อมต่อของคุณ!</string>
@@ -49,90 +52,92 @@
     <string name="my_downloads">ดาวน์โหลดของฉัน</string>
     <string name="yes">ใช่</string>
     <string name="no">ไม่</string>
-    <string name="language_english">อังกฤษ</string>
+    <string name="language_english">ภาษาอังกฤษ</string>
     <string name="no_connection">ไม่มีสัญญาณอินเตอร์เน็ต.</string>
 
     <string name="email">อีเมล</string>
-    <string name="password">พาสเวิร์ด</string>
+    <string name="password">รหัสผ่าน</string>รหัสผ่าน
+
     <string name="full_name">ชื่อ</string>
-    <string name="display_name">Enter your display Name</string>
-    <string name="enter_email_address">Enter Email Address</string>
-    <string name="create_password">Create Password minimum 6 characters</string>
-    <string name="mobile_number">Mobile Number</string>
-    <string name="mobile_error">Please enter a 11 digit phone number and must starts with 66</string>
-    <string name="address">Address</string>
-    <string name="dob">Date of Birth</string>
-    <string name="signup"><b><u>ลงทะเบียน</u></b></string>
+    <string name="display_name">ใส่ชื่อที่ต้องการแสดง</string>
+    <string name="enter_email_address">ใส่อีเมล</string>
+    <string name="create_password">สร้างรหัสผ่านอย่างน้อย 6 ตัวอักษร</string>
+    <string name="mobile_number">เบอร์โทรศัพท์มือถือ</string>
+    <string name="mobile_error">กรุณาใส่หมายเลขโทรศัพท์ที่ถูกต้อง เช่น 0812345678 หรือ 66812345678</string>
+    <string name="address">ที่อยู่</string>
+    <string name="dob">วันเกิด</string>
+    <string name="signup"><b><u>สมัครสมาชิก</u></b></string>
     <string name="login">เข้าสู่ระบบ</string>
-    <string name="sign_in_with_enveu">เข้าสู่ระบบโ</string>
+    <string name="sign_in_with_enveu">สมัครสมาชิก</string>
     <string name="facebook">เฟสบุ๊ค</string>
-    <string name="sign_in_with_facebook">เข้าสู่ระบบโดย เฟสบุ๊ค</string>
-    <string name="sign_up_with_facebook">Sign up with Facebook</string>
+    <string name="sign_in_with_facebook">เข้าสู่ระบบด้วยเฟซบุ๊ก</string>
+    <string name="sign_up_with_facebook">ลงทะเบียนด้วยเฟซบุ๊ก</string>
     <string name="google">กูเกิ้ล</string>
     <string name="register">ลงทะเบียนสมัครสมาชิก</string>
-    <string name="sign_in"><b><u>เข้าสู่ระบบ</u></b></string>
+    <string name="sign_in"><b><u>สมัครสมาชิก</u></b></string>
     <string name="or_login_with">หรือเข้าระบบด้วย</string>
     <string name="or">หรือ</string>
     <string name="or_caps">- หรือ -</string>
     <string name="skip">ข้าม</string>
     <string name="forgot_password">ลืมพาสเวิร์ด</string>
-    <string name="forgot_password_u"><b><u>ลืมพาสเวิร์ด?</u></b></string>
+    <string name="forgot_password_u"><b><u>ลืมรหัสผ่าน?</u></b></string>
 
     <string name="dont_have_an_account">ไม่มีบัญชีผู้ใช้?</string>
     <string name="title_more">เพิ่มเติม</string>
 
     <string name="email_address">อีเมล</string>
     <string name="send_email">ส่งอีเมล</string>
-    <string name="save">เก็บไว้</string>
-    <string name="new_password">พาสเวิร์ดใหม่</string>
+    <string name="save">บันทึก</string>
+    <string name="new_password">รหัสผ่านใหม่</string>
 
     <string name="notification">แจ้งเตือน</string>
-    <string name="notification_setting">Notification Setting</string>
-    <string name="binge_setting">Binge Watch</string>
+    <string name="notification_setting">ตั้งค่าการแจ้งเตือน</string>
+    <string name="binge_setting">รับชมต่อเนื่อง</string>
     <string name="manage_account">จัดการโปรไฟล์</string>
     <string name="login_signup">เข้าสู่ระบบ/ลงทะเบียน</string>
-    <string name="login_txt">เข้าสู่ระบบ</string>
+    <string name="login_txt">เข้าสู่ระบบ</string>เข้าสู่ระบบ
+
     <string name="update">อัพเดท</string>
     <string name="connct_facebbook">เชื่อมต่อโดย เฟสบุ๊ค</string>
-    <string name="detail_title">กรุณาใส่ อีเมลที่ลงทะเบียนไว้ด้านล่าง ระบบจะจัดส่งวิธีการ รีเซ็ตพาสเวิรด์ไปให้ ตามอีเมลที่ลงทะเบียนไว้.</string>
-    <string name="already_have_account_sign">มีบัญชีผู้ใช้หรือยัง?</string>
+    <string name="detail_title">ขอขอบคุณที่ส่งคำขอ หากเราพบที่อยู่อีเมลในระบบของเรา เราจะส่งลิงก์รีเซ็ตไปทางอีเมล โปรดป้อนรหัสผ่านใหม่</string>
+    <string name="already_have_account_sign">มีบัญชีผู้ใช้งานหรือไม่?</string>
 
     <string name="cancel">ยกเลิก</string>
 
     <string name="no_internet_connection">ไม่มีสัญญาณอินเตอร์เน็ต</string>
 
-    <string name="logout_confirmation">คุณแน่ใจว่าคุณต้องการที่จะออกจากระบบ?</string>
+    <string name="logout_confirmation">คุณต้องการออกจากระบบหรือไม่?</string>
     <string name="password_length">กรุณาระบุตัวอักษรภาษาอังกฤษอย่างน้อย 6 ตัว และมีตัวเลขอย่างน้อย 1 หลัก</string>
     <string name="valid_email">อีเมลไม่ถูกต้อง</string>
-    <string name="empty_password">กรุณากรอกพาสเวิร์ด</string>
-    <string name="empty_string">กรุณากรอกอีเมล</string>
-    <string name="credential_mismatch">ข้อมูลไม่ตรงกัน!</string>
+    <string name="empty_password">โปรดใส่รหัสผ่าน</string>
+    <string name="empty_string">โปรดใส่อีเมล</string>
+    <string name="credential_mismatch">ข้อมูลรับรองไม่ตรง!</string>
 
-    <string name="email_check_signup">กรุณากรอกอีเมล</string>
+    <string name="email_check_signup">โปรดใส่อีเมล</string>
 
     <string name="empty_name">กรุณากรอกชื่อ</string>
 
-    <string name="forgot_password_response">ขอขอบคุณที่ส่งคำขอ หากเราพบที่อยู่อีเมลในระบบของเราเราจะส่งลิงก์รีเซ็ตไปทางไปรษณีย์</string>
+    <string name="forgot_password_response">ขอขอบคุณที่ส่งคำขอ หากเราพบที่อยู่อีเมลในระบบของเรา เราจะส่งลิงก์รีเซ็ตไปทางอีเมล โปรดป้อนรหัสผ่านใหม่์</string>
     <string name="purchased">ซื้อแล้ว</string>
     <string name="subscribed">เป็นสมาชิกแล้ว</string>
 
     <string name="please_enter_new_password">กรุณากรอกพาสเวิร์ดใหม่</string>
-    <string name="please_confirm_password">ยืนยันพาสเวิร์ด</string>
+    <string name="please_confirm_password">โปรดยืนยันรหัสผ่าน</string>
 
-    <string name="confirm_pwd_not_match">กรุณากรอกรหัสให้ตรงกัน</string>
+    <string name="confirm_pwd_not_match">รหัสผ่านที่ยืนยันไม่ถูกต้อง</string>
     <string name="ok">ตกลง</string>
 
     <string name="no_result_found">ไม่พบผลลัพธ์</string>
-    <string name="popular_search">ค้นหาเรื่องยอดนิยม</string>
+    <string name="popular_search">ค้นหาจากความนิยม</string>
 
     <string name="no_result">ไม่พบผลลัพธ์</string>
-    <string name="no_result1">ลองค้นหาตอนอื่นๆ</string>
+    <string name="no_result1">ไม่พบผลลัพธ์</string>
 
 
-    <string name="recent_searches">ค้นหาล่าสุด</string>
+    <string name="recent_searches">การค้นหาล่าสุด</string>
     <string name="no_result_found_title">ไม่พบผลลัพธ์</string>
     <string name="movie">ภาพยนตร์</string>
-    <string name="show_all">ดูทั้งหมด</string>
+    <string name="show_all">แสดงทั้งหมด</string>
     <string name="free">ฟรี</string>
     <string name="new_badge">หนังใหม่</string>
     <string name="issuepage">หากมีอะไรเกิดขึ้น</string>
@@ -141,23 +146,23 @@
     <string name="you_are_not_subscribed">คุณยังไม่เป็นสมาชิกสำหรับวีดิโอนี้</string>
     <string name="buy_now">สมัครสมาชิก</string>
     <string name="purhcase_options">ทางเลือกการสั่งซื้อ</string>
-    <string name="less">ย่อลง</string>
+    <string name="less">ย่อ</string>
     <string name="user_already_exists">บันทึกข้อมูลไม่สำเร็จ มีอีเมลนี้อยู่แล้วในระบบ</string>
     <string name="password_cannot_be_blank">รหัสผ่านไม่รองรับเว้นวรรค</string>
-    <string name="please_provide_valid_name">โปรดระบุชื่อที่ถูกต้อง</string>
-    <string name="server_error">มีบางอย่างผิดพลาดในตอนท้ายของเรา กรุณาลองอีกครั้ง</string>
-    <string name="either_user_email_not_found">ไม่พบชื่อผู้ใช้งานหรืออีเมล์</string>
-    <string name="user_inactive_kindly_contact_administrator">ผู้ใช้งานไม่ได้เปิดใช้งาน โปรดติดต่อผู้ดูแลระบบ</string>
-    <string name="fb_id_cannot_be_null_or_empty">รหัส Facebook ไม่รองรับเว้นวรรค หรือปล่อยว่าง</string>
+    <string name="please_provide_valid_name">โปรดใส่ชื่อที่ใช้งานได้</string>
+    <string name="server_error">เกิดข้อผิดพลาดบางอย่างตอนท้าย โปรดลองอีกครั้ง</string>
+    <string name="either_user_email_not_found">ไม่พบชื่อผู้ใช้งานในระบบ</string>
+    <string name="user_inactive_kindly_contact_administrator">บัญชีโดนระงับการใช้งาน โปรดติดต่อผู้ดูแลระบบ</string>
+    <string name="fb_id_cannot_be_null_or_empty">กรุณากรอก Fb id และ รหัสอีเมล ห้ามเว้นว่าง</string>
 
     <string name="email_id_cannot_be_blank">รหัสอีเมล์ไม่รองรับเว้นวรรค</string>
-    <string name="invalid_email_id">Invalid email id</string>
-    <string name="user_does_not_exists">กรุณาตรวจสอบชื่อผู้ใช้ หรือรหัสผ่านให้ถูกต้อง และลองใหม่อีกครั้ง​</string>
-    <string name="user_deactivated">ผู้ใช้งานรายนี้ถูกปิดใช้งาน โปรดติดต่อฝ่ายสนับสนุน​</string>
-    <string name="user_can_not_login">ผู้้ใช้งานไม่สามารถล็อคอินด้วยวีธีการนี้</string>
-    <string name="username_password_doest_match">ชื่อผู้ใช้งาน หรือ รหัสผ่าน ไม่ตรงกับข้อมูลในระบบ​​</string>
+    <string name="invalid_email_id">อีเมลไม่ถูกต้อง</string>
+    <string name="user_does_not_exists">ผู้ใช้งานด้วยอีเมลนี้ไม่มีอยู่ในระบบ​</string>
+    <string name="user_deactivated">ผู้ใช้งานนี้ไม่สามารถใช้งานได้ โปรดติดต่อผู้ดูแลระบบ</string>
+    <string name="user_can_not_login">ไม่สามารถเข้าสู่ระบบด้วยวิธีนี้</string>
+    <string name="username_password_doest_match">ชื่อผู้ใช้งาน หรือรหัสผ่านไม่ตรง</string>
     ​
-    <string name="username_must_be_loggedin">ผู้ใช้งานต้องล็อคอินเข้าสู่ระบบ​​</string>
+    <string name="username_must_be_loggedin">ผู้ใช้งานต้องเข้าสู่ระบบก่อน</string>
     <string name="user_not_found">ไม่พบผู้ใช้งาน</string>
     <string name="title_home">หน้าหลัก</string>
     <string name="title_free">พอดคาสต์</string>
@@ -165,41 +170,41 @@
     <string name="title_live_tv">รายการสด</string>
     <string name="title_more1">หน้าโปรไฟล์</string>
     <string name="more">เพิ่มเติม</string>
-    <string name="player_error">ไม่สามารถทำตามที่ต้องการได้ กรุณาลองใหม่อีกครั้ง</string>
+    <string name="player_error">เราไม่สามารถดำเนินการตามคำขอของคุณได้,โปรดลองอีกครั้งใ</string>
     <string name="tab_heading_episodes">ตอน</string>
     <string name="all_episode">ตอนทั้งหมด</string>
     <string name="video_streaming">VIDEO STREAMING PLATFORM</string>
 
-    <string name="tab_heading_other">หาแบบนี้เพิ่มเติมอีก</string>
+    <string name="tab_heading_other">เนื้อหาอื่น ๆ ที่ใกล้เคียงกับเนื้อหานี้</string>
     <string name="download_settings">ตั้งค่าดาวน์โหลด</string>
     <string name="delete_from_watchlist">คุณแน่ใจหรือไม่ที่จะลบวีดีโอนี้ออกจากรายการของฉัน?</string>
     <string name="you_are_logged_out">คุณออกจากระบบแล้ว</string>
-    <string name="number_Cannot_change">Phone Number cannot be changed after setting once</string>
-    <string name="error">ผิดพลาด</string>
+    <string name="number_Cannot_change">เบอร์โทรศัพท์ไม่สามารถเปลี่ยนได้หลังจากสมัครสมาชิกแล้ว</string>
+    <string name="error">พบข้อผิดพลาด</string>
     <string name="forgot_pwd">ลืมพาสเวิร์ด</string>
-    <string name="share">แชร์</string>
-    <string name="watchlist">รายการของฉัน</string>
+    <string name="share">แบ่งปัน</string>
+    <string name="watchlist">รายการโปรด</string>
     <string name="like">ชอบ</string>
-    <string name="crew">ประเภท: </string>
+    <string name="crew">ประเภทรายการ: </string>
     <string name="cast">นักแสดง: </string>
     <string name="result_caps">ผลลัพธ์</string>
     <string name="results_caps">ผลลัพธ์</string>
     <string name="exclusive">พรีเมี่ยม</string>
-    <string name="something_went_wrong_at_our_end">มีปัญหาในระบบ</string>
-    <string name="something_went_wrong_at_our_end_please_try_later">มีบางอย่างผิดพลาดในตอนท้ายของเรา กรุณาลองอีกครั้ง.</string>
+    <string name="something_went_wrong_at_our_end">เกิดความผิดพลาดในตอนท้าย</string>
+    <string name="something_went_wrong_at_our_end_please_try_later">เกิดข้อผิดพลาดบางอย่างตอนท้าย โปรดลองอีกครั้ง.</string>
     <string name="membership_and_plan_title">เป็นสมาชิกกับเราเพื่อรับชมความบันเทิงใหม่ล่าสุด</string>
     <string name="buy_now_2">ซื้อทันที</string>
 
 
     <string name="you_may_also_like">คุณอาจชอบ</string>
     <string name="splash_screen">หน้าจอ</string>
-    <string name="new_version_available">มีเวอร์ชันใหม่</string>
+    <string name="new_version_available">เวอร์ชันใหม่พร้อมใช้งาน</string>
     <string name="please_update_your_app">เรามีเวอร์ชันใหม่ กรุณาอัปเดตเพื่อเพลิดเพลินกับ VIPA</string>
 
     <string name="no_season">ไม่มีฤดูกาล</string>
     <string name="all">ทั้งหมด</string>
     <string name="login_to_play">เข้าสู่ระบบเพื่อเล่น</string>
-    <string name="can_not_play_error">ไม่สามารถเล่นวีดีโอได้ โปรดติดต่อเรา.</string>
+    <string name="can_not_play_error">ไม่สามารถเล่นวีดีโอนี้ ถ้าปัญหานี้ยังคงอยู่ โปรดติดต่อเจ้าหน้าที่.</string>
     <string name="comments">ความคิดเห็น</string>
     <string name="add_comment">เพิ่มความคิดเห็น...</string>
     <string name="add_comment_fail">การเพิ่มความคิดเห็นล้มเหลวโปรดลองอีกครั้ง</string>
@@ -212,7 +217,7 @@
     <string name="rented">เช่าแล้ว</string>
     <string name="buy_video">รับชมเรื่องนี้ได้ตลอดเวลา</string>
 
-    <string name="Continue">ดำเนินการต่อ</string>
+    <string name="Continue">ต่อไป</string>
     <string name="purchase_options">ซื้อ</string>
     <string name="subscribe_to">สมัครสมาชิก ประเภท</string>
     <string name="subscribed_to">สมัครรับข้อมูล ถึง</string>
@@ -238,7 +243,7 @@
     <string name="already_subscriber">คุณสมัครรับข้อมูลแล้ว</string>
     <string name="already_weekly_subscriber">คุณสมัครแผนรายสัปดาห์แล้ว.</string>
     <string name="please_unsubcribe_to_continue">"โปรดยกเลิกการสมัครแผนปัจจุบันจาก Play Store เพื่อดำเนินการต่อ."</string>
-    <string name="select_season">เลือกซีซัน</string>
+    <string name="select_season">เลือกซีซั่นที่ต้องการรับชม</string>
 
     <string name="offer_region_not_available">ไม่มีข้อเสนอในภูมิภาคของคุณ!</string>
 
@@ -250,7 +255,7 @@
     <string name="slider_image_content_discription">This is view pager slider Image</string>
     <string name="image_description">Content description</string>
     <string name="show_comment">แสดงความคิดเห็น</string>
-    <string name="error_branch_sharing_url">ไม่สามารถแบ่งปันได้ในขณะนี้ โปรดลองอีกครั้งในภายหลัง.</string>
+    <string name="error_branch_sharing_url">ไม่สามารถแชร์ได้ในขณะนี้ โปรดลองอีกครั้ง.</string>
 
     <string name="branch_key">key_live_cdJ7zkyRJg31rm79E5t5QkleDAmzOaM7</string>
     <string name="branch_key_test">key_test_gpJ7BfyMRb11xoZ01dyIsjhbwCfwJgWb</string>
@@ -262,17 +267,17 @@
     <string name="please_try">โปรดลองอีกครั้งหรือติดต่อฝ่ายสนับสนุน</string>
     <string name="redeem_code_expired">รหัสแลกหมดอายุ</string>
     <string name="user_not_already_in_watchlist">เนื้อหานี้ไม่มีอยู่ในรายการเฝ้าดูของผู้ใช้นี้</string>
-    <string name="user_already_not_liked">ผู้ใช้ไม่ชอบเนื้อหานี้​</string>
+    <string name="user_already_not_liked">เนื้อหานี้ได้ถูกกดไม่ถูกใจโดยผู้ใช้งานแล้ว</string>
 
     <string name="redeem_code_invalid">รหัสแลกไม่ถูกต้อง</string>
     <string name="redeem_cancelled">รหัสแลกถูกยกเลิก โปรดติดต่อฝ่ายสนับสนุน</string>
     <string name="redeem_code_already_used">รหัสแลกถูกใช้ไปแล้ว</string>
     <string name="subscribed_already">ผู้ใช้รายนี้สมัครแผนนี้แล้ว</string>
 
-    <string name="delete_from_watchhistory">วิดีโอถูกลบออกจาก Watchhistory</string>
+    <string name="delete_from_watchhistory">เนื้อหาได้ถูกลบจากประวัติการรับชมเรียบร้อยแล้ว</string>
     <string name="delete_from_watchhistory_error">ไม่สามารถลบวิดีโอออกจาก Watchhistory ได้</string>
-    <string name="delete_from_watch_list_message">วิดีโอถูกลบออกจากรายการเฝ้าดู</string>
-    <string name="delete_from_watch_list_message_error">ไม่สามารถลบวิดีโอออกจากรายการเฝ้าดู</string>
+    <string name="delete_from_watch_list_message">วีดีโอได้ถูกลบออกจากรายการรับชม</string>
+    <string name="delete_from_watch_list_message_error">วีดีโอไม่สามารถลบออกจากรายการโปรด</string>
 
 
     <string name="download">ดาวน์โหลด</string>
@@ -283,7 +288,7 @@
     <string name="language_thai">ไทย</string>
     <string name="language_indonesia">bahasa Indonesia</string>
     <string name="go_to_my_downloads">ดูการดาวน์โหลดของฉัน</string>
-    <string name="no_downloads">ไม่พบวิดีโอที่ดาวน์โหลด</string>
+    <string name="no_downloads">ภาพยนตร์และรายการทีวีที่คุณดาวน์โหลดจะปรากฏที่นี่</string>
     <string name="delete_download">ลบดาวน์โหลด</string>
 
     <string name="title_activity_downloaded_video">DownloadedVideoActivity</string>
@@ -305,21 +310,21 @@
     <!--subscription messages-->
 
     <string name="payment_error">เกิดข้อผิดพลาดในการดำเนินการตามคำขอของคุณโปรดลองอีกครั้งในภายหลัง หากต้องการการสนับสนุนเพิ่มเติมโปรดติดต่อเราที่</string>
-    <string name="name_validation_profile">ต้องระบุชื่อ</string>
-    <string name="profile_registered_successfully">ลงทะเบียนเรียบร้อยแล้ว!</string>
+    <string name="name_validation_profile">ต้องการชื่อ</string>
+    <string name="profile_registered_successfully">การลงทะเบียนสำเร็จ!</string>
     <string name="email_id">อีเมลสำหรับเข้าสู่ระบบ FB </string>
-    <string name="check_connection_text">ตรวจสอบการเชื่อมต่อของคุณ.</string>
+    <string name="check_connection_text">ตรวจสอบการเชื่อมต่ออินเทอร์เน็ต.</string>
     <string name="checkout">เช็คเอาท์</string>
     <string name="verify_user">ตรวจสอบบัญชี</string>
     <string name="app_name">VIPA</string>
     <string name="retry">ลองอีกครั้ง</string>
     <string name="on_enveu">บน VIPA!</string>
     <string name="later">ภายหลัง</string>
-    <string name="watchlist_empty_message">ติดตามภาพยนตร์รายการทีวีและคลิปที่คุณต้องการรับชม</string>
+    <string name="watchlist_empty_message">การรับชม ภาพยนตร์,รายการทีวี และคลิปที่คุณต้องการดูแบบไม่มีบัญชีผู้ใช้ ?</string>
     <string name="listing_title_text"><b>ภาพยนตร์</b></string>
     <string name="title_trending">แนวโน้ม</string>
-    <string name="strong_password_required">โปรดป้อนรหัสผ่านระหว่าง 6 ถึง 20 อักขระ</string>
-    <string name="password_changed_successfully">เปลี่ยนรหัสผ่านสำเร็จแล้ว!</string>
+    <string name="strong_password_required">โปรดใส่รหัสผ่าน 6 ถึง 20 ตัวอักษร</string>
+    <string name="password_changed_successfully">การเปลี่ยนรหัสผ่านสำเร็จ!</string>
     <string name="password_match">Password doesn\'t match</string>
     <string name="verify_account">ตรวจสอบบัญชี</string>
     <string name="account_verification_link">คุณแน่ใจหรือไม่ว่าต้องการยืนยันบัญชีของคุณ?</string>
@@ -353,7 +358,7 @@
     <string name="purchase_token_required">จำเป็นต้องซื้อโทเค็นภายใต้หมายเหตุ</string>
     <string name="payment_validation_failed">การตรวจสอบการชำระเงินล้มเหลว</string>
     <string name="receipt_validation_url_not_avail">ไม่มี URL การตรวจสอบใบเสร็จ</string>
-    <string name="user_already_in_watchlist">มีเนื้อหานี้อยู่แล้วในรายการที่ต้องการรับชมของผู้ใช้รายนี้แล้ว</string>
+    <string name="user_already_in_watchlist">เนื้อหานี้มีอยู่ในรายการโปรดของผู้ใช้งานนี้แล้ว</string>
     <string name="buy_for">ซื้อเพื่อ</string>
     <string name="rent_for">รับชมเรื่องนี้ได้</string>
     <string name="day_Rental">วัน</string>
@@ -362,7 +367,7 @@
     <string name="months">เดือน</string>
     <string name="years">ปี</string>
     <string name="not_avail_for_Region">คุณสมบัตินี้ไม่สามารถใช้ได้ในภูมิภาคของคุณ</string>
-    <string name="user_already_liked">ผู้ใช้ชอบเนื้อหานี้อยู่แล้ว​</string>
+    <string name="user_already_liked">เนื้อหานี้ได้ถูกกดถูกใจโดยผู้ใช้งานแล้ว</string>
     <string name="delete">ลบ</string>
     <string name="redeemed_success">แลกสำเร็จแล้ว</string>
     <string name="prime_memb_issue">VIPA ปัญหาการเป็นสมาชิก</string>
@@ -372,10 +377,10 @@
     <string name="heading_movies">ภาพยนตร์</string>
     <string name="heading_series">ซีรีส์</string>
     <string name="heading_live">รายการสด</string>
-    <string name="heading_shows">โชว์</string>
+    <string name="heading_shows">รายการ</string>
     <string name="heading_episodes">ตอน</string>
     <string name="live_tag">รายการสด</string>
-    <string name="skip_intro">ข้ามบทนำ</string>
+    <string name="skip_intro">ข้ามตอนต้น</string>
     <string name="streaming_settings">การตั้งค่าการสตรีม</string>
     <string name="auto">อัตโนมัติ</string>
     <string name="low">ต่ำ</string>
@@ -391,10 +396,27 @@
     <string name="half_yearly">ครึ่งปี</string>
     <string name="annual">ประจำปี</string>
     <string name="purchase_title">เข้าถึงเนื้อหาระดับพรีเมียมได้ในคลิกเดียว เลือกแพ็กเกจที่เหมาะที่สุดสำหรับคุณในการเข้าถึงเนื้อหานี้และเนื้อหาอื่น ๆ อีกมากมายที่ VIPA นำเสนอเฉพาะบน VIPA</string>
-    <string name="start_access">เริ่มเข้าใช้งาน</string>
+    <string name="start_access">เริ่ม (เริ่มใช้งานโดยไม่ลงทะเบียน)</string>
     <string name="content_preminum">Content Premium</string>
-    <string name="select_genre">Select genre as per your interest for best result you can select multiple choices of interest (max 5)</string>
-    <string name="finish">Finish</string>
-    <string name="date_difference">You must be 13 years old and above.</string>
+    <string name="select_genre">โปรดเลือกสิ่งที่คุณสนใจเพื่อให้ได้ผลลัพธ์ที่ดีที่สุด คุณสามารถเลือกได้หลายตัวเลือก (สูงสุด 5 ตัวเลือก)</string>
+    <string name="finish">เสร็จสิ้น</string>
+    <string name="date_difference">คุณต้องมีอายุ 13 ปีขึ้นไป.</string>
+    <string name="recieve_updates">ฉันต้องการรับข้อมูลจาก VIPA ในอนาคต</string>
+    <string name="gender">เพศ</string>
+    <string name="male">ชาย</string>
+    <string name="female">หญิง</string>
+    <string name="others">อื่น ๆ</string>
 
+    <string name="waiting_for_wifi">กำลังรอ WI-Fi</string>
+    <string name="download_will_begin">การดาวน์โหลดของคุณจะเริ่มขึ้นเมื่อคุณใช้ Wi-Fi หรือคุณสามารถเปลี่ยนการตั้งค่าด้านล่าง:</string>
+    <string name="download_over_wifi">ดาวน์โหลดผ่าน Wi-Fi</string>
+    <string name="you_can_change">*คุณสามารถเปลี่ยนได้จากการตั้งค่า</string>
+
+    <string name="Downloading">กำลังดาวน์โหลด</string>
+    <string name="Paused">หยุดชั่วคราว</string>
+
+    <string name="content_prefrences">การตั้งค่าเนื้อหา</string>
+
+    <string name="minutes">นาที</string>
+    <string name="For">สำหรับ</string>
 </resources>

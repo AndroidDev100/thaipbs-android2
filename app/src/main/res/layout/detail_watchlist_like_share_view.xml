@@ -140,71 +140,84 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/download"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/down"
+            android:orientation="vertical"
             android:layout_gravity="center"
             android:layout_marginLeft="40dp"
-            android:orientation="vertical"
-            android:visibility='@{isDownloadable ? View.VISIBLE : View.GONE,default="gone"}'>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-
-            <ImageView
-                android:id="@+id/download_video"
-                android:layout_width="@dimen/watchListWidth"
-                android:layout_height="@dimen/watchListHeight"
-                android:layout_gravity="center"
-                android:layout_margin="@dimen/NontonSize8"
-                android:contentDescription="TODO"
-                android:visibility='@{downloadStatus==DownloadStatus.START ? View.VISIBLE : View.GONE, default="gone"}'
-                app:srcCompat="@drawable/ic_start_download" />
-
-            <me.vipa.app.utils.DownloadProgressBar
-                android:id="@+id/video_downloading"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:layout_gravity="center"
-                android:layout_margin="@dimen/NontonSize8"
-                android:visibility='@{downloadStatus==DownloadStatus.DOWNLOADING ? View.VISIBLE : View.GONE, default="gone"}'
-                app:background_progressbar_color="@android:color/darker_gray"
-                app:progressbar_color="@color/description_title_yellow" />
-
-            <ImageView
-                android:id="@+id/video_downloaded"
-                android:layout_width="@dimen/watchListWidth"
-                android:layout_height="@dimen/watchListHeight"
-                android:layout_gravity="center"
-                android:layout_margin="@dimen/NontonSize8"
-                android:contentDescription="TODO"
-                android:visibility='@{downloadStatus==DownloadStatus.DOWNLOADED ? View.VISIBLE : View.GONE, default="gone"}'
-                app:srcCompat="@drawable/download_icon" />
-
-            <ImageView
-                android:id="@+id/pause_download"
-                android:layout_width="@dimen/watchListWidth"
-                android:layout_height="@dimen/watchListHeight"
-                android:layout_gravity="center"
-                android:layout_margin="@dimen/NontonSize8"
-                android:contentDescription="TODO"
-                android:visibility='@{downloadStatus==DownloadStatus.PAUSE ? View.VISIBLE : View.GONE, default="gone"}'
-                app:srcCompat="?attr/pause_download" />
-
-            <ProgressBar
-                android:id="@+id/loading_download"
-                android:layout_width="@dimen/watch_ListWidth"
-                android:layout_height="@dimen/watch_ListWidth"
-                android:visibility='@{downloadStatus==DownloadStatus.REQUESTED ? View.VISIBLE : View.GONE, default="gone"}' />
-
-            <TextView
+            <LinearLayout
+                android:id="@+id/download"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:fontFamily="@font/sukhumvittadmai_medium"
-                android:gravity="center"
-                android:text="@string/download"
-                android:textColor="?attr/watchlist_icon_text"
-                android:textSize="@dimen/font_medium" />
+                android:layout_height="wrap_content"
+
+                android:orientation="vertical"
+                android:visibility='@{isDownloadable ? View.VISIBLE : View.GONE,default="gone"}'>
+
+
+                <ImageView
+                    android:id="@+id/download_video"
+                    android:layout_width="@dimen/watchListWidth"
+                    android:layout_height="@dimen/watchListHeight"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/NontonSize8"
+                    android:contentDescription="TODO"
+                    android:visibility='@{downloadStatus==DownloadStatus.START ? View.VISIBLE : View.GONE, default="gone"}'
+                    app:srcCompat="@drawable/ic_start_download" />
+
+                <me.vipa.app.utils.DownloadProgressBar
+                    android:id="@+id/video_downloading"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/NontonSize8"
+                    android:visibility='@{downloadStatus==DownloadStatus.DOWNLOADING ? View.VISIBLE : View.GONE, default="gone"}'
+                    app:background_progressbar_color="@android:color/darker_gray"
+                    app:progressbar_color="@color/description_title_yellow" />
+
+                <ImageView
+                    android:id="@+id/video_downloaded"
+                    android:layout_width="@dimen/watchListWidth"
+                    android:layout_height="@dimen/watchListHeight"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/NontonSize8"
+                    android:contentDescription="TODO"
+                    android:visibility='@{downloadStatus==DownloadStatus.DOWNLOADED ? View.VISIBLE : View.GONE, default="gone"}'
+                    app:srcCompat="@drawable/download_icon" />
+
+                <ImageView
+                    android:id="@+id/pause_download"
+                    android:layout_width="@dimen/watchListWidth"
+                    android:layout_height="@dimen/watchListHeight"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/NontonSize8"
+                    android:contentDescription="TODO"
+                    android:visibility='@{downloadStatus==DownloadStatus.PAUSE ? View.VISIBLE : View.GONE, default="gone"}'
+                    app:srcCompat="?attr/pause_download" />
+
+                <ProgressBar
+                    android:id="@+id/loading_download"
+                    android:layout_width="@dimen/watch_ListWidth"
+                    android:layout_height="@dimen/watch_ListWidth"
+                    android:layout_margin="@dimen/NontonSize5"
+                    android:layout_gravity="center"
+                    android:visibility='@{downloadStatus==DownloadStatus.REQUESTED ? View.VISIBLE : View.GONE, default="gone"}' />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/sukhumvittadmai_medium"
+                    android:gravity="center"
+                    android:text="@string/download"
+                    android:textColor="?attr/watchlist_icon_text"
+                    android:textSize="@dimen/font_small" />
+            </LinearLayout>
+
         </LinearLayout>
+
+
 
 
         <LinearLayout

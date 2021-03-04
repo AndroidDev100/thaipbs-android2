@@ -30,6 +30,9 @@ import androidx.annotation.NonNull;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+
+import me.vipa.app.beanModel.userProfile.UserProfileResponse;
+import me.vipa.app.utils.helpers.downloads.room.DownloadedVideo;
 import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
 import me.vipa.enums.ImageType;
 import me.vipa.enums.WidgetImageType;
@@ -72,14 +75,19 @@ import me.vipa.app.SDKConfig;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.mmtv.utils.helpers.downloads.DownloadHelper;
 import com.mvhub.enums.RailCardType;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -147,6 +155,8 @@ public class AppCommonMethod {
     public static String userId;
     public static boolean isOrientationChanged = false;
     public static boolean isResumeDetail = false;
+    public static boolean isDownloadDeleted = false;
+    public static int isDownloadIndex = -1;
     public static boolean isSeasonCount = false;
     public static boolean isSeriesPage = false;
     public static boolean isInternet = false;
@@ -538,35 +548,23 @@ public class AppCommonMethod {
 
     public static String calculateTimein_hh_mm_format(long milliseconds) {
 
-        if (milliseconds % 1000 > 0) {
-            milliseconds = milliseconds + (milliseconds % 1000);
-        }
-
-        long hours = TimeUnit.MILLISECONDS.toHours(milliseconds);
-        long minute = TimeUnit.MILLISECONDS.toMinutes(milliseconds) % TimeUnit.HOURS.toMinutes(1);
-        long second = TimeUnit.MILLISECONDS.toSeconds(milliseconds) % TimeUnit.MINUTES.toSeconds(1);
-
-
-        String strHour = String.format("%02d", hours);
-        String strSecond = String.format("%02d", second);
-        if (second >= 30) {
-            minute = minute + 1;
-        }
-        String strMinute = String.format("%02d", minute);
-
-        String showTime = minute + ":" + strSecond;
-
-        if (hours > 0)
-            showTime = strHour + ":" + strMinute;
-        else if (minute > 0)
-            if (second > 0) {
-                showTime = "00:" + strMinute;
-            } else {
-                showTime = "00:" + strMinute;
+        String minutes="";
+        try {
+            if (milliseconds % 1000 > 0) {
+                milliseconds = milliseconds + (milliseconds % 1000);
             }
-        else if (second >= 0)
-            showTime = "00:" + "01";
-        return showTime;
+
+            long hours = TimeUnit.MILLISECONDS.toHours(milliseconds);
+            long minute = TimeUnit.MILLISECONDS.toMinutes(milliseconds);
+            long second = TimeUnit.MILLISECONDS.toSeconds(milliseconds) % TimeUnit.MINUTES.toSeconds(1);
+
+            Log.w("episodeTiming",minute+"   ---   "+milliseconds);
+            minutes=String.format("%02d", minute);
+
+        }catch (Exception ignored){
+
+        }
+        return minutes;
     }
 
     public static String calculateTime(long milliseconds) {
@@ -1129,7 +1127,7 @@ public class AppCommonMethod {
 
     public static void guestTitle(Context context,TextView userNameWords, TextView usernameTv, KsPreferenceKeys preference) {
         if (preference != null) {
-            userNameWords.setText(AppCommonMethod.getUserName(context.getResources().getString(R.string.guest_user)));
+            userNameWords.setText(AppCommonMethod.getUserName(context.getResources().getString(R.string.guest_user1)));
             usernameTv.setText(context.getResources().getString(R.string.guest_user));
         }
     }
@@ -1272,6 +1270,7 @@ public class AppCommonMethod {
 
     public static void handleTags(String isVIPTag, String isNewS, FrameLayout isVIP, FrameLayout newSeries,FrameLayout newEpisode,FrameLayout newMovie,String assetType) {
        try {
+           newEpisode.setVisibility(View.GONE);
            if (isVIPTag.equalsIgnoreCase("true")){
                isVIP.setVisibility(View.VISIBLE);
            }else {
@@ -1298,9 +1297,9 @@ public class AppCommonMethod {
            }
            if (assetType.equalsIgnoreCase(MediaTypeConstants.getInstance().getEpisode())){
                if (isNewS.equalsIgnoreCase("true")){
-                   newEpisode.setVisibility(View.VISIBLE);
+                   newMovie.setVisibility(View.VISIBLE);
                }else {
-                   newEpisode.setVisibility(View.GONE);
+                   newMovie.setVisibility(View.GONE);
                }
            }else {
                newEpisode.setVisibility(View.GONE);
@@ -1364,4 +1363,97 @@ public class AppCommonMethod {
         }
     }
 
+    public static String checkSeasonNumber(String seasonNumber) {
+
+        return null;
+    }
+
+    @NotNull
+    public static ArrayList<DownloadedVideo> removeDownloadedSeries(@NotNull ArrayList<DownloadedVideo> downloadVideos,DownloadHelper downloadHelper) {
+        ArrayList<DownloadedVideo> downloadedVideos=new ArrayList<>();
+        downloadedVideos.addAll(downloadVideos);
+        for (int i= 0 ;i< downloadVideos.size();i++){
+            if (downloadVideos.get(i).getDownloadType().equalsIgnoreCase(MediaTypeConstants.getInstance().getSeries()) || downloadVideos.get(i).getDownloadType().equalsIgnoreCase(MediaTypeConstants.getInstance().getEpisode())){
+                Logger.e("AppCommon", downloadVideos.get(i).getDownloadType()+"  "+Integer.parseInt(downloadVideos.get(i).getEpisodeCount()));
+                if (Integer.parseInt(downloadVideos.get(i).getEpisodeCount())>0){
+
+                }else {
+                    downloadedVideos.remove(i);
+                    downloadHelper.deleteVideo(downloadVideos.get(i).getVideoId());
+                }
+            }
+        }
+        return downloadedVideos;
+    }
+
+    public static String getProfileUserName(UserProfileResponse userProfileResponse) {
+        String name="";
+        if (userProfileResponse!=null && userProfileResponse.getData().getName()!=null && !userProfileResponse.getData().getName().equalsIgnoreCase("")){
+            name=userProfileResponse.getData().getName();
+        }
+        return name;
+    }
+
+    public static String getProfileUserNumber(UserProfileResponse userProfileResponse) {
+        String number="";
+        if (userProfileResponse!=null && userProfileResponse.getData().getPhoneNumber()!=null && !((String)userProfileResponse.getData().getPhoneNumber()).equalsIgnoreCase("")){
+            number=(String)userProfileResponse.getData().getPhoneNumber();
+        }
+        return number;
+    }
+
+    public static String getProfileUserGender(UserProfileResponse userProfileResponse) {
+        String gender="";
+        if (userProfileResponse!=null && userProfileResponse.getData().getGender()!=null && !((String)userProfileResponse.getData().getGender()).equalsIgnoreCase("")){
+            gender=(String)userProfileResponse.getData().getGender();
+        }
+        return gender;
+    }
+
+    public static String getProfileUserDOB(UserProfileResponse userProfileResponse) {
+        String gender="";
+
+        if (userProfileResponse!=null && userProfileResponse.getData().getDateOfBirth()!=null){
+            double longVv = (double) userProfileResponse.getData().getDateOfBirth();
+            DecimalFormat df = new DecimalFormat("#");
+            df.setMaximumFractionDigits(0);
+            long ll = Long.parseLong(df.format(longVv));
+            gender = String.valueOf(ll);
+            String dateStrings = android.text.format.DateFormat.format("yyyy/MM/dd", new Date(ll)).toString();
+            Log.w("dateOfBirth",gender+"------"+dateStrings);
+        }
+        return gender;
+    }
+
+    public static String getProfileUserAddress(UserProfileResponse userProfileResponse) {
+        String address="";
+        if (userProfileResponse!=null && userProfileResponse.getData().getCustomData()!=null && userProfileResponse.getData().getCustomData().getAddress()!=null && !((String)userProfileResponse.getData().getCustomData().getAddress()).equalsIgnoreCase("")){
+            address=(String) userProfileResponse.getData().getCustomData().getAddress();
+        }
+        return address;
+    }
+
+    public static List<String> createPrefrenceList(UserProfileResponse newObject) {
+        List<String> strings=new ArrayList<>();
+        if (newObject.getData().getCustomData()!=null && newObject.getData().getCustomData().getContentPreferences()!=null
+        ){
+           strings  = Arrays.asList(newObject.getData().getCustomData().getContentPreferences().split("\\s*,\\s*"));
+        }
+
+        return strings;
+    }
+
+    public static boolean check(String identifier, List<String> saved) {
+        boolean contains=false;
+        for (int i=0;i<saved.size();i++){
+            Log.w("savedata6",saved.get(i)+"-"+identifier+"    "+i);
+            if (saved.get(i).equalsIgnoreCase(identifier)){
+                contains=true;
+                break;
+            }else {
+                contains=false;
+            }
+        }
+        return contains;
+    }
 }

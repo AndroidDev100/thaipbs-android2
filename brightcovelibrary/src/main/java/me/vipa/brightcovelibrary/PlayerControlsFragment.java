@@ -79,6 +79,7 @@ public class PlayerControlsFragment extends Fragment {
     public ImageView backArrow;
     private View seekBarControl, settingControl;
     public ImageView fullscreen;
+    private TextView liveTag;
     private long playbackDuration, playbackCurrentPosition;
     private String playerState = "";
     private Activity activity;
@@ -227,7 +228,7 @@ public class PlayerControlsFragment extends Fragment {
         subtitles.setVisibility(View.GONE);
         Log.w("captionHide", "sendPortraitCallback");
         playerSettingIcon.setVisibility(View.GONE);
-        media_route_button.setVisibility(View.GONE);
+        media_route_button.setVisibility(View.VISIBLE);
         audioTracks.setVisibility(View.GONE);
         fullscreen.setBackgroundResource(R.drawable.full_screen);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -247,6 +248,18 @@ public class PlayerControlsFragment extends Fragment {
         backArrow.setLayoutParams(params1);
         //settingLay.setLayoutParams(params1);
 
+        try {
+                       RelativeLayout.LayoutParams params2 = new RelativeLayout.LayoutParams(
+                                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                                        LinearLayout.LayoutParams.WRAP_CONTENT
+                                       );
+                        params2.setMargins(0, 10, 60, 0);
+                       params2.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                       settingLay.setLayoutParams(params2);
+                  }catch (Exception ignored){
+
+                            }
+
         Utils.setParamsResetSkipButton(skipBtn);
         //  Utils.setParamstoSettinIcon(playerSettingIcon);
 
@@ -255,7 +268,11 @@ public class PlayerControlsFragment extends Fragment {
     void sendLandscapeCallback() {
         try {
             fullscreen.setBackgroundResource(R.drawable.exit_full_screen);
-            playerSettingIcon.setVisibility(View.VISIBLE);
+            if (videoType.equalsIgnoreCase("1")){
+                playerSettingIcon.setVisibility(View.INVISIBLE);
+            }else {
+                playerSettingIcon.setVisibility(View.VISIBLE);
+            }
 //            media_route_button.setVsibility(View.VISIBLE);
             if (isCaptionAvailable) {
                 Log.w("captionHide", "sendLandscapeCallbackif");
@@ -284,7 +301,7 @@ public class PlayerControlsFragment extends Fragment {
     }
 
     void showControls() {
-        Log.w("IMATAG", "showControls");
+        Log.w("CONTROLSVIDEO", videoType);
         childControl.setVisibility(View.VISIBLE);
         backArrow.setVisibility(View.VISIBLE);
         if (videoType.equalsIgnoreCase("1")) {
@@ -303,8 +320,10 @@ public class PlayerControlsFragment extends Fragment {
         seekBar.setVisibility(View.INVISIBLE);
         audioTracks.setVisibility(View.GONE);
         subtitles.setVisibility(View.GONE);
+        pauseButton.setVisibility(View.GONE);
         Log.w("captionHide", "hideControlsForLive");
         settingControl.setVisibility(View.GONE);
+        liveTag.setVisibility(View.VISIBLE);
     }
 
     void hideControls() {
@@ -341,7 +360,11 @@ public class PlayerControlsFragment extends Fragment {
         }
         if (type.equalsIgnoreCase(EventType.COMPLETED)) {
             backArrow.setVisibility(View.VISIBLE);
-            replay.setVisibility(View.VISIBLE);
+            if (videoType.equalsIgnoreCase("1")){
+                replay.setVisibility(View.GONE);
+            }else {
+                replay.setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -638,6 +661,7 @@ public class PlayerControlsFragment extends Fragment {
         totalDuration = (TextView) view.findViewById(R.id.exo_duration);
         skipTxt = (TextView) view.findViewById(R.id.skipTxt);
         seekBar = (DefaultTimeBar) view.findViewById(R.id.exo_progress);
+        liveTag = (TextView) view.findViewById(R.id.tag);
         controlLayout = view.findViewById(R.id.controlslayout);
         childControl = (ConstraintLayout) view.findViewById(R.id.childControl);
         audioTracks = (RelativeLayout) view.findViewById(R.id.audio_tracks);
@@ -647,7 +671,7 @@ public class PlayerControlsFragment extends Fragment {
         settingControl = (View) view.findViewById(R.id.playerSetting);
         fullscreen = (ImageView) view.findViewById(R.id.fullscreen);
         settingLay = (LinearLayout) view.findViewById(R.id.settingLay);
-        if (isOffline)
+        if (isOffline && from==1)
             fullscreen.setVisibility(View.GONE);
         else
             fullscreen.setVisibility(View.VISIBLE);
@@ -659,13 +683,18 @@ public class PlayerControlsFragment extends Fragment {
         hideControls();
     }
 
-    public void setIsOffline(boolean isOffline) {
+    int from=0;
+    public void setIsOffline(boolean isOffline,int from) {
         this.isOffline = isOffline;
+        this.from=from;
         if (fullscreen != null) {
-            if (isOffline)
-                fullscreen.setVisibility(View.GONE);
-            else
+            if (isOffline){
+                if (from==1){
+                    fullscreen.setVisibility(View.GONE);
+                }
+            } else{
                 fullscreen.setVisibility(View.VISIBLE);
+            }
         }
     }
 
