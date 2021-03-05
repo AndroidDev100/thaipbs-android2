@@ -3,10 +3,14 @@ package me.vipa.app.repository.bookmarking;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import me.vipa.app.beanModel.userProfile.UserProfileResponse;
+import me.vipa.app.networking.intercepter.ErrorCodesIntercepter;
 import me.vipa.baseCollection.baseCategoryServices.BaseCategoryServices;
 import me.vipa.bookmarking.bean.BookmarkingResponse;
 import me.vipa.bookmarking.bean.GetBookmarkResponse;
 import me.vipa.bookmarking.bean.continuewatching.GetContinueWatchingBean;
+
+import com.google.gson.Gson;
 import com.vipa.userManagement.callBacks.BookmarkingCallback;
 import com.vipa.userManagement.callBacks.GetBookmarkCallback;
 import com.vipa.userManagement.callBacks.GetContinueWatchingCallback;
@@ -118,16 +122,38 @@ public class BookmarkingRepository {
 
     public MutableLiveData<GetContinueWatchingBean> getContinueWatchingData(String token, int pageNumber, int pageSize) {
         MutableLiveData<GetContinueWatchingBean> bookmarkingResponseMutableLiveData = new MutableLiveData<>();
+
         BaseCategoryServices.Companion.getInstance().getContinueWatchingData(token,pageNumber,pageSize, new GetContinueWatchingCallback() {
             @Override
             public void success(boolean status, Response<GetContinueWatchingBean> getBookmarkResponse) {
-                bookmarkingResponseMutableLiveData.postValue(getBookmarkResponse.body());
+                GetContinueWatchingBean cl;
+                if (status){
+                    if (getBookmarkResponse!=null){
+                        if (getBookmarkResponse.code() == 200){
+
+                            Gson gson = new Gson();
+                            String tmp = gson.toJson(getBookmarkResponse.body());
+                            GetContinueWatchingBean profileItemBean = gson.fromJson(tmp, GetContinueWatchingBean.class);
+                            profileItemBean.setStatus(true);
+
+                            bookmarkingResponseMutableLiveData.postValue(profileItemBean);
+                        }else {
+                            cl = ErrorCodesIntercepter.getInstance().continueWatch(getBookmarkResponse);
+                            bookmarkingResponseMutableLiveData.postValue(cl);
+                        }
+                    }
+                }
+
+
+
             }
 
             @Override
             public void failure(boolean status, int errorCode, String message) {
-
-                bookmarkingResponseMutableLiveData.postValue(null);
+                GetContinueWatchingBean cl = new GetContinueWatchingBean();
+                cl.setStatus(false);
+                bookmarkingResponseMutableLiveData.postValue(cl);
+              //  bookmarkingResponseMutableLiveData.postValue(null);
 
             }
         });

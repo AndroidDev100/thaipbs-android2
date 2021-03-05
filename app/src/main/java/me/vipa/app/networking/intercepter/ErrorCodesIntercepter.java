@@ -20,6 +20,7 @@ import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 
 import org.json.JSONObject;
 
+import me.vipa.bookmarking.bean.continuewatching.GetContinueWatchingBean;
 import retrofit2.Response;
 
 public class ErrorCodesIntercepter {
@@ -553,5 +554,28 @@ public class ErrorCodesIntercepter {
             purchaseResponseModel.setDebugMessage(MvHubPlusApplication.getInstance().getResources().getString(R.string.something_went_wrong_at_our_end));
         }
         return purchaseResponseModel;
+    }
+
+    public GetContinueWatchingBean continueWatch(Response<GetContinueWatchingBean> response) {
+        GetContinueWatchingBean empty = new GetContinueWatchingBean();
+        try {
+            JSONObject errorObject = new JSONObject(response.errorBody().string());
+            if (errorObject.getInt("responseCode") != 0) {
+                int code = errorObject.getInt("responseCode");
+                if (code == 4302) {
+                    empty.setStatus(false);
+                    empty.setResponseCode(Long.valueOf(4302));
+                    empty.setDebugMessage(MvHubPlusApplication.getInstance().getResources().getString(R.string.you_are_logged_out));
+                } else if (code == 500) {
+                    empty.setStatus(false);
+                    empty.setResponseCode(Long.valueOf(500));
+                    empty.setDebugMessage(MvHubPlusApplication.getInstance().getResources().getString(R.string.something_went_wrong_at_our_end));
+                }
+            }
+        } catch (Exception ignored) {
+            empty.setResponseCode(Long.valueOf(500));
+            empty.setDebugMessage(MvHubPlusApplication.getInstance().getResources().getString(R.string.something_went_wrong_at_our_end));
+        }
+        return empty;
     }
 }

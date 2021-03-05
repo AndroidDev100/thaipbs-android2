@@ -8,12 +8,20 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import me.vipa.app.activities.homeactivity.ui.HomeActivity;
+import me.vipa.app.activities.usermanagment.ui.ForceLoginFbActivity;
+import me.vipa.app.fragments.dialog.AlertDialogFragment;
+import me.vipa.app.fragments.dialog.AlertDialogSingleButtonFragment;
+import me.vipa.app.utils.helpers.CheckInternetConnection;
+import me.vipa.app.utils.helpers.ToastHandler;
+import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
 import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
 import me.vipa.bookmarking.bean.continuewatching.ContinueWatchingBookmark;
 import me.vipa.enums.ImageType;
@@ -68,7 +76,7 @@ import me.vipa.bookmarking.bean.continuewatching.ContinueWatchingBookmark;
 import me.vipa.enums.ImageType;
 
 
-public class GridActivity extends BaseBindingActivity<ListingActivityBinding> implements ItemClickListener {
+public class GridActivity extends BaseBindingActivity<ListingActivityBinding> implements ItemClickListener, AlertDialogFragment.AlertDialogListener {
     String playListId;
     BaseCategory baseCategory;
     int enveuLayoutType = 0;
@@ -92,6 +100,8 @@ public class GridActivity extends BaseBindingActivity<ListingActivityBinding> im
     private int shimmerType;
     private RailCommonData listData;
     private long mLastClickTime = 0;
+    private boolean isloggedout = false;
+    private KsPreferenceKeys preference;
 
     @Override
     public ListingActivityBinding inflateBindingLayout(@NonNull LayoutInflater inflater) {
@@ -102,6 +112,7 @@ public class GridActivity extends BaseBindingActivity<ListingActivityBinding> im
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        preference = KsPreferenceKeys.getInstance();
         title = getIntent().getStringExtra("title");
         isContinueWatchingEnable = getIntent().getExtras().getBoolean("isContinueWatching");
         playListId = getIntent().getStringExtra("playListId");
@@ -194,7 +205,12 @@ public class GridActivity extends BaseBindingActivity<ListingActivityBinding> im
         getBinding().toolbar.backLayout.setOnClickListener(view -> GridActivity.this.finish());
         getBinding().toolbar.titleText.setVisibility(View.VISIBLE);
         if (isContinueWatchingEnable){
-            getBinding().toolbar.screenText.setText(title+" "+"for"+" "+ KsPreferenceKeys.getInstance().getAppPrefUserName());
+            boolean loginStatus = preference.getAppPrefLoginStatus().equalsIgnoreCase(AppConstants.UserStatus.Login.toString());
+            if (loginStatus) {
+                getBinding().toolbar.screenText.setText(title + " " + "for" + " " + KsPreferenceKeys.getInstance().getAppPrefUserName());
+            }else {
+                new ActivityLauncher(GridActivity.this).homeScreen(GridActivity.this, HomeActivity.class);
+            }
         }else {
             getBinding().toolbar.screenText.setText(title);
         }
@@ -287,52 +303,73 @@ public class GridActivity extends BaseBindingActivity<ListingActivityBinding> im
                         BookmarkingViewModel bookmarkingViewModel = ViewModelProviders.of(this).get(BookmarkingViewModel.class);
                         bookmarkingViewModel.getContinueWatchingData(token, counter, AppConstants.PAGE_SIZE).observe(this, getContinueWatchingBean -> {
                             getBinding().transparentLayout.setVisibility(View.GONE);
-                            String videoIds = "";
-                            try {
-                                List<ContinueWatchingBookmark> continueWatchingBookmarkLists = getContinueWatchingBean.getData().getContinueWatchingBookmarks();
-                                List<ContinueWatchingBookmark> continueWatchingBookmarkList =  removeDuplicates(continueWatchingBookmarkLists);
-                                for (ContinueWatchingBookmark continueWatchingBookmark : continueWatchingBookmarkList
-                                ) {
-                                    videoIds = videoIds.concat(String.valueOf(continueWatchingBookmark.getAssetId())).concat(",");
-                                }
-                                Logger.w("assetIds",videoIds);
+                            if (getContinueWatchingBean != null) {
+                                if (getContinueWatchingBean.isStatus()) {
 
-                                ContinueWatchingLayer.getInstance().getContinueWatchingVideos(continueWatchingBookmarkList, videoIds, new CommonApiCallBack() {
-                                    @Override
-                                    public void onSuccess(Object item) {
-                                        getBinding().transparentLayout.setVisibility(View.GONE);
-                                        if (item instanceof List) {
-                                            ArrayList<DataItem> enveuVideoDetails = (ArrayList<DataItem>) item;
-                                            RailCommonData railCommonData = new RailCommonData();
-                                            railCommonData.setContinueWatchingData(baseCategory,true, enveuVideoDetails, new CommonApiCallBack() {
-                                                @Override
-                                                public void onSuccess(Object item) {
-                                                    setRail(railCommonData);
-                                                }
-
-                                                @Override
-                                                public void onFailure(Throwable throwable) {
-                                                }
-
-                                                @Override
-                                                public void onFinish() {
-
-                                                }
-                                            });
+                                    String videoIds = "";
+                                    try {
+                                        List<ContinueWatchingBookmark> continueWatchingBookmarkLists = getContinueWatchingBean.getData().getContinueWatchingBookmarks();
+                                        List<ContinueWatchingBookmark> continueWatchingBookmarkList = removeDuplicates(continueWatchingBookmarkLists);
+                                        for (ContinueWatchingBookmark continueWatchingBookmark : continueWatchingBookmarkList
+                                        ) {
+                                            videoIds = videoIds.concat(String.valueOf(continueWatchingBookmark.getAssetId())).concat(",");
                                         }
+                                        Logger.w("assetIds", videoIds);
+
+                                        ContinueWatchingLayer.getInstance().getContinueWatchingVideos(continueWatchingBookmarkList, videoIds, new CommonApiCallBack() {
+                                            @Override
+                                            public void onSuccess(Object item) {
+                                                getBinding().transparentLayout.setVisibility(View.GONE);
+                                                if (item instanceof List) {
+                                                    ArrayList<DataItem> enveuVideoDetails = (ArrayList<DataItem>) item;
+                                                    RailCommonData railCommonData = new RailCommonData();
+                                                    railCommonData.setContinueWatchingData(baseCategory, true, enveuVideoDetails, new CommonApiCallBack() {
+                                                        @Override
+                                                        public void onSuccess(Object item) {
+                                                            setRail(railCommonData);
+                                                        }
+
+                                                        @Override
+                                                        public void onFailure(Throwable throwable) {
+                                                        }
+
+                                                        @Override
+                                                        public void onFinish() {
+
+                                                        }
+                                                    });
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onFailure(Throwable throwable) {
+                                            }
+
+                                            @Override
+                                            public void onFinish() {
+
+                                            }
+                                        });
+
+                                    } catch (Exception ignored) {
+
                                     }
+                                } else if (getContinueWatchingBean.getResponseCode() == 4302){
+                                    isloggedout = true;
+                                    logoutCall();
+                                    try {
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                new ActivityLauncher(GridActivity.this).homeScreen(GridActivity.this, HomeActivity.class);
+                                            }
+                                        });
+                                    } catch (Exception e) {
 
-                                    @Override
-                                    public void onFailure(Throwable throwable) {
                                     }
-
-                                    @Override
-                                    public void onFinish() {
-
-                                    }
-                                });
-                            }catch (Exception ignored){
-
+                                }else if (getContinueWatchingBean.getResponseCode() == 500) {
+                                    showDialog(GridActivity.this.getResources().getString(R.string.error), GridActivity.this.getResources().getString(R.string.something_went_wrong));
+                                }
                             }
 
                         });
@@ -389,6 +426,15 @@ public class GridActivity extends BaseBindingActivity<ListingActivityBinding> im
 
         }
 
+    }
+
+    private void logoutCall() {
+        if (CheckInternetConnection.isOnline(Objects.requireNonNull(this))) {
+            clearCredientials(preference);
+            hitApiLogout(this, preference.getAppPrefAccessToken());
+        } else {
+            // new ToastHandler(this).show(getResources().getString(R.string.no_internet_connection));
+        }
     }
 
     private List<ContinueWatchingBookmark> removeDuplicates(List<ContinueWatchingBookmark> continueWatchingBookmarkList) {
@@ -792,6 +838,28 @@ public class GridActivity extends BaseBindingActivity<ListingActivityBinding> im
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
+    }
+
+    @Override
+    public void onFinishDialog() {
+        if (isloggedout) {
+            logoutCall();
+        } else {
+            onBackPressed();
+        }
+    }
+
+    private void showDialog(String title, String message) {
+        FragmentManager fm = getSupportFragmentManager();
+        AlertDialogSingleButtonFragment alertDialog = AlertDialogSingleButtonFragment.newInstance(title, message, getResources().getString(R.string.ok));
+        alertDialog.setCancelable(false);
+        alertDialog.setAlertDialogCallBack(this);
+        alertDialog.show(fm, "fragment_alert");
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }
 

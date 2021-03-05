@@ -12,6 +12,16 @@ public class GetContinueWatchingBean {
     @SerializedName("responseCode")
     private Long mResponseCode;
 
+    boolean status;
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
     public Data getData() {
         return mData;
     }
