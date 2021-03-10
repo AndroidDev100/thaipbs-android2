@@ -5,6 +5,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import me.vipa.app.beanModel.enveuCommonRailData.videoAsset.CustomFields;
+
 public class VideosItem {
     @SerializedName("dateCreated")
     @Expose
@@ -50,6 +52,7 @@ public class VideosItem {
     private Object longDescription;
     @SerializedName("title")
     @Expose
+
     private String title;
     @SerializedName("status")
     @Expose
