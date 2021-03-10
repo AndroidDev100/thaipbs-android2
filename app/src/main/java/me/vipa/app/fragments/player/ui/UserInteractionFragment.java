@@ -259,7 +259,7 @@ public class UserInteractionFragment extends BaseBindingFragment<DetailWatchlist
             return;
         }
         mLastClickTime = SystemClock.elapsedRealtime();
-
+        imgUrl = AppCommonMethod.getBranchUrl(imgUrl,getActivity());
         AppCommonMethod.copyShareURL(getActivity(), title, id, assetType, imgUrl, seriesDetailBean.getSeriesId()  == null ? "" : seriesDetailBean.getSeriesId(), seriesDetailBean.getSeason());
 
         new Handler().postDelayed(() -> {

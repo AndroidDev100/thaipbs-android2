@@ -806,8 +806,8 @@ public class AppCommonMethod {
 
     public static String getBranchUrl(String posterURL, Context context) {
         PrintLogging.printLog("", "PRPosterImage-->>" + posterURL);
-        int w = (int) context.getResources().getDimension(R.dimen.list_sqr_width);
-        int h = (int) context.getResources().getDimension(R.dimen.list_sqr_width);
+        int w = (int) context.getResources().getDimension(R.dimen.splash_width);
+        int h = (int) context.getResources().getDimension(R.dimen.splash_width);
         return setImage(posterURL, w + "x" + h);
     }
 
