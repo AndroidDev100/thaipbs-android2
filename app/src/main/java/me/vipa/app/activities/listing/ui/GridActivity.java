@@ -487,7 +487,9 @@ public class GridActivity extends BaseBindingActivity<ListingActivityBinding> im
     private void setRail(RailCommonData playlistRailData) {
         getBinding().transparentLayout.setVisibility(View.GONE);
         if (isScrolling) {
-            setUiComponents(playlistRailData);
+            if (playlistRailData.getEnveuVideoItemBeans().size()>0 && playlistRailData.getEnveuVideoItemBeans()!=null) {
+                setUiComponents(playlistRailData);
+            }
             getBinding().progressBar.setVisibility(View.GONE);
         } else {
             getBinding().progressBar.setVisibility(View.GONE);
@@ -718,9 +720,11 @@ public class GridActivity extends BaseBindingActivity<ListingActivityBinding> im
                     mIsLoading = playlistRailData.getMaxContent() != commonPotraitTwoAdapter.getItemCount();
 
                 } else if (baseCategory.getContentImageType().equalsIgnoreCase(ImageType.LDS.name())) {
+                        if (commonLandscapeAdapter!=null) {
+                            commonLandscapeAdapter.notifydata(playlistRailData.getEnveuVideoItemBeans());
+                            mIsLoading = playlistRailData.getMaxContent() != commonLandscapeAdapter.getItemCount();
+                        }
 
-                    commonLandscapeAdapter.notifydata(playlistRailData.getEnveuVideoItemBeans());
-                    mIsLoading = playlistRailData.getMaxContent() != commonLandscapeAdapter.getItemCount();
 
                 } else if (baseCategory.getContentImageType().equalsIgnoreCase(ImageType.LDS2.name())) {
 

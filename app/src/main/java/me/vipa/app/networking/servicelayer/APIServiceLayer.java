@@ -69,7 +69,9 @@ public class APIServiceLayer {
 
     public synchronized static APIServiceLayer getInstance() {
         if (projectRepository == null) {
-            endpoint = RequestConfig.getEnveuClient().create(ApiInterface.class);
+            if (RequestConfig.getEnveuClient()!=null) {
+                endpoint = RequestConfig.getEnveuClient().create(ApiInterface.class);
+            }
 
             projectRepository = new APIServiceLayer();
         }
@@ -106,50 +108,54 @@ public class APIServiceLayer {
     public MutableLiveData<EnveuCommonResponse> getPlayListById(String playListId, int pageNumber, int pageSize) {
         MutableLiveData<EnveuCommonResponse> enveuCommonResponseMutableLiveData = new MutableLiveData<>();
         languageCode = LanguageLayer.getCurrentLanguageCode();
-        endpoint.getPlaylistDetailsById(playListId, languageCode, pageNumber, pageSize).enqueue(new Callback<EnveuCommonResponse>() {
-            @Override
-            public void onResponse(Call<EnveuCommonResponse> call, Response<EnveuCommonResponse> response) {
-                if (response.isSuccessful()) {
-                    if (response.body() != null && response.body().getData() != null) {
-                        if (response.body().getResponseCode() == 2000)
-                            enveuCommonResponseMutableLiveData.postValue(response.body());
-                        else {
-                            enveuCommonResponseMutableLiveData.postValue(null);
+        if (endpoint!=null) {
+            endpoint.getPlaylistDetailsById(playListId, languageCode, pageNumber, pageSize).enqueue(new Callback<EnveuCommonResponse>() {
+                @Override
+                public void onResponse(Call<EnveuCommonResponse> call, Response<EnveuCommonResponse> response) {
+                    if (response.isSuccessful()) {
+                        if (response.body() != null && response.body().getData() != null) {
+                            if (response.body().getResponseCode() == 2000)
+                                enveuCommonResponseMutableLiveData.postValue(response.body());
+                            else {
+                                enveuCommonResponseMutableLiveData.postValue(null);
+                            }
                         }
+                    } else {
+                        enveuCommonResponseMutableLiveData.postValue(null);
                     }
-                } else {
+                }
+
+                @Override
+                public void onFailure(Call<EnveuCommonResponse> call, Throwable t) {
+                    Logger.e("API RESPONSE ERROR", t.getMessage());
                     enveuCommonResponseMutableLiveData.postValue(null);
                 }
-            }
-
-            @Override
-            public void onFailure(Call<EnveuCommonResponse> call, Throwable t) {
-                Logger.e("API RESPONSE ERROR", t.getMessage());
-                enveuCommonResponseMutableLiveData.postValue(null);
-            }
-        });
+            });
+        }
         return enveuCommonResponseMutableLiveData;
     }
 
     public void getAssetTypeHero(String manualImageAssetId, CommonApiCallBack commonApiCallBack) {
         languageCode = LanguageLayer.getCurrentLanguageCode();
-        endpoint.getVideoDetails(manualImageAssetId, languageCode).enqueue(new Callback<EnveuVideoDetailsBean>() {
-            @Override
-            public void onResponse(Call<EnveuVideoDetailsBean> call, Response<EnveuVideoDetailsBean> response) {
-                if (response.isSuccessful()) {
-                    commonApiCallBack.onSuccess(response.body().getData());
-                } else {
+        if (endpoint!=null) {
+            endpoint.getVideoDetails(manualImageAssetId, languageCode).enqueue(new Callback<EnveuVideoDetailsBean>() {
+                @Override
+                public void onResponse(Call<EnveuVideoDetailsBean> call, Response<EnveuVideoDetailsBean> response) {
+                    if (response.isSuccessful()) {
+                        commonApiCallBack.onSuccess(response.body().getData());
+                    } else {
+                        commonApiCallBack.onFailure(new Throwable("Details Not Found"));
+
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<EnveuVideoDetailsBean> call, Throwable t) {
                     commonApiCallBack.onFailure(new Throwable("Details Not Found"));
 
                 }
-            }
-
-            @Override
-            public void onFailure(Call<EnveuVideoDetailsBean> call, Throwable t) {
-                commonApiCallBack.onFailure(new Throwable("Details Not Found"));
-
-            }
-        });
+            });
+        }
     }
 
     public void getPlayListByWithPagination(String playlistID,
@@ -159,25 +165,27 @@ public class APIServiceLayer {
         this.callBack = listener;
         callBack.onStart();
         languageCode = LanguageLayer.getCurrentLanguageCode();
-        endpoint.getPlaylistDetailsById(playlistID, languageCode, pageNumber, pageSize).enqueue(new Callback<EnveuCommonResponse>() {
-            @Override
-            public void onResponse(Call<EnveuCommonResponse> call, Response<EnveuCommonResponse> response) {
-                if (response.body() != null && response.body().getData() != null) {
-                    RailCommonData railCommonData = new RailCommonData(response.body().getData(), screenWidget, true);
-                    railCommonData.setStatus(true);
-                    callBack.onSuccess(railCommonData);
-                } else {
-                    ApiErrorModel errorModel = new ApiErrorModel(response.code(), response.message());
-                    callBack.onError(errorModel);
+        if (endpoint!=null) {
+            endpoint.getPlaylistDetailsById(playlistID, languageCode, pageNumber, pageSize).enqueue(new Callback<EnveuCommonResponse>() {
+                @Override
+                public void onResponse(Call<EnveuCommonResponse> call, Response<EnveuCommonResponse> response) {
+                    if (response.body() != null && response.body().getData() != null) {
+                        RailCommonData railCommonData = new RailCommonData(response.body().getData(), screenWidget, true);
+                        railCommonData.setStatus(true);
+                        callBack.onSuccess(railCommonData);
+                    } else {
+                        ApiErrorModel errorModel = new ApiErrorModel(response.code(), response.message());
+                        callBack.onError(errorModel);
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<EnveuCommonResponse> call, Throwable t) {
-                ApiErrorModel errorModel = new ApiErrorModel(500, t.getMessage());
-                callBack.onFailure(errorModel);
-            }
-        });
+                @Override
+                public void onFailure(Call<EnveuCommonResponse> call, Throwable t) {
+                    ApiErrorModel errorModel = new ApiErrorModel(500, t.getMessage());
+                    callBack.onFailure(errorModel);
+                }
+            });
+        }
 
     }
 
@@ -187,18 +195,20 @@ public class APIServiceLayer {
         this.callBack = listener;
         callBack.onStart();
         languageCode = LanguageLayer.getCurrentLanguageCode();
-        endpoint.getRelatedContent(seriesId, seasonNumber, pageNumber, size, languageCode).enqueue(new Callback<EnveuCommonResponse>() {
-            @Override
-            public void onResponse(Call<EnveuCommonResponse> call, Response<EnveuCommonResponse> response) {
-                parseResponseAsRailCommonData(response);
-            }
+        if (endpoint!=null) {
+            endpoint.getRelatedContent(seriesId, seasonNumber, pageNumber, size, languageCode).enqueue(new Callback<EnveuCommonResponse>() {
+                @Override
+                public void onResponse(Call<EnveuCommonResponse> call, Response<EnveuCommonResponse> response) {
+                    parseResponseAsRailCommonData(response);
+                }
 
-            @Override
-            public void onFailure(Call<EnveuCommonResponse> call, Throwable t) {
-                ApiErrorModel errorModel = new ApiErrorModel(500, t.getMessage());
-                callBack.onFailure(errorModel);
-            }
-        });
+                @Override
+                public void onFailure(Call<EnveuCommonResponse> call, Throwable t) {
+                    ApiErrorModel errorModel = new ApiErrorModel(500, t.getMessage());
+                    callBack.onFailure(errorModel);
+                }
+            });
+        }
 
     }
 
@@ -207,21 +217,23 @@ public class APIServiceLayer {
         this.callBack = listener;
         callBack.onStart();
         languageCode = LanguageLayer.getCurrentLanguageCode();
-        endpoint.getRelatedContentWithoutSNo(seriesId, pageNumber, size, languageCode).enqueue(new Callback<EnveuCommonResponse>() {
-            @Override
-            public void onResponse(Call<EnveuCommonResponse> call, Response<EnveuCommonResponse> response) {
-                Gson gson = new Gson();
-                String json = gson.toJson(response.body());
-                Logger.w("EpisodesListResponse", json + "");
-                parseResponseAsRailCommonData(response);
-            }
+        if (endpoint!=null) {
+            endpoint.getRelatedContentWithoutSNo(seriesId, pageNumber, size, languageCode).enqueue(new Callback<EnveuCommonResponse>() {
+                @Override
+                public void onResponse(Call<EnveuCommonResponse> call, Response<EnveuCommonResponse> response) {
+                    Gson gson = new Gson();
+                    String json = gson.toJson(response.body());
+                    Logger.w("EpisodesListResponse", json + "");
+                    parseResponseAsRailCommonData(response);
+                }
 
-            @Override
-            public void onFailure(Call<EnveuCommonResponse> call, Throwable t) {
-                ApiErrorModel errorModel = new ApiErrorModel(500, t.getMessage());
-                callBack.onFailure(errorModel);
-            }
-        });
+                @Override
+                public void onFailure(Call<EnveuCommonResponse> call, Throwable t) {
+                    ApiErrorModel errorModel = new ApiErrorModel(500, t.getMessage());
+                    callBack.onFailure(errorModel);
+                }
+            });
+        }
 
     }
 
@@ -253,32 +265,34 @@ public class APIServiceLayer {
         this.callBack = listener;
         callBack.onStart();
         languageCode = LanguageLayer.getCurrentLanguageCode();
-        endpoint.getVideoDetails(assetID, languageCode).enqueue(new Callback<EnveuVideoDetailsBean>() {
-            @Override
-            public void onResponse(Call<EnveuVideoDetailsBean> call, Response<EnveuVideoDetailsBean> response) {
-                if (response.isSuccessful()) {
-                    Gson gson = new Gson();
-                    String json = gson.toJson(response.body());
-                    Logger.w("VideoDetailResponse", json + "");
+        if (endpoint!=null) {
+            endpoint.getVideoDetails(assetID, languageCode).enqueue(new Callback<EnveuVideoDetailsBean>() {
+                @Override
+                public void onResponse(Call<EnveuVideoDetailsBean> call, Response<EnveuVideoDetailsBean> response) {
+                    if (response.isSuccessful()) {
+                        Gson gson = new Gson();
+                        String json = gson.toJson(response.body());
+                        Logger.w("VideoDetailResponse", json + "");
 
-                    if (response.body().getData() instanceof EnveuVideoDetails) {
-                        RailCommonData railCommonData = new RailCommonData();
-                        AppCommonMethod.getAssetDetail(railCommonData, response);
-                        callBack.onSuccess(railCommonData);
+                        if (response.body().getData() instanceof EnveuVideoDetails) {
+                            RailCommonData railCommonData = new RailCommonData();
+                            AppCommonMethod.getAssetDetail(railCommonData, response);
+                            callBack.onSuccess(railCommonData);
+                        }
+
+                    } else {
+                        ApiErrorModel errorModel = new ApiErrorModel(response.code(), response.message());
+                        callBack.onError(errorModel);
                     }
-
-                } else {
-                    ApiErrorModel errorModel = new ApiErrorModel(response.code(), response.message());
-                    callBack.onError(errorModel);
                 }
-            }
 
-            @Override
-            public void onFailure(Call<EnveuVideoDetailsBean> call, Throwable t) {
-                ApiErrorModel errorModel = new ApiErrorModel(500, t.getMessage());
-                callBack.onFailure(errorModel);
-            }
-        });
+                @Override
+                public void onFailure(Call<EnveuVideoDetailsBean> call, Throwable t) {
+                    ApiErrorModel errorModel = new ApiErrorModel(500, t.getMessage());
+                    callBack.onFailure(errorModel);
+                }
+            });
+        }
 
     }
 
@@ -286,99 +300,105 @@ public class APIServiceLayer {
                                                                     int pageNumber, int pageSize, BaseCategory screenWidget) {
         MutableLiveData<RailCommonData> railCommonDataMutableLiveData = new MutableLiveData<>();
         languageCode = LanguageLayer.getCurrentLanguageCode();
-        endpoint.getPlaylistDetailsById(playlistID, languageCode, pageNumber, pageSize).enqueue(new Callback<EnveuCommonResponse>() {
-            @Override
-            public void onResponse(Call<EnveuCommonResponse> call, Response<EnveuCommonResponse> response) {
-                if (response.body() != null && response.body().getData() != null) {
-                    RailCommonData railCommonData = new RailCommonData(response.body().getData(), screenWidget, true);
-                    railCommonData.setStatus(true);
-                    railCommonDataMutableLiveData.postValue(railCommonData);
-                } else {
+        if (endpoint!=null) {
+            endpoint.getPlaylistDetailsById(playlistID, languageCode, pageNumber, pageSize).enqueue(new Callback<EnveuCommonResponse>() {
+                @Override
+                public void onResponse(Call<EnveuCommonResponse> call, Response<EnveuCommonResponse> response) {
+                    if (response.body() != null && response.body().getData() != null) {
+                        RailCommonData railCommonData = new RailCommonData(response.body().getData(), screenWidget, true);
+                        railCommonData.setStatus(true);
+                        railCommonDataMutableLiveData.postValue(railCommonData);
+                    } else {
+                        RailCommonData railCommonData = new RailCommonData();
+                        railCommonData.setStatus(false);
+                        Logger.e("APIRESPONSEERROR", response.message());
+                        railCommonDataMutableLiveData.postValue(railCommonData);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<EnveuCommonResponse> call, Throwable t) {
                     RailCommonData railCommonData = new RailCommonData();
                     railCommonData.setStatus(false);
-                    Logger.e("APIRESPONSEERROR", response.message());
+                    Logger.e("APIRESPONSEERROR", t.getMessage());
                     railCommonDataMutableLiveData.postValue(railCommonData);
                 }
-            }
-
-            @Override
-            public void onFailure(Call<EnveuCommonResponse> call, Throwable t) {
-                RailCommonData railCommonData = new RailCommonData();
-                railCommonData.setStatus(false);
-                Logger.e("APIRESPONSEERROR", t.getMessage());
-                railCommonDataMutableLiveData.postValue(railCommonData);
-            }
-        });
+            });
+        }
         return railCommonDataMutableLiveData;
 
     }
 
     public void getContinueWatchingVideos(List<ContinueWatchingBookmark> continueWatchingBookmarkList, String manualImageAssetId, CommonApiCallBack commonApiCallBack) {
         languageCode = LanguageLayer.getCurrentLanguageCode();
-        endpoint.getVideos(manualImageAssetId, languageCode).enqueue(new Callback<ContinueWatchingModel>() {
-            @Override
-            public void onResponse(Call<ContinueWatchingModel> call, Response<ContinueWatchingModel> response) {
-                if (response.isSuccessful()) {
-                    ArrayList<DataItem> enveuVideoDetailsArrayList = new ArrayList<>();
-                    ArrayList<DataItem> enveuVideoDetails = (ArrayList<DataItem>) response.body().getData();
+        if (endpoint!=null) {
+            endpoint.getVideos(manualImageAssetId, languageCode).enqueue(new Callback<ContinueWatchingModel>() {
+                @Override
+                public void onResponse(Call<ContinueWatchingModel> call, Response<ContinueWatchingModel> response) {
+                    if (response.isSuccessful()) {
+                        ArrayList<DataItem> enveuVideoDetailsArrayList = new ArrayList<>();
+                        ArrayList<DataItem> enveuVideoDetails = (ArrayList<DataItem>) response.body().getData();
 
-                    for (ContinueWatchingBookmark continueWatchingBookmark : continueWatchingBookmarkList) {
-                        for (DataItem enveuVideoDetail : enveuVideoDetails) {
+                        for (ContinueWatchingBookmark continueWatchingBookmark : continueWatchingBookmarkList) {
+                            for (DataItem enveuVideoDetail : enveuVideoDetails) {
 
-                            if (continueWatchingBookmark.getAssetId().intValue() == enveuVideoDetail.getId()) {
-                                if (continueWatchingBookmark.getPosition() != null)
-                                    enveuVideoDetail.setPosition(continueWatchingBookmark.getPosition());
-                                enveuVideoDetailsArrayList.add(enveuVideoDetail);
+                                if (continueWatchingBookmark.getAssetId().intValue() == enveuVideoDetail.getId()) {
+                                    if (continueWatchingBookmark.getPosition() != null)
+                                        enveuVideoDetail.setPosition(continueWatchingBookmark.getPosition());
+                                    enveuVideoDetailsArrayList.add(enveuVideoDetail);
+                                }
                             }
                         }
+                        commonApiCallBack.onSuccess(enveuVideoDetailsArrayList);
+                    } else {
+                        commonApiCallBack.onFailure(new Throwable("Details Not Found"));
+
                     }
-                    commonApiCallBack.onSuccess(enveuVideoDetailsArrayList);
-                } else {
+                }
+
+                @Override
+                public void onFailure(Call<ContinueWatchingModel> call, Throwable t) {
                     commonApiCallBack.onFailure(new Throwable("Details Not Found"));
 
                 }
-            }
-
-            @Override
-            public void onFailure(Call<ContinueWatchingModel> call, Throwable t) {
-                commonApiCallBack.onFailure(new Throwable("Details Not Found"));
-
-            }
-        });
+            });
+        }
     }
 
     public void getWatchListVideos(List<ItemsItem> continueWatchingBookmarkList, String manualImageAssetId, CommonApiCallBack commonApiCallBack) {
         languageCode = LanguageLayer.getCurrentLanguageCode();
-        endpoint.getVideos(manualImageAssetId, languageCode).enqueue(new Callback<ContinueWatchingModel>() {
-            @Override
-            public void onResponse(Call<ContinueWatchingModel> call, Response<ContinueWatchingModel> response) {
-                if (response.body() != null && response.isSuccessful()) {
-                    Logger.e("WATCH RESPONSE", new Gson().toJson(response.isSuccessful()));
-                    ArrayList<DataItem> enveuVideoDetailsArrayList = new ArrayList<>();
-                    ArrayList<DataItem> enveuVideoDetails = (ArrayList<DataItem>) response.body().getData();
+        if (endpoint!=null) {
+            endpoint.getVideos(manualImageAssetId, languageCode).enqueue(new Callback<ContinueWatchingModel>() {
+                @Override
+                public void onResponse(Call<ContinueWatchingModel> call, Response<ContinueWatchingModel> response) {
+                    if (response.body() != null && response.isSuccessful()) {
+                        Logger.e("WATCH RESPONSE", new Gson().toJson(response.isSuccessful()));
+                        ArrayList<DataItem> enveuVideoDetailsArrayList = new ArrayList<>();
+                        ArrayList<DataItem> enveuVideoDetails = (ArrayList<DataItem>) response.body().getData();
 
-                    for (ItemsItem item :
-                            continueWatchingBookmarkList) {
-                        for (DataItem enveuVideoDetail :
-                                enveuVideoDetails) {
-                            if (item.getAssetId() == enveuVideoDetail.getId()) {
-                                enveuVideoDetailsArrayList.add(enveuVideoDetail);
+                        for (ItemsItem item :
+                                continueWatchingBookmarkList) {
+                            for (DataItem enveuVideoDetail :
+                                    enveuVideoDetails) {
+                                if (item.getAssetId() == enveuVideoDetail.getId()) {
+                                    enveuVideoDetailsArrayList.add(enveuVideoDetail);
+                                }
                             }
                         }
+                        commonApiCallBack.onSuccess(enveuVideoDetailsArrayList);
+                    } else {
+                        commonApiCallBack.onFailure(new Throwable("Details Not Found"));
+
                     }
-                    commonApiCallBack.onSuccess(enveuVideoDetailsArrayList);
-                } else {
+                }
+
+                @Override
+                public void onFailure(Call<ContinueWatchingModel> call, Throwable t) {
                     commonApiCallBack.onFailure(new Throwable("Details Not Found"));
 
                 }
-            }
-
-            @Override
-            public void onFailure(Call<ContinueWatchingModel> call, Throwable t) {
-                commonApiCallBack.onFailure(new Throwable("Details Not Found"));
-
-            }
-        });
+            });
+        }
 
     }
 
