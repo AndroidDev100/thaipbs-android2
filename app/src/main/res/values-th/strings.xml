@@ -180,6 +180,7 @@
     <string name="delete_from_watchlist">คุณแน่ใจหรือไม่ที่จะลบวีดีโอนี้ออกจากรายการของฉัน?</string>
     <string name="you_are_logged_out">คุณออกจากระบบแล้ว</string>
     <string name="number_Cannot_change">เบอร์โทรศัพท์ไม่สามารถเปลี่ยนได้หลังจากสมัครสมาชิกแล้ว</string>
+    <string name="already_exist_number">มีผู้ใช้ที่มีหมายเลขโทรศัพท์นี้แล้ว</string>
     <string name="error">พบข้อผิดพลาด</string>
     <string name="forgot_pwd">ลืมพาสเวิร์ด</string>
     <string name="share">แบ่งปัน</string>

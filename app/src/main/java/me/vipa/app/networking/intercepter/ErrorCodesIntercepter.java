@@ -257,6 +257,10 @@ public class ErrorCodesIntercepter {
                     empty.setStatus(false);
                     empty.setResponseCode(4019);
                     empty.setDebugMessage(MvHubPlusApplication.getInstance().getResources().getString(R.string.number_Cannot_change));
+                }else if (code == 4901){
+                    empty.setStatus(false);
+                    empty.setResponseCode(4901);
+                    empty.setDebugMessage(MvHubPlusApplication.getInstance().getResources().getString(R.string.already_exist_number));
                 }
             }
         } catch (Exception ignored) {

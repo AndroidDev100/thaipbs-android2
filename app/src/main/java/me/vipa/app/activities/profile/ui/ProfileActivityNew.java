@@ -213,8 +213,11 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
                                 }
 
                                 // showDialog(getResources().getString(R.string.logged_out), getResources().getString(R.string.you_are_logged_out));
-                            }
-                            if (userProfileResponse.getDebugMessage() != null) {
+                            }else if (userProfileResponse.getResponseCode() == 4019){
+                                showDialog(ProfileActivityNew.this.getResources().getString(R.string.error), ProfileActivityNew.this.getResources().getString(R.string.number_Cannot_change));
+                            }else if (userProfileResponse.getResponseCode() == 4901){
+                                showDialog(ProfileActivityNew.this.getResources().getString(R.string.error), ProfileActivityNew.this.getResources().getString(R.string.already_exist_number));
+                            }else if (userProfileResponse.getDebugMessage() != null) {
                                 showDialog(ProfileActivityNew.this.getResources().getString(R.string.error), userProfileResponse.getDebugMessage().toString());
                             } else {
                                 showDialog(ProfileActivityNew.this.getResources().getString(R.string.error), ProfileActivityNew.this.getResources().getString(R.string.something_went_wrong));
