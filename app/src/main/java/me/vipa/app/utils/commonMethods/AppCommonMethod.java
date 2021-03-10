@@ -1420,7 +1420,6 @@ public class AppCommonMethod {
             long ll = Long.parseLong(df.format(longVv));
             gender = String.valueOf(ll);
             String dateStrings = android.text.format.DateFormat.format("yyyy/MM/dd", new Date(ll)).toString();
-            Log.w("dateOfBirth",gender+"------"+dateStrings);
         }
         return gender;
     }
