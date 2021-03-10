@@ -18,10 +18,12 @@ import androidx.core.app.NotificationManagerCompat;
 
 import java.util.List;
 
+import me.vipa.app.BuildConfig;
 import me.vipa.app.SDKConfig;
 import me.vipa.app.activities.contentPreference.UI.ContentPreference;
 import me.vipa.app.activities.contentPreference.UI.SettingContentPreferences;
 import me.vipa.app.activities.settings.downloadsettings.DownloadSettings;
+import me.vipa.app.activities.splash.ui.ActivitySplash;
 import me.vipa.app.activities.videoquality.ui.ChangeLanguageActivity;
 import me.vipa.app.activities.videoquality.ui.VideoQualityActivity;
 import me.vipa.app.baseModels.BaseBindingActivity;
@@ -56,6 +58,21 @@ public class ActivitySettings extends BaseBindingActivity<SettingsActivityBindin
             setTheme(R.style.MyMaterialTheme_Base_Dark);
             getBinding().switchTheme.setChecked(true);
         }
+
+        try {
+            boolean isTablet = ActivitySettings.this.getResources().getBoolean(R.bool.isTablet);
+           // getBinding().buildNumber.setVisibility(View.GONE);
+            if (!isTablet) {
+                if (BuildConfig.FLAVOR.equalsIgnoreCase("dev")) {
+                    getBinding().buildNumber.setText(ActivitySettings.this.getResources().getString(R.string.app_name) + "-QA" +"(" +BuildConfig.VERSION_NAME+")");
+                }else {
+                    getBinding().buildNumber.setText(ActivitySettings.this.getResources().getString(R.string.app_name) + "("+BuildConfig.VERSION_NAME+")");
+                }
+            }
+        }catch (Exception ignored){
+
+        }
+
         isNotificationEnable = areNotificationsEnabled();
         setSwitchForNotification();
         setSwitchForBingeWatch();
@@ -273,7 +290,7 @@ public class ActivitySettings extends BaseBindingActivity<SettingsActivityBindin
         super.onResume();
         isNotificationEnable = areNotificationsEnabled();
         setSwitchForNotification();
-       // getBinding().notificationSetting.setOnCheckedChangeListener(this);
+
     }
 
     @Override
