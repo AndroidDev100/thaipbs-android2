@@ -11,7 +11,9 @@ import me.vipa.baseCollection.baseCategoryServices.BaseCategoryServices;
 import me.vipa.bookmarking.bean.continuewatching.ContinueWatchingBookmark;
 import me.vipa.callBacks.EnveuCallBacks;
 import me.vipa.watchHistory.beans.ItemsItem;
+
 import com.google.gson.Gson;
+
 import me.vipa.app.beanModel.enveuCommonRailData.RailCommonData;
 import me.vipa.app.beanModelV3.continueWatching.ContinueWatchingModel;
 import me.vipa.app.beanModelV3.continueWatching.DataItem;
@@ -68,6 +70,7 @@ public class APIServiceLayer {
     public synchronized static APIServiceLayer getInstance() {
         if (projectRepository == null) {
             endpoint = RequestConfig.getEnveuClient().create(ApiInterface.class);
+
             projectRepository = new APIServiceLayer();
         }
         return projectRepository;
@@ -224,10 +227,10 @@ public class APIServiceLayer {
 
     private void parseResponseAsRailCommonData(Response<EnveuCommonResponse> response) {
         if (response.body() != null && response.body().getData() != null) {
-            if (response.body() != null && response.body().getData().getPageNumber()==0 && response.body() != null && response.body().getData().getTotalElements()==0){
+            if (response.body() != null && response.body().getData().getPageNumber() == 0 && response.body() != null && response.body().getData().getTotalElements() == 0) {
                 ApiErrorModel errorModel = new ApiErrorModel(500, "");
                 callBack.onError(errorModel);
-            }else {
+            } else {
                 RailCommonData railCommonData = new RailCommonData(response.body().getData());
                 railCommonData.setStatus(true);
                 try {

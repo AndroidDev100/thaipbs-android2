@@ -695,45 +695,49 @@ public class GridActivity extends BaseBindingActivity<ListingActivityBinding> im
     }
 
     private void setUiComponents(RailCommonData playlistRailData) {
-        if (playlistRailData.getEnveuVideoItemBeans().size() > 0) {
-            if (baseCategory.getContentImageType().equalsIgnoreCase(ImageType.CIR.name())) {
-                commonCircleAdapter.notifydata(playlistRailData.getEnveuVideoItemBeans());
-                mIsLoading = playlistRailData.getMaxContent() != commonCircleAdapter.getItemCount();
+        if (playlistRailData.getEnveuVideoItemBeans()!=null) {
+            if (playlistRailData.getEnveuVideoItemBeans().size() > 0) {
+                if (baseCategory.getContentImageType().equalsIgnoreCase(ImageType.CIR.name())) {
+                    commonCircleAdapter.notifydata(playlistRailData.getEnveuVideoItemBeans());
+                    mIsLoading = playlistRailData.getMaxContent() != commonCircleAdapter.getItemCount();
 
-            } else if (baseCategory.getContentImageType().equalsIgnoreCase(ImageType.SQR.name())) {
-                if (squareCommonAdapter != null) {
-                    squareCommonAdapter.notifydata(playlistRailData.getEnveuVideoItemBeans());
-                    mIsLoading = playlistRailData.getMaxContent() != squareCommonAdapter.getItemCount();
+                } else if (baseCategory.getContentImageType().equalsIgnoreCase(ImageType.SQR.name())) {
+                    if (squareCommonAdapter != null) {
+                        squareCommonAdapter.notifydata(playlistRailData.getEnveuVideoItemBeans());
+                        mIsLoading = playlistRailData.getMaxContent() != squareCommonAdapter.getItemCount();
+                    }
+
+                } else if (baseCategory.getContentImageType().equalsIgnoreCase(ImageType.PR1.name())) {
+
+                    commonPotraitAdapter.notifydata(playlistRailData.getEnveuVideoItemBeans());
+                    mIsLoading = playlistRailData.getMaxContent() != commonPotraitAdapter.getItemCount();
+
+                } else if (baseCategory.getContentImageType().equalsIgnoreCase(ImageType.PR2.name())) {
+
+                    commonPotraitTwoAdapter.notifydata(playlistRailData.getEnveuVideoItemBeans());
+                    mIsLoading = playlistRailData.getMaxContent() != commonPotraitTwoAdapter.getItemCount();
+
+                } else if (baseCategory.getContentImageType().equalsIgnoreCase(ImageType.LDS.name())) {
+
+                    commonLandscapeAdapter.notifydata(playlistRailData.getEnveuVideoItemBeans());
+                    mIsLoading = playlistRailData.getMaxContent() != commonLandscapeAdapter.getItemCount();
+
+                } else if (baseCategory.getContentImageType().equalsIgnoreCase(ImageType.LDS2.name())) {
+
+                    commonLandscapeAdapter.notifydata(playlistRailData.getEnveuVideoItemBeans());
+                    mIsLoading = playlistRailData.getMaxContent() != commonLandscapeAdapter.getItemCount();
+
+                } else if (baseCategory.getContentImageType().equalsIgnoreCase(ImageType.PR1.name())) {
+                    commonPosterPotraitAdapter.notifydata(playlistRailData.getEnveuVideoItemBeans());
+                    mIsLoading = playlistRailData.getMaxContent() != commonPosterPotraitAdapter.getItemCount();
+
+                } else {
+                    commonLandscapeAdapter.notifydata(playlistRailData.getEnveuVideoItemBeans());
+                    mIsLoading = playlistRailData.getMaxContent() != commonLandscapeAdapter.getItemCount();
+
                 }
-
-            } else if (baseCategory.getContentImageType().equalsIgnoreCase(ImageType.PR1.name())) {
-
-                commonPotraitAdapter.notifydata(playlistRailData.getEnveuVideoItemBeans());
-                mIsLoading = playlistRailData.getMaxContent() != commonPotraitAdapter.getItemCount();
-
-            } else if (baseCategory.getContentImageType().equalsIgnoreCase(ImageType.PR2.name())) {
-
-                commonPotraitTwoAdapter.notifydata(playlistRailData.getEnveuVideoItemBeans());
-                mIsLoading = playlistRailData.getMaxContent() != commonPotraitTwoAdapter.getItemCount();
-
-            } else if (baseCategory.getContentImageType().equalsIgnoreCase(ImageType.LDS.name())) {
-
-                commonLandscapeAdapter.notifydata(playlistRailData.getEnveuVideoItemBeans());
-                mIsLoading = playlistRailData.getMaxContent() != commonLandscapeAdapter.getItemCount();
-
-            } else if (baseCategory.getContentImageType().equalsIgnoreCase(ImageType.LDS2.name())) {
-
-                commonLandscapeAdapter.notifydata(playlistRailData.getEnveuVideoItemBeans());
-                mIsLoading = playlistRailData.getMaxContent() != commonLandscapeAdapter.getItemCount();
-
-            } else if (baseCategory.getContentImageType().equalsIgnoreCase(ImageType.PR1.name())) {
-                commonPosterPotraitAdapter.notifydata(playlistRailData.getEnveuVideoItemBeans());
-                mIsLoading = playlistRailData.getMaxContent() != commonPosterPotraitAdapter.getItemCount();
-
-            } else {
-                commonLandscapeAdapter.notifydata(playlistRailData.getEnveuVideoItemBeans());
-                mIsLoading = playlistRailData.getMaxContent() != commonLandscapeAdapter.getItemCount();
-
+            }else {
+                mIsLoading=false;
             }
         }else {
             mIsLoading=false;
