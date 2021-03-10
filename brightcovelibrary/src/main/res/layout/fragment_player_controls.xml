@@ -78,7 +78,7 @@
                         android:layout_height="wrap_content"
                         android:padding="4dp"
                         android:src="@drawable/player_setting_icon"
-                        android:visibility="invisible" />
+                         />
 
                 </RelativeLayout>
 

@@ -227,7 +227,7 @@ public class PlayerControlsFragment extends Fragment {
     void sendPortraitCallback() {
         subtitles.setVisibility(View.GONE);
         Log.w("captionHide", "sendPortraitCallback");
-        playerSettingIcon.setVisibility(View.GONE);
+        playerSettingIcon.setVisibility(View.VISIBLE);
         media_route_button.setVisibility(View.VISIBLE);
         audioTracks.setVisibility(View.GONE);
         fullscreen.setBackgroundResource(R.drawable.full_screen);
