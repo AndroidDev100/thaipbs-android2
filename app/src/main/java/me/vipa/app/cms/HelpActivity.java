@@ -56,6 +56,8 @@ public class HelpActivity extends BaseBindingActivity<ActivityHelpBinding> {
             new ToolBarHandler(this).setHelpAction(getBinding(), HelpActivity.this.getResources().getString(R.string.about_us));
         }else if (type.equalsIgnoreCase("6")){
             new ToolBarHandler(this).setHelpAction(getBinding(), HelpActivity.this.getResources().getString(R.string.feedback));
+        }else if (type.equalsIgnoreCase("7")){
+            new ToolBarHandler(this).setHelpAction(getBinding(), HelpActivity.this.getResources().getString(R.string.other_application));
         }
         getBinding().toolbar.backLayout.setOnClickListener(v -> {
             onBackPressed();
@@ -92,7 +94,11 @@ public class HelpActivity extends BaseBindingActivity<ActivityHelpBinding> {
         }else if (type.equalsIgnoreCase("6")) {
 
             url = SDKConfig.getInstance().getFEEDBACK_URL();
-        } else {
+        }else if (type.equalsIgnoreCase("7")) {
+
+            url = "https://play.google.com/store/apps/dev?id=7373346074773014663";
+        }
+        else {
             url = "https://www.google.co.in/";
         }
         Log.e("LOAD ERROR", url);

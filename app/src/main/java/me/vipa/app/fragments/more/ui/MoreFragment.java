@@ -380,7 +380,8 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
         }else if (caption.equals(getString(R.string.feedback))) {
             Objects.requireNonNull(getActivity()).startActivity(new Intent(getActivity(), HelpActivity.class).putExtra("type", "6"));
         } else if (caption.equals(getString(R.string.other_application))) {
-            new ActivityLauncher(getActivity()).otherActivity(getActivity(), OtherApplication.class);
+            Objects.requireNonNull(getActivity()).startActivity(new Intent(getActivity(), HelpActivity.class).putExtra("type", "7"));
+          //  new ActivityLauncher(getActivity()).otherActivity(getActivity(), OtherApplication.class);
         } else if (caption.equals(getString(R.string.my_watchlist))) {
 
             if (loginStatus)
