@@ -127,7 +127,6 @@ public class APIServiceLayer {
 
                 @Override
                 public void onFailure(Call<EnveuCommonResponse> call, Throwable t) {
-                    Logger.e("API RESPONSE ERROR", t.getMessage());
                     enveuCommonResponseMutableLiveData.postValue(null);
                 }
             });
@@ -223,7 +222,6 @@ public class APIServiceLayer {
                 public void onResponse(Call<EnveuCommonResponse> call, Response<EnveuCommonResponse> response) {
                     Gson gson = new Gson();
                     String json = gson.toJson(response.body());
-                    Logger.w("EpisodesListResponse", json + "");
                     parseResponseAsRailCommonData(response);
                 }
 
@@ -272,7 +270,6 @@ public class APIServiceLayer {
                     if (response.isSuccessful()) {
                         Gson gson = new Gson();
                         String json = gson.toJson(response.body());
-                        Logger.w("VideoDetailResponse", json + "");
 
                         if (response.body().getData() instanceof EnveuVideoDetails) {
                             RailCommonData railCommonData = new RailCommonData();
@@ -311,7 +308,6 @@ public class APIServiceLayer {
                     } else {
                         RailCommonData railCommonData = new RailCommonData();
                         railCommonData.setStatus(false);
-                        Logger.e("APIRESPONSEERROR", response.message());
                         railCommonDataMutableLiveData.postValue(railCommonData);
                     }
                 }
@@ -320,7 +316,6 @@ public class APIServiceLayer {
                 public void onFailure(Call<EnveuCommonResponse> call, Throwable t) {
                     RailCommonData railCommonData = new RailCommonData();
                     railCommonData.setStatus(false);
-                    Logger.e("APIRESPONSEERROR", t.getMessage());
                     railCommonDataMutableLiveData.postValue(railCommonData);
                 }
             });
@@ -372,7 +367,6 @@ public class APIServiceLayer {
                 @Override
                 public void onResponse(Call<ContinueWatchingModel> call, Response<ContinueWatchingModel> response) {
                     if (response.body() != null && response.isSuccessful()) {
-                        Logger.e("WATCH RESPONSE", new Gson().toJson(response.isSuccessful()));
                         ArrayList<DataItem> enveuVideoDetailsArrayList = new ArrayList<>();
                         ArrayList<DataItem> enveuVideoDetails = (ArrayList<DataItem>) response.body().getData();
 
@@ -453,7 +447,6 @@ public class APIServiceLayer {
                     public void onNext(List<ResponseSearch> data) {
                         mModel = new ArrayList<>();
                         try {
-                            Logger.e("valueOfSearch", "" + data.size());
                             for (int i = 0; i < data.size(); i++) {
                                 RailCommonData railCommonData = null;
                                 if (data != null) {
@@ -534,7 +527,6 @@ public class APIServiceLayer {
                         RailCommonData railCommonData = null;
                         if (data != null) {
                             railCommonData = new RailCommonData();
-                            Logger.e("SearchData", new Gson().toJson(data.body().getData()));
                             if (data.body().getData() != null && data.body().getData().getItems() != null) {
                                 railCommonData.setStatus(true);
                                 List<me.vipa.app.beanModelV3.searchV2.ItemsItem> itemsItem = data.body().getData().getItems();
