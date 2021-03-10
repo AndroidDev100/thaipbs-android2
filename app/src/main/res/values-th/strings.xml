@@ -175,7 +175,7 @@
     <string name="all_episode">ตอนทั้งหมด</string>
     <string name="video_streaming">VIDEO STREAMING PLATFORM</string>
 
-    <string name="tab_heading_other">เนื้อหาอื่น ๆ ที่ใกล้เคียงกับเนื้อหานี้</string>
+    <string name="tab_heading_other">เนื้อหาแนะนำ</string>
     <string name="download_settings">ตั้งค่าดาวน์โหลด</string>
     <string name="delete_from_watchlist">คุณแน่ใจหรือไม่ที่จะลบวีดีโอนี้ออกจากรายการของฉัน?</string>
     <string name="you_are_logged_out">คุณออกจากระบบแล้ว</string>
