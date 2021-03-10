@@ -532,6 +532,7 @@ public class UserInteractionFragment extends BaseBindingFragment<DetailWatchlist
         }
         mLastClickTime = SystemClock.elapsedRealtime();
 
+        imgUrl = AppCommonMethod.getBranchUrl(imgUrl,getActivity());
         AppCommonMethod.openShareDialog(getActivity(), title, id, assetType, imgUrl, seriesDetailBean.getSeriesId()  == null ? "" : seriesDetailBean.getSeriesId(), seriesDetailBean.getSeason());
 
         new Handler().postDelayed(() -> {
