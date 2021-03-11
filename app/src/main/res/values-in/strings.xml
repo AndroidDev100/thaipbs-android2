@@ -264,7 +264,8 @@
     <string name="delete_from_watchhistory_error">Video can not be removed  from Watchhistory</string>
     <string name="delete_from_watch_list_message">Video removed from Watch List</string>
     <string name="delete_from_watch_list_message_error">Video can not be removed from Watch List</string>
-    <string name="player_error">We could not process your request, Please try again later</string>
+    <string name="player_error">Sorry, We could not process your request. Please try again later.</string>
+    <string name="geo_block_error">Sorry, this is not available in your area or country</string>
 
     <string name="change_language_message">Anda akan mengubah bahasa. Ini akan menerjemahkan seluruh antarmuka.\n\n Anda dapat mengubah bahasa Anda kapan saja di Pengaturan</string>
     <string name="change_language">Ganti BAHASA</string>

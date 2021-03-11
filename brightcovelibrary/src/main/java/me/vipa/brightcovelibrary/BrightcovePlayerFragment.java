@@ -53,6 +53,7 @@ import com.brightcove.player.captioning.preferences.CaptionConstants;
 import com.brightcove.player.display.ExoPlayerVideoDisplayComponent;
 import com.brightcove.player.display.VideoDisplayComponent;
 import com.brightcove.player.edge.Catalog;
+import com.brightcove.player.edge.CatalogError;
 import com.brightcove.player.edge.VideoListener;
 import com.brightcove.player.event.Event;
 import com.brightcove.player.event.EventEmitter;
@@ -430,11 +431,19 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                     // cast(video);
                 }
 
+//                @Override
+//                public void onError(String error) {
+//                    super.onError(error);
+//                    if (!baseVideoView.isPlaying())
+//                        showErrorDialog(error);
+//                }
+
                 @Override
-                public void onError(String error) {
-                    super.onError(error);
+                public void onError(@NonNull List<CatalogError> errors) {
+                    super.onError(errors);
                     if (!baseVideoView.isPlaying())
-                        showErrorDialog(error);
+                        Log.d("gtgtgtgt",errors.get(0).getCatalogErrorSubcode());
+                        showErrorDialog(errors.get(0).getCatalogErrorSubcode());
                 }
             });
         } else {

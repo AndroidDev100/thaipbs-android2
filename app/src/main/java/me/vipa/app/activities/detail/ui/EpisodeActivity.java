@@ -454,6 +454,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
 
                 }
             });
+            changeTabsFont();
 
         } else {
             Bundle bundleSeason = new Bundle();
@@ -478,6 +479,26 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
             seasonTabFragment.getVideoRails(bundleSeason);
         }
 
+    }
+
+    private void changeTabsFont() {
+        //  Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/"+ Constants.FontStyle);
+        try {
+            ViewGroup vg = (ViewGroup) getBinding().tabLayout.getChildAt(0);
+            int tabsCount = vg.getChildCount();
+            for (int j = 0; j < tabsCount; j++) {
+                ViewGroup vgTab = (ViewGroup) vg.getChildAt(j);
+                int tabChildsCount = vgTab.getChildCount();
+                for (int i = 0; i < tabChildsCount; i++) {
+                    View tabViewChild = vgTab.getChildAt(i);
+                    if (tabViewChild instanceof TextView) {
+                        ((TextView) tabViewChild).setSingleLine();
+                    }
+                }
+            }
+        }catch (Exception ignored){
+
+        }
     }
 
 
