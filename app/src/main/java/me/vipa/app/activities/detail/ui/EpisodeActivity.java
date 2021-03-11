@@ -1851,31 +1851,44 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
     @Override
     public void onPlayerError(String error) {
         try {
+            Log.d("PlayerError",error);
+            String errorMessage= "";
+
             getBinding().backButton.setVisibility(View.VISIBLE);
             getBinding().pBar.setVisibility(View.GONE);
-            String errorMessage = getString(R.string.player_error);
+          //  String errorMessage = getString(R.string.player_error);
+
+
+
             if (!NetworkConnectivity.isOnline(this)) {
                 if (!isOfflineAvailable) {
                     playerFragment.getBaseVideoView().pause();
                 }
             } else {
                 if (!errorDialogShown) {
-                    isPlayerError = true;
-                    errorDialogShown = true;
-                    FragmentManager fm = getSupportFragmentManager();
-                    errorDialog = AlertDialogSingleButtonFragment.newInstance("", errorMessage, getResources().getString(R.string.ok));
-                    errorDialog.setCancelable(false);
-                    errorDialog.setAlertDialogCallBack(new AlertDialogFragment.AlertDialogListener() {
-                        @Override
-                        public void onFinishDialog() {
-                            getBinding().backButton.setVisibility(View.VISIBLE);
-                            getBinding().playerImage.setVisibility(View.VISIBLE);
-                            ImageHelper.getInstance(EpisodeActivity.this).loadListImage(getBinding().playerImage, videoDetails.getPosterURL());
-                            isPlayerError = false;
-
+                    if (!error.equalsIgnoreCase("")) {
+                        if (error.equalsIgnoreCase("CLIENT_GEO")){
+                             errorMessage = getString(R.string.geo_block_error);
+                        }else {
+                              errorMessage = getString(R.string.player_error);
                         }
-                    });
-                    errorDialog.show(fm, "fragment_alert");
+                        isPlayerError = true;
+                        errorDialogShown = true;
+                        FragmentManager fm = getSupportFragmentManager();
+                        errorDialog = AlertDialogSingleButtonFragment.newInstance("", errorMessage, getResources().getString(R.string.ok));
+                        errorDialog.setCancelable(false);
+                        errorDialog.setAlertDialogCallBack(new AlertDialogFragment.AlertDialogListener() {
+                            @Override
+                            public void onFinishDialog() {
+                                getBinding().backButton.setVisibility(View.VISIBLE);
+                                getBinding().playerImage.setVisibility(View.VISIBLE);
+                                ImageHelper.getInstance(EpisodeActivity.this).loadListImage(getBinding().playerImage, videoDetails.getPosterURL());
+                                isPlayerError = false;
+
+                            }
+                        });
+                        errorDialog.show(fm, "fragment_alert");
+                    }
                 }
             }
         } catch (Exception e) {

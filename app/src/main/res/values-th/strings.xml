@@ -170,7 +170,7 @@
     <string name="title_live_tv">รายการสด</string>
     <string name="title_more1">หน้าโปรไฟล์</string>
     <string name="more">เพิ่มเติม</string>
-    <string name="player_error">เราไม่สามารถดำเนินการตามคำขอของคุณได้,โปรดลองอีกครั้งใ</string>
+    <string name="player_error">Sorry, We could not process your request. Please try again later.</string>
     <string name="geo_block_error">Sorry, this is not available in your area or country</string>
     <string name="tab_heading_episodes">ตอน</string>
     <string name="all_episode">ตอนทั้งหมด</string>

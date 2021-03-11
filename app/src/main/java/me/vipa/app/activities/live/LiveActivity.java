@@ -1299,12 +1299,12 @@ public class LiveActivity extends BaseBindingActivity<LiveDetailBinding> impleme
     @Override
     public void onPlayerError(String error) {
         try {
+            String errorMessage= "";
             getBinding().backButton.setVisibility(View.VISIBLE);
             getBinding().pBar.setVisibility(View.GONE);
             getBinding().playerImage.setVisibility(View.VISIBLE);
 
             //Toast.makeText(this, error, Toast.LENGTH_LONG).show();
-            String errorMessage = getString(R.string.player_error);
             if (!NetworkConnectivity.isOnline(this)) {
                 errorMessage = getString(R.string.no_internet_connection);
                 new ToastHandler(this).show(errorMessage);
@@ -1313,20 +1313,29 @@ public class LiveActivity extends BaseBindingActivity<LiveDetailBinding> impleme
                 }
             } else {
                 if (!errorDialogShown) {
-                    errorDialogShown = true;
-                    FragmentManager fm = getSupportFragmentManager();
-                    errorDialog = AlertDialogSingleButtonFragment.newInstance("", errorMessage, getResources().getString(R.string.ok));
-                    errorDialog.setCancelable(false);
-                    errorDialog.setAlertDialogCallBack(new AlertDialogFragment.AlertDialogListener() {
-                        @Override
-                        public void onFinishDialog() {
-                            getBinding().backButton.setVisibility(View.VISIBLE);
-                            getBinding().playerImage.setVisibility(View.VISIBLE);
-                            ImageHelper.getInstance(LiveActivity.this).loadListImage(getBinding().playerImage, videoDetails.getPosterURL());
-                            isPlayerError = false;
+                    if (!error.equalsIgnoreCase("")) {
+                        if (error.equalsIgnoreCase("CLIENT_GEO")) {
+                            errorMessage = getString(R.string.geo_block_error);
+                        } else {
+                            errorMessage = getString(R.string.player_error);
                         }
-                    });
-                    errorDialog.show(fm, "fragment_alert");
+
+
+                        errorDialogShown = true;
+                        FragmentManager fm = getSupportFragmentManager();
+                        errorDialog = AlertDialogSingleButtonFragment.newInstance("", errorMessage, getResources().getString(R.string.ok));
+                        errorDialog.setCancelable(false);
+                        errorDialog.setAlertDialogCallBack(new AlertDialogFragment.AlertDialogListener() {
+                            @Override
+                            public void onFinishDialog() {
+                                getBinding().backButton.setVisibility(View.VISIBLE);
+                                getBinding().playerImage.setVisibility(View.VISIBLE);
+                                ImageHelper.getInstance(LiveActivity.this).loadListImage(getBinding().playerImage, videoDetails.getPosterURL());
+                                isPlayerError = false;
+                            }
+                        });
+                        errorDialog.show(fm, "fragment_alert");
+                    }
                 }
             }
         } catch (Exception e) {

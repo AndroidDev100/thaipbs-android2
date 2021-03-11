@@ -1455,10 +1455,11 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
     @Override
     public void onPlayerError(String error) {
         try {
+            String errorMessage= "";
             getBinding().backButton.setVisibility(View.VISIBLE);
             getBinding().pBar.setVisibility(View.GONE);
-            Toast.makeText(this, error, Toast.LENGTH_LONG).show();
-            String errorMessage = getString(R.string.player_error);
+           // Toast.makeText(this, error, Toast.LENGTH_LONG).show();
+           // String errorMessage = getString(R.string.player_error);
             if (!NetworkConnectivity.isOnline(this)) {
                 errorMessage = getString(R.string.no_internet_connection);
                 if (!isOfflineAvailable) {
@@ -1466,6 +1467,12 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
                 }
             } else {
                 if (!errorDialogShown) {
+                    if (!error.equalsIgnoreCase("")){
+                        if (error.equalsIgnoreCase("CLIENT_GEO")) {
+                            errorMessage = getString(R.string.geo_block_error);
+                        } else {
+                            errorMessage = getString(R.string.player_error);
+                        }
                     isPlayerError = true;
                     errorDialogShown = true;
                     FragmentManager fm = getSupportFragmentManager();
@@ -1481,6 +1488,7 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
                         }
                     });
                     errorDialog.show(fm, "fragment_alert");
+                }
                 }
             }
         } catch (Exception e) {
