@@ -205,7 +205,7 @@
     <string name="per_Month">for 1 month</string>
     <string name="you_are_logged_out">You are logged out</string>
     <string name="number_Cannot_change">Phone Number cannot be changed after setting once</string>
-    <string name="already_exist_number">User with this phone number already exists</string>
+    <string name="already_exist_number">This mobile number is already taken. Please use a different mobile number</string>
     <string name="redeemed_success">Redeemed successfully.</string>
     <string name="error">Error</string>
     <string name="prime_memb_issue">VIPA Membership Issue</string>

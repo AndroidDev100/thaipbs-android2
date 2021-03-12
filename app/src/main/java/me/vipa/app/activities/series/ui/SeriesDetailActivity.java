@@ -830,6 +830,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
         int id = seriesDetailBean.getId();
         String title = seriesDetailBean.getTitle();
         Logger.e("openShareDialogue", new Gson().toJson(seriesDetailBean));
+        imgUrl = AppCommonMethod.getBranchUrl(imgUrl,SeriesDetailActivity.this);
         AppCommonMethod.openShareDialog(SeriesDetailActivity.this, title, id, MediaTypeConstants.getInstance().getSeries(), imgUrl, String.valueOf(seriesId), seriesDetailBean.getSeason());
         new Handler().postDelayed(() -> dismissLoading(getBinding().progressBar), 2000);
     }
