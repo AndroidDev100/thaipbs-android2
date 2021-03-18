@@ -32,11 +32,11 @@
 
 
 
-    <string name="change_language_message">คุณกำลังทำการเปลี่ยนภาษา การดำเนินการนี้จะเปลี่ยนแปลงเป็นภาษาที่คุณเลือก คุณสามารถเลือกกลับได้ในการตั้งค่า</string>
+    <string name="change_language_message">การดำเนินการนี้จะเปลี่ยนภาษาในแอปพลิเคชันตามที่คุณเลือก ต้องการเปลี่ยนแปลงหรือไม่?</string>
     <string name="change_language">เปลี่ยนภาษา</string>
     <string name="in_case_of_any">ในกรณีที่มีปัญหาใด ๆ</string>
     <string name="no_internet">ไม่พบการเชื่อมต่ออินเทอร์เน็ต</string>
-    <string name="wake_up_connection" >ปลุกการเชื่อมต่อของคุณ!</string>
+    <string name="wake_up_connection" >อุปกรณ์ของคุณออฟไลน์อยู่!</string>
     <string name="check_connection">ตรวจสอบการเชื่อมต่อ</string>
 
     <string name="confirm_password">ยืนยันรหัสผ่าน</string>
@@ -384,7 +384,7 @@
     <string name="heading_episodes">ตอน</string>
     <string name="live_tag">รายการสด</string>
     <string name="skip_intro">ข้ามตอนต้น</string>
-    <string name="streaming_settings">การตั้งค่าการสตรีม</string>
+    <string name="streaming_settings">การตั้งค่าความคมชัดเริ่มต้น</string>
     <string name="auto">อัตโนมัติ</string>
     <string name="low">ต่ำ</string>
     <string name="medium">กลาง</string>

@@ -17,9 +17,9 @@
     <string name="audio">Audio</string>
 
     <string name="auto">Auto</string>
-    <string name="low">Low</string>
-    <string name="medium">Medium</string>
-    <string name="high">High</string>
+    <string name="low">SD</string>
+    <string name="medium">HD</string>
+    <string name="high">Full HD</string>
     <string name="select_video_quality">Select Video Quality</string>
     <string name="cancel">Cancel</string>
     <string name="next_episode">Next Episode</string>

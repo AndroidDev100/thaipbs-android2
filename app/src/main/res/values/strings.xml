@@ -357,9 +357,9 @@
     <string name="streaming_settings">Streaming Settings</string>
 
     <string name="auto">Auto</string>
-    <string name="low">Low</string>
-    <string name="medium">Medium</string>
-    <string name="high">High</string>
+    <string name="low">SD</string>
+    <string name="medium">HD</string>
+    <string name="high">Full HD</string>
 
     <string name="enter_coupon_code">Enter a Coupon Code</string>
     <string name="coupon_code">Coupon Code</string>
