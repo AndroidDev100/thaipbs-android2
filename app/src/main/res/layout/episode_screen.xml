@@ -389,7 +389,7 @@
                             app:tabMode="fixed"
                             app:tabSelectedTextColor="@color/white"
                             app:tabTextColor="?attr/cancel_text_color"
-                            />
+                            app:tabTextAppearance="@style/CusromTabText"/>
                         <View
                             android:background="@color/description_grey"
                             android:layout_width="match_parent"
