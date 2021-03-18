@@ -39,7 +39,7 @@
     <string name="wake_up_connection" >ปลุกการเชื่อมต่อของคุณ!</string>
     <string name="check_connection">ตรวจสอบการเชื่อมต่อ</string>
 
-    <string name="confirm_password">ยืนยันพาสเวิร์ด</string>
+    <string name="confirm_password">ยืนยันรหัสผ่าน</string>
     <string name="profile">ข้อมูลของฉัน</string>
 
     <string name="download_quality">ความคมชัดของการดาวน์โหลด</string>
@@ -59,22 +59,23 @@
     <string name="password">รหัสผ่าน</string>รหัสผ่าน
 
     <string name="full_name">ชื่อ</string>
-    <string name="display_name">ใส่ชื่อที่ต้องการแสดง</string>
-    <string name="enter_email_address">ใส่อีเมล</string>
-    <string name="create_password">สร้างรหัสผ่านอย่างน้อย 6 ตัวอักษร</string>
+    <string name="display_name">ชื่อที่ต้องการแสดง</string>
+    <string name="enter_email_address">อีเมล</string>
+    <string name="create_password">รหัสผ่าน (อย่างน้อย 6 ตัวอักษร)</string>
     <string name="mobile_number">เบอร์โทรศัพท์มือถือ</string>
     <string name="mobile_error">กรุณาใส่หมายเลขโทรศัพท์ที่ถูกต้อง เช่น 0812345678 หรือ 66812345678</string>
     <string name="address">ที่อยู่</string>
     <string name="dob">วันเกิด</string>
     <string name="signup"><b><u>สมัครสมาชิก</u></b></string>
     <string name="login">เข้าสู่ระบบ</string>
-    <string name="sign_in_with_enveu">สมัครสมาชิก</string>
+    <string name="sign_in_with_enveu">เข้าสู่ระบบ</string>
     <string name="facebook">เฟสบุ๊ค</string>
-    <string name="sign_in_with_facebook">เข้าสู่ระบบด้วยเฟซบุ๊ก</string>
-    <string name="sign_up_with_facebook">ลงทะเบียนด้วยเฟซบุ๊ก</string>
+    <string name="sign_in_with_facebook">เข้าสู่ระบบด้วย Facebook</string>
+    <string name="sign_up_with_facebook">ลงทะเบียนด้วย Facebook</string>
     <string name="google">กูเกิ้ล</string>
-    <string name="register">ลงทะเบียนสมัครสมาชิก</string>
-    <string name="sign_in"><b><u>สมัครสมาชิก</u></b></string>
+    <string name="register">ลงทะเบียน</string>
+
+    <string name="sign_in"><b><u>เข้าสู่ระบบ</u></b></string>
     <string name="or_login_with">หรือเข้าระบบด้วย</string>
     <string name="or">หรือ</string>
     <string name="or_caps">- หรือ -</string>
@@ -82,7 +83,7 @@
     <string name="forgot_password">ลืมพาสเวิร์ด</string>
     <string name="forgot_password_u"><b><u>ลืมรหัสผ่าน?</u></b></string>
 
-    <string name="dont_have_an_account">ไม่มีบัญชีผู้ใช้?</string>
+    <string name="dont_have_an_account">ฉันไม่มีบัญชีผู้ใช้?</string>
     <string name="title_more">เพิ่มเติม</string>
 
     <string name="email_address">อีเมล</string>
@@ -100,7 +101,7 @@
     <string name="update">อัพเดท</string>
     <string name="connct_facebbook">เชื่อมต่อโดย เฟสบุ๊ค</string>
     <string name="detail_title">ขอขอบคุณที่ส่งคำขอ หากเราพบที่อยู่อีเมลในระบบของเรา เราจะส่งลิงก์รีเซ็ตไปทางอีเมล โปรดป้อนรหัสผ่านใหม่</string>
-    <string name="already_have_account_sign">มีบัญชีผู้ใช้งานหรือไม่?</string>
+    <string name="already_have_account_sign">ฉันมีบัญชีผู้ใช้งานอยู่แล้ว่?</string>
 
     <string name="cancel">ยกเลิก</string>
 
@@ -403,7 +404,7 @@
     <string name="select_genre">โปรดเลือกสิ่งที่คุณสนใจเพื่อให้ได้ผลลัพธ์ที่ดีที่สุด คุณสามารถเลือกได้หลายตัวเลือก (สูงสุด 5 ตัวเลือก)</string>
     <string name="finish">เสร็จสิ้น</string>
     <string name="date_difference">คุณต้องมีอายุ 13 ปีขึ้นไป.</string>
-    <string name="recieve_updates">ฉันต้องการรับข้อมูลจาก VIPA ในอนาคต</string>
+    <string name="recieve_updates">ในอนาคต ⇒ ฉันต้องการรับอีเมลจดหมายข่าวจาก VIPA</string>
     <string name="gender">เพศ</string>
     <string name="male">ชาย</string>
     <string name="female">หญิง</string>
