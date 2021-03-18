@@ -87,7 +87,7 @@
     <string name="title_more">เพิ่มเติม</string>
 
     <string name="email_address">อีเมล</string>
-    <string name="send_email">ส่งอีเมล</string>
+    <string name="send_email">ส่งคำขอเปลี่ยนรหัสผ่าน</string>
     <string name="save">บันทึก</string>
     <string name="new_password">รหัสผ่านใหม่</string>
 
@@ -100,7 +100,7 @@
 
     <string name="update">อัพเดท</string>
     <string name="connct_facebbook">เชื่อมต่อโดย เฟสบุ๊ค</string>
-    <string name="detail_title">ขอขอบคุณที่ส่งคำขอ หากเราพบที่อยู่อีเมลในระบบของเรา เราจะส่งลิงก์รีเซ็ตไปทางอีเมล โปรดป้อนรหัสผ่านใหม่</string>
+    <string name="detail_title">่คุณสามารถเปลี่ยนรหัสผ่านได้ใหม่ผ่านลิงก์สำหรับรีเซ็ตรหัสผ่านที่จะถูกส่งไปยังอีเมลที่คุณลงทะเบียนไว้""ระบุอีเมลของคุณ</string>
     <string name="already_have_account_sign">ฉันมีบัญชีผู้ใช้งานอยู่แล้ว่?</string>
 
     <string name="cancel">ยกเลิก</string>
@@ -111,14 +111,14 @@
     <string name="password_length">กรุณาระบุตัวอักษรภาษาอังกฤษอย่างน้อย 6 ตัว และมีตัวเลขอย่างน้อย 1 หลัก</string>
     <string name="valid_email">อีเมลไม่ถูกต้อง</string>
     <string name="empty_password">โปรดใส่รหัสผ่าน</string>
-    <string name="empty_string">โปรดใส่อีเมล</string>
+    <string name="empty_string">โปรดระบุอีเมล</string>
     <string name="credential_mismatch">ข้อมูลรับรองไม่ตรง!</string>
 
     <string name="email_check_signup">โปรดใส่อีเมล</string>
 
     <string name="empty_name">กรุณากรอกชื่อ</string>
 
-    <string name="forgot_password_response">ขอขอบคุณที่ส่งคำขอ หากเราพบที่อยู่อีเมลในระบบของเรา เราจะส่งลิงก์รีเซ็ตไปทางอีเมล โปรดป้อนรหัสผ่านใหม่์</string>
+    <string name="forgot_password_response">ระบบได้ส่งลิงก์รีเซ็ตรหัสผ่านให้คุณทางอีเมลเรียบร้อยแล้ว โปรดตรวจสอบอีเมลของคุณและเปลี่ยนแปลงรหัสผ่านใหม่ได้ผ่านลิงก์ดังกล่าว่์</string>
     <string name="purchased">ซื้อแล้ว</string>
     <string name="subscribed">เป็นสมาชิกแล้ว</string>
 
@@ -158,7 +158,7 @@
 
     <string name="email_id_cannot_be_blank">รหัสอีเมล์ไม่รองรับเว้นวรรค</string>
     <string name="invalid_email_id">อีเมลไม่ถูกต้อง</string>
-    <string name="user_does_not_exists">ผู้ใช้งานด้วยอีเมลนี้ไม่มีอยู่ในระบบ​</string>
+    <string name="user_does_not_exists">ไม่พบอีเมลของคุณในระบบ</string>
     <string name="user_deactivated">ผู้ใช้งานนี้ไม่สามารถใช้งานได้ โปรดติดต่อผู้ดูแลระบบ</string>
     <string name="user_can_not_login">ไม่สามารถเข้าสู่ระบบด้วยวิธีนี้</string>
     <string name="username_password_doest_match">ชื่อผู้ใช้งาน หรือรหัสผ่านไม่ตรง</string>

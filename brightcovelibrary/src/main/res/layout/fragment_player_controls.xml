@@ -186,7 +186,8 @@
                         android:src="@drawable/videobackicon"
                         android:text="@string/skip_intro"
                         android:textColor="@color/white"
-                        android:textSize="13dp" />
+                        android:textSize="13dp"
+                        android:fontFamily="@font/sukhumvittadmai_normal"/>
 
 
                 </LinearLayout>
@@ -256,7 +257,8 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
                     android:textSize="14dp"
-                    android:src="@drawable/videobackicon"/>
+                    android:src="@drawable/videobackicon"
+                    android:fontFamily="@font/sukhumvittadmai_normal"/>
 
                 <ImageView
                     android:id="@+id/pause_button"

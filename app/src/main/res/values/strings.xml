@@ -115,7 +115,7 @@
     <string name="name_validation_profile">Name is required</string>
     <string name="profile_update_successfully">Updated Successfully!</string>
     <string name="profile_registered_successfully">Registered Successfully!</string>
-    <string name="forgot_password_response">Thanks for putting the request. If we find the email address in our system, we will send the reset link over the mail</string>
+    <string name="forgot_password_response">Thanks for putting the request. If we find the email address in our system, we will send the reset link over the mail Please enter New Password</string>
 
 
     <string name="please_enter_new_password">Please enter New Password</string>

@@ -24,6 +24,7 @@
     <string name="cancel">Cancel</string>
     <string name="next_episode">Next Episode</string>
     <string name="live">Live</string>
+    <string name="skip_intro">Skip Intro</string>
 
 
 </resources>
