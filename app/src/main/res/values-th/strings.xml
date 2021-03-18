@@ -404,7 +404,7 @@
     <string name="select_genre">โปรดเลือกสิ่งที่คุณสนใจเพื่อให้ได้ผลลัพธ์ที่ดีที่สุด คุณสามารถเลือกได้หลายตัวเลือก (สูงสุด 5 ตัวเลือก)</string>
     <string name="finish">เสร็จสิ้น</string>
     <string name="date_difference">คุณต้องมีอายุ 13 ปีขึ้นไป.</string>
-    <string name="recieve_updates">ในอนาคต ⇒ ฉันต้องการรับอีเมลจดหมายข่าวจาก VIPA</string>
+    <string name="recieve_updates">ฉันต้องการรับอีเมลจดหมายข่าวจาก VIPA</string>
     <string name="gender">เพศ</string>
     <string name="male">ชาย</string>
     <string name="female">หญิง</string>
