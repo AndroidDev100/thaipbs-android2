@@ -55,7 +55,7 @@
     <string name="language_english">ภาษาอังกฤษ</string>
     <string name="no_connection">ไม่มีสัญญาณอินเตอร์เน็ต.</string>
 
-    <string name="email">อีเมล</string>
+    <string name="email">ระบุอีเมลของคุณ</string>
     <string name="password">รหัสผ่าน</string>รหัสผ่าน
 
     <string name="full_name">ชื่อ</string>
