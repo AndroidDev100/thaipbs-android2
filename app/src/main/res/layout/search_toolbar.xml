@@ -115,6 +115,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/cancel"
+                    android:fontFamily="@font/sukhumvittadmai_normal"
                     android:textColor="?attr/cancel_text_color"
                     android:textSize="@dimen/_16sdp" />
             </LinearLayout>

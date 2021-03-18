@@ -2,12 +2,14 @@ package me.vipa.app.activities.search.ui;
 
 
 import android.content.DialogInterface;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -18,6 +20,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,6 +33,8 @@ import me.vipa.app.activities.search.adapter.CommonSearchAdapter;
 import me.vipa.app.activities.search.adapter.RecentListAdapter;
 import me.vipa.app.activities.search.viewmodel.SearchViewModel;
 import me.vipa.app.activities.series.ui.SeriesDetailActivity;
+import me.vipa.app.activities.splash.ui.ActivitySplash;
+import me.vipa.app.activities.usermanagment.ui.ChangePasswordActivity;
 import me.vipa.app.adapters.CommonShimmerAdapter;
 import me.vipa.app.baseModels.BaseBindingActivity;
 import me.vipa.app.beanModel.KeywordList;
@@ -62,6 +67,8 @@ import me.vipa.app.activities.series.ui.SeriesDetailActivity;
 import me.vipa.app.baseModels.BaseBindingActivity;
 import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
 
+import static me.vipa.app.R.font.sukhumvittadmai_normal;
+
 //import com.webstreamindonesia.nonton.db.search.SearchedKeywords;
 
 
@@ -80,6 +87,9 @@ public class ActivitySearch extends BaseBindingActivity<ActivitySearchBinding> i
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = ViewModelProviders.of(ActivitySearch.this).get(SearchViewModel.class);
+        Typeface font = ResourcesCompat.getFont(this, sukhumvittadmai_normal);
+        TextView searchText = (TextView) getBinding().toolbar.searchView.findViewById(R.id.search_src_text);
+        searchText.setTypeface(font);
         clickListner();
         connectionObserver();
         getBinding().toolbar.searchView.setOnQueryTextListener(this);
