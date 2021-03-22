@@ -109,6 +109,7 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
     private int counter = 0;
     private AsyncTask mMyTask;
     private Data modelLogin;
+    private String loginCallingFrom = "";
 
     public static String getFileNameFromUrl(String url) {
         Logger.e("", "ProfilePic Name" + url.substring(url.lastIndexOf('/') + 1).split("\\?")[0].split("#")[0]);
@@ -143,6 +144,7 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
 
     private void callBinding() {
         viewModel = ViewModelProviders.of(LoginActivity.this).get(RegistrationLoginViewModel.class);
+        loginCallingFrom = getIntent().getStringExtra("loginFrom");
         getBinding().toolbar.titleToolbar.setVisibility(View.VISIBLE);
         getBinding().toolbar.titleSkip.setVisibility(View.VISIBLE);
         getBinding().toolbar.titleSkip.setVisibility(View.VISIBLE);
@@ -151,7 +153,11 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
         getBinding().toolbar.backLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressed();
+                if(loginCallingFrom.equalsIgnoreCase("OnBoarding")){
+                    new ActivityLauncher(LoginActivity.this).signUpActivity(LoginActivity.this, SignUpActivity.class, loginCallingFrom);
+                }else {
+                    onBackPressed();
+                }
             }
         });
         getBinding().toolbar.titleSkip.setOnClickListener(new View.OnClickListener() {
@@ -191,11 +197,11 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
         });
     }
 
-    String loginCallingFrom = "";
+
 
     public void connectObservors() {
         //intent.putExtra("loginFrom","home");
-        loginCallingFrom = getIntent().getStringExtra("loginFrom");
+
 //        credentialsProvider();
 //        setTransferUtility();
         getBinding().signUpTxt.setClickable(true);
@@ -819,4 +825,12 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        if(loginCallingFrom.equalsIgnoreCase("OnBoarding")){
+            new ActivityLauncher(LoginActivity.this).signUpActivity(LoginActivity.this, SignUpActivity.class, loginCallingFrom);
+        }else {
+            super.onBackPressed();
+        }
+    }
 }

@@ -255,7 +255,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
             }
             mLastClickTime = SystemClock.elapsedRealtime();
             finish();
-            startActivity(new Intent(SignUpActivity.this, LoginActivity.class).putExtra("loginFrom",""));
+            startActivity(new Intent(SignUpActivity.this, LoginActivity.class).putExtra("loginFrom",loginCallingFrom));
         });
 
         getBinding().etName.setOnClickListener(view -> getBinding().errorName.setVisibility(View.INVISIBLE));
@@ -608,7 +608,11 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        new ActivityLauncher(SignUpActivity.this).loginActivity(SignUpActivity.this, LoginActivity.class);
+        if(loginCallingFrom.equalsIgnoreCase("OnBoarding")){
+            new ActivityLauncher(SignUpActivity.this).homeScreen(SignUpActivity.this, HomeActivity.class);
+        }else {
+            new ActivityLauncher(SignUpActivity.this).loginActivity(SignUpActivity.this, LoginActivity.class);
+        }
 
     }
 

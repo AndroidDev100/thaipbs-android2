@@ -48,6 +48,11 @@ public class OnBoardingTab extends BaseBindingActivity<ActivityOnBoardingTabBind
     }
 
     @Override
+    public void onBackPressed() {
+        new ActivityLauncher(OnBoardingTab.this).homeScreen(OnBoardingTab.this, HomeActivity.class);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         if (preference.getAppPrefRegisterStatus().equalsIgnoreCase(AppConstants.UserStatus.Login.toString())) {
