@@ -51,7 +51,7 @@
                                 android:layout_margin="@dimen/NontonSize8"
                                 android:contentDescription="TODO"
                                 android:src="@drawable/back_icon_player"
-                                android:tint="@color/white" />
+                                />
                         </RelativeLayout>
 
                         <androidx.constraintlayout.widget.ConstraintLayout

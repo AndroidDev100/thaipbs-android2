@@ -99,12 +99,13 @@
                     android:visibility="gone"
                     android:padding="@dimen/NontonSize20"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    >
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/ic_arrow_back_black_24dp"
+                        android:src="@drawable/background_shadow"
                         android:contentDescription="TODO" />
 
 
@@ -112,6 +113,7 @@
 
 
             </RelativeLayout>
+
 
             <androidx.core.widget.NestedScrollView
                 android:id="@+id/rootScroll"

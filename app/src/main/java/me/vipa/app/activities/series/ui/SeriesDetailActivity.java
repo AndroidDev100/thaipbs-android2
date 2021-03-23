@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -956,7 +957,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+       // super.onBackPressed();
 
         if (commentsFragment != null) {
             removeCommentFragment();
@@ -998,7 +999,10 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
             commentsFragment = null;
             getBinding().playerFooter.setVisibility(View.VISIBLE);
             getBinding().fragmentComment.setVisibility(View.GONE);
-            getBinding().interactionSection.showComments.setVisibility(View.VISIBLE);
+           // getBinding().interactionSection
+            getBinding().interactionSection.llLike.setVisibility(View.VISIBLE);
+            getBinding().interactionSection.shareWith.setVisibility(View.VISIBLE);
+           // getBinding().interactionSection.showComments.setVisibility(View.VISIBLE);
         }
     }
 
