@@ -330,6 +330,7 @@ public class PlayerControlsFragment extends Fragment {
         Log.w("captionHide", "hideControlsForLive");
         settingControl.setVisibility(View.GONE);
         liveTag.setVisibility(View.VISIBLE);
+        playerSettingIcon.setVisibility(View.INVISIBLE);
     }
 
     void hideControls() {
@@ -858,13 +859,13 @@ public class PlayerControlsFragment extends Fragment {
         private VideoTracksAdapter(List<TrackItem> videoTracks, String selectedTrck) {
             this.tracks = videoTracks;
             selectedTrack = selectedTrck;
-            if (selectedTrack.equalsIgnoreCase("Auto")) {
+            if (selectedTrack.equalsIgnoreCase(getActivity().getResources().getString(R.string.auto))) {
                 selectedIndex = 0;
-            } else if (selectedTrack.equalsIgnoreCase("Low")) {
+            } else if (selectedTrack.equalsIgnoreCase(getActivity().getResources().getString(R.string.low))) {
                 selectedIndex = 1;
-            } else if (selectedTrack.equalsIgnoreCase("Medium")) {
+            } else if (selectedTrack.equalsIgnoreCase(getActivity().getResources().getString(R.string.medium))) {
                 selectedIndex = 2;
-            } else if (selectedTrack.equalsIgnoreCase("High")) {
+            } else if (selectedTrack.equalsIgnoreCase(getActivity().getResources().getString(R.string.high))) {
                 selectedIndex = 3;
             } else {
                 selectedIndex = 0;
@@ -889,12 +890,16 @@ public class PlayerControlsFragment extends Fragment {
                     holder.playbackQualityRadio.setChecked(false);
                 } else {
                     String compareName = tracks.get(position).getTrackName();
-                    //Log.d("edededededed",selectedTrack);
                     if (position == selectedIndex) {
                         selectedTrack = tracks.get(position).getTrackName();
                         holder.playbackQualityRadio.setChecked(true);
                     } else {
-                        holder.playbackQualityRadio.setChecked(false);
+                        if (compareName.equalsIgnoreCase(selectedTrack)){
+                            selectedTrack = tracks.get(position).getTrackName();
+                            holder.playbackQualityRadio.setChecked(true);
+                        }else {
+                            holder.playbackQualityRadio.setChecked(false);
+                        }
                     }
                 }
 
