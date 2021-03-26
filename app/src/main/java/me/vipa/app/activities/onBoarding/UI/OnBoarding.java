@@ -16,6 +16,7 @@ import java.util.List;
 
 import me.vipa.app.activities.homeactivity.ui.HomeActivity;
 import me.vipa.app.activities.splash.ui.ActivitySplash;
+import me.vipa.app.activities.usermanagment.ui.SignUpActivity;
 import me.vipa.app.baseModels.BaseBindingActivity;
 import me.vipa.app.databinding.ActivityOnBoardingBinding;
 import me.vipa.app.databinding.SettingsActivityBinding;
@@ -51,6 +52,21 @@ public class OnBoarding extends BaseBindingActivity<ActivityOnBoardingBinding> {
         // Setup dot's indicator
 
         getBinding().tabLayoutIndicator.setupWithViewPager(getBinding().viewPagerOnBoarding);
+
+        getBinding().skipLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new ActivityLauncher(OnBoarding.this).homeScreen(OnBoarding.this, HomeActivity.class);
+            }
+        });
+        getBinding().register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                new ActivityLauncher(OnBoarding.this).signUpActivity(OnBoarding.this, SignUpActivity.class, "OnBoarding");
+
+            }
+        });
 
     }
 

@@ -25,23 +25,9 @@ public class StepThreeFragment extends BaseBindingFragment<FragmentStepThreeBind
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setClickListeners();
+       // setClickListeners();
     }
 
-    private void setClickListeners() {
-        getBinding().skipLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new ActivityLauncher(getActivity()).homeScreen(getActivity(), HomeActivity.class);
-            }
-        });
-        getBinding().register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new ActivityLauncher(getActivity()).signUpActivity(getActivity(), SignUpActivity.class, "OnBoarding");
-            }
-        });
-    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
