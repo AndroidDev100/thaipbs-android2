@@ -60,7 +60,8 @@ public class SeasonTabFragment extends BaseBindingFragment<SeasonFragmentLayoutB
     private ArrayList<SelectedSeasonModel> seasonList;
     private int currentAssetId;
     private SeasonAdapter seasonAdapter;
-    private List<EnveuVideoItemBean> seasonEpisodes, allEpiosdes;
+    private List<EnveuVideoItemBean> seasonEpisodes;
+    private List<EnveuVideoItemBean> allEpiosdes = new ArrayList<>();
     private long mLastClickTime = 0;
 
     public SeasonTabFragment() {
@@ -256,6 +257,7 @@ public class SeasonTabFragment extends BaseBindingFragment<SeasonFragmentLayoutB
                                     hideProgressBar();
 
                                 } else {
+                                   // allEpiosdes = new ArrayList<EnveuVideoItemBean>();
                                     allEpiosdes.addAll(enveuCommonResponse.getEnveuVideoItemBeans());
                                     seasonAdapter.notifyDataSetChanged();
                                     hideProgressBar();
