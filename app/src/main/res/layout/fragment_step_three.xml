@@ -1,18 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <RelativeLayout
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:src="@drawable/second"
-            android:scaleType="fitXY"/>
+            android:id="@+id/imageView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            app:srcCompat="@drawable/second"
+            app:layout_constraintDimensionRatio="H,9:16"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--    <RelativeLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:gravity="center"-->
+<!--        android:orientation="vertical">-->
+
+<!--        <ImageView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:src="@drawable/second"-->
+<!--            android:scaleType="fitXY"/>-->
 <!--        <LinearLayout-->
 <!--            android:layout_width="match_parent"-->
 <!--            android:layout_height="wrap_content"-->
@@ -79,5 +99,6 @@
 <!--            android:layout_marginLeft="@dimen/_20sdp"-->
 <!--            android:layout_marginRight="@dimen/_20sdp"-->
 <!--            android:background="@drawable/rounded_button_gray"/>-->
-    </RelativeLayout>
+<!--    </RelativeLayout>-->
+
 </layout>
