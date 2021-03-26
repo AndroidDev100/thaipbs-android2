@@ -3,6 +3,7 @@ package me.vipa.app.activities.usermanagment.ui;
 
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -28,6 +29,7 @@ public class ForgotPasswordActivity extends BaseBindingActivity<ForgotPasswordBi
 
     private RegistrationLoginViewModel viewModel;
     private long mLastClickTime = 0;
+    private boolean errorDialog = false;
 
 
     @Override
@@ -90,13 +92,16 @@ public class ForgotPasswordActivity extends BaseBindingActivity<ForgotPasswordBi
                     viewModel.hitForgotPasswordApi(getBinding().etPasswordRecoveryEmail.getText().toString().trim()).observe(ForgotPasswordActivity.this, jsonObject -> {
                         dismissLoading(getBinding().progressBar);
                         if (jsonObject.getCode() == 200){
+                            errorDialog = false;
                             showDialog("", getResources().getString(R.string.forgot_password_response));
                         }
 
                         else{
                             if (jsonObject.getDebugMessage()!=null && !jsonObject.getDebugMessage().equalsIgnoreCase("")){
+                                errorDialog = true;
                                 showDialog(ForgotPasswordActivity.this.getResources().getString(R.string.error),jsonObject.getDebugMessage());
                             }else {
+                                errorDialog = false;
                                 showDialog("", getResources().getString(R.string.forgot_password_response));
                             }
 
@@ -157,7 +162,11 @@ public class ForgotPasswordActivity extends BaseBindingActivity<ForgotPasswordBi
 
     @Override
     public void onFinishDialog() {
-        onBackPressed();
+        if (errorDialog){
+
+        }else {
+            onBackPressed();
+        }
 
     }
 

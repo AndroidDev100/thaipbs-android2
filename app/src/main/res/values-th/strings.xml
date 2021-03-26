@@ -118,7 +118,7 @@
 
     <string name="empty_name">กรุณากรอกชื่อ</string>
 
-    <string name="forgot_password_response">ระบบได้ส่งลิงก์รีเซ็ตรหัสผ่านให้คุณทางอีเมลเรียบร้อยแล้ว โปรดตรวจสอบอีเมลของคุณและเปลี่ยนแปลงรหัสผ่านใหม่ได้ผ่านลิงก์ดังกล่าว่์</string>
+    <string name="forgot_password_response">ระบบได้ส่งลิงก์รีเซ็ตรหัสผ่านให้คุณทางอีเมลเรียบร้อยแล้ว โปรดตรวจสอบอีเมลของคุณและเปลี่ยนแปลงรหัสผ่านใหม่ได้ผ่านลิงก์ดังกล่าว</string>
     <string name="purchased">ซื้อแล้ว</string>
     <string name="subscribed">เป็นสมาชิกแล้ว</string>
 
