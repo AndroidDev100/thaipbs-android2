@@ -199,7 +199,7 @@
                                             android:singleLine="true"
                                             android:text="@{responseApi.title}"
                                             android:textColor="?attr/title_color"
-                                            android:textSize="@dimen/font_medium_large"
+                                            android:textSize="@dimen/font_large"
                                             tools:targetApi="p" />
 
                                         <TextView
@@ -306,7 +306,7 @@
                                     android:lineSpacingExtra="2dp"
                                     android:text="@{responseApi.description.trim()}"
                                     android:textColor="?attr/title_color"
-                                    android:textSize="@dimen/font_xsmall" />
+                                    android:textSize="@dimen/font_small" />
 
 
                                 <LinearLayout

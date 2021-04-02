@@ -165,7 +165,7 @@
                                     android:text="@{responseApi.title}"
                                     android:textColor="?attr/title_color"
                                     android:layout_toLeftOf="@+id/mPremiumStatus"
-                                    android:textSize="@dimen/font_medium_large"
+                                    android:textSize="@dimen/font_large"
                                     tools:targetApi="p" />
 
 
@@ -271,7 +271,7 @@
                                     android:maxLines="2"
                                     android:text="@{responseApi.description.trim()}"
                                     android:textColor="?attr/title_color"
-                                    android:textSize="@dimen/font_xsmall" />
+                                    android:textSize="@dimen/font_small" />
 
                                 <me.vipa.app.utils.helpers.ExpandableCardLayout
                                     android:id="@+id/expandable_layout"

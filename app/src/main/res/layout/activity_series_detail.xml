@@ -211,7 +211,7 @@
                                     android:singleLine="true"
                                     android:text=""
                                     android:textColor="?attr/title_color"
-                                    android:textSize="@dimen/font_medium_large"
+                                    android:textSize="@dimen/font_large"
                                     android:layout_marginTop="10dp"
                                     tools:targetApi="p" />
 
@@ -246,7 +246,7 @@
                                         android:maxLines="2"
                                         android:text="@{responseApi.trim()}"
                                         android:textColor="?attr/title_color"
-                                        android:textSize="@dimen/font_xsmall" />
+                                        android:textSize="@dimen/font_small" />
 
                                     <me.vipa.app.utils.helpers.ExpandableCardLayout
                                         android:id="@+id/expandable_layout"
