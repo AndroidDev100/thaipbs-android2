@@ -37,7 +37,7 @@
     <string name="in_case_of_any">ในกรณีที่มีปัญหาใด ๆ</string>
     <string name="no_internet">ไม่พบการเชื่อมต่ออินเทอร์เน็ต</string>
     <string name="wake_up_connection" >อุปกรณ์ของคุณออฟไลน์อยู่!</string>
-    <string name="check_connection">ตรวจสอบการเชื่อมต่อ</string>
+    <string name="check_connection">ตรวจสอบการเชื่อมต่อของคุณ</string>
 
     <string name="confirm_password">ยืนยันรหัสผ่าน</string>
     <string name="profile">ข้อมูลของฉัน</string>
