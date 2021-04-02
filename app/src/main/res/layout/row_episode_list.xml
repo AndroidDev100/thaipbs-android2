@@ -292,13 +292,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/rail_top_margin"
-            android:ellipsize="end"
             android:fontFamily="@font/sukhumvittadmai_normal"
             android:lineSpacingExtra="2sp"
-            android:paddingLeft="@dimen/rail_top_margin"
-            android:paddingRight="@dimen/rail_top_margin"
-            android:textColor="?attr/more_item_text_color"
+            android:paddingLeft="@dimen/NontonSize5"
+            android:paddingRight="@dimen/NontonSize5"
+
             android:textSize="@dimen/font_xsmall"
+            android:text="dsdhgfdshfgdsfhsgdsdshdsfshdgfsdhfgssdhgfdshfgdshfgdshfsgdfhsghfgshfgdsgfsdfhdsgfsgfhsgfsgfsgfdgfdsgfdsjsgfsjdfhdsjsjfhsjdfhsjdfgshfgdgfshdfgdshfgdshfgdshfdsgfhsdgf<hfgdhgf<gfgfd"
             android:visibility="visible" />
 
     </LinearLayout>
