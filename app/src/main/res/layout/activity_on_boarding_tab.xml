@@ -51,7 +51,7 @@
             android:layout_height="@dimen/NontonSize45"
             android:fontFamily="@font/sukhumvittadmai_medium"
             android:text="เริ่มเข้าใช้งาน"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:gravity="center"
             android:textSize="@dimen/NontonSize20"
             android:layout_alignParentBottom="true"
