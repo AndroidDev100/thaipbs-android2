@@ -152,7 +152,12 @@
     <string name="something_went_wrong">Something went wrong</string>
     <string name="image_upload_fail">Image upload failed</string>
 
-    <string name="search_mv_hub">Search VIPA</string>
+    <string name="description_auto">ปรับความคมชัดตามความเร็วอินเทอร์เน็ต</string>
+    <string name="description_sd">ความคมชัดปกติ</string>
+    <string name="description_hd">ความคมชัดสูง</string>
+    <string name="description_full_hd">ความคมชัดสูงสุด</string>
+
+    <string name="search_mv_hub">Search</string>
     <string name="show_all_results">Show All</string>
     <string name="series">Series</string>
     <string name="article">Article</string>
@@ -354,7 +359,7 @@
     <string name="password_regex_error">Password is not strong enough</string>
     <string name="skip_intro">Skip Intro</string>
     <string name="streaming_settings">Streaming Settings</string>
-    <string name="auto">Auto</string>
+    <string name="auto">อัตโนมัติ</string>
     <string name="low">SD</string>
     <string name="medium">HD</string>
     <string name="high">Full HD</string>

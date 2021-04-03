@@ -35,12 +35,17 @@
     <string name="live_tag">Live</string>
     <string name="skip_intro">Skip Intro</string>
     <string name="streaming_settings">Streaming Settings</string>
-    <string name="auto">Auto</string>
+    <string name="auto">อัตโนมัติ</string>
     <string name="low">SD</string>
     <string name="medium">HD</string>
     <string name="high">Full HD</string>
     <string name="enter_coupon_code">Enter a coupon code</string>
     <string name="coupon_code">Coupon Code</string>
+
+    <string name="description_auto">ปรับความคมชัดตามความเร็วอินเทอร์เน็ต</string>
+    <string name="description_sd">ความคมชัดปกติ</string>
+    <string name="description_hd">ความคมชัดสูง</string>
+    <string name="description_full_hd">ความคมชัดสูงสุด</string>
 
     <string name="waiting_for_wifi">waiting for wifi</string>
     <string name="download_will_begin">Your download will begin once you are come on WiFi. Or you can change the setting below:</string>

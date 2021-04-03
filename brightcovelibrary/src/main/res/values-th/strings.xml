@@ -6,15 +6,20 @@
     <string name="implement_brightcove_creds">Please configure Account Id and Policy Key in Manifest.</string>
 
     <!--Video Quality-->
-    <string name="auto_description">คุณภาพวิดีโอและใช้ข้อมูลตามค่าตั้งต้น</string>
-    <string name="low_description">คุณภาพวิดีโอขั้นพื้นฐานและใช้ข้อมูลน้อย</string>
-    <string name="medium_description">คุณภาพวิดีโอมาตราฐานและใช้ข้อมูลปานกลาง</string>
-    <string name="high_description">คุณภาพวิดีโอที่ดีที่สุดและใช้ข้อมูลสูง</string>
+<!--    <string name="auto_description">คุณภาพวิดีโอและใช้ข้อมูลตามค่าตั้งต้น</string>-->
+<!--    <string name="low_description">คุณภาพวิดีโอขั้นพื้นฐานและใช้ข้อมูลน้อย</string>-->
+<!--    <string name="medium_description">คุณภาพวิดีโอมาตราฐานและใช้ข้อมูลปานกลาง</string>-->
+<!--    <string name="high_description">คุณภาพวิดีโอที่ดีที่สุดและใช้ข้อมูลสูง</string>-->
     <string name="audio_track_selection">การเลือกแทร็กเสียง</string>
     <string name="caption_selection">การเลือกคำบรรยายภาพ</string>
     <string name="ok">ตกลง</string>
     <string name="subtitles">คำบรรยาย</string>
     <string name="audio">เสียง</string>
+
+    <string name="auto_description">ปรับความคมชัดตามความเร็วอินเทอร์เน็ต</string>
+    <string name="low_description">ความคมชัดปกติ</string>
+    <string name="medium_description">ความคมชัดสูง</string>
+    <string name="high_description">ความคมชัดสูงสุด</string>
 
     <string name="auto">อัตโนมัติ</string>
     <string name="low">ต่ำ</string>

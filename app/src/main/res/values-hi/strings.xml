@@ -143,7 +143,7 @@
     <string name="something_went_wrong">Something went wrong</string>
     <string name="image_upload_fail">Image upload failed</string>
 
-    <string name="search_mv_hub">खोजें VIPA</string>
+    <string name="search_mv_hub">खोजें</string>
     <string name="show_all_results">Show All</string>
     <string name="series">सीरीज</string>
     <string name="article">Article</string>
@@ -340,7 +340,7 @@
     <string name="password_regex_error">Password is not strong enough</string>
     <string name="skip_intro">Skip Intro</string>
     <string name="streaming_settings">Streaming Settings</string>
-    <string name="auto">Auto</string>
+    <string name="auto">อัตโนมัติ</string>
     <string name="low">Low</string>
     <string name="medium">Medium</string>
     <string name="high">High</string>
@@ -348,6 +348,11 @@
     <string name="coupon_code">Coupon Code</string>
     <string name="retry_dms">पुन: प्रयास करें</string>
     <string name="enter_valid_coupon_code">Please enter a coupon code</string>
+
+    <string name="description_auto">ปรับความคมชัดตามความเร็วอินเทอร์เน็ต</string>
+    <string name="description_sd">ความคมชัดปกติ</string>
+    <string name="description_hd">ความคมชัดสูง</string>
+    <string name="description_full_hd">ความคมชัดสูงสุด</string>
 
     <string name="montly">Monthly Pack</string>
     <string name="quarterly">Quarterly Pack</string>

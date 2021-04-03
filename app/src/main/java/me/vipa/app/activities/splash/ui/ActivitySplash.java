@@ -141,7 +141,7 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
         if (TextUtils.isEmpty(KsPreferenceKeys.getInstance().getQualityName())) {
-            KsPreferenceKeys.getInstance().setQualityName(getApplicationContext().getResources().getString(com.vipa.brightcovelibrary.R.string.auto));
+            KsPreferenceKeys.getInstance().setQualityName("Auto");
             KsPreferenceKeys.getInstance().setQualityPosition(0);
         }
 

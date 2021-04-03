@@ -41,15 +41,15 @@ public class VideoQualityViewModel extends AndroidViewModel {
         ArrayList<TrackItem> trackItems=new ArrayList<>();
         for (int i=0;i<4;i++){
             if (i==0){
-                trackItems.add(new TrackItem(resources.getString(R.string.auto),"Auto"));
+                trackItems.add(new TrackItem(resources.getString(R.string.auto),"Auto",resources.getString(R.string.description_auto)));
             }
             else if (i==1){
-                trackItems.add(new TrackItem(resources.getString(R.string.low), "Low"));
+                trackItems.add(new TrackItem(resources.getString(R.string.low), "Low",resources.getString(R.string.description_sd)));
             }else if (i==2){
-                trackItems.add(new TrackItem(resources.getString(R.string.medium), "Medium"));
+                trackItems.add(new TrackItem(resources.getString(R.string.medium), "Medium",resources.getString(R.string.description_hd)));
             }else if (i==3){
                 {
-                    trackItems.add(new TrackItem(resources.getString(R.string.high), "High"));
+                    trackItems.add(new TrackItem(resources.getString(R.string.high), "High",resources.getString(R.string.description_full_hd)));
                 }
             }
 

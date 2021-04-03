@@ -66,7 +66,7 @@ public class VideoQualityAdapter extends RecyclerView.Adapter<VideoQualityAdapte
         }
 
         viewHolder.notificationItemBinding.titleText.setText(inboxMessages.get(position).getTrackName());
-        viewHolder.notificationItemBinding.secondTitleText.setVisibility(View.GONE);
+        viewHolder.notificationItemBinding.secondTitleText.setText(inboxMessages.get(position).getDescription());
 
         viewHolder.notificationItemBinding.parentLayout.setOnClickListener(view -> {
 

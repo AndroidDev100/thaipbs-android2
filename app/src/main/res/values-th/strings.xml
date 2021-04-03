@@ -4,7 +4,7 @@
     <string name="something_went_wrong">มีปัญหาในระบบ</string>
 
 
-    <string name="search_mv_hub">ค้นหา VIPA</string>
+    <string name="search_mv_hub">ค้นหา</string>
     <string name="show_all_results">แสดงทั้งหมด</string>
     <string name="change_password">เปลี่ยนรหัสผ่าน</string>
     <string name="update_pref">อัปเดต</string>
@@ -386,13 +386,18 @@
     <string name="skip_intro">ข้ามตอนต้น</string>
     <string name="streaming_settings">การตั้งค่าความคมชัดเริ่มต้น</string>
     <string name="auto">อัตโนมัติ</string>
-    <string name="low">ต่ำ</string>
-    <string name="medium">กลาง</string>
-    <string name="high">สูง</string>
+    <string name="low">SD</string>
+    <string name="medium">HD</string>
+    <string name="high">Full HD</string>
     <string name="enter_coupon_code">ป้อนรหัสคูปอง</string>
     <string name="coupon_code">รหัสคูปอง</string>
     <string name="retry_dms">ลองใหม่</string>
     <string name="enter_valid_coupon_code">กรุณาใส่รหัสคูปอง</string>
+
+    <string name="description_auto">ปรับความคมชัดตามความเร็วอินเทอร์เน็ต</string>
+    <string name="description_sd">ความคมชัดปกติ</string>
+    <string name="description_hd">ความคมชัดสูง</string>
+    <string name="description_full_hd">ความคมชัดสูงสุด</string>
 
     <string name="montly">รายเดือน</string>
     <string name="quarterly">ทุกไตรมาส</string>
