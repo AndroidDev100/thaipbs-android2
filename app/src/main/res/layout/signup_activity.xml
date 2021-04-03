@@ -374,7 +374,8 @@
                                     android:contentDescription="TODO"
                                     android:scaleType="fitXY"
                                     android:tint="#FFFFFF"
-                                    app:srcCompat="@drawable/register1" />
+                                    app:srcCompat="@drawable/register1"
+                                    android:visibility="gone"/>
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -386,13 +387,21 @@
                                     android:textColor="@color/white"
                                     android:textSize="@dimen/suaRegisterText" />
                             </LinearLayout>
-
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/NontonSize10"
+                                android:fontFamily="@font/sukhumvittadmai_normal"
+                                android:gravity="center"
+                                android:text="@string/or_caps"
+                                android:textColor="?attr/or_text_color"
+                                android:textSize="@dimen/TextSize14" />
                             <LinearLayout
                                 android:id="@+id/rlFacebookLogin"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/NontonSize45"
                                 android:layout_gravity="center|center_vertical"
-                                android:layout_marginTop="@dimen/NontonSize20"
+                                android:layout_marginTop="@dimen/NontonSize10"
                                 android:background="@drawable/rounded_button1"
                                 android:gravity="center">
 

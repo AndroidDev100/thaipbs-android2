@@ -17,6 +17,7 @@
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
+            android:fontFamily="@font/sukhumvittadmai_bold"
             android:layout_marginStart="8dp" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -49,6 +50,7 @@
             android:background="@android:color/transparent"
             android:gravity="center"
             android:padding="8dp"
+            android:fontFamily="@font/sukhumvittadmai_bold"
             android:text="@string/cancel"
             android:layout_below="@+id/recycleview"
             android:textColor="#f68b1f" />
