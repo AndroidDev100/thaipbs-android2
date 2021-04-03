@@ -294,8 +294,8 @@
             android:layout_marginTop="@dimen/rail_top_margin"
             android:fontFamily="@font/sukhumvittadmai_normal"
             android:lineSpacingExtra="2sp"
-            android:paddingLeft="@dimen/NontonSize7"
-            android:paddingRight="@dimen/NontonSize7"
+            android:paddingLeft="@dimen/NontonSize10"
+            android:paddingRight="@dimen/NontonSize13"
             android:textColor="?attr/more_item_text_color"
             android:textSize="@dimen/font_xsmall"
             android:visibility="visible" />
