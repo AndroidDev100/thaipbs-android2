@@ -678,8 +678,10 @@ public class PlayerControlsFragment extends Fragment {
         settingControl = (View) view.findViewById(R.id.playerSetting);
         fullscreen = (ImageView) view.findViewById(R.id.fullscreen);
         settingLay = (LinearLayout) view.findViewById(R.id.settingLay);
-        if (isOffline && from==1)
+        if (isOffline && from==1) {
             fullscreen.setVisibility(View.GONE);
+            playerSettingIcon.setVisibility(View.INVISIBLE);
+        }
         else
             fullscreen.setVisibility(View.VISIBLE);
 
