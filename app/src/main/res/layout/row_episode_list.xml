@@ -35,7 +35,8 @@
         android:layout_marginRight="@dimen/rail_top_margin"
         android:layout_marginBottom="@dimen/rail_top_margin"
         android:background="?attr/backgroundColor"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/NontonSize14">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -135,7 +136,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_20sdp"
                     android:layout_gravity="center|bottom"
-                    android:background="@drawable/episode_cell_shadow"
                     android:gravity="center_horizontal|bottom">
 
                     <TextView
@@ -291,10 +291,10 @@
             android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/rail_top_margin"
+            android:layout_marginTop="@dimen/NontonSize8"
             android:fontFamily="@font/sukhumvittadmai_normal"
             android:lineSpacingExtra="2sp"
-            android:layout_marginLeft="@dimen/NontonSize13"
+            android:layout_marginLeft="@dimen/NontonSize8"
             android:layout_marginRight="@dimen/NontonSize13"
             android:textColor="?attr/more_item_text_color"
             android:textSize="@dimen/font_xsmall"
