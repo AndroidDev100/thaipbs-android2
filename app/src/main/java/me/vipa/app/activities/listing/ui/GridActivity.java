@@ -16,11 +16,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import me.vipa.app.activities.homeactivity.ui.HomeActivity;
-import me.vipa.app.activities.usermanagment.ui.ForceLoginFbActivity;
 import me.vipa.app.fragments.dialog.AlertDialogFragment;
 import me.vipa.app.fragments.dialog.AlertDialogSingleButtonFragment;
 import me.vipa.app.utils.helpers.CheckInternetConnection;
-import me.vipa.app.utils.helpers.ToastHandler;
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
 import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
 import me.vipa.bookmarking.bean.continuewatching.ContinueWatchingBookmark;
@@ -63,17 +61,6 @@ import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import me.vipa.app.Bookmarking.BookmarkingViewModel;
-import me.vipa.app.activities.listing.callback.ItemClickListener;
-import me.vipa.app.activities.listing.viewmodel.ListingViewModel;
-import me.vipa.app.baseModels.BaseBindingActivity;
-import me.vipa.app.beanModelV3.continueWatching.DataItem;
-import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
-import me.vipa.app.networking.apistatus.APIStatus;
-import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
-import me.vipa.bookmarking.bean.continuewatching.ContinueWatchingBookmark;
-import me.vipa.enums.ImageType;
 
 
 public class GridActivity extends BaseBindingActivity<ListingActivityBinding> implements ItemClickListener, AlertDialogFragment.AlertDialogListener {

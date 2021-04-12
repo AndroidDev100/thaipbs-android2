@@ -22,8 +22,6 @@ import me.vipa.app.utils.commonMethods.AppCommonMethod;
 
 import java.util.List;
 
-import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
-
 public class CategoriedSearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements RowSearchAdapter.RowSearchListener {
     private final Context context;
     private final List<RailCommonData> list;

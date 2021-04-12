@@ -43,6 +43,7 @@ public interface AppConstants {
     String Episode = "EPISODE";
     String Series = "SERIES";
     String Video = "VIDEO";
+    String SIGN_LANG = "SIGNLANGUAGE";
     String Article = "ARTICLE";
 
     /***************
@@ -205,6 +206,10 @@ public interface AppConstants {
     String BUNDLE_TYPE_FOR_COMMENTS = "type";
     String BUNDLE_SEASON_COUNT="seasonCount";
     String BUNDLE_SEASON_ARRAY="seasonArray";
+
+    String IS_SIGN_LANG_ENABLE = "signLangParentRefId";
+    String SIGN_LANG_ID = "signLangId";
+
 
     String BUNDLE_SELECTED_SEASON="selectedSeasonId";
     String BUNDLE_DETAIL_TYPE = "detailType";

@@ -19,4 +19,7 @@ public interface CustomeFields {
     String WIDEVINE_URL="widevine_content_url";
     String WIDEVINE_LICENCE="widevine_content_license_url";
     String ISLIVEDRM = "islivedrm";
+    String ISSIGNEDLANGUAGE = "is_signed_language_enabled";
+    String SIGNEDLANGUAGEPARENTREGRENCEID = "signed_language_parent_reference_id";
+    String SIGNEDLANGUAGEREFRENCEID = "signed_language_reference_id";
 }

@@ -18,4 +18,6 @@ public interface PlayerCallbacks {
     void showPlayerController(boolean isVisible);
     void changeBitRateRequest(String title,int position);
     void bitRateRequest();
+
+    void playSignVideo(boolean isSignPlaying);
 }

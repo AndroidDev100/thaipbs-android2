@@ -34,7 +34,6 @@ import me.vipa.app.activities.purchase.callBack.EntitlementStatus;
 import me.vipa.app.activities.purchase.planslayer.GetPlansLayer;
 import me.vipa.app.beanModel.entitle.EntitledAs;
 import me.vipa.app.databinding.LiveDetailBinding;
-import me.vipa.app.liveplayer.LivePlayerFragment;
 import me.vipa.app.Bookmarking.BookmarkingViewModel;
 import me.vipa.app.activities.chromecast.ExpandedControlsActivity;
 import me.vipa.app.activities.listing.listui.ListActivity;
@@ -89,22 +88,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Timer;
 import java.util.concurrent.TimeUnit;
-
-import me.vipa.app.Bookmarking.BookmarkingViewModel;
-import me.vipa.app.activities.chromecast.ExpandedControlsActivity;
-import me.vipa.app.activities.detail.viewModel.DetailViewModel;
-import me.vipa.app.activities.listing.listui.ListActivity;
-import me.vipa.app.activities.purchase.callBack.EntitlementStatus;
-import me.vipa.app.activities.purchase.planslayer.GetPlansLayer;
-import me.vipa.app.activities.purchase.ui.PurchaseActivity;
-import me.vipa.app.activities.purchase.ui.VodOfferType;
-import me.vipa.app.activities.usermanagment.ui.LoginActivity;
-import me.vipa.app.baseModels.BaseBindingActivity;
-import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
-import me.vipa.app.liveplayer.LivePlayerFragment;
-import me.vipa.app.networking.apistatus.APIStatus;
-import me.vipa.app.networking.responsehandler.ResponseModel;
-import me.vipa.enums.Layouts;
 
 import static android.media.AudioManager.AUDIOFOCUS_LOSS;
 

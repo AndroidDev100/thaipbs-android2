@@ -67,6 +67,35 @@ public class EnveuVideoItemBean implements Serializable {
     private String imageType;
 
     private String parentalRating;
+    private String signedLangEnabled;
+
+    public String getSignedLangEnabled() {
+        return signedLangEnabled;
+    }
+
+    public void setSignedLangEnabled(String signedLangEnabled) {
+        this.signedLangEnabled = signedLangEnabled;
+    }
+
+    public String getSignedLangParentRefId() {
+        return signedLangParentRefId;
+    }
+
+    public void setSignedLangParentRefId(String signedLangParentRefId) {
+        this.signedLangParentRefId = signedLangParentRefId;
+    }
+
+    private String signedLangParentRefId;
+    private String signedLangRefId;
+
+    public String getSignedLangRefId() {
+        return signedLangRefId;
+    }
+
+    public void setSignedLangRefId(String signedLangRefId) {
+        this.signedLangRefId = signedLangRefId;
+    }
+
     private String iscomingsoon;
     private String widevineLicence;
     private String getWidevineURL;
@@ -193,6 +222,22 @@ public class EnveuVideoItemBean implements Serializable {
                 this.isNewS = isNew;
             }
 
+            if (t.containsKey(CustomeFields.ISSIGNEDLANGUAGE)) {
+                String isNew = t.get((CustomeFields.ISSIGNEDLANGUAGE)).toString();
+                this.signedLangEnabled = isNew;
+            }
+
+            if (t.containsKey(CustomeFields.SIGNEDLANGUAGEPARENTREGRENCEID)) {
+                String isNew = t.get((CustomeFields.SIGNEDLANGUAGEPARENTREGRENCEID)).toString();
+                this.signedLangParentRefId = isNew;
+            }
+
+            if (t.containsKey(CustomeFields.SIGNEDLANGUAGEREFRENCEID)) {
+                String isNew = t.get((CustomeFields.SIGNEDLANGUAGEREFRENCEID)).toString();
+                this.signedLangRefId = isNew;
+            }
+
+
             this.longDescription = details.getData().getLongDescription() == null ? "" : details.getData().getLongDescription().toString().trim();
 
 
@@ -294,6 +339,20 @@ public class EnveuVideoItemBean implements Serializable {
                     this.VastTag = year;
                 }
 
+                if (t.containsKey(CustomeFields.ISSIGNEDLANGUAGE)) {
+                    String isNew = t.get((CustomeFields.ISSIGNEDLANGUAGE)).toString();
+                    this.signedLangEnabled = isNew;
+                }
+                if (t.containsKey(CustomeFields.SIGNEDLANGUAGEPARENTREGRENCEID)) {
+                    String isNew = t.get((CustomeFields.SIGNEDLANGUAGEPARENTREGRENCEID)).toString();
+                    this.signedLangParentRefId = isNew;
+                }
+
+                if (t.containsKey(CustomeFields.SIGNEDLANGUAGEREFRENCEID)) {
+                    String isNew = t.get((CustomeFields.SIGNEDLANGUAGEREFRENCEID)).toString();
+                    this.signedLangRefId = isNew;
+                }
+
             }else {
 
                 if (t.containsKey(CustomeFields.rating)){
@@ -325,6 +384,22 @@ public class EnveuVideoItemBean implements Serializable {
                     String year = t.get((CustomeFields.VastTag)).toString();
                     this.VastTag = year;
                 }
+
+                if (t.containsKey(CustomeFields.ISSIGNEDLANGUAGE)) {
+                    String isNew = t.get((CustomeFields.ISSIGNEDLANGUAGE)).toString();
+                    this.signedLangEnabled = isNew;
+                }
+
+                if (t.containsKey(CustomeFields.SIGNEDLANGUAGEPARENTREGRENCEID)) {
+                    String isNew = t.get((CustomeFields.SIGNEDLANGUAGEPARENTREGRENCEID)).toString();
+                    this.signedLangParentRefId = isNew;
+                }
+
+                if (t.containsKey(CustomeFields.SIGNEDLANGUAGEREFRENCEID)) {
+                    String isNew = t.get((CustomeFields.SIGNEDLANGUAGEREFRENCEID)).toString();
+                    this.signedLangRefId = isNew;
+                }
+
             }
 
         if (t.containsKey(CustomeFields.IsVip)){
@@ -440,6 +515,21 @@ public class EnveuVideoItemBean implements Serializable {
                             this.VastTag = year;
                         }
 
+                        if (t.containsKey(CustomeFields.ISSIGNEDLANGUAGE)) {
+                            String isNew = t.get((CustomeFields.ISSIGNEDLANGUAGE)).toString();
+                            this.signedLangEnabled = isNew;
+                        }
+                        if (t.containsKey(CustomeFields.SIGNEDLANGUAGEPARENTREGRENCEID)) {
+                            String isNew = t.get((CustomeFields.SIGNEDLANGUAGEPARENTREGRENCEID)).toString();
+                            this.signedLangParentRefId = isNew;
+                        }
+
+                        if (t.containsKey(CustomeFields.SIGNEDLANGUAGEREFRENCEID)) {
+                            String isNew = t.get((CustomeFields.SIGNEDLANGUAGEREFRENCEID)).toString();
+                            this.signedLangRefId = isNew;
+                        }
+
+
                     } else {
 
                         if (t.containsKey(CustomeFields.rating)) {
@@ -471,6 +561,22 @@ public class EnveuVideoItemBean implements Serializable {
                             String year = t.get((CustomeFields.VastTag)).toString();
                             this.VastTag = year;
                         }
+
+                        if (t.containsKey(CustomeFields.ISSIGNEDLANGUAGE)) {
+                            String isNew = t.get((CustomeFields.ISSIGNEDLANGUAGE)).toString();
+                            this.signedLangEnabled = isNew;
+                        }
+
+                        if (t.containsKey(CustomeFields.SIGNEDLANGUAGEPARENTREGRENCEID)) {
+                            String isNew = t.get((CustomeFields.SIGNEDLANGUAGEPARENTREGRENCEID)).toString();
+                            this.signedLangParentRefId = isNew;
+                        }
+
+                        if (t.containsKey(CustomeFields.SIGNEDLANGUAGEREFRENCEID)) {
+                            String isNew = t.get((CustomeFields.SIGNEDLANGUAGEREFRENCEID)).toString();
+                            this.signedLangRefId = isNew;
+                        }
+
 
                     }
 
@@ -582,6 +688,22 @@ public class EnveuVideoItemBean implements Serializable {
                     this.VastTag = year;
                 }
 
+                if (t.containsKey(CustomeFields.ISSIGNEDLANGUAGE)) {
+                    String isNew = t.get((CustomeFields.ISSIGNEDLANGUAGE)).toString();
+                    this.signedLangEnabled = isNew;
+                }
+
+                if (t.containsKey(CustomeFields.SIGNEDLANGUAGEPARENTREGRENCEID)) {
+                    String isNew = t.get((CustomeFields.SIGNEDLANGUAGEPARENTREGRENCEID)).toString();
+                    this.signedLangParentRefId = isNew;
+                }
+
+                if (t.containsKey(CustomeFields.SIGNEDLANGUAGEREFRENCEID)) {
+                    String isNew = t.get((CustomeFields.SIGNEDLANGUAGEREFRENCEID)).toString();
+                    this.signedLangRefId = isNew;
+                }
+
+
             } else {
 
                 if (t.containsKey(CustomeFields.rating)) {
@@ -613,6 +735,21 @@ public class EnveuVideoItemBean implements Serializable {
                     String year = t.get((CustomeFields.VastTag)).toString();
                     this.VastTag = year;
                 }
+                if (t.containsKey(CustomeFields.ISSIGNEDLANGUAGE)) {
+                    String isNew = t.get((CustomeFields.ISSIGNEDLANGUAGE)).toString();
+                    this.signedLangEnabled = isNew;
+                }
+
+                if (t.containsKey(CustomeFields.SIGNEDLANGUAGEPARENTREGRENCEID)) {
+                    String isNew = t.get((CustomeFields.SIGNEDLANGUAGEPARENTREGRENCEID)).toString();
+                    this.signedLangParentRefId = isNew;
+                }
+
+                if (t.containsKey(CustomeFields.SIGNEDLANGUAGEREFRENCEID)) {
+                    String isNew = t.get((CustomeFields.SIGNEDLANGUAGEREFRENCEID)).toString();
+                    this.signedLangRefId = isNew;
+                }
+
 
             }
 

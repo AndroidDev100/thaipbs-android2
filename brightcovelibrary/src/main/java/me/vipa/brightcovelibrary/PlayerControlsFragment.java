@@ -58,7 +58,7 @@ public class PlayerControlsFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private final String ARG_PARAM1 = "param1";
     private final String ARG_PARAM2 = "param2";
-    private ImageView pauseButton, forward, rewind, playerSettingIcon;
+    private ImageView pauseButton, forward, rewind, playerSettingIcon,signIcon;
     private androidx.mediarouter.app.MediaRouteButton media_route_button;
     private LinearLayout skipBtn, bingeBtn;
     private TextView skipduration;
@@ -92,6 +92,7 @@ public class PlayerControlsFragment extends Fragment {
     private boolean isOffline = false;
     private LinearLayout settingLay;
     private CountDownTimer mTimer;
+    private boolean isSignPlaying = false;
 
 
     private OnFragmentInteractionListener mListener;
@@ -559,6 +560,20 @@ public class PlayerControlsFragment extends Fragment {
             }
         });
 
+        signIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isSignPlaying){
+                    isSignPlaying = true;
+                    playerCallbacks.playSignVideo(isSignPlaying);
+                }else {
+                    isSignPlaying = false;
+                    playerCallbacks.playSignVideo(isSignPlaying);
+                }
+
+            }
+        });
+
 
     }
 
@@ -663,6 +678,7 @@ public class PlayerControlsFragment extends Fragment {
         forward = (ImageView) view.findViewById(R.id.forward);
         rewind = (ImageView) view.findViewById(R.id.rewind);
         playerSettingIcon = (ImageView) view.findViewById(R.id.playerSettingIcon);
+        signIcon = (ImageView) view.findViewById(R.id.signIcon);
         media_route_button = (MediaRouteButton) view.findViewById(R.id.media_route_button);
         currentPosition = (TextView) view.findViewById(R.id.exo_position);
         totalDuration = (TextView) view.findViewById(R.id.exo_duration);
@@ -796,6 +812,14 @@ public class PlayerControlsFragment extends Fragment {
 
     public void isInPip(boolean pipMode) {
         isPipEnabled = pipMode;
+    }
+
+    public void setIsSignEnable(String isSignEnable) {
+        if (isSignEnable.equalsIgnoreCase("true")){
+
+        }else {
+
+        }
     }
 
 
