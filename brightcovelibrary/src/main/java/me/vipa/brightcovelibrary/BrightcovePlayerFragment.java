@@ -157,6 +157,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
     int from=0;
     private String signLangParentRefId = "";
     private String signLangRefId = "";
+    private boolean isFragmentCalled = false;
 
 
     public BrightcovePlayerFragment() {
@@ -182,8 +183,6 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             signLangParentRefId = bundle.getString("signLangParentRefId");
             signLangRefId = bundle.getString("signLangId");
 
-            Log.d("gtgtgtgtgtgtgt",signLangParentRefId);
-            Log.d("gtgtgtgtgtgtgt",signLangRefId);
 
 
             bingeWatchTimer = bundle.getInt("binge_watch_timer");
@@ -421,7 +420,9 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                     if (playerControlsFragment != null) {
                         playerControlsFragment.sendTapCallBack(false);
                         playerControlsFragment.setIsOffline(false,from);
+
                     }
+
 
                     Log.w("videoFound", "inUp");
                     /*if (ChromecastManager.getInstance().getRunningVideoId()!=null && !ChromecastManager.getInstance().getRunningVideoId().equalsIgnoreCase("")){
@@ -1107,18 +1108,30 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         if (!isAdded()) return;
 
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        if (playerControlsFragment == null) {
-            try {
-                playerControlsFragment = new PlayerControlsFragment();
-                transaction.add(R.id.container, playerControlsFragment, "PlayerControlsFragment");
-                transaction.addToBackStack(null);
-                transaction.commit();
-                playerControlsFragment.setVideoType(videoType);
-                playerControlsFragment.setPlayerCallBacks(this);
-                playerControlsFragment.setIsSignEnable(signLangParentRefId);
-            } catch (Exception ignored) {
 
-            }
+            if (playerControlsFragment == null) {
+                try {
+                    playerControlsFragment = new PlayerControlsFragment();
+                    transaction.add(R.id.container, playerControlsFragment, "PlayerControlsFragment");
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                    playerControlsFragment.setVideoType(videoType);
+                    playerControlsFragment.setPlayerCallBacks(this);
+
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (playerControlsFragment!=null) {
+                                playerControlsFragment.setIsSignEnable(signLangParentRefId, signLangRefId);
+
+                            }
+                        }
+                    }, 1500);
+
+                } catch (Exception ignored) {
+
+                }
+
 
         }
     }
@@ -2021,19 +2034,67 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
     }
 
     @Override
-    public void playSignVideo(boolean isSignPlaying) {
-        if (isSignPlaying){
-            if (baseVideoView!=null){
-                baseVideoView.stopPlayback();
-                baseVideoView.clear();
-                setPlayerWithCallBacks(false,signLangRefId);
+    public void playSignVideo(boolean isSignPlaying, String signLangId, boolean isFromParentRef) {
+        if (isFromParentRef) {
+            if (isSignPlaying) {
+                startPlayer(videoId);
+            } else {
+                startPlayer(signLangId);
             }
         }else {
-            if (baseVideoView!=null){
-                baseVideoView.stopPlayback();
-                baseVideoView.clear();
-                setPlayerWithCallBacks(false,videoId);
+            if (isSignPlaying) {
+                startPlayer(signLangId);
+            } else {
+                startPlayer(videoId);
             }
+        }
+    }
+
+    private void startPlayer(String videoId) {
+        if (baseVideoView != null) {
+            bookmarkPosition = baseVideoView.getCurrentPosition();
+            baseVideoView.stopPlayback();
+            baseVideoView.clear();
+            //setPlayerWithCallBacks(false,signLangId);
+
+            progressBar.setVisibility(View.VISIBLE);
+            Catalog catalog = new Catalog(eventEmitter, brightcoveAccountId, brightcovePolicyKey);
+            catalog.findVideoByID(videoId, new VideoListener() {
+                @Override
+                public void onVideo(Video video) {
+                    Log.w("IMATAG", "catalogin");
+                    progressBar.setVisibility(View.VISIBLE);
+                    currentVideo = video;
+                    cuePointsList = new ArrayList<>();
+                    createCuePointList(video);
+                    baseVideoView.add(video);
+                    isContentCompleted = false;
+                    willBingWatchShow = false;
+                    baseVideoView.start();
+                    baseVideoView.seekTo((int) (bookmarkPosition));
+                    // callPlayerControlsFragment();
+                    /*if (playerControlsFragment != null)
+                        playerControlsFragment.sendTapCallBack(false);*/
+                    if (playerControlsFragment != null) {
+                        playerControlsFragment.sendTapCallBack(false);
+                        playerControlsFragment.setIsOffline(false, from);
+
+                    }
+
+
+                    Log.w("videoFound", "inUp");
+                    /*if (ChromecastManager.getInstance().getRunningVideoId()!=null && !ChromecastManager.getInstance().getRunningVideoId().equalsIgnoreCase("")){
+                        if (ChromecastManager.getInstance().getRunningVideoId().equalsIgnoreCase(videoId)){
+                            onStatusUpdate();
+                        }else {
+                            castEnabling(video);
+                        }
+                    }else {
+                        castEnabling(video);
+                    }*/
+                    castEnabling(video);
+                }
+            });
         }
     }
 
