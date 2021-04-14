@@ -617,6 +617,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
         if (flagLogIn) {
 //            AppCommonMethod.guestTitle(getBaseActivity(),getBinding().userNameWords, getBinding().usernameTv, preference);
             hitApiLogout();
+
             flagLogIn = false;
           //  getBinding().userNameWords.setVisibility(View.GONE);
         } else if (flagVerify) {
@@ -624,6 +625,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
             flagVerify = false;
         } else if (isloggedout) {
             hitApiLogout();
+
           //  getBinding().userNameWords.setVisibility(View.GONE);
             isHomeDirect = true;
             isloggedout = false;
