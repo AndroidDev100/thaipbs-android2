@@ -163,6 +163,8 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
     public static boolean isBackStacklost = false;
     private boolean isOfflineAvailable = false;
     private boolean isCastConnected = false;
+    private String signLangParentRefId ="";
+    private String signLangRefId = "";
 
     @Override
     public DetailScreenBinding inflateBindingLayout(@NonNull LayoutInflater inflater) {
@@ -373,6 +375,17 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
         args.putString("selected_track", KsPreferenceKeys.getInstance().getQualityName());
         args.putBoolean("ads_visibility", isAdShowingToUser);
         args.putString("selected_lang", KsPreferenceKeys.getInstance().getAppLanguage());
+
+        if (videoDetails.getSignedLangParentRefId()!=null) {
+            signLangParentRefId = videoDetails.getSignedLangParentRefId();
+            args.putString(AppConstants.IS_SIGN_LANG_ENABLE, signLangParentRefId);
+        }
+
+        if (videoDetails.getSignedLangRefId()!=null) {
+            signLangRefId = videoDetails.getSignedLangRefId();
+            args.putString(AppConstants.SIGN_LANG_ID, signLangRefId);
+        }
+
         if (videoDetails != null) {
             args.putString("vast_tag", videoDetails.getVastTag());
         }
@@ -780,6 +793,8 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
 
         if (enveuCommonResponse != null && enveuCommonResponse.getEnveuVideoItemBeans().size() > 0) {
             videoDetails = enveuCommonResponse.getEnveuVideoItemBeans().get(0);
+
+
             getBinding().descriptionText.setEllipsize(TextUtils.TruncateAt.END);
             ImageHelper.getInstance(DetailActivity.this).loadListImage(getBinding().playerImage, videoDetails.getPosterURL());
 //            if (videoDetails.isPremium()) {
