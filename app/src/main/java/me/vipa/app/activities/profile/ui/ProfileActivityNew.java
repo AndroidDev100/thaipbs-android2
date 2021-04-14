@@ -264,7 +264,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
                         int difference = mYear-selectedyear;
                         if (difference>=13) {
 
-                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                            SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy ", Locale.getDefault());
                             getBinding().etDob.setText(sdf.format(mcurrentDate.getTime()));
                             try {
                                 Date d = sdf.parse(getBinding().etDob.getText().toString());
@@ -292,24 +292,27 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
             @Override
             public void onClick(View v) {
 
-                final CharSequence[] items = {"Take Photo", "Select from Library", "Select from avatar",
-                        "Cancel"};
+                final CharSequence[] items = {getResources().getString(R.string.take_photo), getResources().getString(R.string.select_from_library), getResources().getString(R.string.select_from_avtar),
+                        getResources().getString(R.string.cancel)};
+
+
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(ProfileActivityNew.this);
                 builder.setTitle("");
                 builder.setItems(items, (dialog, item) -> {
 //            boolean result = Utility.checkPermission(MyUploadActivity.this);
-                    if (items[item].equals("Take Photo")) {
+                    if (items[item].equals(getResources().getString(R.string.take_photo))) {
                         // userChoosenTask = "Take Photo";
 
 //                                cameraIntent();
                         galleryIntent();
-                    } else if (items[item].equals("Select from Library")) {
+                    } else if (items[item].equals(getResources().getString(R.string.select_from_library))) {
                         // userChoosenTask = "Choose from Library";
                         galleryIntent();
-                    } else if (items[item].equals("Select from avatar")) {
+                    } else if (items[item].equals(getResources().getString(R.string.select_from_avtar))) {
                         // userChoosenTask = "Choose from Library";
                         new ActivityLauncher(ProfileActivityNew.this).avatarActivity(ProfileActivityNew.this, AvatarImageActivity.class);
-                    } else if (items[item].equals("Cancel")) {
+                    } else if (items[item].equals(getResources().getString(R.string.cancel))) {
                         dialog.dismiss();
                     }
                 });
@@ -649,7 +652,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
                 df.setMaximumFractionDigits(0);
                 long l = Long.parseLong(df.format(longV));
                 dateMilliseconds = String.valueOf(l);
-                String dateString = DateFormat.format("yyyy/MM/dd", new Date(l)).toString();
+                String dateString = DateFormat.format("dd MMMM yyyy", new Date(l)).toString();
                 getBinding().etDob.setText(dateString);
             }
 

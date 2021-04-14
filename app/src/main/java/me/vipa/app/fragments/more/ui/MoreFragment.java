@@ -144,7 +144,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
             if (isLogin.equalsIgnoreCase(AppConstants.UserStatus.Login.toString())) {
                 getBinding().titleLayout.setVisibility(View.GONE);
                 getBinding().ivProfilePic.setVisibility(View.VISIBLE);
-                getBinding().userNameWords.setText(AppCommonMethod.getUserName(preference.getAppPrefUserName()));
+//                getBinding().userNameWords.setText(AppCommonMethod.getUserName(preference.getAppPrefUserName()));
                 getBinding().usernameTv.setText(preference.getAppPrefUserName());
                 clickEvent();
                 //getBinding().titleLayout.setVisibility(View.VISIBLE);
@@ -152,6 +152,8 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
             }else {
                 getBinding().titleLayout.setVisibility(View.VISIBLE);
                 getBinding().ivProfilePic.setVisibility(View.GONE);
+               // getBinding().userNameWords.setVisibility(View.GONE);
+
             }
         }
 
@@ -168,6 +170,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
         LocalBroadcastManager.getInstance(Objects.requireNonNull(getActivity())).registerReceiver(appSyncBroadcast, intentFilter);
         isloggedout = false;
         startMoreFragment();
+
     }
 
     @Override
@@ -208,10 +211,13 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                 String tempResponseApi = preference.getAppPrefProfile();
                 setVerifyApi(tempResponseApi);
             }
+
         } else {
             getBinding().loginBtn.setVisibility(View.VISIBLE);
-            AppCommonMethod.guestTitle(getBaseActivity(),getBinding().userNameWords, getBinding().usernameTv, preference);
-            getBinding().usernameTv.setVisibility(View.VISIBLE);
+//            AppCommonMethod.guestTitle(getBaseActivity(),getBinding().userNameWords, getBinding().usernameTv, preference);
+//            getBinding().usernameTv.setVisibility(View.VISIBLE);
+            getBinding().usernameTv.setVisibility(View.GONE);
+
             setUIComponets(mListLogOut, false);
         }
     }
@@ -235,6 +241,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
             preference = KsPreferenceKeys.getInstance();
             isLogin = preference.getAppPrefLoginStatus();
             if (isLogin.equalsIgnoreCase(AppConstants.UserStatus.Login.toString())) {
+
                 preference = KsPreferenceKeys.getInstance();
                 String token = preference.getAppPrefAccessToken();
                 viewModel.hitUserProfile(getContext(), token).observe(getActivity(), userProfileResponse -> {
@@ -266,7 +273,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
         try {
             preference.setAppPrefUserName(String.valueOf(userProfileResponse.getData().getName()));
             preference.setAppPrefUserEmail(String.valueOf(userProfileResponse.getData().getEmail()));
-            getBinding().userNameWords.setText(AppCommonMethod.getUserName(preference.getAppPrefUserName()));
+         //   getBinding().userNameWords.setText(AppCommonMethod.getUserName(preference.getAppPrefUserName()));
             getBinding().usernameTv.setText(preference.getAppPrefUserName());
             getBinding().titleLayout.setVisibility(View.VISIBLE);
             getBinding().ivProfilePic.setVisibility(View.GONE);
@@ -298,14 +305,14 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                 String firstFiveChar = imageUrlId.substring(0, 5);
                 if (firstFiveChar.equalsIgnoreCase("https")){
                     Glide.with(getActivity()).load(userProfileResponse.getData().getProfilePicURL())
-                            .placeholder(R.drawable.default_profile_pic)
-                            .error(R.drawable.default_profile_pic)
+                            .placeholder(R.drawable.ic_person_24dp)
+                            .error(R.drawable.ic_person_24dp)
                             .into(getBinding().ivProfilePic);
                 }else {
 
                     Glide.with(getActivity()).load(SDKConfig.getInstance().getCLOUD_FRONT_BASE_URL() + SDKConfig.getInstance().getProfileFolder() + userProfileResponse.getData().getProfilePicURL())
-                            .placeholder(R.drawable.default_profile_pic)
-                            .error(R.drawable.default_profile_pic)
+                            .placeholder(R.drawable.ic_person_24dp)
+                            .error(R.drawable.ic_person_24dp)
                             .into(getBinding().ivProfilePic);
                 }
             } else {
@@ -319,8 +326,8 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                             via = "Avatar";
 
                             Glide.with(getActivity()).load(SDKConfig.getInstance().getAvatarImages().get(i).getUrl())
-                                    .placeholder(R.drawable.default_profile_pic)
-                                    .error(R.drawable.default_profile_pic)
+                                    .placeholder(R.drawable.ic_person_24dp)
+                                    .error(R.drawable.ic_person_24dp)
                                     .into(getBinding().ivProfilePic);
 
                         }
@@ -331,8 +338,8 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                     imageUrlId = SDKConfig.getInstance().getAvatarImages().get(0).getIdentifier();
                     via = "Avatar";
                     Glide.with(getActivity()).load(SDKConfig.getInstance().getAvatarImages().get(0).getUrl())
-                            .placeholder(R.drawable.default_profile_pic)
-                            .error(R.drawable.default_profile_pic)
+                            .placeholder(R.drawable.ic_person_24dp)
+                            .error(R.drawable.ic_person_24dp)
                             .into(getBinding().ivProfilePic);
 
                 }
@@ -575,7 +582,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
 
 
                     // versionValidator.version(false, currentVersion, currentVersion);
-                    Glide.with(getActivity()).load(getActivity().getResources().getDrawable(R.drawable.default_profile_pic)).into(getBinding().ivProfilePic);
+                    Glide.with(getActivity()).load(getActivity().getResources().getDrawable(R.drawable.ic_person_24dp)).into(getBinding().ivProfilePic);
                     modelCall();
                     if (isHomeDirect) {
 
@@ -608,14 +615,16 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
             AppCommonMethod.updateLanguage("en", MvHubPlusApplication.getInstance());
         }
         if (flagLogIn) {
-            AppCommonMethod.guestTitle(getBaseActivity(),getBinding().userNameWords, getBinding().usernameTv, preference);
+//            AppCommonMethod.guestTitle(getBaseActivity(),getBinding().userNameWords, getBinding().usernameTv, preference);
             hitApiLogout();
             flagLogIn = false;
+          //  getBinding().userNameWords.setVisibility(View.GONE);
         } else if (flagVerify) {
             hitApiVerifyUser();
             flagVerify = false;
         } else if (isloggedout) {
             hitApiLogout();
+          //  getBinding().userNameWords.setVisibility(View.GONE);
             isHomeDirect = true;
             isloggedout = false;
 
@@ -627,11 +636,12 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
         if (!StringUtils.isNullOrEmptyOrZero(tempResponse)) {
             AppUserModel dataModel = new Gson().fromJson(tempResponse, AppUserModel.class);
             getBinding().loginBtn.setVisibility(View.GONE);
-            getBinding().usernameTv.setVisibility(View.VISIBLE);
-            getBinding().userNameWords.setText(AppCommonMethod.getUserName(dataModel.getName()));
+
+         //   getBinding().userNameWords.setText(AppCommonMethod.getUserName(dataModel.getName()));
             getBinding().usernameTv.setText(dataModel.getName());
             if (!StringUtils.isNullOrEmpty(dataModel.getProfilePicURL()))
                 try {
+
                     setProfilePic(dataModel.getProfilePicURL());
                 } catch (Exception e) {
                     Logger.e("MoreFragment", "" + e.toString());
@@ -657,7 +667,8 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
         if (!StringUtils.isNullOrEmptyOrZero(tempResponse)) {
             getBinding().loginBtn.setVisibility(View.GONE);
             getBinding().usernameTv.setVisibility(View.VISIBLE);
-            getBinding().userNameWords.setText(AppCommonMethod.getUserName(preference.getAppPrefUserName()));
+
+           // getBinding().userNameWords.setText(AppCommonMethod.getUserName(preference.getAppPrefUserName()));
             getBinding().usernameTv.setText(preference.getAppPrefUserName());
             setUIComponets(mListLogin, true);
            /* if (ddModel.isVerified()) {

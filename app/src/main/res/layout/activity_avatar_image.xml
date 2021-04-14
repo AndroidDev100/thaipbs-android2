@@ -35,7 +35,7 @@
             android:layout_marginTop="24dp"
             android:layout_marginBottom="20dp"
             android:maxLines="1"
-            android:text="Set Profile Pic"
+            android:text="@string/set_as_profilepic"
             android:textSize="@dimen/TextSize16"
             android:fontFamily="@font/sukhumvittadmai_bold"
             android:background="@drawable/rounded_update"

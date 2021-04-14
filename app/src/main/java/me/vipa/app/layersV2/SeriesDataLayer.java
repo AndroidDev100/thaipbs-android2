@@ -21,7 +21,9 @@ public class SeriesDataLayer {
 
     public static SeriesDataLayer getInstance() {
         if (seriesDataLayerInstance == null) {
-            endpoint = RequestConfig.getEnveuClient().create(ApiInterface.class);
+            if (RequestConfig.getEnveuClient()!= null) {
+                endpoint = RequestConfig.getEnveuClient().create(ApiInterface.class);
+            }
             seriesDataLayerInstance = new SeriesDataLayer();
         }
         return (seriesDataLayerInstance);

@@ -57,5 +57,8 @@
 
     <string name="Downloading">Downloading</string>
     <string name="Paused">Paused</string>
+    <string name="set_as_profilepic">Set Profile Pic</string>
+    <string name="take_photo">Take Photo</string>
+
 
 </resources>
