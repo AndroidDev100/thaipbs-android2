@@ -67,7 +67,6 @@ import com.google.gson.Gson;
 import com.mmtv.utils.helpers.downloads.DownloadHelper;
 
 import me.vipa.app.Bookmarking.BookmarkingViewModel;
-import me.vipa.app.activities.chromecast.ExpandedControlsActivity;
 import me.vipa.app.activities.detail.adapter.AllCommentAdapter;
 import me.vipa.app.activities.downloads.NetworkHelper;
 import me.vipa.app.activities.downloads.WifiPreferenceListener;
@@ -136,27 +135,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
-import me.vipa.app.Bookmarking.BookmarkingViewModel;
-import me.vipa.app.activities.chromecast.ExpandedControlsActivity;
-import me.vipa.app.activities.detail.adapter.AllCommentAdapter;
-import me.vipa.app.activities.detail.viewModel.DetailViewModel;
-import me.vipa.app.activities.downloads.NetworkHelper;
-import me.vipa.app.activities.downloads.WifiPreferenceListener;
-import me.vipa.app.activities.listing.listui.ListActivity;
-import me.vipa.app.activities.purchase.callBack.EntitlementStatus;
-import me.vipa.app.activities.purchase.planslayer.GetPlansLayer;
-import me.vipa.app.activities.purchase.ui.PurchaseActivity;
-import me.vipa.app.activities.purchase.ui.VodOfferType;
-import me.vipa.app.activities.usermanagment.ui.LoginActivity;
-import me.vipa.app.baseModels.BaseBindingActivity;
-import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
-import me.vipa.app.networking.apistatus.APIStatus;
-import me.vipa.app.networking.responsehandler.ResponseModel;
-import me.vipa.bookmarking.bean.GetBookmarkResponse;
-import me.vipa.enums.Layouts;
-
 import static android.media.AudioManager.AUDIOFOCUS_LOSS;
-import static com.google.android.material.tabs.TabLayout.INDICATOR_GRAVITY_BOTTOM;
 
 public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> implements AlertDialogFragment.AlertDialogListener, NetworkChangeReceiver.ConnectivityReceiverListener, AudioManager.OnAudioFocusChangeListener, CommonRailtItemClickListner, MoreClickListner, BrightcovePlayerFragment.OnPlayerInteractionListener, OnDownloadClickInteraction, MediaDownloadable.DownloadEventListener, VideoListListener, BrightcovePlayerFragment.ChromeCastStartedCallBack {
     public static boolean isActive = false;
@@ -189,6 +168,8 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
     private int selectedIdIntent = -1;
     private String tabId;
     private Long brightCoveVideoId;
+    private String signLangParentRefId ="";
+    private String signLangRefId = "";
     private RailInjectionHelper railInjectionHelper;
     private FragmentTransaction transaction;
     private String sharingUrl;
@@ -289,6 +270,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
                 assestId = Objects.requireNonNull(extras).getInt(AppConstants.BUNDLE_ASSET_ID);
                 videoPos = TimeUnit.SECONDS.toMillis(Long.parseLong(extras.getString(AppConstants.BUNDLE_DURATION)));
                 brightCoveVideoId = Objects.requireNonNull(extras).getLong(AppConstants.BUNDLE_VIDEO_ID_BRIGHTCOVE);
+
 
             }
         } else {
@@ -615,6 +597,8 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
         args.putString("selected_track", KsPreferenceKeys.getInstance().getQualityName());
         args.putString("selected_lang", KsPreferenceKeys.getInstance().getAppLanguage());
         args.putBoolean("ads_visibility", isAdShowingToUser);
+        args.putString(AppConstants.IS_SIGN_LANG_ENABLE, signLangParentRefId);
+        args.putString(AppConstants.SIGN_LANG_ID, signLangRefId);
         if (videoDetails != null) {
             args.putString("vast_tag", videoDetails.getVastTag());
         }
@@ -867,6 +851,9 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
         getBinding().setCasttext("");
         getBinding().setCrewtext("");
         EnveuVideoItemBean player = new EnveuVideoItemBean();
+
+        Log.d("ftftftftftftft",new Gson().toJson(player));
+
         Data data = new Data();
         data.setContentTitle("");
         getBinding().setResponseApi(player);
@@ -949,6 +936,19 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
 
     private void parseVideoDetails(EnveuVideoItemBean videoDetails) {
         dismissLoading(getBinding().progressBar);
+
+        if (videoDetails.getSignedLangParentRefId()!=null) {
+            signLangParentRefId = videoDetails.getSignedLangParentRefId();
+        }
+
+        if (videoDetails.getSignedLangRefId()!=null) {
+            signLangRefId = videoDetails.getSignedLangRefId();
+        }
+
+
+
+
+
         sharingClick(videoDetails);
         ImageHelper.getInstance(EpisodeActivity.this).loadListImage(getBinding().playerImage, videoDetails.getPosterURL());Log.w("videoPrimium",videoDetails.getBrightcoveVideoId());
 //        if (videoDetails.isPremium()) {

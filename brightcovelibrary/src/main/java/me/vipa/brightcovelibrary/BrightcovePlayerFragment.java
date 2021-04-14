@@ -32,7 +32,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 import android.annotation.SuppressLint;
 
 import androidx.annotation.NonNull;
@@ -106,7 +105,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Logger;
 
 import static android.content.Context.TELEPHONY_SERVICE;
 import static android.media.AudioManager.AUDIOFOCUS_LOSS;
@@ -157,6 +155,9 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
     boolean isFirstCalled = true;
     private boolean isCastConnected = false;
     int from=0;
+    private String signLangParentRefId = "";
+    private String signLangRefId = "";
+    private boolean isFragmentCalled = false;
 
 
     public BrightcovePlayerFragment() {
@@ -178,6 +179,10 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             selected_lang = bundle.getString("selected_lang");
             adRulesURL = bundle.getString("config_vast_tag");
             bingeWatch = bundle.getBoolean("binge_watch");
+
+            signLangParentRefId = bundle.getString("signLangParentRefId");
+            signLangRefId = bundle.getString("signLangId");
+
 
 
             bingeWatchTimer = bundle.getInt("binge_watch_timer");
@@ -310,7 +315,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
 
         }
         if (isOfflineVideo) {
-            setPlayerWithCallBacks(true);
+            setPlayerWithCallBacks(true,"");
             if (mActivity != null) {
                 if (from==1){
                     mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
@@ -318,7 +323,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                 }
             }
         } else {
-            setPlayerWithCallBacks(false);
+            setPlayerWithCallBacks(false,videoId);
         }
 
         try {
@@ -352,7 +357,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
     boolean isContentCompleted = false;
     boolean willBingWatchShow = false;
 
-    private void setPlayerWithCallBacks(boolean isOffline) {
+    private void setPlayerWithCallBacks(boolean isOffline, String videoId) {
         bandwidthMeter = new DefaultBandwidthMeter();
 
         PictureInPictureManager.getInstance().registerActivity(mActivity, baseVideoView);
@@ -415,7 +420,9 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                     if (playerControlsFragment != null) {
                         playerControlsFragment.sendTapCallBack(false);
                         playerControlsFragment.setIsOffline(false,from);
+
                     }
+
 
                     Log.w("videoFound", "inUp");
                     /*if (ChromecastManager.getInstance().getRunningVideoId()!=null && !ChromecastManager.getInstance().getRunningVideoId().equalsIgnoreCase("")){
@@ -825,9 +832,9 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         eventEmitter.on(GoogleCastEventType.CAST_SESSION_STARTED, new EventListener() {
             @Override
             public void processEvent(Event event) {
-                boolean playing = ChromecastManager.getInstance().updatePlayingId(videoId);
+                boolean playing = ChromecastManager.getInstance().updatePlayingId(BrightcovePlayerFragment.this.videoId);
                 Log.w("videoFound", "inDown");
-                ChromecastManager.getInstance().loadRemoteMediaOtt(videoId);
+                ChromecastManager.getInstance().loadRemoteMediaOtt(BrightcovePlayerFragment.this.videoId);
                 if (baseVideoView != null) {
                     baseVideoView.pause();
                 }
@@ -1101,17 +1108,30 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         if (!isAdded()) return;
 
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        if (playerControlsFragment == null) {
-            try {
-                playerControlsFragment = new PlayerControlsFragment();
-                transaction.add(R.id.container, playerControlsFragment, "PlayerControlsFragment");
-                transaction.addToBackStack(null);
-                transaction.commit();
-                playerControlsFragment.setVideoType(videoType);
-                playerControlsFragment.setPlayerCallBacks(this);
-            } catch (Exception ignored) {
 
-            }
+            if (playerControlsFragment == null) {
+                try {
+                    playerControlsFragment = new PlayerControlsFragment();
+                    transaction.add(R.id.container, playerControlsFragment, "PlayerControlsFragment");
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                    playerControlsFragment.setVideoType(videoType);
+                    playerControlsFragment.setPlayerCallBacks(this);
+
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (playerControlsFragment!=null) {
+                                playerControlsFragment.setIsSignEnable(signLangParentRefId, signLangRefId);
+
+                            }
+                        }
+                    }, 1500);
+
+                } catch (Exception ignored) {
+
+                }
+
 
         }
     }
@@ -2011,6 +2031,71 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             Utils.updateLanguage("en", getActivity());
         }
         gettingVideoTracks("");
+    }
+
+    @Override
+    public void playSignVideo(boolean isSignPlaying, String signLangId, boolean isFromParentRef) {
+        if (isFromParentRef) {
+            if (isSignPlaying) {
+                startPlayer(videoId);
+            } else {
+                startPlayer(signLangId);
+            }
+        }else {
+            if (isSignPlaying) {
+                startPlayer(signLangId);
+            } else {
+                startPlayer(videoId);
+            }
+        }
+    }
+
+    private void startPlayer(String videoId) {
+        if (baseVideoView != null) {
+            bookmarkPosition = baseVideoView.getCurrentPosition();
+            baseVideoView.stopPlayback();
+            baseVideoView.clear();
+            //setPlayerWithCallBacks(false,signLangId);
+
+            progressBar.setVisibility(View.VISIBLE);
+            Catalog catalog = new Catalog(eventEmitter, brightcoveAccountId, brightcovePolicyKey);
+            catalog.findVideoByID(videoId, new VideoListener() {
+                @Override
+                public void onVideo(Video video) {
+                    Log.w("IMATAG", "catalogin");
+                    progressBar.setVisibility(View.VISIBLE);
+                    currentVideo = video;
+                    cuePointsList = new ArrayList<>();
+                    createCuePointList(video);
+                    baseVideoView.add(video);
+                    isContentCompleted = false;
+                    willBingWatchShow = false;
+                    baseVideoView.start();
+                    baseVideoView.seekTo((int) (bookmarkPosition));
+                    // callPlayerControlsFragment();
+                    /*if (playerControlsFragment != null)
+                        playerControlsFragment.sendTapCallBack(false);*/
+                    if (playerControlsFragment != null) {
+                        playerControlsFragment.sendTapCallBack(false);
+                        playerControlsFragment.setIsOffline(false, from);
+
+                    }
+
+
+                    Log.w("videoFound", "inUp");
+                    /*if (ChromecastManager.getInstance().getRunningVideoId()!=null && !ChromecastManager.getInstance().getRunningVideoId().equalsIgnoreCase("")){
+                        if (ChromecastManager.getInstance().getRunningVideoId().equalsIgnoreCase(videoId)){
+                            onStatusUpdate();
+                        }else {
+                            castEnabling(video);
+                        }
+                    }else {
+                        castEnabling(video);
+                    }*/
+                    castEnabling(video);
+                }
+            });
+        }
     }
 
     private void getSelectedTrack() {

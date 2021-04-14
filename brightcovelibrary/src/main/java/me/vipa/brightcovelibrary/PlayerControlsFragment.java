@@ -26,6 +26,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatRadioButton;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.mediarouter.app.MediaRouteButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -39,6 +40,7 @@ import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.ui.DefaultTimeBar;
 import com.google.android.exoplayer2.ui.TimeBar;
 import com.google.android.gms.cast.framework.CastButtonFactory;
+import com.google.gson.Gson;
 import com.vipa.brightcovelibrary.R;
 
 import java.util.ArrayList;
@@ -58,7 +60,7 @@ public class PlayerControlsFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private final String ARG_PARAM1 = "param1";
     private final String ARG_PARAM2 = "param2";
-    private ImageView pauseButton, forward, rewind, playerSettingIcon;
+    private ImageView pauseButton, forward, rewind, playerSettingIcon,signIcon;
     private androidx.mediarouter.app.MediaRouteButton media_route_button;
     private LinearLayout skipBtn, bingeBtn;
     private TextView skipduration;
@@ -92,6 +94,9 @@ public class PlayerControlsFragment extends Fragment {
     private boolean isOffline = false;
     private LinearLayout settingLay;
     private CountDownTimer mTimer;
+    private boolean isSignPlaying = false;
+    private boolean isFromParentRef = false;
+    private String signLangId = "";
 
 
     private OnFragmentInteractionListener mListener;
@@ -559,6 +564,24 @@ public class PlayerControlsFragment extends Fragment {
             }
         });
 
+        signIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isSignPlaying){
+                    isSignPlaying = true;
+                    signIcon.setImageBitmap(null);
+                    signIcon.setBackgroundResource(R.drawable.ic_menu_green_sl);
+                    playerCallbacks.playSignVideo(isSignPlaying,signLangId,isFromParentRef);
+                }else {
+                    isSignPlaying = false;
+                    signIcon.setImageBitmap(null);
+                    signIcon.setBackgroundResource(R.drawable.ic_sl_logo_black);
+                    playerCallbacks.playSignVideo(isSignPlaying,signLangId,isFromParentRef);
+                }
+
+            }
+        });
+
 
     }
 
@@ -663,6 +686,7 @@ public class PlayerControlsFragment extends Fragment {
         forward = (ImageView) view.findViewById(R.id.forward);
         rewind = (ImageView) view.findViewById(R.id.rewind);
         playerSettingIcon = (ImageView) view.findViewById(R.id.playerSettingIcon);
+        signIcon = (ImageView) view.findViewById(R.id.signIcon);
         media_route_button = (MediaRouteButton) view.findViewById(R.id.media_route_button);
         currentPosition = (TextView) view.findViewById(R.id.exo_position);
         totalDuration = (TextView) view.findViewById(R.id.exo_duration);
@@ -796,6 +820,27 @@ public class PlayerControlsFragment extends Fragment {
 
     public void isInPip(boolean pipMode) {
         isPipEnabled = pipMode;
+    }
+
+    public void setIsSignEnable(String signLangParentRefId, String signLangRefId) {
+
+        if(signLangParentRefId!=null && signLangParentRefId!=""){
+            signIcon.setBackgroundResource(R.drawable.ic_menu_green_sl);
+            signIcon.setVisibility(View.VISIBLE);
+            isSignPlaying = true;
+            isFromParentRef = true;
+            signLangId = signLangParentRefId;
+
+        }else if (signLangRefId!=null && signLangRefId!=""){
+
+            signIcon.setVisibility(View.VISIBLE);
+            signIcon.setBackgroundResource(R.drawable.ic_sl_logo_black);
+            isSignPlaying = false;
+            isFromParentRef = false;
+            signLangId = signLangRefId;
+        }else {
+            signIcon.setVisibility(View.INVISIBLE);
+        }
     }
 
 

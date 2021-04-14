@@ -41,19 +41,6 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.vipa.app.activities.detail.ui.EpisodeActivity;
-import me.vipa.app.activities.listing.listui.ListActivity;
-import me.vipa.app.activities.listing.ui.GridActivity;
-import me.vipa.app.activities.privacypolicy.ui.WebViewActivity;
-import me.vipa.app.activities.search.ui.ActivitySearch;
-import me.vipa.app.activities.series.ui.SeriesDetailActivity;
-import me.vipa.app.activities.usermanagment.ui.LoginActivity;
-import me.vipa.app.baseModels.BaseBindingFragment;
-import me.vipa.enums.LandingPageType;
-import me.vipa.enums.Layouts;
-import me.vipa.enums.ListingLayoutType;
-import me.vipa.enums.PDFTarget;
-
 public class RecommendationRailFragment extends BaseBindingFragment<DetailFooterFragmentBinding> implements CommonRailtItemClickListner, MoreClickListner {
 
     private List<RailCommonData> railCommonDataList = new ArrayList<>();

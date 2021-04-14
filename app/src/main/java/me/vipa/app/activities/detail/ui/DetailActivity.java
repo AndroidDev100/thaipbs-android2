@@ -55,7 +55,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.mmtv.utils.helpers.downloads.DownloadHelper;
 
 import me.vipa.app.Bookmarking.BookmarkingViewModel;
-import me.vipa.app.activities.chromecast.ExpandedControlsActivity;
 import me.vipa.app.activities.downloads.NetworkHelper;
 import me.vipa.app.activities.downloads.WifiPreferenceListener;
 import me.vipa.app.activities.listing.listui.ListActivity;
@@ -114,24 +113,6 @@ import java.util.Objects;
 import java.util.Timer;
 import java.util.concurrent.TimeUnit;
 
-import me.vipa.app.Bookmarking.BookmarkingViewModel;
-import me.vipa.app.activities.chromecast.ExpandedControlsActivity;
-import me.vipa.app.activities.detail.viewModel.DetailViewModel;
-import me.vipa.app.activities.downloads.NetworkHelper;
-import me.vipa.app.activities.downloads.WifiPreferenceListener;
-import me.vipa.app.activities.listing.listui.ListActivity;
-import me.vipa.app.activities.purchase.callBack.EntitlementStatus;
-import me.vipa.app.activities.purchase.planslayer.GetPlansLayer;
-import me.vipa.app.activities.purchase.ui.PurchaseActivity;
-import me.vipa.app.activities.purchase.ui.VodOfferType;
-import me.vipa.app.activities.usermanagment.ui.LoginActivity;
-import me.vipa.app.baseModels.BaseBindingActivity;
-import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
-import me.vipa.app.networking.apistatus.APIStatus;
-import me.vipa.app.networking.responsehandler.ResponseModel;
-import me.vipa.bookmarking.bean.GetBookmarkResponse;
-import me.vipa.enums.Layouts;
-
 import static android.media.AudioManager.AUDIOFOCUS_LOSS;
 
 
@@ -182,6 +163,8 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
     public static boolean isBackStacklost = false;
     private boolean isOfflineAvailable = false;
     private boolean isCastConnected = false;
+    private String signLangParentRefId ="";
+    private String signLangRefId = "";
 
     @Override
     public DetailScreenBinding inflateBindingLayout(@NonNull LayoutInflater inflater) {
@@ -392,6 +375,17 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
         args.putString("selected_track", KsPreferenceKeys.getInstance().getQualityName());
         args.putBoolean("ads_visibility", isAdShowingToUser);
         args.putString("selected_lang", KsPreferenceKeys.getInstance().getAppLanguage());
+
+        if (videoDetails.getSignedLangParentRefId()!=null) {
+            signLangParentRefId = videoDetails.getSignedLangParentRefId();
+            args.putString(AppConstants.IS_SIGN_LANG_ENABLE, signLangParentRefId);
+        }
+
+        if (videoDetails.getSignedLangRefId()!=null) {
+            signLangRefId = videoDetails.getSignedLangRefId();
+            args.putString(AppConstants.SIGN_LANG_ID, signLangRefId);
+        }
+
         if (videoDetails != null) {
             args.putString("vast_tag", videoDetails.getVastTag());
         }
@@ -799,6 +793,8 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
 
         if (enveuCommonResponse != null && enveuCommonResponse.getEnveuVideoItemBeans().size() > 0) {
             videoDetails = enveuCommonResponse.getEnveuVideoItemBeans().get(0);
+
+
             getBinding().descriptionText.setEllipsize(TextUtils.TruncateAt.END);
             ImageHelper.getInstance(DetailActivity.this).loadListImage(getBinding().playerImage, videoDetails.getPosterURL());
 //            if (videoDetails.isPremium()) {

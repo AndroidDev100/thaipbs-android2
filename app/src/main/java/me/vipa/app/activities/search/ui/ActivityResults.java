@@ -37,13 +37,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import me.vipa.app.activities.search.adapter.CommonSearchAdapter;
-import me.vipa.app.activities.search.adapter.RowSearchAdapter;
-import me.vipa.app.activities.search.viewmodel.SearchViewModel;
-import me.vipa.app.activities.series.ui.SeriesDetailActivity;
-import me.vipa.app.baseModels.BaseBindingActivity;
-import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
-
 
 public class ActivityResults extends BaseBindingActivity<ActivityResultBinding> implements CommonSearchAdapter.CommonSearchListener, RowSearchAdapter.RowSearchListener {
 

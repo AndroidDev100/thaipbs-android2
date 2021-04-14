@@ -1,7 +1,6 @@
 package me.vipa.app.activities.watchList.ui;
 
 import android.content.Context;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -56,15 +55,6 @@ import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import me.vipa.app.Bookmarking.BookmarkingViewModel;
-import me.vipa.app.activities.watchList.adapter.WatchHistoryAdapter;
-import me.vipa.app.activities.watchList.adapter.WatchListAdapter;
-import me.vipa.app.activities.watchList.viewModel.WatchListViewModel;
-import me.vipa.app.baseModels.BaseBindingActivity;
-import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
-import me.vipa.bookmarking.bean.BookmarkingResponse;
-import me.vipa.enums.ImageType;
 
 
 public class WatchListActivity extends BaseBindingActivity<WatchListActivityBinding> implements WatchListAdapter.WatchListAdaperListener, WatchHistoryAdapter.WatchHistoryAdaperListener, WatchListAdapter.DeleteWatchList, AlertDialogFragment.AlertDialogListener, ItemClickListener, View.OnClickListener {

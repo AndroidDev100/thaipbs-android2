@@ -21,8 +21,6 @@ import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 
 import java.util.ArrayList;
 
-import me.vipa.app.beanModel.ContinueRailModel.CommonContinueRail;
-
 public class CommonPosterPotraitContinue extends RecyclerView.Adapter<CommonPosterPotraitContinue.SingleItemRowHolder> {
 
     private final String contentType;

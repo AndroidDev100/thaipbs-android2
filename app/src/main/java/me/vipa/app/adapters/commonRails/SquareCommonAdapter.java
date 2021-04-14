@@ -30,12 +30,6 @@ import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.vipa.app.activities.detail.ui.DetailActivity;
-import me.vipa.app.activities.detail.ui.EpisodeActivity;
-import me.vipa.app.activities.series.ui.SeriesDetailActivity;
-import me.vipa.app.beanModel.ContinueRailModel.CommonContinueRail;
-import me.vipa.app.beanModel.responseModels.landingTabResponses.railData.ContentsItem;
-
 
 public class SquareCommonAdapter extends RecyclerView.Adapter<SquareCommonAdapter.SingleItemRowHolder> {
 

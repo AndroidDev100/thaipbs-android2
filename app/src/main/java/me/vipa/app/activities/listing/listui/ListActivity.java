@@ -34,14 +34,6 @@ import me.vipa.app.utils.helpers.RecyclerAnimator;
 
 import java.util.Objects;
 
-import me.vipa.app.activities.listing.callback.ItemClickListener;
-import me.vipa.app.activities.listing.listadapter.ListAdapter;
-import me.vipa.app.activities.listing.viewmodel.ListingViewModel;
-import me.vipa.app.baseModels.BaseBindingActivity;
-import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
-import me.vipa.app.networking.apistatus.APIStatus;
-import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
-
 public class ListActivity extends BaseBindingActivity<ListingActivityBinding> implements ItemClickListener {
     String playListId;
     BaseCategory baseCategory;

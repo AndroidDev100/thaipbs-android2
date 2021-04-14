@@ -251,6 +251,8 @@ public class ActivityLauncher {
         args.putInt(AppConstants.BUNDLE_ASSET_ID, id);
         args.putLong(AppConstants.BUNDLE_VIDEO_ID_BRIGHTCOVE, videoId);
         args.putBoolean(AppConstants.BUNDLE_IS_PREMIUM, isPremium);
+//        args.putString(AppConstants.IS_SIGN_LANG_ENABLE, signedLangEnabled);
+//        args.putString(AppConstants.SIGN_LANG_ID, signedLangRefId);
 
         if (StringUtils.isNullOrEmpty(duration))
             args.putString(AppConstants.BUNDLE_DURATION, "0");

@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SimpleItemAnimator;
 
+import com.google.gson.Gson;
+
 import me.vipa.app.activities.series.adapter.SeasonAdapter;
 import me.vipa.app.activities.series.ui.SeriesDetailActivity;
 import me.vipa.app.baseModels.BaseBindingFragment;
@@ -391,7 +393,6 @@ public class SeasonTabFragment extends BaseBindingFragment<SeasonFragmentLayoutB
             } else {
                 AppCommonMethod.launchDetailScreen(getActivity(), 0l, MediaTypeConstants.getInstance().getEpisode(), enveuVideoItemBean.getId(), "0", enveuVideoItemBean.isPremium());
             }
-
         }
 
 /*

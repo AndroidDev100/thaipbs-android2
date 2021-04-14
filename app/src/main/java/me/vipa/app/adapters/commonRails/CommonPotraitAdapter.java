@@ -26,10 +26,6 @@ import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.vipa.app.activities.listing.callback.ItemClickListener;
-import me.vipa.app.activities.series.ui.SeriesDetailActivity;
-import me.vipa.app.beanModel.ContinueRailModel.CommonContinueRail;
-import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
 import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
 
 

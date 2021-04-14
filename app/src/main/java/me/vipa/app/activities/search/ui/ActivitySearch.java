@@ -33,8 +33,6 @@ import me.vipa.app.activities.search.adapter.CommonSearchAdapter;
 import me.vipa.app.activities.search.adapter.RecentListAdapter;
 import me.vipa.app.activities.search.viewmodel.SearchViewModel;
 import me.vipa.app.activities.series.ui.SeriesDetailActivity;
-import me.vipa.app.activities.splash.ui.ActivitySplash;
-import me.vipa.app.activities.usermanagment.ui.ChangePasswordActivity;
 import me.vipa.app.adapters.CommonShimmerAdapter;
 import me.vipa.app.baseModels.BaseBindingActivity;
 import me.vipa.app.beanModel.KeywordList;
@@ -58,14 +56,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-
-import me.vipa.app.activities.search.adapter.CategoriedSearchAdapter;
-import me.vipa.app.activities.search.adapter.CommonSearchAdapter;
-import me.vipa.app.activities.search.adapter.RecentListAdapter;
-import me.vipa.app.activities.search.viewmodel.SearchViewModel;
-import me.vipa.app.activities.series.ui.SeriesDetailActivity;
-import me.vipa.app.baseModels.BaseBindingActivity;
-import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
 
 import static me.vipa.app.R.font.sukhumvittadmai_normal;
 
