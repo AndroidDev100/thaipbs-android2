@@ -67,15 +67,20 @@
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
                                     android:orientation="vertical">
-
                                     <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
                                         android:id="@+id/titleLayout"
+                                        android:background="@drawable/white_circle_bg"
+                                        android:orientation="vertical">
+                                    <ImageView
                                         android:visibility="visible"
                                         android:layout_width="@dimen/new_more_img_size"
                                         android:layout_height="@dimen/new_more_img_size"
                                         android:gravity="center"
                                         android:background="@drawable/ic_person_24dp"
-                                        android:orientation="vertical">
+                                        />
 
 <!--                                        <TextView-->
 <!--                                            android:id="@+id/user_name_words"-->
@@ -119,7 +124,7 @@
                                         android:background="@drawable/rounded_button"
                                         android:gravity="center"
                                         android:fontFamily="@font/sukhumvittadmai_normal"
-                                        android:layout_marginTop="@dimen/_7sdp"
+                                        android:layout_marginTop="@dimen/_14sdp"
                                         android:text="@string/login_txt"
                                         android:textAllCaps="false"
                                         android:textColor="@color/white"
