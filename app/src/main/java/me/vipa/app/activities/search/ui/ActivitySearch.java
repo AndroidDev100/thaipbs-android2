@@ -1,7 +1,10 @@
 package me.vipa.app.activities.search.ui;
 
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,11 +14,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.exoplayer2.util.Log;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SearchView;
@@ -41,6 +46,7 @@ import me.vipa.app.beanModel.popularSearch.ItemsItem;
 import me.vipa.app.callbacks.commonCallbacks.SearchClickCallbacks;
 import me.vipa.app.utils.cropImage.helpers.NetworkConnectivity;
 import me.vipa.app.utils.helpers.AppPreference;
+import me.vipa.app.utils.helpers.SharedPrefHelper;
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
 import me.vipa.app.R;
 import me.vipa.app.SDKConfig;
@@ -51,6 +57,7 @@ import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.helpers.RailInjectionHelper;
 import me.vipa.app.utils.helpers.RecyclerAnimator;
 import me.vipa.app.utils.helpers.ToastHandler;
+import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -72,6 +79,9 @@ public class ActivitySearch extends BaseBindingActivity<ActivitySearchBinding> i
     private long mLastClickTime = 0;
     private boolean isShimmer;
     private RailInjectionHelper railInjectionHelper;
+    private final int FILTER_REQUEST_CODE = 2000;
+    private String searchText = "";
+    private boolean applyFilter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -97,6 +107,15 @@ public class ActivitySearch extends BaseBindingActivity<ActivitySearchBinding> i
 
         getBinding().toolbar.backButton.setOnClickListener(view -> onBackPressed());
         getBinding().toolbar.clearText.setOnClickListener(view -> onBackPressed());
+        getBinding().toolbar.filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ActivitySearch.this, FilterIconActivity.class);
+                startActivityForResult(intent, FILTER_REQUEST_CODE);
+
+
+            }
+        });
 
 //        getBinding().toolbar.searchText.setOnEditorActionListener((textView, actionId, keyEvent) -> {
 //            if ((keyEvent != null && (keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
@@ -185,7 +204,7 @@ public class ActivitySearch extends BaseBindingActivity<ActivitySearchBinding> i
     }
 
 
-    private void hitApiSearchKeyword(String searchKeyword) {
+    private void hitApiSearchKeyword(String searchKeyword, Context context, boolean applyFilter) {
         model = new ArrayList<>();
         callShimmer(getBinding().searchResultRecycler);
         setRecyclerProperties(getBinding().searchResultRecycler);
@@ -195,13 +214,14 @@ public class ActivitySearch extends BaseBindingActivity<ActivitySearchBinding> i
       //  getBinding().noResult1.setVisibility(View.GONE);
         // getBinding().progressBar.setVisibility(View.VISIBLE);
         getBinding().llSearchResultLayout.setVisibility(View.VISIBLE);
-        railInjectionHelper.getSearch(searchKeyword, 4, 0).observe(ActivitySearch.this, data -> {
+        railInjectionHelper.getSearch(context, searchKeyword, 4, 0, applyFilter).observe(ActivitySearch.this, data -> {
             searchResult = true;
             if (Objects.requireNonNull(data).size() > 0) {
                 try {
                     getBinding().noResult.setVisibility(View.GONE);
                    // getBinding().noResult1.setVisibility(View.GONE);
                     getBinding().rootView.setVisibility(View.GONE);
+                    getBinding().toolbar.filter.setVisibility(View.VISIBLE);
                     for (int i = 0; i < data.size(); i++) {
                         if (data.get(i).getPageTotal() > 0) {
                             if (data.get(i).getStatus()) {
@@ -239,13 +259,29 @@ public class ActivitySearch extends BaseBindingActivity<ActivitySearchBinding> i
                     getBinding().searchResultRecycler.setAdapter(searchAdapter);
                 } else {
                     getBinding().noResult.setVisibility(View.VISIBLE);
-                  //  getBinding().noResult1.setVisibility(View.VISIBLE);
+
+                    List<String> filterGenreSavedListKeyForApi = new SharedPrefHelper(this).getDataGenreListKeyValue();
+                    List<String> filterSortSavedListKeyForApi = new SharedPrefHelper(this).getDataSortListKeyValue();
+                    if (filterGenreSavedListKeyForApi != null && filterGenreSavedListKeyForApi.size() > 0 || filterSortSavedListKeyForApi != null && filterSortSavedListKeyForApi.size() > 0) {
+                        getBinding().toolbar.filter.setVisibility(View.VISIBLE);
+                    } else {
+                        getBinding().toolbar.filter.setVisibility(View.GONE);
+
+                    }
                     getBinding().rootView.setVisibility(View.VISIBLE);
                     getBinding().llSearchResultLayout.setVisibility(View.GONE);
                 }
             } else {
                 getBinding().noResult.setVisibility(View.VISIBLE);
               //  getBinding().noResult1.setVisibility(View.VISIBLE);
+                List<String> filterGenreSavedListKeyForApi = new SharedPrefHelper(this).getDataGenreListKeyValue();
+                List<String> filterSortSavedListKeyForApi = new SharedPrefHelper(this).getDataSortListKeyValue();
+                if (filterGenreSavedListKeyForApi != null && filterGenreSavedListKeyForApi.size() > 0 || filterSortSavedListKeyForApi != null && filterSortSavedListKeyForApi.size() > 0) {
+                    getBinding().toolbar.filter.setVisibility(View.VISIBLE);
+                } else {
+                    getBinding().toolbar.filter.setVisibility(View.GONE);
+
+                }
                 getBinding().rootView.setVisibility(View.VISIBLE);
                 getBinding().llSearchResultLayout.setVisibility(View.GONE);
             }
@@ -432,7 +468,8 @@ public class ActivitySearch extends BaseBindingActivity<ActivitySearchBinding> i
     public void onShowAllItemClicked(RailCommonData itemValue) {
 
         if (itemValue != null && itemValue.getStatus()) {
-            new ActivityLauncher(ActivitySearch.this).resultActivityBundle(ActivitySearch.this, ActivityResults.class, itemValue.getAssetType(), itemValue.getSearchKey(), itemValue.getTotalCount());
+            applyFilter = Boolean.parseBoolean(KsPreferenceKeys.getInstance().getFilterApply());
+            new ActivityLauncher(ActivitySearch.this).resultActivityBundle(ActivitySearch.this, ActivityResults.class, itemValue.getAssetType(), itemValue.getSearchKey(), itemValue.getTotalCount(),applyFilter);
 
         }
     }
@@ -506,7 +543,11 @@ public class ActivitySearch extends BaseBindingActivity<ActivitySearchBinding> i
 
             }
             if (query!=null && query.trim().length()>2){
-                hitApiSearchKeyword(query.trim());
+                applyFilter = Boolean.parseBoolean(KsPreferenceKeys.getInstance().getFilterApply());
+                searchText = query.trim();
+                Log.e("SEARCHYTEXT", searchText);
+                hitApiSearchKeyword(query.trim(), ActivitySearch.this, applyFilter);
+
             }
 
             //  hitApiSearchSeries(getBinding().toolbar.searchText.getText().toString().trim());
@@ -521,6 +562,23 @@ public class ActivitySearch extends BaseBindingActivity<ActivitySearchBinding> i
     @Override
     public boolean onQueryTextChange(String newText) {
         return false;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == FILTER_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                Log.e("BACK", "BACK");
+                Log.e("SEARCHTEXT_ONRESULT", searchText);
+                if (searchText != null && searchText.trim().length() > 2) {
+                    applyFilter = Boolean.parseBoolean(KsPreferenceKeys.getInstance().getFilterApply());
+                    hitApiSearchKeyword(searchText.trim(), ActivitySearch.this, applyFilter);
+                }
+
+            }
+        }
     }
 }
 

@@ -134,6 +134,31 @@
                     android:background="?attr/search_icon_background"
                     android:tint="@color/white" />
             </LinearLayout>
+            <LinearLayout
+                android:id="@+id/clear_text"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@+id/llSearchIcon"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/_15sdp"
+                android:gravity="center_vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/clear_screen_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/sukhumvittadmai_normal"
+                    android:singleLine="true"
+                    android:text="Clear All"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textSize="@dimen/headingToolbar"
+                    android:textColor="?attr/toolbar_text_color">
+
+                </TextView>
+            </LinearLayout>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"

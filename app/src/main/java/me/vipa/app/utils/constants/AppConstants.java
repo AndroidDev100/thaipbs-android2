@@ -22,6 +22,8 @@ public interface AppConstants {
     String FILTER_PLAYER_BANNER = "/640x360/filters:format(jpeg):quality(100)";
     String FILTER = "/filters:";
     String LINE_URI = "https://line.me/R/oaMessage/@mvhub";
+    String SEARCH_GENRE_CONSTATNT = "genre:";
+    String SEARCH_SORT_CONSTATNT = "title.keyword:";
 
 
     //  private static String hlsvideouri = "https://d228i5jh7v5l96.cloudfront.net/deval_dabeli/d5369610-7f07-dc54-71c3-56ca1b972a25.m3u8";

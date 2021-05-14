@@ -1,5 +1,6 @@
 package me.vipa.app.activities.search.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.LayoutInflater;
@@ -54,6 +55,7 @@ public class ActivityResults extends BaseBindingActivity<ActivityResultBinding> 
     private long mLastClickTime = 0;
     private int firstVisiblePosition, pastVisiblesItems, visibleItemCount, totalItemCount;
     private RailInjectionHelper railInjectionHelper;
+    private boolean applyFilter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -78,6 +80,7 @@ public class ActivityResults extends BaseBindingActivity<ActivityResultBinding> 
                     searchType = Objects.requireNonNull(extras).getString("Search_Show_All");
                     searchKeyword = extras.getString("Search_Key");
                     totalCount = extras.getInt("Total_Result");
+                    applyFilter = extras.getBoolean("apply_filter");
                 } catch (NullPointerException e) {
                     e.printStackTrace();
                 }
@@ -116,7 +119,7 @@ public class ActivityResults extends BaseBindingActivity<ActivityResultBinding> 
         itemListDataAdapter1 = new RowSearchAdapter(ActivityResults.this, singleSectionItems, false, this);
         setRecyclerProperties(getBinding().resultRecycler);
         callShimmer(getBinding().resultRecycler);
-        hitApiSearchKeyword(searchKeyword, searchType);
+        hitApiSearchKeyword(searchKeyword, searchType,applyFilter,ActivityResults.this);
         /*if (searchType.equalsIgnoreCase("SERIES")) {
             hitApiPopularSearch(searchKeyword);
         } else {
@@ -202,7 +205,7 @@ public class ActivityResults extends BaseBindingActivity<ActivityResultBinding> 
                                 loading = false;
                                 counter = counter + AppConstants.PAGE_SIZE;
                                 getBinding().progressBar.setVisibility(View.VISIBLE);
-                                hitApiSearchKeyword(searchKeyword, searchType);
+                                hitApiSearchKeyword(searchKeyword, searchType,applyFilter,ActivityResults.this);
                                /* if (searchType.equalsIgnoreCase("SERIES")) {
                                     hitApiPopularSearch(searchKeyword);
                                 } else {
@@ -228,9 +231,9 @@ public class ActivityResults extends BaseBindingActivity<ActivityResultBinding> 
         recyclerView.setLayoutManager(mLayoutManager);
     }
 
-    private void hitApiSearchKeyword(String type, String searchKeyword) {
+    private void hitApiSearchKeyword(String type, String searchKeyword, boolean applyFilter, Context context) {
 
-        railInjectionHelper.getSearchSingleCategory(type, searchKeyword, AppConstants.PAGE_SIZE, counter).observe(ActivityResults.this, data -> {
+        railInjectionHelper.getSearchSingleCategory(type, searchKeyword, AppConstants.PAGE_SIZE, counter,applyFilter,context).observe(ActivityResults.this, data -> {
             if (data != null) {
                 if (counter == 0) {
                     new RecyclerAnimator(this).animate(getBinding().resultRecycler);

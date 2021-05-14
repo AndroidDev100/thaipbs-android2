@@ -344,11 +344,12 @@ public class ActivityLauncher {
         activity.startActivity(intent);
     }
 
-    public void resultActivityBundle(Activity source, Class<ActivityResults> destination, String searchType, String searchKey, int total) {
+    public void resultActivityBundle(Activity source, Class<ActivityResults> destination, String searchType, String searchKey, int total,boolean applyFilter) {
         Bundle args = new Bundle();
         args.putString("Search_Show_All", searchType);
         args.putString("Search_Key", searchKey);
         args.putInt("Total_Result", total);
+        args.putBoolean("apply_filter", applyFilter);
         Intent intent = new Intent(source, destination);
         intent.putExtra("SearchResult", args);
         activity.startActivity(intent);

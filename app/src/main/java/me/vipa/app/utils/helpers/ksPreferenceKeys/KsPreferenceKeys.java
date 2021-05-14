@@ -27,6 +27,12 @@ public class KsPreferenceKeys extends SharedPrefHelper {
     public static final String AUTO_ROTATE = "auto_rotate";
     public static final String AUTO_DURATION = "auto_rotate_duration";
     public static final String USER_DATA = "user_data_new";
+    public static final String FILTER_SELECTED_GENRE = "FILTER_SELECTED_GENRE";
+    public static final String FILTER_SELECTED_GENRE_VALUE = "FILTER_SELECTED_GENRE_VALUE";
+
+    public static final String FILTER_SELECTED_SORT = "FILTER_SELECTED_SORT";
+    public static final String FILTER_SELECTED_SORT_VALUE = "FILTER_SELECTED_SORT_VALUE";
+    public static final String FILTER_APPLY = "FILTER_APPLY";
 
 
 
@@ -401,6 +407,50 @@ public class KsPreferenceKeys extends SharedPrefHelper {
 
     public String getUserProfileData() {
         return getString(USER_DATA, "");
+    }
+
+
+    public void setFilterGenre(int profileData) {
+        mInstance.setInt(FILTER_SELECTED_GENRE, profileData);
+    }
+
+    public int getFilterGenre() {
+        return mInstance.getInt(FILTER_SELECTED_GENRE, 1 );
+    }
+
+
+    public void setFilterGenreSelection(String profileData) {
+        mInstance.setString(FILTER_SELECTED_GENRE_VALUE, profileData);
+    }
+
+    public String getFilterGenreSelection() {
+        return mInstance.getString(FILTER_SELECTED_GENRE_VALUE, "");
+    }
+
+    /////////////////////////////////////
+    public void setFilterSort(String profileData) {
+        mInstance.setString(FILTER_SELECTED_SORT, profileData);
+    }
+
+    public String getFilterSort() {
+        return mInstance.getString(FILTER_SELECTED_SORT, "");
+    }
+
+
+    public void setFilterSortSelection(String profileData) {
+        mInstance.setString(FILTER_SELECTED_SORT_VALUE, profileData);
+    }
+
+    public String getFilterSortSelection() {
+        return mInstance.getString(FILTER_SELECTED_SORT_VALUE, "");
+    }
+
+    public void setFilterApply(String profileData) {
+        mInstance.setString(FILTER_APPLY, profileData);
+    }
+
+    public String getFilterApply() {
+        return mInstance.getString(FILTER_APPLY, "");
     }
 
 }

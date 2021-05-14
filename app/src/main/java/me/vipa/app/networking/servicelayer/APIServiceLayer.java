@@ -1,11 +1,13 @@
 package me.vipa.app.networking.servicelayer;
 
+import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import me.vipa.app.utils.helpers.SharedPrefHelper;
 import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
 import me.vipa.baseCollection.baseCategoryServices.BaseCategoryServices;
 import me.vipa.bookmarking.bean.continuewatching.ContinueWatchingBookmark;
@@ -398,34 +400,70 @@ public class APIServiceLayer {
 
     private List<RailCommonData> mModel;
 
-    public LiveData<List<RailCommonData>> getSearchData(String type, String keyword, int size, int page) {
+    public LiveData<List<RailCommonData>> getSearchData(Context context, String type, String keyword, int size, int page, boolean applyFilter) {
         languageCode = LanguageLayer.getCurrentLanguageCode();
+        List<String> filterGenreSavedListKeyForApi = new SharedPrefHelper(context).getDataGenreListKeyValue();
+        List<String> filterSortSavedListKeyForApi = new SharedPrefHelper(context).getDataSortListKeyValue();
+
+
         ApiInterface endpoint = RequestConfig.getClientSearch().create(ApiInterface.class);
+
 
         MutableLiveData<List<RailCommonData>> responsePopular = new MutableLiveData<>();
         {
             try {
                 // keyword= URLEncoder.encode(keyword, "UTF-8");
                 //String searchValue=
+                Observable<ResponseSearch> call =null;
+                Observable<ResponseSearch> call1=null;
+                Observable<ResponseSearch> call2=null;
+                Observable<ResponseSearch> call3=null;
+                Observable<ResponseSearch> call4=null;
 
-                Observable<ResponseSearch> call = endpoint.getSearch(keyword, "MOVIES", size, page, languageCode)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(Schedulers.io());
-                Observable<ResponseSearch> call1 = endpoint.getSearch(keyword, MediaTypeConstants.getInstance().getSeries(), size, page, languageCode)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(Schedulers.io());
+                if(applyFilter){
+                    if ( filterGenreSavedListKeyForApi != null && filterGenreSavedListKeyForApi.size() > 0||filterSortSavedListKeyForApi != null && filterSortSavedListKeyForApi.size() > 0) {
+                        call = endpoint.getSearchByFilters(keyword, "MOVIES", size, page, languageCode,filterGenreSavedListKeyForApi,filterSortSavedListKeyForApi)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(Schedulers.io());
 
-                Observable<ResponseSearch> call2 = endpoint.getSearch(keyword, MediaTypeConstants.getInstance().getLive(), size, page, languageCode)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(Schedulers.io());
+                        call1 = endpoint.getSearchByFilters(keyword, MediaTypeConstants.getInstance().getSeries(), size, page, languageCode,filterGenreSavedListKeyForApi,filterSortSavedListKeyForApi)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(Schedulers.io());
 
-                Observable<ResponseSearch> call3 = endpoint.getSearch(keyword, MediaTypeConstants.getInstance().getShow(), size, page, languageCode)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(Schedulers.io());
+                        call2 = endpoint.getSearchByFilters(keyword, MediaTypeConstants.getInstance().getLive(), size, page, languageCode,filterGenreSavedListKeyForApi,filterSortSavedListKeyForApi)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(Schedulers.io());
 
-                Observable<ResponseSearch> call4 = endpoint.getSearch(keyword, MediaTypeConstants.getInstance().getEpisode(), size, page, languageCode)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(Schedulers.io());
+                        call3 = endpoint.getSearchByFilters(keyword, MediaTypeConstants.getInstance().getShow(), size, page, languageCode,filterGenreSavedListKeyForApi,filterSortSavedListKeyForApi)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(Schedulers.io());
+
+                        call4 = endpoint.getSearchByFilters(keyword, MediaTypeConstants.getInstance().getEpisode(), size, page, languageCode,filterGenreSavedListKeyForApi,filterSortSavedListKeyForApi)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(Schedulers.io());
+                    }
+                }
+                else {
+                    call = endpoint.getSearch(keyword, "MOVIES", size, page, languageCode)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(Schedulers.io());
+
+                    call1 = endpoint.getSearch(keyword, MediaTypeConstants.getInstance().getSeries(), size, page, languageCode)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(Schedulers.io());
+
+                    call2 = endpoint.getSearch(keyword, MediaTypeConstants.getInstance().getLive(), size, page, languageCode)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(Schedulers.io());
+
+                    call3 = endpoint.getSearch(keyword, MediaTypeConstants.getInstance().getShow(), size, page, languageCode)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(Schedulers.io());
+
+                    call4 = endpoint.getSearch(keyword, MediaTypeConstants.getInstance().getEpisode(), size, page, languageCode)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(Schedulers.io());
+                }
 
                 Observable<List<ResponseSearch>> combined = Observable.zip(call, call1, call2, call3, call4, (list, list1, list2, list3, list4) -> {
                     List<ResponseSearch> mlist = new ArrayList<>();
@@ -506,8 +544,9 @@ public class APIServiceLayer {
         return responsePopular;
     }
 
-    public LiveData<RailCommonData> getSingleCategorySearch(String keyword, String type, int size, int page) {
+    public LiveData<RailCommonData> getSingleCategorySearch(String keyword, String type, int size, int page,boolean applyFilter, Context context) {
         MutableLiveData<RailCommonData> responsePopular;
+        Call<ResponseSearch> call = null;
         {
             languageCode = LanguageLayer.getCurrentLanguageCode();
             try {
@@ -519,7 +558,20 @@ public class APIServiceLayer {
             ApiInterface backendApi = RequestConfig.getClientSearch().create(ApiInterface.class);
 
             PrintLogging.printLog("", "SearchValues-->>" + keyword + " " + type + " " + size + " " + page);
-            Call<ResponseSearch> call = backendApi.getSearchResults(keyword, type, size, page, languageCode);
+
+
+            if(applyFilter){
+                List<String> filterGenreSavedListKeyForApi = new SharedPrefHelper(context).getDataGenreListKeyValue();
+                List<String> filterSortSavedListKeyForApi = new SharedPrefHelper(context).getDataSortListKeyValue();
+                if ( filterGenreSavedListKeyForApi != null && filterGenreSavedListKeyForApi.size() > 0||filterSortSavedListKeyForApi != null && filterSortSavedListKeyForApi.size() > 0) {
+                    call = backendApi.getSearchResultsByFilters(keyword, type, size, page, languageCode,filterGenreSavedListKeyForApi,filterSortSavedListKeyForApi);
+                }
+
+            }
+            else {
+                call = backendApi.getSearchResults(keyword, type, size, page, languageCode);
+
+            }
             call.enqueue(new Callback<ResponseSearch>() {
                 @Override
                 public void onResponse(@NonNull Call<ResponseSearch> call, @NonNull Response<ResponseSearch> data) {

@@ -356,12 +356,12 @@ public class RailInjectionHelper extends AndroidViewModel {
         return APIServiceLayer.getInstance().getSearchPopularPlayList(playlistID, pageNumber, pageSize, screenWidget);
     }
 
-    public LiveData<List<RailCommonData>> getSearch(String keyword, int size, int page) {
-        return SearchLayer.getInstance().getSearchData("MOVIE", keyword, size, page);
+    public LiveData<List<RailCommonData>> getSearch(Context context,String keyword, int size, int page,boolean applyFilter) {
+        return SearchLayer.getInstance().getSearchData(context,"MOVIE",keyword, size, page,applyFilter);
     }
 
-    public LiveData<RailCommonData> getSearchSingleCategory(String type, String keyword, int size, int page) {
-        return SearchLayer.getInstance().getSingleCategorySearch(type, keyword, size, page);
+    public LiveData<RailCommonData> getSearchSingleCategory(String type, String keyword, int size, int page,boolean applyFilter, Context context) {
+        return SearchLayer.getInstance().getSingleCategorySearch(type, keyword, size, page,applyFilter,context);
     }
 
 

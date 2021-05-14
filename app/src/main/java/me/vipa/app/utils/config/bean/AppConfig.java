@@ -155,6 +155,18 @@ public class AppConfig {
     @Expose
     private List<AvatarImages> avatarImages = null;
 
+
+    public SearchFilters getSearchFilters() {
+        return searchFilters;
+    }
+
+    public void setSearchFilters(SearchFilters searchFilters) {
+        this.searchFilters = searchFilters;
+    }
+
+    @SerializedName("searchFilters")
+    @Expose
+    private SearchFilters searchFilters;
     public String getBaseUrl() {
         return baseUrl;
     }

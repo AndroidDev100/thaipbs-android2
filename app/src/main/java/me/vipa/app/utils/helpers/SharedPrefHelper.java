@@ -4,6 +4,13 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+
 import me.vipa.app.utils.constants.AppConstants;
 import me.vipa.app.utils.security.CryptUtil;
 import me.vipa.app.utils.constants.AppConstants;
@@ -75,4 +82,67 @@ public class SharedPrefHelper {
         mEditor.putBoolean(key, value);
         mEditor.commit();
     }
+    public void saveDataGenre(List<String> data) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(data);
+        editor.putString("genre", json);
+        editor.apply();     // This line is IMPORTANT !!!
+
+    }
+
+    public List<String> getDataGenreList(){
+        Gson gson = new Gson();
+        String json = mSharedPreferences.getString("genre", null);
+        Type type = new TypeToken<ArrayList<String>>() {}.getType();
+        return gson.fromJson(json, type);
+    }
+    public void saveDataGenreKeyValue(List<String> data) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(data);
+        editor.putString("genreKey", json);
+        editor.apply();     // This line is IMPORTANT !!!
+
+    }
+
+    public List<String> getDataGenreListKeyValue(){
+        Gson gson = new Gson();
+        String json = mSharedPreferences.getString("genreKey", null);
+        Type type = new TypeToken<ArrayList<String>>() {}.getType();
+        return gson.fromJson(json, type);
+    }
+
+    public void saveDataSort(List<String> data) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(data);
+        editor.putString("sort", json);
+        editor.apply();     // This line is IMPORTANT !!!
+    }
+
+    public List<String> getDataSortList(){
+        Gson gson = new Gson();
+        String json = mSharedPreferences.getString("sort", null);
+        Type type = new TypeToken<ArrayList<String>>() {}.getType();
+        return gson.fromJson(json, type);
+    }
+
+
+    public void saveDataSortKeyValue(List<String> data) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(data);
+        editor.putString("sortKey", json);
+        editor.apply();     // This line is IMPORTANT !!!
+
+    }
+
+    public List<String> getDataSortListKeyValue(){
+        Gson gson = new Gson();
+        String json = mSharedPreferences.getString("sortKey", null);
+        Type type = new TypeToken<ArrayList<String>>() {}.getType();
+        return gson.fromJson(json, type);
+    }
+
 }

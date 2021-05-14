@@ -98,6 +98,7 @@
     <!--<color name="badge_background_color">#00BBF6</color>-->
     <color name="badge_background_color">#009FFF</color>
     <color name="gray">#BDBEC2</color>
+    <color name="grayOne">#eeedea</color>
 
     <color name="themeLight">#000000</color>
     <color name="theme_background_dark">#181818</color>

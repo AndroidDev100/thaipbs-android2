@@ -1,0 +1,25 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+
+    <TextView
+        android:id="@+id/items_filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_corner_filter_gray"
+        android:fontFamily="@font/sukhumvittadmai_normal"
+        android:paddingTop="5dp"
+
+        android:paddingBottom="5dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text=""
+        android:textColor="@color/black_filter_text"
+        android:textSize="@dimen/_12sdp"
+        />
+
+
+</layout>

@@ -32,6 +32,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 
 import me.vipa.app.beanModel.userProfile.UserProfileResponse;
+import me.vipa.app.utils.helpers.SharedPrefHelper;
 import me.vipa.app.utils.helpers.downloads.room.DownloadedVideo;
 import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
 import me.vipa.enums.ImageType;
@@ -1442,5 +1443,35 @@ public class AppCommonMethod {
             }
         }
         return contains;
+    }
+
+    public static List<String> createFilterGenreList(String selectedGenres) {
+        List<String> strings = new ArrayList<>();
+        if (selectedGenres != null && !selectedGenres.equalsIgnoreCase("")) {
+            strings = Arrays.asList(selectedGenres.split("\\s*,\\s*"));
+        }
+
+        return strings;
+    }
+
+    public static List<String> createFilterSortList(String selectedGenres) {
+        List<String> strings = new ArrayList<>();
+        if (selectedGenres != null && !selectedGenres.equalsIgnoreCase("")) {
+            strings = Arrays.asList(selectedGenres.split("\\s*,\\s*"));
+        }
+
+        return strings;
+    }
+    public static void resetFilter(Context context) {
+   /*     KsPreferenceKeys.getInstance().setFilterGenre("");
+        KsPreferenceKeys.getInstance().setFilterGenreSelection("");*/
+        new SharedPrefHelper(context).saveDataGenre(null);
+        new SharedPrefHelper(context).saveDataGenreKeyValue(null);
+        new SharedPrefHelper(context).saveDataSort(null);
+        new SharedPrefHelper(context).saveDataSortKeyValue(null);
+       /* KsPreferenceKeys.getInstance().setFilterSort("");
+        KsPreferenceKeys.getInstance().setFilterSortSelection("");*/
+        KsPreferenceKeys.getInstance().setFilterApply("false");
+        KsPreferenceKeys.getInstance().setFilterGenre(0);
     }
 }

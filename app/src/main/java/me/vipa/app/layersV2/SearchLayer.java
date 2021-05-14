@@ -1,5 +1,7 @@
 package me.vipa.app.layersV2;
 
+import android.content.Context;
+
 import androidx.lifecycle.LiveData;
 
 import me.vipa.app.beanModel.enveuCommonRailData.RailCommonData;
@@ -35,12 +37,14 @@ public class SearchLayer {
     }
 
 
-    public LiveData<List<RailCommonData>> getSearchData(String type, String keyword, int size, int page) {
-        return APIServiceLayer.getInstance().getSearchData(type,keyword,size,page);
+
+
+    public LiveData<List<RailCommonData>> getSearchData(Context context, String type, String keyword, int size, int page, boolean applyFilter) {
+        return APIServiceLayer.getInstance().getSearchData(context,type,keyword,size,page,applyFilter);
     }
 
-    public LiveData<RailCommonData> getSingleCategorySearch(String type, String keyword, int size, int page) {
-        return APIServiceLayer.getInstance().getSingleCategorySearch(type,keyword,size,page);
+    public LiveData<RailCommonData> getSingleCategorySearch(String type, String keyword, int size, int page,boolean applyFilter, Context context) {
+        return APIServiceLayer.getInstance().getSingleCategorySearch(type,keyword,size,page,applyFilter,context);
     }
 
 

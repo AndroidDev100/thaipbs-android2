@@ -8,12 +8,19 @@
         android:background="?attr/bottomNavigationBackground"
         android:orientation="vertical">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/_60sdp"
-            android:gravity="center_vertical"
-            android:orientation="vertical">
 
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:id="@+id/rl_parent"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_60sdp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
 
             <LinearLayout
                 android:id="@+id/back_button"
@@ -102,25 +109,37 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/clear_text"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:layout_gravity="center"
-                android:layout_marginRight="@dimen/_10sdp"
-                android:gravity="center">
-
-                <TextView
+                <LinearLayout
+                    android:id="@+id/clear_text"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/cancel"
-                    android:fontFamily="@font/sukhumvittadmai_normal"
-                    android:textColor="?attr/cancel_text_color"
-                    android:textSize="@dimen/_16sdp" />
-            </LinearLayout>
-        </RelativeLayout>
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:gravity="center">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sukhumvittadmai_normal"
+                        android:text="@string/cancel"
+                        android:textColor="?attr/cancel_text_color"
+                        android:textSize="@dimen/NontonSize14" />
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_gravity="center_vertical"
+                android:padding="@dimen/_5sdp"
+                android:src="@drawable/ic_filter" />
+
+        </LinearLayout>
         <!-- footer-->
         <View
             android:id="@+id/search_toolbar_sperator"

@@ -59,7 +59,7 @@ public class ConfigManager {
                     Logger.w("configResponse", response + "");
                     if (response.isSuccessful()) {
 
-                        Logger.w("configResponse", response.body().getData() + "");
+                        Logger.e("configResponse", response.body().getData() + "");
 
                         Gson gson = new Gson();
                         String json = gson.toJson(response.body());

@@ -45,9 +45,7 @@ public class SearchViewModel extends AndroidViewModel {
     }
 
 
-    public LiveData<RailCommonData> getSearchSingleCategory(String type, String keyword, int size, int page) {
-        return SearchLayer.getInstance().getSingleCategorySearch(type, keyword, size, page);
-    }
+
 
     public LiveData<ResponseSearch> getSearchSeries(String keyword, int size, int page) {
         return searchRepository.getSearchSeriesData("SERIES", keyword, size, page);

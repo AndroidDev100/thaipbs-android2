@@ -4,4 +4,5 @@
     <color name="black">#000000</color>
     <color name="blue">#2b71e2</color>
     <color name="theme_background">#1a1a1a</color>
+    <color name="black_filter_text">#393939</color>
 </resources>

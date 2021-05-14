@@ -319,6 +319,7 @@ public class HomeActivity extends BaseBindingActivity<ActivityMainBinding> imple
     @Override
     protected void onResume() {
         super.onResume();
+        AppCommonMethod.resetFilter(HomeActivity.this);
         if (preference == null)
             preference = KsPreferenceKeys.getInstance();
 

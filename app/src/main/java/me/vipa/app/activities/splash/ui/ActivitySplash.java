@@ -248,7 +248,7 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
                 configBean = AppCommonMethod.getConfigResponse();
                 Gson gson = new Gson();
                 String json = gson.toJson(configBean);
-                Logger.w("configResponse fromshared", json + "");
+                Logger.e("configResponse fromshared", json + "");
                 AppCommonMethod.setConfigConstant(configBean, isTablet);
 
                 String API_KEY = "";
