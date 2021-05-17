@@ -68,6 +68,15 @@ public class EnveuVideoItemBean implements Serializable {
 
     private String parentalRating;
     private String signedLangEnabled;
+    private String isPodcast;
+
+    public String getIsPodcast(){
+        return isPodcast;
+    }
+
+    public void setIsPodcast(String isPodcast) {
+        this.isPodcast = isPodcast;
+    }
 
     public String getSignedLangEnabled() {
         return signedLangEnabled;
@@ -237,6 +246,11 @@ public class EnveuVideoItemBean implements Serializable {
                 this.signedLangRefId = isNew;
             }
 
+            if (t.containsKey(CustomeFields.IS_PODCAST)) {
+                String isNew = t.get((CustomeFields.IS_PODCAST)).toString();
+                this.isPodcast = isNew;
+            }
+
 
             this.longDescription = details.getData().getLongDescription() == null ? "" : details.getData().getLongDescription().toString().trim();
 
@@ -353,6 +367,11 @@ public class EnveuVideoItemBean implements Serializable {
                     this.signedLangRefId = isNew;
                 }
 
+                if (t.containsKey(CustomeFields.IS_PODCAST)) {
+                    String isNew = t.get((CustomeFields.IS_PODCAST)).toString();
+                    this.isPodcast = isNew;
+                }
+
             }else {
 
                 if (t.containsKey(CustomeFields.rating)){
@@ -398,6 +417,11 @@ public class EnveuVideoItemBean implements Serializable {
                 if (t.containsKey(CustomeFields.SIGNEDLANGUAGEREFRENCEID)) {
                     String isNew = t.get((CustomeFields.SIGNEDLANGUAGEREFRENCEID)).toString();
                     this.signedLangRefId = isNew;
+                }
+
+                if (t.containsKey(CustomeFields.IS_PODCAST)) {
+                    String isNew = t.get((CustomeFields.IS_PODCAST)).toString();
+                    this.isPodcast = isNew;
                 }
 
             }
@@ -529,6 +553,11 @@ public class EnveuVideoItemBean implements Serializable {
                             this.signedLangRefId = isNew;
                         }
 
+                        if (t.containsKey(CustomeFields.IS_PODCAST)) {
+                            String isNew = t.get((CustomeFields.IS_PODCAST)).toString();
+                            this.isPodcast = isNew;
+                        }
+
 
                     } else {
 
@@ -575,6 +604,11 @@ public class EnveuVideoItemBean implements Serializable {
                         if (t.containsKey(CustomeFields.SIGNEDLANGUAGEREFRENCEID)) {
                             String isNew = t.get((CustomeFields.SIGNEDLANGUAGEREFRENCEID)).toString();
                             this.signedLangRefId = isNew;
+                        }
+
+                        if (t.containsKey(CustomeFields.IS_PODCAST)) {
+                            String isNew = t.get((CustomeFields.IS_PODCAST)).toString();
+                            this.isPodcast = isNew;
                         }
 
 
@@ -703,6 +737,11 @@ public class EnveuVideoItemBean implements Serializable {
                     this.signedLangRefId = isNew;
                 }
 
+                if (t.containsKey(CustomeFields.IS_PODCAST)) {
+                    String isNew = t.get((CustomeFields.IS_PODCAST)).toString();
+                    this.isPodcast = isNew;
+                }
+
 
             } else {
 
@@ -748,6 +787,11 @@ public class EnveuVideoItemBean implements Serializable {
                 if (t.containsKey(CustomeFields.SIGNEDLANGUAGEREFRENCEID)) {
                     String isNew = t.get((CustomeFields.SIGNEDLANGUAGEREFRENCEID)).toString();
                     this.signedLangRefId = isNew;
+                }
+
+                if (t.containsKey(CustomeFields.IS_PODCAST)) {
+                    String isNew = t.get((CustomeFields.IS_PODCAST)).toString();
+                    this.isPodcast = isNew;
                 }
 
 

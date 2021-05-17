@@ -75,6 +75,7 @@ import me.vipa.brightcovelibrary.callBacks.PlayerCallbacks;
 import me.vipa.brightcovelibrary.chromecast.ChromeCastCallback;
 import me.vipa.brightcovelibrary.chromecast.ChromecastManager;
 
+import com.bumptech.glide.Glide;
 import com.google.ads.interactivemedia.v3.api.AdDisplayContainer;
 import com.google.ads.interactivemedia.v3.api.AdError;
 import com.google.ads.interactivemedia.v3.api.AdsRequest;
@@ -129,6 +130,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
     String selected_lang = "";
     private String adRulesURL = "";
     private String poster_image = "";
+    private String poster_url = "";
     private int bottomMargin = 0;
     private int currentCaptionLanguage = 0;
     private int currentAudioLanguage = 0;
@@ -140,6 +142,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
     private Runnable runnable;
     private long bookmarkPosition = 0l;
     private ProgressBar progressBar;
+    private ImageView posterImage,posterImageDefault;
     private String brightcoveAccountId;
     private String brightcovePolicyKey;
     private PlayerControlsFragment playerControlsFragment;
@@ -157,6 +160,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
     int from=0;
     private String signLangParentRefId = "";
     private String signLangRefId = "";
+    private String isPodcast = "";
     private boolean isFragmentCalled = false;
 
 
@@ -183,12 +187,20 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             signLangParentRefId = bundle.getString("signLangParentRefId");
             signLangRefId = bundle.getString("signLangId");
 
+            if (bundle.getString("podcast")!=null){
+                isPodcast = bundle.getString("podcast");
+            }
+
 
 
             bingeWatchTimer = bundle.getInt("binge_watch_timer");
 
 
             isAdShowingToUser = bundle.getBoolean("ads_visibility");
+
+            if (bundle.getString("posterUrl")!=null){
+                poster_url = bundle.getString("posterUrl");
+            }
             // Log.w("config_vast_tag", adRulesURL);
 
 //            Log.w("IMATAG ",bundle.getString("vast_tag"));
@@ -197,6 +209,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             }
             if (bundle.getString("poster_image") != null && !bundle.getString("poster_image").equalsIgnoreCase("")) {
                 poster_image = bundle.getString("poster_image");
+
             }
 
 
@@ -1042,9 +1055,32 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
     private void findPlayerId(View view) {
         baseVideoView = view.findViewById(R.id.brightcove_video_view);
         progressBar = view.findViewById(R.id.pBar);
+        posterImage = view.findViewById(R.id.poster_image);
+        posterImageDefault = view.findViewById(R.id.poster_image_default);
         Log.w("IMATAG", "viewFind");
         progressBar.setVisibility(View.VISIBLE);
         container = view.findViewById(R.id.container);
+
+        if (isPodcast.equalsIgnoreCase("true")){
+            if (poster_url!="" && poster_url!=null) {
+                posterImageDefault.setVisibility(View.VISIBLE);
+                posterImage.setVisibility(View.GONE);
+
+                Glide.with(getActivity())
+                        .load(poster_url)
+                        .placeholder(R.drawable.splash)
+                        .into(posterImageDefault);
+            }else {
+                posterImageDefault.setVisibility(View.GONE);
+                posterImage.setVisibility(View.VISIBLE);
+                Glide.with(getActivity())
+                        .load(poster_url)
+                        .placeholder(R.drawable.splash)
+                        .into(posterImage);            }
+        }else {
+            posterImage.setVisibility(View.GONE);
+            posterImageDefault.setVisibility(View.GONE);
+        }
        /* progressBar.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
             @Override
             public void onSystemUiVisibilityChange(int visibility) {

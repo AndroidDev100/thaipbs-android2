@@ -22,4 +22,5 @@ public interface CustomeFields {
     String ISSIGNEDLANGUAGE = "is_signed_language_enabled";
     String SIGNEDLANGUAGEPARENTREGRENCEID = "signed_language_parent_reference_id";
     String SIGNEDLANGUAGEREFRENCEID = "signed_language_reference_id";
+    String IS_PODCAST = "is_podcast";
 }

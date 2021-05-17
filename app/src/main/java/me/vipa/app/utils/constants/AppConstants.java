@@ -205,12 +205,14 @@ public interface AppConstants {
     String WEB_VIEW_URL = "WebVieweURl";
     String BUNDLE_ID_FOR_COMMENTS = "commentId";
     String BUNDLE_BANNER_IMAGE = "bannerImage";
+    String POSTER_URL = "posterUrl";
     String BUNDLE_TYPE_FOR_COMMENTS = "type";
     String BUNDLE_SEASON_COUNT="seasonCount";
     String BUNDLE_SEASON_ARRAY="seasonArray";
 
     String IS_SIGN_LANG_ENABLE = "signLangParentRefId";
     String SIGN_LANG_ID = "signLangId";
+    String IS_PODCAST = "podcast";
 
 
     String BUNDLE_SELECTED_SEASON="selectedSeasonId";

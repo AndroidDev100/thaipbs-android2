@@ -170,6 +170,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
     private Long brightCoveVideoId;
     private String signLangParentRefId ="";
     private String signLangRefId = "";
+    private String isPodcast = "";
     private RailInjectionHelper railInjectionHelper;
     private FragmentTransaction transaction;
     private String sharingUrl;
@@ -599,12 +600,18 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
         args.putBoolean("ads_visibility", isAdShowingToUser);
         args.putString(AppConstants.IS_SIGN_LANG_ENABLE, signLangParentRefId);
         args.putString(AppConstants.SIGN_LANG_ID, signLangRefId);
+        args.putString(AppConstants.IS_PODCAST, isPodcast);
         if (videoDetails != null) {
             args.putString("vast_tag", videoDetails.getVastTag());
         }
         if (videoDetails.getAssetType() != null) {
             args.putString("assetType", videoDetails.getAssetType());
         }
+
+        if (videoDetails.getPosterURL()!= null) {
+            args.putString(AppConstants.POSTER_URL, videoDetails.getPosterURL());
+        }
+
         Log.w("totalZies", KsPreferenceKeys.getInstance().getBingeWatchEnable() + "");
         args.putString("config_vast_tag", SDKConfig.getInstance().getConfigVastTag());
         args.putBoolean("binge_watch", KsPreferenceKeys.getInstance().getBingeWatchEnable());
@@ -943,6 +950,10 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
 
         if (videoDetails.getSignedLangRefId()!=null) {
             signLangRefId = videoDetails.getSignedLangRefId();
+        }
+
+        if (videoDetails.getIsPodcast()!=null){
+            isPodcast = videoDetails.getIsPodcast();
         }
 
 

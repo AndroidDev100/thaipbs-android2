@@ -165,6 +165,7 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
     private boolean isCastConnected = false;
     private String signLangParentRefId ="";
     private String signLangRefId = "";
+    private String isPodcast = "";
 
     @Override
     public DetailScreenBinding inflateBindingLayout(@NonNull LayoutInflater inflater) {
@@ -386,11 +387,20 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
             args.putString(AppConstants.SIGN_LANG_ID, signLangRefId);
         }
 
+        if (videoDetails.getIsPodcast()!=null){
+            isPodcast = videoDetails.getIsPodcast();
+            args.putString(AppConstants.IS_PODCAST, isPodcast);
+        }
+
         if (videoDetails != null) {
             args.putString("vast_tag", videoDetails.getVastTag());
         }
         if (videoDetails.getAssetType() != null) {
             args.putString("assetType", videoDetails.getAssetType());
+        }
+
+        if (videoDetails.getPosterURL()!= null) {
+            args.putString(AppConstants.POSTER_URL, videoDetails.getPosterURL());
         }
         args.putString("config_vast_tag", SDKConfig.getInstance().getConfigVastTag());
 
