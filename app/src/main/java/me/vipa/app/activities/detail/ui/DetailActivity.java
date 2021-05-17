@@ -390,6 +390,7 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
         if (videoDetails.getIsPodcast()!=null){
             isPodcast = videoDetails.getIsPodcast();
             args.putString(AppConstants.IS_PODCAST, isPodcast);
+            KsPreferenceKeys.getInstance().setPodId(videoDetails.getBrightcoveVideoId(),true);
         }
 
         if (videoDetails != null) {

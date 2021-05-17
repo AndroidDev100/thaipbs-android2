@@ -162,6 +162,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
     private String signLangRefId = "";
     private String isPodcast = "";
     private boolean isFragmentCalled = false;
+    private boolean isOfflinePodcast = false;
 
 
     public BrightcovePlayerFragment() {
@@ -216,6 +217,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             bookmarkPosition = bundle.getLong("bookmarkPosition");
             if (bundle.containsKey("isOffline")) {
                 isOfflineVideo = bundle.getBoolean("isOffline");
+                isOfflinePodcast = bundle.getBoolean("isOfflinePodcast");
                 from=bundle.getInt("from");
                 currentVideo = bundle.getParcelable("videoId");
                 if (isOfflineVideo && mActivity != null) {
@@ -1080,6 +1082,19 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         }else {
             posterImage.setVisibility(View.GONE);
             posterImageDefault.setVisibility(View.GONE);
+        }
+        if (isOfflineVideo) {
+            if (isOfflinePodcast) {
+                posterImageDefault.setVisibility(View.GONE);
+                posterImage.setVisibility(View.VISIBLE);
+                Glide.with(getActivity())
+                        .load(R.drawable.splash)
+                        .placeholder(R.drawable.splash)
+                        .into(posterImage);
+            } else {
+                posterImageDefault.setVisibility(View.GONE);
+                posterImage.setVisibility(View.GONE);
+            }
         }
        /* progressBar.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
             @Override

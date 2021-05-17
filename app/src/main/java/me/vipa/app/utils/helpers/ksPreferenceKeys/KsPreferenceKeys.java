@@ -178,6 +178,15 @@ public class KsPreferenceKeys extends SharedPrefHelper {
         setBoolean("isFirstTimeUser", firstTimeUser);
     }
 
+    public void setPodId(String id, boolean reminderValue) {
+        setBoolean("video_Id"+id, reminderValue);
+    }
+
+    public boolean getPodId(String id)
+    {
+        return getBoolean("video_Id"+id,false);
+    }
+
     public Boolean getBingeWatchEnable() {
         return getBoolean("isBingeWatchEnable", true);
     }

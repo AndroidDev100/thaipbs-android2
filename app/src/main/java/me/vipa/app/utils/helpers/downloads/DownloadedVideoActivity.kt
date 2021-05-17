@@ -5,16 +5,18 @@ import android.content.pm.ActivityInfo
 import android.net.Uri
 import android.os.Bundle
 import android.os.Parcelable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import com.brightcove.player.model.Video
-import me.vipa.brightcovelibrary.BrightcovePlayerFragment
 import com.google.gson.Gson
 import me.vipa.app.R
 import me.vipa.app.baseModels.BaseBindingActivity
 import me.vipa.app.databinding.ActivityDownloadedVideoBinding
 import me.vipa.app.utils.constants.AppConstants
 import me.vipa.app.utils.cropImage.helpers.Logger
+import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys
+import me.vipa.brightcovelibrary.BrightcovePlayerFragment
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -61,6 +63,10 @@ class DownloadedVideoActivity : BaseBindingActivity<ActivityDownloadedVideoBindi
         args.putBoolean("isOffline", true)
         args.putInt("from", 1)
         args.putParcelable(AppConstants.BUNDLE_VIDEO_ID_BRIGHTCOVE, intentData as Parcelable)
+        val value = KsPreferenceKeys.getInstance().getPodId(intentData.id)
+        args.putBoolean("isOfflinePodcast", value)
+        //Log.d("frfrfrfrfr", video.toString() + "")
+
         playerFragment.arguments = args
         transaction.add(R.id.playerFragmentFrame, playerFragment).commit()
     }

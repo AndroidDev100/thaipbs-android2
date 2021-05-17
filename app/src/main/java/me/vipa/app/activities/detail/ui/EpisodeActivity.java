@@ -954,6 +954,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
 
         if (videoDetails.getIsPodcast()!=null){
             isPodcast = videoDetails.getIsPodcast();
+             KsPreferenceKeys.getInstance().setPodId(videoDetails.getBrightcoveVideoId(),true);
         }
 
 
