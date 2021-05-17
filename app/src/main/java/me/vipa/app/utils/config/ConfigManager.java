@@ -63,7 +63,7 @@ public class ConfigManager {
 
                         Gson gson = new Gson();
                         String json = gson.toJson(response.body());
-                        Logger.w("configResponse", json + "");
+                        Logger.e("configResponse", json + "");
                         KsPreferenceKeys.getInstance().setString("DMS_Response", json);
                         KsPreferenceKeys.getInstance().setString("DMS_Date", "" + System.currentTimeMillis());
                         callBack.onSuccess(response.body());

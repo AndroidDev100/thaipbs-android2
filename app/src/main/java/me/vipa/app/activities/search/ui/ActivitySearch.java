@@ -570,12 +570,16 @@ public class ActivitySearch extends BaseBindingActivity<ActivitySearchBinding> i
 
         if (requestCode == FILTER_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
-                Log.e("BACK", "BACK");
+                Log.e("RETURNWITHDATA", "RETURNWITHDATA");
                 Log.e("SEARCHTEXT_ONRESULT", searchText);
                 if (searchText != null && searchText.trim().length() > 2) {
                     applyFilter = Boolean.parseBoolean(KsPreferenceKeys.getInstance().getFilterApply());
                     hitApiSearchKeyword(searchText.trim(), ActivitySearch.this, applyFilter);
                 }
+
+            }
+            else {
+                Log.e("RETURNWITHNODATA", "RETURNWITHNODATA");
 
             }
         }

@@ -162,7 +162,17 @@ public class FilterIconActivity extends BaseBindingActivity<ActivityFilterIconBi
                     setResult(Activity.RESULT_OK);
                     finish();
                 } else {
-                    Toast.makeText(FilterIconActivity.this, getResources().getString(R.string.select_one), Toast.LENGTH_SHORT).show();
+                    for (int i = 0; i < genereModels.size(); i++) {
+                        genereModels.get(i).setGenereChecked(false);
+                    }
+                    for (int i = 0; i < sortModels.size(); i++) {
+                        sortModels.get(i).setSortChecked(false);
+                    }
+                    genereSearchAdapter.notifyDataSetChanged();
+                    sortAdapter.notifyDataSetChanged();
+                    AppCommonMethod.resetFilter(FilterIconActivity.this);
+                    finish();
+                   // Toast.makeText(FilterIconActivity.this, getResources().getString(R.string.select_one), Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -172,15 +182,6 @@ public class FilterIconActivity extends BaseBindingActivity<ActivityFilterIconBi
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
-    /*    for (int i = 0; i < genereModels.size(); i++) {
-            genereModels.get(i).setGenereChecked(false);
-        }
-        for (int i = 0; i < sortModels.size(); i++) {
-            sortModels.get(i).setSortChecked(false);
-        }
-        genereSearchAdapter.notifyDataSetChanged();
-        sortAdapter.notifyDataSetChanged();*/
 
         if (KsPreferenceKeys.getInstance().getFilterApply().equalsIgnoreCase("false")) {
             AppCommonMethod.resetFilter(FilterIconActivity.this);
