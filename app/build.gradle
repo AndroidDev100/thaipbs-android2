@@ -62,8 +62,8 @@ android {
         }
         prod {
             dimension 'default'
-            versionCode 21
-            versionName "1.1.14"
+            versionCode 22
+            versionName "1.1.15"
             applicationId "me.vipa.app"
         }
     }
