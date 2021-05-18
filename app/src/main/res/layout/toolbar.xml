@@ -131,7 +131,7 @@
                     android:contentDescription="TODO"
                     android:transitionName="imageMain"
                     android:background="?attr/search_icon_background"
-                    android:tint="@color/white" />
+                    app:tint="@color/white" />
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/clear_text"
