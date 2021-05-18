@@ -142,12 +142,10 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
             }
         });
 
-
-
         getBinding().termsPrivacyPolicies.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if ( isChecked )
+                if (isChecked)
                 { getBinding().llSignUp.setEnabled(true);
                     getBinding().llSignUp.getBackground().setAlpha(225);
                     getBinding().registerText.setTextColor(getResources().getColor(R.color.white));

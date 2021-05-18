@@ -363,7 +363,6 @@
                                         android:text="@string/agree"
                                         android:textColor="@color/white"
                                         android:textSize="@dimen/font_small" />
-
                                     <TextView
                                         android:id="@+id/tv_terms"
                                         android:layout_width="wrap_content"
@@ -373,7 +372,6 @@
                                         android:text="@string/term"
                                         android:textColor="@color/description_title_yellow"
                                         android:textSize="@dimen/font_small" />
-
                                     <TextView
                                         android:id="@+id/tv_and"
                                         android:layout_width="wrap_content"
