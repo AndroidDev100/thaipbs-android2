@@ -37,6 +37,7 @@ import me.vipa.app.R;
 import me.vipa.app.beanModel.responseModels.LoginResponse.Data;
 import me.vipa.app.beanModel.responseModels.LoginResponse.LoginResponseModel;
 import me.vipa.app.beanModel.userProfile.UserProfileResponse;
+import me.vipa.app.cms.HelpActivity;
 import me.vipa.app.databinding.ActivityMainBinding;
 import me.vipa.app.databinding.SignupActivityBinding;
 import me.vipa.app.fragments.dialog.AlertDialogFragment;
@@ -141,19 +142,15 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
             }
         });
 
-        spannableString();
+
 
         getBinding().termsPrivacyPolicies.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if ( isChecked )
-                {
-                    getBinding().llSignUp.setEnabled(true);
+                { getBinding().llSignUp.setEnabled(true);
                     getBinding().llSignUp.getBackground().setAlpha(225);
                     getBinding().registerText.setTextColor(getResources().getColor(R.color.white));
-
-
-
 
                 }else{
                     getBinding().llSignUp.setEnabled(false);
@@ -161,6 +158,21 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
                     getBinding().registerText.setTextColor(getResources().getColor(R.color.greyTextColor));
 
                 }
+            }
+        });
+
+        getBinding().tvTerms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Objects.requireNonNull(SignUpActivity.this).startActivity(new Intent(SignUpActivity.this, HelpActivity.class).putExtra("type", "1"));
+
+            }
+        });
+
+        getBinding().tvPrivacy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Objects.requireNonNull(SignUpActivity.this).startActivity(new Intent(SignUpActivity.this, HelpActivity.class).putExtra("type", "2"));
             }
         });
         connectObservors();
@@ -751,70 +763,5 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
         }
     }
 
-    private void spannableString() {
-        if (KsPreferenceKeys.getInstance().getAppLanguage().equalsIgnoreCase("Thai")){
-            SpannableStringBuilder builder = new SpannableStringBuilder();
-            String white = "ฉันยอมรับ";
-            SpannableString whiteSpannable= new SpannableString(white);
-            whiteSpannable.setSpan(new ForegroundColorSpan(Color.WHITE), 0, white.length(), 0);
-            builder.append(whiteSpannable);
-            builder.append(" ");
-            String yellow = "เงื่อนไขและข้อตกลง";
-            SpannableString yellowSpannable= new SpannableString(yellow);
-            yellowSpannable.setSpan(new UnderlineSpan(), 0, yellowSpannable.length(), 0);
-            int color = getResources().getColor(R.color.description_title_yellow);
-            yellowSpannable.setSpan(new ForegroundColorSpan(color), 0, yellow.length(), 0);
-            builder.append(yellowSpannable);
-            builder.append(" ");
-            String white1 = "รวมถึง";
-            SpannableString whiteSpannable1= new SpannableString(white1);
-            whiteSpannable1.setSpan(new ForegroundColorSpan(Color.WHITE), 0, white1.length(), 0);
-            builder.append(whiteSpannable1);
-            builder.append(" ");
-            String yellow1 = "นโยบายความเป็นส่วนตั";
-            SpannableString yellowSpannable1= new SpannableString(yellow);
-            yellowSpannable1.setSpan(new UnderlineSpan(), 0, yellowSpannable1.length(), 0);
-            int color1 = getResources().getColor(R.color.description_title_yellow);
-            yellowSpannable1.setSpan(new ForegroundColorSpan(color), 0, yellow.length(), 0);
-            builder.append(yellowSpannable1);
-            builder.append(" ");
-            String white2 = " วในการเข้าถึงและใช้งาน VIPA";
-            SpannableString whiteSpannable2= new SpannableString(white2);
-            whiteSpannable1.setSpan(new ForegroundColorSpan(Color.WHITE), 0, white1.length(), 0);
-            builder.append(whiteSpannable2);
-            getBinding().termsPrivacyTxt.setText(builder, TextView.BufferType.SPANNABLE);
 
-        }
-        else {
-
-            SpannableStringBuilder builder = new SpannableStringBuilder();
-            String white = "I agree with the";
-            SpannableString whiteSpannable= new SpannableString(white);
-            whiteSpannable.setSpan(new ForegroundColorSpan(Color.WHITE), 0, white.length(), 0);
-            builder.append(whiteSpannable);
-            builder.append(" ");
-            String red = "Terms and Conditions";
-            SpannableString yellowSpannable= new SpannableString(red);
-            yellowSpannable.setSpan(new UnderlineSpan(), 0, yellowSpannable.length(), 0);
-            int color = getResources().getColor(R.color.description_title_yellow);
-            yellowSpannable.setSpan(new  ForegroundColorSpan(color), 0, red.length(), 0);
-            builder.append(yellowSpannable);
-            builder.append(" ");
-            if (yellowSpannable.equals(getString(R.string.term_condition))) {
-                itemClickListener.onClick(getString(R.string.term_condition));
-            }
-            String white1 = "and the";
-            SpannableString whiteSpannable1= new SpannableString(white1);
-            whiteSpannable1.setSpan(new ForegroundColorSpan(Color.WHITE), 0, white1.length(), 0);
-            builder.append(whiteSpannable1);
-            builder.append(" ");
-            String red1 = "Privacy Policy";
-            SpannableString yellowSpannable1= new SpannableString(red1);
-            yellowSpannable1.setSpan(new UnderlineSpan(), 0, yellowSpannable1.length(), 0);
-            int color1 = getResources().getColor(R.color.description_title_yellow);
-            yellowSpannable1.setSpan(new ForegroundColorSpan(color), 0, red1.length(), 0);
-            builder.append(yellowSpannable1);
-            getBinding().termsPrivacyTxt.setText(builder, TextView.BufferType.SPANNABLE);
-        }
-    }
 }

@@ -431,6 +431,11 @@
     <string name="take_photo">ถ่ายภาพด้วยกล้อง</string>
     <string name="select_from_library">เลือกภาพจากคลังภาพ</string>
     <string name="select_from_avtar">เลือกภาพ</string>
+    <string name="agree">ฉันยอมรับ</string>
+    <string name="term"><u>เงื่อนไขและข้อตกลง</u></string>
+    <string name="and_the">รวมถึง</string>
+    <string name="privacy"><u>นโยบายความเป็นส่วนตั</u></string>
+    <string name="privacy_other_text"> วในการเข้าถึงและใช้งาน VIPA</string>
 
 
 </resources>
