@@ -154,7 +154,7 @@ public class Slider extends FrameLayout implements ViewPager.OnPageChangeListene
                 // viewPager.setPadding(getViewPagerTabletPadding(layoutType), 10, getViewPagerTabletPadding(layoutType), 10);
             }
         } else {
-            viewPager.setPadding(0, 10, 0, 10);
+            viewPager.setPadding(0, 0, 0, 10);
         }
 
 
