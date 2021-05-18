@@ -1,16 +1,22 @@
 package me.vipa.app.activities.usermanagment.ui;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.text.Editable;
 import android.text.InputType;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
 import android.text.TextWatcher;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -132,6 +138,29 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
             @Override
             public void onClick(View v) {
                 new ActivityLauncher(SignUpActivity.this).homeScreen(SignUpActivity.this, HomeActivity.class);
+            }
+        });
+
+        spannableString();
+
+        getBinding().termsPrivacyPolicies.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if ( isChecked )
+                {
+                    getBinding().llSignUp.setEnabled(true);
+                    getBinding().llSignUp.getBackground().setAlpha(225);
+                    getBinding().registerText.setTextColor(getResources().getColor(R.color.white));
+
+
+
+
+                }else{
+                    getBinding().llSignUp.setEnabled(false);
+                    getBinding().llSignUp.getBackground().setAlpha(128);
+                    getBinding().registerText.setTextColor(getResources().getColor(R.color.greyTextColor));
+
+                }
             }
         });
         connectObservors();
@@ -719,6 +748,73 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
         } catch (Exception e) {
             Logger.e("LoginActivity", "" + e.toString());
 
+        }
+    }
+
+    private void spannableString() {
+        if (KsPreferenceKeys.getInstance().getAppLanguage().equalsIgnoreCase("Thai")){
+            SpannableStringBuilder builder = new SpannableStringBuilder();
+            String white = "ฉันยอมรับ";
+            SpannableString whiteSpannable= new SpannableString(white);
+            whiteSpannable.setSpan(new ForegroundColorSpan(Color.WHITE), 0, white.length(), 0);
+            builder.append(whiteSpannable);
+            builder.append(" ");
+            String yellow = "เงื่อนไขและข้อตกลง";
+            SpannableString yellowSpannable= new SpannableString(yellow);
+            yellowSpannable.setSpan(new UnderlineSpan(), 0, yellowSpannable.length(), 0);
+            int color = getResources().getColor(R.color.description_title_yellow);
+            yellowSpannable.setSpan(new ForegroundColorSpan(color), 0, yellow.length(), 0);
+            builder.append(yellowSpannable);
+            builder.append(" ");
+            String white1 = "รวมถึง";
+            SpannableString whiteSpannable1= new SpannableString(white1);
+            whiteSpannable1.setSpan(new ForegroundColorSpan(Color.WHITE), 0, white1.length(), 0);
+            builder.append(whiteSpannable1);
+            builder.append(" ");
+            String yellow1 = "นโยบายความเป็นส่วนตั";
+            SpannableString yellowSpannable1= new SpannableString(yellow);
+            yellowSpannable1.setSpan(new UnderlineSpan(), 0, yellowSpannable1.length(), 0);
+            int color1 = getResources().getColor(R.color.description_title_yellow);
+            yellowSpannable1.setSpan(new ForegroundColorSpan(color), 0, yellow.length(), 0);
+            builder.append(yellowSpannable1);
+            builder.append(" ");
+            String white2 = " วในการเข้าถึงและใช้งาน VIPA";
+            SpannableString whiteSpannable2= new SpannableString(white2);
+            whiteSpannable1.setSpan(new ForegroundColorSpan(Color.WHITE), 0, white1.length(), 0);
+            builder.append(whiteSpannable2);
+            getBinding().termsPrivacyTxt.setText(builder, TextView.BufferType.SPANNABLE);
+
+        }
+        else {
+
+            SpannableStringBuilder builder = new SpannableStringBuilder();
+            String white = "I agree with the";
+            SpannableString whiteSpannable= new SpannableString(white);
+            whiteSpannable.setSpan(new ForegroundColorSpan(Color.WHITE), 0, white.length(), 0);
+            builder.append(whiteSpannable);
+            builder.append(" ");
+            String red = "Terms and Conditions";
+            SpannableString yellowSpannable= new SpannableString(red);
+            yellowSpannable.setSpan(new UnderlineSpan(), 0, yellowSpannable.length(), 0);
+            int color = getResources().getColor(R.color.description_title_yellow);
+            yellowSpannable.setSpan(new  ForegroundColorSpan(color), 0, red.length(), 0);
+            builder.append(yellowSpannable);
+            builder.append(" ");
+            if (yellowSpannable.equals(getString(R.string.term_condition))) {
+                itemClickListener.onClick(getString(R.string.term_condition));
+            }
+            String white1 = "and the";
+            SpannableString whiteSpannable1= new SpannableString(white1);
+            whiteSpannable1.setSpan(new ForegroundColorSpan(Color.WHITE), 0, white1.length(), 0);
+            builder.append(whiteSpannable1);
+            builder.append(" ");
+            String red1 = "Privacy Policy";
+            SpannableString yellowSpannable1= new SpannableString(red1);
+            yellowSpannable1.setSpan(new UnderlineSpan(), 0, yellowSpannable1.length(), 0);
+            int color1 = getResources().getColor(R.color.description_title_yellow);
+            yellowSpannable1.setSpan(new ForegroundColorSpan(color), 0, red1.length(), 0);
+            builder.append(yellowSpannable1);
+            getBinding().termsPrivacyTxt.setText(builder, TextView.BufferType.SPANNABLE);
         }
     }
 }
