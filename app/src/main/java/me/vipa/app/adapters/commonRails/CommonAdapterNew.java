@@ -293,6 +293,7 @@ public class CommonAdapterNew extends RecyclerView.Adapter<RecyclerView.ViewHold
         headingRailsBinding.shimmerTitleLayout.setVisibility(View.GONE);
         if (item.getScreenWidget().getShowHeader() != null && item.getScreenWidget().getShowHeader() && item.getEnveuVideoItemBeans().size() > 0) {
             headingRailsBinding.headerTitleLayout.setVisibility(View.VISIBLE);
+            headingRailsBinding.mainHeaderTitle.setVisibility(View.VISIBLE);
             headingRailsBinding.headingTitle.bringToFront();
 
             if (item.isContinueWatching()){
@@ -304,9 +305,11 @@ public class CommonAdapterNew extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         } else {
             headingRailsBinding.headerTitleLayout.setVisibility(View.GONE);
+            headingRailsBinding.mainHeaderTitle.setVisibility(View.GONE);
         }
         if (item.getScreenWidget().getContentShowMoreButton() != null && item.getScreenWidget().getContentShowMoreButton() && item.getEnveuVideoItemBeans().size() > 0) {
             headingRailsBinding.headerTitleLayout.setVisibility(View.VISIBLE);
+            headingRailsBinding.mainHeaderTitle.setVisibility(View.VISIBLE);
             headingRailsBinding.headingTitle.bringToFront();
             headingRailsBinding.moreText.setVisibility(View.VISIBLE);
             headingRailsBinding.moreText.setOnClickListener(v -> {
@@ -314,6 +317,7 @@ public class CommonAdapterNew extends RecyclerView.Adapter<RecyclerView.ViewHold
             });
         } else {
             headingRailsBinding.moreText.setVisibility(View.GONE);
+            headingRailsBinding.mainHeaderTitle.setVisibility(View.GONE);
         }
     }
 
