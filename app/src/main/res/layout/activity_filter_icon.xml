@@ -112,8 +112,8 @@
                 android:background="@drawable/down_corner_filter_yellow"
                 android:textSize="@dimen/_14sdp"
                 android:gravity="center"
-                android:textColor="@color/black"
-                android:fontFamily="@font/sukhumvittadmai_medium"
+                android:textColor="@color/white"
+                android:fontFamily="@font/sukhumvittadmai_bold"
                 android:padding="@dimen/_14sdp"/>
 
 

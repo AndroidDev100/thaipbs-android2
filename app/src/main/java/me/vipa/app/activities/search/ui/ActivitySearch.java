@@ -579,6 +579,8 @@ public class ActivitySearch extends BaseBindingActivity<ActivitySearchBinding> i
 
             }
             else {
+                applyFilter = Boolean.parseBoolean(KsPreferenceKeys.getInstance().getFilterApply());
+                hitApiSearchKeyword(searchText.trim(), ActivitySearch.this, applyFilter);
                 Log.e("RETURNWITHNODATA", "RETURNWITHNODATA");
 
             }
