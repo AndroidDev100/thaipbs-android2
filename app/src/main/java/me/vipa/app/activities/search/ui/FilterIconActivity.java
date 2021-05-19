@@ -274,9 +274,7 @@ public class FilterIconActivity extends BaseBindingActivity<ActivityFilterIconBi
             } else {
                 getBinding().tvGenre.setVisibility(View.GONE);
                 getBinding().vGenre.setVisibility(View.GONE);
-
                 getBinding().genreRecyclerView.setVisibility(View.GONE);
-
             }
 
         } else {
