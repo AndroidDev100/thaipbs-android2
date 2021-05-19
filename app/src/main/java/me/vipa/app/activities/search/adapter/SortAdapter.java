@@ -17,12 +17,14 @@ import me.vipa.app.R;
 import me.vipa.app.beanModel.filterModel.SortModel;
 import me.vipa.app.databinding.SortItemBinding;
 import me.vipa.app.utils.constants.AppConstants;
+import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 
 public class SortAdapter extends RecyclerView.Adapter<SortAdapter.SingleItemRowHolder> {
     private List<SortModel> sortModels;
     private Activity context;
     private int selectedPostion = -1;
     private final SortByListener sortByListener;
+    private String currentLanguage;
 
 
     public SortAdapter(Activity ctx, List<SortModel> list, SortByListener sortByListener) {
@@ -50,6 +52,7 @@ public class SortAdapter extends RecyclerView.Adapter<SortAdapter.SingleItemRowH
 
     @Override
     public void onBindViewHolder(SortAdapter.SingleItemRowHolder holder, int position) {
+        currentLanguage = KsPreferenceKeys.getInstance().getAppLanguage();
         holder.sortItemBinding.sortItem.setText(sortModels.get(position).getSortLists());
         if (sortModels.get(position).isSortChecked()) {
             holder.sortItemBinding.sortItem.setBackgroundResource(R.drawable.rounded_corner_filter_yellow);
@@ -95,10 +98,25 @@ public class SortAdapter extends RecyclerView.Adapter<SortAdapter.SingleItemRowH
         StringBuilder stringBuilder1 = new StringBuilder();
         for (int i = 0; i < arrayList.size(); i++) {
             if (arrayList.get(i).isSortChecked()) {
-                if (arrayList.get(i).getSortLists().equalsIgnoreCase("A to Z")) {
-                    stringBuilder.append(AppConstants.SEARCH_SORT_CONSTATNT + "ASC");
+                if (currentLanguage.equalsIgnoreCase("Thai")) {
+                    if (arrayList.get(i).getSortLists().equalsIgnoreCase("จาก ก-ฮ")) {
+                        stringBuilder.append(AppConstants.SEARCH_SORT_CONSTATNT + "ASC");
+                    } else {
+                        stringBuilder.append(AppConstants.SEARCH_SORT_CONSTATNT + "DESC");
+                    }
+                }
+                else if (currentLanguage.equalsIgnoreCase("English")) {
+                    if (arrayList.get(i).getSortLists().equalsIgnoreCase("A to Z")) {
+                        stringBuilder.append(AppConstants.SEARCH_SORT_CONSTATNT + "ASC");
+                    } else {
+                        stringBuilder.append(AppConstants.SEARCH_SORT_CONSTATNT + "DESC");
+                    }
                 } else {
-                    stringBuilder.append(AppConstants.SEARCH_SORT_CONSTATNT + "DESC");
+                    if (arrayList.get(i).getSortLists().equalsIgnoreCase("A to Z")) {
+                        stringBuilder.append(AppConstants.SEARCH_SORT_CONSTATNT + "ASC");
+                    } else {
+                        stringBuilder.append(AppConstants.SEARCH_SORT_CONSTATNT + "DESC");
+                    }
                 }
                 stringBuilder1.append(arrayList.get(i).getSortLists()).append(", ");
             }

@@ -437,5 +437,11 @@
     <string name="privacy"><u>นโยบายความเป็นส่วนตั</u></string>
     <string name="privacy_other_text"> วในการเข้าถึงและใช้งาน VIPA</string>
 
+    <string name="genere">แนวภาพยนตร์</string>
+    <string name="sort">ประเภท</string>
+    <string name="apply_filter">นำไปใช้</string>
+    <string name="filters">ตัวกรองการค้นหา</string>
+    <string name="clear_all">ลบทั้งหมด</string>
+
 
 </resources>

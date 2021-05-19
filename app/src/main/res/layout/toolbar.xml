@@ -150,7 +150,7 @@
                     android:layout_gravity="center_vertical"
                     android:fontFamily="@font/sukhumvittadmai_normal"
                     android:singleLine="true"
-                    android:text="Clear All"
+                    android:text="@string/clear_all"
                     android:maxLines="1"
                     android:ellipsize="end"
                     android:textSize="@dimen/headingToolbar"

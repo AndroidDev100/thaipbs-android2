@@ -405,16 +405,18 @@
     <string name="take_photo">Take Photo</string>
     <string name="select_from_library">Select from Library</string>
     <string name="select_from_avtar">Select from avatar</string>
-    <string name="genere">Genres</string>
-    <string name="sort">Sort</string>
-    <string name="apply_filter">Apply Filter</string>
-    <string name="filters">Filters</string>
-    <string name="select_one">You need to make at least one selection first!</string>
     <string name="agree">I agree with the</string>
     <string name="term"><u>Terms and Conditions</u></string>
     <string name="and_the">and the</string>
     <string name="privacy"><u>Privacy Policy</u></string>
     <string name="privacy_other_text"></string>
+
+    <string name="genere">Genres</string>
+    <string name="sort">Sort</string>
+    <string name="apply_filter">Apply</string>
+    <string name="filters">Filters</string>
+    <string name="select_one">You need to make at least one selection first!</string>
+    <string name="clear_all">Clear All</string>
 
 
 </resources>

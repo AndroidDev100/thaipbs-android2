@@ -272,8 +272,19 @@ public class FilterIconActivity extends BaseBindingActivity<ActivityFilterIconBi
     }
 
     private void getSortData() {
-        sortModels.add(new SortModel("A to Z"));
-        sortModels.add(new SortModel("Z to A"));
+        if (currentLanguage.equalsIgnoreCase("Thai")) {
+            sortModels.add(new SortModel("จาก ก-ฮ"));
+            sortModels.add(new SortModel("จาก ฮ-ก"));
+
+        } else if (currentLanguage.equalsIgnoreCase("English")) {
+            sortModels.add(new SortModel("A to Z"));
+            sortModels.add(new SortModel("Z to A"));
+
+        } else {
+            sortModels.add(new SortModel("A to Z"));
+            sortModels.add(new SortModel("Z to A"));
+
+        }
         setRecyclerProperties(getBinding().sortRecyclerView, false);
         if (filterSortSavedList != null) {
             for (int i = 0; i < sortModels.size(); i++) {
