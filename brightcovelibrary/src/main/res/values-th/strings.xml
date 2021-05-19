@@ -30,6 +30,7 @@
     <string name="next_episode">ตอนต่อไป</string>
     <string name="live">สด</string>
     <string name="skip_intro">ข้ามตอนต้น</string>
+    <string name="video_tracks_not_available">There is no video track for this content.</string>
 
 
 </resources>

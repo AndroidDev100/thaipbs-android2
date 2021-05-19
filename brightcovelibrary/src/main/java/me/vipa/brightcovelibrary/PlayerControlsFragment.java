@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatRadioButton;
@@ -887,13 +888,14 @@ public class PlayerControlsFragment extends Fragment {
         } else if (selectedLang.equalsIgnoreCase("English")) {
             Utils.updateLanguage("en", getActivity());
         }
-
         if (array.size() > 0) {
             videoTrackArray = array;
             ArrayList<TrackItem> arrayList = Utils.createTrackList(videoTrackArray, getActivity());
             VideoTracksAdapter videoTracksAdapter = new VideoTracksAdapter(arrayList, selectedTrack);
             recycleview.setAdapter(videoTracksAdapter);
             dialogQuality.show();
+        }else {
+            Toast.makeText(getActivity(),getActivity().getResources().getString(R.string.video_tracks_not_available),Toast.LENGTH_SHORT).show();
         }
     }
 
