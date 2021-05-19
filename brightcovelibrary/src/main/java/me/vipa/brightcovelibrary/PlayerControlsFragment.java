@@ -895,6 +895,12 @@ public class PlayerControlsFragment extends Fragment {
             recycleview.setAdapter(videoTracksAdapter);
             dialogQuality.show();
         }else {
+//            Log.d("gtgtgtgt",selectedLang);
+//            if (selectedLang.equalsIgnoreCase("Thai")) {
+//                Utils.updateLanguage("th", getActivity());
+//            } else if (selectedLang.equalsIgnoreCase("English")) {
+//                Utils.updateLanguage("en", getActivity());
+//            }
             Toast.makeText(getActivity(),getActivity().getResources().getString(R.string.video_tracks_not_available),Toast.LENGTH_SHORT).show();
         }
     }

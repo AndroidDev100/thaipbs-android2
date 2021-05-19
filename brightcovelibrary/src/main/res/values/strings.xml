@@ -32,7 +32,7 @@
     <string name="next_episode">Next Episode</string>
     <string name="live">Live</string>
     <string name="skip_intro">Skip Intro</string>
-    <string name="video_tracks_not_available">ไม่มีแทร็กวิดีโอสำหรับเนื้อหานี้</string>
+    <string name="video_tracks_not_available">There is no video track for this content.ี้</string>
 
 
 </resources>
