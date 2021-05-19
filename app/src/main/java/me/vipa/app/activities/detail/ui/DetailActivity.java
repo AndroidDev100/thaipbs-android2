@@ -369,6 +369,8 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
         if (isOffline) {
             args.putBoolean("isOffline", isOfflineAvailable);
             args.putParcelable(AppConstants.BUNDLE_VIDEO_ID_BRIGHTCOVE, video);
+            boolean value = KsPreferenceKeys.getInstance().getPodId(video.getId());
+            args.putBoolean("isOfflinePodcast", value);
         } else {
             args.putString(AppConstants.BUNDLE_VIDEO_ID_BRIGHTCOVE, String.valueOf(brightCoveVideoId));
         }

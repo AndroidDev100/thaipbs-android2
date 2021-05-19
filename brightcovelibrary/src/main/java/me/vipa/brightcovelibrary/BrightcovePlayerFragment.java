@@ -1085,12 +1085,12 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         }
         if (isOfflineVideo) {
             if (isOfflinePodcast) {
-                posterImageDefault.setVisibility(View.GONE);
-                posterImage.setVisibility(View.VISIBLE);
                 Glide.with(getActivity())
                         .load(R.drawable.splash)
                         .placeholder(R.drawable.splash)
                         .into(posterImage);
+                posterImageDefault.setVisibility(View.GONE);
+                posterImage.setVisibility(View.VISIBLE);
             } else {
                 posterImageDefault.setVisibility(View.GONE);
                 posterImage.setVisibility(View.GONE);
