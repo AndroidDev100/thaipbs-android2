@@ -87,6 +87,7 @@
                     android:layout_height="@dimen/toolbar_logo_icon_height"
                     android:layout_toRightOf="@+id/back_layout"
                     android:contentDescription="TODO"
+                    android:src="@drawable/vipalogo180"
                     android:layout_gravity="center"/>
 
 
