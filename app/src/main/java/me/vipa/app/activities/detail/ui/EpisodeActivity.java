@@ -591,6 +591,8 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
         if (isOffline) {
             args.putBoolean("isOffline", isOfflineAvailable);
             args.putParcelable(AppConstants.BUNDLE_VIDEO_ID_BRIGHTCOVE, video);
+            boolean value = KsPreferenceKeys.getInstance().getPodId(video.getId());
+            args.putBoolean("isOfflinePodcast", value);
         } else {
             args.putString(AppConstants.BUNDLE_VIDEO_ID_BRIGHTCOVE, String.valueOf(brightCoveVideoId));
         }
@@ -2421,7 +2423,11 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
     public void alreadyDownloaded(@androidx.annotation.NonNull Video video) {
         if (video.getId().equals(downloadAbleVideo.getId())) {
             userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.DOWNLOADED);
-            isOfflineAvailable = true;
+            if (NetworkConnectivity.isOnline(this)) {
+                isOfflineAvailable = false;
+            }else {
+                isOfflineAvailable = true;
+            }
         }
     }
 

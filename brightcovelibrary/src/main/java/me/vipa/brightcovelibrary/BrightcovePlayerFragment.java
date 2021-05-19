@@ -94,6 +94,7 @@ import com.google.android.gms.cast.MediaInfo;
 import com.google.android.gms.cast.MediaMetadata;
 import com.google.android.gms.cast.VastAdsRequest;
 import com.google.android.gms.common.images.WebImage;
+import com.google.gson.Gson;
 import com.vipa.brightcovelibrary.R;
 
 import org.json.JSONObject;
@@ -1062,38 +1063,41 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         Log.w("IMATAG", "viewFind");
         progressBar.setVisibility(View.VISIBLE);
         container = view.findViewById(R.id.container);
+        if (!isOfflineVideo) {
+            if (isPodcast.equalsIgnoreCase("true")) {
+                if (poster_url != "" && poster_url != null) {
+                    posterImageDefault.setVisibility(View.VISIBLE);
+                    posterImage.setVisibility(View.GONE);
 
-        if (isPodcast.equalsIgnoreCase("true")){
-            if (poster_url!="" && poster_url!=null) {
-                posterImageDefault.setVisibility(View.VISIBLE);
-                posterImage.setVisibility(View.GONE);
-
-                Glide.with(getActivity())
-                        .load(poster_url)
-                        .placeholder(R.drawable.splash)
-                        .into(posterImageDefault);
-            }else {
-                posterImageDefault.setVisibility(View.GONE);
-                posterImage.setVisibility(View.VISIBLE);
-                Glide.with(getActivity())
-                        .load(poster_url)
-                        .placeholder(R.drawable.splash)
-                        .into(posterImage);            }
-        }else {
-            posterImage.setVisibility(View.GONE);
-            posterImageDefault.setVisibility(View.GONE);
-        }
-        if (isOfflineVideo) {
-            if (isOfflinePodcast) {
-                posterImageDefault.setVisibility(View.GONE);
-                posterImage.setVisibility(View.VISIBLE);
-                Glide.with(getActivity())
-                        .load(R.drawable.splash)
-                        .placeholder(R.drawable.splash)
-                        .into(posterImage);
+                    Glide.with(getActivity())
+                            .load(poster_url)
+                            .placeholder(R.drawable.splash)
+                            .into(posterImageDefault);
+                } else {
+                    posterImageDefault.setVisibility(View.GONE);
+                    posterImage.setVisibility(View.VISIBLE);
+                    Glide.with(getActivity())
+                            .load(poster_url)
+                            .placeholder(R.drawable.splash)
+                            .into(posterImage);
+                }
             } else {
-                posterImageDefault.setVisibility(View.GONE);
                 posterImage.setVisibility(View.GONE);
+                posterImageDefault.setVisibility(View.GONE);
+            }
+        }else {
+            if (isOfflineVideo) {
+                if (isOfflinePodcast) {
+                    Glide.with(getActivity())
+                            .load(R.drawable.splash)
+                            .placeholder(R.drawable.splash)
+                            .into(posterImage);
+                    posterImageDefault.setVisibility(View.GONE);
+                    posterImage.setVisibility(View.VISIBLE);
+                } else {
+                    posterImageDefault.setVisibility(View.GONE);
+                    posterImage.setVisibility(View.GONE);
+                }
             }
         }
        /* progressBar.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
@@ -2221,6 +2225,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
     List<Format> videoTrackArray;
 
     private void gettingVideoTracks(String msg) {
+
         if (videoTrackArray != null || videoTrackArray == null) {
             videoTrackArray = new ArrayList<>();
             Log.d("DID_SET_VIDEO", msg);
