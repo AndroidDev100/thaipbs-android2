@@ -286,8 +286,6 @@ public class FilterIconActivity extends BaseBindingActivity<ActivityFilterIconBi
             getBinding().genreRecyclerView.setVisibility(View.GONE);
 
         }
-
-
         setRecyclerProperties(getBinding().genreRecyclerView, true);
 
         if (filterGenreSavedList != null) {

@@ -138,8 +138,6 @@ public class SortAdapter extends RecyclerView.Adapter<SortAdapter.SingleItemRowH
 
         //  Log.e("selectedSort", selectedSort);
         //  Log.e("selectedSort2", selectedSort2);
-
-
     }
 
 
