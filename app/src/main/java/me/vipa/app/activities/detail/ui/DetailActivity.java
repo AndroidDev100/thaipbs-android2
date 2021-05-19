@@ -1831,7 +1831,12 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
         if (userInteractionFragment != null) {
             userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.DOWNLOADED);
             Logger.e("License", "Expiry" + video.getLicenseExpiryDate());
-            isOfflineAvailable = true;
+            //isOfflineAvailable = true;
+            if (NetworkConnectivity.isOnline(this)) {
+                isOfflineAvailable = false;
+            }else {
+                isOfflineAvailable = true;
+            }
         }
     }
 
