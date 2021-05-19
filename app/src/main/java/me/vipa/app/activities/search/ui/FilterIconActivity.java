@@ -135,6 +135,10 @@ public class FilterIconActivity extends BaseBindingActivity<ActivityFilterIconBi
                 genereSearchAdapter.notifyDataSetChanged();
                 sortAdapter.notifyDataSetChanged();
                 AppCommonMethod.resetFilter(FilterIconActivity.this);
+                filterGenreSavedList = new SharedPrefHelper(FilterIconActivity.this).getDataGenreList();
+                filterGenreSelectedList = filterGenreSavedList;
+                filterGenreSavedListKeyForApi = new SharedPrefHelper(FilterIconActivity.this).getDataGenreListKeyValue();
+                filterGenreSelectedListKeyForApi = filterGenreSavedListKeyForApi;
             }
         });
         getBinding().tvApply.setOnClickListener(new View.OnClickListener() {
@@ -223,13 +227,56 @@ public class FilterIconActivity extends BaseBindingActivity<ActivityFilterIconBi
         genereModels.add(new GenereModel("Thriller"));
         genereModels.add(new GenereModel("ille"));
         genereModels.add(new GenereModel("Vlog"));*/
-        if (configBean.getData().getAppConfig().getSearchFilters() != null) {
+      /*  if (configBean.getData().getAppConfig().getSearchFilters() != null) {
             if (configBean.getData().getAppConfig().getSearchFilters().getGenres() != null) {
                 genereModels = configBean.getData().getAppConfig().getSearchFilters().getGenres();
             } else {
                 getBinding().tvGenre.setVisibility(View.GONE);
                 getBinding().vGenre.setVisibility(View.GONE);
                 getBinding().genreRecyclerView.setVisibility(View.GONE);
+            }
+
+        } else {
+            getBinding().tvGenre.setVisibility(View.GONE);
+            getBinding().vGenre.setVisibility(View.GONE);
+
+            getBinding().genreRecyclerView.setVisibility(View.GONE);
+
+        }*/
+
+        if (configBean.getData().getAppConfig().getSearchFilters() != null) {
+
+            if (configBean.getData().getAppConfig().getSearchFilters().getGenres() != null) {
+                for (int i=0;i<configBean.getData().getAppConfig().getSearchFilters().getGenres().size();i++){
+                    if (currentLanguage.equalsIgnoreCase("Thai")) {
+                        if(configBean.getData().getAppConfig().getSearchFilters().getGenres().get(i).getDisplayName().getTh()!=null){
+                            genereModels = configBean.getData().getAppConfig().getSearchFilters().getGenres();
+                        }
+                        else {
+                            getBinding().tvGenre.setVisibility(View.GONE);
+                            getBinding().vGenre.setVisibility(View.GONE);
+                            getBinding().genreRecyclerView.setVisibility(View.GONE);
+                        }
+                    }
+                    else if (currentLanguage.equalsIgnoreCase("English")) {
+                        if(configBean.getData().getAppConfig().getSearchFilters().getGenres().get(i).getDisplayName().getEnUS()!=null){
+                            genereModels = configBean.getData().getAppConfig().getSearchFilters().getGenres();
+                        }
+                        else {
+                            getBinding().tvGenre.setVisibility(View.GONE);
+                            getBinding().vGenre.setVisibility(View.GONE);
+                            getBinding().genreRecyclerView.setVisibility(View.GONE);
+
+                        }
+                    }
+                }
+
+            } else {
+                getBinding().tvGenre.setVisibility(View.GONE);
+                getBinding().vGenre.setVisibility(View.GONE);
+
+                getBinding().genreRecyclerView.setVisibility(View.GONE);
+
             }
 
         } else {
