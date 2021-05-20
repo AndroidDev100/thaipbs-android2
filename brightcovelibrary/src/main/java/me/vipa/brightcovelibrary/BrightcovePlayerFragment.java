@@ -143,7 +143,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
     private Runnable runnable;
     private long bookmarkPosition = 0l;
     private ProgressBar progressBar;
-    private ImageView posterImage,posterImageDefault;
+    private ImageView posterImage, posterImageDefault;
     private String brightcoveAccountId;
     private String brightcovePolicyKey;
     private PlayerControlsFragment playerControlsFragment;
@@ -158,7 +158,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
     private boolean isBingeWatchTimeCalculate = false;
     boolean isFirstCalled = true;
     private boolean isCastConnected = false;
-    int from=0;
+    int from = 0;
     private String signLangParentRefId = "";
     private String signLangRefId = "";
     private String isPodcast = "";
@@ -177,10 +177,10 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         Bundle bundle = getArguments();
         if (bundle != null) {
             videoId = bundle.getString("videoId");
-           // Log.w("IMATAG", videoId);
+            // Log.w("IMATAG", videoId);
             assetType = bundle.getString("assetType");
             selected_track = bundle.getString("selected_track");
-          //  Log.e("Selectedtrack", selected_track);
+            //  Log.e("Selectedtrack", selected_track);
             //Log.d("asasasasas",selected_track);
             selected_lang = bundle.getString("selected_lang");
             adRulesURL = bundle.getString("config_vast_tag");
@@ -189,10 +189,9 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             signLangParentRefId = bundle.getString("signLangParentRefId");
             signLangRefId = bundle.getString("signLangId");
 
-            if (bundle.getString("podcast")!=null){
+            if (bundle.getString("podcast") != null) {
                 isPodcast = bundle.getString("podcast");
             }
-
 
 
             bingeWatchTimer = bundle.getInt("binge_watch_timer");
@@ -200,7 +199,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
 
             isAdShowingToUser = bundle.getBoolean("ads_visibility");
 
-            if (bundle.getString("posterUrl")!=null){
+            if (bundle.getString("posterUrl") != null) {
                 poster_url = bundle.getString("posterUrl");
             }
             // Log.w("config_vast_tag", adRulesURL);
@@ -219,10 +218,10 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             if (bundle.containsKey("isOffline")) {
                 isOfflineVideo = bundle.getBoolean("isOffline");
                 isOfflinePodcast = bundle.getBoolean("isOfflinePodcast");
-                from=bundle.getInt("from");
+                from = bundle.getInt("from");
                 currentVideo = bundle.getParcelable("videoId");
                 if (isOfflineVideo && mActivity != null) {
-                    if (from==1){
+                    if (from == 1) {
                         mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
                     }
                 }
@@ -312,7 +311,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         mListener = (OnPlayerInteractionListener) mActivity;
         try {
             chromeCastStartedListener = (ChromeCastStartedCallBack) mActivity;
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
 
@@ -331,15 +330,15 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
 
         }
         if (isOfflineVideo) {
-            setPlayerWithCallBacks(true,"");
+            setPlayerWithCallBacks(true, "");
             if (mActivity != null) {
-                if (from==1){
+                if (from == 1) {
                     mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
                     mActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
                 }
             }
         } else {
-            setPlayerWithCallBacks(false,videoId);
+            setPlayerWithCallBacks(false, videoId);
         }
 
         try {
@@ -384,8 +383,11 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         brightcoveCaptionStyle.createCaptionStyle("6",
                 "sans-serif",greenColorValue,greenColorValue,greenColorValue,greenColorValue,greenColorValue,greenColorValue,greenColorValue,greenColorValue);
         BrightcoveClosedCaptioningManager.getInstance(getActivity()).setStyle(brightcoveCaptionStyle);*/
+        if (baseVideoView.getEventEmitter() != null) {
+            eventEmitter = baseVideoView.getEventEmitter();
 
-        eventEmitter = baseVideoView.getEventEmitter();
+        }
+
         eventEmitter.enable();
         if (adRulesURL == null || adRulesURL.equalsIgnoreCase("")) {
             imaEnable = false;
@@ -435,7 +437,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                         playerControlsFragment.sendTapCallBack(false);*/
                     if (playerControlsFragment != null) {
                         playerControlsFragment.sendTapCallBack(false);
-                        playerControlsFragment.setIsOffline(false,from);
+                        playerControlsFragment.setIsOffline(false, from);
 
                     }
 
@@ -465,14 +467,18 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                 public void onError(@NonNull List<CatalogError> errors) {
                     super.onError(errors);
                     if (!baseVideoView.isPlaying())
-                        Log.d("gtgtgtgt",errors.get(0).getCatalogErrorSubcode());
-                        showErrorDialog(errors.get(0).getCatalogErrorSubcode());
+                        Log.d("gtgtgtgt", errors.get(0).getCatalogErrorSubcode());
+                    showErrorDialog(errors.get(0).getCatalogErrorSubcode());
                 }
             });
         } else {
             baseVideoView.stopPlayback();
             baseVideoView.clear();
-            eventEmitter = baseVideoView.getEventEmitter();
+
+            if (baseVideoView.getEventEmitter() != null) {
+                eventEmitter = baseVideoView.getEventEmitter();
+
+            }
             eventEmitter.enable();
             baseVideoView.setMediaController((MediaController) null);
             baseVideoView.seekTo((int) (bookmarkPosition * 1000));
@@ -484,7 +490,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             callPlayerControlsFragment();
             if (playerControlsFragment != null) {
                 playerControlsFragment.sendTapCallBack(false);
-                playerControlsFragment.setIsOffline(true,from);
+                playerControlsFragment.setIsOffline(true, from);
             }
         }
 
@@ -1085,7 +1091,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                 posterImage.setVisibility(View.GONE);
                 posterImageDefault.setVisibility(View.GONE);
             }
-        }else {
+        } else {
             if (isOfflineVideo) {
                 if (isOfflinePodcast) {
                     Glide.with(getActivity())
@@ -1147,7 +1153,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         }
         try {
             if (baseVideoView != null) {
-                if(!isOfflineVideo){
+                if (!isOfflineVideo) {
                     baseVideoView.stopPlayback();
                     baseVideoView.removeListeners();
                 }
@@ -1164,28 +1170,28 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
 
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
 
-            if (playerControlsFragment == null) {
-                try {
-                    playerControlsFragment = new PlayerControlsFragment();
-                    transaction.add(R.id.container, playerControlsFragment, "PlayerControlsFragment");
-                    transaction.addToBackStack(null);
-                    transaction.commit();
-                    playerControlsFragment.setVideoType(videoType);
-                    playerControlsFragment.setPlayerCallBacks(this);
+        if (playerControlsFragment == null) {
+            try {
+                playerControlsFragment = new PlayerControlsFragment();
+                transaction.add(R.id.container, playerControlsFragment, "PlayerControlsFragment");
+                transaction.addToBackStack(null);
+                transaction.commit();
+                playerControlsFragment.setVideoType(videoType);
+                playerControlsFragment.setPlayerCallBacks(this);
 
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (playerControlsFragment!=null) {
-                                playerControlsFragment.setIsSignEnable(signLangParentRefId, signLangRefId);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (playerControlsFragment != null) {
+                            playerControlsFragment.setIsSignEnable(signLangParentRefId, signLangRefId);
 
-                            }
                         }
-                    }, 1500);
+                    }
+                }, 1500);
 
-                } catch (Exception ignored) {
+            } catch (Exception ignored) {
 
-                }
+            }
 
 
         }
@@ -1554,7 +1560,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         }
         baseVideoView.stopPlayback();
         if (mActivity != null && !mActivity.isFinishing()) {
-            if (assetType!=null){
+            if (assetType != null) {
                 if (assetType.equalsIgnoreCase("EPISODES") || assetType.equalsIgnoreCase("EPISODE")) {
 
                 } else {
@@ -2047,29 +2053,33 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                     trackSelector = (DefaultTrackSelector) mappingTrackSelector;
 
                     mappedTrackInfo = trackSelector.getCurrentMappedTrackInfo();
-                    if (mappedTrackInfo.length > 0) {
-                        trackGroups = mappedTrackInfo.getTrackGroups(0);
-                        DefaultTrackSelector.Parameters pp = trackSelector.getParameters();
-                        trackSelectedPosition = position;
-                        DefaultTrackSelector.SelectionOverride selectiveBitRateOverride = null;
-                        if (position > 0) {
-                            Log.d("selectedPosition", position + "  " + videoTrackArray.get(position - 1).height + "  " + videoTrackArray.get(position - 1).bitrate);
-                            Log.w("", videoTrackArray.get(position - 1).bitrate + "");
-                            selectiveBitRateOverride = new DefaultTrackSelector.SelectionOverride(0, position - 1);
+                    if (mappedTrackInfo != null) {
+                        if (mappedTrackInfo.length > 0) {
+                            trackGroups = mappedTrackInfo.getTrackGroups(0);
+                            DefaultTrackSelector.Parameters pp = trackSelector.getParameters();
+                            trackSelectedPosition = position;
+                            DefaultTrackSelector.SelectionOverride selectiveBitRateOverride = null;
+                            if (position > 0) {
+                                Log.d("selectedPosition", position + "  " + videoTrackArray.get(position - 1).height + "  " + videoTrackArray.get(position - 1).bitrate);
+                                Log.w("", videoTrackArray.get(position - 1).bitrate + "");
+                                selectiveBitRateOverride = new DefaultTrackSelector.SelectionOverride(0, position - 1);
 
-                        } else {
-                            int[] trackIndices = new int[trackGroups.get(0).length];
+                            } else {
+                                int[] trackIndices = new int[trackGroups.get(0).length];
 
-                            for (int idx = 0; idx < trackGroups.get(0).length; idx++) {
-                                trackIndices[idx] = idx;
+                                for (int idx = 0; idx < trackGroups.get(0).length; idx++) {
+                                    trackIndices[idx] = idx;
+                                }
+                                selectiveBitRateOverride = new DefaultTrackSelector.SelectionOverride(0, trackIndices);
                             }
-                            selectiveBitRateOverride = new DefaultTrackSelector.SelectionOverride(0, trackIndices);
+
+                            trackSelector.setParameters(trackSelector.buildUponParameters()
+                                    .setSelectionOverride(0, trackGroups, selectiveBitRateOverride));
+
                         }
 
-                        trackSelector.setParameters(trackSelector.buildUponParameters()
-                                .setSelectionOverride(0, trackGroups, selectiveBitRateOverride));
-
                     }
+
                 }
             }
         } catch (Exception ignored) {
@@ -2096,7 +2106,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             } else {
                 startPlayer(signLangId);
             }
-        }else {
+        } else {
             if (isSignPlaying) {
                 startPlayer(signLangId);
             } else {
@@ -2194,20 +2204,24 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                         trackSelector = (DefaultTrackSelector) mappingTrackSelector;
 
                         mappedTrackInfo = trackSelector.getCurrentMappedTrackInfo();
-                        if (mappedTrackInfo.length > 0) {
-                            trackGroups = mappedTrackInfo.getTrackGroups(0);
+                        if (mappedTrackInfo != null) {
+                            if (mappedTrackInfo.length > 0) {
+                                trackGroups = mappedTrackInfo.getTrackGroups(0);
 
-                            for (int i = 0; i < trackGroups.length; i++) {
-                                group = trackGroups.get(i);
+                                for (int i = 0; i < trackGroups.length; i++) {
+                                    group = trackGroups.get(i);
 
-                                for (int j = 0; j < trackGroups.get(i).length; j++) {
-                                    Log.d("selectedPosition", trackGroups.get(i).getFormat(j).height + " " + trackGroups.get(i).getFormat(j).width + "  " + trackGroups.get(i).getFormat(j).bitrate);
-                                    videoTrackArray.add(trackGroups.get(i).getFormat(j));
+                                    for (int j = 0; j < trackGroups.get(i).length; j++) {
+                                        Log.d("selectedPosition", trackGroups.get(i).getFormat(j).height + " " + trackGroups.get(i).getFormat(j).width + "  " + trackGroups.get(i).getFormat(j).bitrate);
+                                        videoTrackArray.add(trackGroups.get(i).getFormat(j));
+                                    }
                                 }
+
+
                             }
 
-
                         }
+
 
                     }
                 }
@@ -2239,26 +2253,31 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                     trackSelector = (DefaultTrackSelector) mappingTrackSelector;
 
                     mappedTrackInfo = trackSelector.getCurrentMappedTrackInfo();
-                    if (mappedTrackInfo.length > 0) {
-                        trackGroups = mappedTrackInfo.getTrackGroups(0);
 
-                        for (int i = 0; i < trackGroups.length; i++) {
-                            group = trackGroups.get(i);
+                    if (mappedTrackInfo != null) {
+                        if (mappedTrackInfo.length > 0) {
+                            trackGroups = mappedTrackInfo.getTrackGroups(0);
 
-                            for (int j = 0; j < trackGroups.get(i).length; j++) {
-                                Log.d("selectedPosition", trackGroups.get(i).getFormat(j).height + " " + trackGroups.get(i).getFormat(j).width + "  " + trackGroups.get(i).getFormat(j).bitrate);
-                                videoTrackArray.add(trackGroups.get(i).getFormat(j));
+                            for (int i = 0; i < trackGroups.length; i++) {
+                                group = trackGroups.get(i);
+
+                                for (int j = 0; j < trackGroups.get(i).length; j++) {
+                                    Log.d("selectedPosition", trackGroups.get(i).getFormat(j).height + " " + trackGroups.get(i).getFormat(j).width + "  " + trackGroups.get(i).getFormat(j).bitrate);
+                                    videoTrackArray.add(trackGroups.get(i).getFormat(j));
+                                }
                             }
-                        }
                         /*270P - 360P = Low
                         540P - 720P = Medium
                         1080P = High*/
-                        DefaultTrackSelector.Parameters pp = trackSelector.getParameters();
-                        trackSelectedPosition = position;
-                        if (playerControlsFragment != null) {
-                            playerControlsFragment.setVideoFormate(videoTrackArray, selected_track, selected_lang);
+                            DefaultTrackSelector.Parameters pp = trackSelector.getParameters();
+                            trackSelectedPosition = position;
+                            if (playerControlsFragment != null) {
+                                playerControlsFragment.setVideoFormate(videoTrackArray, selected_track, selected_lang);
+                            }
                         }
+
                     }
+
 
                 }
             }

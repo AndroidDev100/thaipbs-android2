@@ -100,7 +100,7 @@ public class ActivitySearch extends BaseBindingActivity<ActivitySearchBinding> i
 
     private void clickListner() {
         getBinding().noResult.setVisibility(View.GONE);
-       // getBinding().noResult1.setVisibility(View.GONE);
+        // getBinding().noResult1.setVisibility(View.GONE);
         hitApiPopularSearch();
         setRecyclerProperties(getBinding().recentSearchRecycler);
         setRecentSearchAdapter("");
@@ -211,7 +211,7 @@ public class ActivitySearch extends BaseBindingActivity<ActivitySearchBinding> i
 
         getBinding().rootView.setVisibility(View.GONE);
         getBinding().noResult.setVisibility(View.GONE);
-      //  getBinding().noResult1.setVisibility(View.GONE);
+        //  getBinding().noResult1.setVisibility(View.GONE);
         // getBinding().progressBar.setVisibility(View.VISIBLE);
         getBinding().llSearchResultLayout.setVisibility(View.VISIBLE);
         railInjectionHelper.getSearch(context, searchKeyword, 4, 0, applyFilter).observe(ActivitySearch.this, data -> {
@@ -219,7 +219,7 @@ public class ActivitySearch extends BaseBindingActivity<ActivitySearchBinding> i
             if (Objects.requireNonNull(data).size() > 0) {
                 try {
                     getBinding().noResult.setVisibility(View.GONE);
-                   // getBinding().noResult1.setVisibility(View.GONE);
+                    // getBinding().noResult1.setVisibility(View.GONE);
                     getBinding().rootView.setVisibility(View.GONE);
                     getBinding().toolbar.filter.setVisibility(View.VISIBLE);
                     for (int i = 0; i < data.size(); i++) {
@@ -273,7 +273,7 @@ public class ActivitySearch extends BaseBindingActivity<ActivitySearchBinding> i
                 }
             } else {
                 getBinding().noResult.setVisibility(View.VISIBLE);
-              //  getBinding().noResult1.setVisibility(View.VISIBLE);
+                //  getBinding().noResult1.setVisibility(View.VISIBLE);
                 List<String> filterGenreSavedListKeyForApi = new SharedPrefHelper(this).getDataGenreListKeyValue();
                 List<String> filterSortSavedListKeyForApi = new SharedPrefHelper(this).getDataSortListKeyValue();
                 if (filterGenreSavedListKeyForApi != null && filterGenreSavedListKeyForApi.size() > 0 || filterSortSavedListKeyForApi != null && filterSortSavedListKeyForApi.size() > 0) {
@@ -571,7 +571,7 @@ public class ActivitySearch extends BaseBindingActivity<ActivitySearchBinding> i
         if (requestCode == FILTER_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 Log.e("RETURNWITHDATA", "RETURNWITHDATA");
-                Log.e("SEARCHTEXT_ONRESULT", searchText);
+
                 if (searchText != null && searchText.trim().length() > 2) {
                     applyFilter = Boolean.parseBoolean(KsPreferenceKeys.getInstance().getFilterApply());
                     hitApiSearchKeyword(searchText.trim(), ActivitySearch.this, applyFilter);
@@ -581,7 +581,7 @@ public class ActivitySearch extends BaseBindingActivity<ActivitySearchBinding> i
             else {
                 applyFilter = Boolean.parseBoolean(KsPreferenceKeys.getInstance().getFilterApply());
                 hitApiSearchKeyword(searchText.trim(), ActivitySearch.this, applyFilter);
-                Log.e("RETURNWITHNODATA", "RETURNWITHNODATA");
+
 
             }
         }
