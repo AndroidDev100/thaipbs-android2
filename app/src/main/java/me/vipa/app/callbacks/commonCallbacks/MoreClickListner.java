@@ -4,5 +4,5 @@ import me.vipa.app.beanModel.enveuCommonRailData.RailCommonData;
 
 public interface MoreClickListner {
 
-    void moreRailClick(RailCommonData data, int position);
+    void moreRailClick(RailCommonData data, int position,String multilingualTitle);
 }

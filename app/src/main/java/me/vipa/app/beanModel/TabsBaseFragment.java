@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import me.vipa.app.utils.helpers.downloads.room.DownloadModel;
+import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
 import me.vipa.enums.LandingPageType;
 import me.vipa.enums.Layouts;
 import me.vipa.enums.ListingLayoutType;
@@ -471,13 +472,13 @@ public class TabsBaseFragment<T extends HomeBaseViewModel> extends BaseBindingFr
                 }
             } else if (landingPageType.equals(LandingPageType.PLT.name())) {
                 Logger.e("MORE RAIL CLICK", new Gson().toJson(railCommonData));
-                moreRailClick(railCommonData, 0);
+                moreRailClick(railCommonData, 0,"");
             }
         }
     }
 
     @Override
-    public void moreRailClick(RailCommonData data, int position) {
+    public void moreRailClick(RailCommonData data, int position,String multilingualTitle) {
         if (data.getScreenWidget() != null) {
 
             if (data.getScreenWidget().getContentID() != null)
@@ -485,28 +486,29 @@ public class TabsBaseFragment<T extends HomeBaseViewModel> extends BaseBindingFr
             else
                 playListId = data.getScreenWidget().getLandingPagePlayListId();
 
+            String finalName=checkNull(data.getScreenWidget(),multilingualTitle);
             if (data.getScreenWidget().getName() != null && data.getScreenWidget().getReferenceName() != null && (data.getScreenWidget().getReferenceName().equalsIgnoreCase(AppConstants.ContentType.CONTINUE_WATCHING.name()) || data.getScreenWidget().getReferenceName().equalsIgnoreCase("special_playlist"))) {
-                new ActivityLauncher(getActivity()).portraitListing(getActivity(), GridActivity.class, playListId, data.getScreenWidget().getName().toString(), 0, 0, data.getScreenWidget(),data.isContinueWatching());
+                new ActivityLauncher(getActivity()).portraitListing(getActivity(), GridActivity.class, playListId, finalName, 0, 0, data.getScreenWidget(),data.isContinueWatching());
             } else if (data.getScreenWidget().getName() != null && data.getScreenWidget().getReferenceName() != null && (data.getScreenWidget().getReferenceName().equalsIgnoreCase(AppConstants.ContentType.MY_WATCHLIST.name()))) {
-                new ActivityLauncher(getActivity()).watchHistory(getActivity(), WatchListActivity.class, data.getScreenWidget().getName().toString(), false);
+                new ActivityLauncher(getActivity()).watchHistory(getActivity(), WatchListActivity.class, finalName, false);
             } else {
                 if (data.getScreenWidget().getContentListinglayout() != null && !data.getScreenWidget().getContentListinglayout().equalsIgnoreCase("") && data.getScreenWidget().getContentListinglayout().equalsIgnoreCase(ListingLayoutType.LST.name())) {
                     if (data.getScreenWidget().getName() != null) {
-                        new ActivityLauncher(getActivity()).listActivity(getActivity(), ListActivity.class, playListId, data.getScreenWidget().getName().toString(), 0, 0, data.getScreenWidget());
+                        new ActivityLauncher(getActivity()).listActivity(getActivity(), ListActivity.class, playListId, finalName, 0, 0, data.getScreenWidget());
                     } else {
                         new ActivityLauncher(getActivity()).listActivity(getActivity(), ListActivity.class, playListId, "", 0, 0, data.getScreenWidget());
                     }
                 } else if (data.getScreenWidget().getContentListinglayout() != null && !data.getScreenWidget().getContentListinglayout().equalsIgnoreCase("") && data.getScreenWidget().getContentListinglayout().equalsIgnoreCase(ListingLayoutType.GRD.name())) {
                     Logger.e("getRailData", "GRD");
                     if (data.getScreenWidget().getName() != null) {
-                        new ActivityLauncher(getActivity()).portraitListing(getActivity(), GridActivity.class, playListId, data.getScreenWidget().getName().toString(), 0, 0, data.getScreenWidget(), data.isContinueWatching());
+                        new ActivityLauncher(getActivity()).portraitListing(getActivity(), GridActivity.class, playListId, finalName, 0, 0, data.getScreenWidget(), data.isContinueWatching());
                     } else {
                         new ActivityLauncher(getActivity()).portraitListing(getActivity(), GridActivity.class, playListId, "", 0, 0, data.getScreenWidget(), data.isContinueWatching());
                     }
                 } else {
                     Logger.e("getRailData", "PDF");
                     if (data.getScreenWidget().getName() != null) {
-                        new ActivityLauncher(getActivity()).portraitListing(getActivity(), GridActivity.class, playListId, data.getScreenWidget().getName().toString(), 0, 0, data.getScreenWidget(), data.isContinueWatching());
+                        new ActivityLauncher(getActivity()).portraitListing(getActivity(), GridActivity.class, playListId, finalName, 0, 0, data.getScreenWidget(), data.isContinueWatching());
                     } else {
                         new ActivityLauncher(getActivity()).portraitListing(getActivity(), GridActivity.class, playListId, "", 0, 0, data.getScreenWidget(), data.isContinueWatching());
                     }
@@ -514,6 +516,22 @@ public class TabsBaseFragment<T extends HomeBaseViewModel> extends BaseBindingFr
             }
         }
 
+    }
+
+    private String checkNull(BaseCategory screenWidget, String multilingualTitle) {
+        String name="";
+        try {
+            if (multilingualTitle.equalsIgnoreCase("")){
+                if (screenWidget!=null && screenWidget.getName()!=null){
+                    name=screenWidget.getName().toString();
+                }
+            }else {
+                name=multilingualTitle;
+            }
+        }catch (Exception ignored){
+
+        }
+        return name;
     }
 
     public interface OnFragmentInteractionListener {

@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
 import me.vipa.enums.LandingPageType;
 import me.vipa.enums.Layouts;
 import me.vipa.enums.ListingLayoutType;
@@ -248,13 +249,13 @@ public class RecommendationRailFragment extends BaseBindingFragment<DetailFooter
                 }
             } else if (landingPageType.equals(LandingPageType.PLT.name())) {
                 Logger.e("MORE RAIL CLICK", new Gson().toJson(railCommonData));
-                moreRailClick(railCommonData, 0);
+                moreRailClick(railCommonData, 0,"");
             }
         }
     }
 
     @Override
-    public void moreRailClick(RailCommonData data, int position) {
+    public void moreRailClick(RailCommonData data, int position,String multilingualname) {
         if (data.getScreenWidget() != null) {
             if (data.getScreenWidget().getContentID() != null)
                 playListId = data.getScreenWidget().getContentID();
@@ -262,47 +263,60 @@ public class RecommendationRailFragment extends BaseBindingFragment<DetailFooter
                 playListId = data.getScreenWidget().getLandingPagePlayListId();
 
             if (data.getScreenWidget().getContentListinglayout() != null && !data.getScreenWidget().getContentListinglayout().equalsIgnoreCase("") && data.getScreenWidget().getContentListinglayout().equalsIgnoreCase(ListingLayoutType.LST.name())) {
-               startListingActivity(data);
+               startListingActivity(data,multilingualname);
             } else if (data.getScreenWidget().getContentListinglayout() != null && !data.getScreenWidget().getContentListinglayout().equalsIgnoreCase("") && data.getScreenWidget().getContentListinglayout().equalsIgnoreCase(ListingLayoutType.GRD.name())) {
-                startGridActivity(data);
+                startGridActivity(data,multilingualname);
             } else {
-                startListingActivity(data);
+                startListingActivity(data,multilingualname);
             }
         }
     }
 
-    private void startListingActivity(RailCommonData data) {
+    private void startListingActivity(RailCommonData data,String multilingualname) {
         if (data.getScreenWidget() != null && data.getScreenWidget().getContentID() != null) {
             String playListId = data.getScreenWidget().getContentID();
-            String screenName = "";
-            if (data.getScreenWidget().getName() != null) {
-                screenName = (String) data.getScreenWidget().getName();
-            }
+            String finalName=checkNull(data.getScreenWidget(),multilingualname);
+
             Intent intent = new Intent(getActivity(), ListActivity.class);
             intent.putExtra("playListId", playListId);
-            intent.putExtra("title", screenName);
+            intent.putExtra("title", finalName);
             intent.putExtra("flag", 0);
             intent.putExtra("shimmerType", 0);
             intent.putExtra("baseCategory", data.getScreenWidget());
             startActivityForResult(intent, 1001);
         }
     }
-    private void startGridActivity(RailCommonData data) {
+    private void startGridActivity(RailCommonData data,String multilingualname) {
         if (data.getScreenWidget() != null && data.getScreenWidget().getContentID() != null) {
             String playListId = data.getScreenWidget().getContentID();
-            String screenName = "";
-            if (data.getScreenWidget().getName() != null) {
-                screenName = (String) data.getScreenWidget().getName();
-            }
+            String finalName=checkNull(data.getScreenWidget(),multilingualname);
+
             Intent intent = new Intent(getActivity(), GridActivity.class);
             intent.putExtra("playListId", playListId);
-            intent.putExtra("title", screenName);
+            intent.putExtra("title", finalName);
             intent.putExtra("flag", 0);
             intent.putExtra("shimmerType", 0);
             intent.putExtra("baseCategory", data.getScreenWidget());
             startActivityForResult(intent, 1001);
         }
     }
+
+    private String checkNull(BaseCategory screenWidget, String multilingualTitle) {
+        String name="";
+        try {
+            if (multilingualTitle.equalsIgnoreCase("")){
+                if (screenWidget!=null && screenWidget.getName()!=null){
+                    name=screenWidget.getName().toString();
+                }
+            }else {
+                name=multilingualTitle;
+            }
+        }catch (Exception ignored){
+
+        }
+        return name;
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

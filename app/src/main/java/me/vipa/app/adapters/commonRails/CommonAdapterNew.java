@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -18,6 +19,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
+import me.vipa.app.SDKConfig;
 import me.vipa.app.beanModel.enveuCommonRailData.RailCommonData;
 import me.vipa.app.callbacks.commonCallbacks.CommonRailtItemClickListner;
 import me.vipa.app.callbacks.commonCallbacks.MoreClickListner;
@@ -297,9 +302,11 @@ public class CommonAdapterNew extends RecyclerView.Adapter<RecyclerView.ViewHold
             headingRailsBinding.headingTitle.bringToFront();
 
             if (item.isContinueWatching()){
-                headingRailsBinding.headingTitle.setText((String) item.getScreenWidget().getName()+" "+mContext.getResources().getString(R.string.For)+" "+ KsPreferenceKeys.getInstance().getAppPrefUserName());
+                //headingRailsBinding.headingTitle.setText((String) item.getScreenWidget().getName()+" "+mContext.getResources().getString(R.string.For)+" "+ KsPreferenceKeys.getInstance().getAppPrefUserName());
+                setContinueWatchMultiLngTitle(item,headingRailsBinding);
             }else {
-                headingRailsBinding.headingTitle.setText((String) item.getScreenWidget().getName());
+                setMultiLingTitle(item,headingRailsBinding);
+               // headingRailsBinding.headingTitle.setText((String) item.getScreenWidget().getName());
             }
 
 
@@ -313,12 +320,79 @@ public class CommonAdapterNew extends RecyclerView.Adapter<RecyclerView.ViewHold
             headingRailsBinding.headingTitle.bringToFront();
             headingRailsBinding.moreText.setVisibility(View.VISIBLE);
             headingRailsBinding.moreText.setOnClickListener(v -> {
-                moreClickListner.moreRailClick(item, position);
+                try {
+                    if (item.getScreenWidget().getEnableMultilingualTitle()!=null && item.getScreenWidget().getEnableMultilingualTitle()  instanceof Boolean){
+                        boolean isMultilingualTitleEnable=(Boolean)item.getScreenWidget().getEnableMultilingualTitle();
+                        if (isMultilingualTitleEnable){
+                            String currentLang=KsPreferenceKeys.getInstance().getAppLanguage();
+                            JsonObject jsonObject = new Gson().toJsonTree(item.getScreenWidget().getMultilingualTitle()).getAsJsonObject();
+                            String name=AppCommonMethod.getMultilingualTitle(currentLang,jsonObject, SDKConfig.getInstance().getThaiLangCode(),SDKConfig.getInstance().getEnglishCode());
+                            if (!name.equalsIgnoreCase("")){
+                                moreClickListner.moreRailClick(item, position,name);
+                            }else {
+                                moreClickListner.moreRailClick(item, position,"");
+                            }
+                        }else {
+                            moreClickListner.moreRailClick(item, position,"");
+                        }
+                    }else {
+                        moreClickListner.moreRailClick(item, position,"");
+                    }
+
+                }catch (Exception e){
+                    moreClickListner.moreRailClick(item, position,"");
+                }
+                //moreClickListner.moreRailClick(item, position);
             });
         } else {
             headingRailsBinding.moreText.setVisibility(View.GONE);
             headingRailsBinding.mainHeaderTitle.setVisibility(View.GONE);
         }
+    }
+
+    private void setMultiLingTitle(RailCommonData item, HeadingRailsBinding headingRailsBinding) {
+        try {
+            if (item.getScreenWidget().getEnableMultilingualTitle()!=null && item.getScreenWidget().getEnableMultilingualTitle()  instanceof Boolean){
+                boolean isMultilingualTitleEnable=(Boolean)item.getScreenWidget().getEnableMultilingualTitle();
+                if (isMultilingualTitleEnable){
+                    String currentLang=KsPreferenceKeys.getInstance().getAppLanguage();
+                    JsonObject jsonObject = new Gson().toJsonTree(item.getScreenWidget().getMultilingualTitle()).getAsJsonObject();
+                    String name=AppCommonMethod.getMultilingualTitle(currentLang,jsonObject, SDKConfig.getInstance().getThaiLangCode(),SDKConfig.getInstance().getEnglishCode());
+                    if (!name.equalsIgnoreCase("")){
+                        headingRailsBinding.headingTitle.setText(name);
+                    }
+                }else {
+                    headingRailsBinding.headingTitle.setText((String) item.getScreenWidget().getName());
+                }
+            }else {
+                headingRailsBinding.headingTitle.setText((String) item.getScreenWidget().getName());
+            }
+        }catch (Exception ignored){
+            headingRailsBinding.headingTitle.setText((String) item.getScreenWidget().getName());
+        }
+    }
+
+    private void setContinueWatchMultiLngTitle(RailCommonData item, HeadingRailsBinding headingRailsBinding) {
+        try {
+            if (item.getScreenWidget().getEnableMultilingualTitle()!=null && item.getScreenWidget().getEnableMultilingualTitle()  instanceof Boolean){
+                boolean isMultilingualTitleEnable=(Boolean)item.getScreenWidget().getEnableMultilingualTitle();
+                if (isMultilingualTitleEnable){
+                    String currentLang=KsPreferenceKeys.getInstance().getAppLanguage();
+                    JsonObject jsonObject = new Gson().toJsonTree(item.getScreenWidget().getMultilingualTitle()).getAsJsonObject();
+                    String name=AppCommonMethod.getMultilingualTitle(currentLang,jsonObject, SDKConfig.getInstance().getThaiLangCode(),SDKConfig.getInstance().getEnglishCode());
+                    if (!name.equalsIgnoreCase("")){
+                        headingRailsBinding.headingTitle.setText(name+" "+mContext.getResources().getString(R.string.For)+" "+ KsPreferenceKeys.getInstance().getAppPrefUserName());
+                    }
+                }else {
+                    headingRailsBinding.headingTitle.setText((String) item.getScreenWidget().getName()+" "+mContext.getResources().getString(R.string.For)+" "+ KsPreferenceKeys.getInstance().getAppPrefUserName());
+                }
+            }else {
+                headingRailsBinding.headingTitle.setText((String) item.getScreenWidget().getName()+" "+mContext.getResources().getString(R.string.For)+" "+ KsPreferenceKeys.getInstance().getAppPrefUserName());
+            }
+        }catch (Exception ignored){
+            headingRailsBinding.headingTitle.setText((String) item.getScreenWidget().getName()+" "+mContext.getResources().getString(R.string.For)+" "+ KsPreferenceKeys.getInstance().getAppPrefUserName());
+        }
+
     }
 
     public class HeroAdsHolder extends RecyclerView.ViewHolder {

@@ -75,6 +75,7 @@ import me.vipa.app.SDKConfig;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mmtv.utils.helpers.downloads.DownloadHelper;
 import com.mvhub.enums.RailCardType;
@@ -93,6 +94,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.concurrent.TimeUnit;
 
@@ -1474,4 +1476,31 @@ public class AppCommonMethod {
         KsPreferenceKeys.getInstance().setFilterApply("false");
         KsPreferenceKeys.getInstance().setFilterGenre(0);
     }
+
+    public static String getMultilingualTitle(String currentLang, JsonObject multilingualTitle,String thaiCode,String englishCode) {
+        String name="";
+        try {
+            if (KsPreferenceKeys.getInstance().getAppLanguage().equalsIgnoreCase("Thai") || KsPreferenceKeys.getInstance().getAppLanguage().equalsIgnoreCase("हिंदी") ){
+                for (Map.Entry<String, JsonElement> entry : multilingualTitle.entrySet()) {
+                    String key=entry.getKey();
+                    if (key.equalsIgnoreCase(thaiCode)){
+                        name=entry.getValue().getAsString();
+                        break;
+                    }
+                }
+            }else {
+                for (Map.Entry<String, JsonElement> entry : multilingualTitle.entrySet()) {
+                    String key=entry.getKey();
+                    if (key.equalsIgnoreCase(englishCode)){
+                        name=entry.getValue().getAsString();
+                        break;
+                    }
+                }
+            }
+        }catch (Exception ignored){
+            name="";
+        }
+        return name;
+    }
+
 }
