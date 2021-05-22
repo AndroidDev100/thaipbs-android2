@@ -75,4 +75,6 @@ public abstract class BaseBindingActivity<B extends ViewDataBinding> extends Bas
     }
 
 
+
+
 }

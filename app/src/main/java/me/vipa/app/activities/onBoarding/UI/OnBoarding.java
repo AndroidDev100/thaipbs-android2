@@ -56,7 +56,7 @@ public class OnBoarding extends BaseBindingActivity<ActivityOnBoardingBinding> {
         getBinding().skipLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new ActivityLauncher(OnBoarding.this).homeScreen(OnBoarding.this, HomeActivity.class);
+                new ActivityLauncher(OnBoarding.this).homeScreen(OnBoarding.this, HomeActivity.class,false);
             }
         });
         getBinding().register.setOnClickListener(new View.OnClickListener() {
@@ -74,13 +74,13 @@ public class OnBoarding extends BaseBindingActivity<ActivityOnBoardingBinding> {
     protected void onResume() {
         super.onResume();
         if (preference.getAppPrefRegisterStatus().equalsIgnoreCase(AppConstants.UserStatus.Login.toString())) {
-            new ActivityLauncher(OnBoarding.this).homeScreen(OnBoarding.this, HomeActivity.class);
+            new ActivityLauncher(OnBoarding.this).homeScreen(OnBoarding.this, HomeActivity.class,false);
         }
     }
 
     @Override
     public void onBackPressed() {
-        new ActivityLauncher(OnBoarding.this).homeScreen(OnBoarding.this, HomeActivity.class);
+        new ActivityLauncher(OnBoarding.this).homeScreen(OnBoarding.this, HomeActivity.class,false);
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {

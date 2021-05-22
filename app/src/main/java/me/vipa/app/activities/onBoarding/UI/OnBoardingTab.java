@@ -33,7 +33,7 @@ public class OnBoardingTab extends BaseBindingActivity<ActivityOnBoardingTabBind
         getBinding().skipLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new ActivityLauncher(OnBoardingTab.this).homeScreen(OnBoardingTab.this, HomeActivity.class);
+                new ActivityLauncher(OnBoardingTab.this).homeScreen(OnBoardingTab.this, HomeActivity.class,false);
             }
         });
         getBinding().register.setOnClickListener(new View.OnClickListener() {
@@ -49,14 +49,14 @@ public class OnBoardingTab extends BaseBindingActivity<ActivityOnBoardingTabBind
 
     @Override
     public void onBackPressed() {
-        new ActivityLauncher(OnBoardingTab.this).homeScreen(OnBoardingTab.this, HomeActivity.class);
+        new ActivityLauncher(OnBoardingTab.this).homeScreen(OnBoardingTab.this, HomeActivity.class,false);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         if (preference.getAppPrefRegisterStatus().equalsIgnoreCase(AppConstants.UserStatus.Login.toString())) {
-            new ActivityLauncher(OnBoardingTab.this).homeScreen(OnBoardingTab.this, HomeActivity.class);
+            new ActivityLauncher(OnBoardingTab.this).homeScreen(OnBoardingTab.this, HomeActivity.class,false);
         }
     }
 }

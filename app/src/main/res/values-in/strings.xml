@@ -287,6 +287,8 @@
     <string name="episode">Episode</string>
     <string name="now_playing">sedang dimainkan</string>
     <string name="my_downloads">Download Anda</string>
+    <string name="vipa_kids">VIPA Kids</string>
+    <string name="leave_kids">Leave Kids Mode</string>
 
     <string name="language_english">English</string>
     <string name="language_hindi">हिंदी</string>

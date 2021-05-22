@@ -303,6 +303,8 @@
     <string name="cancel_download">Cancel Download</string>
     <string name="pause_download">Pause Download</string>
     <string name="my_downloads">My Downloads</string>
+    <string name="vipa_kids">VIPA Kids</string>
+    <string name="leave_kids">Leave Kids Mode</string>
 
     <string name="language_english">English</string>
     <string name="language_hindi">हिंदी</string>

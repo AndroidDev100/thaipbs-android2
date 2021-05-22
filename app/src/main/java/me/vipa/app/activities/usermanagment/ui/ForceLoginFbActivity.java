@@ -146,7 +146,7 @@ public class ForceLoginFbActivity extends BaseBindingActivity<ActivityForceLogin
         preference.setAppPrefUserName(String.valueOf(fbLoginData.getName()));
         preference.setAppPrefUserEmail(String.valueOf(fbLoginData.getEmail()));
         AppCommonMethod.userId = String.valueOf(fbLoginData.getId());
-        new ActivityLauncher(ForceLoginFbActivity.this).homeScreen(ForceLoginFbActivity.this, HomeActivity.class);
+        new ActivityLauncher(ForceLoginFbActivity.this).homeScreen(ForceLoginFbActivity.this, HomeActivity.class,false);
     }
 
 

@@ -3,6 +3,7 @@ package me.vipa.app.activities.homeactivity.ui;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,6 +37,7 @@ import me.vipa.app.utils.cropImage.helpers.Logger;
 import me.vipa.app.utils.helpers.ActivityTrackers;
 import me.vipa.app.utils.helpers.AnalyticsController;
 
+import me.vipa.app.utils.helpers.SharedPrefHelper;
 import me.vipa.app.utils.helpers.StringUtils;
 import me.vipa.app.utils.helpers.ToolBarHandler;
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
@@ -156,6 +158,7 @@ public class HomeActivity extends BaseBindingActivity<ActivityMainBinding> imple
         }
     };
     private BottomNavigationView navigation;
+    private boolean kidsMode=false;
 
     @SuppressLint("RestrictedApi")
     public static void removeNavigationShiftMode(BottomNavigationView view) {
@@ -196,6 +199,15 @@ public class HomeActivity extends BaseBindingActivity<ActivityMainBinding> imple
         //setupCrashlytics();
 
         strCurrentTheme = KsPreferenceKeys.getInstance().getCurrentTheme();
+
+
+        //kidsMode  = new SharedPrefHelper(HomeActivity.this).getKidsMode();
+        if (getIntent().getExtras() != null) {
+            kidsMode = getIntent().getExtras().getBoolean( AppConstants.KIDS_MODE);
+
+        }
+
+
         Logger.d("CurrentThemeIs",strCurrentTheme);
         if (KsPreferenceKeys.getInstance().getCurrentTheme().equalsIgnoreCase(AppConstants.LIGHT_THEME)) {
             setTheme(R.style.MyMaterialTheme_Base_Light);
@@ -274,6 +286,9 @@ public class HomeActivity extends BaseBindingActivity<ActivityMainBinding> imple
 
     public void switchToMoreFragment() {
         getBinding().toolbar.llSearchIcon.setVisibility(View.INVISIBLE);
+        Bundle bundle = new Bundle();
+        bundle.putBoolean( AppConstants.KIDS_MODE,kidsMode);
+        moreFragment.setArguments(bundle);
         fragmentManager.beginTransaction().hide(active).show(moreFragment).commit();
         active = moreFragment;
 
@@ -305,6 +320,20 @@ public class HomeActivity extends BaseBindingActivity<ActivityMainBinding> imple
 
     private void UIinitialization() {
         navigation = findViewById(R.id.navigation);
+        if(kidsMode){
+            getBinding().toolbar.rlToolBar.setBackgroundColor(HomeActivity.this.getResources().getColor(R.color.blue));
+            navigation.getMenu().findItem(R.id.navigation_originals).setVisible(false);
+            navigation.getMenu().findItem(R.id.navigation_premium).setVisible(false);
+            navigation.getMenu().findItem(R.id.navigation_sinetron).setVisible(false);
+
+        }
+        else {
+            getBinding().toolbar.rlToolBar.setBackgroundColor(HomeActivity.this.getResources().getColor(R.color.black));
+            navigation.getMenu().findItem(R.id.navigation_originals).setVisible(true);
+            navigation.getMenu().findItem(R.id.navigation_premium).setVisible(true);
+            navigation.getMenu().findItem(R.id.navigation_sinetron).setVisible(true);
+        }
+
         removeNavigationShiftMode(navigation);
         if (active instanceof HomeFragment) {
             navigation.getMenu().findItem(R.id.navigation_home).setChecked(true);
@@ -319,6 +348,7 @@ public class HomeActivity extends BaseBindingActivity<ActivityMainBinding> imple
     @Override
     protected void onResume() {
         super.onResume();
+        Log.e("onResume","onResume");
         AppCommonMethod.resetFilter(HomeActivity.this);
         if (preference == null)
             preference = KsPreferenceKeys.getInstance();
@@ -331,14 +361,23 @@ public class HomeActivity extends BaseBindingActivity<ActivityMainBinding> imple
     @Override
     protected void onPause() {
         super.onPause();
+        Log.e("PAUSE","PAUSE");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.e("onStop","onStop");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Log.e("onDestroy","onDestroy");
         if (preference.getAppPrefIsRestoreState()) {
             preference.setAppPrefIsRestoreState(false);
         }
+
     }
 
 
@@ -408,5 +447,8 @@ public class HomeActivity extends BaseBindingActivity<ActivityMainBinding> imple
         snackbar.setActionTextColor(getResources().getColor(R.color.moretitlecolor));
         snackbar.show();
     }
+
+
+
 }
 

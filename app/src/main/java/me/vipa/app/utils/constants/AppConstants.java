@@ -225,6 +225,7 @@ public interface AppConstants {
     int PAGE_SIZE = 20;
     String BUNDLE_ASSET_TYPE = "assetType";
     String BUNDLE_CURRENT_ASSET_ID = "currentAssetId";
+    String KIDS_MODE = "KIDS_MODE";
 
     enum UserLoginType {
         Manual,

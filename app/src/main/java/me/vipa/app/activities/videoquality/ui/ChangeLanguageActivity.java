@@ -176,7 +176,7 @@ public class ChangeLanguageActivity extends BaseBindingActivity<VideoQualityActi
             } else if (preference.getAppLanguage().equalsIgnoreCase(getString(R.string.language_english_title))) {
                 AppCommonMethod.updateLanguage("en", ChangeLanguageActivity.this);
             }
-            new ActivityLauncher(this).homeScreen(this, HomeActivity.class);
+            new ActivityLauncher(this).homeScreen(this, HomeActivity.class,false);
 
         } else {
 

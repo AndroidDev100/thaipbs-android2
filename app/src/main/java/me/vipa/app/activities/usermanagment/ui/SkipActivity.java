@@ -436,7 +436,7 @@ public class SkipActivity extends BaseBindingActivity<SkipBinding> implements Al
                         }
                     }
                 } else
-                    new ActivityLauncher(SkipActivity.this).homeScreen(SkipActivity.this, HomeActivity.class);
+                    new ActivityLauncher(SkipActivity.this).homeScreen(SkipActivity.this, HomeActivity.class,false);
 
 
             }

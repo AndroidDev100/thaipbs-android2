@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
 
+import me.vipa.app.utils.helpers.SharedPrefHelper;
 import me.vipa.baseClient.BaseDeviceType;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
@@ -67,6 +68,7 @@ public class MvHubPlusApplication extends MultiDexApplication {
         mvHubPlusApplication = this;
         KsPreferenceKeys.getInstance();
         MultiDex.install(this);
+      //  new SharedPrefHelper(mvHubPlusApplication).saveKidsMode("false");
         if (BuildConfig.FLAVOR.equals("dev"))
             Branch.enableTestMode();
         AsyncTask.execute(new Runnable() {
@@ -85,6 +87,8 @@ public class MvHubPlusApplication extends MultiDexApplication {
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         firebaseCrashlyticSetup();
     }
+
+
 
     private void firebaseCrashlyticSetup() {
 
@@ -153,4 +157,7 @@ public class MvHubPlusApplication extends MultiDexApplication {
         }
         return v;
     }
+
+
+
 }

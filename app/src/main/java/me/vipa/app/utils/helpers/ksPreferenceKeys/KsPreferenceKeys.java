@@ -36,6 +36,7 @@ public class KsPreferenceKeys extends SharedPrefHelper {
 
 
 
+
     private static final String DOWNLOADED_ITEM_DELETED = "download_item_deleted";
 
     public static KsPreferenceKeys getInstance(){
@@ -461,5 +462,9 @@ public class KsPreferenceKeys extends SharedPrefHelper {
     public String getFilterApply() {
         return mInstance.getString(FILTER_APPLY, "");
     }
+
+
+
+
 
 }

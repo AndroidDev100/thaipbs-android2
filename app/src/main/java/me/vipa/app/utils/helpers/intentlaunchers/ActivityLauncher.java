@@ -126,8 +126,10 @@ public class ActivityLauncher {
         activity.startActivity(intent);
     }
 
-    public void homeScreen(Activity source, Class<HomeActivity> destination) {
+    public void homeScreen(Activity source, Class<HomeActivity> destination, boolean kidsMode) {
         Intent intent = new Intent(source, destination);
+        intent.putExtra( AppConstants.KIDS_MODE,kidsMode);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         TaskStackBuilder.create(source).addNextIntentWithParentStack(intent).startActivities();
     }
     public void onBoardingScreen(Activity source, Class<OnBoarding> destination) {

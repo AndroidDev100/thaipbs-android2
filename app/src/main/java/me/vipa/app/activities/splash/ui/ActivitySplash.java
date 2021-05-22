@@ -318,7 +318,7 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
                         public void run() {
                             Log.w("branchRedirectors", "-->>non" + "");
                             //This logic is for now will update later
-                        new ActivityLauncher(ActivitySplash.this).homeScreen(ActivitySplash.this, HomeActivity.class);
+                        new ActivityLauncher(ActivitySplash.this).homeScreen(ActivitySplash.this, HomeActivity.class,false);
 
                             finish();
                         }
@@ -332,7 +332,7 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
                             @Override
                             public void run() {
                                 Log.w("branchRedirectors", "-->>non" + "");
-                                new ActivityLauncher(ActivitySplash.this).homeScreen(ActivitySplash.this, HomeActivity.class);
+                                new ActivityLauncher(ActivitySplash.this).homeScreen(ActivitySplash.this, HomeActivity.class,false);
 
                                 finish();
                             }
@@ -720,7 +720,7 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
                         }
                         mLastClickTime = SystemClock.elapsedRealtime();
                         launchSeriesPage(contentType, assestId);
-                        new ActivityLauncher(this).homeScreen(this, HomeActivity.class);
+                        new ActivityLauncher(this).homeScreen(this, HomeActivity.class,false);
                         new ActivityLauncher(ActivitySplash.this).seriesDetailScreen(ActivitySplash.this, SeriesDetailActivity.class, assestId);
                         finish();
                     } else if (contentType.equalsIgnoreCase(AppConstants.ContentType.VIDEO.name()) || contentType.equalsIgnoreCase(MediaTypeConstants.getInstance().getMovie())) {
@@ -729,7 +729,7 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
                         }
                         mLastClickTime = SystemClock.elapsedRealtime();
                         //new ActivityLauncher(ActivitySplash.this).articleScreen(ActivitySplash.this, ArticleActivity.class, assestId, "0", false);
-                        new ActivityLauncher(this).homeScreen(this, HomeActivity.class);
+                        new ActivityLauncher(this).homeScreen(this, HomeActivity.class,false);
                         new ActivityLauncher(ActivitySplash.this).detailScreen(ActivitySplash.this, DetailActivity.class, assestId, "0", false);
                         finish();
                     } else if (contentType.equalsIgnoreCase(MediaTypeConstants.getInstance().getShow())) {
@@ -738,7 +738,7 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
                         }
                         mLastClickTime = SystemClock.elapsedRealtime();
                         //new ActivityLauncher(ActivitySplash.this).articleScreen(ActivitySplash.this, ArticleActivity.class, assestId, "0", false);
-                        new ActivityLauncher(this).homeScreen(this, HomeActivity.class);
+                        new ActivityLauncher(this).homeScreen(this, HomeActivity.class,false);
                         new ActivityLauncher(ActivitySplash.this).detailScreen(ActivitySplash.this, DetailActivity.class, assestId, "0", false);
                         finish();
                     } else if (contentType.equalsIgnoreCase(MediaTypeConstants.getInstance().getLive())) {
@@ -747,7 +747,7 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
                         }
                         mLastClickTime = SystemClock.elapsedRealtime();
                         //new ActivityLauncher(ActivitySplash.this).articleScreen(ActivitySplash.this, ArticleActivity.class, assestId, "0", false);
-                        new ActivityLauncher(this).homeScreen(this, HomeActivity.class);
+                        new ActivityLauncher(this).homeScreen(this, HomeActivity.class,false);
                         new ActivityLauncher(ActivitySplash.this).liveScreenBrightCove(ActivitySplash.this, LiveActivity.class, 0l, assestId, "0", false, SDKConfig.getInstance().getLiveDetailId());
                         finish();
                     } else if (contentType.equalsIgnoreCase(MediaTypeConstants.getInstance().getEpisode())) {
@@ -755,7 +755,7 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
                             return;
                         }
                         mLastClickTime = SystemClock.elapsedRealtime();
-                        new ActivityLauncher(this).homeScreen(this, HomeActivity.class);
+                        new ActivityLauncher(this).homeScreen(this, HomeActivity.class,false);
                         new ActivityLauncher(ActivitySplash.this).episodeScreen(ActivitySplash.this, EpisodeActivity.class, assestId, "0", false);
                         finish();
                     } else if (contentType.equalsIgnoreCase(AppConstants.ContentType.ARTICLE.toString())) {
@@ -763,12 +763,12 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
                             return;
                         }
                         mLastClickTime = SystemClock.elapsedRealtime();
-                        new ActivityLauncher(this).homeScreen(this, HomeActivity.class);
+                        new ActivityLauncher(this).homeScreen(this, HomeActivity.class,false);
                         new ActivityLauncher(ActivitySplash.this).articleScreen(ActivitySplash.this, ArticleActivity.class, assestId, "0", false);
                         finish();
                     }
                 } else {
-                    new ActivityLauncher(this).homeScreen(this, HomeActivity.class);
+                    new ActivityLauncher(this).homeScreen(this, HomeActivity.class,false);
                     finish();
                 }
 

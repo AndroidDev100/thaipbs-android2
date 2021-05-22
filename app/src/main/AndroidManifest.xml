@@ -209,7 +209,6 @@
         <activity
             android:name=".activities.homeactivity.ui.HomeActivity"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
-            android:launchMode="singleTop"
             android:theme="@style/MyMaterialTheme" />
         <activity
             android:name=".activities.search.ui.ActivitySearch"

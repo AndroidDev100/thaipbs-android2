@@ -20,15 +20,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+
 import me.vipa.app.MvHubPlusApplication;
 import me.vipa.app.SDKConfig;
 import me.vipa.app.activities.ManageAccount.UI.ManageAccount;
 import me.vipa.app.activities.OtherApplication.UI.OtherApplication;
 import me.vipa.app.activities.downloads.MyDownloads;
+import me.vipa.app.activities.homeactivity.ui.HomeActivity;
 import me.vipa.app.activities.homeactivity.viewmodel.HomeViewModel;
 import me.vipa.app.activities.notification.ui.NotificationActivity;
+import me.vipa.app.activities.onBoarding.UI.OnBoardingTab;
 import me.vipa.app.activities.profile.ui.ProfileActivityNew;
 import me.vipa.app.activities.redeemcoupon.RedeemCouponActivity;
+import me.vipa.app.activities.search.ui.FilterIconActivity;
 import me.vipa.app.activities.settings.ActivitySettings;
 import me.vipa.app.activities.splash.ui.ActivitySplash;
 import me.vipa.app.activities.usermanagment.ui.ChangePasswordActivity;
@@ -54,9 +58,11 @@ import me.vipa.app.utils.cropImage.helpers.Logger;
 import me.vipa.app.utils.helpers.CheckInternetConnection;
 
 import me.vipa.app.utils.helpers.NetworkConnectivity;
+import me.vipa.app.utils.helpers.SharedPrefHelper;
 import me.vipa.app.utils.helpers.StringUtils;
 import me.vipa.app.utils.helpers.ToastHandler;
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
+
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.google.gson.Gson;
@@ -91,12 +97,14 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
     private String isLogin;
     private List<String> mListVerify;
     private List<String> mListLogin;
+    private List<String> mListKidsMode;
     private AppSyncBroadcast appSyncBroadcast;
     private HomeViewModel viewModel;
     private boolean flagLogIn;
     private boolean flagVerify;
     private long mLastClickTime = 0;
     private MoreFragmentInteraction mListener;
+    private boolean isKidsMode;
 
     @Override
     public FragmentMoreBinding inflateBindingLayout(@NonNull LayoutInflater inflater) {
@@ -149,10 +157,10 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                 clickEvent();
                 //getBinding().titleLayout.setVisibility(View.VISIBLE);
                 //getBinding().ivProfilePic.setVisibility(View.GONE);
-            }else {
+            } else {
                 getBinding().titleLayout.setVisibility(View.VISIBLE);
                 getBinding().ivProfilePic.setVisibility(View.GONE);
-               // getBinding().userNameWords.setVisibility(View.GONE);
+                // getBinding().userNameWords.setVisibility(View.GONE);
 
             }
         }
@@ -171,11 +179,13 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
         isloggedout = false;
         startMoreFragment();
 
+
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        Log.e("ONPAUSE FRAGMENT","FRAGMENT");
         try {
             LocalBroadcastManager.getInstance(Objects.requireNonNull(getActivity())).unregisterReceiver(appSyncBroadcast);
         } catch (IllegalArgumentException e) {
@@ -187,6 +197,24 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
         }
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.e("onStop FRAGMENT","onStopFRAGMENT");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.e("onDestroyViewFRAGMENT","onDestroyViewFRAGMENT");
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Log.e("onDetachFRAGMENT","onDetachFRAGMENT");
+    }
+
     private void modelCall() {
 
         viewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(HomeViewModel.class);
@@ -194,6 +222,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
         String[] label1 = getActivity().getResources().getStringArray(R.array.more_with_verify);
         String[] label2 = getActivity().getResources().getStringArray(R.array.more_with_login);
         String[] label3 = getActivity().getResources().getStringArray(R.array.more_logout);
+        String[] label4 = getActivity().getResources().getStringArray(R.array.more_kids_mode);
 
         mListVerify = new ArrayList<>();
         mListVerify.addAll(Arrays.asList(label1));
@@ -201,8 +230,20 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
         mListLogin = new ArrayList<>();
         mListLogin.addAll(Arrays.asList(label2));
 
+        mListKidsMode = new ArrayList<>();
+        mListKidsMode.addAll(Arrays.asList(label4));
+
         preference = KsPreferenceKeys.getInstance();
         isLogin = preference.getAppPrefLoginStatus();
+
+
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            isKidsMode=bundle.getBoolean( AppConstants.KIDS_MODE);
+
+
+        }
+
         if (isLogin.equalsIgnoreCase(AppConstants.UserStatus.Login.toString())) {
             String tempResponse = preference.getAppPrefUser();
             if (!StringUtils.isNullOrEmptyOrZero(tempResponse)) {
@@ -218,19 +259,27 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
 //            getBinding().usernameTv.setVisibility(View.VISIBLE);
             getBinding().usernameTv.setVisibility(View.GONE);
 
-            setUIComponets(mListLogOut, false);
+            if(isKidsMode){
+                setUIComponets(mListKidsMode, false,isKidsMode);
+            }
+            else {
+                setUIComponets(mListLogOut, false,isKidsMode);
+
+            }
+
+
         }
     }
 
-    private void setUIComponets(List<String> mList, boolean isLogin) {
+    private void setUIComponets(List<String> mList, boolean isLogin,boolean isKidsMode) {
 
-        MoreListAdapter adapter = new MoreListAdapter(getActivity(), mList, MoreFragment.this, isLogin);
+        MoreListAdapter adapter = new MoreListAdapter(getActivity(), mList, MoreFragment.this, isLogin,isKidsMode);
         getBinding().recyclerViewMore.hasFixedSize();
         getBinding().recyclerViewMore.setNestedScrollingEnabled(false);
         getBinding().recyclerViewMore.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
         getBinding().recyclerViewMore.setAdapter(adapter);
 
-      //  getBinding().loginBtn.setOnClickListener(v -> );
+        //  getBinding().loginBtn.setOnClickListener(v -> );
         getBinding().loginBtn.setOnClickListener(v -> {
             mListener.onLoginClicked();
         });
@@ -257,14 +306,14 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                         }
                     }
                 });
-            }else {
+            } else {
                 getBinding().titleLayout.setVisibility(View.VISIBLE);
                 getBinding().ivProfilePic.setVisibility(View.GONE);
             }
 
 
-        }catch (Exception ignored){
-            Log.w("ProfileClick",ignored.toString());
+        } catch (Exception ignored) {
+            Log.w("ProfileClick", ignored.toString());
         }
 
     }
@@ -273,7 +322,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
         try {
             preference.setAppPrefUserName(String.valueOf(userProfileResponse.getData().getName()));
             preference.setAppPrefUserEmail(String.valueOf(userProfileResponse.getData().getEmail()));
-         //   getBinding().userNameWords.setText(AppCommonMethod.getUserName(preference.getAppPrefUserName()));
+            //   getBinding().userNameWords.setText(AppCommonMethod.getUserName(preference.getAppPrefUserName()));
             getBinding().usernameTv.setText(preference.getAppPrefUserName());
             getBinding().titleLayout.setVisibility(View.VISIBLE);
             getBinding().ivProfilePic.setVisibility(View.GONE);
@@ -281,10 +330,10 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
             Gson gson = new Gson();
             String userProfileData = gson.toJson(userProfileResponse);
             KsPreferenceKeys.getInstance().setUserProfileData(userProfileData);
-            Log.w("savedata2",KsPreferenceKeys.getInstance().getUserProfileData());
+            Log.w("savedata2", KsPreferenceKeys.getInstance().getUserProfileData());
             String json = KsPreferenceKeys.getInstance().getUserProfileData();
             UserProfileResponse newObject = gson.fromJson(json, UserProfileResponse.class);
-            Log.w("savedata3",newObject.toString());
+            Log.w("savedata3", newObject.toString());
 
 
         } catch (Exception e) {
@@ -294,21 +343,22 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
 
     private String imageUrlId = "";
     private String via = "";
+
     private void setUserImage(UserProfileResponse userProfileResponse) {
         try {
             if (userProfileResponse.getData().getProfilePicURL() != null && userProfileResponse.getData().getProfilePicURL() != "") {
-               getBinding().titleLayout.setVisibility(View.GONE);
+                getBinding().titleLayout.setVisibility(View.GONE);
                 getBinding().ivProfilePic.setVisibility(View.VISIBLE);
                 imageUrlId = userProfileResponse.getData().getProfilePicURL().toString();
                 via = "Gallery";
 
                 String firstFiveChar = imageUrlId.substring(0, 5);
-                if (firstFiveChar.equalsIgnoreCase("https")){
+                if (firstFiveChar.equalsIgnoreCase("https")) {
                     Glide.with(getActivity()).load(userProfileResponse.getData().getProfilePicURL())
                             .placeholder(R.drawable.ic_person_24dp)
                             .error(R.drawable.ic_person_24dp)
                             .into(getBinding().ivProfilePic);
-                }else {
+                } else {
 
                     Glide.with(getActivity()).load(SDKConfig.getInstance().getCLOUD_FRONT_BASE_URL() + SDKConfig.getInstance().getProfileFolder() + userProfileResponse.getData().getProfilePicURL())
                             .placeholder(R.drawable.ic_person_24dp)
@@ -345,7 +395,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                 }
             }
 
-        }catch (Exception ignored){
+        } catch (Exception ignored) {
 
         }
     }
@@ -364,8 +414,8 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
               /*  if (isFacebook.equalsIgnoreCase(AppConstants.UserLoginType.FbLogin.toString())) {
 
                 } else {*/
-                    new ActivityLauncher(getActivity()).changePassword(getActivity(), ChangePasswordActivity.class);
-               /* }*/
+                new ActivityLauncher(getActivity()).changePassword(getActivity(), ChangePasswordActivity.class);
+                /* }*/
 
             else
                 mListener.onLoginClicked();
@@ -380,15 +430,15 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
             Objects.requireNonNull(getActivity()).startActivity(new Intent(getActivity(), HelpActivity.class).putExtra("type", "2"));
         } else if (caption.equals(getString(R.string.contact_us))) {
             Objects.requireNonNull(getActivity()).startActivity(new Intent(getActivity(), HelpActivity.class).putExtra("type", "3"));
-        }else if (caption.equals(getString(R.string.faq))) {
+        } else if (caption.equals(getString(R.string.faq))) {
             Objects.requireNonNull(getActivity()).startActivity(new Intent(getActivity(), HelpActivity.class).putExtra("type", "4"));
-        }else if (caption.equals(getString(R.string.about_us))) {
+        } else if (caption.equals(getString(R.string.about_us))) {
             Objects.requireNonNull(getActivity()).startActivity(new Intent(getActivity(), HelpActivity.class).putExtra("type", "5"));
-        }else if (caption.equals(getString(R.string.feedback))) {
+        } else if (caption.equals(getString(R.string.feedback))) {
             Objects.requireNonNull(getActivity()).startActivity(new Intent(getActivity(), HelpActivity.class).putExtra("type", "6"));
         } else if (caption.equals(getString(R.string.other_application))) {
             Objects.requireNonNull(getActivity()).startActivity(new Intent(getActivity(), HelpActivity.class).putExtra("type", "7"));
-          //  new ActivityLauncher(getActivity()).otherActivity(getActivity(), OtherApplication.class);
+            //  new ActivityLauncher(getActivity()).otherActivity(getActivity(), OtherApplication.class);
         } else if (caption.equals(getString(R.string.my_watchlist))) {
 
             if (loginStatus)
@@ -396,15 +446,26 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
             else
                 mListener.onLoginClicked();
 
-        }
-        else if (caption.equals(getString(R.string.my_download))) {
+        } else if (caption.equals(getString(R.string.my_download))) {
 
             if (loginStatus)
                 new ActivityLauncher(getActivity()).launchMyDownloads();
             else
                 mListener.onLoginClicked();
 
+        } else if (caption.equals(getString(R.string.vipa_kids))) {
+            //new SharedPrefHelper(getActivity()).saveKidsMode("true");
+            new ActivityLauncher(getActivity()).homeScreen(getActivity(), HomeActivity.class,true);
+
+
         }
+
+        else if (caption.equals(getString(R.string.leave_kids))) {
+           // new SharedPrefHelper(getActivity()).saveKidsMode("false");
+            new ActivityLauncher(getActivity()).homeScreen(getActivity(), HomeActivity.class,false);
+
+        }
+
         else if (caption.equals(getString(R.string.my_history))) {
             if (loginStatus)
                 new ActivityLauncher(getActivity()).watchHistory(getActivity(), WatchListActivity.class, Objects.requireNonNull(getActivity()).getResources().getString(R.string.my_history), true);
@@ -428,7 +489,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                 if (NetworkConnectivity.isOnline(getActivity())) {
                     Intent intent = new Intent(getActivity(), MemberShipPlanActivity.class);
                     startActivity(intent);
-                }else {
+                } else {
                     new ToastHandler(getActivity()).show(getResources().getString(R.string.no_connection));
                 }
 
@@ -446,8 +507,8 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
 
         } else if (caption.equalsIgnoreCase(getActivity().getResources().getString(R.string.setting_title))) {
 
-                Intent intent = new Intent(getActivity(), ActivitySettings.class);
-                startActivity(intent);
+            Intent intent = new Intent(getActivity(), ActivitySettings.class);
+            startActivity(intent);
         }
 
     }
@@ -505,7 +566,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                 dismissLoading(getBinding().progressBar, getActivity());
                 String strCurrentTheme = KsPreferenceKeys.getInstance().getCurrentTheme();
                 String strCurrentLanguage = KsPreferenceKeys.getInstance().getAppLanguage();
-                int languagePosition=KsPreferenceKeys.getInstance().getAppPrefLanguagePos();
+                int languagePosition = KsPreferenceKeys.getInstance().getAppPrefLanguagePos();
                 preference.setAppPrefRegisterStatus(AppConstants.UserStatus.Logout.toString());
                 preference.clear();
                 KsPreferenceKeys.getInstance().setCurrentTheme(strCurrentTheme);
@@ -516,13 +577,14 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                 getBinding().titleLayout.setVisibility(View.VISIBLE);
                 getBinding().ivProfilePic.setVisibility(View.GONE);
                 deleteDownloadedVideos();
+
                 //TODO Handle Content Preference Data On Logout
-               // AppCommonMethod.getConfigResponse().getData().getAppConfig().setContentPreference(AppCommonMethod.getConfigResponse().getData().getAppConfig().getContentPreference());
+                // AppCommonMethod.getConfigResponse().getData().getAppConfig().setContentPreference(AppCommonMethod.getConfigResponse().getData().getAppConfig().getContentPreference());
                 modelCall();
-                Logger.w("currentLang-->>",strCurrentLanguage);
-                if (strCurrentLanguage.equalsIgnoreCase("Thai") || KsPreferenceKeys.getInstance().getAppLanguage().equalsIgnoreCase("हिंदी") ){
+                Logger.w("currentLang-->>", strCurrentLanguage);
+                if (strCurrentLanguage.equalsIgnoreCase("Thai") || KsPreferenceKeys.getInstance().getAppLanguage().equalsIgnoreCase("हिंदी")) {
                     AppCommonMethod.updateLanguage("th", MvHubPlusApplication.getInstance());
-                } else if (strCurrentLanguage.equalsIgnoreCase("English")){
+                } else if (strCurrentLanguage.equalsIgnoreCase("English")) {
                     AppCommonMethod.updateLanguage("en", MvHubPlusApplication.getInstance());
                 }
                 //AppCommonMethod.updateLanguage(strCurrentLanguage, getActivity());
@@ -545,12 +607,12 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
 
     private void deleteDownloadedVideos() {
         try {
-            if (getActivity()!=null){
+            if (getActivity() != null) {
                 DownloadHelper downloadHelper = new DownloadHelper(getActivity());
                 downloadHelper.deleteAllVideos(getActivity());
             }
 
-        }catch (Exception ignored){
+        } catch (Exception ignored) {
 
         }
     }
@@ -569,7 +631,6 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                     Gson gson = new Gson();
                     String json = gson.toJson(cl);
                     AppCommonMethod.urlPoints = /*AppConstants.PROFILE_URL +*/ response.body().getData().getImageTransformationEndpoint();
-
                     ksPreferenceKeys.setAppPrefLastConfigHit(String.valueOf(System.currentTimeMillis()));
                     ksPreferenceKeys.setAppPrefLoginStatus(AppConstants.UserStatus.Logout.toString());
                     ksPreferenceKeys.setAppPrefAccessToken("");
@@ -609,9 +670,9 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
 
     @Override
     public void onFinishDialog() {
-        if (KsPreferenceKeys.getInstance().getAppLanguage().equalsIgnoreCase("Thai") || KsPreferenceKeys.getInstance().getAppLanguage().equalsIgnoreCase("हिंदी") ){
+        if (KsPreferenceKeys.getInstance().getAppLanguage().equalsIgnoreCase("Thai") || KsPreferenceKeys.getInstance().getAppLanguage().equalsIgnoreCase("हिंदी")) {
             AppCommonMethod.updateLanguage("th", MvHubPlusApplication.getInstance());
-        } else if (KsPreferenceKeys.getInstance().getAppLanguage().equalsIgnoreCase("English")){
+        } else if (KsPreferenceKeys.getInstance().getAppLanguage().equalsIgnoreCase("English")) {
             AppCommonMethod.updateLanguage("en", MvHubPlusApplication.getInstance());
         }
         if (flagLogIn) {
@@ -619,14 +680,14 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
             hitApiLogout();
 
             flagLogIn = false;
-          //  getBinding().userNameWords.setVisibility(View.GONE);
+            //  getBinding().userNameWords.setVisibility(View.GONE);
         } else if (flagVerify) {
             hitApiVerifyUser();
             flagVerify = false;
         } else if (isloggedout) {
             hitApiLogout();
 
-          //  getBinding().userNameWords.setVisibility(View.GONE);
+            //  getBinding().userNameWords.setVisibility(View.GONE);
             isHomeDirect = true;
             isloggedout = false;
 
@@ -639,7 +700,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
             AppUserModel dataModel = new Gson().fromJson(tempResponse, AppUserModel.class);
             getBinding().loginBtn.setVisibility(View.GONE);
 
-         //   getBinding().userNameWords.setText(AppCommonMethod.getUserName(dataModel.getName()));
+            //   getBinding().userNameWords.setText(AppCommonMethod.getUserName(dataModel.getName()));
             getBinding().usernameTv.setText(dataModel.getName());
             if (!StringUtils.isNullOrEmpty(dataModel.getProfilePicURL()))
                 try {
@@ -654,9 +715,22 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                     setUIComponets(mListLogin, true);
                 } else
                     setUIComponets(mListVerify, true);*/
-                setUIComponets(mListLogin, true);
+                if(isKidsMode){
+                    setUIComponets(mListKidsMode, true,isKidsMode);
+                }
+                else {
+                    setUIComponets(mListLogin, true,isKidsMode);
+                }
+
             } else {
-                setUIComponets(mListLogin, true);
+                if(isKidsMode){
+                    setUIComponets(mListKidsMode, true,isKidsMode);
+                }
+                else {
+                    setUIComponets(mListLogin, true,isKidsMode);
+                }
+
+
             }
 
         }
@@ -670,9 +744,18 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
             getBinding().loginBtn.setVisibility(View.GONE);
             getBinding().usernameTv.setVisibility(View.VISIBLE);
 
-           // getBinding().userNameWords.setText(AppCommonMethod.getUserName(preference.getAppPrefUserName()));
+            // getBinding().userNameWords.setText(AppCommonMethod.getUserName(preference.getAppPrefUserName()));
             getBinding().usernameTv.setText(preference.getAppPrefUserName());
-            setUIComponets(mListLogin, true);
+
+            if(isKidsMode){
+                setUIComponets(mListKidsMode, true,isKidsMode);
+
+            }
+            else {
+                setUIComponets(mListLogin, true,isKidsMode);
+
+            }
+
            /* if (ddModel.isVerified()) {
                 setUIComponets(mListLogin, true);
             } else
@@ -723,5 +806,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
     public interface MoreFragmentInteraction {
         void onLoginClicked();
     }
+
+
 
 }

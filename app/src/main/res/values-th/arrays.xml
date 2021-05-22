@@ -6,6 +6,7 @@
         <item>รายการโปรดของฉัน</item>
         <item>ประวัติการรับชม</item>
         <item>ดาวน์โหลดของฉัน</item>
+        <item>VIPA Kids</item>
         <item>ติดต่อเรา</item>
         <item>คำถามที่พบบ่อย</item>
         <item>เกี่ยวกับเรา</item>
@@ -48,6 +49,7 @@
         <item>รายการโปรดของฉัน</item>
         <item>ประวัติการรับชม</item>
         <item>ดาวน์โหลดของฉัน</item>
+        <item>VIPA Kids</item>
         <item>ติดต่อเรา</item>
         <item>คำถามที่พบบ่อย</item>
         <item>เกี่ยวกับเรา</item>
@@ -58,7 +60,22 @@
         <item>นโยบายความเป็นส่วนตัว</item>
 
 
+
+
     </string-array>
+    <string-array name="more_kids_mode">
+        <item>Leave Kids Mode</item>
+        <item>รายการโปรดของฉัน</item>
+        <item>ดาวน์โหลดของฉัน</item>
+        <item>ติดต่อเรา</item>
+        <item>คำถามที่พบบ่อย</item>
+        <item>เกี่ยวกับเรา</item>
+        <item>ข้อเสนอแนะ</item>
+        <item>การตั้งค่า</item>
+        <item>ออกจากระบบ</item>
+    </string-array>
+
+
 
     <string-array name="gender_array">
         <item>เพศ</item>
