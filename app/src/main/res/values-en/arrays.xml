@@ -66,9 +66,10 @@
         <item>Frequently Ask Questions</item>
         <item>About VIPA</item>
         <item>Feedback</item>
-        <item>Settings</item>
-        <item>Logout</item>
+        <item>Other Applications</item>
+
     </string-array>
+
     <string-array name="gender_array">
         <item>Gender</item>
         <item>MALE</item>

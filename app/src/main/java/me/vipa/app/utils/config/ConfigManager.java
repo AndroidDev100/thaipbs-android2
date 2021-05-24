@@ -51,23 +51,23 @@ public class ConfigManager {
         this.callBack = listener;
         callBack.onStart();
         boolean _date = verifyDmsDate(KsPreferenceKeys.getInstance().getString("DMS_Date", "mDate"));
-        Logger.w("configResponse", _date + "");
+       // Logger.w("configResponse", _date + "");
         if (_date) {
             endpoint.getConfig(SDKConfig.getInstance().CONFIG_VERSION).enqueue(new Callback<ConfigBean>() {
                 @Override
                 public void onResponse(Call<ConfigBean> call, Response<ConfigBean> response) {
-                    Logger.w("configResponse", response + "");
+                   // Logger.w("configResponse", response + "");
                     if (response.isSuccessful()) {
 
-                        Logger.e("configResponse", response.body().getData() + "");
+                       // Logger.e("configResponse", response.body().getData() + "");
 
                         Gson gson = new Gson();
                         String json = gson.toJson(response.body());
-                        Logger.e("configResponse", json + "");
+                       // Logger.e("configResponse", json + "");
                         KsPreferenceKeys.getInstance().setString("DMS_Response", json);
                         KsPreferenceKeys.getInstance().setString("DMS_Date", "" + System.currentTimeMillis());
                         callBack.onSuccess(response.body());
-                        Log.w("redirectionss", "inone");
+                      //  Log.w("redirectionss", "inone");
 
                     } else {
 

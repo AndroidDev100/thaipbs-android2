@@ -140,6 +140,10 @@ public class SDKConfig {
         return AppCommonMethod.getHomeTabId(configBean,"LIVETV DETAIL");
     }
 
+    public String getKidsModeId() {
+        return AppCommonMethod.getHomeTabId(configBean,"VIPA KIDS");
+    }
+
     public String getPopularSearchId() {
         return configBean == null ? "" : configBean.getData().getAppConfig().getPopularSearchId().toString();
     }

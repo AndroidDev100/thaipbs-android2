@@ -115,6 +115,8 @@ public class TabsBaseFragment<T extends HomeBaseViewModel> extends BaseBindingFr
                     tabId = SDKConfig.getInstance().getFirstTabId();
                 }
 
+
+
             }else {
                 if (viewModel instanceof HomeFragmentViewModel){
                     tabId = AppConstants.HOME_ENVEU;

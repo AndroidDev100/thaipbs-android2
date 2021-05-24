@@ -224,6 +224,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
         String[] label3 = getActivity().getResources().getStringArray(R.array.more_logout);
         String[] label4 = getActivity().getResources().getStringArray(R.array.more_kids_mode);
 
+
         mListVerify = new ArrayList<>();
         mListVerify.addAll(Arrays.asList(label1));
         List<String> mListLogOut = new ArrayList<>(Arrays.asList(label3));
@@ -232,6 +233,12 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
 
         mListKidsMode = new ArrayList<>();
         mListKidsMode.addAll(Arrays.asList(label4));
+
+
+
+
+
+
 
         preference = KsPreferenceKeys.getInstance();
         isLogin = preference.getAppPrefLoginStatus();

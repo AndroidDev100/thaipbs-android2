@@ -1,4 +1,4 @@
-package me.vipa.app.activities.homeactivity.ui;
+ package me.vipa.app.activities.homeactivity.ui;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -206,8 +206,6 @@ public class HomeActivity extends BaseBindingActivity<ActivityMainBinding> imple
             kidsMode = getIntent().getExtras().getBoolean( AppConstants.KIDS_MODE);
 
         }
-
-
         Logger.d("CurrentThemeIs",strCurrentTheme);
         if (KsPreferenceKeys.getInstance().getCurrentTheme().equalsIgnoreCase(AppConstants.LIGHT_THEME)) {
             setTheme(R.style.MyMaterialTheme_Base_Light);
@@ -322,13 +320,19 @@ public class HomeActivity extends BaseBindingActivity<ActivityMainBinding> imple
         navigation = findViewById(R.id.navigation);
         if(kidsMode){
             getBinding().toolbar.rlToolBar.setBackgroundColor(HomeActivity.this.getResources().getColor(R.color.blue));
+            getBinding().toolbar.homeIcon.setBackground(HomeActivity.this.getResources().getDrawable(R.drawable.vipa_logo_kids));
+            getBinding().toolbar.homeIcon.getLayoutParams().height = 100;
+            getBinding().toolbar.homeIcon.requestLayout();
+
             navigation.getMenu().findItem(R.id.navigation_originals).setVisible(false);
             navigation.getMenu().findItem(R.id.navigation_premium).setVisible(false);
             navigation.getMenu().findItem(R.id.navigation_sinetron).setVisible(false);
-
         }
         else {
             getBinding().toolbar.rlToolBar.setBackgroundColor(HomeActivity.this.getResources().getColor(R.color.black));
+            getBinding().toolbar.homeIcon.setBackground(HomeActivity.this.getResources().getDrawable(R.drawable.vipalogo180));
+            getBinding().toolbar.homeIcon.getLayoutParams().height = 80;
+            getBinding().toolbar.homeIcon.requestLayout();
             navigation.getMenu().findItem(R.id.navigation_originals).setVisible(true);
             navigation.getMenu().findItem(R.id.navigation_premium).setVisible(true);
             navigation.getMenu().findItem(R.id.navigation_sinetron).setVisible(true);
