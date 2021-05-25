@@ -3,6 +3,7 @@ package me.vipa.app.beanModel;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -13,7 +14,9 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+
 import me.vipa.app.utils.helpers.downloads.room.DownloadModel;
+import me.vipa.app.utils.helpers.ksPreferenceKeys.KidsModeSinglton;
 import me.vipa.enums.LandingPageType;
 import me.vipa.enums.Layouts;
 import me.vipa.enums.ListingLayoutType;
@@ -77,6 +80,7 @@ public class TabsBaseFragment<T extends HomeBaseViewModel> extends BaseBindingFr
     private List<RailCommonData> railCommonDataList = new ArrayList<>();
     private CommonAdapterNew adapterNew;
     private long mLastClickTime = 0;
+    private   boolean kidsMode;
 
     protected void setViewModel(Class<? extends HomeBaseViewModel> viewModelClass) {
         viewModel = (T) ViewModelProviders.of(this).get(viewModelClass);
@@ -103,7 +107,15 @@ public class TabsBaseFragment<T extends HomeBaseViewModel> extends BaseBindingFr
                     && AppCommonMethod.getConfigResponse().getData().getAppConfig()!=null
                     && AppCommonMethod.getConfigResponse().getData().getAppConfig().getNavScreens()!=null){
                 if (viewModel instanceof HomeFragmentViewModel) {
-                    tabId = SDKConfig.getInstance().getFirstTabId();
+
+                    if(kidsMode){
+                        tabId = SDKConfig.getInstance().getKidsModeId();
+                    }
+                    else {
+                        tabId = SDKConfig.getInstance().getFirstTabId();
+
+                    }
+
                 }
                 else if (viewModel instanceof NewsFragmentViewModel) {
                     tabId = SDKConfig.getInstance().getSecondTabId();
@@ -115,11 +127,17 @@ public class TabsBaseFragment<T extends HomeBaseViewModel> extends BaseBindingFr
                     tabId = SDKConfig.getInstance().getFirstTabId();
                 }
 
-
-
             }else {
+
                 if (viewModel instanceof HomeFragmentViewModel){
-                    tabId = AppConstants.HOME_ENVEU;
+                    if(kidsMode){
+                        tabId = SDKConfig.getInstance().getKidsModeId();
+                    }
+                    else {
+                        tabId = AppConstants.HOME_ENVEU;
+
+                    }
+
                 }
                 else if (viewModel instanceof NewsFragmentViewModel) {
                     tabId = AppConstants.ORIGINAL_ENVEU;
@@ -407,6 +425,9 @@ public class TabsBaseFragment<T extends HomeBaseViewModel> extends BaseBindingFr
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+         kidsMode   = KidsModeSinglton.getInstance().aBoolean;
+        Log.e("BolleanTABBASEFRAGMENT ", String.valueOf(kidsMode));
         modelCall();
         viewModel.resetObject();
     }
@@ -559,6 +580,12 @@ public class TabsBaseFragment<T extends HomeBaseViewModel> extends BaseBindingFr
             }
         }
     }
+
+    public String getKidId( String s){
+        return s;
+    }
+
+
 
 
 }

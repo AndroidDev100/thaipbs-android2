@@ -222,7 +222,8 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
         String[] label1 = getActivity().getResources().getStringArray(R.array.more_with_verify);
         String[] label2 = getActivity().getResources().getStringArray(R.array.more_with_login);
         String[] label3 = getActivity().getResources().getStringArray(R.array.more_logout);
-        String[] label4 = getActivity().getResources().getStringArray(R.array.more_kids_mode);
+        String[] label4 = getActivity().getResources().getStringArray(R.array.more_kids_mode_login);
+        String[] label5 = getActivity().getResources().getStringArray(R.array.more_kids_mode_logout);
 
 
         mListVerify = new ArrayList<>();
@@ -230,26 +231,19 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
         List<String> mListLogOut = new ArrayList<>(Arrays.asList(label3));
         mListLogin = new ArrayList<>();
         mListLogin.addAll(Arrays.asList(label2));
-
-        mListKidsMode = new ArrayList<>();
-        mListKidsMode.addAll(Arrays.asList(label4));
-
-
-
-
-
-
-
         preference = KsPreferenceKeys.getInstance();
         isLogin = preference.getAppPrefLoginStatus();
-
-
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            isKidsMode=bundle.getBoolean( AppConstants.KIDS_MODE);
-
+        isKidsMode  = new SharedPrefHelper(getActivity()).getKidsMode();
+        mListKidsMode = new ArrayList<>();
+        if(isLogin.equalsIgnoreCase(AppConstants.UserStatus.Login.toString())){
+            mListKidsMode.addAll(Arrays.asList(label4));
+        }
+        else {
+            mListKidsMode.addAll(Arrays.asList(label5));
 
         }
+
+
 
         if (isLogin.equalsIgnoreCase(AppConstants.UserStatus.Login.toString())) {
             String tempResponse = preference.getAppPrefUser();
@@ -461,15 +455,15 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                 mListener.onLoginClicked();
 
         } else if (caption.equals(getString(R.string.vipa_kids))) {
-            //new SharedPrefHelper(getActivity()).saveKidsMode("true");
-            new ActivityLauncher(getActivity()).homeScreen(getActivity(), HomeActivity.class,true);
+            new SharedPrefHelper(getActivity()).saveKidsMode(true);
+            new ActivityLauncher(getActivity()).homeScreen(getActivity(), HomeActivity.class);
 
 
         }
 
         else if (caption.equals(getString(R.string.leave_kids))) {
-           // new SharedPrefHelper(getActivity()).saveKidsMode("false");
-            new ActivityLauncher(getActivity()).homeScreen(getActivity(), HomeActivity.class,false);
+            new SharedPrefHelper(getActivity()).saveKidsMode(false);
+            new ActivityLauncher(getActivity()).homeScreen(getActivity(), HomeActivity.class);
 
         }
 

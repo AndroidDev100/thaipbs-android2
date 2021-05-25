@@ -138,7 +138,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
         getBinding().toolbar.titleSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new ActivityLauncher(SignUpActivity.this).homeScreen(SignUpActivity.this, HomeActivity.class,false);
+                new ActivityLauncher(SignUpActivity.this).homeScreen(SignUpActivity.this, HomeActivity.class);
             }
         });
 
@@ -648,7 +648,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
     public void onBackPressed() {
         super.onBackPressed();
         if(loginCallingFrom.equalsIgnoreCase("OnBoarding")){
-            new ActivityLauncher(SignUpActivity.this).homeScreen(SignUpActivity.this, HomeActivity.class,false);
+            new ActivityLauncher(SignUpActivity.this).homeScreen(SignUpActivity.this, HomeActivity.class);
         }else {
             new ActivityLauncher(SignUpActivity.this).loginActivity(SignUpActivity.this, LoginActivity.class);
         }

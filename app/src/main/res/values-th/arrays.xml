@@ -2,11 +2,11 @@
 <resources>
 
     <string-array name="more_with_login">
-        <item>VIPA Kids</item>
         <item>จัดการโปรไฟล์</item>
         <item>รายการโปรดของฉัน</item>
         <item>ประวัติการรับชม</item>
         <item>ดาวน์โหลดของฉัน</item>
+        <item>VIPA Kids</item>
         <item>ติดต่อเรา</item>
         <item>คำถามที่พบบ่อย</item>
         <item>เกี่ยวกับเรา</item>
@@ -45,11 +45,11 @@
     </string-array>
 
     <string-array name="more_logout">
-        <item>VIPA Kids</item>
         <item>จัดการโปรไฟล์</item>
         <item>รายการโปรดของฉัน</item>
         <item>ประวัติการรับชม</item>
         <item>ดาวน์โหลดของฉัน</item>
+        <item>VIPA Kids</item>
         <item>ติดต่อเรา</item>
         <item>คำถามที่พบบ่อย</item>
         <item>เกี่ยวกับเรา</item>
@@ -58,16 +58,20 @@
         <item>การตั้งค่า</item>
         <item>ข้อกำหนดและเงื่อนไข</item>
         <item>นโยบายความเป็นส่วนตัว</item>
-
-
-
-
     </string-array>
-    <string-array name="more_kids_mode">
+    <string-array name="more_kids_mode_login">
         <item>ออกจากคิดส์โหมด</item>
         <item>รายการโปรดของฉัน</item>
         <item>ประวัติการรับชม</item>
         <item>ดาวน์โหลดของฉัน</item>
+        <item>ติดต่อเรา</item>
+        <item>คำถามที่พบบ่อย</item>
+        <item>เกี่ยวกับเรา</item>
+        <item>ข้อเสนอแนะ</item>
+        <item>แอปพลิเคชันอื่น ๆ</item>
+    </string-array>
+    <string-array name="more_kids_mode_logout">
+        <item>ออกจากคิดส์โหมด</item>
         <item>ติดต่อเรา</item>
         <item>คำถามที่พบบ่อย</item>
         <item>เกี่ยวกับเรา</item>

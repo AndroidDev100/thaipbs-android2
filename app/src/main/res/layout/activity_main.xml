@@ -43,19 +43,8 @@
                 app:itemTextColor="?attr/menuItemTextSelector"
                 app:labelVisibilityMode="unlabeled"
                 app:menu="@menu/navigation" />
-            <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:id="@+id/navigation_kids"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:layout_alignParentBottom="true"
-                android:background="?attr/bottomNavigationBackground"
-                android:theme="@style/Widget.BottomNavigationView"
-                app:itemTextAppearanceActive="@font/sukhumvittadmai_medium"
-                app:itemIconTint="?attr/menuItemSelector"
-                app:itemTextColor="?attr/menuItemTextSelector"
-                app:labelVisibilityMode="unlabeled"
-                app:menu="@menu/navigation" />
+
+
         </RelativeLayout>
     </LinearLayout>
     </FrameLayout>

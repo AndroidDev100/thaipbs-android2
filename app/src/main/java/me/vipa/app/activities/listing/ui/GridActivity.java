@@ -196,7 +196,7 @@ public class GridActivity extends BaseBindingActivity<ListingActivityBinding> im
             if (loginStatus) {
                 getBinding().toolbar.screenText.setText(title + " " + "for" + " " + KsPreferenceKeys.getInstance().getAppPrefUserName());
             }else {
-                new ActivityLauncher(GridActivity.this).homeScreen(GridActivity.this, HomeActivity.class,false);
+                new ActivityLauncher(GridActivity.this).homeScreen(GridActivity.this, HomeActivity.class);
             }
         }else {
             getBinding().toolbar.screenText.setText(title);
@@ -348,7 +348,7 @@ public class GridActivity extends BaseBindingActivity<ListingActivityBinding> im
                                         runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {
-                                                new ActivityLauncher(GridActivity.this).homeScreen(GridActivity.this, HomeActivity.class,false);
+                                                new ActivityLauncher(GridActivity.this).homeScreen(GridActivity.this, HomeActivity.class);
                                             }
                                         });
                                     } catch (Exception e) {

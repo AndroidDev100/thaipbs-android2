@@ -145,6 +145,16 @@ public class SharedPrefHelper {
         return gson.fromJson(json, type);
     }
 
+    public  void saveKidsMode( boolean kidsMode) {
 
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putBoolean("kidMode", kidsMode);
+        editor.apply();
+    }
+
+    public  boolean getKidsMode() {
+        boolean text = mSharedPreferences.getBoolean("kidMode", false);
+        return text;
+    }
 
 }

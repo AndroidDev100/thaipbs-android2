@@ -44,6 +44,8 @@ import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomnavigation.LabelVisibilityMode;
+
+import me.vipa.app.utils.helpers.ksPreferenceKeys.KidsModeSinglton;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 import me.vipa.app.utils.inAppUpdate.AppUpdateCallBack;
 import me.vipa.app.utils.inAppUpdate.ApplicationUpdateManager;
@@ -201,11 +203,9 @@ public class HomeActivity extends BaseBindingActivity<ActivityMainBinding> imple
         strCurrentTheme = KsPreferenceKeys.getInstance().getCurrentTheme();
 
 
-        //kidsMode  = new SharedPrefHelper(HomeActivity.this).getKidsMode();
-        if (getIntent().getExtras() != null) {
-            kidsMode = getIntent().getExtras().getBoolean( AppConstants.KIDS_MODE);
+        kidsMode  = new SharedPrefHelper(HomeActivity.this).getKidsMode();
 
-        }
+        KidsModeSinglton.getInstance().aBoolean=kidsMode;
         Logger.d("CurrentThemeIs",strCurrentTheme);
         if (KsPreferenceKeys.getInstance().getCurrentTheme().equalsIgnoreCase(AppConstants.LIGHT_THEME)) {
             setTheme(R.style.MyMaterialTheme_Base_Light);
@@ -213,6 +213,8 @@ public class HomeActivity extends BaseBindingActivity<ActivityMainBinding> imple
             setTheme(R.style.MyMaterialTheme_Base_Dark);
 
         }
+
+
 
 
 
@@ -284,9 +286,6 @@ public class HomeActivity extends BaseBindingActivity<ActivityMainBinding> imple
 
     public void switchToMoreFragment() {
         getBinding().toolbar.llSearchIcon.setVisibility(View.INVISIBLE);
-        Bundle bundle = new Bundle();
-        bundle.putBoolean( AppConstants.KIDS_MODE,kidsMode);
-        moreFragment.setArguments(bundle);
         fragmentManager.beginTransaction().hide(active).show(moreFragment).commit();
         active = moreFragment;
 
@@ -312,6 +311,7 @@ public class HomeActivity extends BaseBindingActivity<ActivityMainBinding> imple
         active = homeFragment;
         fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().add(R.id.content_frame, homeFragment, "1").hide(homeFragment).commitAllowingStateLoss();
+
         fragmentManager.beginTransaction().hide(active).show(homeFragment).commitAllowingStateLoss();
         UIinitialization();
     }
@@ -365,19 +365,19 @@ public class HomeActivity extends BaseBindingActivity<ActivityMainBinding> imple
     @Override
     protected void onPause() {
         super.onPause();
-        Log.e("PAUSE","PAUSE");
+
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Log.e("onStop","onStop");
+
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.e("onDestroy","onDestroy");
+
         if (preference.getAppPrefIsRestoreState()) {
             preference.setAppPrefIsRestoreState(false);
         }

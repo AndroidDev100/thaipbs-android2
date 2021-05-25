@@ -2,11 +2,11 @@
 <resources>
 
     <string-array name="more_with_login">
-        <item>VIPA Kids</item>
         <item>Manage Account</item>
         <item>My Watchlist</item>
         <item>My Watch History</item>
         <item>My Downloads</item>
+        <item>VIPA Kids</item>
         <item>Contact Us</item>
         <item>Frequently Ask Questions</item>
         <item>About VIPA</item>
@@ -45,11 +45,12 @@
     </string-array>
 
     <string-array name="more_logout">
-        <item>VIPA Kids</item>
+
         <item>Manage Account</item>
         <item>My Watchlist</item>
         <item>My Watch History</item>
         <item>My Downloads</item>
+        <item>VIPA Kids</item>
         <item>Contact Us</item>
         <item>Frequently Ask Questions</item>
         <item>About VIPA</item>
@@ -60,11 +61,19 @@
         <item>Privacy Policy</item>
     </string-array>
 
-    <string-array name="more_kids_mode">
+    <string-array name="more_kids_mode_login">
         <item>Leave Kids Mode</item>
         <item>My Watchlist</item>
         <item>My Watch History</item>
         <item>My Downloads</item>
+        <item>Contact Us</item>
+        <item>Frequently Ask Questions</item>
+        <item>About VIPA</item>
+        <item>Feedback</item>
+        <item>Other Applications</item>
+    </string-array>
+    <string-array name="more_kids_mode_logout">
+        <item>Leave Kids Mode</item>
         <item>Contact Us</item>
         <item>Frequently Ask Questions</item>
         <item>About VIPA</item>

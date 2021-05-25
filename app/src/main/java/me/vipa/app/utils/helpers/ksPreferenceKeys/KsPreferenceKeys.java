@@ -33,6 +33,7 @@ public class KsPreferenceKeys extends SharedPrefHelper {
     public static final String FILTER_SELECTED_SORT = "FILTER_SELECTED_SORT";
     public static final String FILTER_SELECTED_SORT_VALUE = "FILTER_SELECTED_SORT_VALUE";
     public static final String FILTER_APPLY = "FILTER_APPLY";
+    public static final String KIDS_MODE_ID = "KIDS_MODE_ID";
 
 
 
@@ -461,6 +462,14 @@ public class KsPreferenceKeys extends SharedPrefHelper {
 
     public String getFilterApply() {
         return mInstance.getString(FILTER_APPLY, "");
+    }
+
+    public void setKidsModeId(String id) {
+        mInstance.setString(KIDS_MODE_ID, id);
+    }
+
+    public String getKidsModeId() {
+        return mInstance.getString(KIDS_MODE_ID, "");
     }
 
 

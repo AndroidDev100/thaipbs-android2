@@ -163,7 +163,7 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
         getBinding().toolbar.titleSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new ActivityLauncher(LoginActivity.this).homeScreen(LoginActivity.this, HomeActivity.class,false);
+                new ActivityLauncher(LoginActivity.this).homeScreen(LoginActivity.this, HomeActivity.class);
             }
         });
         connectObservors();
