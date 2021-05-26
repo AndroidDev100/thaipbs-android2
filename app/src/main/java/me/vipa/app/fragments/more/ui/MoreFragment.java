@@ -235,6 +235,14 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
         isLogin = preference.getAppPrefLoginStatus();
         isKidsMode  = new SharedPrefHelper(getActivity()).getKidsMode();
         mListKidsMode = new ArrayList<>();
+
+        if(isKidsMode){
+            getBinding().loginBtn.setVisibility(View.GONE);
+        }
+        else {
+            getBinding().loginBtn.setVisibility(View.VISIBLE);
+        }
+
         if(isLogin.equalsIgnoreCase(AppConstants.UserStatus.Login.toString())){
             mListKidsMode.addAll(Arrays.asList(label4));
         }
@@ -255,7 +263,9 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
             }
 
         } else {
-            getBinding().loginBtn.setVisibility(View.VISIBLE);
+            // hide login mange kis mode
+
+            //getBinding().loginBtn.setVisibility(View.VISIBLE);
 //            AppCommonMethod.guestTitle(getBaseActivity(),getBinding().userNameWords, getBinding().usernameTv, preference);
 //            getBinding().usernameTv.setVisibility(View.VISIBLE);
             getBinding().usernameTv.setVisibility(View.GONE);

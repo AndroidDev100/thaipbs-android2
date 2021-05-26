@@ -55,16 +55,29 @@ public class MoreListAdapter extends RecyclerView.Adapter<MoreListAdapter.ViewHo
         setIcons(holder.moreItemBinding.moreListIcon, i, holder.moreItemBinding);
 
         if(isKidsMode){
-            if (i == 3  ){
-                holder.itemView.findViewById(R.id.view_line).setVisibility(View.VISIBLE);
-            }else {
-                holder.itemView.findViewById(R.id.view_line).setVisibility(View.GONE);
+            if(islogin){
+                if (i == 3  ){
+                    holder.itemView.findViewById(R.id.view_line).setVisibility(View.VISIBLE);
+                }else {
+                    holder.itemView.findViewById(R.id.view_line).setVisibility(View.GONE);
+                }
+
             }
+            else {
+                if (i == 0  ){
+                    holder.itemView.findViewById(R.id.view_line).setVisibility(View.VISIBLE);
+                }else {
+                    holder.itemView.findViewById(R.id.view_line).setVisibility(View.GONE);
+                }
+
+            }
+
         }
         else {
             if (i == 4 || i == 9 || i == 13){
                 holder.itemView.findViewById(R.id.view_line).setVisibility(View.VISIBLE);
-            }else {
+            }
+            else {
                 holder.itemView.findViewById(R.id.view_line).setVisibility(View.GONE);
             }
 

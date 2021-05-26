@@ -296,6 +296,8 @@ public class CommonAdapterNew extends RecyclerView.Adapter<RecyclerView.ViewHold
             headingRailsBinding.mainHeaderTitle.setVisibility(View.VISIBLE);
             headingRailsBinding.headingTitle.bringToFront();
 
+            //TODO COLOURS
+
             if (item.isContinueWatching()){
                 headingRailsBinding.headingTitle.setText((String) item.getScreenWidget().getName()+" "+mContext.getResources().getString(R.string.For)+" "+ KsPreferenceKeys.getInstance().getAppPrefUserName());
             }else {
