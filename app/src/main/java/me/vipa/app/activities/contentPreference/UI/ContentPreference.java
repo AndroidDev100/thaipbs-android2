@@ -1,7 +1,6 @@
 package me.vipa.app.activities.contentPreference.UI;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -9,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.Gson;
 import com.xiaofeng.flowlayoutmanager.FlowLayoutManager;
 
 import java.util.ArrayList;
@@ -17,12 +15,10 @@ import java.util.ArrayList;
 import me.vipa.app.R;
 import me.vipa.app.SDKConfig;
 import me.vipa.app.activities.contentPreference.adapter.ContentPreferenceAdapter;
-import me.vipa.app.activities.usermanagment.ui.ChangePasswordActivity;
 import me.vipa.app.activities.usermanagment.ui.SignUpThirdPage;
 import me.vipa.app.baseModels.BaseBindingActivity;
 import me.vipa.app.callbacks.commonCallbacks.ContentPreferenceCallback;
 import me.vipa.app.databinding.ActivityContentPreferenceBinding;
-import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.config.bean.PreferenceBean;
 import me.vipa.app.utils.constants.AppConstants;
 import me.vipa.app.utils.cropImage.helpers.NetworkConnectivity;
@@ -116,7 +112,7 @@ public class ContentPreference extends BaseBindingActivity<ActivityContentPrefer
             }
 
 
-        adatperContentPreference = new ContentPreferenceAdapter(ContentPreference.this, list, ContentPreference.this);
+        adatperContentPreference = new ContentPreferenceAdapter(ContentPreference.this, 0, list,ContentPreference.this);
         getBinding().recyclerView.setAdapter(adatperContentPreference);
     }
 

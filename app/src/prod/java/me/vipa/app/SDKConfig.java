@@ -79,6 +79,9 @@ public class SDKConfig {
     public String getPAYMENT_BASE_URL() {
         return configBean == null ? "" : configBean.getData().getAppConfig().getPaymentBaseUrl();
     }
+    public String getKidsModeId() {
+        return AppCommonMethod.getHomeTabId(configBean,"VIPA KIDS");
+    }
 
     public String getCoupon_BASE_URL() {
         return configBean == null ? "" : configBean.getData().getAppConfig().getCouponBaseUrl();
