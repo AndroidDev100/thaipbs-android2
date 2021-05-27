@@ -107,13 +107,11 @@ public class TabsBaseFragment<T extends HomeBaseViewModel> extends BaseBindingFr
                     && AppCommonMethod.getConfigResponse().getData().getAppConfig()!=null
                     && AppCommonMethod.getConfigResponse().getData().getAppConfig().getNavScreens()!=null){
                 if (viewModel instanceof HomeFragmentViewModel) {
-
                     if(kidsMode){
                         tabId = SDKConfig.getInstance().getKidsModeId();
                     }
                     else {
                         tabId = SDKConfig.getInstance().getFirstTabId();
-
                     }
 
                 }
