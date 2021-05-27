@@ -7,9 +7,12 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import me.vipa.app.beanModel.responseModels.listAllAccounts.AllSecondaryAccountDetails;
 import me.vipa.app.beanModel.userProfile.UserProfileResponse;
 import me.vipa.baseCollection.baseCategoryServices.BaseCategoryServices;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
+import me.vipa.userManagement.bean.allSecondaryDetails.AllSecondaryDetails;
+import me.vipa.userManagement.callBacks.AllListCallBack;
 import me.vipa.userManagement.callBacks.ForgotPasswordCallBack;
 import me.vipa.userManagement.callBacks.LoginCallBack;
 import me.vipa.userManagement.callBacks.UserProfileCallBack;
@@ -687,6 +690,44 @@ public class RegistrationLoginRepository {
             }
         });
         return mutableLiveData;
+    }
+
+    /////
+    public LiveData<AllSecondaryAccountDetails> getSecondaryAPIResponse(Context context,String token) {
+        final MutableLiveData<AllSecondaryAccountDetails> responseApi;
+        responseApi = new MutableLiveData<>();
+
+
+        BaseCategoryServices.Companion.getInstance().AllListService( token,new AllListCallBack() {
+            @Override
+            public void success(boolean status, Response<AllSecondaryDetails> response) {
+                if (status) {
+                    AllSecondaryAccountDetails cl;
+                    if (response.body() != null) {
+                     /*   String token = response.headers().get("x-auth");
+                        KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
+                        preference.setAppPrefAccessToken(token);*/
+                        Gson gson = new Gson();
+                        String tmp = gson.toJson(response.body());
+                        AllSecondaryAccountDetails loginItemBean = gson.fromJson(tmp, AllSecondaryAccountDetails.class);
+                        responseApi.postValue(loginItemBean);
+                    } else {
+                        AllSecondaryAccountDetails responseModel = ErrorCodesIntercepter.getInstance().allSecondaryAccountDetailsl(response);
+                        responseApi.postValue(responseModel);
+                    }
+                }
+            }
+
+            @Override
+            public void failure(boolean status, int errorCode, String errorMessage) {
+                Logger.e("", "AllSecondaryResponse E" + errorMessage);
+                AllSecondaryAccountDetails cl = new AllSecondaryAccountDetails();
+                cl.setDebugMessage(errorMessage);
+                responseApi.postValue(cl);
+            }
+        });
+
+        return responseApi;
     }
 
 }

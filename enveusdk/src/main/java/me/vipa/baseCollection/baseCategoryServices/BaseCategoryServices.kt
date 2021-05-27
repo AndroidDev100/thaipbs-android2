@@ -5,10 +5,7 @@ import me.vipa.networkRequestManager.RequestManager
 import com.vipa.userManagement.callBacks.*
 import me.vipa.watchHistory.callbacks.GetWatchHistoryCallBack
 import com.google.gson.JsonObject
-import me.vipa.userManagement.callBacks.ForgotPasswordCallBack
-import me.vipa.userManagement.callBacks.LoginCallBack
-import me.vipa.userManagement.callBacks.LogoutCallBack
-import me.vipa.userManagement.callBacks.UserProfileCallBack
+import me.vipa.userManagement.callBacks.*
 
 class BaseCategoryServices {
 
@@ -23,6 +20,9 @@ class BaseCategoryServices {
 
     fun loginService(email:String, password:String, enveuCallBacks: LoginCallBack) {
         RequestManager.instance.loginCall(email,password,enveuCallBacks)
+    }
+    fun AllListService(token : String, enveuCallBacks: AllListCallBack ) {
+        RequestManager.instance.secondaryUsersCall(enveuCallBacks,token)
     }
 
     fun registerService(name: String, email: String, password: String, isNotificationEnable: Boolean, enveuCallBacks: LoginCallBack) {
@@ -90,4 +90,6 @@ class BaseCategoryServices {
     fun forgotPasswordService(screenId:String, enveuCallBacks: ForgotPasswordCallBack) {
         RequestManager.instance.forgotPasswordCall(screenId,enveuCallBacks)
     }
+
+
 }

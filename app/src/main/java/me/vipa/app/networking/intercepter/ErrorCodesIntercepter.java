@@ -11,6 +11,7 @@ import me.vipa.app.beanModel.responseGetWatchlist.ResponseGetIsWatchlist;
 import me.vipa.app.beanModel.responseIsLike.ResponseIsLike;
 import me.vipa.app.beanModel.responseModels.LoginResponse.LoginResponseModel;
 import me.vipa.app.beanModel.responseModels.SignUp.SignupResponseAccessToken;
+import me.vipa.app.beanModel.responseModels.listAllAccounts.AllSecondaryAccountDetails;
 import me.vipa.app.beanModel.userProfile.UserProfileResponse;
 import me.vipa.app.redeemcoupon.RedeemCouponResponseModel;
 import me.vipa.app.repository.redeemCoupon.RedeemModel;
@@ -21,6 +22,7 @@ import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 import org.json.JSONObject;
 
 import me.vipa.bookmarking.bean.continuewatching.GetContinueWatchingBean;
+import me.vipa.userManagement.bean.allSecondaryDetails.AllSecondaryDetails;
 import retrofit2.Response;
 
 public class ErrorCodesIntercepter {
@@ -581,5 +583,32 @@ public class ErrorCodesIntercepter {
             empty.setDebugMessage(MvHubPlusApplication.getInstance().getResources().getString(R.string.something_went_wrong_at_our_end));
         }
         return empty;
+    }
+
+
+
+    public AllSecondaryAccountDetails allSecondaryAccountDetailsl(Response<AllSecondaryDetails> response) {
+        AllSecondaryAccountDetails responseModel = null;
+        try {
+            responseModel = new AllSecondaryAccountDetails();
+            JSONObject errorObject = new JSONObject(response.errorBody().string());
+            responseModel.setResponseCode(400);
+            if (errorObject.getInt("responseCode") != 0) {
+                if (errorObject.getInt("responseCode") != 0) {
+                    if (errorObject.getInt("responseCode") == 4003) {
+                        responseModel.setDebugMessage(MvHubPlusApplication.getInstance().getResources().getString(R.string.something_went_wrong));
+
+                    }
+                }
+
+                } else {
+                    responseModel.setDebugMessage(MvHubPlusApplication.getInstance().getResources().getString(R.string.something_went_wrong));
+                }
+
+        } catch (Exception e) {
+
+        }
+
+        return responseModel;
     }
 }

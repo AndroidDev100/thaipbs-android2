@@ -9,10 +9,14 @@ import me.vipa.userManagement.bean.UserProfile.UserProfileResponse
 import me.vipa.watchHistory.beans.ResponseWatchHistoryAssetList
 import com.google.gson.JsonObject
 import com.watcho.enveu.bean.EnveuCategory
+import me.vipa.userManagement.bean.allSecondaryDetails.AllSecondaryDetails
 import retrofit2.Call
 import retrofit2.http.*
 
 interface EnveuEndpoints {
+
+    @GET("v4/user/secondaryAccount/listAll")
+    fun getKidsModeUsers(): Call<AllSecondaryDetails>
 
     @GET("screen?")
     fun categoryService(@Header("x-device") device: String, @Header("x-platform") platform: String, @Header("x-api-key") key: String, @Query("screenId") screenId: String): Call<EnveuCategory>

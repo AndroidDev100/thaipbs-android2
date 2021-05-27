@@ -31,9 +31,9 @@ public class RegistrationLoginViewModel extends AndroidViewModel {
     public LiveData<LoginResponseModel> hitLoginAPI(Context context, String userName, String pwd) {
         return loginRepository.getLoginAPIResponse(context, userName, pwd);
     }
-   /* public LiveData<AllSecondaryAccountDetails> hitAllSecondaryApi(Context context) {
-        return loginRepository.getSecondaryAPIResponse(context);
-    }*/
+    public LiveData<AllSecondaryAccountDetails> hitAllSecondaryApi(Context context,String token) {
+        return loginRepository.getSecondaryAPIResponse(context,token);
+    }
 
     public LiveData<SignupResponseAccessToken> hitSignUpAPI(String name, String userName, String pwd, boolean isNotificationEnable) {
         return loginRepository.getSignupAPIResponse(name, userName, pwd,isNotificationEnable);

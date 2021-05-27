@@ -14,10 +14,8 @@ import me.vipa.bookmarking.bean.continuewatching.GetContinueWatchingBean
 import me.vipa.callBacks.EnveuCallBacks
 import me.vipa.userManagement.bean.LoginResponse.LoginResponseModel
 import me.vipa.userManagement.bean.UserProfile.UserProfileResponse
-import me.vipa.userManagement.callBacks.ForgotPasswordCallBack
-import me.vipa.userManagement.callBacks.LoginCallBack
-import me.vipa.userManagement.callBacks.LogoutCallBack
-import me.vipa.userManagement.callBacks.UserProfileCallBack
+import me.vipa.userManagement.bean.allSecondaryDetails.AllSecondaryDetails
+import me.vipa.userManagement.callBacks.*
 import me.vipa.userManagement.params.UserManagement
 import me.vipa.watchHistory.beans.ResponseWatchHistoryAssetList
 import me.vipa.watchHistory.callbacks.GetWatchHistoryCallBack
@@ -354,6 +352,22 @@ class RequestManager {
 
             override fun onFailure(call: Call<JsonObject>, t: Throwable) {
                 enveuCallBacks.failure(false, 0, "")
+            }
+        })
+    }
+
+
+    fun secondaryUsersCall(allListCallBack: AllListCallBack,token: String) {
+        val endPoint = NetworkSetup().kidsModeClient(token).create<EnveuEndpoints>(EnveuEndpoints::class.java)
+        val call = endPoint?.getKidsModeUsers();
+        call?.enqueue(object : Callback<AllSecondaryDetails> {
+            override fun onResponse(call: Call<AllSecondaryDetails>, response: Response<AllSecondaryDetails>) {
+                allListCallBack.success(true, response)
+            }
+
+            override fun onFailure(call: Call<AllSecondaryDetails>, t: Throwable) {
+                t.message?.let { allListCallBack.failure(false, 0, it) }
+                allListCallBack.failure(false, 0, "")
             }
         })
     }

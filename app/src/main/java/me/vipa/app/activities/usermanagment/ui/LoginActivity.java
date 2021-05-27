@@ -422,7 +422,9 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
                         Gson gson = new Gson();
                         modelLogin = loginResponseModelResponse.getData();
                         String stringJson = gson.toJson(loginResponseModelResponse.getData());
-                        saveUserDetails(stringJson, loginResponseModelResponse.getData().getId(), true);
+
+                        callAllSecondaryAccount(preference.getAppPrefAccessToken(),stringJson,loginResponseModelResponse.getData().getId());
+                       // saveUserDetails(stringJson, loginResponseModelResponse.getData().getId(), true);
                     } else {
                         if (loginResponseModelResponse.getDebugMessage() != null) {
                             dismissLoading(getBinding().progressBar);
@@ -839,14 +841,33 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
         }
     }
 
-   /* public void callAllSecondaryAccount() {
+   public void callAllSecondaryAccount(String token,String stringJson,int id) {
         if (CheckInternetConnection.isOnline(LoginActivity.this)) {
-
             showLoading(getBinding().progressBar, true);
-                viewModel.hitAllSecondaryApi(LoginActivity.this).observe(LoginActivity.this, loginResponseModelResponse -> {
-                    if (Objects.requireNonNull(loginResponseModelResponse).getResponseCode() == 2000) {
+                viewModel.hitAllSecondaryApi(LoginActivity.this,token).observe(LoginActivity.this, allSecondaryAccountDetails -> {
+                    if(allSecondaryAccountDetails!=null ){
+                        if(allSecondaryAccountDetails.getData()!=null&& !allSecondaryAccountDetails.getData().isEmpty()){
+                            Log.e("allSecondaryAcco",new Gson().toJson(allSecondaryAccountDetails));
+                            saveUserDetails(stringJson, id, true);
+                        }
+                        else {
+                            Log.e("allSecondaryEMPTY",new Gson().toJson(allSecondaryAccountDetails));
+
+                        }
+                    }
+                    else {
+                        if (allSecondaryAccountDetails.getDebugMessage() != null) {
+                            dismissLoading(getBinding().progressBar);
+                            showDialog(LoginActivity.this.getResources().getString(R.string.error), allSecondaryAccountDetails.getDebugMessage().toString());
+                        } else {
+                            dismissLoading(getBinding().progressBar);
+                            showDialog(LoginActivity.this.getResources().getString(R.string.error), LoginActivity.this.getResources().getString(R.string.something_went_wrong));
+
+                        }
 
                     }
+
+
 
 
                 });
@@ -857,5 +878,5 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
 
 
         }
-    }*/
+    }
 }
