@@ -250,6 +250,7 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
                 String json = gson.toJson(configBean);
                // Log.e("configResponseLog", json);
                 AppCommonMethod.setConfigConstant(configBean, isTablet);
+                // kid mode id
                 String kidsModeId=SDKConfig.getInstance().getKidsModeId();
                 session.setKidsModeId(kidsModeId);
 

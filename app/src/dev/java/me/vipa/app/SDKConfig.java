@@ -139,7 +139,7 @@ public class SDKConfig {
     public String getLiveDetailId() {
         return AppCommonMethod.getHomeTabId(configBean,"LIVETV DETAIL");
     }
-
+// for id mode id
     public String getKidsModeId() {
         return AppCommonMethod.getHomeTabId(configBean,"VIPA KIDS");
     }

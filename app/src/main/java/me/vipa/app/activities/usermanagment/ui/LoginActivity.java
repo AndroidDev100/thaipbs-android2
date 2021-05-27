@@ -474,6 +474,10 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
         preference.setAppPrefUserEmail(String.valueOf(fbLoginData.getEmail()));
         AppCommonMethod.userId = String.valueOf(fbLoginData.getId());
         String token = preference.getAppPrefAccessToken();
+
+
+
+        ////
         if (loginCallingFrom.equalsIgnoreCase("home") && token != null && !token.equalsIgnoreCase("")) {
             GetPlansLayer.getInstance().getEntitlementStatus(preference, token, new EntitlementStatus() {
                 @Override
@@ -484,8 +488,9 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
         } else {
             onBackPressed();
         }
+        ///
 
-            trackEvent(String.valueOf(fbLoginData.getName()), isManual);
+        trackEvent(String.valueOf(fbLoginData.getName()), isManual);
 
         }catch (Exception e){
             Log.d("Exception",e.getMessage());
@@ -833,4 +838,24 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
             super.onBackPressed();
         }
     }
+
+   /* public void callAllSecondaryAccount() {
+        if (CheckInternetConnection.isOnline(LoginActivity.this)) {
+
+            showLoading(getBinding().progressBar, true);
+                viewModel.hitAllSecondaryApi(LoginActivity.this).observe(LoginActivity.this, loginResponseModelResponse -> {
+                    if (Objects.requireNonNull(loginResponseModelResponse).getResponseCode() == 2000) {
+
+                    }
+
+
+                });
+
+
+        } else {
+            connectionObserver();
+
+
+        }
+    }*/
 }

@@ -1234,7 +1234,7 @@ public class AppCommonMethod {
         SDKConfig.getInstance().setConfigObject(configResponse, isTablet);
 
     }
-
+// home tab id
     public static String getHomeTabId(ConfigBean configBean, String name) {
         String screenId = "";
         if (configBean != null) {
