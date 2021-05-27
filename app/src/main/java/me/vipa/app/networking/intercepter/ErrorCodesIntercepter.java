@@ -12,6 +12,7 @@ import me.vipa.app.beanModel.responseIsLike.ResponseIsLike;
 import me.vipa.app.beanModel.responseModels.LoginResponse.LoginResponseModel;
 import me.vipa.app.beanModel.responseModels.SignUp.SignupResponseAccessToken;
 import me.vipa.app.beanModel.responseModels.listAllAccounts.AllSecondaryAccountDetails;
+import me.vipa.app.beanModel.responseModels.secondaryUserDetails.SecondaryUserDetailsJavaPojo;
 import me.vipa.app.beanModel.userProfile.UserProfileResponse;
 import me.vipa.app.redeemcoupon.RedeemCouponResponseModel;
 import me.vipa.app.repository.redeemCoupon.RedeemModel;
@@ -23,6 +24,7 @@ import org.json.JSONObject;
 
 import me.vipa.bookmarking.bean.continuewatching.GetContinueWatchingBean;
 import me.vipa.userManagement.bean.allSecondaryDetails.AllSecondaryDetails;
+import me.vipa.userManagement.bean.allSecondaryDetails.SecondaryUserDetails;
 import retrofit2.Response;
 
 public class ErrorCodesIntercepter {
@@ -595,7 +597,7 @@ public class ErrorCodesIntercepter {
             responseModel.setResponseCode(400);
             if (errorObject.getInt("responseCode") != 0) {
                 if (errorObject.getInt("responseCode") != 0) {
-                    if (errorObject.getInt("responseCode") == 4003) {
+                    if (errorObject.getInt("responseCode") == 404) {
                         responseModel.setDebugMessage(MvHubPlusApplication.getInstance().getResources().getString(R.string.something_went_wrong));
 
                     }
@@ -607,8 +609,41 @@ public class ErrorCodesIntercepter {
 
         } catch (Exception e) {
 
+            Logger.e("Exception", String.valueOf(e));
+
         }
 
         return responseModel;
     }
+
+    public SecondaryUserDetailsJavaPojo secondaryUserDetails(Response<SecondaryUserDetails> response) {
+        SecondaryUserDetailsJavaPojo responseModel = null;
+        try {
+            responseModel = new SecondaryUserDetailsJavaPojo();
+            JSONObject errorObject = new JSONObject(response.errorBody().string());
+            responseModel.setResponseCode(400);
+            if (errorObject.getInt("responseCode") != 0) {
+                if (errorObject.getInt("responseCode") != 0) {
+                    if (errorObject.getInt("responseCode") == 404) {
+                        responseModel.setDebugMessage(MvHubPlusApplication.getInstance().getResources().getString(R.string.something_went_wrong));
+
+                    }
+                }
+
+            } else {
+                responseModel.setDebugMessage(MvHubPlusApplication.getInstance().getResources().getString(R.string.something_went_wrong));
+            }
+
+        } catch (Exception e) {
+            Logger.e("Exception", String.valueOf(e));
+
+        }
+
+        return responseModel;
+    }
+
+
+
+
+
 }

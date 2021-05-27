@@ -353,7 +353,6 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
                         return true;
                     }
                     mLastClickTime = SystemClock.elapsedRealtime();
-
                     callLogin();
                 } else
                     new ToastHandler(LoginActivity.this).show(LoginActivity.this.getResources().getString(R.string.no_internet_connection));
@@ -422,7 +421,6 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
                         Gson gson = new Gson();
                         modelLogin = loginResponseModelResponse.getData();
                         String stringJson = gson.toJson(loginResponseModelResponse.getData());
-
                         callAllSecondaryAccount(preference.getAppPrefAccessToken(),stringJson,loginResponseModelResponse.getData().getId());
                        // saveUserDetails(stringJson, loginResponseModelResponse.getData().getId(), true);
                     } else {
@@ -848,10 +846,14 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
                     if(allSecondaryAccountDetails!=null ){
                         if(allSecondaryAccountDetails.getData()!=null&& !allSecondaryAccountDetails.getData().isEmpty()){
                             Log.e("allSecondaryAcco",new Gson().toJson(allSecondaryAccountDetails));
+
+
+
                             saveUserDetails(stringJson, id, true);
                         }
                         else {
                             Log.e("allSecondaryEMPTY",new Gson().toJson(allSecondaryAccountDetails));
+                            addSecondaryUserApi(token,stringJson,id);
 
                         }
                     }
@@ -876,6 +878,40 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
         } else {
             connectionObserver();
 
+
+        }
+    }
+
+    public void addSecondaryUserApi( String token,String stringJson,int id) {
+        if (CheckInternetConnection.isOnline(LoginActivity.this)) {
+            showLoading(getBinding().progressBar, true);
+                viewModel.hitSecondaryUser(token).observe(LoginActivity.this, secondaryUserDetails -> {
+                    if (Objects.requireNonNull(secondaryUserDetails).getResponseCode() == 2000) {
+
+                  String primaryAccountId= secondaryUserDetails.getData().getPrimaryAccountRef().getAccountId();
+                  String  secondaryAccountId=  secondaryUserDetails.getData().getAccountId();
+                  Logger.e("primaryAccountId",primaryAccountId);
+                  Logger.e("secondaryAccountId",secondaryAccountId);
+                        saveUserDetails(stringJson, id, true);
+
+                    } else {
+                        if (secondaryUserDetails.getDebugMessage() != null) {
+                            dismissLoading(getBinding().progressBar);
+                            showDialog(LoginActivity.this.getResources().getString(R.string.error), secondaryUserDetails.getDebugMessage().toString());
+                        } else {
+                            dismissLoading(getBinding().progressBar);
+                            showDialog(LoginActivity.this.getResources().getString(R.string.error), LoginActivity.this.getResources().getString(R.string.something_went_wrong));
+
+                        }
+
+                    }
+
+                });
+
+
+        } else {
+            connectionObserver();
+            // new ToastHandler(LoginActivity.this).show(LoginActivity.this.getResources().getString(R.string.no_internet_connection));
 
         }
     }

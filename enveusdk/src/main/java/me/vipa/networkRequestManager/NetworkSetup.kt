@@ -1,6 +1,7 @@
 package me.vipa.networkRequestManager
 
-import com.mvhub.BuildConfig
+import androidx.multidex.BuildConfig
+
 import me.vipa.baseClient.BaseConfiguration
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -115,7 +116,7 @@ class NetworkSetup {
 
 
 
-    fun kidsModeClient(token:String): Retrofit {
+    fun kidsModeClientAllUsers(token:String): Retrofit {
 
         val loggingInterceptor = HttpLoggingInterceptor()
         if (BuildConfig.DEBUG)
@@ -148,6 +149,45 @@ class NetworkSetup {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(client)
                 .build()
+
+
+        return kidsModeManagementRetrofit
+    }
+
+    fun kidsModeSecondaryUsers(token:String): Retrofit {
+
+        val loggingInterceptor = HttpLoggingInterceptor()
+        if (BuildConfig.DEBUG)
+            loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+        else
+            loggingInterceptor.level = HttpLoggingInterceptor.Level.NONE
+
+        val httpClient = OkHttpClient.Builder()
+        httpClient.addInterceptor { chain ->
+            val original = chain.request()
+            // Request customization: add request headers
+            val requestBuilder = original.newBuilder()
+                    .addHeader("x-api-key", BaseConfiguration.instance.clients.getOVPApiKey())
+                    .addHeader("x-auth",token)
+            val request = requestBuilder.build()
+
+            chain.proceed(request)
+        }
+        httpClient.readTimeout(120, TimeUnit.SECONDS)
+                .writeTimeout(120, TimeUnit.SECONDS)
+                .connectTimeout(120, TimeUnit.SECONDS)
+                .cache(null)
+                .addInterceptor(loggingInterceptor)
+
+        val client = httpClient.build()
+
+        kidsModeManagementRetrofit = Retrofit.Builder()
+                .baseUrl("https://subscription.beta.enveu.com/app/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .client(client)
+                .build()
+
 
         return kidsModeManagementRetrofit
     }

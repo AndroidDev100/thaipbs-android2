@@ -8,13 +8,16 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import me.vipa.app.beanModel.responseModels.listAllAccounts.AllSecondaryAccountDetails;
+import me.vipa.app.beanModel.responseModels.secondaryUserDetails.SecondaryUserDetailsJavaPojo;
 import me.vipa.app.beanModel.userProfile.UserProfileResponse;
 import me.vipa.baseCollection.baseCategoryServices.BaseCategoryServices;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.userManagement.bean.allSecondaryDetails.AllSecondaryDetails;
+import me.vipa.userManagement.bean.allSecondaryDetails.SecondaryUserDetails;
 import me.vipa.userManagement.callBacks.AllListCallBack;
 import me.vipa.userManagement.callBacks.ForgotPasswordCallBack;
 import me.vipa.userManagement.callBacks.LoginCallBack;
+import me.vipa.userManagement.callBacks.SecondaryUserCallBack;
 import me.vipa.userManagement.callBacks.UserProfileCallBack;
 import com.google.gson.Gson;
 import com.google.gson.JsonNull;
@@ -693,7 +696,7 @@ public class RegistrationLoginRepository {
     }
 
     /////
-    public LiveData<AllSecondaryAccountDetails> getSecondaryAPIResponse(Context context,String token) {
+    public LiveData<AllSecondaryAccountDetails>  getSecondaryAPIResponse(Context context,String token) {
         final MutableLiveData<AllSecondaryAccountDetails> responseApi;
         responseApi = new MutableLiveData<>();
 
@@ -722,6 +725,42 @@ public class RegistrationLoginRepository {
             public void failure(boolean status, int errorCode, String errorMessage) {
                 Logger.e("", "AllSecondaryResponse E" + errorMessage);
                 AllSecondaryAccountDetails cl = new AllSecondaryAccountDetails();
+                cl.setDebugMessage(errorMessage);
+                responseApi.postValue(cl);
+            }
+        });
+
+        return responseApi;
+    }
+
+    public LiveData<SecondaryUserDetailsJavaPojo> getSecondaryUserAPIReponse(String token) {
+        final MutableLiveData<SecondaryUserDetailsJavaPojo> responseApi;
+        responseApi = new MutableLiveData<>();
+
+        BaseCategoryServices.Companion.getInstance().SecondaryUserService( token,new SecondaryUserCallBack() {
+            @Override
+            public void success(boolean status, Response<SecondaryUserDetails> response) {
+                if (status) {
+                    SecondaryUserDetails cl;
+                    if (response.body() != null) {
+                     /*   String token = response.headers().get("x-auth");
+                        KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
+                        preference.setAppPrefAccessToken(token);*/
+                        Gson gson = new Gson();
+                        String tmp = gson.toJson(response.body());
+                        SecondaryUserDetailsJavaPojo loginItemBean = gson.fromJson(tmp, SecondaryUserDetailsJavaPojo.class);
+                        responseApi.postValue(loginItemBean);
+                    } else {
+                        SecondaryUserDetailsJavaPojo responseModel = ErrorCodesIntercepter.getInstance().secondaryUserDetails(response);
+                        responseApi.postValue(responseModel);
+                    }
+                }
+            }
+
+            @Override
+            public void failure(boolean status, int errorCode, String errorMessage) {
+                Logger.e("", "SecondaryUser E" + errorMessage);
+                SecondaryUserDetailsJavaPojo cl = new SecondaryUserDetailsJavaPojo();
                 cl.setDebugMessage(errorMessage);
                 responseApi.postValue(cl);
             }

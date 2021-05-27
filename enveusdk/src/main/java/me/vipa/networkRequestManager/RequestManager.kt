@@ -1,5 +1,6 @@
 package me.vipa.networkRequestManager
 
+import android.util.Log
 import com.google.gson.JsonObject
 import com.vipa.userManagement.callBacks.BookmarkingCallback
 import com.vipa.userManagement.callBacks.GetBookmarkCallback
@@ -15,6 +16,7 @@ import me.vipa.callBacks.EnveuCallBacks
 import me.vipa.userManagement.bean.LoginResponse.LoginResponseModel
 import me.vipa.userManagement.bean.UserProfile.UserProfileResponse
 import me.vipa.userManagement.bean.allSecondaryDetails.AllSecondaryDetails
+import me.vipa.userManagement.bean.allSecondaryDetails.SecondaryUserDetails
 import me.vipa.userManagement.callBacks.*
 import me.vipa.userManagement.params.UserManagement
 import me.vipa.watchHistory.beans.ResponseWatchHistoryAssetList
@@ -358,7 +360,7 @@ class RequestManager {
 
 
     fun secondaryUsersCall(allListCallBack: AllListCallBack,token: String) {
-        val endPoint = NetworkSetup().kidsModeClient(token).create<EnveuEndpoints>(EnveuEndpoints::class.java)
+        val endPoint = NetworkSetup().kidsModeClientAllUsers(token).create<EnveuEndpoints>(EnveuEndpoints::class.java)
         val call = endPoint?.getKidsModeUsers();
         call?.enqueue(object : Callback<AllSecondaryDetails> {
             override fun onResponse(call: Call<AllSecondaryDetails>, response: Response<AllSecondaryDetails>) {
@@ -366,6 +368,26 @@ class RequestManager {
             }
 
             override fun onFailure(call: Call<AllSecondaryDetails>, t: Throwable) {
+                t.message?.let { allListCallBack.failure(false, 0, it) }
+                allListCallBack.failure(false, 0, "")
+            }
+        })
+    }
+
+    fun addSecondaryUsersCall(allListCallBack: SecondaryUserCallBack,token: String) {
+        val endPoint = NetworkSetup().kidsModeSecondaryUsers(token).create<EnveuEndpoints>(EnveuEndpoints::class.java)
+        val requestParam = JsonObject()
+        requestParam.addProperty("name", "Profile 1")
+        requestParam.addProperty("kidsAccount", true)
+
+        Log.e("DATA", requestParam.toString());
+        val call = endPoint?.getKidsSecondaryUser(requestParam);
+        call?.enqueue(object : Callback<SecondaryUserDetails> {
+            override fun onResponse(call: Call<SecondaryUserDetails>, response: Response<SecondaryUserDetails>) {
+                allListCallBack.success(true, response)
+            }
+
+            override fun onFailure(call: Call<SecondaryUserDetails>, t: Throwable) {
                 t.message?.let { allListCallBack.failure(false, 0, it) }
                 allListCallBack.failure(false, 0, "")
             }

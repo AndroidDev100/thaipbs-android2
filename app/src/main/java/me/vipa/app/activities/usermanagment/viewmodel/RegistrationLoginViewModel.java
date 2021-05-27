@@ -14,8 +14,11 @@ import me.vipa.app.beanModel.responseModels.LoginResponse.LoginResponseModel;
 import me.vipa.app.beanModel.responseModels.RegisterSignUpModels.ResponseRegisteredSignup;
 import me.vipa.app.beanModel.responseModels.SignUp.SignupResponseAccessToken;
 import me.vipa.app.beanModel.responseModels.listAllAccounts.AllSecondaryAccountDetails;
+import me.vipa.app.beanModel.responseModels.secondaryUserDetails.SecondaryUserDetailsJavaPojo;
 import me.vipa.app.beanModel.userProfile.UserProfileResponse;
 import me.vipa.app.repository.userManagement.RegistrationLoginRepository;
+import me.vipa.userManagement.bean.allSecondaryDetails.SecondaryUserDetails;
+
 import com.google.gson.JsonObject;
 
 
@@ -33,6 +36,10 @@ public class RegistrationLoginViewModel extends AndroidViewModel {
     }
     public LiveData<AllSecondaryAccountDetails> hitAllSecondaryApi(Context context,String token) {
         return loginRepository.getSecondaryAPIResponse(context,token);
+    }
+
+    public LiveData<SecondaryUserDetailsJavaPojo> hitSecondaryUser(String token) {
+        return loginRepository.getSecondaryUserAPIReponse(token);
     }
 
     public LiveData<SignupResponseAccessToken> hitSignUpAPI(String name, String userName, String pwd, boolean isNotificationEnable) {
