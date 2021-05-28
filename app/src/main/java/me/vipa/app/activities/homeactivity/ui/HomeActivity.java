@@ -319,7 +319,7 @@ public class HomeActivity extends BaseBindingActivity<ActivityMainBinding> imple
     private void UIinitialization() {
         navigation = findViewById(R.id.navigation);
         if(kidsMode){
-            getBinding().toolbar.rlToolBar.setBackgroundColor(HomeActivity.this.getResources().getColor(R.color.blue));
+            getBinding().toolbar.rlToolBar.setBackgroundColor(HomeActivity.this.getResources().getColor(R.color.ligh_blue ));
             getBinding().toolbar.homeIcon.setBackground(HomeActivity.this.getResources().getDrawable(R.drawable.vipa_logo_kids));
             getBinding().toolbar.homeIcon.getLayoutParams().height = 100;
             getBinding().toolbar.homeIcon.requestLayout();

@@ -81,6 +81,8 @@ public class CommonAdapterNew extends RecyclerView.Adapter<RecyclerView.ViewHold
     private MoreClickListner moreClickListner;
     private boolean kidsMode;
 
+    private int value = 0;
+
     public CommonAdapterNew(Context context, List<RailCommonData> mList, CommonRailtItemClickListner listner, MoreClickListner moreClickListner) {
         this.mContext = context;
         this.mList = mList;
@@ -109,7 +111,7 @@ public class CommonAdapterNew extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int position) {
-        kidsMode   = KidsModeSinglton.getInstance().aBoolean;
+        kidsMode = KidsModeSinglton.getInstance().aBoolean;
         Logger.e("position bind in", position + " ==>" + holder.getClass().getSimpleName());
         setFadeAnimation(holder.itemView);
         if (holder instanceof CarouselViewHolder) {
@@ -139,31 +141,31 @@ public class CommonAdapterNew extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     private void posterPotraitRail(PosterPotraitHolder viewHolder, int position) {
         RecyclerView recyclerView = viewHolder.itemBinding.recyclerViewList2;
-        CommonPosterPotrailRailAdapter adapter = new CommonPosterPotrailRailAdapter(mContext, mList.get(position), position,listner,mList.get(position).getScreenWidget());
+        CommonPosterPotrailRailAdapter adapter = new CommonPosterPotrailRailAdapter(mContext, mList.get(position), position, listner, mList.get(position).getScreenWidget());
         setCommonRailAdapter(viewHolder.itemBinding.titleHeading, recyclerView, position, adapter);
     }
 
     private void LandscapeRail(LandscapeHolder viewHolder, int position) {
         RecyclerView recyclerView = viewHolder.landscapeRecyclerItemBinding.recyclerViewList3;
-        CommonLandscapeRailAdapter adapter = new CommonLandscapeRailAdapter(mContext, mList.get(position),position, listner,mList.get(position).getScreenWidget());
+        CommonLandscapeRailAdapter adapter = new CommonLandscapeRailAdapter(mContext, mList.get(position), position, listner, mList.get(position).getScreenWidget());
         setCommonRailAdapter(viewHolder.landscapeRecyclerItemBinding.titleHeading, recyclerView, position, adapter);
     }
 
     private void potraitRail(PortraitHolder viewHolder, int position) {
         RecyclerView recyclerView = viewHolder.potraitRecyclerItemBinding.recyclerViewList4;
-        CommonPotraitRailAdapter adapter = new CommonPotraitRailAdapter(mContext, mList.get(position), position,listner,mList.get(position).getScreenWidget());
+        CommonPotraitRailAdapter adapter = new CommonPotraitRailAdapter(mContext, mList.get(position), position, listner, mList.get(position).getScreenWidget());
         setCommonRailAdapter(viewHolder.potraitRecyclerItemBinding.titleHeading, recyclerView, position, adapter);
     }
 
     private void squareRail(SquareHolder viewHolder, int position) {
         RecyclerView recyclerView = viewHolder.squareRecyclerItemBinding.recyclerViewList2;
-        CommonSquareRailAdapter commonSquareRailAdapter = new CommonSquareRailAdapter(mContext, mList.get(position), listner,mList.get(position).getScreenWidget());
+        CommonSquareRailAdapter commonSquareRailAdapter = new CommonSquareRailAdapter(mContext, mList.get(position), listner, mList.get(position).getScreenWidget());
         setCommonRailAdapter(viewHolder.squareRecyclerItemBinding.titleHeading, recyclerView, position, commonSquareRailAdapter);
     }
 
     private void circularRail(CircleHolder viewHolder, int position) {
         RecyclerView recyclerView = viewHolder.circularRecyclerItemBinding.recyclerViewList1;
-        CommonCircleRailAdapter commonCircleAdapter = new CommonCircleRailAdapter(mContext, mList.get(position), position,listner,mList.get(position).getScreenWidget());
+        CommonCircleRailAdapter commonCircleAdapter = new CommonCircleRailAdapter(mContext, mList.get(position), position, listner, mList.get(position).getScreenWidget());
         setCommonRailAdapter(viewHolder.circularRecyclerItemBinding.titleHeading, recyclerView, position, commonCircleAdapter);
     }
 
@@ -171,12 +173,12 @@ public class CommonAdapterNew extends RecyclerView.Adapter<RecyclerView.ViewHold
     private void setCommonRailAdapter(HeadingRailsBinding headingRailsBinding, RecyclerView recyclerView, int position, RecyclerView.Adapter adapter) {
         try {
             setTitle(headingRailsBinding, mList.get(position), position);
-            if(mList.get(position).getEnveuVideoItemBeans().size() > 0 ) {
+            if (mList.get(position).getEnveuVideoItemBeans().size() > 0) {
                 recyclerView.setNestedScrollingEnabled(false);
                 recyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
                 recyclerView.setHasFixedSize(true);
                 recyclerView.setAdapter(adapter);
-            }else{
+            } else {
                 recyclerView.setAdapter(null);
             }
         } catch (ClassCastException e) {
@@ -198,7 +200,7 @@ public class CommonAdapterNew extends RecyclerView.Adapter<RecyclerView.ViewHold
         setTitle(viewHolder.itemBinding.titleHeading, mList.get(position), position);
         KsPreferenceKeys.getInstance().setAutoDuration(mList.get(position).getScreenWidget().getAutoRotateDuration() == null ? 0 : mList.get(position).getScreenWidget().getAutoRotateDuration());
         KsPreferenceKeys.getInstance().setAutoRotation(mList.get(position).getScreenWidget().getAutoRotate() == null ? true : mList.get(position).getScreenWidget().getAutoRotate());
-        viewHolder.itemBinding.slider.addSlides(mList.get(position), listner,position, mList.get(position).getRailType(), mList.get(position).getScreenWidget().getContentIndicator(),mList.get(position).getScreenWidget().getAutoRotate() == null ? true : mList.get(position).getScreenWidget().getAutoRotate(),mList.get(position).getScreenWidget().getAutoRotateDuration() == null ? 0 : mList.get(position).getScreenWidget().getAutoRotateDuration());
+        viewHolder.itemBinding.slider.addSlides(mList.get(position), listner, position, mList.get(position).getRailType(), mList.get(position).getScreenWidget().getContentIndicator(), mList.get(position).getScreenWidget().getAutoRotate() == null ? true : mList.get(position).getScreenWidget().getAutoRotate(), mList.get(position).getScreenWidget().getAutoRotateDuration() == null ? 0 : mList.get(position).getScreenWidget().getAutoRotateDuration());
     }
 
 
@@ -305,33 +307,14 @@ public class CommonAdapterNew extends RecyclerView.Adapter<RecyclerView.ViewHold
             headingRailsBinding.headingTitle.bringToFront();
 
             //TODO COLOURS
-          /*  if(kidsMode){
-                if(position==0){
-                    headingRailsBinding.headingTitle.setTextColor(mContext.getResources().getColor(R.color.orange_mustard));
-
-                }
-                else if(position==1){
-                    headingRailsBinding.headingTitle.setTextColor(mContext.getResources().getColor(R.color.ligh_blue));
-
-                }
-                else if(position==2){
-                    headingRailsBinding.headingTitle.setTextColor(mContext.getResources().getColor(R.color.light_green));
-
-                }
-                else if(position==3){
-                    headingRailsBinding.headingTitle.setTextColor(mContext.getResources().getColor(R.color.mustard_light));
-
-                }
-
-            }*/
 
 
-            if (item.isContinueWatching()){
+            if (item.isContinueWatching()) {
                 //headingRailsBinding.headingTitle.setText((String) item.getScreenWidget().getName()+" "+mContext.getResources().getString(R.string.For)+" "+ KsPreferenceKeys.getInstance().getAppPrefUserName());
-                setContinueWatchMultiLngTitle(item,headingRailsBinding);
-            }else {
-                setMultiLingTitle(item,headingRailsBinding);
-               // headingRailsBinding.headingTitle.setText((String) item.getScreenWidget().getName());
+                setContinueWatchMultiLngTitle(item, headingRailsBinding);
+            } else {
+                setMultiLingTitle(item, headingRailsBinding);
+                // headingRailsBinding.headingTitle.setText((String) item.getScreenWidget().getName());
             }
 
 
@@ -346,26 +329,26 @@ public class CommonAdapterNew extends RecyclerView.Adapter<RecyclerView.ViewHold
             headingRailsBinding.moreText.setVisibility(View.VISIBLE);
             headingRailsBinding.moreText.setOnClickListener(v -> {
                 try {
-                    if (item.getScreenWidget().getEnableMultilingualTitle()!=null && item.getScreenWidget().getEnableMultilingualTitle()  instanceof Boolean){
-                        boolean isMultilingualTitleEnable=(Boolean)item.getScreenWidget().getEnableMultilingualTitle();
-                        if (isMultilingualTitleEnable){
-                            String currentLang=KsPreferenceKeys.getInstance().getAppLanguage();
+                    if (item.getScreenWidget().getEnableMultilingualTitle() != null && item.getScreenWidget().getEnableMultilingualTitle() instanceof Boolean) {
+                        boolean isMultilingualTitleEnable = (Boolean) item.getScreenWidget().getEnableMultilingualTitle();
+                        if (isMultilingualTitleEnable) {
+                            String currentLang = KsPreferenceKeys.getInstance().getAppLanguage();
                             JsonObject jsonObject = new Gson().toJsonTree(item.getScreenWidget().getMultilingualTitle()).getAsJsonObject();
-                            String name=AppCommonMethod.getMultilingualTitle(currentLang,jsonObject, SDKConfig.getInstance().getThaiLangCode(),SDKConfig.getInstance().getEnglishCode());
-                            if (!name.equalsIgnoreCase("")){
-                                moreClickListner.moreRailClick(item, position,name);
-                            }else {
-                                moreClickListner.moreRailClick(item, position,"");
+                            String name = AppCommonMethod.getMultilingualTitle(currentLang, jsonObject, SDKConfig.getInstance().getThaiLangCode(), SDKConfig.getInstance().getEnglishCode());
+                            if (!name.equalsIgnoreCase("")) {
+                                moreClickListner.moreRailClick(item, position, name);
+                            } else {
+                                moreClickListner.moreRailClick(item, position, "");
                             }
-                        }else {
-                            moreClickListner.moreRailClick(item, position,"");
+                        } else {
+                            moreClickListner.moreRailClick(item, position, "");
                         }
-                    }else {
-                        moreClickListner.moreRailClick(item, position,"");
+                    } else {
+                        moreClickListner.moreRailClick(item, position, "");
                     }
 
-                }catch (Exception e){
-                    moreClickListner.moreRailClick(item, position,"");
+                } catch (Exception e) {
+                    moreClickListner.moreRailClick(item, position, "");
                 }
                 //moreClickListner.moreRailClick(item, position);
             });
@@ -373,49 +356,74 @@ public class CommonAdapterNew extends RecyclerView.Adapter<RecyclerView.ViewHold
             headingRailsBinding.moreText.setVisibility(View.GONE);
             headingRailsBinding.mainHeaderTitle.setVisibility(View.GONE);
         }
+
+        if (kidsMode) {
+            for (int i = 0; i < item.getEnveuVideoItemBeans().size(); i++) {
+                if (value == 4) {
+                    value = 0;
+                } else {
+                    if (value == 0) {
+                        headingRailsBinding.headingTitle.setTextColor(mContext.getResources().getColor(R.color.ripple_effect_dark_color));
+                        value++;
+                    } else if (value == 1) {
+                        headingRailsBinding.headingTitle.setTextColor(mContext.getResources().getColor(R.color.ligh_blue));
+                        value++;
+                    } else if (value == 2) {
+                        headingRailsBinding.headingTitle.setTextColor(mContext.getResources().getColor(R.color.light_green));
+                        value++;
+                    } else if (value == 3) {
+                        headingRailsBinding.headingTitle.setTextColor(mContext.getResources().getColor(R.color.mustard_light));
+                        value++;
+                    }
+                }
+            }
+
+        }
+
+
     }
 
     private void setMultiLingTitle(RailCommonData item, HeadingRailsBinding headingRailsBinding) {
         try {
-            if (item.getScreenWidget().getEnableMultilingualTitle()!=null && item.getScreenWidget().getEnableMultilingualTitle()  instanceof Boolean){
-                boolean isMultilingualTitleEnable=(Boolean)item.getScreenWidget().getEnableMultilingualTitle();
-                if (isMultilingualTitleEnable){
-                    String currentLang=KsPreferenceKeys.getInstance().getAppLanguage();
+            if (item.getScreenWidget().getEnableMultilingualTitle() != null && item.getScreenWidget().getEnableMultilingualTitle() instanceof Boolean) {
+                boolean isMultilingualTitleEnable = (Boolean) item.getScreenWidget().getEnableMultilingualTitle();
+                if (isMultilingualTitleEnable) {
+                    String currentLang = KsPreferenceKeys.getInstance().getAppLanguage();
                     JsonObject jsonObject = new Gson().toJsonTree(item.getScreenWidget().getMultilingualTitle()).getAsJsonObject();
-                    String name=AppCommonMethod.getMultilingualTitle(currentLang,jsonObject, SDKConfig.getInstance().getThaiLangCode(),SDKConfig.getInstance().getEnglishCode());
-                    if (!name.equalsIgnoreCase("")){
+                    String name = AppCommonMethod.getMultilingualTitle(currentLang, jsonObject, SDKConfig.getInstance().getThaiLangCode(), SDKConfig.getInstance().getEnglishCode());
+                    if (!name.equalsIgnoreCase("")) {
                         headingRailsBinding.headingTitle.setText(name);
                     }
-                }else {
+                } else {
                     headingRailsBinding.headingTitle.setText((String) item.getScreenWidget().getName());
                 }
-            }else {
+            } else {
                 headingRailsBinding.headingTitle.setText((String) item.getScreenWidget().getName());
             }
-        }catch (Exception ignored){
+        } catch (Exception ignored) {
             headingRailsBinding.headingTitle.setText((String) item.getScreenWidget().getName());
         }
     }
 
     private void setContinueWatchMultiLngTitle(RailCommonData item, HeadingRailsBinding headingRailsBinding) {
         try {
-            if (item.getScreenWidget().getEnableMultilingualTitle()!=null && item.getScreenWidget().getEnableMultilingualTitle()  instanceof Boolean){
-                boolean isMultilingualTitleEnable=(Boolean)item.getScreenWidget().getEnableMultilingualTitle();
-                if (isMultilingualTitleEnable){
-                    String currentLang=KsPreferenceKeys.getInstance().getAppLanguage();
+            if (item.getScreenWidget().getEnableMultilingualTitle() != null && item.getScreenWidget().getEnableMultilingualTitle() instanceof Boolean) {
+                boolean isMultilingualTitleEnable = (Boolean) item.getScreenWidget().getEnableMultilingualTitle();
+                if (isMultilingualTitleEnable) {
+                    String currentLang = KsPreferenceKeys.getInstance().getAppLanguage();
                     JsonObject jsonObject = new Gson().toJsonTree(item.getScreenWidget().getMultilingualTitle()).getAsJsonObject();
-                    String name=AppCommonMethod.getMultilingualTitle(currentLang,jsonObject, SDKConfig.getInstance().getThaiLangCode(),SDKConfig.getInstance().getEnglishCode());
-                    if (!name.equalsIgnoreCase("")){
-                        headingRailsBinding.headingTitle.setText(name+" "+mContext.getResources().getString(R.string.For)+" "+ KsPreferenceKeys.getInstance().getAppPrefUserName());
+                    String name = AppCommonMethod.getMultilingualTitle(currentLang, jsonObject, SDKConfig.getInstance().getThaiLangCode(), SDKConfig.getInstance().getEnglishCode());
+                    if (!name.equalsIgnoreCase("")) {
+                        headingRailsBinding.headingTitle.setText(name + " " + mContext.getResources().getString(R.string.For) + " " + KsPreferenceKeys.getInstance().getAppPrefUserName());
                     }
-                }else {
-                    headingRailsBinding.headingTitle.setText((String) item.getScreenWidget().getName()+" "+mContext.getResources().getString(R.string.For)+" "+ KsPreferenceKeys.getInstance().getAppPrefUserName());
+                } else {
+                    headingRailsBinding.headingTitle.setText((String) item.getScreenWidget().getName() + " " + mContext.getResources().getString(R.string.For) + " " + KsPreferenceKeys.getInstance().getAppPrefUserName());
                 }
-            }else {
-                headingRailsBinding.headingTitle.setText((String) item.getScreenWidget().getName()+" "+mContext.getResources().getString(R.string.For)+" "+ KsPreferenceKeys.getInstance().getAppPrefUserName());
+            } else {
+                headingRailsBinding.headingTitle.setText((String) item.getScreenWidget().getName() + " " + mContext.getResources().getString(R.string.For) + " " + KsPreferenceKeys.getInstance().getAppPrefUserName());
             }
-        }catch (Exception ignored){
-            headingRailsBinding.headingTitle.setText((String) item.getScreenWidget().getName()+" "+mContext.getResources().getString(R.string.For)+" "+ KsPreferenceKeys.getInstance().getAppPrefUserName());
+        } catch (Exception ignored) {
+            headingRailsBinding.headingTitle.setText((String) item.getScreenWidget().getName() + " " + mContext.getResources().getString(R.string.For) + " " + KsPreferenceKeys.getInstance().getAppPrefUserName());
         }
 
     }
