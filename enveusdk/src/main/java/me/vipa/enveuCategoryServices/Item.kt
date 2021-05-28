@@ -39,6 +39,12 @@ data class Item(
         @field:SerializedName("title")
         val title: Any? = null,
 
+        @field:SerializedName("enableMultilingualTitle")
+        val enableMultilingualTitle: Any? = null,
+
+        @field:SerializedName("multilingualTitle")
+        val multilingualTitle: Any? = null,
+
         @field:SerializedName("imageType")
         val imageType: String? = null,
 

@@ -52,6 +52,7 @@ public class SettingContentPreferences extends BaseBindingActivity<ActivityConte
     private KsPreferenceKeys preference;
     private boolean isNotificationEnable = false;
     private boolean isloggedout = false;
+    private int count = 0;
     @Override
     public ActivityContentPrefSettingsBinding inflateBindingLayout(@NonNull LayoutInflater inflater) {
         return ActivityContentPrefSettingsBinding.inflate(inflater);
@@ -240,6 +241,7 @@ public class SettingContentPreferences extends BaseBindingActivity<ActivityConte
                     if(AppCommonMethod.check(SDKConfig.getInstance().getContentPreference().get(i).getIdentifier(),saved)){
                         Log.w("savedata5",newObject.getData().getCustomData().getContentPreferences());
                         preferenceBean.setChecked(true);
+                        count++;
                     }else {
                         preferenceBean.setChecked(false);
                     }
@@ -254,7 +256,7 @@ public class SettingContentPreferences extends BaseBindingActivity<ActivityConte
         }
 
 
-        adatperContentPreference = new ContentPreferenceAdapter(SettingContentPreferences.this, list, SettingContentPreferences.this);
+        adatperContentPreference = new ContentPreferenceAdapter(SettingContentPreferences.this,count, list,SettingContentPreferences.this);
         getBinding().recyclerView.setAdapter(adatperContentPreference);
     }
 

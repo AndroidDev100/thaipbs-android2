@@ -73,8 +73,8 @@ public class ActivitySettings extends BaseBindingActivity<SettingsActivityBindin
 
         }
 
-        isNotificationEnable = areNotificationsEnabled();
-        setSwitchForNotification();
+//        isNotificationEnable = areNotificationsEnabled();
+//        setSwitchForNotification();
         setSwitchForBingeWatch();
         toolBar();
         checkLanguage();
@@ -155,33 +155,56 @@ public class ActivitySettings extends BaseBindingActivity<SettingsActivityBindin
 
         });
 
-
-        getBinding().notificationSetting.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        getBinding().notificationSetting.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (buttonView.isPressed()) {
-                    Intent intent = new Intent();
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        intent.setAction(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                        intent.putExtra(Settings.EXTRA_APP_PACKAGE, getApplicationContext().getPackageName());
-                    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
-                        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                        intent.putExtra("app_package", getApplicationContext().getPackageName());
-                        intent.putExtra("app_uid", getApplicationContext().getApplicationInfo().uid);
-                    } else {
-                        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                        intent.addCategory(Intent.CATEGORY_DEFAULT);
-                        intent.setData(Uri.parse("package:" + getApplicationContext().getPackageName()));
-                    }
-                    ActivitySettings.this.startActivity(intent);
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    intent.setAction(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    intent.putExtra(Settings.EXTRA_APP_PACKAGE, getApplicationContext().getPackageName());
+                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
+                    intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    intent.putExtra("app_package", getApplicationContext().getPackageName());
+                    intent.putExtra("app_uid", getApplicationContext().getApplicationInfo().uid);
+                } else {
+                    intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    intent.addCategory(Intent.CATEGORY_DEFAULT);
+                    intent.setData(Uri.parse("package:" + getApplicationContext().getPackageName()));
                 }
-
+                ActivitySettings.this.startActivity(intent);
             }
-
         });
+
+
+//        getBinding().notificationSetting.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                if (buttonView.isPressed()) {
+//                    Intent intent = new Intent();
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//                        intent.setAction(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
+//                        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+//                        intent.putExtra(Settings.EXTRA_APP_PACKAGE, getApplicationContext().getPackageName());
+//                    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                        intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
+//                        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+//                        intent.putExtra("app_package", getApplicationContext().getPackageName());
+//                        intent.putExtra("app_uid", getApplicationContext().getApplicationInfo().uid);
+//                    } else {
+//                        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+//                        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+//                        intent.addCategory(Intent.CATEGORY_DEFAULT);
+//                        intent.setData(Uri.parse("package:" + getApplicationContext().getPackageName()));
+//                    }
+//                    ActivitySettings.this.startActivity(intent);
+//                }
+//
+//            }
+//
+//        });
     }
 
     private void setSwitchForBingeWatch() {
@@ -195,11 +218,11 @@ public class ActivitySettings extends BaseBindingActivity<SettingsActivityBindin
     }
 
     private void setSwitchForNotification() {
-        if (isNotificationEnable){
-            getBinding().notificationSetting.setChecked(true);
-        }else {
-            getBinding().notificationSetting.setChecked(false);
-        }
+//        if (isNotificationEnable){
+//            getBinding().notificationSetting.setChecked(true);
+//        }else {
+//            getBinding().notificationSetting.setChecked(false);
+//        }
 
     }
 
@@ -288,8 +311,8 @@ public class ActivitySettings extends BaseBindingActivity<SettingsActivityBindin
     @Override
     protected void onResume() {
         super.onResume();
-        isNotificationEnable = areNotificationsEnabled();
-        setSwitchForNotification();
+//        isNotificationEnable = areNotificationsEnabled();
+//        setSwitchForNotification();
 
     }
 

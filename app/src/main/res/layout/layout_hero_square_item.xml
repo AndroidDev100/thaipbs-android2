@@ -43,12 +43,11 @@
                     android:background="@drawable/placeholder_landscape"
                     android:contentDescription="@string/slider_image_content_discription"
                     android:scaleType="fitXY" />
-
+<!--                android:background="@drawable/above_shado"-->
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_gravity="bottom"
-                    android:background="@drawable/above_shado"
                     android:gravity="bottom"
                     android:paddingStart="5dp"
                     android:paddingBottom="5dp">

@@ -1203,7 +1203,7 @@ public class LiveActivity extends BaseBindingActivity<LiveDetailBinding> impleme
     }
 
     @Override
-    public void moreRailClick(RailCommonData data, int position) {
+    public void moreRailClick(RailCommonData data, int position,String multilingualTitle) {
         PrintLogging.printLog("", data.getScreenWidget().getContentID() + "  " + data.getScreenWidget().getLandingPageTitle() + " " + 0 + " " + 0);
         if (data.getScreenWidget() != null && data.getScreenWidget().getContentID() != null) {
             String playListId = data.getScreenWidget().getContentID();
