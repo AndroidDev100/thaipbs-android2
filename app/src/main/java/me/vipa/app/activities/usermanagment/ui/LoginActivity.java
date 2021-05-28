@@ -53,6 +53,7 @@ import me.vipa.app.utils.cropImage.helpers.PrintLogging;
 import me.vipa.app.utils.helpers.AppPreference;
 import me.vipa.app.utils.helpers.CheckInternetConnection;
 
+import me.vipa.app.utils.helpers.SharedPrefHelper;
 import me.vipa.app.utils.helpers.StringUtils;
 import me.vipa.app.utils.helpers.ToastHandler;
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
@@ -846,10 +847,20 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
                     if(allSecondaryAccountDetails!=null ){
                         if(allSecondaryAccountDetails.getData()!=null&& !allSecondaryAccountDetails.getData().isEmpty()){
                             Log.e("allSecondaryAcco",new Gson().toJson(allSecondaryAccountDetails));
+                            String primaryAccountId="";
+                            String secondaryId="";
+                             for (int i=0;i<allSecondaryAccountDetails.getData().size();i++){
+                                 if(allSecondaryAccountDetails.getData().get(0).getKidsAccount()){
+                                     primaryAccountId=allSecondaryAccountDetails.getData().get(0).getPrimaryAccountRef().getAccountId();
+                                      secondaryId= allSecondaryAccountDetails.getData().get(0).getAccountId();
 
-
-
-                            saveUserDetails(stringJson, id, true);
+                                 }
+                             }
+                            Log.e("alllistApiPrimaryid",primaryAccountId);
+                            Log.e("allListApiSecondid",secondaryId);
+                            new SharedPrefHelper(LoginActivity.this).savePrimaryAccountId(primaryAccountId);
+                            new SharedPrefHelper(LoginActivity.this).saveSecondaryAccountId(secondaryId);
+                             saveUserDetails(stringJson, id, true);
                         }
                         else {
                             Log.e("allSecondaryEMPTY",new Gson().toJson(allSecondaryAccountDetails));
@@ -890,9 +901,11 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
 
                   String primaryAccountId= secondaryUserDetails.getData().getPrimaryAccountRef().getAccountId();
                   String  secondaryAccountId=  secondaryUserDetails.getData().getAccountId();
-                  Logger.e("primaryAccountId",primaryAccountId);
-                  Logger.e("secondaryAccountId",secondaryAccountId);
-                        saveUserDetails(stringJson, id, true);
+                  Log.e("addSecondaryApPrimaryid",primaryAccountId);
+                  Log.e("addSecondaryApiSecondid",secondaryAccountId);
+                  new SharedPrefHelper(LoginActivity.this).savePrimaryAccountId(primaryAccountId);
+                  new SharedPrefHelper(LoginActivity.this).saveSecondaryAccountId(secondaryAccountId);
+                  saveUserDetails(stringJson, id, true);
 
                     } else {
                         if (secondaryUserDetails.getDebugMessage() != null) {

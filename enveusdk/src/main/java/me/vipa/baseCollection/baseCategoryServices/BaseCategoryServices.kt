@@ -27,6 +27,9 @@ class BaseCategoryServices {
     fun SecondaryUserService(token : String, enveuCallBacks: SecondaryUserCallBack ) {
         RequestManager.instance.addSecondaryUsersCall(enveuCallBacks,token)
     }
+    fun switchUserService(token : String, id:String, enveuCallBacks: SwitchUserCallBack ) {
+        RequestManager.instance.switchUsersCall(enveuCallBacks,token,id)
+    }
 
     fun registerService(name: String, email: String, password: String, isNotificationEnable: Boolean, enveuCallBacks: LoginCallBack) {
         RequestManager.instance.registerCall(name,email,password,isNotificationEnable,enveuCallBacks)

@@ -191,4 +191,8 @@ class NetworkSetup {
 
         return kidsModeManagementRetrofit
     }
+
+
+  //  https://subscription.beta.enveu.com/app/api/v4/user/secondaryAccount/switchAccount?accountId
+
 }

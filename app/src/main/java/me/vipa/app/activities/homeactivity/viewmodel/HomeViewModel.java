@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import me.vipa.app.beanModel.responseModels.secondaryUserDetails.SecondaryUserDetailsJavaPojo;
+import me.vipa.app.beanModel.responseModels.switchUserDetail.SwitchUser;
 import me.vipa.app.beanModel.userProfile.UserProfileResponse;
 import me.vipa.app.repository.home.HomeRepository;
 import me.vipa.app.beanModel.emptyResponse.ResponseEmpty;
@@ -36,5 +38,9 @@ public class HomeViewModel extends AndroidViewModel {
 
     public LiveData<UserProfileResponse> hitUserProfile(Context context, String token) {
         return loginRepository.getUserProfile(context,token);
+    }
+
+    public LiveData<SwitchUser> hitSwitchUser(String token, String  id) {
+        return homeRepository.getSwitchUserAPIReponse(token,id);
     }
 }

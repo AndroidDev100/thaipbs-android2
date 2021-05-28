@@ -1,6 +1,7 @@
 package me.vipa.networkRequestManager
 
 import android.util.Log
+import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.vipa.userManagement.callBacks.BookmarkingCallback
 import com.vipa.userManagement.callBacks.GetBookmarkCallback
@@ -17,6 +18,7 @@ import me.vipa.userManagement.bean.LoginResponse.LoginResponseModel
 import me.vipa.userManagement.bean.UserProfile.UserProfileResponse
 import me.vipa.userManagement.bean.allSecondaryDetails.AllSecondaryDetails
 import me.vipa.userManagement.bean.allSecondaryDetails.SecondaryUserDetails
+import me.vipa.userManagement.bean.allSecondaryDetails.SwitchUserDetails
 import me.vipa.userManagement.callBacks.*
 import me.vipa.userManagement.params.UserManagement
 import me.vipa.watchHistory.beans.ResponseWatchHistoryAssetList
@@ -380,7 +382,12 @@ class RequestManager {
         requestParam.addProperty("name", "Profile 1")
         requestParam.addProperty("kidsAccount", true)
 
-        Log.e("DATA", requestParam.toString());
+
+        var gson = Gson()
+        //Convert the Json object to JsonString
+        var jsonString:String = gson.toJson(requestParam)
+
+        Log.e("DATA", jsonString);
         val call = endPoint?.getKidsSecondaryUser(requestParam);
         call?.enqueue(object : Callback<SecondaryUserDetails> {
             override fun onResponse(call: Call<SecondaryUserDetails>, response: Response<SecondaryUserDetails>) {
@@ -388,6 +395,21 @@ class RequestManager {
             }
 
             override fun onFailure(call: Call<SecondaryUserDetails>, t: Throwable) {
+                t.message?.let { allListCallBack.failure(false, 0, it) }
+                allListCallBack.failure(false, 0, "")
+            }
+        })
+    }
+    fun switchUsersCall(allListCallBack: SwitchUserCallBack,token: String,id:String) {
+        val endPoint = NetworkSetup().kidsModeSecondaryUsers(token).create<EnveuEndpoints>(EnveuEndpoints::class.java)
+
+        val call = endPoint?.getKidsSwitchUser(id)
+        call?.enqueue(object : Callback<SwitchUserDetails> {
+            override fun onResponse(call: Call<SwitchUserDetails>, response: Response<SwitchUserDetails>) {
+                allListCallBack.success(true, response)
+            }
+
+            override fun onFailure(call: Call<SwitchUserDetails>, t: Throwable) {
                 t.message?.let { allListCallBack.failure(false, 0, it) }
                 allListCallBack.failure(false, 0, "")
             }

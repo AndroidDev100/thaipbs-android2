@@ -13,6 +13,7 @@ import me.vipa.app.beanModel.responseModels.LoginResponse.LoginResponseModel;
 import me.vipa.app.beanModel.responseModels.SignUp.SignupResponseAccessToken;
 import me.vipa.app.beanModel.responseModels.listAllAccounts.AllSecondaryAccountDetails;
 import me.vipa.app.beanModel.responseModels.secondaryUserDetails.SecondaryUserDetailsJavaPojo;
+import me.vipa.app.beanModel.responseModels.switchUserDetail.SwitchUser;
 import me.vipa.app.beanModel.userProfile.UserProfileResponse;
 import me.vipa.app.redeemcoupon.RedeemCouponResponseModel;
 import me.vipa.app.repository.redeemCoupon.RedeemModel;
@@ -25,6 +26,7 @@ import org.json.JSONObject;
 import me.vipa.bookmarking.bean.continuewatching.GetContinueWatchingBean;
 import me.vipa.userManagement.bean.allSecondaryDetails.AllSecondaryDetails;
 import me.vipa.userManagement.bean.allSecondaryDetails.SecondaryUserDetails;
+import me.vipa.userManagement.bean.allSecondaryDetails.SwitchUserDetails;
 import retrofit2.Response;
 
 public class ErrorCodesIntercepter {
@@ -594,18 +596,17 @@ public class ErrorCodesIntercepter {
         try {
             responseModel = new AllSecondaryAccountDetails();
             JSONObject errorObject = new JSONObject(response.errorBody().string());
-            responseModel.setResponseCode(400);
             if (errorObject.getInt("responseCode") != 0) {
-                if (errorObject.getInt("responseCode") != 0) {
-                    if (errorObject.getInt("responseCode") == 404) {
-                        responseModel.setDebugMessage(MvHubPlusApplication.getInstance().getResources().getString(R.string.something_went_wrong));
+                int code = errorObject.getInt("responseCode");
+                if (code == 4302) {
+                    //  responseModel.setStatus(false);
+                    // responseModel.setResponseCode("");
+                    responseModel.setDebugMessage("User must be logged in");
+                } else   {
 
-                    }
+                    responseModel.setDebugMessage(MvHubPlusApplication.getInstance().getResources().getString(R.string.something_went_wrong_at_our_end));
                 }
-
-                } else {
-                    responseModel.setDebugMessage(MvHubPlusApplication.getInstance().getResources().getString(R.string.something_went_wrong));
-                }
+            }
 
         } catch (Exception e) {
 
@@ -621,17 +622,16 @@ public class ErrorCodesIntercepter {
         try {
             responseModel = new SecondaryUserDetailsJavaPojo();
             JSONObject errorObject = new JSONObject(response.errorBody().string());
-            responseModel.setResponseCode(400);
             if (errorObject.getInt("responseCode") != 0) {
-                if (errorObject.getInt("responseCode") != 0) {
-                    if (errorObject.getInt("responseCode") == 404) {
-                        responseModel.setDebugMessage(MvHubPlusApplication.getInstance().getResources().getString(R.string.something_went_wrong));
+                int code = errorObject.getInt("responseCode");
+                if (code == 4302) {
+                    //  responseModel.setStatus(false);
+                    // responseModel.setResponseCode("");
+                    responseModel.setDebugMessage("User must be logged in");
+                } else   {
 
-                    }
+                    responseModel.setDebugMessage(MvHubPlusApplication.getInstance().getResources().getString(R.string.something_went_wrong_at_our_end));
                 }
-
-            } else {
-                responseModel.setDebugMessage(MvHubPlusApplication.getInstance().getResources().getString(R.string.something_went_wrong));
             }
 
         } catch (Exception e) {
@@ -642,6 +642,30 @@ public class ErrorCodesIntercepter {
         return responseModel;
     }
 
+    public SwitchUser switchUserDetails(Response<SwitchUserDetails> response) {
+        SwitchUser responseModel = null;
+        try {
+            responseModel = new SwitchUser();
+            JSONObject errorObject = new JSONObject(response.errorBody().string());
+            if (errorObject.getInt("responseCode") != 0) {
+                int code = errorObject.getInt("responseCode");
+                if (code == 4302) {
+                  //  responseModel.setStatus(false);
+                   // responseModel.setResponseCode("");
+                    responseModel.setDebugMessage("User must be logged in");
+                } else   {
+
+                    responseModel.setDebugMessage(MvHubPlusApplication.getInstance().getResources().getString(R.string.something_went_wrong_at_our_end));
+                }
+            }
+
+        } catch (Exception e) {
+            Logger.e("Exception", String.valueOf(e));
+
+        }
+
+        return responseModel;
+    }
 
 
 

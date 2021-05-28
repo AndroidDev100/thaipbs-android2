@@ -1,21 +1,34 @@
 package me.vipa.app.repository.home;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import me.vipa.app.beanModel.responseModels.secondaryUserDetails.SecondaryUserDetailsJavaPojo;
+import me.vipa.app.beanModel.responseModels.switchUserDetail.SwitchUser;
+import me.vipa.app.networking.intercepter.ErrorCodesIntercepter;
+import me.vipa.app.utils.cropImage.helpers.Logger;
+import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 import me.vipa.baseCollection.baseCategoryServices.BaseCategoryServices;
+import me.vipa.userManagement.bean.allSecondaryDetails.SecondaryUserDetails;
+import me.vipa.userManagement.bean.allSecondaryDetails.SwitchUserDetails;
 import me.vipa.userManagement.callBacks.LogoutCallBack;
 import me.vipa.app.beanModel.emptyResponse.ResponseEmpty;
 import me.vipa.app.networking.apiendpoints.ApiInterface;
 import me.vipa.app.networking.apiendpoints.RequestConfig;
 import me.vipa.app.utils.constants.AppConstants;
+
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import java.util.Objects;
 
 import me.vipa.baseCollection.baseCategoryServices.BaseCategoryServices;
 import me.vipa.userManagement.callBacks.LogoutCallBack;
+import me.vipa.userManagement.callBacks.SecondaryUserCallBack;
+import me.vipa.userManagement.callBacks.SwitchUserCallBack;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -128,6 +141,45 @@ public class HomeRepository {
                 }
             });
         }
+
+        return responseApi;
+    }
+
+    public LiveData<SwitchUser> getSwitchUserAPIReponse(String token,String id) {
+        final MutableLiveData<SwitchUser> responseApi;
+        responseApi = new MutableLiveData<>();
+
+        BaseCategoryServices.Companion.getInstance().switchUserService( token,id,new SwitchUserCallBack() {
+            @Override
+            public void success(boolean status, Response<SwitchUserDetails> response) {
+                if (status) {
+                    SwitchUserDetails cl;
+                    if (response.body() != null) {
+                        String token = response.headers().get("x-auth");
+                        KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
+                        preference.setAppPrefAccessToken("");
+                        preference.setAppPrefAccessToken(token);
+                        Log.e("AuthTokenSwithUser",preference.getAppPrefAccessToken());
+                        Gson gson = new Gson();
+                        String tmp = gson.toJson(response.body());
+                        SwitchUser loginItemBean = gson.fromJson(tmp, SwitchUser.class);
+                        responseApi.postValue(loginItemBean);
+                    }
+                    else {
+                        SwitchUser responseModel = ErrorCodesIntercepter.getInstance().switchUserDetails(response);
+                        responseApi.postValue(responseModel);
+                    }
+                }
+            }
+
+            @Override
+            public void failure(boolean status, int errorCode, String errorMessage) {
+                Logger.e("", "SwitchUser E" + errorMessage);
+                SwitchUser cl = new SwitchUser();
+                cl.setDebugMessage(errorMessage);
+                responseApi.postValue(cl);
+            }
+        });
 
         return responseApi;
     }

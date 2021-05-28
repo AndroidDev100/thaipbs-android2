@@ -157,4 +157,29 @@ public class SharedPrefHelper {
         return text;
     }
 
+    public  void savePrimaryAccountId( String primaryId) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putString("primaryId", primaryId);
+        editor.apply();
+    }
+
+    public  String getPrimaryAccountId() {
+        String text = mSharedPreferences.getString("primaryId", "");
+        return text;
+    }
+
+    public  void saveSecondaryAccountId( String secondaryId) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putString("secondaryId", secondaryId);
+        editor.apply();
+    }
+
+    public  String getSecondaryAccountId() {
+        String text = mSharedPreferences.getString("secondaryId", "");
+        return text;
+    }
+
+
+
+
 }

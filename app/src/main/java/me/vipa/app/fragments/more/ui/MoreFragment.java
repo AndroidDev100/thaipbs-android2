@@ -36,6 +36,7 @@ import me.vipa.app.activities.search.ui.FilterIconActivity;
 import me.vipa.app.activities.settings.ActivitySettings;
 import me.vipa.app.activities.splash.ui.ActivitySplash;
 import me.vipa.app.activities.usermanagment.ui.ChangePasswordActivity;
+import me.vipa.app.activities.usermanagment.ui.LoginActivity;
 import me.vipa.app.activities.watchList.ui.WatchListActivity;
 import me.vipa.app.baseModels.BaseBindingFragment;
 import me.vipa.app.beanModel.userProfile.UserProfileResponse;
@@ -465,15 +466,19 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                 mListener.onLoginClicked();
 
         } else if (caption.equals(getString(R.string.vipa_kids))) {
-            new SharedPrefHelper(getActivity()).saveKidsMode(true);
-            new ActivityLauncher(getActivity()).homeScreen(getActivity(), HomeActivity.class);
+            String  secondaryId  = new SharedPrefHelper(getActivity()).getSecondaryAccountId();
+            KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
+           String authToken=    preference.getAppPrefAccessToken();
+           switchUserApi(authToken,secondaryId,true);
 
 
         }
 
         else if (caption.equals(getString(R.string.leave_kids))) {
-            new SharedPrefHelper(getActivity()).saveKidsMode(false);
-            new ActivityLauncher(getActivity()).homeScreen(getActivity(), HomeActivity.class);
+            String  primaryAccountId  = new SharedPrefHelper(getActivity()).getPrimaryAccountId();
+            KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
+            String authToken=    preference.getAppPrefAccessToken();
+            switchUserApi(authToken,primaryAccountId,false);
 
         }
 
@@ -816,6 +821,61 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
 
     public interface MoreFragmentInteraction {
         void onLoginClicked();
+    }
+
+    public void switchUserApi( String authToken,String accountId,boolean vipaMode) {
+        if (CheckInternetConnection.isOnline(getActivity())) {
+            showLoading(getBinding().progressBar, true, getActivity());
+            viewModel.hitSwitchUser(authToken,accountId).observe(getActivity(), switchUserDetails -> {
+                if (switchUserDetails!=null) {
+                    if(switchUserDetails.getResponseCode()==2000){
+                        if(vipaMode){
+                            new SharedPrefHelper(getActivity()).saveKidsMode(true);
+                            new ActivityLauncher(getActivity()).homeScreen(getActivity(), HomeActivity.class);
+                        }
+                        else {
+                            new SharedPrefHelper(getActivity()).saveKidsMode(false);
+                            new ActivityLauncher(getActivity()).homeScreen(getActivity(), HomeActivity.class);
+
+                        }
+                    }
+                    else {
+                        if (switchUserDetails.getDebugMessage() != null) {
+                            dismissLoading(getBinding().progressBar, getActivity());
+                            showDialog(getActivity().getResources().getString(R.string.error), switchUserDetails.getDebugMessage().toString());
+                        } else {
+                            dismissLoading(getBinding().progressBar, getActivity());
+                            showDialog(getActivity().getResources().getString(R.string.error),getActivity().getResources().getString(R.string.something_went_wrong));
+
+                        }
+
+                    }
+
+
+
+
+                } else {
+                    if (switchUserDetails.getDebugMessage() != null) {
+                        dismissLoading(getBinding().progressBar, getActivity());
+                        showDialog(getActivity().getResources().getString(R.string.error), switchUserDetails.getDebugMessage().toString());
+                    } else {
+                        dismissLoading(getBinding().progressBar, getActivity());
+                        showDialog(getActivity().getResources().getString(R.string.error),getActivity().getResources().getString(R.string.something_went_wrong));
+
+                    }
+
+                }
+
+            });
+
+
+        } else {
+            dismissLoading(getBinding().progressBar, getActivity());
+
+            new ToastHandler(getActivity()).show(getActivity().getResources().getString(R.string.no_internet_connection));
+            // new ToastHandler(LoginActivity.this).show(LoginActivity.this.getResources().getString(R.string.no_internet_connection));
+
+        }
     }
 
 

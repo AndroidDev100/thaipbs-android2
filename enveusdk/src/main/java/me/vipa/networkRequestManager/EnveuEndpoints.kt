@@ -11,6 +11,7 @@ import com.google.gson.JsonObject
 import com.watcho.enveu.bean.EnveuCategory
 import me.vipa.userManagement.bean.allSecondaryDetails.AllSecondaryDetails
 import me.vipa.userManagement.bean.allSecondaryDetails.SecondaryUserDetails
+import me.vipa.userManagement.bean.allSecondaryDetails.SwitchUserDetails
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -21,6 +22,9 @@ interface EnveuEndpoints {
 
     @POST("v4/user/secondaryAccount/add")
     fun getKidsSecondaryUser(@Body secondaryDetails: JsonObject): Call<SecondaryUserDetails>
+
+    @POST("v4/user/secondaryAccount/switchAccount")
+    fun getKidsSwitchUser(@Query("accountId") id: String):Call<SwitchUserDetails>
 
     @GET("screen?")
     fun categoryService(@Header("x-device") device: String, @Header("x-platform") platform: String, @Header("x-api-key") key: String, @Query("screenId") screenId: String): Call<EnveuCategory>
