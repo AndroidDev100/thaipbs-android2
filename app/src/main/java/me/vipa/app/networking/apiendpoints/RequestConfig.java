@@ -7,6 +7,7 @@ import me.vipa.app.utils.cropImage.helpers.Logger;
 
 import java.util.concurrent.TimeUnit;
 
+import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -68,13 +69,22 @@ public class RequestConfig {
                     .addInterceptor(loggingInterceptor);
 
             OkHttpClient client = httpClient.build();
-            if (SDKConfig.getInstance().getOVP_BASE_URL()!=null && SDKConfig.getInstance().getOVP_BASE_URL()!="") {
+            if (SDKConfig.getInstance().getOVP_BASE_URL()!=null && !SDKConfig.getInstance().getOVP_BASE_URL().equalsIgnoreCase("")){
                 enveuRetrofit = new Retrofit.Builder()
                         .baseUrl(SDKConfig.getInstance().getOVP_BASE_URL())
                         .addConverterFactory(GsonConverterFactory.create())
                         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                         .client(client)
                         .build();
+            }else {
+                if (!KsPreferenceKeys.getInstance().getOVPBASEURL().equalsIgnoreCase("")){
+                    enveuRetrofit = new Retrofit.Builder()
+                            .baseUrl(KsPreferenceKeys.getInstance().getOVPBASEURL())
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                            .client(client)
+                            .build();
+                }
             }
         }
         return enveuRetrofit;
