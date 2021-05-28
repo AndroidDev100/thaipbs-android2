@@ -26,6 +26,8 @@ class ModelGenerator{
             cat.screen=response.body()?.data?.screen
             cat.responseCode=response.body()?.responseCode
             cat.name=i?.item?.title
+            cat.enableMultilingualTitle=i?.item?.enableMultilingualTitle
+            cat.multilingualTitle=i?.item?.multilingualTitle
             cat.type=i?.type
 
             when(BaseConfiguration.instance.clients.getGateway()){

@@ -1653,7 +1653,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
     }
 
     @Override
-    public void moreRailClick(RailCommonData data, int position) {
+    public void moreRailClick(RailCommonData data, int position,String multilingualTitle) {
         if (data.getScreenWidget() != null && data.getScreenWidget().getContentID() != null) {
             String playListId = data.getScreenWidget().getContentID();
             String screenName = "";
