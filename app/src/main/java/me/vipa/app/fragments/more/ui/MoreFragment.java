@@ -466,19 +466,32 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                 mListener.onLoginClicked();
 
         } else if (caption.equals(getString(R.string.vipa_kids))) {
-            String  secondaryId  = new SharedPrefHelper(getActivity()).getSecondaryAccountId();
-            KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
-           String authToken=    preference.getAppPrefAccessToken();
-           switchUserApi(authToken,secondaryId,true);
+            if(loginStatus){
+                String  secondaryId  = new SharedPrefHelper(getActivity()).getSecondaryAccountId();
+                KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
+                String authToken=    preference.getAppPrefAccessToken();
+                switchUserApi(authToken,secondaryId,true);
+            }
+            else {
+                new SharedPrefHelper(getActivity()).saveKidsMode(true);
+                new ActivityLauncher(getActivity()).homeScreen(getActivity(), HomeActivity.class);
 
-
+            }
         }
 
         else if (caption.equals(getString(R.string.leave_kids))) {
-            String  primaryAccountId  = new SharedPrefHelper(getActivity()).getPrimaryAccountId();
-            KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
-            String authToken=    preference.getAppPrefAccessToken();
-            switchUserApi(authToken,primaryAccountId,false);
+            if(loginStatus){
+                String  primaryAccountId  = new SharedPrefHelper(getActivity()).getPrimaryAccountId();
+                KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
+                String authToken=    preference.getAppPrefAccessToken();
+                switchUserApi(authToken,primaryAccountId,false);
+
+            }
+            else {
+                new SharedPrefHelper(getActivity()).saveKidsMode(false);
+                new ActivityLauncher(getActivity()).homeScreen(getActivity(), HomeActivity.class);
+            }
+
 
         }
 
@@ -828,28 +841,38 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
             showLoading(getBinding().progressBar, true, getActivity());
             viewModel.hitSwitchUser(authToken,accountId).observe(getActivity(), switchUserDetails -> {
                 if (switchUserDetails!=null) {
-                    if(switchUserDetails.getResponseCode()==2000){
-                        if(vipaMode){
-                            new SharedPrefHelper(getActivity()).saveKidsMode(true);
-                            new ActivityLauncher(getActivity()).homeScreen(getActivity(), HomeActivity.class);
-                        }
-                        else {
-                            new SharedPrefHelper(getActivity()).saveKidsMode(false);
-                            new ActivityLauncher(getActivity()).homeScreen(getActivity(), HomeActivity.class);
+                     if(switchUserDetails.getResponseCode()!=null){
+                         if(switchUserDetails.getResponseCode()==2000){
+                             if(vipaMode){
+                                 new SharedPrefHelper(getActivity()).saveKidsMode(true);
+                                 new ActivityLauncher(getActivity()).homeScreen(getActivity(), HomeActivity.class);
+                             }
+                             else {
+                                 new SharedPrefHelper(getActivity()).saveKidsMode(false);
+                                 new ActivityLauncher(getActivity()).homeScreen(getActivity(), HomeActivity.class);
 
-                        }
-                    }
-                    else {
-                        if (switchUserDetails.getDebugMessage() != null) {
-                            dismissLoading(getBinding().progressBar, getActivity());
-                            showDialog(getActivity().getResources().getString(R.string.error), switchUserDetails.getDebugMessage().toString());
-                        } else {
-                            dismissLoading(getBinding().progressBar, getActivity());
-                            showDialog(getActivity().getResources().getString(R.string.error),getActivity().getResources().getString(R.string.something_went_wrong));
+                             }
+                         }
+                         else {
+                             if (switchUserDetails.getDebugMessage() != null) {
+                                 dismissLoading(getBinding().progressBar, getActivity());
+                                 showDialog(getActivity().getResources().getString(R.string.error), switchUserDetails.getDebugMessage().toString());
+                             } else {
+                                 dismissLoading(getBinding().progressBar, getActivity());
+                                 showDialog(getActivity().getResources().getString(R.string.error),getActivity().getResources().getString(R.string.something_went_wrong));
 
-                        }
+                             }
 
-                    }
+                         }
+                     }
+                     else {
+                         if (switchUserDetails.getDebugMessage() != null) {
+                             dismissLoading(getBinding().progressBar, getActivity());
+                             showDialog(getActivity().getResources().getString(R.string.error), switchUserDetails.getDebugMessage().toString());
+                         }
+
+                     }
+
 
 
 

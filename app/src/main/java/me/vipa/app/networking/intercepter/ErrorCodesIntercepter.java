@@ -604,7 +604,9 @@ public class ErrorCodesIntercepter {
                     responseModel.setDebugMessage("User must be logged in");
                 } else   {
 
-                    responseModel.setDebugMessage(MvHubPlusApplication.getInstance().getResources().getString(R.string.something_went_wrong_at_our_end));
+                    String errorMsg =  errorObject.getString("debugMessage");
+
+                    responseModel.setDebugMessage(errorMsg);
                 }
             }
 
@@ -630,7 +632,9 @@ public class ErrorCodesIntercepter {
                     responseModel.setDebugMessage("User must be logged in");
                 } else   {
 
-                    responseModel.setDebugMessage(MvHubPlusApplication.getInstance().getResources().getString(R.string.something_went_wrong_at_our_end));
+                    String errorMsg =  errorObject.getString("debugMessage");
+
+                    responseModel.setDebugMessage(errorMsg);
                 }
             }
 
@@ -655,7 +659,9 @@ public class ErrorCodesIntercepter {
                     responseModel.setDebugMessage("User must be logged in");
                 } else   {
 
-                    responseModel.setDebugMessage(MvHubPlusApplication.getInstance().getResources().getString(R.string.something_went_wrong_at_our_end));
+                 String errorMsg =  errorObject.getString("debugMessage");
+
+                    responseModel.setDebugMessage(errorMsg);
                 }
             }
 

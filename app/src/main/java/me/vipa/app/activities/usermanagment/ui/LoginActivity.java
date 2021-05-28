@@ -845,28 +845,39 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
             showLoading(getBinding().progressBar, true);
                 viewModel.hitAllSecondaryApi(LoginActivity.this,token).observe(LoginActivity.this, allSecondaryAccountDetails -> {
                     if(allSecondaryAccountDetails!=null ){
-                        if(allSecondaryAccountDetails.getData()!=null&& !allSecondaryAccountDetails.getData().isEmpty()){
-                            Log.e("allSecondaryAcco",new Gson().toJson(allSecondaryAccountDetails));
-                            String primaryAccountId="";
-                            String secondaryId="";
-                             for (int i=0;i<allSecondaryAccountDetails.getData().size();i++){
-                                 if(allSecondaryAccountDetails.getData().get(0).getKidsAccount()){
-                                     primaryAccountId=allSecondaryAccountDetails.getData().get(0).getPrimaryAccountRef().getAccountId();
-                                      secondaryId= allSecondaryAccountDetails.getData().get(0).getAccountId();
+                        if(allSecondaryAccountDetails.getResponseCode()!=null){
+                            if(allSecondaryAccountDetails.getData()!=null&& !allSecondaryAccountDetails.getData().isEmpty()){
+                                Log.e("allSecondaryAcco",new Gson().toJson(allSecondaryAccountDetails));
+                                String primaryAccountId="";
+                                String secondaryId="";
+                                for (int i=0;i<allSecondaryAccountDetails.getData().size();i++){
+                                    if(allSecondaryAccountDetails.getData().get(0).getKidsAccount()){
+                                        primaryAccountId=allSecondaryAccountDetails.getData().get(0).getPrimaryAccountRef().getAccountId();
+                                        secondaryId= allSecondaryAccountDetails.getData().get(0).getAccountId();
 
-                                 }
-                             }
-                            Log.e("alllistApiPrimaryid",primaryAccountId);
-                            Log.e("allListApiSecondid",secondaryId);
-                            new SharedPrefHelper(LoginActivity.this).savePrimaryAccountId(primaryAccountId);
-                            new SharedPrefHelper(LoginActivity.this).saveSecondaryAccountId(secondaryId);
-                             saveUserDetails(stringJson, id, true);
+                                    }
+                                }
+                                Log.e("alllistApiPrimaryid",primaryAccountId);
+                                Log.e("allListApiSecondid",secondaryId);
+                                new SharedPrefHelper(LoginActivity.this).savePrimaryAccountId(primaryAccountId);
+                                new SharedPrefHelper(LoginActivity.this).saveSecondaryAccountId(secondaryId);
+                                saveUserDetails(stringJson, id, true);
+                            }
+                            else {
+                                Log.e("allSecondaryEMPTY",new Gson().toJson(allSecondaryAccountDetails));
+                                addSecondaryUserApi(token,stringJson,id);
+
+                            }
+
                         }
                         else {
-                            Log.e("allSecondaryEMPTY",new Gson().toJson(allSecondaryAccountDetails));
-                            addSecondaryUserApi(token,stringJson,id);
+                            if (allSecondaryAccountDetails.getDebugMessage() != null) {
+                                dismissLoading(getBinding().progressBar);
+                                showDialog(LoginActivity.this.getResources().getString(R.string.error), allSecondaryAccountDetails.getDebugMessage().toString());
+                            }
 
                         }
+
                     }
                     else {
                         if (allSecondaryAccountDetails.getDebugMessage() != null) {
@@ -897,27 +908,39 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
         if (CheckInternetConnection.isOnline(LoginActivity.this)) {
             showLoading(getBinding().progressBar, true);
                 viewModel.hitSecondaryUser(token).observe(LoginActivity.this, secondaryUserDetails -> {
-                    if (Objects.requireNonNull(secondaryUserDetails).getResponseCode() == 2000) {
 
-                  String primaryAccountId= secondaryUserDetails.getData().getPrimaryAccountRef().getAccountId();
-                  String  secondaryAccountId=  secondaryUserDetails.getData().getAccountId();
-                  Log.e("addSecondaryApPrimaryid",primaryAccountId);
-                  Log.e("addSecondaryApiSecondid",secondaryAccountId);
-                  new SharedPrefHelper(LoginActivity.this).savePrimaryAccountId(primaryAccountId);
-                  new SharedPrefHelper(LoginActivity.this).saveSecondaryAccountId(secondaryAccountId);
-                  saveUserDetails(stringJson, id, true);
+                    if(secondaryUserDetails.getResponseCode()!=null) {
+                        if (Objects.requireNonNull(secondaryUserDetails).getResponseCode() == 2000) {
 
-                    } else {
-                        if (secondaryUserDetails.getDebugMessage() != null) {
-                            dismissLoading(getBinding().progressBar);
-                            showDialog(LoginActivity.this.getResources().getString(R.string.error), secondaryUserDetails.getDebugMessage().toString());
+                            String primaryAccountId= secondaryUserDetails.getData().getPrimaryAccountRef().getAccountId();
+                            String  secondaryAccountId=  secondaryUserDetails.getData().getAccountId();
+                            Log.e("addSecondaryApPrimaryid",primaryAccountId);
+                            Log.e("addSecondaryApiSecondid",secondaryAccountId);
+                            new SharedPrefHelper(LoginActivity.this).savePrimaryAccountId(primaryAccountId);
+                            new SharedPrefHelper(LoginActivity.this).saveSecondaryAccountId(secondaryAccountId);
+                            saveUserDetails(stringJson, id, true);
+
                         } else {
-                            dismissLoading(getBinding().progressBar);
-                            showDialog(LoginActivity.this.getResources().getString(R.string.error), LoginActivity.this.getResources().getString(R.string.something_went_wrong));
+                            if (secondaryUserDetails.getDebugMessage() != null) {
+                                dismissLoading(getBinding().progressBar);
+                                showDialog(LoginActivity.this.getResources().getString(R.string.error), secondaryUserDetails.getDebugMessage().toString());
+                            } else {
+                                dismissLoading(getBinding().progressBar);
+                                showDialog(LoginActivity.this.getResources().getString(R.string.error), LoginActivity.this.getResources().getString(R.string.something_went_wrong));
+
+                            }
 
                         }
 
                     }
+                    else {
+                        if (secondaryUserDetails.getDebugMessage() != null) {
+                            dismissLoading(getBinding().progressBar);
+                            showDialog(LoginActivity.this.getResources().getString(R.string.error), secondaryUserDetails.getDebugMessage().toString());
+                        }
+
+                    }
+
 
                 });
 

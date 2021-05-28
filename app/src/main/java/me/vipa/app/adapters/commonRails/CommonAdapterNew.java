@@ -43,6 +43,7 @@ import java.util.List;
 import me.vipa.app.beanModel.enveuCommonRailData.RailCommonData;
 import me.vipa.app.callbacks.commonCallbacks.CommonRailtItemClickListner;
 import me.vipa.app.callbacks.commonCallbacks.MoreClickListner;
+import me.vipa.app.utils.helpers.ksPreferenceKeys.KidsModeSinglton;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 
 import static me.vipa.app.utils.constants.AppConstants.ADS_BANNER;
@@ -73,6 +74,7 @@ public class CommonAdapterNew extends RecyclerView.Adapter<RecyclerView.ViewHold
     private List<RailCommonData> mList;
     private CommonRailtItemClickListner listner;
     private MoreClickListner moreClickListner;
+    private boolean kidsMode;
 
     public CommonAdapterNew(Context context, List<RailCommonData> mList, CommonRailtItemClickListner listner, MoreClickListner moreClickListner) {
         this.mContext = context;
@@ -102,6 +104,7 @@ public class CommonAdapterNew extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int position) {
+        kidsMode   = KidsModeSinglton.getInstance().aBoolean;
         Logger.e("position bind in", position + " ==>" + holder.getClass().getSimpleName());
         setFadeAnimation(holder.itemView);
         if (holder instanceof CarouselViewHolder) {
@@ -297,6 +300,26 @@ public class CommonAdapterNew extends RecyclerView.Adapter<RecyclerView.ViewHold
             headingRailsBinding.headingTitle.bringToFront();
 
             //TODO COLOURS
+          /*  if(kidsMode){
+                if(position==0){
+                    headingRailsBinding.headingTitle.setTextColor(mContext.getResources().getColor(R.color.orange_mustard));
+
+                }
+                else if(position==1){
+                    headingRailsBinding.headingTitle.setTextColor(mContext.getResources().getColor(R.color.ligh_blue));
+
+                }
+                else if(position==2){
+                    headingRailsBinding.headingTitle.setTextColor(mContext.getResources().getColor(R.color.light_green));
+
+                }
+                else if(position==3){
+                    headingRailsBinding.headingTitle.setTextColor(mContext.getResources().getColor(R.color.mustard_light));
+
+                }
+
+            }*/
+
 
             if (item.isContinueWatching()){
                 headingRailsBinding.headingTitle.setText((String) item.getScreenWidget().getName()+" "+mContext.getResources().getString(R.string.For)+" "+ KsPreferenceKeys.getInstance().getAppPrefUserName());

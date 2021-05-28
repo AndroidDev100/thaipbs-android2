@@ -50,6 +50,7 @@ import me.vipa.app.utils.cropImage.helpers.Logger;
 import me.vipa.app.utils.helpers.CheckInternetConnection;
 import me.vipa.app.utils.helpers.NetworkConnectivity;
 
+import me.vipa.app.utils.helpers.SharedPrefHelper;
 import me.vipa.app.utils.helpers.StringUtils;
 import me.vipa.app.utils.helpers.ToastHandler;
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
@@ -262,7 +263,9 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
                                 Gson gson = new Gson();
                                 preference.setAppPrefAccessToken(signupResponseAccessToken.getAccessToken());
                                 String stringJson = gson.toJson(signupResponseAccessToken.getResponseModel().getData());
-                                saveUserDetails(stringJson, signupResponseAccessToken.getResponseModel().getData().getId(), true);
+
+                             //   saveUserDetails(stringJson, signupResponseAccessToken.getResponseModel().getData().getId(), true);
+                                callAllSecondaryAccount(preference.getAppPrefAccessToken(),stringJson,signupResponseAccessToken.getResponseModel().getData().getId());
                                // onBackPressed();
                                 //new ActivityLauncher(SignUpActivity.this).homeScreen(SignUpActivity.this, HomeActivity.class);
                                 //finish();
@@ -757,6 +760,118 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
             callbackManager.onActivityResult(requestCode, resultCode, data);
         } catch (Exception e) {
             Logger.e("LoginActivity", "" + e.toString());
+
+        }
+    }
+
+    public void callAllSecondaryAccount(String token,String stringJson,int id) {
+        if (CheckInternetConnection.isOnline(SignUpActivity.this)) {
+            showLoading(getBinding().progressBar, true);
+            viewModel.hitAllSecondaryApi(SignUpActivity.this,token).observe(SignUpActivity.this, allSecondaryAccountDetails -> {
+                if(allSecondaryAccountDetails!=null ){
+                    if(allSecondaryAccountDetails.getResponseCode()!=null){
+                        if(allSecondaryAccountDetails.getData()!=null&& !allSecondaryAccountDetails.getData().isEmpty()){
+                            Log.e("allSecondaryAcco",new Gson().toJson(allSecondaryAccountDetails));
+                            String primaryAccountId="";
+                            String secondaryId="";
+                            for (int i=0;i<allSecondaryAccountDetails.getData().size();i++){
+                                if(allSecondaryAccountDetails.getData().get(0).getKidsAccount()){
+                                    primaryAccountId=allSecondaryAccountDetails.getData().get(0).getPrimaryAccountRef().getAccountId();
+                                    secondaryId= allSecondaryAccountDetails.getData().get(0).getAccountId();
+
+                                }
+                            }
+                            Log.e("alllistApiPrimaryid",primaryAccountId);
+                            Log.e("allListApiSecondid",secondaryId);
+                            new SharedPrefHelper(SignUpActivity.this).savePrimaryAccountId(primaryAccountId);
+                            new SharedPrefHelper(SignUpActivity.this).saveSecondaryAccountId(secondaryId);
+                            saveUserDetails(stringJson, id, true);
+
+                        }
+                        else {
+                            Log.e("allSecondaryEMPTY",new Gson().toJson(allSecondaryAccountDetails));
+                            addSecondaryUserApi(token,stringJson,id);
+
+                        }
+                    }
+                    else {
+                        if (allSecondaryAccountDetails.getDebugMessage() != null) {
+                            dismissLoading(getBinding().progressBar);
+                            showDialog(SignUpActivity.this.getResources().getString(R.string.error), allSecondaryAccountDetails.getDebugMessage().toString());
+                        }
+
+                    }
+
+                }
+                else {
+                    if (allSecondaryAccountDetails.getDebugMessage() != null) {
+                        dismissLoading(getBinding().progressBar);
+                        showDialog(SignUpActivity.this.getResources().getString(R.string.error), allSecondaryAccountDetails.getDebugMessage().toString());
+                    } else {
+                        dismissLoading(getBinding().progressBar);
+                        showDialog(SignUpActivity.this.getResources().getString(R.string.error), SignUpActivity.this.getResources().getString(R.string.something_went_wrong));
+
+                    }
+
+                }
+
+
+
+
+            });
+
+
+        } else {
+            connectionObserver();
+
+
+        }
+    }
+
+    public void addSecondaryUserApi( String token,String stringJson,int id) {
+        if (CheckInternetConnection.isOnline(SignUpActivity.this)) {
+            showLoading(getBinding().progressBar, true);
+            viewModel.hitSecondaryUser(token).observe(SignUpActivity.this, secondaryUserDetails -> {
+
+                if(secondaryUserDetails.getResponseCode()!=null){
+                    if (Objects.requireNonNull(secondaryUserDetails).getResponseCode() == 2000) {
+
+                        String primaryAccountId= secondaryUserDetails.getData().getPrimaryAccountRef().getAccountId();
+                        String  secondaryAccountId=  secondaryUserDetails.getData().getAccountId();
+                        Log.e("addSecondaryApPrimaryid",primaryAccountId);
+                        Log.e("addSecondaryApiSecondid",secondaryAccountId);
+                        new SharedPrefHelper(SignUpActivity.this).savePrimaryAccountId(primaryAccountId);
+                        new SharedPrefHelper(SignUpActivity.this).saveSecondaryAccountId(secondaryAccountId);
+                        saveUserDetails(stringJson, id, true);
+
+                    } else {
+                        if (secondaryUserDetails.getDebugMessage() != null) {
+                            dismissLoading(getBinding().progressBar);
+                            showDialog(SignUpActivity.this.getResources().getString(R.string.error), secondaryUserDetails.getDebugMessage().toString());
+                        } else {
+                            dismissLoading(getBinding().progressBar);
+                            showDialog(SignUpActivity.this.getResources().getString(R.string.error), SignUpActivity.this.getResources().getString(R.string.something_went_wrong));
+
+                        }
+
+                    }
+
+                }
+                else {
+                    if (secondaryUserDetails.getDebugMessage() != null) {
+                        dismissLoading(getBinding().progressBar);
+                        showDialog(SignUpActivity.this.getResources().getString(R.string.error), secondaryUserDetails.getDebugMessage().toString());
+                    }
+
+                }
+
+
+            });
+
+
+        } else {
+            connectionObserver();
+            // new ToastHandler(LoginActivity.this).show(LoginActivity.this.getResources().getString(R.string.no_internet_connection));
 
         }
     }
