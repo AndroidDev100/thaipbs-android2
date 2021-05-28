@@ -99,7 +99,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
     private Data modelLogin;
     private final List<String> permissionNeeds = Arrays.asList("email", "public_profile");
     private boolean isNotificationEnable = false;
-    String loginCallingFrom="";
+    String loginCallingFrom = "";
     private boolean isloggedout = false;
 
     @Override
@@ -110,7 +110,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // setupUI(getBinding().root);
+        // setupUI(getBinding().root);
         callBinding();
     }
 
@@ -120,10 +120,10 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
         getBinding().radioPasswordEye.setChecked(false);
         getBinding().confirmPasswordEye.setChecked(false);
         font = ResourcesCompat.getFont(SignUpActivity.this, sukhumvittadmai_normal);
-        loginCallingFrom=getIntent().getStringExtra("loginFrom");
-        if(loginCallingFrom.equalsIgnoreCase("OnBoarding")){
+        loginCallingFrom = getIntent().getStringExtra("loginFrom");
+        if (loginCallingFrom.equalsIgnoreCase("OnBoarding")) {
             getBinding().toolbar.backLayout.setVisibility(View.INVISIBLE);
-        }else {
+        } else {
             getBinding().toolbar.backLayout.setVisibility(View.VISIBLE);
         }
         getBinding().toolbar.titleToolbar.setVisibility(View.VISIBLE);
@@ -146,12 +146,12 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
         getBinding().termsPrivacyPolicies.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked)
-                { getBinding().llSignUp.setEnabled(true);
+                if (isChecked) {
+                    getBinding().llSignUp.setEnabled(true);
                     getBinding().llSignUp.getBackground().setAlpha(225);
                     getBinding().registerText.setTextColor(getResources().getColor(R.color.white));
 
-                }else{
+                } else {
                     getBinding().llSignUp.setEnabled(false);
                     getBinding().llSignUp.getBackground().setAlpha(128);
                     getBinding().registerText.setTextColor(getResources().getColor(R.color.greyTextColor));
@@ -181,7 +181,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
     @Override
     protected void onResume() {
         super.onResume();
-       // isFbLoginClick = false;
+        // isFbLoginClick = false;
         getBinding().llFooter.setVisibility(View.VISIBLE);
         dismissLoading(getBinding().progressBar);
         if (preference.getAppPrefLoginStatus().equalsIgnoreCase(AppConstants.UserStatus.Login.toString())) {
@@ -189,7 +189,6 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
         }
         //resetUI();
     }
-
 
 
     private void connectionObserver() {
@@ -246,7 +245,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
             mLastClickTime = SystemClock.elapsedRealtime();
 
             if (CheckInternetConnection.isOnline(SignUpActivity.this)) {
-                if (validateNameEmpty() && validateEmptyEmail() && validateEmail() && passwordCheck(getBinding().etPassword.getText().toString()) && confirmPasswordCheck(getBinding().etPassword.getText().toString(),getBinding().etCnfPassword.getText().toString())) {
+                if (validateNameEmpty() && validateEmptyEmail() && validateEmail() && passwordCheck(getBinding().etPassword.getText().toString()) && confirmPasswordCheck(getBinding().etPassword.getText().toString(), getBinding().etCnfPassword.getText().toString())) {
                     getBinding().errorName.setVisibility(View.INVISIBLE);
                     getBinding().errorEmail.setVisibility(View.INVISIBLE);
                     getBinding().errorPassword.setVisibility(View.INVISIBLE);
@@ -255,7 +254,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
 
                     preference.setAppPrefAccessToken("");
 
-                    viewModel.hitSignUpAPI(getBinding().etName.getText().toString(), getBinding().etEmail.getText().toString(), getBinding().etPassword.getText().toString(),isNotificationEnable).observe(SignUpActivity.this, signupResponseAccessToken -> {
+                    viewModel.hitSignUpAPI(getBinding().etName.getText().toString(), getBinding().etEmail.getText().toString(), getBinding().etPassword.getText().toString(), isNotificationEnable).observe(SignUpActivity.this, signupResponseAccessToken -> {
                         dismissLoading(getBinding().progressBar);
 
                         try {
@@ -264,9 +263,9 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
                                 preference.setAppPrefAccessToken(signupResponseAccessToken.getAccessToken());
                                 String stringJson = gson.toJson(signupResponseAccessToken.getResponseModel().getData());
 
-                             //   saveUserDetails(stringJson, signupResponseAccessToken.getResponseModel().getData().getId(), true);
-                                callAllSecondaryAccount(preference.getAppPrefAccessToken(),stringJson,signupResponseAccessToken.getResponseModel().getData().getId());
-                               // onBackPressed();
+                                //   saveUserDetails(stringJson, signupResponseAccessToken.getResponseModel().getData().getId(), true);
+                                callAllSecondaryAccount(preference.getAppPrefAccessToken(), stringJson, signupResponseAccessToken.getResponseModel().getData().getId());
+                                // onBackPressed();
                                 //new ActivityLauncher(SignUpActivity.this).homeScreen(SignUpActivity.this, HomeActivity.class);
                                 //finish();
 
@@ -297,7 +296,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
             }
             mLastClickTime = SystemClock.elapsedRealtime();
             finish();
-            startActivity(new Intent(SignUpActivity.this, LoginActivity.class).putExtra("loginFrom",loginCallingFrom));
+            startActivity(new Intent(SignUpActivity.this, LoginActivity.class).putExtra("loginFrom", loginCallingFrom));
         });
 
         getBinding().etName.setOnClickListener(view -> getBinding().errorName.setVisibility(View.INVISIBLE));
@@ -510,8 +509,6 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
         });
 
 
-
-
     }
 
     private void hitApiFBLogin() {
@@ -567,12 +564,12 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
         preference.setAppPrefUserName(String.valueOf(fbLoginData.getName()));
         preference.setAppPrefUserEmail(String.valueOf(fbLoginData.getEmail()));
         AppCommonMethod.userId = String.valueOf(fbLoginData.getId());
-       // onBackPressed();
-      //  new ActivityLauncher(SignUpActivity.this).onContentScreen(SignUpActivity.this, ContentPreference.class,isNotificationEnable);
+        // onBackPressed();
+        //  new ActivityLauncher(SignUpActivity.this).onContentScreen(SignUpActivity.this, ContentPreference.class,isNotificationEnable);
 //
-        if (isFbLoginClick){
+        if (isFbLoginClick) {
             callUpdateApi();
-        }else {
+        } else {
             new ActivityLauncher(SignUpActivity.this).onContentScreen(SignUpActivity.this, ContentPreference.class, isNotificationEnable);
         }
 
@@ -580,8 +577,8 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
         //new ActivityLauncher(SignUpActivity.this).homeScreen(SignUpActivity.this, HomeActivity.class);
 
         try {
-            trackEvent(String.valueOf(fbLoginData.getName()),String.valueOf(fbLoginData.getEmail()));
-        }catch (Exception e){
+            trackEvent(String.valueOf(fbLoginData.getName()), String.valueOf(fbLoginData.getEmail()));
+        } catch (Exception e) {
 
         }
     }
@@ -623,9 +620,9 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
 
     private void updateUI(UserProfileResponse userProfileResponse) {
 
-        if (userProfileResponse.getData().getCustomData().getContentPreferences()!=null && userProfileResponse.getData().getCustomData().getContentPreferences()!=""){
+        if (userProfileResponse.getData().getCustomData().getContentPreferences() != null && userProfileResponse.getData().getCustomData().getContentPreferences() != "") {
             onBackPressed();
-        }else {
+        } else {
             new ActivityLauncher(SignUpActivity.this).onContentScreen(SignUpActivity.this, ContentPreference.class, isNotificationEnable);
         }
     }
@@ -643,16 +640,16 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
         final JsonObject requestParam = new JsonObject();
         requestParam.addProperty(EventConstant.Name, name);
         requestParam.addProperty(EventConstant.PlatformType, type);
-        FCMEvents.getInstance().setContext(SignUpActivity.this).trackEvent(1,requestParam);
+        FCMEvents.getInstance().setContext(SignUpActivity.this).trackEvent(1, requestParam);
     }
 
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if(loginCallingFrom.equalsIgnoreCase("OnBoarding")){
+        if (loginCallingFrom.equalsIgnoreCase("OnBoarding")) {
             new ActivityLauncher(SignUpActivity.this).homeScreen(SignUpActivity.this, HomeActivity.class);
-        }else {
+        } else {
             new ActivityLauncher(SignUpActivity.this).loginActivity(SignUpActivity.this, LoginActivity.class);
         }
 
@@ -705,28 +702,27 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
 
 
     public boolean passwordCheck(String password) {
-       // String passwordRegex="^(?=.*[!&^%$#@()\\_+-])[A-Za-z0-9\\d!&^%$#@()\\_+-]{6,20}$";
+        // String passwordRegex="^(?=.*[!&^%$#@()\\_+-])[A-Za-z0-9\\d!&^%$#@()\\_+-]{6,20}$";
         boolean check = false;
-       // Pattern mPattern = Pattern.compile(passwordRegex);
-       // Matcher matcher = mPattern.matcher(password.toString());
-        if(!(password.length() >=6))
-        {
+        // Pattern mPattern = Pattern.compile(passwordRegex);
+        // Matcher matcher = mPattern.matcher(password.toString());
+        if (!(password.length() >= 6)) {
             getBinding().errorPassword.setVisibility(View.VISIBLE);
             getBinding().errorPassword.setText(getResources().getString(R.string.strong_password_required));
-          //  showDialog(SignUpActivity.this.getResources().getString(R.string.error), getResources().getString(R.string.strong_password_required));
-        }else {
+            //  showDialog(SignUpActivity.this.getResources().getString(R.string.error), getResources().getString(R.string.strong_password_required));
+        } else {
             getBinding().errorPassword.setVisibility(View.INVISIBLE);
             check = true;
         }
         return check;
     }
 
-    public boolean confirmPasswordCheck(String password, String confirmPassword){
+    public boolean confirmPasswordCheck(String password, String confirmPassword) {
         boolean check = false;
-        if (!password.equalsIgnoreCase(confirmPassword)){
+        if (!password.equalsIgnoreCase(confirmPassword)) {
             getBinding().errorCnfPassword.setVisibility(View.VISIBLE);
             getBinding().errorCnfPassword.setText(getResources().getString(R.string.confirm_pwd_not_match));
-        }else {
+        } else {
             getBinding().errorCnfPassword.setVisibility(View.INVISIBLE);
             check = true;
         }
@@ -749,7 +745,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
         super.onPause();
         if (isFbLoginClick)
             getBinding().llFooter.setVisibility(View.GONE);
-            getBinding().etPassword.setText("");
+        getBinding().etPassword.setText("");
     }
 
 
@@ -764,37 +760,35 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
         }
     }
 
-    public void callAllSecondaryAccount(String token,String stringJson,int id) {
+    public void callAllSecondaryAccount(String token, String stringJson, int id) {
         if (CheckInternetConnection.isOnline(SignUpActivity.this)) {
             showLoading(getBinding().progressBar, true);
-            viewModel.hitAllSecondaryApi(SignUpActivity.this,token).observe(SignUpActivity.this, allSecondaryAccountDetails -> {
-                if(allSecondaryAccountDetails!=null ){
-                    if(allSecondaryAccountDetails.getResponseCode()!=null){
-                        if(allSecondaryAccountDetails.getData()!=null&& !allSecondaryAccountDetails.getData().isEmpty()){
-                            Log.e("allSecondaryAcco",new Gson().toJson(allSecondaryAccountDetails));
-                            String primaryAccountId="";
-                            String secondaryId="";
-                            for (int i=0;i<allSecondaryAccountDetails.getData().size();i++){
-                                if(allSecondaryAccountDetails.getData().get(0).getKidsAccount()){
-                                    primaryAccountId=allSecondaryAccountDetails.getData().get(0).getPrimaryAccountRef().getAccountId();
-                                    secondaryId= allSecondaryAccountDetails.getData().get(0).getAccountId();
+            viewModel.hitAllSecondaryApi(SignUpActivity.this, token).observe(SignUpActivity.this, allSecondaryAccountDetails -> {
+                if (allSecondaryAccountDetails != null) {
+                    if (allSecondaryAccountDetails.getResponseCode() != null) {
+                        if (allSecondaryAccountDetails.getData() != null && !allSecondaryAccountDetails.getData().isEmpty()) {
+                            Log.e("allSecondaryAcco", new Gson().toJson(allSecondaryAccountDetails));
+                            String primaryAccountId = "";
+                            String secondaryId = "";
+                            for (int i = 0; i < allSecondaryAccountDetails.getData().size(); i++) {
+                                if (allSecondaryAccountDetails.getData().get(0).getKidsAccount()) {
+                                    primaryAccountId = allSecondaryAccountDetails.getData().get(0).getPrimaryAccountRef().getAccountId();
+                                    secondaryId = allSecondaryAccountDetails.getData().get(0).getAccountId();
 
                                 }
                             }
-                            Log.e("alllistApiPrimaryid",primaryAccountId);
-                            Log.e("allListApiSecondid",secondaryId);
+                            Log.e("alllistApiPrimaryid", primaryAccountId);
+                            Log.e("allListApiSecondid", secondaryId);
                             new SharedPrefHelper(SignUpActivity.this).savePrimaryAccountId(primaryAccountId);
                             new SharedPrefHelper(SignUpActivity.this).saveSecondaryAccountId(secondaryId);
                             saveUserDetails(stringJson, id, true);
 
-                        }
-                        else {
-                            Log.e("allSecondaryEMPTY",new Gson().toJson(allSecondaryAccountDetails));
-                            addSecondaryUserApi(token,stringJson,id);
+                        } else {
+                            Log.e("allSecondaryEMPTY", new Gson().toJson(allSecondaryAccountDetails));
+                            addSecondaryUserApi(token, stringJson, id);
 
                         }
-                    }
-                    else {
+                    } else {
                         if (allSecondaryAccountDetails.getDebugMessage() != null) {
                             dismissLoading(getBinding().progressBar);
                             showDialog(SignUpActivity.this.getResources().getString(R.string.error), allSecondaryAccountDetails.getDebugMessage().toString());
@@ -802,8 +796,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
 
                     }
 
-                }
-                else {
+                } else {
                     if (allSecondaryAccountDetails.getDebugMessage() != null) {
                         dismissLoading(getBinding().progressBar);
                         showDialog(SignUpActivity.this.getResources().getString(R.string.error), allSecondaryAccountDetails.getDebugMessage().toString());
@@ -816,8 +809,6 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
                 }
 
 
-
-
             });
 
 
@@ -828,18 +819,18 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
         }
     }
 
-    public void addSecondaryUserApi( String token,String stringJson,int id) {
+    public void addSecondaryUserApi(String token, String stringJson, int id) {
         if (CheckInternetConnection.isOnline(SignUpActivity.this)) {
             showLoading(getBinding().progressBar, true);
             viewModel.hitSecondaryUser(token).observe(SignUpActivity.this, secondaryUserDetails -> {
 
-                if(secondaryUserDetails.getResponseCode()!=null){
+                if (secondaryUserDetails.getResponseCode() != null) {
                     if (Objects.requireNonNull(secondaryUserDetails).getResponseCode() == 2000) {
 
-                        String primaryAccountId= secondaryUserDetails.getData().getPrimaryAccountRef().getAccountId();
-                        String  secondaryAccountId=  secondaryUserDetails.getData().getAccountId();
-                        Log.e("addSecondaryApPrimaryid",primaryAccountId);
-                        Log.e("addSecondaryApiSecondid",secondaryAccountId);
+                        String primaryAccountId = secondaryUserDetails.getData().getPrimaryAccountRef().getAccountId();
+                        String secondaryAccountId = secondaryUserDetails.getData().getAccountId();
+                        Log.e("addSecondaryApPrimaryid", primaryAccountId);
+                        Log.e("addSecondaryApiSecondid", secondaryAccountId);
                         new SharedPrefHelper(SignUpActivity.this).savePrimaryAccountId(primaryAccountId);
                         new SharedPrefHelper(SignUpActivity.this).saveSecondaryAccountId(secondaryAccountId);
                         saveUserDetails(stringJson, id, true);
@@ -856,8 +847,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
 
                     }
 
-                }
-                else {
+                } else {
                     if (secondaryUserDetails.getDebugMessage() != null) {
                         dismissLoading(getBinding().progressBar);
                         showDialog(SignUpActivity.this.getResources().getString(R.string.error), secondaryUserDetails.getDebugMessage().toString());

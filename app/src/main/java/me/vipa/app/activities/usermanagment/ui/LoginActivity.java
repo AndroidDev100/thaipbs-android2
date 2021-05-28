@@ -57,6 +57,7 @@ import me.vipa.app.utils.helpers.SharedPrefHelper;
 import me.vipa.app.utils.helpers.StringUtils;
 import me.vipa.app.utils.helpers.ToastHandler;
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
+
 import com.facebook.CallbackManager;
 import com.facebook.FacebookAuthorizationException;
 import com.facebook.FacebookCallback;
@@ -67,6 +68,7 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 
 import org.json.JSONException;
@@ -96,7 +98,7 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
     Bitmap bitmap;
     boolean isFbLoginClick = false;
     private KsPreferenceKeys preference;
-    private RegistrationLoginViewModel viewModel ;
+    private RegistrationLoginViewModel viewModel;
     private CallbackManager callbackManager;
     private String accessTokenFB;
     private String name = "", email = "", id = "";
@@ -154,9 +156,9 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
         getBinding().toolbar.backLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(loginCallingFrom.equalsIgnoreCase("OnBoarding")){
+                if (loginCallingFrom.equalsIgnoreCase("OnBoarding")) {
                     new ActivityLauncher(LoginActivity.this).signUpActivity(LoginActivity.this, SignUpActivity.class, loginCallingFrom);
-                }else {
+                } else {
                     onBackPressed();
                 }
             }
@@ -197,7 +199,6 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
             connectionObserver();
         });
     }
-
 
 
     public void connectObservors() {
@@ -277,7 +278,7 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
                                     response.toString());
                             try {
                                 id = object.getString("id");
-                               try {
+                                try {
                                     profile_pic = new URL(
                                             "https://graph.facebook.com/" + id + "/picture?type=large");
 
@@ -326,7 +327,7 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
             public void onError(FacebookException error) {
                 if (error instanceof FacebookAuthorizationException)
                     LoginManager.getInstance().logOut();
-               // Logger.e("LoginActivity", error.getCause().toString());
+                // Logger.e("LoginActivity", error.getCause().toString());
             }
         });
 
@@ -422,8 +423,8 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
                         Gson gson = new Gson();
                         modelLogin = loginResponseModelResponse.getData();
                         String stringJson = gson.toJson(loginResponseModelResponse.getData());
-                        callAllSecondaryAccount(preference.getAppPrefAccessToken(),stringJson,loginResponseModelResponse.getData().getId());
-                       // saveUserDetails(stringJson, loginResponseModelResponse.getData().getId(), true);
+                        callAllSecondaryAccount(preference.getAppPrefAccessToken(), stringJson, loginResponseModelResponse.getData().getId());
+                        // saveUserDetails(stringJson, loginResponseModelResponse.getData().getId(), true);
                     } else {
                         if (loginResponseModelResponse.getDebugMessage() != null) {
                             dismissLoading(getBinding().progressBar);
@@ -459,42 +460,41 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
 
     public void saveUserDetails(String response, int userID, boolean isManual) {
         try {
-        Data fbLoginData = new Gson().fromJson(response, Data.class);
-        Gson gson = new Gson();
-        String stringJson = gson.toJson(fbLoginData);
-        AppPreference.getInstance(this).clear();
-        counter = 0;
-        if (isManual)
-            preference.setAppPrefLoginType(AppConstants.UserLoginType.Manual.toString());
-        else
-            preference.setAppPrefLoginType(AppConstants.UserLoginType.FbLogin.toString());
-        preference.setAppPrefProfile(stringJson);
-        preference.setAppPrefLoginStatus(AppConstants.UserStatus.Login.toString());
-        preference.setAppPrefUserId(String.valueOf(fbLoginData.getId()));
-        preference.setAppPrefUserName(String.valueOf(fbLoginData.getName()));
-        preference.setAppPrefUserEmail(String.valueOf(fbLoginData.getEmail()));
-        AppCommonMethod.userId = String.valueOf(fbLoginData.getId());
-        String token = preference.getAppPrefAccessToken();
+            Data fbLoginData = new Gson().fromJson(response, Data.class);
+            Gson gson = new Gson();
+            String stringJson = gson.toJson(fbLoginData);
+            AppPreference.getInstance(this).clear();
+            counter = 0;
+            if (isManual)
+                preference.setAppPrefLoginType(AppConstants.UserLoginType.Manual.toString());
+            else
+                preference.setAppPrefLoginType(AppConstants.UserLoginType.FbLogin.toString());
+            preference.setAppPrefProfile(stringJson);
+            preference.setAppPrefLoginStatus(AppConstants.UserStatus.Login.toString());
+            preference.setAppPrefUserId(String.valueOf(fbLoginData.getId()));
+            preference.setAppPrefUserName(String.valueOf(fbLoginData.getName()));
+            preference.setAppPrefUserEmail(String.valueOf(fbLoginData.getEmail()));
+            AppCommonMethod.userId = String.valueOf(fbLoginData.getId());
+            String token = preference.getAppPrefAccessToken();
 
 
+            ////
+            if (loginCallingFrom.equalsIgnoreCase("home") && token != null && !token.equalsIgnoreCase("")) {
+                GetPlansLayer.getInstance().getEntitlementStatus(preference, token, new EntitlementStatus() {
+                    @Override
+                    public void entitlementStatus(boolean entitlementStatus, boolean apiStatus) {
+                        onBackPressed();
+                    }
+                });
+            } else {
+                onBackPressed();
+            }
+            ///
 
-        ////
-        if (loginCallingFrom.equalsIgnoreCase("home") && token != null && !token.equalsIgnoreCase("")) {
-            GetPlansLayer.getInstance().getEntitlementStatus(preference, token, new EntitlementStatus() {
-                @Override
-                public void entitlementStatus(boolean entitlementStatus, boolean apiStatus) {
-                    onBackPressed();
-                }
-            });
-        } else {
-            onBackPressed();
-        }
-        ///
+            trackEvent(String.valueOf(fbLoginData.getName()), isManual);
 
-        trackEvent(String.valueOf(fbLoginData.getName()), isManual);
-
-        }catch (Exception e){
-            Log.d("Exception",e.getMessage());
+        } catch (Exception e) {
+            Log.d("Exception", e.getMessage());
         }
 
         //new ActivityLauncher(LoginActivity.this).homeScreen(LoginActivity.this, HomeActivity.class);
@@ -548,12 +548,11 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
         boolean check = false;
         // Pattern mPattern = Pattern.compile(passwordRegex);
         // Matcher matcher = mPattern.matcher(password.toString());
-        if(!(getBinding().etPassword.length() >=6))
-        {
+        if (!(getBinding().etPassword.length() >= 6)) {
             getBinding().errorPassword.setVisibility(View.VISIBLE);
             getBinding().errorPassword.setText(getResources().getString(R.string.strong_password_required));
             //  showDialog(SignUpActivity.this.getResources().getString(R.string.error), getResources().getString(R.string.strong_password_required));
-        }else {
+        } else {
             getBinding().errorPassword.setVisibility(View.INVISIBLE);
             check = true;
         }
@@ -573,11 +572,11 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
     }
 
     public boolean passwordCheck(String password) {
-       // String passwordRegex = "^(?=.*[!&^%$#@()\\_+-])[A-Za-z0-9\\d!&^%$#@()\\_+-]{6,20}$";
+        // String passwordRegex = "^(?=.*[!&^%$#@()\\_+-])[A-Za-z0-9\\d!&^%$#@()\\_+-]{6,20}$";
         boolean check = false;
-      //  Pattern mPattern = Pattern.compile(passwordRegex);
-      //  Matcher matcher = mPattern.matcher(password.toString());
-        if (!(password.length() >=6)) {
+        //  Pattern mPattern = Pattern.compile(passwordRegex);
+        //  Matcher matcher = mPattern.matcher(password.toString());
+        if (!(password.length() >= 6)) {
             getBinding().errorPassword.setVisibility(View.VISIBLE);
             getBinding().errorPassword.setText(getResources().getString(R.string.strong_password_required));
             //showDialog(LoginActivity.this.getResources().getString(R.string.error), getResources().getString(R.string.strong_password_required));
@@ -833,68 +832,61 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
 
     @Override
     public void onBackPressed() {
-        if(loginCallingFrom.equalsIgnoreCase("OnBoarding")){
+        if (loginCallingFrom.equalsIgnoreCase("OnBoarding")) {
             new ActivityLauncher(LoginActivity.this).signUpActivity(LoginActivity.this, SignUpActivity.class, loginCallingFrom);
-        }else {
+        } else {
             super.onBackPressed();
         }
     }
 
-   public void callAllSecondaryAccount(String token,String stringJson,int id) {
+    public void callAllSecondaryAccount(String token, String stringJson, int id) {
         if (CheckInternetConnection.isOnline(LoginActivity.this)) {
             showLoading(getBinding().progressBar, true);
-                viewModel.hitAllSecondaryApi(LoginActivity.this,token).observe(LoginActivity.this, allSecondaryAccountDetails -> {
-                    if(allSecondaryAccountDetails!=null ){
-                        if(allSecondaryAccountDetails.getResponseCode()!=null){
-                            if(allSecondaryAccountDetails.getData()!=null&& !allSecondaryAccountDetails.getData().isEmpty()){
-                                Log.e("allSecondaryAcco",new Gson().toJson(allSecondaryAccountDetails));
-                                String primaryAccountId="";
-                                String secondaryId="";
-                                for (int i=0;i<allSecondaryAccountDetails.getData().size();i++){
-                                    if(allSecondaryAccountDetails.getData().get(0).getKidsAccount()){
-                                        primaryAccountId=allSecondaryAccountDetails.getData().get(0).getPrimaryAccountRef().getAccountId();
-                                        secondaryId= allSecondaryAccountDetails.getData().get(0).getAccountId();
-
-                                    }
+            viewModel.hitAllSecondaryApi(LoginActivity.this, token).observe(LoginActivity.this, allSecondaryAccountDetails -> {
+                if (allSecondaryAccountDetails != null) {
+                    if (allSecondaryAccountDetails.getResponseCode() != null) {
+                        if (allSecondaryAccountDetails.getData() != null && !allSecondaryAccountDetails.getData().isEmpty()) {
+                            Log.e("allSecondaryAcco", new Gson().toJson(allSecondaryAccountDetails));
+                            String primaryAccountId = "";
+                            String secondaryId = "";
+                            for (int i = 0; i < allSecondaryAccountDetails.getData().size(); i++) {
+                                if (allSecondaryAccountDetails.getData().get(0).getKidsAccount()) {
+                                    primaryAccountId = allSecondaryAccountDetails.getData().get(0).getPrimaryAccountRef().getAccountId();
+                                    secondaryId = allSecondaryAccountDetails.getData().get(0).getAccountId();
                                 }
-                                Log.e("alllistApiPrimaryid",primaryAccountId);
-                                Log.e("allListApiSecondid",secondaryId);
-                                new SharedPrefHelper(LoginActivity.this).savePrimaryAccountId(primaryAccountId);
-                                new SharedPrefHelper(LoginActivity.this).saveSecondaryAccountId(secondaryId);
-                                saveUserDetails(stringJson, id, true);
                             }
-                            else {
-                                Log.e("allSecondaryEMPTY",new Gson().toJson(allSecondaryAccountDetails));
-                                addSecondaryUserApi(token,stringJson,id);
-
-                            }
-
-                        }
-                        else {
-                            if (allSecondaryAccountDetails.getDebugMessage() != null) {
-                                dismissLoading(getBinding().progressBar);
-                                showDialog(LoginActivity.this.getResources().getString(R.string.error), allSecondaryAccountDetails.getDebugMessage().toString());
-                            }
-
+                            Log.e("alllistApiPrimaryid", primaryAccountId);
+                            Log.e("allListApiSecondid", secondaryId);
+                            new SharedPrefHelper(LoginActivity.this).savePrimaryAccountId(primaryAccountId);
+                            new SharedPrefHelper(LoginActivity.this).saveSecondaryAccountId(secondaryId);
+                            saveUserDetails(stringJson, id, true);
+                        } else {
+                            Log.e("allSecondaryEMPTY", new Gson().toJson(allSecondaryAccountDetails));
+                            addSecondaryUserApi(token, stringJson, id);
                         }
 
-                    }
-                    else {
+                    } else {
                         if (allSecondaryAccountDetails.getDebugMessage() != null) {
                             dismissLoading(getBinding().progressBar);
                             showDialog(LoginActivity.this.getResources().getString(R.string.error), allSecondaryAccountDetails.getDebugMessage().toString());
-                        } else {
-                            dismissLoading(getBinding().progressBar);
-                            showDialog(LoginActivity.this.getResources().getString(R.string.error), LoginActivity.this.getResources().getString(R.string.something_went_wrong));
-
                         }
 
                     }
 
+                } else {
+                    if (allSecondaryAccountDetails.getDebugMessage() != null) {
+                        dismissLoading(getBinding().progressBar);
+                        showDialog(LoginActivity.this.getResources().getString(R.string.error), allSecondaryAccountDetails.getDebugMessage().toString());
+                    } else {
+                        dismissLoading(getBinding().progressBar);
+                        showDialog(LoginActivity.this.getResources().getString(R.string.error), LoginActivity.this.getResources().getString(R.string.something_went_wrong));
+
+                    }
+
+                }
 
 
-
-                });
+            });
 
 
         } else {
@@ -904,45 +896,44 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
         }
     }
 
-    public void addSecondaryUserApi( String token,String stringJson,int id) {
+    public void addSecondaryUserApi(String token, String stringJson, int id) {
         if (CheckInternetConnection.isOnline(LoginActivity.this)) {
             showLoading(getBinding().progressBar, true);
-                viewModel.hitSecondaryUser(token).observe(LoginActivity.this, secondaryUserDetails -> {
+            viewModel.hitSecondaryUser(token).observe(LoginActivity.this, secondaryUserDetails -> {
 
-                    if(secondaryUserDetails.getResponseCode()!=null) {
-                        if (Objects.requireNonNull(secondaryUserDetails).getResponseCode() == 2000) {
+                if (secondaryUserDetails.getResponseCode() != null) {
+                    if (Objects.requireNonNull(secondaryUserDetails).getResponseCode() == 2000) {
 
-                            String primaryAccountId= secondaryUserDetails.getData().getPrimaryAccountRef().getAccountId();
-                            String  secondaryAccountId=  secondaryUserDetails.getData().getAccountId();
-                            Log.e("addSecondaryApPrimaryid",primaryAccountId);
-                            Log.e("addSecondaryApiSecondid",secondaryAccountId);
-                            new SharedPrefHelper(LoginActivity.this).savePrimaryAccountId(primaryAccountId);
-                            new SharedPrefHelper(LoginActivity.this).saveSecondaryAccountId(secondaryAccountId);
-                            saveUserDetails(stringJson, id, true);
+                        String primaryAccountId = secondaryUserDetails.getData().getPrimaryAccountRef().getAccountId();
+                        String secondaryAccountId = secondaryUserDetails.getData().getAccountId();
+                        Log.e("addSecondaryApPrimaryid", primaryAccountId);
+                        Log.e("addSecondaryApiSecondid", secondaryAccountId);
+                        new SharedPrefHelper(LoginActivity.this).savePrimaryAccountId(primaryAccountId);
+                        new SharedPrefHelper(LoginActivity.this).saveSecondaryAccountId(secondaryAccountId);
+                        saveUserDetails(stringJson, id, true);
 
-                        } else {
-                            if (secondaryUserDetails.getDebugMessage() != null) {
-                                dismissLoading(getBinding().progressBar);
-                                showDialog(LoginActivity.this.getResources().getString(R.string.error), secondaryUserDetails.getDebugMessage().toString());
-                            } else {
-                                dismissLoading(getBinding().progressBar);
-                                showDialog(LoginActivity.this.getResources().getString(R.string.error), LoginActivity.this.getResources().getString(R.string.something_went_wrong));
-
-                            }
-
-                        }
-
-                    }
-                    else {
+                    } else {
                         if (secondaryUserDetails.getDebugMessage() != null) {
                             dismissLoading(getBinding().progressBar);
                             showDialog(LoginActivity.this.getResources().getString(R.string.error), secondaryUserDetails.getDebugMessage().toString());
+                        } else {
+                            dismissLoading(getBinding().progressBar);
+                            showDialog(LoginActivity.this.getResources().getString(R.string.error), LoginActivity.this.getResources().getString(R.string.something_went_wrong));
+
                         }
 
                     }
 
+                } else {
+                    if (secondaryUserDetails.getDebugMessage() != null) {
+                        dismissLoading(getBinding().progressBar);
+                        showDialog(LoginActivity.this.getResources().getString(R.string.error), secondaryUserDetails.getDebugMessage().toString());
+                    }
 
-                });
+                }
+
+
+            });
 
 
         } else {
