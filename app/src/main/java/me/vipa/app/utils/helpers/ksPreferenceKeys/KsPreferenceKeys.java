@@ -34,6 +34,7 @@ public class KsPreferenceKeys extends SharedPrefHelper {
     public static final String FILTER_SELECTED_SORT_VALUE = "FILTER_SELECTED_SORT_VALUE";
     public static final String FILTER_APPLY = "FILTER_APPLY";
     public static final String KIDS_MODE_ID = "KIDS_MODE_ID";
+    public static final String OVP_BASE_URL = "OVP_BASE_URL";
 
 
 
@@ -473,7 +474,13 @@ public class KsPreferenceKeys extends SharedPrefHelper {
     }
 
 
+    public String getOVPBASEURL() {
+        return getString(OVP_BASE_URL, "");
+    }
 
+    public void setOVPBASEURL(String AppLanguage) {
+        setString(OVP_BASE_URL, AppLanguage);
+    }
 
 
 }

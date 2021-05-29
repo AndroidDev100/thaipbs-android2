@@ -300,6 +300,7 @@ public class SeasonTabFragment extends BaseBindingFragment<SeasonFragmentLayoutB
         railInjectionHelper.getEpisodeNoSeasonV2(seriesId, totalPages, 50, selectedSeason).observe(getActivity(), new Observer<ResponseModel>() {
             @Override
             public void onChanged(ResponseModel response) {
+                hideProgressBar();
                 if (response != null) {
                     if (response.getStatus().equalsIgnoreCase(APIStatus.START.name())) {
 
