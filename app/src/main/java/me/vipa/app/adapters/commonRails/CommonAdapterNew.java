@@ -81,7 +81,7 @@ public class CommonAdapterNew extends RecyclerView.Adapter<RecyclerView.ViewHold
     private MoreClickListner moreClickListner;
     private boolean kidsMode;
 
-    private int value = 0;
+    private int value = 1;
 
     public CommonAdapterNew(Context context, List<RailCommonData> mList, CommonRailtItemClickListner listner, MoreClickListner moreClickListner) {
         this.mContext = context;
@@ -316,6 +316,23 @@ public class CommonAdapterNew extends RecyclerView.Adapter<RecyclerView.ViewHold
                 setMultiLingTitle(item, headingRailsBinding);
                 // headingRailsBinding.headingTitle.setText((String) item.getScreenWidget().getName());
             }
+            if (kidsMode) {
+                if (value == 1) {
+                    headingRailsBinding.headingTitle.setTextColor(mContext.getResources().getColor(R.color.orange_mustard));
+                    value++;
+                } else if (value == 2) {
+                    headingRailsBinding.headingTitle.setTextColor(mContext.getResources().getColor(R.color.ligh_blue));
+                    value++;
+                }
+                else if (value == 3) {
+                    headingRailsBinding.headingTitle.setTextColor(mContext.getResources().getColor(R.color.light_green));
+                    value++;
+                } else if (value == 4) {
+                    headingRailsBinding.headingTitle.setTextColor(mContext.getResources().getColor(R.color.mustard_light));
+                    value = 1;
+                }
+
+            }
 
 
         } else {
@@ -355,29 +372,6 @@ public class CommonAdapterNew extends RecyclerView.Adapter<RecyclerView.ViewHold
         } else {
             headingRailsBinding.moreText.setVisibility(View.GONE);
             headingRailsBinding.mainHeaderTitle.setVisibility(View.GONE);
-        }
-
-        if (kidsMode) {
-            for (int i = 0; i < item.getEnveuVideoItemBeans().size(); i++) {
-                if (value == 4) {
-                    value = 0;
-                } else {
-                    if (value == 0) {
-                        headingRailsBinding.headingTitle.setTextColor(mContext.getResources().getColor(R.color.orange_mustard));
-                        value++;
-                    } else if (value == 1) {
-                        headingRailsBinding.headingTitle.setTextColor(mContext.getResources().getColor(R.color.ligh_blue));
-                        value++;
-                    } else if (value == 2) {
-                        headingRailsBinding.headingTitle.setTextColor(mContext.getResources().getColor(R.color.light_green));
-                        value++;
-                    } else if (value == 3) {
-                        headingRailsBinding.headingTitle.setTextColor(mContext.getResources().getColor(R.color.mustard_light));
-                        value++;
-                    }
-                }
-            }
-
         }
 
 

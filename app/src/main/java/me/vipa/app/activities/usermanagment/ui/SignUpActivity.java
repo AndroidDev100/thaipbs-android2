@@ -523,7 +523,9 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
                         Gson gson = new Gson();
                         modelLogin = loginResponseModelResponse.getData();
                         String stringJson = gson.toJson(loginResponseModelResponse.getData());
-                        saveUserDetails(stringJson, loginResponseModelResponse.getData().getId(), false);
+                        callAllSecondaryAccount(preference.getAppPrefAccessToken(), stringJson, loginResponseModelResponse.getData().getId());
+
+                       // saveUserDetails(stringJson, loginResponseModelResponse.getData().getId(), false);
                     } else if (loginResponseModelResponse.getResponseCode() == 403) {
                         new ActivityLauncher(SignUpActivity.this).forceLogin(SignUpActivity.this, ForceLoginFbActivity.class, accessTokenFB, id, name, String.valueOf(profile_pic));
                     } else {

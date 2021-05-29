@@ -132,7 +132,7 @@ class NetworkSetup {
             val original = chain.request()
             // Request customization: add request headers
             val requestBuilder = original.newBuilder()
-                    .addHeader("x-api-key", BaseConfiguration.instance.clients.getOVPApiKey())
+                    .addHeader("x-api-key", BaseConfiguration.instance.clients!!.getOVPApiKey())
                     .addHeader("x-auth",token)
             val request = requestBuilder.build()
 
@@ -147,7 +147,9 @@ class NetworkSetup {
         val client = httpClient.build()
 
         kidsModeManagementRetrofit = Retrofit.Builder()
-                .baseUrl("https://subscription.beta.enveu.com:443/app/api/")
+               // .baseUrl("https://subscription.beta.enveu.com:443/app/api/")
+                //.baseUrl("https://subscription.beta.enveu.com/app/api/")
+                .baseUrl(BaseConfiguration.instance.clients!!.getUserMngmntBaseUrl())
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(client)
@@ -158,7 +160,6 @@ class NetworkSetup {
     }
 
     fun kidsModeSecondaryUsers(token:String): Retrofit {
-
         val loggingInterceptor = HttpLoggingInterceptor()
         if (BuildConfig.DEBUG)
             loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
@@ -170,7 +171,7 @@ class NetworkSetup {
             val original = chain.request()
             // Request customization: add request headers
             val requestBuilder = original.newBuilder()
-                    .addHeader("x-api-key", BaseConfiguration.instance.clients.getOVPApiKey())
+                    .addHeader("x-api-key", BaseConfiguration.instance.clients!!.getOVPApiKey())
                     .addHeader("x-auth",token)
             val request = requestBuilder.build()
 
@@ -185,7 +186,8 @@ class NetworkSetup {
         val client = httpClient.build()
 
         kidsModeManagementRetrofit = Retrofit.Builder()
-                .baseUrl("https://subscription.beta.enveu.com/app/api/")
+                //.baseUrl("https://subscription.beta.enveu.com/app/api/")
+                .baseUrl(BaseConfiguration.instance.clients!!.getUserMngmntBaseUrl())
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(client)
