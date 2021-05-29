@@ -31,12 +31,15 @@ import me.vipa.app.activities.homeactivity.viewmodel.HomeViewModel;
 import me.vipa.app.activities.notification.ui.NotificationActivity;
 import me.vipa.app.activities.onBoarding.UI.OnBoardingTab;
 import me.vipa.app.activities.profile.ui.ProfileActivityNew;
+import me.vipa.app.activities.purchase.callBack.EntitlementStatus;
+import me.vipa.app.activities.purchase.planslayer.GetPlansLayer;
 import me.vipa.app.activities.redeemcoupon.RedeemCouponActivity;
 import me.vipa.app.activities.search.ui.FilterIconActivity;
 import me.vipa.app.activities.settings.ActivitySettings;
 import me.vipa.app.activities.splash.ui.ActivitySplash;
 import me.vipa.app.activities.usermanagment.ui.ChangePasswordActivity;
 import me.vipa.app.activities.usermanagment.ui.LoginActivity;
+import me.vipa.app.activities.usermanagment.viewmodel.RegistrationLoginViewModel;
 import me.vipa.app.activities.watchList.ui.WatchListActivity;
 import me.vipa.app.baseModels.BaseBindingFragment;
 import me.vipa.app.beanModel.userProfile.UserProfileResponse;
@@ -101,6 +104,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
     private List<String> mListKidsMode;
     private AppSyncBroadcast appSyncBroadcast;
     private HomeViewModel viewModel;
+    private RegistrationLoginViewModel registrationLoginViewModel;
     private boolean flagLogIn;
     private boolean flagVerify;
     private long mLastClickTime = 0;
@@ -117,6 +121,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
         super.onActivityCreated(savedInstanceState);
         res = getResources();
         FacebookSdk.sdkInitialize(getActivity());
+
 //
 //        ((HomeActivity) Objects.requireNonNull(getActivity())).updateApi(click -> {
 //            if (click) {
@@ -219,6 +224,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
     private void modelCall() {
 
         viewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(HomeViewModel.class);
+        registrationLoginViewModel = ViewModelProviders.of(getActivity()).get(RegistrationLoginViewModel.class);
 
         String[] label1 = getActivity().getResources().getStringArray(R.array.more_with_verify);
         String[] label2 = getActivity().getResources().getStringArray(R.array.more_with_login);
@@ -468,9 +474,16 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
         } else if (caption.equals(getString(R.string.vipa_kids))) {
             if(loginStatus){
                 String  secondaryId  = new SharedPrefHelper(getActivity()).getSecondaryAccountId();
-                KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
-                String authToken=    preference.getAppPrefAccessToken();
-                switchUserApi(authToken,secondaryId,true);
+                if(secondaryId!=null && !secondaryId.isEmpty()){
+                    KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
+                    String authToken=    preference.getAppPrefAccessToken();
+                    switchUserApi(authToken,secondaryId,true);
+                }
+                else {
+                    KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
+                    String authToken=    preference.getAppPrefAccessToken();
+                    callAllSecondaryAccount(authToken,true);
+                }
             }
             else {
                 new SharedPrefHelper(getActivity()).saveKidsMode(true);
@@ -482,9 +495,18 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
         else if (caption.equals(getString(R.string.leave_kids))) {
             if(loginStatus){
                 String  primaryAccountId  = new SharedPrefHelper(getActivity()).getPrimaryAccountId();
-                KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
-                String authToken=    preference.getAppPrefAccessToken();
-                switchUserApi(authToken,primaryAccountId,false);
+                if(primaryAccountId!=null && !primaryAccountId.isEmpty()){
+                    KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
+                    String authToken=    preference.getAppPrefAccessToken();
+                    switchUserApi(authToken,primaryAccountId,false);
+                }
+                else {
+                    KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
+                    String authToken=    preference.getAppPrefAccessToken();
+                    callAllSecondaryAccount(authToken,false);
+
+                }
+
 
             }
             else {
@@ -843,6 +865,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                 if (switchUserDetails!=null) {
                      if(switchUserDetails.getResponseCode()!=null){
                          if(switchUserDetails.getResponseCode()==2000){
+                             dismissLoading(getBinding().progressBar, getActivity());
                              if(vipaMode){
                                  new SharedPrefHelper(getActivity()).saveKidsMode(true);
                                  new ActivityLauncher(getActivity()).homeScreen(getActivity(), HomeActivity.class);
@@ -901,6 +924,150 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
         }
     }
 
+    public void callAllSecondaryAccount(String token,boolean vipaMode) {
+        if (CheckInternetConnection.isOnline(getActivity())) {
+            showLoading(getBinding().progressBar, true, getActivity());
+            registrationLoginViewModel.hitAllSecondaryApi(getActivity(), token).observe(getActivity(), allSecondaryAccountDetails -> {
+                if (allSecondaryAccountDetails != null) {
+                    if (allSecondaryAccountDetails.getResponseCode() != null) {
+                        if (Objects.requireNonNull(allSecondaryAccountDetails).getResponseCode() == 2000) {
+                            if (allSecondaryAccountDetails.getData() != null && !allSecondaryAccountDetails.getData().isEmpty()) {
+                                Log.e("allSecondaryAcco", new Gson().toJson(allSecondaryAccountDetails));
+                                String primaryAccountId = "";
+                                String secondaryId = "";
+                                for (int i = 0; i < allSecondaryAccountDetails.getData().size(); i++) {
+                                    if (allSecondaryAccountDetails.getData().get(0).getKidsAccount()) {
+                                        primaryAccountId = allSecondaryAccountDetails.getData().get(0).getPrimaryAccountRef().getAccountId();
+                                        secondaryId = allSecondaryAccountDetails.getData().get(0).getAccountId();
+                                    }
+                                }
+                                Log.e("alllistApiPrimaryid", primaryAccountId);
+                                Log.e("allListApiSecondid", secondaryId);
+                                new SharedPrefHelper(getActivity()).savePrimaryAccountId(primaryAccountId);
+                                new SharedPrefHelper(getActivity()).saveSecondaryAccountId(secondaryId);
+                                if(vipaMode){
+                                    switchUserApi(token,secondaryId,vipaMode);
 
+                                }
+                                else {
+                                    switchUserApi(token,primaryAccountId,vipaMode);
+
+                                }
+
+
+                            } else {
+                                Log.e("allSecondaryEMPTY", new Gson().toJson(allSecondaryAccountDetails));
+                                addSecondaryUserApi(token,vipaMode);
+                            }
+
+                        }
+                        else {
+                            if (allSecondaryAccountDetails.getDebugMessage() != null) {
+                                dismissLoading(getBinding().progressBar, getActivity());
+                                showDialog(getActivity().getResources().getString(R.string.error), allSecondaryAccountDetails.getDebugMessage().toString());
+                            } else {
+                                dismissLoading(getBinding().progressBar, getActivity());
+                                showDialog(getActivity().getResources().getString(R.string.error),getActivity().getResources().getString(R.string.something_went_wrong));
+
+                            }
+
+                        }
+
+                    } else {
+                        if (allSecondaryAccountDetails.getDebugMessage() != null) {
+                            dismissLoading(getBinding().progressBar, getActivity());
+                            showDialog(getActivity().getResources().getString(R.string.error), allSecondaryAccountDetails.getDebugMessage().toString());
+                        } else {
+                            dismissLoading(getBinding().progressBar, getActivity());
+                            showDialog(getActivity().getResources().getString(R.string.error),getActivity().getResources().getString(R.string.something_went_wrong));
+
+                        }
+
+                    }
+
+                } else {
+                    if (allSecondaryAccountDetails.getDebugMessage() != null) {
+                        dismissLoading(getBinding().progressBar, getActivity());
+                        showDialog(getActivity().getResources().getString(R.string.error), allSecondaryAccountDetails.getDebugMessage().toString());
+                    } else {
+                        dismissLoading(getBinding().progressBar, getActivity());
+                        showDialog(getActivity().getResources().getString(R.string.error),getActivity().getResources().getString(R.string.something_went_wrong));
+
+                    }
+
+                }
+
+
+            });
+
+
+        } else {
+            dismissLoading(getBinding().progressBar, getActivity());
+
+            new ToastHandler(getActivity()).show(getActivity().getResources().getString(R.string.no_internet_connection));
+
+
+        }
+    }
+    public void addSecondaryUserApi(String token,boolean vipaMode) {
+        if (CheckInternetConnection.isOnline(getActivity())) {
+            showLoading(getBinding().progressBar, true, getActivity());
+            registrationLoginViewModel.hitSecondaryUser(token).observe(getActivity(), secondaryUserDetails -> {
+
+                if (secondaryUserDetails.getResponseCode() != null) {
+                    if (Objects.requireNonNull(secondaryUserDetails).getResponseCode() == 2000) {
+
+                        String primaryAccountId = secondaryUserDetails.getData().getPrimaryAccountRef().getAccountId();
+                        String secondaryAccountId = secondaryUserDetails.getData().getAccountId();
+                        Log.e("addSecondaryApPrimaryid", primaryAccountId);
+                        Log.e("addSecondaryApiSecondid", secondaryAccountId);
+                        new SharedPrefHelper(getActivity()).savePrimaryAccountId(primaryAccountId);
+                        new SharedPrefHelper(getActivity()).saveSecondaryAccountId(secondaryAccountId);
+                        if(vipaMode){
+                            switchUserApi(token,secondaryAccountId,true);
+
+                        }
+                        else {
+                            switchUserApi(token,primaryAccountId,false);
+
+                        }
+
+
+                    } else {
+                        if (secondaryUserDetails.getDebugMessage() != null) {
+                            dismissLoading(getBinding().progressBar, getActivity());
+                            showDialog(getActivity().getResources().getString(R.string.error), secondaryUserDetails.getDebugMessage().toString());
+                        } else {
+                            dismissLoading(getBinding().progressBar, getActivity());
+                            showDialog(getActivity().getResources().getString(R.string.error),getActivity().getResources().getString(R.string.something_went_wrong));
+
+                        }
+
+                    }
+
+                } else {
+                    if (secondaryUserDetails.getDebugMessage() != null) {
+                        dismissLoading(getBinding().progressBar, getActivity());
+                        showDialog(getActivity().getResources().getString(R.string.error), secondaryUserDetails.getDebugMessage().toString());
+                    } else {
+                        dismissLoading(getBinding().progressBar, getActivity());
+                        showDialog(getActivity().getResources().getString(R.string.error),getActivity().getResources().getString(R.string.something_went_wrong));
+
+                    }
+
+                }
+
+
+            });
+
+
+        } else {
+            dismissLoading(getBinding().progressBar, getActivity());
+
+            new ToastHandler(getActivity()).show(getActivity().getResources().getString(R.string.no_internet_connection));
+            // new ToastHandler(LoginActivity.this).show(LoginActivity.this.getResources().getString(R.string.no_internet_connection));
+
+        }
+    }
 
 }

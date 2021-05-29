@@ -398,8 +398,8 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
                         Gson gson = new Gson();
                         modelLogin = loginResponseModelResponse.getData();
                         String stringJson = gson.toJson(loginResponseModelResponse.getData());
-                        callAllSecondaryAccount(preference.getAppPrefAccessToken(), stringJson, loginResponseModelResponse.getData().getId());
-                       // saveUserDetails(stringJson, loginResponseModelResponse.getData().getId(), false);
+                        saveUserDetails(stringJson, loginResponseModelResponse.getData().getId(), false);
+
                     } else if (loginResponseModelResponse.getResponseCode() == 403) {
                         new ActivityLauncher(LoginActivity.this).forceLogin(LoginActivity.this, ForceLoginFbActivity.class, accessTokenFB, id, name, String.valueOf(profile_pic));
                     } else {
@@ -424,8 +424,8 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
                         Gson gson = new Gson();
                         modelLogin = loginResponseModelResponse.getData();
                         String stringJson = gson.toJson(loginResponseModelResponse.getData());
-                        callAllSecondaryAccount(preference.getAppPrefAccessToken(), stringJson, loginResponseModelResponse.getData().getId());
-                        // saveUserDetails(stringJson, loginResponseModelResponse.getData().getId(), true);
+                        saveUserDetails(stringJson, loginResponseModelResponse.getData().getId(), true);
+
                     } else {
                         if (loginResponseModelResponse.getDebugMessage() != null) {
                             dismissLoading(getBinding().progressBar);
@@ -476,21 +476,11 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
             preference.setAppPrefUserName(String.valueOf(fbLoginData.getName()));
             preference.setAppPrefUserEmail(String.valueOf(fbLoginData.getEmail()));
             AppCommonMethod.userId = String.valueOf(fbLoginData.getId());
-            String token = preference.getAppPrefAccessToken();
+          //  String token = preference.getAppPrefAccessToken();
+
+            callAllSecondaryAccount(preference.getAppPrefAccessToken());
 
 
-            ////
-            if (loginCallingFrom.equalsIgnoreCase("home") && token != null && !token.equalsIgnoreCase("")) {
-                GetPlansLayer.getInstance().getEntitlementStatus(preference, token, new EntitlementStatus() {
-                    @Override
-                    public void entitlementStatus(boolean entitlementStatus, boolean apiStatus) {
-                        onBackPressed();
-                    }
-                });
-            } else {
-                onBackPressed();
-            }
-            ///
 
             trackEvent(String.valueOf(fbLoginData.getName()), isManual);
 
@@ -840,7 +830,7 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
         }
     }
 
-    public void callAllSecondaryAccount(String token, String stringJson, int id) {
+    public void callAllSecondaryAccount(String token) {
         if (CheckInternetConnection.isOnline(LoginActivity.this)) {
             showLoading(getBinding().progressBar, true);
             viewModel.hitAllSecondaryApi(LoginActivity.this, token).observe(LoginActivity.this, allSecondaryAccountDetails -> {
@@ -861,38 +851,70 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
                                 Log.e("allListApiSecondid", secondaryId);
                                 new SharedPrefHelper(LoginActivity.this).savePrimaryAccountId(primaryAccountId);
                                 new SharedPrefHelper(LoginActivity.this).saveSecondaryAccountId(secondaryId);
-                                saveUserDetails(stringJson, id, true);
+                                ////
+                                if (loginCallingFrom.equalsIgnoreCase("home") && token != null && !token.equalsIgnoreCase("")) {
+                                    GetPlansLayer.getInstance().getEntitlementStatus(preference, token, new EntitlementStatus() {
+                                        @Override
+                                        public void entitlementStatus(boolean entitlementStatus, boolean apiStatus) {
+                                            onBackPressed();
+                                        }
+                                    });
+                                } else {
+                                    onBackPressed();
+                                }
+                                ///
+                               // saveUserDetails(stringJson, id, true);
                             } else {
                                 Log.e("allSecondaryEMPTY", new Gson().toJson(allSecondaryAccountDetails));
-                                addSecondaryUserApi(token, stringJson, id);
+                                addSecondaryUserApi(token);
                             }
 
                         }
                         else {
-                            if (allSecondaryAccountDetails.getDebugMessage() != null) {
-                                dismissLoading(getBinding().progressBar);
-                                showDialog(LoginActivity.this.getResources().getString(R.string.error), allSecondaryAccountDetails.getDebugMessage().toString());
+                            ////
+                            if (loginCallingFrom.equalsIgnoreCase("home") && token != null && !token.equalsIgnoreCase("")) {
+                                GetPlansLayer.getInstance().getEntitlementStatus(preference, token, new EntitlementStatus() {
+                                    @Override
+                                    public void entitlementStatus(boolean entitlementStatus, boolean apiStatus) {
+                                        onBackPressed();
+                                    }
+                                });
+                            } else {
+                                onBackPressed();
                             }
+                            ///
 
                         }
 
                     } else {
-                        if (allSecondaryAccountDetails.getDebugMessage() != null) {
-                            dismissLoading(getBinding().progressBar);
-                            showDialog(LoginActivity.this.getResources().getString(R.string.error), allSecondaryAccountDetails.getDebugMessage().toString());
+                        ////
+                        if (loginCallingFrom.equalsIgnoreCase("home") && token != null && !token.equalsIgnoreCase("")) {
+                            GetPlansLayer.getInstance().getEntitlementStatus(preference, token, new EntitlementStatus() {
+                                @Override
+                                public void entitlementStatus(boolean entitlementStatus, boolean apiStatus) {
+                                    onBackPressed();
+                                }
+                            });
+                        } else {
+                            onBackPressed();
                         }
+                        ///
 
                     }
 
                 } else {
-                    if (allSecondaryAccountDetails.getDebugMessage() != null) {
-                        dismissLoading(getBinding().progressBar);
-                        showDialog(LoginActivity.this.getResources().getString(R.string.error), allSecondaryAccountDetails.getDebugMessage().toString());
+                    ////
+                    if (loginCallingFrom.equalsIgnoreCase("home") && token != null && !token.equalsIgnoreCase("")) {
+                        GetPlansLayer.getInstance().getEntitlementStatus(preference, token, new EntitlementStatus() {
+                            @Override
+                            public void entitlementStatus(boolean entitlementStatus, boolean apiStatus) {
+                                onBackPressed();
+                            }
+                        });
                     } else {
-                        dismissLoading(getBinding().progressBar);
-                        showDialog(LoginActivity.this.getResources().getString(R.string.error), LoginActivity.this.getResources().getString(R.string.something_went_wrong));
-
+                        onBackPressed();
                     }
+                    ///
 
                 }
 
@@ -907,7 +929,7 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
         }
     }
 
-    public void addSecondaryUserApi(String token, String stringJson, int id) {
+    public void addSecondaryUserApi(String token) {
         if (CheckInternetConnection.isOnline(LoginActivity.this)) {
             showLoading(getBinding().progressBar, true);
             viewModel.hitSecondaryUser(token).observe(LoginActivity.this, secondaryUserDetails -> {
@@ -921,25 +943,49 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
                         Log.e("addSecondaryApiSecondid", secondaryAccountId);
                         new SharedPrefHelper(LoginActivity.this).savePrimaryAccountId(primaryAccountId);
                         new SharedPrefHelper(LoginActivity.this).saveSecondaryAccountId(secondaryAccountId);
-                        saveUserDetails(stringJson, id, true);
+                        ////
+                        if (loginCallingFrom.equalsIgnoreCase("home") && token != null && !token.equalsIgnoreCase("")) {
+                            GetPlansLayer.getInstance().getEntitlementStatus(preference, token, new EntitlementStatus() {
+                                @Override
+                                public void entitlementStatus(boolean entitlementStatus, boolean apiStatus) {
+                                    onBackPressed();
+                                }
+                            });
+                        } else {
+                            onBackPressed();
+                        }
+                        ///
+                       // saveUserDetails(stringJson, id, true);
 
                     } else {
-                        if (secondaryUserDetails.getDebugMessage() != null) {
-                            dismissLoading(getBinding().progressBar);
-                            showDialog(LoginActivity.this.getResources().getString(R.string.error), secondaryUserDetails.getDebugMessage().toString());
+                        ////
+                        if (loginCallingFrom.equalsIgnoreCase("home") && token != null && !token.equalsIgnoreCase("")) {
+                            GetPlansLayer.getInstance().getEntitlementStatus(preference, token, new EntitlementStatus() {
+                                @Override
+                                public void entitlementStatus(boolean entitlementStatus, boolean apiStatus) {
+                                    onBackPressed();
+                                }
+                            });
                         } else {
-                            dismissLoading(getBinding().progressBar);
-                            showDialog(LoginActivity.this.getResources().getString(R.string.error), LoginActivity.this.getResources().getString(R.string.something_went_wrong));
-
+                            onBackPressed();
                         }
+                        ///
 
                     }
 
                 } else {
-                    if (secondaryUserDetails.getDebugMessage() != null) {
-                        dismissLoading(getBinding().progressBar);
-                        showDialog(LoginActivity.this.getResources().getString(R.string.error), secondaryUserDetails.getDebugMessage().toString());
+                    ////
+                    if (loginCallingFrom.equalsIgnoreCase("home") && token != null && !token.equalsIgnoreCase("")) {
+                        GetPlansLayer.getInstance().getEntitlementStatus(preference, token, new EntitlementStatus() {
+                            @Override
+                            public void entitlementStatus(boolean entitlementStatus, boolean apiStatus) {
+                                onBackPressed();
+                            }
+                        });
+                    } else {
+                        onBackPressed();
                     }
+                    ///
 
                 }
 

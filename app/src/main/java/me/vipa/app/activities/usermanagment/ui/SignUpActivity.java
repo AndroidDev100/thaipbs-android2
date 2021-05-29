@@ -262,9 +262,8 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
                                 Gson gson = new Gson();
                                 preference.setAppPrefAccessToken(signupResponseAccessToken.getAccessToken());
                                 String stringJson = gson.toJson(signupResponseAccessToken.getResponseModel().getData());
+                                saveUserDetails(stringJson, signupResponseAccessToken.getResponseModel().getData().getId(), true);
 
-                                //   saveUserDetails(stringJson, signupResponseAccessToken.getResponseModel().getData().getId(), true);
-                                callAllSecondaryAccount(preference.getAppPrefAccessToken(), stringJson, signupResponseAccessToken.getResponseModel().getData().getId());
                                 // onBackPressed();
                                 //new ActivityLauncher(SignUpActivity.this).homeScreen(SignUpActivity.this, HomeActivity.class);
                                 //finish();
@@ -523,9 +522,9 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
                         Gson gson = new Gson();
                         modelLogin = loginResponseModelResponse.getData();
                         String stringJson = gson.toJson(loginResponseModelResponse.getData());
-                        callAllSecondaryAccount(preference.getAppPrefAccessToken(), stringJson, loginResponseModelResponse.getData().getId());
+                        saveUserDetails(stringJson, loginResponseModelResponse.getData().getId(), false);
 
-                       // saveUserDetails(stringJson, loginResponseModelResponse.getData().getId(), false);
+
                     } else if (loginResponseModelResponse.getResponseCode() == 403) {
                         new ActivityLauncher(SignUpActivity.this).forceLogin(SignUpActivity.this, ForceLoginFbActivity.class, accessTokenFB, id, name, String.valueOf(profile_pic));
                     } else {
@@ -566,14 +565,13 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
         preference.setAppPrefUserName(String.valueOf(fbLoginData.getName()));
         preference.setAppPrefUserEmail(String.valueOf(fbLoginData.getEmail()));
         AppCommonMethod.userId = String.valueOf(fbLoginData.getId());
+
+        callAllSecondaryAccount(preference.getAppPrefAccessToken());
+
         // onBackPressed();
         //  new ActivityLauncher(SignUpActivity.this).onContentScreen(SignUpActivity.this, ContentPreference.class,isNotificationEnable);
 //
-        if (isFbLoginClick) {
-            callUpdateApi();
-        } else {
-            new ActivityLauncher(SignUpActivity.this).onContentScreen(SignUpActivity.this, ContentPreference.class, isNotificationEnable);
-        }
+
 
 
         //new ActivityLauncher(SignUpActivity.this).homeScreen(SignUpActivity.this, HomeActivity.class);
@@ -762,7 +760,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
         }
     }
 
-    public void callAllSecondaryAccount(String token, String stringJson, int id) {
+    public void callAllSecondaryAccount(String token) {
         if (CheckInternetConnection.isOnline(SignUpActivity.this)) {
             showLoading(getBinding().progressBar, true);
             viewModel.hitAllSecondaryApi(SignUpActivity.this, token).observe(SignUpActivity.this, allSecondaryAccountDetails -> {
@@ -783,29 +781,32 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
                             Log.e("allListApiSecondid", secondaryId);
                             new SharedPrefHelper(SignUpActivity.this).savePrimaryAccountId(primaryAccountId);
                             new SharedPrefHelper(SignUpActivity.this).saveSecondaryAccountId(secondaryId);
-                            saveUserDetails(stringJson, id, true);
+                            if (isFbLoginClick) {
+                                callUpdateApi();
+                            } else {
+                                new ActivityLauncher(SignUpActivity.this).onContentScreen(SignUpActivity.this, ContentPreference.class, isNotificationEnable);
+                            }
+                            //saveUserDetails(stringJson, id, true);
 
                         } else {
                             Log.e("allSecondaryEMPTY", new Gson().toJson(allSecondaryAccountDetails));
-                            addSecondaryUserApi(token, stringJson, id);
+                            addSecondaryUserApi(token);
 
                         }
                     } else {
-                        if (allSecondaryAccountDetails.getDebugMessage() != null) {
-                            dismissLoading(getBinding().progressBar);
-                            showDialog(SignUpActivity.this.getResources().getString(R.string.error), allSecondaryAccountDetails.getDebugMessage().toString());
+                        if (isFbLoginClick) {
+                            callUpdateApi();
+                        } else {
+                            new ActivityLauncher(SignUpActivity.this).onContentScreen(SignUpActivity.this, ContentPreference.class, isNotificationEnable);
                         }
 
                     }
 
                 } else {
-                    if (allSecondaryAccountDetails.getDebugMessage() != null) {
-                        dismissLoading(getBinding().progressBar);
-                        showDialog(SignUpActivity.this.getResources().getString(R.string.error), allSecondaryAccountDetails.getDebugMessage().toString());
+                    if (isFbLoginClick) {
+                        callUpdateApi();
                     } else {
-                        dismissLoading(getBinding().progressBar);
-                        showDialog(SignUpActivity.this.getResources().getString(R.string.error), SignUpActivity.this.getResources().getString(R.string.something_went_wrong));
-
+                        new ActivityLauncher(SignUpActivity.this).onContentScreen(SignUpActivity.this, ContentPreference.class, isNotificationEnable);
                     }
 
                 }
@@ -821,7 +822,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
         }
     }
 
-    public void addSecondaryUserApi(String token, String stringJson, int id) {
+    public void addSecondaryUserApi(String token) {
         if (CheckInternetConnection.isOnline(SignUpActivity.this)) {
             showLoading(getBinding().progressBar, true);
             viewModel.hitSecondaryUser(token).observe(SignUpActivity.this, secondaryUserDetails -> {
@@ -835,24 +836,26 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
                         Log.e("addSecondaryApiSecondid", secondaryAccountId);
                         new SharedPrefHelper(SignUpActivity.this).savePrimaryAccountId(primaryAccountId);
                         new SharedPrefHelper(SignUpActivity.this).saveSecondaryAccountId(secondaryAccountId);
-                        saveUserDetails(stringJson, id, true);
+                        if (isFbLoginClick) {
+                            callUpdateApi();
+                        } else {
+                            new ActivityLauncher(SignUpActivity.this).onContentScreen(SignUpActivity.this, ContentPreference.class, isNotificationEnable);
+                        }
+                       // saveUserDetails(stringJson, id, true);
 
                     } else {
-                        if (secondaryUserDetails.getDebugMessage() != null) {
-                            dismissLoading(getBinding().progressBar);
-                            showDialog(SignUpActivity.this.getResources().getString(R.string.error), secondaryUserDetails.getDebugMessage().toString());
+                        if (isFbLoginClick) {
+                            callUpdateApi();
                         } else {
-                            dismissLoading(getBinding().progressBar);
-                            showDialog(SignUpActivity.this.getResources().getString(R.string.error), SignUpActivity.this.getResources().getString(R.string.something_went_wrong));
-
+                            new ActivityLauncher(SignUpActivity.this).onContentScreen(SignUpActivity.this, ContentPreference.class, isNotificationEnable);
                         }
-
                     }
 
                 } else {
-                    if (secondaryUserDetails.getDebugMessage() != null) {
-                        dismissLoading(getBinding().progressBar);
-                        showDialog(SignUpActivity.this.getResources().getString(R.string.error), secondaryUserDetails.getDebugMessage().toString());
+                    if (isFbLoginClick) {
+                        callUpdateApi();
+                    } else {
+                        new ActivityLauncher(SignUpActivity.this).onContentScreen(SignUpActivity.this, ContentPreference.class, isNotificationEnable);
                     }
 
                 }
