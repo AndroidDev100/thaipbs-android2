@@ -363,7 +363,7 @@ public class CommonAdapterNew extends RecyclerView.Adapter<RecyclerView.ViewHold
                     value = 0;
                 } else {
                     if (value == 0) {
-                        headingRailsBinding.headingTitle.setTextColor(mContext.getResources().getColor(R.color.ripple_effect_dark_color));
+                        headingRailsBinding.headingTitle.setTextColor(mContext.getResources().getColor(R.color.orange_mustard));
                         value++;
                     } else if (value == 1) {
                         headingRailsBinding.headingTitle.setTextColor(mContext.getResources().getColor(R.color.ligh_blue));
