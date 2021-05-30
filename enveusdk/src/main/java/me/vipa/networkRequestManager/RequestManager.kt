@@ -379,8 +379,8 @@ class RequestManager {
     fun addSecondaryUsersCall(allListCallBack: SecondaryUserCallBack,token: String) {
         val endPoint = NetworkSetup().kidsModeSecondaryUsers(token).create<EnveuEndpoints>(EnveuEndpoints::class.java)
         val requestParam = JsonObject()
-        requestParam.addProperty("name", "Profile 1")
-        requestParam.addProperty("kidsAccount", true)
+        requestParam.addProperty("name","Profile 1")
+        requestParam.addProperty("kidsAccount",true)
 
 
         var gson = Gson()
