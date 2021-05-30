@@ -27,6 +27,7 @@ import me.vipa.app.baseModels.BaseBindingFragment;
 import me.vipa.app.enums.DownloadStatus;
 import me.vipa.app.utils.MediaTypeConstants;
 import me.vipa.app.utils.helpers.ActivityTrackers;
+import me.vipa.app.utils.helpers.SharedPrefHelper;
 import me.vipa.app.utils.helpers.downloads.OnDownloadClickInteraction;
 import me.vipa.app.R;
 import me.vipa.app.activities.detail.ui.DetailActivity;
@@ -78,6 +79,7 @@ public class UserInteractionFragment extends BaseBindingFragment<DetailWatchlist
      */
     private Video video;
     private String seriesId;
+    private boolean kidsMode;
 
 
     public UserInteractionFragment() {
@@ -117,6 +119,15 @@ public class UserInteractionFragment extends BaseBindingFragment<DetailWatchlist
             if (context instanceof LiveActivity) {
                 getBinding().watchList.setVisibility(View.GONE);
                 getBinding().llLike.setVisibility(View.GONE);
+            }
+
+            kidsMode  = new SharedPrefHelper(context).getKidsMode();
+            String isLogins = preference.getAppPrefLoginStatus();
+
+            if( !isLogins.equalsIgnoreCase(AppConstants.UserStatus.Login.toString()) && kidsMode ){
+                getBinding().watchList.setVisibility(View.GONE);
+                getBinding().llLike.setVisibility(View.GONE);
+                getBinding().download.setVisibility(View.GONE);
             }
 
         } catch (Exception e) {

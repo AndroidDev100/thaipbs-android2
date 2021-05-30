@@ -40,6 +40,7 @@ import com.brightcove.player.offline.MediaDownloadable;
 import com.mmtv.utils.helpers.downloads.DownloadHelper;
 import me.vipa.app.activities.downloads.NetworkHelper;
 import me.vipa.app.activities.downloads.WifiPreferenceListener;
+import me.vipa.app.activities.homeactivity.ui.HomeActivity;
 import me.vipa.app.activities.series.viewmodel.SeriesViewModel;
 import me.vipa.app.activities.usermanagment.ui.LoginActivity;
 import me.vipa.app.baseModels.BaseBindingActivity;
@@ -77,6 +78,8 @@ import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+
+import me.vipa.app.utils.helpers.ksPreferenceKeys.KidsModeSinglton;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 
 import org.jetbrains.annotations.NotNull;
@@ -128,6 +131,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
     private UserInteractionFragment userInteractionFragment;
     private ArrayList<DownloadedEpisodes> downloadableEpisodes;
     private boolean mFlag = false;
+    private boolean kidsMode;
 
     @Override
     public ActivitySeriesDetailBinding inflateBindingLayout(@NonNull LayoutInflater inflater) {
@@ -149,6 +153,8 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
         } else {
             tabId = SDKConfig.getInstance().getSeriesDetailId();
         }
+
+
 
         setupUI(getBinding().llParent);
         seriesId = getIntent().getIntExtra("seriesId", 0);
@@ -280,6 +286,18 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
         isLogin = preference.getAppPrefLoginStatus();
         token = preference.getAppPrefAccessToken();
         viewModel = ViewModelProviders.of(this).get(SeriesViewModel.class);
+
+        kidsMode  = new SharedPrefHelper(SeriesDetailActivity.this).getKidsMode();
+
+
+        if( !isLogin.equalsIgnoreCase(AppConstants.UserStatus.Login.toString()) && kidsMode ){
+            getBinding().interactionSection.watchList.setVisibility(View.GONE);
+            getBinding().interactionSection.llLike.setVisibility(View.GONE);
+            getBinding().interactionSection.download.setVisibility(View.GONE);
+        }
+
+
+
         if (isLogin.equalsIgnoreCase(AppConstants.UserStatus.Login.toString())) {
             AppUserModel signInResponseModel = AppUserModel.getInstance();
             if (signInResponseModel != null) {

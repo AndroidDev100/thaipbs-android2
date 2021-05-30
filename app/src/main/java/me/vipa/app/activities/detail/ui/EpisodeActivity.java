@@ -53,6 +53,7 @@ import com.brightcove.player.network.DownloadStatus;
 import com.brightcove.player.offline.MediaDownloadable;
 import com.brightcove.player.pictureinpicture.PictureInPictureManager;
 
+import me.vipa.app.activities.series.ui.SeriesDetailActivity;
 import me.vipa.app.utils.helpers.ADHelper;
 import me.vipa.app.utils.helpers.downloads.MediaTypeCheck;
 import me.vipa.bookmarking.bean.GetBookmarkResponse;
@@ -204,6 +205,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
     Bundle extras;
     private boolean isOfflineAvailable = false;
     private boolean isCastConnected = false;
+
 
     public static void closeActivity() {
     }
@@ -878,6 +880,8 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
 
 
         showLoading(getBinding().progressBar, false);
+
+
 
         if (isLogin.equalsIgnoreCase(AppConstants.UserStatus.Login.toString())) {
             AppUserModel signInResponseModel = AppUserModel.getInstance();
