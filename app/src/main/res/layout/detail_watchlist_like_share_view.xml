@@ -151,9 +151,7 @@
                 android:id="@+id/download"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
-                android:orientation="vertical"
-                android:visibility='@{isDownloadable ? View.VISIBLE : View.GONE,default="gone"}'>
+                android:orientation="vertical">
 
 
                 <ImageView
@@ -251,3 +249,5 @@
 
     </LinearLayout>
 </layout>
+<!--
+    android:visibility='@{isDownloadable ? View.VISIBLE : View.GONE}-->

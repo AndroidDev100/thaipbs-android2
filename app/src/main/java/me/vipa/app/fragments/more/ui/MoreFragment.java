@@ -4,6 +4,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkCapabilities;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.text.format.DateFormat;
@@ -76,7 +79,11 @@ import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.net.HttpURLConnection;
+import java.net.InetAddress;
+import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -859,7 +866,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
     }
 
     public void switchUserApi( String authToken,String accountId,boolean vipaMode) {
-        if (CheckInternetConnection.isOnline(getActivity())) {
+        if (NetworkConnectivity.isOnline(getActivity()) && isNetworkAvailable(getActivity())) {
             showLoading(getBinding().progressBar, true, getActivity());
             viewModel.hitSwitchUser(authToken,accountId).observe(getActivity(), switchUserDetails -> {
                 if (switchUserDetails!=null) {
@@ -877,7 +884,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                              }
                          }
                          else {
-                             if (switchUserDetails.getDebugMessage() != null) {
+                             if (switchUserDetails.getDebugMessage() != null && !switchUserDetails.getDebugMessage().equals("")) {
                                  dismissLoading(getBinding().progressBar, getActivity());
                                  showDialog(getActivity().getResources().getString(R.string.error), switchUserDetails.getDebugMessage().toString());
                              } else {
@@ -889,9 +896,13 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                          }
                      }
                      else {
-                         if (switchUserDetails.getDebugMessage() != null) {
+                         if (switchUserDetails.getDebugMessage() != null && !switchUserDetails.getDebugMessage().equals("")) {
                              dismissLoading(getBinding().progressBar, getActivity());
                              showDialog(getActivity().getResources().getString(R.string.error), switchUserDetails.getDebugMessage().toString());
+                         } else {
+                             dismissLoading(getBinding().progressBar, getActivity());
+                             showDialog(getActivity().getResources().getString(R.string.error),getActivity().getResources().getString(R.string.something_went_wrong));
+
                          }
 
                      }
@@ -901,7 +912,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
 
 
                 } else {
-                    if (switchUserDetails.getDebugMessage() != null) {
+                    if (switchUserDetails.getDebugMessage() != null && !switchUserDetails.getDebugMessage().equals("")) {
                         dismissLoading(getBinding().progressBar, getActivity());
                         showDialog(getActivity().getResources().getString(R.string.error), switchUserDetails.getDebugMessage().toString());
                     } else {
@@ -1010,7 +1021,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
         }
     }
     public void addSecondaryUserApi(String token,boolean vipaMode) {
-        if (CheckInternetConnection.isOnline(getActivity())) {
+        if (CheckInternetConnection.isOnline(getActivity() )) {
             showLoading(getBinding().progressBar, true, getActivity());
             registrationLoginViewModel.hitSecondaryUser(token).observe(getActivity(), secondaryUserDetails -> {
 
@@ -1068,6 +1079,24 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
             // new ToastHandler(LoginActivity.this).show(LoginActivity.this.getResources().getString(R.string.no_internet_connection));
 
         }
+    }public boolean isNetworkAvailable(Context context) {
+        boolean isOnline = false;
+        ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        try {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                NetworkCapabilities capabilities = manager.getNetworkCapabilities(manager.getActiveNetwork());
+                isOnline = capabilities != null && capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED);
+            } else {
+                NetworkInfo activeNetworkInfo = manager.getActiveNetworkInfo();
+                isOnline = activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return isOnline;
     }
+
+
+
 
 }
