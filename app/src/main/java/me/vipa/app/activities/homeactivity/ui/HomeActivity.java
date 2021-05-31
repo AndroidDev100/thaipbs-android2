@@ -321,7 +321,8 @@ public class HomeActivity extends BaseBindingActivity<ActivityMainBinding> imple
         if(kidsMode){
             getBinding().toolbar.rlToolBar.setBackgroundColor(HomeActivity.this.getResources().getColor(R.color.ligh_blue ));
             getBinding().toolbar.homeIcon.setBackground(HomeActivity.this.getResources().getDrawable(R.drawable.vipa_logo_kids));
-            getBinding().toolbar.homeIcon.getLayoutParams().height = 100;
+            getBinding().toolbar.homeIcon.getLayoutParams().height = 90;
+            getBinding().toolbar.homeIcon.getLayoutParams().width = 280;
             getBinding().toolbar.homeIcon.requestLayout();
 
             navigation.getMenu().findItem(R.id.navigation_originals).setVisible(false);
@@ -331,8 +332,6 @@ public class HomeActivity extends BaseBindingActivity<ActivityMainBinding> imple
         else {
             getBinding().toolbar.rlToolBar.setBackgroundColor(HomeActivity.this.getResources().getColor(R.color.black));
             getBinding().toolbar.homeIcon.setBackground(HomeActivity.this.getResources().getDrawable(R.drawable.vipalogo180));
-            getBinding().toolbar.homeIcon.getLayoutParams().height = 80;
-            getBinding().toolbar.homeIcon.requestLayout();
             navigation.getMenu().findItem(R.id.navigation_originals).setVisible(true);
             navigation.getMenu().findItem(R.id.navigation_premium).setVisible(true);
             navigation.getMenu().findItem(R.id.navigation_sinetron).setVisible(true);

@@ -237,6 +237,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
         String[] label2 = getActivity().getResources().getStringArray(R.array.more_with_login);
         String[] label3 = getActivity().getResources().getStringArray(R.array.more_logout);
         String[] label4 = getActivity().getResources().getStringArray(R.array.more_kids_mode_login);
+        String[] label6 = getActivity().getResources().getStringArray(R.array.more_kids_mode_login_watchlist_condition);
         String[] label5 = getActivity().getResources().getStringArray(R.array.more_kids_mode_logout);
 
 
@@ -258,7 +259,15 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
         }
 
         if(isLogin.equalsIgnoreCase(AppConstants.UserStatus.Login.toString())){
-            mListKidsMode.addAll(Arrays.asList(label4));
+            if(isLogin.equalsIgnoreCase(AppConstants.UserStatus.Login.toString()) && isKidsMode){
+                mListKidsMode.addAll(Arrays.asList(label6));
+
+            }
+            else {
+                mListKidsMode.addAll(Arrays.asList(label4));
+
+            }
+
         }
         else {
             mListKidsMode.addAll(Arrays.asList(label5));
@@ -1023,7 +1032,8 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
     public void addSecondaryUserApi(String token,boolean vipaMode) {
         if (CheckInternetConnection.isOnline(getActivity() )) {
             showLoading(getBinding().progressBar, true, getActivity());
-            registrationLoginViewModel.hitSecondaryUser(token).observe(getActivity(), secondaryUserDetails -> {
+            String userName=KsPreferenceKeys.getInstance().getAppPrefUserName();
+            registrationLoginViewModel.hitSecondaryUser(token,userName).observe(getActivity(), secondaryUserDetails -> {
 
                 if (secondaryUserDetails.getResponseCode() != null) {
                     if (Objects.requireNonNull(secondaryUserDetails).getResponseCode() == 2000) {

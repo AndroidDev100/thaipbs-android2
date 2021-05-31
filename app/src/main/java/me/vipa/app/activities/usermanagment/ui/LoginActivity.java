@@ -932,7 +932,9 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
     public void addSecondaryUserApi(String token) {
         if (CheckInternetConnection.isOnline(LoginActivity.this)) {
             showLoading(getBinding().progressBar, true);
-            viewModel.hitSecondaryUser(token).observe(LoginActivity.this, secondaryUserDetails -> {
+
+         String userName=KsPreferenceKeys.getInstance().getAppPrefUserName();
+            viewModel.hitSecondaryUser(token,userName).observe(LoginActivity.this, secondaryUserDetails -> {
 
                 if (secondaryUserDetails.getResponseCode() != null) {
                     if (Objects.requireNonNull(secondaryUserDetails).getResponseCode() == 2000) {

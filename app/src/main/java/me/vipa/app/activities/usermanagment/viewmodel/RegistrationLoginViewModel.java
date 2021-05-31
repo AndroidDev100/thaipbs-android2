@@ -38,8 +38,8 @@ public class RegistrationLoginViewModel extends AndroidViewModel {
         return loginRepository.getSecondaryAPIResponse(context,token);
     }
 
-    public LiveData<SecondaryUserDetailsJavaPojo> hitSecondaryUser(String token) {
-        return loginRepository.getSecondaryUserAPIReponse(token);
+    public LiveData<SecondaryUserDetailsJavaPojo> hitSecondaryUser(String token, String userName) {
+        return loginRepository.getSecondaryUserAPIReponse(token,userName);
     }
 
     public LiveData<SignupResponseAccessToken> hitSignUpAPI(String name, String userName, String pwd, boolean isNotificationEnable) {

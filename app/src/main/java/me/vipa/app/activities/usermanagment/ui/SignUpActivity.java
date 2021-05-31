@@ -825,7 +825,8 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
     public void addSecondaryUserApi(String token) {
         if (CheckInternetConnection.isOnline(SignUpActivity.this)) {
             showLoading(getBinding().progressBar, true);
-            viewModel.hitSecondaryUser(token).observe(SignUpActivity.this, secondaryUserDetails -> {
+            String userName=KsPreferenceKeys.getInstance().getAppPrefUserName();
+            viewModel.hitSecondaryUser(token,userName).observe(SignUpActivity.this, secondaryUserDetails -> {
 
                 if (secondaryUserDetails.getResponseCode() != null) {
                     if (Objects.requireNonNull(secondaryUserDetails).getResponseCode() == 2000) {

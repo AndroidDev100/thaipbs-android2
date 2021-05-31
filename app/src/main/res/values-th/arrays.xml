@@ -69,6 +69,19 @@
         <item>ข้อกำหนดและเงื่อนไข</item>
         <item>นโยบายความเป็นส่วนตัว</item>
     </string-array>
+    <string-array name="more_kids_mode_login_watchlist_condition">
+        <item>ออกจากคิดส์โหมด</item>
+        <item>รายการโปรดของฉัน</item>
+        <item>ประวัติการรับชม</item>
+        <item>ติดต่อเรา</item>
+        <item>คำถามที่พบบ่อย</item>
+        <item>เกี่ยวกับเรา</item>
+        <item>ข้อเสนอแนะ</item>
+        <item>แอปพลิเคชันอื่น ๆ</item>
+        <item>ข้อกำหนดและเงื่อนไข</item>
+        <item>นโยบายความเป็นส่วนตัว</item>
+
+    </string-array>
     <string-array name="more_kids_mode_logout">
         <item>ออกจากคิดส์โหมด</item>
         <item>ติดต่อเรา</item>

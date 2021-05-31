@@ -79,7 +79,7 @@ public class CommonAdapterNew extends RecyclerView.Adapter<RecyclerView.ViewHold
     private List<RailCommonData> mList;
     private CommonRailtItemClickListner listner;
     private MoreClickListner moreClickListner;
-    private boolean kidsMode;
+   // private boolean kidsMode;
 
     private int value = 1;
 
@@ -111,7 +111,6 @@ public class CommonAdapterNew extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int position) {
-        kidsMode = KidsModeSinglton.getInstance().aBoolean;
         Logger.e("position bind in", position + " ==>" + holder.getClass().getSimpleName());
         setFadeAnimation(holder.itemView);
         if (holder instanceof CarouselViewHolder) {
@@ -316,7 +315,7 @@ public class CommonAdapterNew extends RecyclerView.Adapter<RecyclerView.ViewHold
                 setMultiLingTitle(item, headingRailsBinding);
                 // headingRailsBinding.headingTitle.setText((String) item.getScreenWidget().getName());
             }
-            if (kidsMode) {
+          /*  if (kidsMode) {
                 if (value == 1) {
                     headingRailsBinding.headingTitle.setTextColor(mContext.getResources().getColor(R.color.orange_mustard));
                     value++;
@@ -332,7 +331,7 @@ public class CommonAdapterNew extends RecyclerView.Adapter<RecyclerView.ViewHold
                     value = 1;
                 }
 
-            }
+            }*/
 
 
         } else {

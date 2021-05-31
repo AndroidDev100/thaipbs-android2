@@ -56,7 +56,7 @@ public class MoreListAdapter extends RecyclerView.Adapter<MoreListAdapter.ViewHo
 
         if(isKidsMode){
             if(islogin){
-                if (i == 0||i==5  ){
+                if (i == 2||i==5  ){
                     holder.itemView.findViewById(R.id.view_line).setVisibility(View.VISIBLE);
                 }else {
                     holder.itemView.findViewById(R.id.view_line).setVisibility(View.GONE);
@@ -102,32 +102,40 @@ public class MoreListAdapter extends RecyclerView.Adapter<MoreListAdapter.ViewHo
                     case 0:
                         callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.vipa_kids, v);
                         break;
-
-
                     case 1:
-                        callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.contact_us, v);
+                        callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.watch_list, v);
                         break;
                     case 2:
+                        callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.watchhistory_icon, v);
+                        break;
+
+
+
+
+                    case 3:
+                        callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.contact_us, v);
+                        break;
+                    case 4:
                         callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.frequently_ask_question, v);
 
                         break;
-                    case 3:
+                    case 5:
                         v.setBackgroundResource(R.drawable.about_vipa);
 
                         break;
-                    case 4:
+                    case 6:
                         callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.feedback, v);
 
                         break;
-                    case 5:
+                    case 7:
                         callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.other_application, v);
 
                         break;
-                    case 6:
+                    case 8:
                         callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.t_and_c_more, v);
 
                         break;
-                    case 7:
+                    case 9:
                         callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.privacy, v);
 
                         break;

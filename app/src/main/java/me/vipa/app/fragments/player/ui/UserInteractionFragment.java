@@ -127,8 +127,13 @@ public class UserInteractionFragment extends BaseBindingFragment<DetailWatchlist
             if( !isLogins.equalsIgnoreCase(AppConstants.UserStatus.Login.toString()) && kidsMode ){
                 getBinding().watchList.setVisibility(View.GONE);
                 getBinding().llLike.setVisibility(View.GONE);
+
+            }
+
+            if(kidsMode){
                 getBinding().download.setVisibility(View.GONE);
             }
+
 
         } catch (Exception e) {
 

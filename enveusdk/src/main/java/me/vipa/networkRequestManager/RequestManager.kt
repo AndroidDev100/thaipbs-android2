@@ -376,10 +376,10 @@ class RequestManager {
         })
     }
 
-    fun addSecondaryUsersCall(allListCallBack: SecondaryUserCallBack,token: String) {
+    fun addSecondaryUsersCall(allListCallBack: SecondaryUserCallBack,token: String,userName: String) {
         val endPoint = NetworkSetup().kidsModeSecondaryUsers(token).create<EnveuEndpoints>(EnveuEndpoints::class.java)
         val requestParam = JsonObject()
-        requestParam.addProperty("name","Profile 1")
+        requestParam.addProperty("name",userName)
         requestParam.addProperty("kidsAccount",true)
 
 

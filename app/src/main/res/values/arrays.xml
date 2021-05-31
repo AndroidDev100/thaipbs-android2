@@ -71,6 +71,19 @@
         <item>Terms and Conditions</item>
         <item>Privacy Policy</item>
     </string-array>
+    <string-array name="more_kids_mode_login_watchlist_condition">
+        <item>Leave Kids Mode</item>
+        <item>My Watchlist</item>
+        <item>My Watch History</item>
+        <item>Contact Us</item>
+        <item>Frequently Ask Questions</item>
+        <item>About VIPA</item>
+        <item>Feedback</item>
+        <item>Other Applications</item>
+        <item>Terms and Conditions</item>
+        <item>Privacy Policy</item>
+
+    </string-array>
     <string-array name="more_kids_mode_logout">
         <item>Leave Kids Mode</item>
         <item>Contact Us</item>

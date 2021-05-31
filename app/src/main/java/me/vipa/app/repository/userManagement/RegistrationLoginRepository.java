@@ -734,11 +734,11 @@ public class RegistrationLoginRepository {
         return responseApi;
     }
 
-    public LiveData<SecondaryUserDetailsJavaPojo> getSecondaryUserAPIReponse(String token) {
+    public LiveData<SecondaryUserDetailsJavaPojo> getSecondaryUserAPIReponse(String token,String userName) {
         final MutableLiveData<SecondaryUserDetailsJavaPojo> responseApi;
         responseApi = new MutableLiveData<>();
 
-        BaseCategoryServices.Companion.getInstance().SecondaryUserService( token,new SecondaryUserCallBack() {
+        BaseCategoryServices.Companion.getInstance().SecondaryUserService( token,userName,new SecondaryUserCallBack() {
             @Override
             public void success(boolean status, Response<SecondaryUserDetails> response) {
                 if (status) {

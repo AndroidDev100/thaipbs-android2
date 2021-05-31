@@ -293,6 +293,9 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
         if( !isLogin.equalsIgnoreCase(AppConstants.UserStatus.Login.toString()) && kidsMode ){
             getBinding().interactionSection.watchList.setVisibility(View.GONE);
             getBinding().interactionSection.llLike.setVisibility(View.GONE);
+
+        }
+        if(kidsMode){
             getBinding().interactionSection.download.setVisibility(View.GONE);
         }
 

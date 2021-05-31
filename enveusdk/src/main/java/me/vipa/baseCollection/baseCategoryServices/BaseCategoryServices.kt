@@ -24,8 +24,8 @@ class BaseCategoryServices {
     fun AllListService(token : String, enveuCallBacks: AllListCallBack ) {
         RequestManager.instance.secondaryUsersCall(enveuCallBacks,token)
     }
-    fun SecondaryUserService(token : String, enveuCallBacks: SecondaryUserCallBack ) {
-        RequestManager.instance.addSecondaryUsersCall(enveuCallBacks,token)
+    fun SecondaryUserService(token : String,  userName :String,enveuCallBacks: SecondaryUserCallBack ) {
+        RequestManager.instance.addSecondaryUsersCall(enveuCallBacks,token,userName)
     }
     fun switchUserService(token : String, id:String, enveuCallBacks: SwitchUserCallBack ) {
         RequestManager.instance.switchUsersCall(enveuCallBacks,token,id)
