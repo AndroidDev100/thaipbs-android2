@@ -109,6 +109,7 @@
         <item name="bottomNavigationBackground">@color/bottom_navigation_bg_light</item>
         <item name="app_edit_text_color">@color/white</item>
         <item name="menuItemSelector">@drawable/menu_item_selector_light</item>
+        <item name="menuItemTextSelector">@drawable/menu_item_text_selector_dark</item>
         <item name="profile_background_color">@color/white</item>
         <item name="profile_icon_background">@drawable/profile_icon_navy_blue</item>
         <item name="mobile_icon_background">@drawable/mobile_icon_navy_blue</item>
