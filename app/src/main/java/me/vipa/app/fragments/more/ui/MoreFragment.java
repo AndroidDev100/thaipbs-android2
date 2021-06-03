@@ -504,6 +504,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
             else {
                 new SharedPrefHelper(getActivity()).saveKidsMode(true);
                 new ActivityLauncher(getActivity()).homeScreen(getActivity(), HomeActivity.class);
+                getActivity().setTheme(R.style.MyMaterialTheme_Base_Light);
 
             }
         }
@@ -885,10 +886,12 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                              if(vipaMode){
                                  new SharedPrefHelper(getActivity()).saveKidsMode(true);
                                  new ActivityLauncher(getActivity()).homeScreen(getActivity(), HomeActivity.class);
+                                 getActivity().setTheme(R.style.MyMaterialTheme_Base_Light);
                              }
                              else {
                                  new SharedPrefHelper(getActivity()).saveKidsMode(false);
                                  new ActivityLauncher(getActivity()).homeScreen(getActivity(), HomeActivity.class);
+                                 getActivity().setTheme(R.style.MyMaterialTheme_Base_Dark);
 
                              }
                          }
