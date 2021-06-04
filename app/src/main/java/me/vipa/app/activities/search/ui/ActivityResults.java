@@ -111,6 +111,7 @@ public class ActivityResults extends BaseBindingActivity<ActivityResultBinding> 
         railInjectionHelper = ViewModelProviders.of(this).get(RailInjectionHelper.class);
         getBinding().noConnectionLayout.setVisibility(View.GONE);
         getBinding().root.setVisibility(View.VISIBLE);
+//        getBinding().toolbar.ivClose.setBackgroundResource(R.drawable.ic_clear_black_24dp);
 
         getBinding().progressBar.setVisibility(View.VISIBLE);
         counter = 0;

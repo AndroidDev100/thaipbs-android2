@@ -2,6 +2,9 @@
 <resources>
 
     <attr name="backgroundColor" format="color" />
+    <attr name="shimmer_backgroundColor" format="color" />
+
+    <attr name="shimmer_animation_dark" format="color"/>
     <attr name="search_edt_backgroundColor" format="color" />
     <attr name="header_text_color" format="color" />
     <attr name="more_text_color" format="color" />
@@ -31,6 +34,8 @@
     <attr name="watchlist_background" format="reference" />
     <attr name="watchlist_item_title_color" format="reference" />
     <attr name="bottomNavigationBackground" format="reference" />
+    <attr name="search_toolbar_bg" format="reference" />
+
     <attr name="menuItemSelector" format="reference" />
     <attr name="menuItemTextSelector" format="reference" />
     <attr name="watchlist_item_episode_color" format="reference" />
@@ -65,6 +70,7 @@
     <attr name="search_toolbar_background" format="reference" />
     <attr name="search_box_background" format="reference" />
     <attr name="search_text_color" format="reference" />
+    <attr name="close_icon" format="reference"/>
     <attr name="cancel_text_color" format="reference" />
     <attr name="result_activity_background_color" format="reference" />
     <attr name="row_search_title_color" format="reference" />

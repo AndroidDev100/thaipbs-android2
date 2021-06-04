@@ -52,7 +52,7 @@
                         android:paddingRight="@dimen/NontonSize7"
                         android:fontFamily="@font/sukhumvittadmai_medium"
                         android:text="@string/show_all_results"
-                        android:background="#444444"
+                        android:background="#D3D3D3"
                         android:textColor="?attr/more_text_color"
                         android:textSize="@dimen/font_medium" />
                 </LinearLayout>
