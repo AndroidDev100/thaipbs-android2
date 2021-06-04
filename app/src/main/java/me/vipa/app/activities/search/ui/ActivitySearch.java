@@ -13,6 +13,7 @@ import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.exoplayer2.util.Log;
@@ -85,14 +86,19 @@ public class ActivitySearch extends BaseBindingActivity<ActivitySearchBinding> i
     private String searchText = "";
     private boolean applyFilter;
 
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = ViewModelProviders.of(ActivitySearch.this).get(SearchViewModel.class);
         Typeface font = ResourcesCompat.getFont(this, sukhumvittadmai_normal);
         TextView searchText = (TextView) getBinding().toolbar.searchView.findViewById(R.id.search_src_text);
+       ImageView imageView = (ImageView) getBinding().toolbar.searchView.findViewById(R.id.search_close_btn);
         if (KsPreferenceKeys.getInstance().getCurrentTheme().equalsIgnoreCase(AppConstants.LIGHT_THEME)) {
             searchText.setTextColor(getResources().getColor(R.color.white));
+            searchText.setCursorVisible(true);
+            searchText.setTextCursorDrawable(getDrawable(R.drawable.color_cursor));
+            imageView.setColorFilter(ContextCompat.getColor(this, R.color.white), android.graphics.PorterDuff.Mode.MULTIPLY);
         }
         searchText.setTypeface(font);
         clickListner();

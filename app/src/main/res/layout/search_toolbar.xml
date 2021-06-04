@@ -6,7 +6,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/search_toolbar_bg"
-        android:orientation="vertical">
+        android:orientation="vertical"
+         >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -105,7 +106,6 @@
                     app:queryHint="@string/search_mv_hub"
                     app:searchHintIcon="@null"
                     app:searchIcon="@null"
-
                     />
 
 
