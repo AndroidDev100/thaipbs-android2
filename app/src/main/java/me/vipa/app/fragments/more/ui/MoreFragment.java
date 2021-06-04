@@ -890,11 +890,13 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                                  new SharedPrefHelper(getActivity()).saveKidsMode(true);
                                  new ActivityLauncher(getActivity()).homeScreen(getActivity(), HomeActivity.class);
                                  getActivity().setTheme(R.style.MyMaterialTheme_Base_Light);
+                                 KsPreferenceKeys.getInstance().setCurrentTheme(AppConstants.LIGHT_THEME);
                              }
                              else {
                                  new SharedPrefHelper(getActivity()).saveKidsMode(false);
                                  new ActivityLauncher(getActivity()).homeScreen(getActivity(), HomeActivity.class);
                                  getActivity().setTheme(R.style.MyMaterialTheme_Base_Dark);
+                                 KsPreferenceKeys.getInstance().setCurrentTheme(AppConstants.DARK_THEME);
 
                              }
                          }
