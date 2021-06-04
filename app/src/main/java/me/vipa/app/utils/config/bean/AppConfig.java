@@ -167,6 +167,18 @@ public class AppConfig {
     @SerializedName("searchFilters")
     @Expose
     private SearchFilters searchFilters;
+
+    public ParentalControl getParentalControl() {
+        return parentalControl;
+    }
+
+    public void setParentalControl(ParentalControl parentalControl) {
+        this.parentalControl = parentalControl;
+    }
+
+    @SerializedName("parentalControl")
+    @Expose
+    private ParentalControl parentalControl;
     public String getBaseUrl() {
         return baseUrl;
     }
