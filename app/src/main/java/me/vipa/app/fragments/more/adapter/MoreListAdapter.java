@@ -98,96 +98,199 @@ public class MoreListAdapter extends RecyclerView.Adapter<MoreListAdapter.ViewHo
 
         if(isKidsMode){
             if(islogin){
-                switch (i) {
-                    case 0:
-                        callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.vipa_kids, v);
-                        break;
-                    case 1:
-                        callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.watch_list, v);
-                        break;
-                    case 2:
-                        callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.watchhistory_icon, v);
-                        break;
+
+                if (KsPreferenceKeys.getInstance().getCurrentTheme().equalsIgnoreCase(AppConstants.LIGHT_THEME)) {
+                    switch (i) {
+                        case 0:
+                            callDrawableHelper(mContext, R.color.more_icon_color, R.drawable.vipa_kids, v);
+                            break;
+                        case 1:
+                            callDrawableHelper(mContext, R.color.more_icon_color, R.drawable.watch_list, v);
+                            break;
+                        case 2:
+                            callDrawableHelper(mContext, R.color.more_icon_color, R.drawable.watchhistory_icon, v);
+                            break;
 
 
 
 
-                    case 3:
-                        callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.contact_us, v);
-                        break;
-                    case 4:
-                        callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.frequently_ask_question, v);
+                        case 3:
+                            callDrawableHelper(mContext, R.color.more_icon_color, R.drawable.contact_us, v);
+                            break;
+                        case 4:
+                            callDrawableHelper(mContext, R.color.more_icon_color, R.drawable.frequently_ask_question, v);
 
-                        break;
-                    case 5:
-                        v.setBackgroundResource(R.drawable.about_vipa);
+                            break;
+                        case 5:
+                            v.setBackgroundResource(R.drawable.about_vipa);
 
-                        break;
-                    case 6:
-                        callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.feedback, v);
+                            break;
+                        case 6:
+                            callDrawableHelper(mContext, R.color.more_icon_color, R.drawable.feedback, v);
 
-                        break;
-                    case 7:
-                        callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.other_application, v);
+                            break;
+                        case 7:
+                            callDrawableHelper(mContext, R.color.more_icon_color, R.drawable.other_application, v);
 
-                        break;
-                    case 8:
-                        callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.t_and_c_more, v);
+                            break;
+                        case 8:
+                            callDrawableHelper(mContext, R.color.more_icon_color, R.drawable.t_and_c_more, v);
 
-                        break;
-                    case 9:
-                        callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.privacy, v);
+                            break;
+                        case 9:
+                            callDrawableHelper(mContext, R.color.more_icon_color, R.drawable.privacy, v);
 
-                        break;
+                            break;
 
 
-                    default:
+                        default:
 
-                        break;
+                            break;
+                    }
+
                 }
+                else {
+                    switch (i) {
+                        case 0:
+                            callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.vipa_kids, v);
+                            break;
+                        case 1:
+                            callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.watch_list, v);
+                            break;
+                        case 2:
+                            callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.watchhistory_icon, v);
+                            break;
+
+
+
+
+                        case 3:
+                            callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.contact_us, v);
+                            break;
+                        case 4:
+                            callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.frequently_ask_question, v);
+
+                            break;
+                        case 5:
+                            v.setBackgroundResource(R.drawable.about_vipa);
+
+                            break;
+                        case 6:
+                            callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.feedback, v);
+
+                            break;
+                        case 7:
+                            callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.other_application, v);
+
+                            break;
+                        case 8:
+                            callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.t_and_c_more, v);
+
+                            break;
+                        case 9:
+                            callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.privacy, v);
+
+                            break;
+
+
+                        default:
+
+                            break;
+                    }
+
+                }
+
 
             }
             else {
-                switch (i) {
-                    case 0:
-                        callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.vipa_kids, v);
-                        break;
 
-                    case 1:
-                        callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.contact_us, v);
-                        break;
+                if (KsPreferenceKeys.getInstance().getCurrentTheme().equalsIgnoreCase(AppConstants.LIGHT_THEME)) {
+                    switch (i) {
+                        case 0:
+                            callDrawableHelper(mContext, R.color.more_icon_color, R.drawable.vipa_kids, v);
+                            break;
+
+                        case 1:
+                            callDrawableHelper(mContext, R.color.more_icon_color, R.drawable.contact_us, v);
+                            break;
                     /*case 4:
                         callDrawableHelper(mContext, R.color.icons_color, R.drawable.ic_save_alt, v);
                         break;*/
-                    case 2:
+                        case 2:
 
-                        callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.frequently_ask_question, v);
-                        break;
-                    case 3:
-                        //callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.about_vipa, v);
-                        v.setBackgroundResource(R.drawable.about_vipa);
-                        break;
-                    case 4:
-                        callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.feedback, v);
-                        break;
-                    case 5:
-                        callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.other_application, v);
+                            callDrawableHelper(mContext, R.color.more_icon_color, R.drawable.frequently_ask_question, v);
+                            break;
+                        case 3:
+                            //callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.about_vipa, v);
+                            v.setBackgroundResource(R.drawable.about_vipa);
+                            break;
+                        case 4:
+                            callDrawableHelper(mContext, R.color.more_icon_color, R.drawable.feedback, v);
+                            break;
+                        case 5:
+                            callDrawableHelper(mContext, R.color.more_icon_color, R.drawable.other_application, v);
 
-                        break;
-                    case 6:
-                        callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.t_and_c_more, v);
+                            break;
+                        case 6:
+                            callDrawableHelper(mContext, R.color.more_icon_color, R.drawable.t_and_c_more, v);
 
-                        break;
-                    case 7:
-                        callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.privacy, v);
+                            break;
+                        case 7:
+                            callDrawableHelper(mContext, R.color.more_icon_color, R.drawable.privacy, v);
 
-                        break;
+                            break;
 
 
-                    default:
+                        default:
 
-                        break;
+                            break;
+                    }
+
                 }
+                else {
+                    switch (i) {
+                        case 0:
+                            callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.vipa_kids, v);
+                            break;
+
+                        case 1:
+                            callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.contact_us, v);
+                            break;
+                    /*case 4:
+                        callDrawableHelper(mContext, R.color.icons_color, R.drawable.ic_save_alt, v);
+                        break;*/
+                        case 2:
+
+                            callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.frequently_ask_question, v);
+                            break;
+                        case 3:
+                            //callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.about_vipa, v);
+                            v.setBackgroundResource(R.drawable.about_vipa);
+                            break;
+                        case 4:
+                            callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.feedback, v);
+                            break;
+                        case 5:
+                            callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.other_application, v);
+
+                            break;
+                        case 6:
+                            callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.t_and_c_more, v);
+
+                            break;
+                        case 7:
+                            callDrawableHelper(mContext, R.color.icons_color_dark, R.drawable.privacy, v);
+
+                            break;
+
+
+                        default:
+
+                            break;
+                    }
+
+                }
+
 
             }
 
