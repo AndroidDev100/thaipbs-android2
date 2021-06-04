@@ -41,11 +41,11 @@
     </style>
 
     <style name="NegativeButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
-        <item name="android:textColor">@color/moretitlecolor</item>
+        <item name="android:textColor">@color/themeColorDark</item>
     </style>
 
     <style name="PositiveButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
-        <item name="android:textColor">@color/moretitlecolor</item>
+        <item name="android:textColor">@color/themeColorDark</item>
     </style>
 
     <style name="ProfileRadioButton" parent="Base.Widget.AppCompat.CompoundButton.RadioButton">
