@@ -66,8 +66,6 @@ public class HomeActivity extends BaseBindingActivity<ActivityMainBinding> imple
     private Fragment sinetronFragment;
     private Fragment moreFragment;
     private FragmentManager fragmentManager;
-
-
     private FragmentClickNetwork updatfrag;
     private HomeClickNetwork homeClickNetwork;
     private OriginalFragmentClick originalFragmentClick;

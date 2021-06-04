@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
@@ -44,6 +45,7 @@ import me.vipa.app.beanModel.KeywordList;
 import me.vipa.app.beanModel.enveuCommonRailData.RailCommonData;
 import me.vipa.app.beanModel.popularSearch.ItemsItem;
 import me.vipa.app.callbacks.commonCallbacks.SearchClickCallbacks;
+import me.vipa.app.utils.constants.AppConstants;
 import me.vipa.app.utils.cropImage.helpers.NetworkConnectivity;
 import me.vipa.app.utils.helpers.AppPreference;
 import me.vipa.app.utils.helpers.SharedPrefHelper;
@@ -89,6 +91,9 @@ public class ActivitySearch extends BaseBindingActivity<ActivitySearchBinding> i
         viewModel = ViewModelProviders.of(ActivitySearch.this).get(SearchViewModel.class);
         Typeface font = ResourcesCompat.getFont(this, sukhumvittadmai_normal);
         TextView searchText = (TextView) getBinding().toolbar.searchView.findViewById(R.id.search_src_text);
+        if (KsPreferenceKeys.getInstance().getCurrentTheme().equalsIgnoreCase(AppConstants.LIGHT_THEME)) {
+            searchText.setTextColor(getResources().getColor(R.color.white));
+        }
         searchText.setTypeface(font);
         clickListner();
         connectionObserver();
@@ -411,6 +416,7 @@ public class ActivitySearch extends BaseBindingActivity<ActivitySearchBinding> i
         getBinding().tvPopularSearch.setVisibility(View.GONE);
         getBinding().toolbar.searchView.onActionViewExpanded();
         getBinding().toolbar.searchView.requestFocus();
+        getBinding().toolbar.searchText.setTextColor(Color.parseColor("#ffffff"));
         callShimmer(getBinding().popularSearchRecycler);
 
         clickListner();
