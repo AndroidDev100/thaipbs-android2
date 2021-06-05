@@ -12,6 +12,10 @@
             name="isDownloadable"
             type="Boolean" />
 
+        <variable
+            name="isKidsMode"
+            type="Boolean" />
+
         <import type="android.view.View" />
 
         <import type="me.vipa.app.enums.DownloadStatus" />
@@ -151,7 +155,8 @@
                 android:id="@+id/download"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility='@{isDownloadable &amp;&amp; !isKidsMode? View.VISIBLE : View.GONE,default="gone"}'>
 
 
                 <ImageView
