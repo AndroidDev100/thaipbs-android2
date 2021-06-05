@@ -208,7 +208,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="@dimen/_5sdp"
                                             android:fontFamily="@font/sukhumvittadmai_normal"
-                                            android:textColor="@color/gray_thai"
+                                            android:textColor="?attr/sub_title"
                                             android:textSize="@dimen/font_small" />
                                     </LinearLayout>
 

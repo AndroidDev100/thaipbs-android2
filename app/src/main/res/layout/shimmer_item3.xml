@@ -8,7 +8,7 @@
         android:layout_width="@dimen/_110sdp"
         android:layout_height="@dimen/_110sdp"
         android:layout_marginRight="@dimen/_5sdp"
-        android:background="?attr/simmer_background"
+        android:background="?attr/shimmer_backgroundColor"
         android:orientation="vertical">
 
 

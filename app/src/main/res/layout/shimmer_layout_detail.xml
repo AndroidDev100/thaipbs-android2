@@ -8,6 +8,7 @@
         android:id="@+id/rv_shimmer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="?attr/shimmer_backgroundColor"
         android:orientation="vertical">
 
         <!-- MOCK Layout (when you are still fetching data) -->
@@ -66,7 +67,7 @@
                                 android:layout_marginStart="0dp"
                                 android:layout_marginTop="0dp"
                                 android:layout_marginEnd="0dp"
-                                android:background="@color/shimmerDark"
+                                android:background="?attr/shimmer_animation_dark"
                                 android:clickable="false"
                                 android:keepScreenOn="true"
                                 app:layout_constraintDimensionRatio="H,16:9"
@@ -94,20 +95,20 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/NontonSize13"
                             android:layout_marginRight="@dimen/NontonSize50"
-                            android:background="@color/shimmerDark" />
+                            android:background="?attr/shimmer_animation_dark" />
 
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/NontonSize8"
                             android:layout_marginTop="@dimen/NontonSize10"
                             android:layout_marginRight="@dimen/NontonSize50"
-                            android:background="@color/shimmerDark" />
+                            android:background="?attr/shimmer_animation_dark" />
 
                         <View
                             android:layout_width="@dimen/NontonSize150"
                             android:layout_height="@dimen/NontonSize10"
                             android:layout_marginTop="@dimen/NontonSize10"
-                            android:background="@color/shimmerDark" />
+                            android:background="?attr/shimmer_animation_dark" />
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -122,7 +123,7 @@
                                 android:layout_height="@dimen/NontonSize15"
                                 android:layout_alignParentLeft="true"
                                 android:layout_gravity="left|center_vertical"
-                                android:background="@color/shimmerDark" />
+                                android:background="?attr/shimmer_animation_dark" />
 
                             <View
                                 android:layout_width="@dimen/NontonSize60"
@@ -131,7 +132,7 @@
                                 android:layout_gravity="right|center_vertical"
                                 android:layout_marginRight="@dimen/NontonSize30"
 
-                                android:background="@color/shimmerDark" />
+                                android:background="?attr/shimmer_animation_dark" />
 
                         </RelativeLayout>
 
@@ -146,21 +147,21 @@
                                 android:layout_width="@dimen/NontonSize40"
                                 android:layout_height="@dimen/NontonSize45"
                                 android:layout_marginTop="8dp"
-                                android:background="@color/shimmerDark" />
+                                android:background="?attr/shimmer_animation_dark" />
 
                             <View
                                 android:layout_width="@dimen/NontonSize40"
                                 android:layout_height="@dimen/NontonSize45"
                                 android:layout_marginLeft="@dimen/NontonSize10"
                                 android:layout_marginTop="8dp"
-                                android:background="@color/shimmerDark" />
+                                android:background="?attr/shimmer_animation_dark" />
 
                             <View
                                 android:layout_width="@dimen/NontonSize40"
                                 android:layout_height="@dimen/NontonSize45"
                                 android:layout_marginLeft="@dimen/NontonSize10"
                                 android:layout_marginTop="8dp"
-                                android:background="@color/shimmerDark" />
+                                android:background="?attr/shimmer_animation_dark" />
 
                         </LinearLayout>
 
@@ -200,7 +201,7 @@
                             android:layout_height="@dimen/NontonSize15"
                             android:layout_marginTop="@dimen/NontonSize10"
                             android:layout_marginRight="@dimen/NontonSize30"
-                            android:background="@color/shimmerDark" />
+                            android:background="?attr/shimmer_animation_dark" />
 
 
                         <LinearLayout
@@ -214,32 +215,32 @@
                             <View
                                 android:layout_width="@dimen/NontonSize150"
                                 android:layout_height="@dimen/NontonSize84"
-                                android:background="@color/shimmerDark" />
+                                android:background="?attr/shimmer_animation_dark" />
 
 
                             <View
                                 android:layout_width="@dimen/NontonSize150"
                                 android:layout_height="@dimen/NontonSize84"
                                 android:layout_marginLeft="@dimen/NontonSize10"
-                                android:background="@color/shimmerDark" />
+                                android:background="?attr/shimmer_animation_dark" />
 
                             <View
                                 android:layout_width="@dimen/NontonSize150"
                                 android:layout_height="@dimen/NontonSize84"
                                 android:layout_marginLeft="@dimen/NontonSize10"
-                                android:background="@color/shimmerDark" />
+                                android:background="?attr/shimmer_animation_dark" />
 
                             <View
                                 android:layout_width="@dimen/NontonSize150"
                                 android:layout_height="@dimen/NontonSize84"
                                 android:layout_marginLeft="@dimen/NontonSize10"
-                                android:background="@color/shimmerDark" />
+                                android:background="?attr/shimmer_animation_dark" />
 
                             <View
                                 android:layout_width="@dimen/NontonSize150"
                                 android:layout_height="@dimen/NontonSize84"
                                 android:layout_marginLeft="@dimen/NontonSize10"
-                                android:background="@color/shimmerDark" />
+                                android:background="?attr/shimmer_animation_dark" />
 
                             <View
                                 android:layout_width="@dimen/NontonSize150"
@@ -277,7 +278,7 @@
                         android:layout_width="@dimen/NontonSize150"
                         android:layout_height="@dimen/NontonSize15"
                         android:layout_marginTop="@dimen/NontonSize10"
-                        android:background="@color/shimmerDark" />
+                        android:background="?attr/shimmer_animation_dark" />
 
 
                 </LinearLayout>
@@ -291,7 +292,7 @@
                     <View
                         android:layout_width="@dimen/NontonSize60"
                         android:layout_height="@dimen/NontonSize20"
-                        android:background="@color/shimmerDark" />
+                        android:background="?attr/shimmer_animation_dark" />
 
                     <View
                         android:layout_width="match_parent"
@@ -299,7 +300,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="@dimen/NontonSize10"
                         android:layout_marginRight="@dimen/NontonSize40"
-                        android:background="@color/shimmerDark" />
+                        android:background="?attr/shimmer_animation_dark" />
 
                 </LinearLayout>
 
@@ -312,7 +313,7 @@
                     <View
                         android:layout_width="@dimen/NontonSize60"
                         android:layout_height="@dimen/NontonSize20"
-                        android:background="@color/shimmerDark" />
+                        android:background="?attr/shimmer_animation_dark" />
 
                     <View
                         android:layout_width="match_parent"
@@ -320,7 +321,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="@dimen/NontonSize10"
                         android:layout_marginRight="@dimen/NontonSize40"
-                        android:background="@color/shimmerDark" />
+                        android:background="?attr/shimmer_animation_dark" />
 
                 </LinearLayout>
 
@@ -333,7 +334,7 @@
                     <View
                         android:layout_width="@dimen/NontonSize60"
                         android:layout_height="@dimen/NontonSize20"
-                        android:background="@color/shimmerDark" />
+                        android:background="?attr/shimmer_animation_dark" />
 
                     <View
                         android:layout_width="match_parent"
@@ -341,7 +342,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="@dimen/NontonSize10"
                         android:layout_marginRight="@dimen/NontonSize40"
-                        android:background="@color/shimmerDark" />
+                        android:background="?attr/shimmer_animation_dark" />
 
                 </LinearLayout>
 

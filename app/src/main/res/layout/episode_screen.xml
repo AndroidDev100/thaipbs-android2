@@ -236,7 +236,7 @@
                                         android:layout_gravity="center_vertical"
                                         android:layout_marginEnd="@dimen/movie_metadata_tag_margin_margin_right"
                                         android:fontFamily="@font/sukhumvittadmai_normal"
-                                        android:textColor="@color/gray_thai"
+                                        android:textColor="?attr/sub_title"
                                         android:textSize="@dimen/font_small" />
 
                                     <TextView
@@ -393,7 +393,7 @@
                             app:tabTextColor="?attr/cancel_text_color"
                             app:tabTextAppearance="@style/CusromTabText"/>
                         <View
-                            android:background="@color/description_grey"
+                            android:background="?attr/tab_selected"
                             android:layout_width="match_parent"
                             android:layout_alignBottom="@+id/tabLayout"
                             android:layout_height="1dp"

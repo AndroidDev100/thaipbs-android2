@@ -8,13 +8,14 @@
         android:id="@+id/cv_tvod"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/backgroundColor"
+        android:background="?attr/shimmer_backgroundColor"
         android:layout_margin="@dimen/NontonSize8">
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="?attr/shimmer_backgroundColor">
             <!-- MOCK Layout (when you are still fetching data) -->
             <com.facebook.shimmer.ShimmerFrameLayout
                 android:id="@+id/sflMockContent"
@@ -35,32 +36,32 @@
                         android:layout_width="150dp"
                         android:layout_height="20dp"
                         android:layout_marginBottom="@dimen/NontonSize30"
-                        android:background="?attr/list_shimmer"
+                        android:background="?attr/shimmer_animation_dark"
                         android:visibility="gone" />
 
 
                     <View
                         android:layout_width="150dp"
                         android:layout_height="30dp"
-                        android:background="?attr/list_shimmer" />
+                        android:background="?attr/shimmer_animation_dark" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="10dp"
                         android:layout_marginTop="16dp"
-                        android:background="?attr/list_shimmer" />
+                        android:background="?attr/shimmer_animation_dark" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="10dp"
                         android:layout_marginTop="8dp"
-                        android:background="?attr/list_shimmer" />
+                        android:background="?attr/shimmer_animation_dark" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="10dp"
                         android:layout_marginTop="8dp"
-                        android:background="?attr/list_shimmer" />
+                        android:background="?attr/shimmer_animation_dark" />
                 </LinearLayout>
 
             </com.facebook.shimmer.ShimmerFrameLayout>

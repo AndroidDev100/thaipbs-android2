@@ -87,23 +87,27 @@
         <item name="title_color">@color/black</item>
         <item name="backgroundColor">@color/white</item>
         <item name="shimmer_backgroundColor">@color/light_shimmer_bg</item>
-
+        <item name="genre_item_unselected">@color/genre_unselected_light</item>
+        <item name="show_all_bg">@color/show_all_light</item>
         <item name="shimmer_animation_dark">@color/shimmer_color_animation</item>
         <item name="search_edt_backgroundColor">@color/search_grey</item>
         <item name="header_text_color">@color/description_title_yellow</item>
         <item name="more_text_color">@color/more_text_color_light</item>
         <item name="circle_item_background_color">@color/white</item>
         <item name="simmer_background">@color/less_white</item>
+        <item name="sub_title">@color/black</item>
+        <item name="tab_selected">@color/black</item>
+
         <item name="toolbar_background">@color/toolbar_bg_color_light</item>
         <item name="search_icon_background">@drawable/search</item>
         <item name="more_layout_background_color">@color/white</item>
         <item name="more_recyclerview_background_color">@color/white</item>
-        <item name="more_item_text_color">@color/navy_blue</item>
+        <item name="more_item_text_color">@color/black</item>
         <item name="user_name_text_color">@color/navy_blue</item>
         <item name="change_language_text_color">@color/navy_blue</item>
         <item name="more_item_bottom_line_color">@color/subtitlecolor</item>
         <item name="toolbar_text_color">@color/white</item>
-        <item name="toolbar_back_arrow">@drawable/back_arrow_navy_blue</item>
+        <item name="toolbar_back_arrow">@drawable/ic_arrow_back_black_24dp</item>
         <item name="new_password_text_and_hint_color">@color/navy_blue</item>
         <item name="change_password_bakground_color">@color/white</item>
         <item name="confirm_password_text_and_hint_color">@color/navy_blue</item>
@@ -156,6 +160,9 @@
 
 
         <item name="cancel_text_color">@color/white</item>
+        <item name="tab_text_color">@color/black</item>
+        <item name="filter_genre_bg">@color/show_all_light</item>
+
         <item name="result_activity_background_color">@color/white</item>
         <item name="row_search_title_color">@color/navy_blue</item>
         <item name="recomended_rail_theme_color">@color/white</item>
@@ -165,7 +172,7 @@
         <item name="expandable_text_color">@color/navy_blue</item>
         <item name="cast_title_color">@color/navy_blue</item>
         <item name="cast_text_color">@color/navy_blue</item>
-        <item name="more_less_text_color">@color/blue_color</item>
+        <item name="more_less_text_color">@color/black</item>
         <item name="like_share_watchlist_background">@color/white</item>
         <item name="watchlist_share_like_text_color">@color/navy_blue</item>
         <item name="watchlist_icon_color">@drawable/add_to_watchlist_navy_blue</item>
@@ -213,6 +220,10 @@
         <item name="search_edt_backgroundColor">@color/theme_background_dark</item>
         <item name="backgroundColor">@color/theme_background_dark</item>
         <item name="shimmer_backgroundColor">@color/theme_background_dark</item>
+        <item name="genre_item_unselected">@color/genre_unselected_dark</item>
+        <item name="show_all_bg">@color/show_all_dark</item>
+         <item name="sub_title">@color/gray_thai</item>
+        <item name="tab_selected">@color/white</item>
         <item name="shimmer_animation_dark">@color/shimmerDark</item>
         <item name="header_text_color">@color/description_title_yellow</item>
         <item name="more_text_color">@color/more_text_color_dark</item>
@@ -288,8 +299,9 @@
         <item name="search_box_background">@drawable/search_header_drawable</item>
         <item name="search_text_color">@color/white</item>
         <item name="close_icon">@drawable/ic_clear_black_24dp</item>
-
+        <item name="filter_genre_bg">@color/grayOne</item>
         <item name="cancel_text_color">@color/grey_color_dark</item>
+        <item name="tab_text_color">@color/grey_color_dark</item>
         <item name="result_activity_background_color">@color/black_theme_color</item>
         <item name="row_search_title_color">@color/description_title_white</item>
         <item name="recomended_rail_theme_color">@color/black_theme_color</item>

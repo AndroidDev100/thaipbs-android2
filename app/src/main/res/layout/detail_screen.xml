@@ -232,7 +232,7 @@
                                     android:layout_gravity="center_vertical"
                                     android:layout_marginEnd="@dimen/movie_metadata_tag_margin_margin_right"
                                     android:fontFamily="@font/sukhumvittadmai_normal"
-                                    android:textColor="@color/gray_thai"
+                                    android:textColor="?attr/sub_title"
                                     android:textSize="@dimen/font_small" />
 
                                 <TextView

@@ -75,6 +75,10 @@
     <color name="theme_tint_more_fragment_icon">#ffffff</color>
     <color name="theme_white">#ffffff</color>
     <color name="theme_black">#000000</color>
+     <color name="genre_unselected_dark">#FFD8D8D8</color>
+    <color name="genre_unselected_light">#D3D3D3</color>
+    <color name="show_all_light">#D3D3D3</color>
+    <color name="show_all_dark">#444444</color>
 
     <color name="black_theme_color">#181818</color>
     <color name="bottom_nav_color_f">#757575</color>
@@ -102,7 +106,7 @@
     <color name="grayOne">#eeedea</color>
 
     <color name="themeLight">#000000</color>
-    <color name="shimmer_color_animation">#DCDCDC</color>
+    <color name="shimmer_color_animation">#DEDEDE</color>
     <color name="light_shimmer_bg">#BEBEBE</color>
     <color name="theme_background_dark">#181818</color>
     <color name="more_icon_color">#1F1E2F</color>

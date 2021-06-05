@@ -3,7 +3,12 @@
 
     <attr name="backgroundColor" format="color" />
     <attr name="shimmer_backgroundColor" format="color" />
-
+    <attr name="genre_item_unselected" format="color" />
+    <attr name="show_all_bg" format="color" />
+    <attr name="filter_genre_bg" format="color"/>
+    <attr name="sub_title" format="color"/>
+    <attr name="tab_selected" format="color"/>
+    <attr name="tab_text_color" format="color"/>
     <attr name="shimmer_animation_dark" format="color"/>
     <attr name="search_edt_backgroundColor" format="color" />
     <attr name="header_text_color" format="color" />

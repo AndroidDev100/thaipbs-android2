@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/NontonSize5"
+        android:background="?attr/shimmer_backgroundColor"
         android:orientation="vertical">
 
         <!-- MOCK Layout (when you are still fetching data) -->
@@ -29,7 +30,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/NontonSize84"
-                    android:background="?attr/list_shimmer"
+                    android:background="?attr/shimmer_animation_dark"
                     android:orientation="vertical" />
 
 

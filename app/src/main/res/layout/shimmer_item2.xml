@@ -3,14 +3,15 @@
 
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+   >
 
     <RelativeLayout
         android:layout_width="@dimen/_125sdp"
         android:layout_height="@dimen/_65sdp"
         android:layout_gravity="center"
         android:layout_marginRight="@dimen/_5sdp"
-        android:background="?attr/simmer_background"
+        android:background="?attr/shimmer_backgroundColor"
 
         >
 
