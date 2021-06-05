@@ -131,7 +131,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
     private UserInteractionFragment userInteractionFragment;
     private ArrayList<DownloadedEpisodes> downloadableEpisodes;
     private boolean mFlag = false;
-    private boolean kidsMode;
+   // private boolean kidsMode;
 
     @Override
     public ActivitySeriesDetailBinding inflateBindingLayout(@NonNull LayoutInflater inflater) {
@@ -286,7 +286,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
         isLogin = preference.getAppPrefLoginStatus();
         token = preference.getAppPrefAccessToken();
         viewModel = ViewModelProviders.of(this).get(SeriesViewModel.class);
-
+/*
         kidsMode  = new SharedPrefHelper(SeriesDetailActivity.this).getKidsMode();
 
 
@@ -297,7 +297,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
         }
         if(kidsMode){
             getBinding().interactionSection.download.setVisibility(View.GONE);
-        }
+        }*/
 
 
 

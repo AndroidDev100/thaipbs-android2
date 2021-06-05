@@ -124,15 +124,15 @@ public class UserInteractionFragment extends BaseBindingFragment<DetailWatchlist
             kidsMode  = new SharedPrefHelper(context).getKidsMode();
             String isLogins = preference.getAppPrefLoginStatus();
 
+             setKidsMode(kidsMode);
+
             if( !isLogins.equalsIgnoreCase(AppConstants.UserStatus.Login.toString()) && kidsMode ){
                 getBinding().watchList.setVisibility(View.GONE);
                 getBinding().llLike.setVisibility(View.GONE);
 
             }
 
-            if(kidsMode){
-                getBinding().download.setVisibility(View.GONE);
-            }
+
 
 
         } catch (Exception e) {
@@ -773,6 +773,11 @@ public class UserInteractionFragment extends BaseBindingFragment<DetailWatchlist
     public void setDownloadable(boolean isDownloadable) {
         if (getBinding() != null)
             getBinding().setIsDownloadable(isDownloadable);
+    }
+
+    public void setKidsMode(boolean isKidsMode) {
+        if (getBinding() != null)
+            getBinding().setIsKidsMode(isKidsMode);
     }
 
     public void setDownloadProgress(float progress) {
