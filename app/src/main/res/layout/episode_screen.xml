@@ -389,7 +389,7 @@
                             app:tabGravity="fill"
                             app:tabIndicatorColor="@color/description_title_yellow"
                             app:tabMode="fixed"
-                            app:tabSelectedTextColor="@color/white"
+                            app:tabSelectedTextColor="?attr/tab_selected"
                             app:tabTextColor="?attr/cancel_text_color"
                             app:tabTextAppearance="@style/CusromTabText"/>
                         <View

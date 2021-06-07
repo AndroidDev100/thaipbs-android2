@@ -58,6 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:paddingLeft="10dp"
+                android:textColor="@color/white"
                 android:fontFamily="@font/sukhumvittadmai_medium"
                 android:textSize="11dp"
                 app:layout_constraintLeft_toLeftOf="parent"
