@@ -1,5 +1,6 @@
 package me.vipa.app.networking.servicelayer;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
@@ -107,31 +108,57 @@ public class APIServiceLayer {
 
     String languageCode = "";
 
-    public MutableLiveData<EnveuCommonResponse> getPlayListById(String playListId, int pageNumber, int pageSize) {
+    public MutableLiveData<EnveuCommonResponse> getPlayListById(String playListId, int pageNumber, int pageSize, Activity activity) {
         MutableLiveData<EnveuCommonResponse> enveuCommonResponseMutableLiveData = new MutableLiveData<>();
         languageCode = LanguageLayer.getCurrentLanguageCode();
         if (endpoint!=null) {
-            endpoint.getPlaylistDetailsById(playListId, languageCode, pageNumber, pageSize).enqueue(new Callback<EnveuCommonResponse>() {
-                @Override
-                public void onResponse(Call<EnveuCommonResponse> call, Response<EnveuCommonResponse> response) {
-                    if (response.isSuccessful()) {
-                        if (response.body() != null && response.body().getData() != null) {
-                            if (response.body().getResponseCode() == 2000)
-                                enveuCommonResponseMutableLiveData.postValue(response.body());
-                            else {
-                                enveuCommonResponseMutableLiveData.postValue(null);
-                            }
-                        }
-                    } else {
-                        enveuCommonResponseMutableLiveData.postValue(null);
-                    }
-                }
+           boolean isKidsMode  = new SharedPrefHelper(activity).getKidsMode();
+           if (isKidsMode){
+               String parentalRating = AppCommonMethod.getParentalRating();
+               endpoint.getPlaylistDetailsByIdWithPG(playListId, languageCode, pageNumber, pageSize,parentalRating).enqueue(new Callback<EnveuCommonResponse>() {
+                   @Override
+                   public void onResponse(Call<EnveuCommonResponse> call, Response<EnveuCommonResponse> response) {
+                       if (response.isSuccessful()) {
+                           if (response.body() != null && response.body().getData() != null) {
+                               if (response.body().getResponseCode() == 2000)
+                                   enveuCommonResponseMutableLiveData.postValue(response.body());
+                               else {
+                                   enveuCommonResponseMutableLiveData.postValue(null);
+                               }
+                           }
+                       } else {
+                           enveuCommonResponseMutableLiveData.postValue(null);
+                       }
+                   }
 
-                @Override
-                public void onFailure(Call<EnveuCommonResponse> call, Throwable t) {
-                    enveuCommonResponseMutableLiveData.postValue(null);
-                }
-            });
+                   @Override
+                   public void onFailure(Call<EnveuCommonResponse> call, Throwable t) {
+                       enveuCommonResponseMutableLiveData.postValue(null);
+                   }
+               });
+           }else {
+               endpoint.getPlaylistDetailsById(playListId, languageCode, pageNumber, pageSize).enqueue(new Callback<EnveuCommonResponse>() {
+                   @Override
+                   public void onResponse(Call<EnveuCommonResponse> call, Response<EnveuCommonResponse> response) {
+                       if (response.isSuccessful()) {
+                           if (response.body() != null && response.body().getData() != null) {
+                               if (response.body().getResponseCode() == 2000)
+                                   enveuCommonResponseMutableLiveData.postValue(response.body());
+                               else {
+                                   enveuCommonResponseMutableLiveData.postValue(null);
+                               }
+                           }
+                       } else {
+                           enveuCommonResponseMutableLiveData.postValue(null);
+                       }
+                   }
+
+                   @Override
+                   public void onFailure(Call<EnveuCommonResponse> call, Throwable t) {
+                       enveuCommonResponseMutableLiveData.postValue(null);
+                   }
+               });
+           }
         }
         return enveuCommonResponseMutableLiveData;
     }

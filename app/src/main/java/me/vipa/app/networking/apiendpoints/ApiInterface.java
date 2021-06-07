@@ -143,6 +143,10 @@ public interface ApiInterface {
     @GET("v3/playlist")
     Call<EnveuCommonResponse> getPlaylistDetailsById(@Query("playlistId") String playListId, @Query("locale") String locale, @Query("page") int pageNumber, @Query("size") int pageSize);
 
+
+    @GET("v3/playlist")
+    Call<EnveuCommonResponse> getPlaylistDetailsByIdWithPG(@Query("playlistId") String playListId, @Query("locale") String locale, @Query("page") int pageNumber, @Query("size") int pageSize, @Query("parentalRating") String parentalRating);
+
     //V2 PI for getting asset details
     @GET("v3/content")
     Call<EnveuVideoDetailsBean> getVideoDetails(@Query("contentId") String manualImageAssetId, @Query("locale") String locale);

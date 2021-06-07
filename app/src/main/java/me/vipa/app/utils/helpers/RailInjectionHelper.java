@@ -178,7 +178,7 @@ public class RailInjectionHelper extends AndroidViewModel {
         } else if (screenWidget.getName() != null && screenWidget.getReferenceName() != null && screenWidget.getReferenceName().equalsIgnoreCase(AppConstants.ContentType.MY_WATCHLIST.name())) {
             injectWatchlistRail(activity, contentSize, screenWidget, commonApiCallBack);
         } else {
-            APIServiceLayer.getInstance().getPlayListById(screenWidget.getContentID(), 0, contentSize).observe((LifecycleOwner) activity, enveuCommonResponse -> {
+            APIServiceLayer.getInstance().getPlayListById(screenWidget.getContentID(), 0, contentSize,activity).observe((LifecycleOwner) activity, enveuCommonResponse -> {
                 if (enveuCommonResponse != null && enveuCommonResponse.getData() != null) {
                     RailCommonData railCommonData = new RailCommonData(enveuCommonResponse.getData(), screenWidget, false);
                     commonApiCallBack.onSuccess(railCommonData);
