@@ -593,8 +593,9 @@ public class UserInteractionFragment extends BaseBindingFragment<DetailWatchlist
 
     private void setLikeProperty() {
         if (KsPreferenceKeys.getInstance().getCurrentTheme().equalsIgnoreCase(AppConstants.LIGHT_THEME)) {
-            getBinding().tvLike.setTextColor(ContextCompat.getColor(getActivity(), R.color.navy_blue));
-            ImageViewCompat.setImageTintList(getBinding().likeIcon, ColorStateList.valueOf(getResources().getColor(R.color.navy_blue)));
+            getBinding().tvLike.setTextColor(ContextCompat.getColor(getActivity(), R.color.description_title_yellow));
+            ImageViewCompat.setImageTintList(getBinding().likeIcon, ColorStateList.valueOf(getResources().getColor(R.color.description_title_yellow)));
+
         } else {
             getBinding().tvLike.setTextColor(ContextCompat.getColor(getActivity(), R.color.description_title_yellow));
             ImageViewCompat.setImageTintList(getBinding().likeIcon, ColorStateList.valueOf(getResources().getColor(R.color.description_title_yellow)));
