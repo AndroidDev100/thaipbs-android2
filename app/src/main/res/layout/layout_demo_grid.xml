@@ -9,7 +9,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/shimmer_backgroundColor">
+        android:background="?attr/shimmer_animation_dark">
 
         <RelativeLayout
             android:layout_width="0dp"

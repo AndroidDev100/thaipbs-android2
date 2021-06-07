@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="@dimen/_90sdp"
         android:layout_height="@dimen/_160sdp"
-        android:background="?attr/shimmer_backgroundColor"
+        android:background="?attr/shimmer_animation_dark"
         android:orientation="vertical">
 
 
