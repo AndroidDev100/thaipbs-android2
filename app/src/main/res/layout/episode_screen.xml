@@ -390,7 +390,7 @@
                             app:tabIndicatorColor="@color/description_title_yellow"
                             app:tabMode="fixed"
                             app:tabSelectedTextColor="?attr/tab_selected"
-                            app:tabTextColor="?attr/cancel_text_color"
+                            app:tabTextColor="?attr/tab_text_color"
                             app:tabTextAppearance="@style/CusromTabText"/>
                         <View
                             android:background="?attr/tab_selected"
