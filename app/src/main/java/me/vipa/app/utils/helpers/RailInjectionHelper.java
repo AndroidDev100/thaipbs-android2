@@ -487,7 +487,7 @@ public class RailInjectionHelper extends AndroidViewModel {
                                                                             int pageNumber, int pageSize,
                                                                               BaseCategory screenWidget) {
         MutableLiveData liveData=new MutableLiveData();
-        ListPaginationDataLayer.getInstance().getPlayListByWithPagination(playlistID, pageNumber, pageSize, screenWidget, new ApiResponseModel<RailCommonData>() {
+        ListPaginationDataLayer.getInstance().getPlayListByWithPagination(playlistID, pageNumber, pageSize, screenWidget,context, new ApiResponseModel<RailCommonData>() {
             @Override
             public void onStart() {
                 liveData.postValue(new ResponseModel(APIStatus.START.name(),null,null));

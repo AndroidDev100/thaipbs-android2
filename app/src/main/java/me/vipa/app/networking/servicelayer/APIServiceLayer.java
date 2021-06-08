@@ -189,30 +189,56 @@ public class APIServiceLayer {
     public void getPlayListByWithPagination(String playlistID,
                                             int pageNumber,
                                             int pageSize,
-                                            BaseCategory screenWidget, ApiResponseModel listener) {
+                                            BaseCategory screenWidget, Context context,ApiResponseModel listener) {
         this.callBack = listener;
         callBack.onStart();
         languageCode = LanguageLayer.getCurrentLanguageCode();
         if (endpoint!=null) {
-            endpoint.getPlaylistDetailsById(playlistID, languageCode, pageNumber, pageSize).enqueue(new Callback<EnveuCommonResponse>() {
-                @Override
-                public void onResponse(Call<EnveuCommonResponse> call, Response<EnveuCommonResponse> response) {
-                    if (response.body() != null && response.body().getData() != null) {
-                        RailCommonData railCommonData = new RailCommonData(response.body().getData(), screenWidget, true);
-                        railCommonData.setStatus(true);
-                        callBack.onSuccess(railCommonData);
-                    } else {
-                        ApiErrorModel errorModel = new ApiErrorModel(response.code(), response.message());
-                        callBack.onError(errorModel);
-                    }
-                }
 
-                @Override
-                public void onFailure(Call<EnveuCommonResponse> call, Throwable t) {
-                    ApiErrorModel errorModel = new ApiErrorModel(500, t.getMessage());
-                    callBack.onFailure(errorModel);
-                }
-            });
+            boolean isKidsMode  = new SharedPrefHelper(context).getKidsMode();
+            if (isKidsMode){
+                String parentalRating = AppCommonMethod.getParentalRating();
+                endpoint.getPlaylistDetailsByIdWithPG(playlistID, languageCode, pageNumber, pageSize,parentalRating).enqueue(new Callback<EnveuCommonResponse>() {
+                    @Override
+                    public void onResponse(Call<EnveuCommonResponse> call, Response<EnveuCommonResponse> response) {
+                        if (response.body() != null && response.body().getData() != null) {
+                            RailCommonData railCommonData = new RailCommonData(response.body().getData(), screenWidget, true);
+                            railCommonData.setStatus(true);
+                            callBack.onSuccess(railCommonData);
+                        } else {
+                            ApiErrorModel errorModel = new ApiErrorModel(response.code(), response.message());
+                            callBack.onError(errorModel);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<EnveuCommonResponse> call, Throwable t) {
+                        ApiErrorModel errorModel = new ApiErrorModel(500, t.getMessage());
+                        callBack.onFailure(errorModel);
+                    }
+                });
+            }else {
+
+                endpoint.getPlaylistDetailsById(playlistID, languageCode, pageNumber, pageSize).enqueue(new Callback<EnveuCommonResponse>() {
+                    @Override
+                    public void onResponse(Call<EnveuCommonResponse> call, Response<EnveuCommonResponse> response) {
+                        if (response.body() != null && response.body().getData() != null) {
+                            RailCommonData railCommonData = new RailCommonData(response.body().getData(), screenWidget, true);
+                            railCommonData.setStatus(true);
+                            callBack.onSuccess(railCommonData);
+                        } else {
+                            ApiErrorModel errorModel = new ApiErrorModel(response.code(), response.message());
+                            callBack.onError(errorModel);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<EnveuCommonResponse> call, Throwable t) {
+                        ApiErrorModel errorModel = new ApiErrorModel(500, t.getMessage());
+                        callBack.onFailure(errorModel);
+                    }
+                });
+            }
         }
 
     }

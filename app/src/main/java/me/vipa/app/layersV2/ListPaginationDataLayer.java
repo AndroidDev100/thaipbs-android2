@@ -1,5 +1,7 @@
 package me.vipa.app.layersV2;
 
+import android.content.Context;
+
 import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
 import me.vipa.app.callbacks.apicallback.ApiResponseModel;
 import me.vipa.app.networking.apiendpoints.ApiInterface;
@@ -33,7 +35,7 @@ public class ListPaginationDataLayer {
     public void getPlayListByWithPagination(String playlistID,
                                             int pageNumber,
                                             int pageSize,
-                                            BaseCategory screenWidget, ApiResponseModel listener) {
-        APIServiceLayer.getInstance().getPlayListByWithPagination(playlistID, pageNumber, pageSize, screenWidget, listener);
+                                            BaseCategory screenWidget, Context context, ApiResponseModel listener) {
+        APIServiceLayer.getInstance().getPlayListByWithPagination(playlistID, pageNumber, pageSize, screenWidget, context,listener);
     }
 }
