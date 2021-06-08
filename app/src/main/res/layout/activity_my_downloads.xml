@@ -17,7 +17,6 @@
                     android:id="@+id/no_data"
                     android:layout_width="160dp"
                     android:layout_height="160dp"
-                    android:background="@drawable/ic_no_data"
                     android:contentDescription="TODO"
                     android:layout_centerInParent="true"/>
             <TextView

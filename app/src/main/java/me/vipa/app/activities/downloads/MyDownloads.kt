@@ -23,9 +23,11 @@ import kotlinx.android.synthetic.main.activity_my_downloads.*
 import me.vipa.app.baseModels.BaseBindingActivity
 import me.vipa.app.utils.MediaTypeConstants
 import me.vipa.app.utils.commonMethods.AppCommonMethod
+import me.vipa.app.utils.constants.AppConstants
 import me.vipa.app.utils.cropImage.helpers.Logger
 import me.vipa.app.utils.helpers.downloads.DownloadedVideoActivity
 import me.vipa.app.utils.helpers.downloads.VideoListListener
+import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys
 import java.io.Serializable
 
 class MyDownloads : BaseBindingActivity<ActivityMyDownloadsBinding>(), MediaDownloadable.DownloadEventListener, VideoListListener,NoDataCallBack {
@@ -157,6 +159,12 @@ class MyDownloads : BaseBindingActivity<ActivityMyDownloadsBinding>(), MediaDown
 
 
     private fun setupToolbar() {
+        if (KsPreferenceKeys.getInstance().getCurrentTheme()==(AppConstants.LIGHT_THEME)) {
+            binding.noData.setBackgroundResource(R.drawable.ic_no_data_black);
+        }
+        else{
+            binding.noData.setBackgroundResource(R.drawable.ic_no_data);
+        }
         binding.toolbar.llSearchIcon.visibility = View.GONE
         binding.toolbar.backLayout.visibility = View.VISIBLE
         binding.toolbar.homeIcon.visibility = View.GONE
