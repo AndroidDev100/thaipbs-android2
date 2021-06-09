@@ -353,7 +353,7 @@ public class RailInjectionHelper extends AndroidViewModel {
     public MutableLiveData<RailCommonData> getPlayListDetailsWithPagination(Context
                                                                                     context, String playlistID,
                                                                             int pageNumber, int pageSize, BaseCategory screenWidget) {
-        return APIServiceLayer.getInstance().getSearchPopularPlayList(playlistID, pageNumber, pageSize, screenWidget);
+        return APIServiceLayer.getInstance().getSearchPopularPlayList(playlistID, pageNumber, pageSize, screenWidget,context);
     }
 
     public LiveData<List<RailCommonData>> getSearch(Context context,String keyword, int size, int page,boolean applyFilter) {

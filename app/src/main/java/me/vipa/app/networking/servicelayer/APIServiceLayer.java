@@ -349,31 +349,59 @@ public class APIServiceLayer {
     }
 
     public MutableLiveData<RailCommonData> getSearchPopularPlayList(String playlistID,
-                                                                    int pageNumber, int pageSize, BaseCategory screenWidget) {
+                                                                    int pageNumber, int pageSize, BaseCategory screenWidget, Context context) {
         MutableLiveData<RailCommonData> railCommonDataMutableLiveData = new MutableLiveData<>();
         languageCode = LanguageLayer.getCurrentLanguageCode();
         if (endpoint!=null) {
-            endpoint.getPlaylistDetailsById(playlistID, languageCode, pageNumber, pageSize).enqueue(new Callback<EnveuCommonResponse>() {
-                @Override
-                public void onResponse(Call<EnveuCommonResponse> call, Response<EnveuCommonResponse> response) {
-                    if (response.body() != null && response.body().getData() != null) {
-                        RailCommonData railCommonData = new RailCommonData(response.body().getData(), screenWidget, true);
-                        railCommonData.setStatus(true);
-                        railCommonDataMutableLiveData.postValue(railCommonData);
-                    } else {
+
+            boolean isKidsMode  = new SharedPrefHelper(context).getKidsMode();
+            if (isKidsMode){
+                String parentalRating = AppCommonMethod.getParentalRating();
+                endpoint.getPlaylistDetailsByIdWithPG(playlistID, languageCode, pageNumber, pageSize,parentalRating).enqueue(new Callback<EnveuCommonResponse>() {
+                    @Override
+                    public void onResponse(Call<EnveuCommonResponse> call, Response<EnveuCommonResponse> response) {
+                        if (response.body() != null && response.body().getData() != null) {
+                            RailCommonData railCommonData = new RailCommonData(response.body().getData(), screenWidget, true);
+                            railCommonData.setStatus(true);
+                            railCommonDataMutableLiveData.postValue(railCommonData);
+                        } else {
+                            RailCommonData railCommonData = new RailCommonData();
+                            railCommonData.setStatus(false);
+                            railCommonDataMutableLiveData.postValue(railCommonData);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<EnveuCommonResponse> call, Throwable t) {
                         RailCommonData railCommonData = new RailCommonData();
                         railCommonData.setStatus(false);
                         railCommonDataMutableLiveData.postValue(railCommonData);
                     }
-                }
+                });
+            }
+            else {
+                endpoint.getPlaylistDetailsById(playlistID, languageCode, pageNumber, pageSize).enqueue(new Callback<EnveuCommonResponse>() {
+                    @Override
+                    public void onResponse(Call<EnveuCommonResponse> call, Response<EnveuCommonResponse> response) {
+                        if (response.body() != null && response.body().getData() != null) {
+                            RailCommonData railCommonData = new RailCommonData(response.body().getData(), screenWidget, true);
+                            railCommonData.setStatus(true);
+                            railCommonDataMutableLiveData.postValue(railCommonData);
+                        } else {
+                            RailCommonData railCommonData = new RailCommonData();
+                            railCommonData.setStatus(false);
+                            railCommonDataMutableLiveData.postValue(railCommonData);
+                        }
+                    }
 
-                @Override
-                public void onFailure(Call<EnveuCommonResponse> call, Throwable t) {
-                    RailCommonData railCommonData = new RailCommonData();
-                    railCommonData.setStatus(false);
-                    railCommonDataMutableLiveData.postValue(railCommonData);
-                }
-            });
+                    @Override
+                    public void onFailure(Call<EnveuCommonResponse> call, Throwable t) {
+                        RailCommonData railCommonData = new RailCommonData();
+                        railCommonData.setStatus(false);
+                        railCommonDataMutableLiveData.postValue(railCommonData);
+                    }
+                });
+            }
         }
         return railCommonDataMutableLiveData;
 
