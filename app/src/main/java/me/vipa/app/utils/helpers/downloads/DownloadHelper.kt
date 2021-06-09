@@ -616,7 +616,6 @@ class DownloadHelper() {
                 }
             })*/
         } else {
-            Logger.e("addVideoData 2", "fdfdfdfdfd")
             var downloadedVideo = DownloadedVideo(video.id, assetType, seriesId, "", "", video.name, AppCommonMethod.expiryDate(SDKConfig.DOWNLOAD_EXPIRY_DAYS),parentalRating)
             insertVideo(downloadedVideo, null)
         }

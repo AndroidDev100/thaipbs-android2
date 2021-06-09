@@ -4,29 +4,27 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.brightcove.player.edge.OfflineCallback
 import com.brightcove.player.model.Video
 import com.brightcove.player.network.DownloadStatus
 import com.brightcove.player.offline.MediaDownloadable
 import com.google.gson.Gson
 import com.mmtv.utils.helpers.downloads.DownloadHelper
-import me.vipa.app.R
-import me.vipa.app.databinding.ActivityMyDownloadsBinding
-import me.vipa.app.utils.helpers.downloads.room.DownloadModel
 import kotlinx.android.synthetic.main.activity_my_downloads.*
+import me.vipa.app.R
 import me.vipa.app.baseModels.BaseBindingActivity
+import me.vipa.app.databinding.ActivityMyDownloadsBinding
 import me.vipa.app.utils.MediaTypeConstants
 import me.vipa.app.utils.commonMethods.AppCommonMethod
 import me.vipa.app.utils.constants.AppConstants
 import me.vipa.app.utils.cropImage.helpers.Logger
-import me.vipa.app.utils.helpers.downloads.DownloadedVideoActivity
+import me.vipa.app.utils.helpers.SharedPrefHelper
 import me.vipa.app.utils.helpers.downloads.VideoListListener
+import me.vipa.app.utils.helpers.downloads.room.DownloadModel
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys
 import java.io.Serializable
 
@@ -44,6 +42,7 @@ class MyDownloads : BaseBindingActivity<ActivityMyDownloadsBinding>(), MediaDown
 
     private lateinit var downloadHelper: DownloadHelper
     private var downloadsAdapter: DownloadsAdapter? = null
+    private var kidsMode = false
     val TAG = this.javaClass.simpleName
     override fun alreadyDownloaded(video: Video) {
     }
@@ -122,6 +121,13 @@ class MyDownloads : BaseBindingActivity<ActivityMyDownloadsBinding>(), MediaDown
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         var counter = 0
+        kidsMode = SharedPrefHelper(this).kidsMode
+        Logger.e("addVideoData 2", kidsMode.toString())
+        if (kidsMode) {
+
+
+        }
+
         downloadHelper = DownloadHelper(this, this)
         downloadHelper.getAllVideosFromDatabase().observe(this, Observer {
 
