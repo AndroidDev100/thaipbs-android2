@@ -1,5 +1,7 @@
 package me.vipa.app.layersV2;
 
+import android.content.Context;
+
 import me.vipa.app.callbacks.apicallback.ApiResponseModel;
 import me.vipa.app.networking.apiendpoints.ApiInterface;
 import me.vipa.app.networking.apiendpoints.RequestConfig;
@@ -30,7 +32,7 @@ public class SeriesDataLayer {
     }
 
 
-    public void getSeriesData(String assetID, ApiResponseModel listener) {
-        APIServiceLayer.getInstance().getSeriesData(assetID, listener);
+    public void getSeriesData(String assetID, Context context, ApiResponseModel listener) {
+        APIServiceLayer.getInstance().getSeriesData(assetID, listener,context);
     }
 }

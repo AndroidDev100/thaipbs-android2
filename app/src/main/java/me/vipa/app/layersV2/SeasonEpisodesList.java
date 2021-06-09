@@ -1,5 +1,7 @@
 package me.vipa.app.layersV2;
 
+import androidx.fragment.app.FragmentActivity;
+
 import me.vipa.app.beanModel.enveuCommonRailData.RailCommonData;
 import me.vipa.app.beanModelV3.playListModelV2.EnveuCommonResponse;
 import me.vipa.app.callbacks.apicallback.ApiResponseModel;
@@ -36,13 +38,13 @@ public class SeasonEpisodesList {
     }
 
     public void getSeasonEpisodesV2(int seriesId, int pageNumber,
-                                    int size, int seasonNumber, ApiResponseModel listener) {
-        APIServiceLayer.getInstance().getSeasonEpisodesV2(seriesId, pageNumber, size, seasonNumber, listener);
+                                    int size, int seasonNumber, FragmentActivity activity, ApiResponseModel listener) {
+        APIServiceLayer.getInstance().getSeasonEpisodesV2(seriesId, pageNumber, size, seasonNumber, activity,listener);
     }
 
     public void getAllEpisodesV2(int seriesId, int pageNumber,
-                                 int size, ApiResponseModel listener) {
-        APIServiceLayer.getInstance().getAllEpisodesV2(seriesId, pageNumber, size, listener);
+                                 int size, FragmentActivity activity, ApiResponseModel listener) {
+        APIServiceLayer.getInstance().getAllEpisodesV2(seriesId, pageNumber, size, activity,listener);
     }
 
     private void parseResponseAsRailCommonData(Response<EnveuCommonResponse> response) {

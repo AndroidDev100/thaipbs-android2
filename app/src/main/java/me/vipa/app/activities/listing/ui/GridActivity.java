@@ -303,7 +303,7 @@ public class GridActivity extends BaseBindingActivity<ListingActivityBinding> im
                                         }
                                         Logger.w("assetIds", videoIds);
 
-                                        ContinueWatchingLayer.getInstance().getContinueWatchingVideos(continueWatchingBookmarkList, videoIds, new CommonApiCallBack() {
+                                        ContinueWatchingLayer.getInstance().getContinueWatchingVideos(continueWatchingBookmarkList, videoIds,this, new CommonApiCallBack() {
                                             @Override
                                             public void onSuccess(Object item) {
                                                 getBinding().transparentLayout.setVisibility(View.GONE);

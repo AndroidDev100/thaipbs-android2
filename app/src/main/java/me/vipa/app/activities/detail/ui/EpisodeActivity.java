@@ -915,7 +915,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
         if (fromBingWatch) {
             parseVideoDetails(nextEpisode);
         } else {
-            railInjectionHelper.getSeriesDetailsV2(String.valueOf(assestId)).observe(EpisodeActivity.this, new Observer<ResponseModel>() {
+            railInjectionHelper.getSeriesDetailsV2(String.valueOf(assestId),this).observe(EpisodeActivity.this, new Observer<ResponseModel>() {
                 @Override
                 public void onChanged(ResponseModel response) {
                     if (response != null) {
@@ -1111,7 +1111,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
             setTabs(seasonNumber, false);
         } else {
 
-            railInjectionHelper.getSeriesDetailsV2(String.valueOf(seriesId)).observe(EpisodeActivity.this, new Observer<ResponseModel>() {
+            railInjectionHelper.getSeriesDetailsV2(String.valueOf(seriesId),this).observe(EpisodeActivity.this, new Observer<ResponseModel>() {
                 @Override
                 public void onChanged(ResponseModel response) {
                     if (response != null) {

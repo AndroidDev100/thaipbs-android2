@@ -350,7 +350,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
         modelCall();
         postCommentClick();
         RailInjectionHelper railInjectionHelper = ViewModelProviders.of(this).get(RailInjectionHelper.class);
-        railInjectionHelper.getSeriesDetailsV2(String.valueOf(seriesId)).observe(SeriesDetailActivity.this, new Observer<ResponseModel>() {
+        railInjectionHelper.getSeriesDetailsV2(String.valueOf(seriesId),this).observe(SeriesDetailActivity.this, new Observer<ResponseModel>() {
             @Override
             public void onChanged(ResponseModel response) {
                 if (response != null) {

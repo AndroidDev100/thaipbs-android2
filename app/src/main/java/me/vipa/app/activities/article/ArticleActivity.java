@@ -127,7 +127,7 @@ public class ArticleActivity  extends BaseBindingActivity<ArticleActivityBinding
         });
 */
 
-        railInjectionHelper.getAssetDetailsV2(String.valueOf(assestId)).observe(ArticleActivity.this, assetResponse -> {
+        railInjectionHelper.getAssetDetailsV2(String.valueOf(assestId),this).observe(ArticleActivity.this, assetResponse -> {
             if (assetResponse!=null){
                 if (assetResponse.getStatus().equalsIgnoreCase(APIStatus.START.name())){
 

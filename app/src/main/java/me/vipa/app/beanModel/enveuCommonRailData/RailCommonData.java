@@ -1,5 +1,7 @@
 package me.vipa.app.beanModel.enveuCommonRailData;
 
+import android.app.Activity;
+
 import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
 import me.vipa.enums.ImageSource;
 import me.vipa.enums.ImageType;
@@ -24,20 +26,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
-import me.vipa.app.beanModelV3.continueWatching.DataItem;
-import me.vipa.app.beanModelV3.playListModelV2.ItemsItem;
-import me.vipa.app.beanModelV3.playListModelV2.PlayListDetailsResponse;
-import me.vipa.app.beanModelV3.playListModelV2.VideosItem;
-import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
-import me.vipa.app.beanModelV3.videoDetailsV2.EnveuVideoDetails;
-import me.vipa.app.callbacks.commonCallbacks.CommonApiCallBack;
-import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
-import me.vipa.enums.ImageSource;
-import me.vipa.enums.ImageType;
-import me.vipa.enums.LandingPageType;
-import me.vipa.enums.Layouts;
-import me.vipa.enums.WidgetImageType;
 
 public class RailCommonData {
 
@@ -90,25 +78,25 @@ public class RailCommonData {
 
     }
 
-    public void getHeroRailCommonData(BaseCategory screenWidget, CommonApiCallBack commonApiCallBack) {
+    public void getHeroRailCommonData(BaseCategory screenWidget, Activity activity, CommonApiCallBack commonApiCallBack) {
         EnveuVideoItemBean enveuVideoItemBean = new EnveuVideoItemBean();
         this.screenWidget = screenWidget;
         setRailType(screenWidget.getLayout(), screenWidget.getContentImageType());
         if (screenWidget.getImageSource() != null && screenWidget.getImageSource().equalsIgnoreCase(ImageSource.MNL.name())) {
-            setManualTypeHero(enveuVideoItemBean, commonApiCallBack);
+            setManualTypeHero(activity,enveuVideoItemBean, commonApiCallBack);
         } else {
-            setAssetTypeHero(enveuVideoItemBean, commonApiCallBack);
+            setAssetTypeHero(activity,enveuVideoItemBean, commonApiCallBack);
         }
     }
 
-    private void setManualTypeHero(EnveuVideoItemBean enveuVideoItemBean, CommonApiCallBack commonApiCallBack) {
+    private void setManualTypeHero(Activity activity, EnveuVideoItemBean enveuVideoItemBean, CommonApiCallBack commonApiCallBack) {
         enveuVideoItemBean.setPosterURL(screenWidget.getImageURL());
         setRailType(screenWidget.getLayout(), screenWidget.getContentImageType());
         if (screenWidget.getLandingPageType().equals(LandingPageType.PDF.name()) || screenWidget.getLandingPageType().equals(LandingPageType.PLT.name()) || screenWidget.getLandingPageType().equals(LandingPageType.HTM.name())) {
             enveuVideoItemBeans.add(enveuVideoItemBean);
             commonApiCallBack.onSuccess(this);
         } else {
-            VideoDetailLayer.getInstance().getAssetTypeHero(screenWidget.getLandingPageAssetId(), new CommonApiCallBack() {
+            VideoDetailLayer.getInstance().getAssetTypeHero(screenWidget.getLandingPageAssetId(),activity, new CommonApiCallBack() {
                 @Override
                 public void onSuccess(Object item) {
                     if (item instanceof EnveuVideoDetails) {
@@ -136,10 +124,10 @@ public class RailCommonData {
 
     }
 
-    private void setAssetTypeHero(EnveuVideoItemBean enveuVideoItemBean, CommonApiCallBack commonApiCallBack) {
+    private void setAssetTypeHero(Activity activity, EnveuVideoItemBean enveuVideoItemBean, CommonApiCallBack commonApiCallBack) {
         final RailCommonData railCommonData = this;
         screenWidget.setLandingPageAssetId(screenWidget.getManualImageAssetId());
-        VideoDetailLayer.getInstance().getAssetTypeHero(screenWidget.getManualImageAssetId(), new CommonApiCallBack() {
+        VideoDetailLayer.getInstance().getAssetTypeHero(screenWidget.getManualImageAssetId(), activity, new CommonApiCallBack() {
             @Override
             public void onSuccess(Object item) {
                 if (item instanceof EnveuVideoDetails) {

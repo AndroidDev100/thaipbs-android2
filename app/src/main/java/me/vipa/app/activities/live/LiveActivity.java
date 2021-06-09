@@ -675,7 +675,7 @@ public class LiveActivity extends BaseBindingActivity<LiveDetailBinding> impleme
         isHitPlayerApi = true;
         railInjectionHelper = ViewModelProviders.of(this).get(RailInjectionHelper.class);
         getBinding().pBar.setVisibility(View.VISIBLE);
-        railInjectionHelper.getAssetDetailsV2(String.valueOf(assestId)).observe(LiveActivity.this, assetResponse -> {
+        railInjectionHelper.getAssetDetailsV2(String.valueOf(assestId), LiveActivity.this).observe(LiveActivity.this, assetResponse -> {
             if (assetResponse != null) {
                 if (assetResponse.getStatus().equalsIgnoreCase(APIStatus.START.name())) {
 

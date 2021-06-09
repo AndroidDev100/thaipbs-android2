@@ -45,34 +45,6 @@ import me.vipa.enums.PlaylistType;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.vipa.app.Bookmarking.BookmarkingViewModel;
-import me.vipa.app.beanModel.emptyResponse.ResponseEmpty;
-import me.vipa.app.beanModel.enveuCommonRailData.RailCommonData;
-import me.vipa.app.beanModel.responseGetWatchlist.ResponseGetIsWatchlist;
-import me.vipa.app.beanModel.responseIsLike.ResponseIsLike;
-import me.vipa.app.beanModelV3.continueWatching.DataItem;
-import me.vipa.app.callbacks.apicallback.ApiResponseModel;
-import me.vipa.app.callbacks.commonCallbacks.CommonApiCallBack;
-import me.vipa.app.layersV2.ContinueWatchingLayer;
-import me.vipa.app.layersV2.ListPaginationDataLayer;
-import me.vipa.app.layersV2.SearchLayer;
-import me.vipa.app.layersV2.SeasonEpisodesList;
-import me.vipa.app.layersV2.SeriesDataLayer;
-import me.vipa.app.layersV2.VideoDetailLayer;
-import me.vipa.app.networking.apistatus.APIStatus;
-import me.vipa.app.networking.errormodel.ApiErrorModel;
-import me.vipa.app.networking.responsehandler.ResponseModel;
-import me.vipa.app.networking.servicelayer.APIServiceLayer;
-import me.vipa.app.repository.home.HomeFragmentRepository;
-import me.vipa.app.repository.userManagement.RegistrationLoginRepository;
-import me.vipa.app.utils.constants.AppConstants;
-import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
-import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
-import me.vipa.bookmarking.bean.continuewatching.ContinueWatchingBookmark;
-import me.vipa.enums.Layouts;
-import me.vipa.enums.PlaylistType;
-import me.vipa.watchHistory.beans.ItemsItem;
-
 
 public class RailInjectionHelper extends AndroidViewModel {
     private MutableLiveData<RailCommonData> mutableRailCommonData = new MutableLiveData<>();
@@ -145,7 +117,7 @@ public class RailInjectionHelper extends AndroidViewModel {
 
     private void getHeroDetails(Activity activity, BaseCategory screenWidget, CommonApiCallBack commonApiCallBack) {
         RailCommonData railCommonData = new RailCommonData();
-        railCommonData.getHeroRailCommonData(screenWidget, new CommonApiCallBack() {
+        railCommonData.getHeroRailCommonData(screenWidget,activity, new CommonApiCallBack() {
             @Override
             public void onSuccess(Object item) {
                 commonApiCallBack.onSuccess(item);
@@ -207,7 +179,7 @@ public class RailInjectionHelper extends AndroidViewModel {
                     ) {
                         videoIds = videoIds.concat(String.valueOf(continueWatchingBookmark.getAssetId())).concat(",");
                     }
-                    ContinueWatchingLayer.getInstance().getWatchHistoryVideos(continueWatchingBookmarkList, videoIds, new CommonApiCallBack() {
+                    ContinueWatchingLayer.getInstance().getWatchHistoryVideos(continueWatchingBookmarkList, videoIds, activity,new CommonApiCallBack() {
                         @Override
                         public void onSuccess(Object item) {
                             if (item instanceof List) {
@@ -275,7 +247,7 @@ public class RailInjectionHelper extends AndroidViewModel {
                     for (ContinueWatchingBookmark continueWatchingBookmark : continueWatchingBookmarkList) {
                         videoIds = videoIds.concat(String.valueOf(continueWatchingBookmark.getAssetId())).concat(",");
                     }
-                    ContinueWatchingLayer.getInstance().getContinueWatchingVideos(continueWatchingBookmarkList, videoIds, new CommonApiCallBack() {
+                    ContinueWatchingLayer.getInstance().getContinueWatchingVideos(continueWatchingBookmarkList, videoIds,activity, new CommonApiCallBack() {
                         @Override
                         public void onSuccess(Object item) {
                             if (item instanceof List) {
@@ -396,10 +368,10 @@ public class RailInjectionHelper extends AndroidViewModel {
     }
 
 
-    public LiveData<RailCommonData> getWatchHistoryAssets(List<ItemsItem> watchHistoryList, String videoIds) {
+    public LiveData<RailCommonData> getWatchHistoryAssets(List<ItemsItem> watchHistoryList, String videoIds,Activity activity) {
         MutableLiveData<RailCommonData> railCommonDataMutableLiveData = new MutableLiveData<>();
 
-        ContinueWatchingLayer.getInstance().getWatchHistoryVideos(watchHistoryList, videoIds, new CommonApiCallBack() {
+        ContinueWatchingLayer.getInstance().getWatchHistoryVideos(watchHistoryList, videoIds, activity, new CommonApiCallBack() {
             @Override
             public void onSuccess(Object item) {
                 if (item instanceof List) {
@@ -512,9 +484,9 @@ public class RailInjectionHelper extends AndroidViewModel {
         return liveData;
     }
 
-    public LiveData<ResponseModel> getSeriesDetailsV2(String asseetID) {
+    public LiveData<ResponseModel> getSeriesDetailsV2(String asseetID, Context context) {
         MutableLiveData liveData=new MutableLiveData();
-        SeriesDataLayer.getInstance().getSeriesData(asseetID, new ApiResponseModel<RailCommonData>() {
+        SeriesDataLayer.getInstance().getSeriesData(asseetID,context, new ApiResponseModel<RailCommonData>() {
             @Override
             public void onStart() {
                 liveData.postValue(new ResponseModel(APIStatus.START.name(),null,null));
@@ -540,11 +512,11 @@ public class RailInjectionHelper extends AndroidViewModel {
     }
 
 
-    public LiveData<ResponseModel> getEpisodeNoSeasonV2(int seriesId, int pageNo, int size, int seasonNumber) {
+    public LiveData<ResponseModel> getEpisodeNoSeasonV2(int seriesId, int pageNo, int size, int seasonNumber, FragmentActivity activity) {
         MutableLiveData liveData=new MutableLiveData();
         if (seasonNumber == -1) {
 
-            SeasonEpisodesList.getInstance().getAllEpisodesV2(seriesId, pageNo, size, new ApiResponseModel<RailCommonData>() {
+            SeasonEpisodesList.getInstance().getAllEpisodesV2(seriesId, pageNo, size,activity, new ApiResponseModel<RailCommonData>() {
                 @Override
                 public void onStart() {
                     liveData.postValue(new ResponseModel(APIStatus.START.name(), null, null));
@@ -570,7 +542,7 @@ public class RailInjectionHelper extends AndroidViewModel {
             return liveData;//SeasonEpisodesList.getInstance().getAllEpisodes(seriesId, pageNo, size);
 
         }else {
-            SeasonEpisodesList.getInstance().getSeasonEpisodesV2(seriesId, pageNo, size, seasonNumber, new ApiResponseModel<RailCommonData>() {
+            SeasonEpisodesList.getInstance().getSeasonEpisodesV2(seriesId, pageNo, size, seasonNumber,activity, new ApiResponseModel<RailCommonData>() {
                 @Override
                 public void onStart() {
                     liveData.postValue(new ResponseModel(APIStatus.START.name(), null, null));
@@ -596,9 +568,9 @@ public class RailInjectionHelper extends AndroidViewModel {
         }
     }
 
-    public LiveData<ResponseModel> getAssetDetailsV2(String asseetID) {
+    public LiveData<ResponseModel> getAssetDetailsV2(String asseetID, Context context) {
         MutableLiveData liveData=new MutableLiveData();
-        VideoDetailLayer.getInstance().getVideoDetails(asseetID, new ApiResponseModel<RailCommonData>() {
+        VideoDetailLayer.getInstance().getVideoDetails(asseetID,context, new ApiResponseModel<RailCommonData>() {
             @Override
             public void onStart() {
                 liveData.postValue(new ResponseModel(APIStatus.START.name(), null, null));

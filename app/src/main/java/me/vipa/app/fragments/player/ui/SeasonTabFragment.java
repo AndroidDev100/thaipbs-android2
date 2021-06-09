@@ -222,7 +222,7 @@ public class SeasonTabFragment extends BaseBindingFragment<SeasonFragmentLayoutB
     }
 
     public void getAllEpisodes() {
-        railInjectionHelper.getEpisodeNoSeasonV2(seriesId, totalPages, 50, -1).observe(getActivity(), new Observer<ResponseModel>() {
+        railInjectionHelper.getEpisodeNoSeasonV2(seriesId, totalPages, 50, -1,getActivity()).observe(getActivity(), new Observer<ResponseModel>() {
             @Override
             public void onChanged(ResponseModel response) {
                 hideProgressBar();
@@ -297,7 +297,7 @@ public class SeasonTabFragment extends BaseBindingFragment<SeasonFragmentLayoutB
         getBinding().seasonHeader.setEnabled(false);
         ((SimpleItemAnimator) getBinding().seriesRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
 
-        railInjectionHelper.getEpisodeNoSeasonV2(seriesId, totalPages, 50, selectedSeason).observe(getActivity(), new Observer<ResponseModel>() {
+        railInjectionHelper.getEpisodeNoSeasonV2(seriesId, totalPages, 50, selectedSeason,getActivity()).observe(getActivity(), new Observer<ResponseModel>() {
             @Override
             public void onChanged(ResponseModel response) {
                 hideProgressBar();

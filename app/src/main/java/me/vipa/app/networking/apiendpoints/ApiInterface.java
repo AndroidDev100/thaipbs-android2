@@ -151,17 +151,32 @@ public interface ApiInterface {
     @GET("v3/content")
     Call<EnveuVideoDetailsBean> getVideoDetails(@Query("contentId") String manualImageAssetId, @Query("locale") String locale);
 
+    @GET("v3/content")
+    Call<EnveuVideoDetailsBean> getVideoDetailsPG(@Query("contentId") String manualImageAssetId, @Query("locale") String locale,@Query("parentalRating") String parentalRating);
+
+
     // v2 API for getting related content -->> all the season episodes
     @GET("v3/content/listAll")
     Call<EnveuCommonResponse> getRelatedContent(@Query("linkedContentId") int seriesId, @Query("seasonNumber") int seasonNumber, @Query("page") int pageNumber, @Query("size") int pageSize, @Query("locale") String locale);
+
+    @GET("v3/content/listAll")
+    Call<EnveuCommonResponse> getRelatedContentPG(@Query("linkedContentId") int seriesId, @Query("seasonNumber") int seasonNumber, @Query("page") int pageNumber, @Query("size") int pageSize, @Query("locale") String locale,@Query("parentalRating") String parentalRating);
+
 
     // v2 API for getting related content -->> all the episodes
     @GET("v3/content/listAll")
     Call<EnveuCommonResponse> getRelatedContentWithoutSNo(@Query("linkedContentId") int seriesId, @Query("page") int pageNumber, @Query("size") int pageSize, @Query("locale") String locale);
 
+
+    @GET("v3/content/listAll")
+    Call<EnveuCommonResponse> getRelatedContentWithoutSNoPG(@Query("linkedContentId") int seriesId, @Query("page") int pageNumber, @Query("size") int pageSize, @Query("locale") String locale,@Query("parentalRating") String parentalRating);
+
     //V2 PI for getting asset details
     @GET("v3/content")
     Call<ContinueWatchingModel> getVideos(@Query("contentId") String manualImageAssetId, @Query("locale") String locale);
+
+    @GET("v3/content")
+    Call<ContinueWatchingModel> getVideosPG(@Query("contentId") String manualImageAssetId, @Query("locale") String locale,@Query("parentalRating") String parentalRating);
 
     @Headers("x-platform: android")
     @GET("v4/search")

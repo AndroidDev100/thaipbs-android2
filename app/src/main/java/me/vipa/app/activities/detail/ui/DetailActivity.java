@@ -780,7 +780,7 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
     public void getAssetDetails() {
         isHitPlayerApi = true;
         railInjectionHelper = ViewModelProviders.of(this).get(RailInjectionHelper.class);
-        railInjectionHelper.getAssetDetailsV2(String.valueOf(assestId)).observe(DetailActivity.this, assetResponse -> {
+        railInjectionHelper.getAssetDetailsV2(String.valueOf(assestId), DetailActivity.this).observe(DetailActivity.this, assetResponse -> {
             if (assetResponse != null) {
                 if (assetResponse.getStatus().equalsIgnoreCase(APIStatus.START.name())) {
 

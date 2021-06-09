@@ -210,7 +210,7 @@ public class WatchListActivity extends BaseBindingActivity<WatchListActivityBind
                                 for (me.vipa.watchHistory.beans.ItemsItem historyItem : watchHistoryList) {
                                     videoIds = videoIds.concat(String.valueOf(historyItem.getAssetId())).concat(",");
                                 }
-                                railInjectionHelper.getWatchHistoryAssets(watchHistoryList, videoIds).observe(this, new Observer<RailCommonData>() {
+                                railInjectionHelper.getWatchHistoryAssets(watchHistoryList, videoIds,this).observe(this, new Observer<RailCommonData>() {
                                     @Override
                                     public void onChanged(RailCommonData railCommonData) {
                                         if (railCommonData != null) {
@@ -421,7 +421,7 @@ public class WatchListActivity extends BaseBindingActivity<WatchListActivityBind
                                 ) {
                                     videoIds = videoIds.concat(String.valueOf(historyItem.getAssetId())).concat(",");
                                 }
-                                railInjectionHelper.getWatchHistoryAssets(watchHistoryList, videoIds).observe(this, new Observer<RailCommonData>() {
+                                railInjectionHelper.getWatchHistoryAssets(watchHistoryList, videoIds,this).observe(this, new Observer<RailCommonData>() {
                                     @Override
                                     public void onChanged(RailCommonData railCommonData) {
                                         if (railCommonData != null) {
