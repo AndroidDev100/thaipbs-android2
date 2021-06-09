@@ -18,6 +18,10 @@ public interface DownloadEpisodeDao {
     @Query("SELECT * FROM downloadedEpisodes where seriesId=:seriesId and seasonNumber=:seasonNumber")
     List<DownloadedEpisodes> getEpisodesList(@NotNull String seriesId, @NonNull String seasonNumber);
 
+    @Query("SELECT * FROM downloadedEpisodes where seriesId=:seriesId and seasonNumber=:seasonNumber and parentalRating=:parentalRating")
+    List<DownloadedEpisodes> getEpisodesListWithPG(@NotNull String seriesId, @NonNull String seasonNumber, @NonNull String parentalRating);
+
+
     @Query("SELECT * FROM downloadedEpisodes where videoId=:episodeId")
     List<DownloadedEpisodes> getEpisodes(@NotNull String episodeId);
 
