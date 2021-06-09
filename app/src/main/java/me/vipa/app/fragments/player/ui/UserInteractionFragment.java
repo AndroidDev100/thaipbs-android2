@@ -74,12 +74,14 @@ public class UserInteractionFragment extends BaseBindingFragment<DetailWatchlist
     private boolean isloggedout = false;
     private String videoId = "6081937244001";
     private OnDownloadClickInteraction onDownloadClickInteraction;
+    String isLogins;
     /**
      * The policy key for the video cloud account.
      */
     private Video video;
     private String seriesId;
     private boolean kidsMode;
+
 
 
     public UserInteractionFragment() {
@@ -122,7 +124,7 @@ public class UserInteractionFragment extends BaseBindingFragment<DetailWatchlist
             }
 
             kidsMode  = new SharedPrefHelper(context).getKidsMode();
-            String isLogins = preference.getAppPrefLoginStatus();
+             isLogins = preference.getAppPrefLoginStatus();
 
              setKidsMode(kidsMode);
 
@@ -131,6 +133,22 @@ public class UserInteractionFragment extends BaseBindingFragment<DetailWatchlist
                 getBinding().llLike.setVisibility(View.GONE);
 
             }
+            if(kidsMode){
+                getBinding().downloadVideo.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.ic_start_download_black));
+            }
+            else {
+                getBinding().downloadVideo.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.ic_start_download));
+
+            }
+
+
+
+
+
+            //android:visibility='@{isDownloadable &amp;&amp; !isKidsMode? View.VISIBLE : View.GONE,default="gone"}'
+
+
+
 
 
 
@@ -772,8 +790,24 @@ public class UserInteractionFragment extends BaseBindingFragment<DetailWatchlist
     }
 
     public void setDownloadable(boolean isDownloadable) {
-        if (getBinding() != null)
+        if (getBinding() != null){
             getBinding().setIsDownloadable(isDownloadable);
+            if(isDownloadable && isLogins.equalsIgnoreCase(AppConstants.UserStatus.Login.toString()) && !kidsMode){
+                getBinding().download.setVisibility(View.VISIBLE);
+            }
+            else if(isDownloadable && !isLogins.equalsIgnoreCase(AppConstants.UserStatus.Login.toString()) && !kidsMode ){
+                getBinding().download.setVisibility(View.VISIBLE);
+            }
+            else if(isDownloadable && isLogins.equalsIgnoreCase(AppConstants.UserStatus.Login.toString()) && kidsMode ){
+                getBinding().download.setVisibility(View.VISIBLE);
+            }
+            else {
+                getBinding().download.setVisibility(View.GONE);
+
+            }
+
+        }
+
     }
 
     public void setKidsMode(boolean isKidsMode) {

@@ -203,7 +203,7 @@ public class HomeActivity extends BaseBindingActivity<ActivityMainBinding> imple
 
         kidsMode  = new SharedPrefHelper(HomeActivity.this).getKidsMode();
 
-        KidsModeSinglton.getInstance().aBoolean=kidsMode;
+        KidsModeSinglton.getInstance().aBoolean=kidsMode; 
         Logger.d("CurrentThemeIs",strCurrentTheme);
         if (KsPreferenceKeys.getInstance().getCurrentTheme().equalsIgnoreCase(AppConstants.LIGHT_THEME)) {
             setTheme(R.style.MyMaterialTheme_Base_Light);
