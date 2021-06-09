@@ -81,7 +81,7 @@ public class UserInteractionFragment extends BaseBindingFragment<DetailWatchlist
     private Video video;
     private String seriesId;
     private boolean kidsMode;
-    private boolean issDownloadable;
+
 
 
     public UserInteractionFragment() {
@@ -791,14 +791,13 @@ public class UserInteractionFragment extends BaseBindingFragment<DetailWatchlist
     public void setDownloadable(boolean isDownloadable) {
         if (getBinding() != null){
             getBinding().setIsDownloadable(isDownloadable);
-              issDownloadable=isDownloadable;
-            if(issDownloadable && isLogins.equalsIgnoreCase(AppConstants.UserStatus.Login.toString()) && !kidsMode){
+            if(isDownloadable && isLogins.equalsIgnoreCase(AppConstants.UserStatus.Login.toString()) && !kidsMode){
                 getBinding().download.setVisibility(View.VISIBLE);
             }
-            else if(issDownloadable && !isLogins.equalsIgnoreCase(AppConstants.UserStatus.Login.toString()) && !kidsMode ){
+            else if(isDownloadable && !isLogins.equalsIgnoreCase(AppConstants.UserStatus.Login.toString()) && !kidsMode ){
                 getBinding().download.setVisibility(View.VISIBLE);
             }
-            else if(issDownloadable && isLogins.equalsIgnoreCase(AppConstants.UserStatus.Login.toString()) && kidsMode ){
+            else if(isDownloadable && isLogins.equalsIgnoreCase(AppConstants.UserStatus.Login.toString()) && kidsMode ){
                 getBinding().download.setVisibility(View.VISIBLE);
             }
             else {
