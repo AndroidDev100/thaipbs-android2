@@ -67,6 +67,7 @@ class DownloadHelper() {
     private lateinit var enveuVideoItemBean: EnveuVideoItemBean
     private var seriesId = ""
     private var seriesName = ""
+    private var parentalRating = ""
     private var seasonNumber: String? = null
     private var episodeNumber: String? = null
     private var mobileDownloadAllwed: Int? = 1
@@ -102,12 +103,13 @@ class DownloadHelper() {
         this.activity = activity
     }
 
-    constructor(activity: Activity, videoListener: MediaDownloadable.DownloadEventListener, seriesId: String, seriesName: String, assetType: String, enveuVideoItemBean: EnveuVideoItemBean) : this(activity, videoListener) {
+    constructor(activity: Activity, videoListener: MediaDownloadable.DownloadEventListener, seriesId: String, seriesName: String, assetType: String, enveuVideoItemBean: EnveuVideoItemBean, parentalRating: String) : this(activity, videoListener) {
         this.assetType = assetType
         this.enveuVideoItemBean = enveuVideoItemBean
         this.seriesId = seriesId
         this.seriesName = seriesName
         this.seasonNumber = enveuVideoItemBean.season
+        this.parentalRating = parentalRating
         if (enveuVideoItemBean.episodeNo != null)
             this.episodeNumber = enveuVideoItemBean.episodeNo.toString()
     }
@@ -298,11 +300,12 @@ class DownloadHelper() {
         }
     }
 
-    fun startEpisodeDownload(video: Video, seriesId: String, seasonNumber: Int, episodeNumber: String, videoQuality: Int) {
+    fun startEpisodeDownload(video: Video, seriesId: String, seasonNumber: Int, episodeNumber: String, videoQuality: Int, parentalRating: String) {
         assetType = MediaTypeConstants.getInstance().episode
         this.seriesId = seriesId
         this.seasonNumber = seasonNumber.toString()
         this.episodeNumber = episodeNumber
+        this.parentalRating = parentalRating
         Logger.e("episodedownload", video.isClearContent.toString())
         if (video.isClearContent) {
             downloadVideo(video, videoQuality)
@@ -584,7 +587,7 @@ class DownloadHelper() {
             var downloadedVideo = DownloadedVideo(video!!.id, MediaTypeConstants.getInstance().series, seriesId)
             downloadedVideo.seriesName = seriesName
             downloadedVideo.seasonNumber = seasonNumber!!
-            val downloadedEpisodes = DownloadedEpisodes(video.id, seasonNumber!!, episodeNumber!!, seriesId)
+            val downloadedEpisodes = DownloadedEpisodes(video.id, seasonNumber!!, episodeNumber!!, seriesId,parentalRating)
             ImageDownloadHelper(activity as Context, seriesId, object : CommonApiCallBack {
                 override fun onSuccess(item: Any?) {
                     Logger.e("addVideoData 4", item.toString())
@@ -613,14 +616,17 @@ class DownloadHelper() {
                 }
             })*/
         } else {
-            var downloadedVideo = DownloadedVideo(video.id, assetType, seriesId, "", "", video.name, AppCommonMethod.expiryDate(SDKConfig.DOWNLOAD_EXPIRY_DAYS))
+            Logger.e("addVideoData 2", "fdfdfdfdfd")
+            var downloadedVideo = DownloadedVideo(video.id, assetType, seriesId, "", "", video.name, AppCommonMethod.expiryDate(SDKConfig.DOWNLOAD_EXPIRY_DAYS),parentalRating)
             insertVideo(downloadedVideo, null)
         }
 
         if (assetType == MediaTypeConstants.getInstance().episode || assetType == MediaTypeConstants.getInstance().series) {
             try {
                 AsyncTask.execute {
-                    val downloadedEpisodes = DownloadedEpisodes(video.id, seasonNumber!!, episodeNumber!!, seriesId)
+                    Logger.e("addVideoData 2", "edededed")
+                    Logger.e("addVideoData 2", parentalRating)
+                    val downloadedEpisodes = DownloadedEpisodes(video.id, seasonNumber!!, episodeNumber!!, seriesId, parentalRating)
                     db.downloadEpisodeDao().insertEpisodes(downloadedEpisodes)
                 }
             } catch (ex: Exception) {

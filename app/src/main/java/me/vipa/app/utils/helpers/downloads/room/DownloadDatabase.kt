@@ -7,7 +7,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.room.migration.Migration
 
 
-@Database(entities = [DownloadedVideo::class, DownloadedEpisodes::class], version = 7, exportSchema = false)
+@Database(entities = [DownloadedVideo::class, DownloadedEpisodes::class], version = 8, exportSchema = false)
 @Singleton
 abstract class DownloadDatabase : RoomDatabase() {
     abstract fun downloadVideoDao(): DownloadVideoDao
@@ -26,6 +26,7 @@ abstract class DownloadDatabase : RoomDatabase() {
 
         private fun buildDatabase(context: Context) = Room.databaseBuilder(context,
                 DownloadDatabase::class.java, "enveu.db")
+                .fallbackToDestructiveMigration()
                 .build()
         val MIGRATION_2_3: Migration = object : Migration(2, 3) {
             override fun migrate(database: SupportSQLiteDatabase) {

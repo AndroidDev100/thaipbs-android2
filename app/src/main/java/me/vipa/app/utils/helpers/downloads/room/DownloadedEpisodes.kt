@@ -11,5 +11,6 @@ data class DownloadedEpisodes (
         val videoId: String,
         val seasonNumber: String,
         val episodeNumber:String,
-        val seriesId: String
+        val seriesId: String,
+        val parentalRating: String
 )

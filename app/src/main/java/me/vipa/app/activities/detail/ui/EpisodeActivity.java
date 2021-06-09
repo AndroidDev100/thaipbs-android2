@@ -53,6 +53,7 @@ import com.brightcove.player.network.DownloadStatus;
 import com.brightcove.player.offline.MediaDownloadable;
 import com.brightcove.player.pictureinpicture.PictureInPictureManager;
 
+import me.vipa.app.activities.homeactivity.ui.HomeActivity;
 import me.vipa.app.activities.series.ui.SeriesDetailActivity;
 import me.vipa.app.utils.helpers.ADHelper;
 import me.vipa.app.utils.helpers.downloads.MediaTypeCheck;
@@ -205,6 +206,8 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
     Bundle extras;
     private boolean isOfflineAvailable = false;
     private boolean isCastConnected = false;
+    private boolean kidsMode;
+    private String parentalRating = "";
 
 
     public static void closeActivity() {
@@ -248,6 +251,14 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
         getWindow().setBackgroundDrawableResource(R.color.black);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,
                 WindowManager.LayoutParams.FLAG_SECURE);
+
+        Log.d("frfrfrfrf","Enter");
+        kidsMode  = new SharedPrefHelper(EpisodeActivity.this).getKidsMode();
+        Log.d("frfrfrfrf",kidsMode+"");
+        if (kidsMode) {
+            parentalRating = AppCommonMethod.getParentalRating();
+        }
+        Log.d("frfrfrfrf",parentalRating);
 
         if (SDKConfig.getInstance().getEpisodeDetailId().equalsIgnoreCase("")) {
             //tabId = AppConstants.EPISODE_ENVEU;
@@ -293,6 +304,8 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
         getBinding().connection.retryTxt.setOnClickListener(view -> {
             getBinding().llParent.setVisibility(View.VISIBLE);
             getBinding().noConnectionLayout.setVisibility(View.GONE);
+
+
             connectionObserver();
         });
 
@@ -372,7 +385,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
 
     public void setTabs(String seasonNumber, boolean noEpisode) {
         if (seriesDetailBean != null) {
-            downloadHelper = new DownloadHelper(this, this, seriesDetailBean.getBrightcoveVideoId(), seriesDetailBean.getTitle(), MediaTypeConstants.getInstance().getEpisode(), videoDetails);
+            downloadHelper = new DownloadHelper(this, this, seriesDetailBean.getBrightcoveVideoId(), seriesDetailBean.getTitle(), MediaTypeConstants.getInstance().getEpisode(), videoDetails, parentalRating);
             downloadHelper.findVideo(videoDetails.getBrightcoveVideoId());
         }
         // getBinding().tabLayout.setSelectedTabIndicatorGravity(INDICATOR_GRAVITY_BOTTOM);
@@ -1271,7 +1284,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
         transaction.addToBackStack(null);
         transaction.commit();
 
-        downloadHelper = new DownloadHelper(this, this, seriesId, seriesDetailBean.getTitle(), MediaTypeConstants.getInstance().getEpisode(), videoDetails);
+        downloadHelper = new DownloadHelper(this, this, seriesId, seriesDetailBean.getTitle(), MediaTypeConstants.getInstance().getEpisode(), videoDetails,parentalRating);
         downloadHelper.findVideo(videoDetails.getBrightcoveVideoId());
     }
 
@@ -2041,11 +2054,11 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
                             if (AppCommonMethod.getCheckBCID(videoDetails.getBrightcoveVideoId())){
                                 if (videoDetails.getSeasonNumber().equalsIgnoreCase("")){
                                     //userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.REQUESTED);
-                                    downloadHelper.startEpisodeDownload(downloadAbleVideo, String.valueOf(videoDetails.getBrightcoveVideoId()), seasonTabFragment.getSelectedSeason(), String.valueOf(videoDetails.getEpisodeNo()), videoQuality);
+                                    downloadHelper.startEpisodeDownload(downloadAbleVideo, String.valueOf(videoDetails.getBrightcoveVideoId()), seasonTabFragment.getSelectedSeason(), String.valueOf(videoDetails.getEpisodeNo()), videoQuality,parentalRating);
 
                                 }else {
                                     //userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.REQUESTED);
-                                    downloadHelper.startEpisodeDownload(downloadAbleVideo, String.valueOf(videoDetails.getBrightcoveVideoId()), seasonTabFragment.getSelectedSeason(), String.valueOf(videoDetails.getEpisodeNo()), videoQuality);
+                                    downloadHelper.startEpisodeDownload(downloadAbleVideo, String.valueOf(videoDetails.getBrightcoveVideoId()), seasonTabFragment.getSelectedSeason(), String.valueOf(videoDetails.getEpisodeNo()), videoQuality,parentalRating);
 
                                 }
                             }
@@ -2074,14 +2087,14 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
                                             if (seasonTabFragment!=null){
                                                 seasonTabFragment.updateStatus();
                                             }
-                                            downloadHelper.startEpisodeDownload(downloadAbleVideo, String.valueOf(videoDetails.getBrightcoveVideoId()), 1, String.valueOf( videoDetails.getEpisodeNo()), videoQuality);
+                                            downloadHelper.startEpisodeDownload(downloadAbleVideo, String.valueOf(videoDetails.getBrightcoveVideoId()), 1, String.valueOf( videoDetails.getEpisodeNo()), videoQuality,parentalRating);
 
                                         }else {
                                             if (seasonTabFragment!=null){
                                                 seasonTabFragment.updateStatus();
                                             }
                                             // userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.REQUESTED);
-                                            downloadHelper.startEpisodeDownload(downloadAbleVideo, String.valueOf(videoDetails.getBrightcoveVideoId()), seasonTabFragment.getSelectedSeason(), String.valueOf(videoDetails.getEpisodeNo()), videoQuality);
+                                            downloadHelper.startEpisodeDownload(downloadAbleVideo, String.valueOf(videoDetails.getBrightcoveVideoId()), seasonTabFragment.getSelectedSeason(), String.valueOf(videoDetails.getEpisodeNo()), videoQuality,parentalRating);
 
                                         }
                                     }
@@ -2112,10 +2125,10 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
                                 if (AppCommonMethod.getCheckBCID(videoDetails.getBrightcoveVideoId())){
                                     if (videoDetails.getSeasonNumber().equalsIgnoreCase("")){
                                         //userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.REQUESTED);
-                                        downloadHelper.startEpisodeDownload(downloadAbleVideo, String.valueOf(videoDetails.getBrightcoveVideoId()), 1, String.valueOf(videoDetails.getEpisodeNo()), videoQuality);
+                                        downloadHelper.startEpisodeDownload(downloadAbleVideo, String.valueOf(videoDetails.getBrightcoveVideoId()), 1, String.valueOf(videoDetails.getEpisodeNo()), videoQuality,parentalRating);
                                     }else {
                                         // userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.REQUESTED);
-                                        downloadHelper.startEpisodeDownload(downloadAbleVideo, String.valueOf(videoDetails.getBrightcoveVideoId()), seasonTabFragment.getSelectedSeason(), String.valueOf(videoDetails.getEpisodeNo()), videoQuality);
+                                        downloadHelper.startEpisodeDownload(downloadAbleVideo, String.valueOf(videoDetails.getBrightcoveVideoId()), seasonTabFragment.getSelectedSeason(), String.valueOf(videoDetails.getEpisodeNo()), videoQuality,parentalRating);
                                     }
 
                                 }
@@ -2142,12 +2155,12 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
                                                 if (seasonTabFragment!=null){
                                                     seasonTabFragment.updateStatus();
                                                 }
-                                                downloadHelper.startEpisodeDownload(downloadAbleVideo, String.valueOf(videoDetails.getBrightcoveVideoId()), 1, String.valueOf(videoDetails.getEpisodeNo()) + "", videoQuality);
+                                                downloadHelper.startEpisodeDownload(downloadAbleVideo, String.valueOf(videoDetails.getBrightcoveVideoId()), 1, String.valueOf(videoDetails.getEpisodeNo()) + "", videoQuality,parentalRating);
                                             }else {
                                                 if (seasonTabFragment!=null){
                                                     seasonTabFragment.updateStatus();
                                                 }
-                                                downloadHelper.startEpisodeDownload(downloadAbleVideo, String.valueOf(videoDetails.getBrightcoveVideoId()), seasonTabFragment.getSelectedSeason(), String.valueOf(videoDetails.getEpisodeNo()) + "", videoQuality);
+                                                downloadHelper.startEpisodeDownload(downloadAbleVideo, String.valueOf(videoDetails.getBrightcoveVideoId()), seasonTabFragment.getSelectedSeason(), String.valueOf(videoDetails.getEpisodeNo()) + "", videoQuality,parentalRating);
                                             }
 
                                         }
@@ -2200,7 +2213,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
                     if (downloadHelper.getCatalog() != null) {
                         downloadHelper.allowedMobileDownload();
                         if (videoQuality != 4) {
-                            downloadHelper.startEpisodeDownload(downloadAbleVideo, String.valueOf(seriesDetailBean.getBrightcoveVideoId()), seasonTabFragment.getSelectedSeason(), videoDetails.getEpisodeNo() + "", videoQuality);
+                            downloadHelper.startEpisodeDownload(downloadAbleVideo, String.valueOf(seriesDetailBean.getBrightcoveVideoId()), seasonTabFragment.getSelectedSeason(), videoDetails.getEpisodeNo() + "", videoQuality,parentalRating);
                         } else {
                             selectDownloadVideoQuality(video, String.valueOf(seriesDetailBean.getBrightcoveVideoId()), seasonTabFragment.getSelectedSeason(), episodeNumber);
                         }
@@ -2219,7 +2232,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
             Logger.e("SeriesId", String.valueOf(seriesDetailBean.getBrightcoveVideoId()));
             Logger.e("SeasonNumber", String.valueOf(seasonTabFragment.getSelectedSeason()));
             userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.REQUESTED);
-            downloadHelper.startEpisodeDownload(video, brightcoveVideoId, seasonNumber, episodeNumber, position);
+            downloadHelper.startEpisodeDownload(video, brightcoveVideoId, seasonNumber, episodeNumber, position,parentalRating);
         });
     }
 

@@ -12,7 +12,8 @@ data class DownloadedVideo(
         var seasonNumber: String = "",
         var episodeCount: String = "",
         var seriesName: String = "",
-        var expiryDate: String = "") {
+        var expiryDate: String = "",
+        var parentalRating: String = "") {
 
     var id: Long = 0
     @ColumnInfo(name = "created_at")
