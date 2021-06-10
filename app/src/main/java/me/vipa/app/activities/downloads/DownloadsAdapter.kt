@@ -121,7 +121,7 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
                     if (Integer.parseInt(downloadedVideo.episodeCount) != 0){
 
                     }else{
-                        downloadHelper.deleteVideo(downloadedVideo.videoId)
+                       // downloadHelper.deleteVideo(downloadedVideo.videoId)
                       //  noDataCallBac!!.dataNotAvailable();
                     }
                    //

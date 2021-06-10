@@ -257,8 +257,10 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
         Log.d("frfrfrfrf",kidsMode+"");
         if (kidsMode) {
             parentalRating = AppCommonMethod.getParentalRating();
+        }else {
+            parentalRating = "Other";
         }
-        Log.d("frfrfrfrf",parentalRating);
+
 
         if (SDKConfig.getInstance().getEpisodeDetailId().equalsIgnoreCase("")) {
             //tabId = AppConstants.EPISODE_ENVEU;
@@ -580,6 +582,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
                                     Logger.e("License", "Expiry" + video.getLicenseExpiryDate());
                                     setPlayerFragment(video, true, bookmarkPosition2);
                                 } else {
+                                    Logger.e("addVideoData 2", video.getId());
                                     downloadHelper.deleteVideo(video);
                                     setPlayerFragment(null, false, bookmarkPosition2);
                                 }

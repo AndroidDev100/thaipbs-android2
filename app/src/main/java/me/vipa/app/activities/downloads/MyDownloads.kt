@@ -83,7 +83,8 @@ class MyDownloads : BaseBindingActivity<ActivityMyDownloadsBinding>(), MediaDown
             Handler(Looper.getMainLooper()).postDelayed({
                 downloadHelper.getAllVideosFromDatabase().observe(this, Observer {
 
-                        var downloadedVideos = AppCommonMethod.removeDownloadedSeries(it.downloadVideos, downloadHelper)
+
+                        //var downloadedVideos = AppCommonMethod.removeDownloadedSeries(it.downloadVideos, downloadHelper)
                         checkOffline(it)
 
 
@@ -121,17 +122,14 @@ class MyDownloads : BaseBindingActivity<ActivityMyDownloadsBinding>(), MediaDown
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         var counter = 0
-        kidsMode = SharedPrefHelper(this).kidsMode
-        Logger.e("addVideoData 2", kidsMode.toString())
-        if (kidsMode) {
-
-
-        }
 
         downloadHelper = DownloadHelper(this, this)
-        downloadHelper.getAllVideosFromDatabase().observe(this, Observer {
 
-                var downloadedVideos = AppCommonMethod.removeDownloadedSeries(it.downloadVideos, downloadHelper)
+
+        downloadHelper.getAllVideosFromDatabase().observe(this, Observer {
+            Logger.e("dtdtdtdtdtd", "OnCreate")
+
+               // var downloadedVideos = AppCommonMethod.removeDownloadedSeries(it.downloadVideos, downloadHelper)
                 checkOffline(it)
 
         })
@@ -140,7 +138,10 @@ class MyDownloads : BaseBindingActivity<ActivityMyDownloadsBinding>(), MediaDown
 
     private fun checkOffline(it: DownloadModel?) {
         downloadHelper.getAllVideosFromDatabase().observe(this, Observer {
-            if (it.downloadVideos.size>0){
+            Logger.e("dtdtdtdtdtd", "calledNext")
+            Logger.e("addVideoData 2", it.downloadVideos.size.toString())
+            Logger.e("addVideoData 2", it.status.toString())
+            if (it.downloadVideos.size>0 && it.status!=false){
                 downloadsAdapter = DownloadsAdapter(this, it,this)
                 downloaded_recycler_view.layoutManager = LinearLayoutManager(this)
                 downloaded_recycler_view.setHasFixedSize(true)
