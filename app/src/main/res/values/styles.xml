@@ -168,6 +168,7 @@
         <item name="recomended_rail_theme_color">@color/white</item>
         <item name="detail_screen_background">@color/white</item>
         <item name="movie_title_background_color">@color/navy_blue</item>
+        <item name="wifi_background_color">@drawable/ic_wifi_off_black</item>
         <item name="tag_color">@color/navy_blue</item>
         <item name="expandable_text_color">@color/navy_blue</item>
         <item name="cast_title_color">@color/navy_blue</item>
@@ -211,7 +212,7 @@
         <item name="android:windowEnableSplitTouch">false</item>
         <item name="android:splitMotionEvents">false</item>
         <item name="android:windowDisablePreview">true</item>
-
+        <item name="wifi_background_color">@drawable/ic_wifi_off</item>
         <!--<item name="download_circle_color">@color/otp_tint_color</item>-->
         <!--<item name="episode_item_back">@color/episode_back_color</item>-->
         <item name="splash_bg">@color/black</item>

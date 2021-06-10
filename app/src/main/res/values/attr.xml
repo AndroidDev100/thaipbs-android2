@@ -82,6 +82,7 @@
     <attr name="recomended_rail_theme_color" format="reference" />
     <attr name="detail_screen_background" format="reference" />
     <attr name="movie_title_background_color" format="reference" />
+    <attr name="wifi_background_color" format="reference" />
     <attr name="tag_color" format="reference" />
     <attr name="expandable_text_color" format="reference" />
     <attr name="cast_title_color" format="reference" />
