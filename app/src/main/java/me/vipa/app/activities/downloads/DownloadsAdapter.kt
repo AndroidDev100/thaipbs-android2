@@ -21,6 +21,7 @@ import me.vipa.app.R
 import me.vipa.app.databinding.ListDownloadItemBinding
 import me.vipa.app.utils.MediaTypeConstants
 import me.vipa.app.utils.cropImage.helpers.Logger
+import me.vipa.app.utils.helpers.SharedPrefHelper
 import me.vipa.app.utils.helpers.downloads.DownloadedVideoActivity
 import me.vipa.app.utils.helpers.downloads.VideoListListener
 import me.vipa.app.utils.helpers.downloads.room.DownloadModel
@@ -97,6 +98,7 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
         popup.show()
     }
 
+    private var kidsMode: Boolean = false
     private lateinit var video: Video
     private var viewHolder: DownloadsAdapter.LandscapeItemRowHolder? = null
     private val TAG = this.javaClass.simpleName
@@ -163,6 +165,7 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
                 }
 
             } else {
+                kidsMode = SharedPrefHelper(activity).kidsMode
                 downloadHelper.findOfflineVideoById(downloadedVideo.videoId, object : OfflineCallback<Video> {
                     override fun onSuccess(video: Video) {
                         Logger.e("Video Found", "true")
@@ -175,7 +178,17 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
                             if (!video.isClearContent) {
                                 if (video.licenseExpiryDate!!.time >= System.currentTimeMillis()) {
                                     Logger.e("License", "Expiry" + video.licenseExpiryDate)
-                                    downloadedVideos.add(downloadedVideo)
+                                    if (kidsMode==true){
+                                        if (downloadedVideo.parentalRating == "G"){
+                                            downloadedVideos.add(downloadedVideo)
+                                        }
+
+                                    }else if (kidsMode!= true){
+                                        if (downloadedVideo.parentalRating == "Other"){
+                                            downloadedVideos.add(downloadedVideo)
+                                        }
+                                    }
+//                                    downloadedVideos.add(downloadedVideo)
                                     if (index == downloadsList.downloadVideos.size - 1) {
                                         buildIndexMap()
                                     }
@@ -186,7 +199,17 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
                                     }
                                 }
                             } else {
-                                downloadedVideos.add(downloadedVideo)
+                                if (kidsMode==true){
+                                    if (downloadedVideo.parentalRating == "G"){
+                                        downloadedVideos.add(downloadedVideo)
+                                    }
+
+                                }else if (kidsMode!= true){
+                                    if (downloadedVideo.parentalRating == "Other"){
+                                        downloadedVideos.add(downloadedVideo)
+                                    }
+                                }
+                               // downloadedVideos.add(downloadedVideo)
                                 if (index == downloadsList.downloadVideos.size - 1) {
                                     buildIndexMap()
                                 }else{

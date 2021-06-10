@@ -680,9 +680,7 @@ class DownloadHelper() {
     fun getAllVideosFromDatabase(): MutableLiveData<DownloadModel> {
         val mutableLiveData = MutableLiveData<DownloadModel>()
         kidsMode = SharedPrefHelper(activity).kidsMode
-        Logger.e("frfrfrfrfrfr", kidsMode.toString())
         if (kidsMode){
-            Logger.e("frfrfrfrfrfr", "EnterIf")
             val downloadTask = DownloadTask1()
             downloadTask.delegate = object : AsyncResponse<DownloadModel> {
                 override fun processFinish(result: DownloadModel) {
@@ -691,7 +689,6 @@ class DownloadHelper() {
             }
             downloadTask.execute(db)
         }else{
-            Logger.e("frfrfrfrfrfr", "EnterElse")
             val downloadTask = DownloadTask()
             downloadTask.delegate = object : AsyncResponse<DownloadModel> {
                 override fun processFinish(result: DownloadModel) {
@@ -1012,12 +1009,12 @@ class DownloadHelper() {
             val seriesId = params[0].downloadVideoDao().downloadedVideos
             val downloadModel = DownloadModel()
             downloadModel.downloadVideos = seriesId as ArrayList<DownloadedVideo>
-            Logger.e("dtdtdtdtdtd", downloadModel.downloadVideos.toString())
+
             seriesId.forEachIndexed { index, downloadVideo ->
                 val downloadedEpisodes = params[0].downloadEpisodeDao().getEpisodesListWithPG(downloadVideo.seriesId, downloadVideo.seasonNumber,"Other")
                 downloadVideo.episodeCount = downloadedEpisodes.size.toString()
 
-                if (downloadVideo.downloadType == MediaTypeConstants.getInstance().series && downloadedEpisodes.size > 0) {
+                if (downloadVideo.downloadType == "SERIES" && downloadedEpisodes.size > 0) {
                     downloadVideo.seasonNumber = downloadedEpisodes[0].seasonNumber
                     downloadModel.episodeMap[downloadVideo.seriesId + "_" + downloadedEpisodes[0].seasonNumber] = downloadedEpisodes as java.util.ArrayList<DownloadedEpisodes>
                     downloadModel.status = true
@@ -1037,13 +1034,17 @@ class DownloadHelper() {
     private class DownloadTask1 : AsyncTask<DownloadDatabase, Any, DownloadModel>() {
         var delegate: AsyncResponse<DownloadModel>? = null
         override fun doInBackground(vararg params: DownloadDatabase): DownloadModel {
+          //  Logger.e("gtgtgtgtgtg", params[0].downloadVideoDao().downloadedVideos.toString())
             val seriesId = params[0].downloadVideoDao().downloadedVideos
+          //  Logger.e("gtgtgtgtgtg", seriesId.toString())
             val downloadModel = DownloadModel()
             downloadModel.downloadVideos = seriesId as ArrayList<DownloadedVideo>
+
             seriesId.forEachIndexed { index, downloadVideo ->
                 val downloadedEpisodes = params[0].downloadEpisodeDao().getEpisodesListWithPG(downloadVideo.seriesId, downloadVideo.seasonNumber, "G")
+               // Logger.e("gtgtgtgtgtg", downloadedEpisodes.toString())
                 downloadVideo.episodeCount = downloadedEpisodes.size.toString()
-                if (downloadVideo.downloadType == MediaTypeConstants.getInstance().series && downloadedEpisodes.size > 0) {
+                if (downloadVideo.downloadType == "SERIES" && downloadedEpisodes.size > 0) {
                     downloadVideo.seasonNumber = downloadedEpisodes[0].seasonNumber
                     downloadModel.episodeMap[downloadVideo.seriesId + "_" + downloadedEpisodes[0].seasonNumber] = downloadedEpisodes as java.util.ArrayList<DownloadedEpisodes>
                     downloadModel.status = true
@@ -1054,6 +1055,7 @@ class DownloadHelper() {
 
         override fun onPostExecute(result: DownloadModel) {
             super.onPostExecute(result)
+          //  Logger.e("gtgtgtgtgtg", "EnterHere")
             delegate?.processFinish(result)
 //            val downloadEpisodeTask = DownloadEpisodeTask(result as List<DownloadedVideo>)
 //            downloadEpisodeTask.delegate = delegate
