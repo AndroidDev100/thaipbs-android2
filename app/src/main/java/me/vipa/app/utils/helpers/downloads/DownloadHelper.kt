@@ -1014,7 +1014,7 @@ class DownloadHelper() {
                 val downloadedEpisodes = params[0].downloadEpisodeDao().getEpisodesListWithPG(downloadVideo.seriesId, downloadVideo.seasonNumber,"Other")
                 downloadVideo.episodeCount = downloadedEpisodes.size.toString()
 
-                if (downloadVideo.downloadType == "SERIES" && downloadedEpisodes.size > 0) {
+                if (downloadVideo.downloadType == MediaTypeConstants.getInstance().series && downloadedEpisodes.size > 0) {
                     downloadVideo.seasonNumber = downloadedEpisodes[0].seasonNumber
                     downloadModel.episodeMap[downloadVideo.seriesId + "_" + downloadedEpisodes[0].seasonNumber] = downloadedEpisodes as java.util.ArrayList<DownloadedEpisodes>
                     downloadModel.status = true
@@ -1044,7 +1044,7 @@ class DownloadHelper() {
                 val downloadedEpisodes = params[0].downloadEpisodeDao().getEpisodesListWithPG(downloadVideo.seriesId, downloadVideo.seasonNumber, "G")
                // Logger.e("gtgtgtgtgtg", downloadedEpisodes.toString())
                 downloadVideo.episodeCount = downloadedEpisodes.size.toString()
-                if (downloadVideo.downloadType == "SERIES" && downloadedEpisodes.size > 0) {
+                if (downloadVideo.downloadType == MediaTypeConstants.getInstance().series && downloadedEpisodes.size > 0) {
                     downloadVideo.seasonNumber = downloadedEpisodes[0].seasonNumber
                     downloadModel.episodeMap[downloadVideo.seriesId + "_" + downloadedEpisodes[0].seasonNumber] = downloadedEpisodes as java.util.ArrayList<DownloadedEpisodes>
                     downloadModel.status = true
