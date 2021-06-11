@@ -88,7 +88,7 @@
     <string name="verify_user">Verify Account</string>
     <string name="connct_facebbook">Connect with Facebook</string>
     <string name="detail_title">Enter your registered email address below and we will send you instructions on resetting your password.</string>
-    <string name="already_have_account_sign">Sudah memiliki akun?</string>
+    <string name="already_have_account_sign">Sudah memiliki akun</string>
     <string name="in_case_of_any">In case of any issues</string>
     <string name="offer_region_not_available">No offer available in your region!</string>
     <string name="cannot_find_any_subs">cannot find any subscription or subscription cannot contain price</string>

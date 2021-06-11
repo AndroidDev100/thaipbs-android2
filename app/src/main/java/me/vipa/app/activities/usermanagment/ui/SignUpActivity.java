@@ -111,6 +111,9 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // setupUI(getBinding().root);
+        getBinding().llSignUp.setEnabled(false);
+        getBinding().llSignUp.getBackground().setAlpha(128);
+        getBinding().registerText.setTextColor(getResources().getColor(R.color.greyTextColor));
         callBinding();
     }
 
