@@ -238,7 +238,7 @@ class MyDownloads : BaseBindingActivity<ActivityMyDownloadsBinding>(), MediaDown
 
                                     } else {
                                         Logger.e("inCondition", downloadedVideo.videoId)
-                                        downloadHelper.deleteVideo(downloadedVideo.videoId)
+                                      //  downloadHelper.deleteVideo(downloadedVideo.videoId)
                                     }
                                 }
                             }
