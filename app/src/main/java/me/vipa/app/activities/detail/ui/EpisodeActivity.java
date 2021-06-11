@@ -1026,8 +1026,6 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
 //        }
 
         if (fromBingWatch) {
-            Log.d("frfrfrfrfrfrfr",seriesDetailBean.getBrightcoveVideoId());
-            downloadHelper = new DownloadHelper(this, this, seriesDetailBean.getBrightcoveVideoId(), seriesDetailBean.getTitle(), MediaTypeConstants.getInstance().getEpisode(), videoDetails,parentalRating);
             downloadHelper.findVideo(videoDetails.getBrightcoveVideoId());
             // getBinding().playIcon.setVisibility(View.GONE);
             if (AppCommonMethod.getCheckBCID(videoDetails.getBrightcoveVideoId())) {
