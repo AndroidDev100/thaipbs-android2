@@ -103,7 +103,7 @@
     <string name="update">อัพเดท</string>
     <string name="connct_facebbook">เชื่อมต่อโดย เฟสบุ๊ค</string>
     <string name="detail_title">่คุณสามารถเปลี่ยนรหัสผ่านได้ใหม่ผ่านลิงก์สำหรับรีเซ็ตรหัสผ่านที่จะถูกส่งไปยังอีเมลที่คุณลงทะเบียนไว้</string>
-    <string name="already_have_account_sign">ฉันมีบัญชีผู้ใช้งานอยู่แล้ว่?</string>
+    <string name="already_have_account_sign">ฉันมีบัญชีผู้ใช้งานอยู่แล้ว่</string>
 
     <string name="cancel">ยกเลิก</string>
 
@@ -436,8 +436,8 @@
     <string name="agree">ฉันยอมรับ</string>
     <string name="term"><u>เงื่อนไขและข้อตกลง</u></string>
     <string name="and_the">รวมถึง</string>
-    <string name="privacy"><u>นโยบายความเป็นส่วนตั</u></string>
-    <string name="privacy_other_text"> วในการเข้าถึงและใช้งาน VIPA</string>
+    <string name="privacy"><u>นโยบายความเป็นส่วนตัว</u></string>
+    <string name="privacy_other_text">ในการเข้าถึงและใช้งาน VIPA</string>
 
     <string name="genere">แนวภาพยนตร์</string>
     <string name="sort">ประเภท</string>

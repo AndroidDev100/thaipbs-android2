@@ -92,7 +92,7 @@
     <string name="verify_user">Verify Account</string>
     <string name="connct_facebbook">Connect with Facebook</string>
     <string name="detail_title">Enter your registered email address below and we will send you instructions on resetting your password.</string>
-    <string name="already_have_account_sign">Already have an account?</string>
+    <string name="already_have_account_sign">Already have an account</string>
 
     <string name="description_auto">ปรับความคมชัดตามความเร็วอินเทอร์เน็ต</string>
     <string name="description_sd">ความคมชัดปกติ</string>
