@@ -166,6 +166,8 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
     private String signLangParentRefId ="";
     private String signLangRefId = "";
     private String isPodcast = "";
+    private boolean kidsMode;
+    private String parentalRating = "";
 
     @Override
     public DetailScreenBinding inflateBindingLayout(@NonNull LayoutInflater inflater) {
@@ -195,6 +197,12 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
         } else {
             // code for landscape mode
             hideVideoDetail();
+        }
+        kidsMode  = new SharedPrefHelper(DetailActivity.this).getKidsMode();
+        if (kidsMode) {
+            parentalRating = AppCommonMethod.getParentalRating();
+        }else {
+            parentalRating = "Other";
         }
 
         //basic settings and do not require internet
@@ -1855,8 +1863,19 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
             if (SDKConfig.getInstance().isDownloadEnable()){
                 if (videoDetails!=null){
                     if (MediaTypeCheck.isMediaTypeSupported(videoDetails.getAssetType())){
-                        userInteractionFragment.setDownloadable(downloadAbleVideo.isOfflinePlaybackAllowed());
-                        userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.START);
+                        if (kidsMode){
+                            if (videoDetails.getParentalRating().equalsIgnoreCase(parentalRating)){
+                                this.downloadAbleVideo = video;
+                                // userInteractionFragment.setDownloadable(true);
+                                userInteractionFragment.setDownloadable(downloadAbleVideo.isOfflinePlaybackAllowed());
+                            }else {
+                                userInteractionFragment.setDownloadable(false);
+                            }
+
+                        }else {
+                            userInteractionFragment.setDownloadable(downloadAbleVideo.isOfflinePlaybackAllowed());
+                            userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.START);
+                        }
                     }
                 }
             }

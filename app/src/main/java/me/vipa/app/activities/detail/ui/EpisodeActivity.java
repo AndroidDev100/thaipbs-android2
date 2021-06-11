@@ -252,9 +252,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,
                 WindowManager.LayoutParams.FLAG_SECURE);
 
-        Log.d("frfrfrfrf","Enter");
         kidsMode  = new SharedPrefHelper(EpisodeActivity.this).getKidsMode();
-        Log.d("frfrfrfrf",kidsMode+"");
         if (kidsMode) {
             parentalRating = AppCommonMethod.getParentalRating();
         }else {
@@ -966,6 +964,8 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
     private void parseVideoDetails(EnveuVideoItemBean videoDetails) {
         dismissLoading(getBinding().progressBar);
 
+
+
         if (videoDetails.getSignedLangParentRefId()!=null) {
             signLangParentRefId = videoDetails.getSignedLangParentRefId();
         }
@@ -1026,6 +1026,9 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
 //        }
 
         if (fromBingWatch) {
+            Log.d("frfrfrfrfrfrfr",seriesDetailBean.getBrightcoveVideoId());
+            downloadHelper = new DownloadHelper(this, this, seriesDetailBean.getBrightcoveVideoId(), seriesDetailBean.getTitle(), MediaTypeConstants.getInstance().getEpisode(), videoDetails,parentalRating);
+            downloadHelper.findVideo(videoDetails.getBrightcoveVideoId());
             // getBinding().playIcon.setVisibility(View.GONE);
             if (AppCommonMethod.getCheckBCID(videoDetails.getBrightcoveVideoId())) {
                 isLogin = preference.getAppPrefLoginStatus();
@@ -2461,13 +2464,27 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
 
     @Override
     public void videoFound(Video video) {
+
         if (SDKConfig.getInstance().isDownloadEnable()){
             if (video!=null) {
                 if (MediaTypeCheck.isMediaTypeSupported(videoDetails.getAssetType())) {
-                    this.downloadAbleVideo = video;
-                    // userInteractionFragment.setDownloadable(true);
-                    userInteractionFragment.setDownloadable(downloadAbleVideo.isOfflinePlaybackAllowed());
+                    if (kidsMode){
+                      if (videoDetails.getParentalRating().equalsIgnoreCase(parentalRating)){
+                          this.downloadAbleVideo = video;
+                          // userInteractionFragment.setDownloadable(true);
+                          userInteractionFragment.setDownloadable(downloadAbleVideo.isOfflinePlaybackAllowed());
+                      }else {
+                          userInteractionFragment.setDownloadable(false);
+                      }
+
+                    }else {
+                        this.downloadAbleVideo = video;
+                        // userInteractionFragment.setDownloadable(true);
+                        userInteractionFragment.setDownloadable(downloadAbleVideo.isOfflinePlaybackAllowed());
+                    }
                 }
+            }else {
+                userInteractionFragment.setDownloadable(false);
             }
         }
     }

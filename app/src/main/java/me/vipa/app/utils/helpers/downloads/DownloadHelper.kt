@@ -179,6 +179,7 @@ class DownloadHelper() {
             }
 
             override fun onError(error: String) {
+                videoListListener.videoFound(null)
                 Logger.e("findVideo", error.toString())
             }
         })
