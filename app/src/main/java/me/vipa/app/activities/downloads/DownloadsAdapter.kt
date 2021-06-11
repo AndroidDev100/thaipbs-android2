@@ -44,8 +44,23 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
         popup.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.delete_download -> {
-                    downloadHelper.deleteVideo(downloadedVideo.videoId)
-                    downloadedVideos.remove(downloadedVideo)
+                    Logger.e("VideoSize", downloadedVideos.size.toString())
+
+                    if (kidsMode==true){
+                        if (downloadedVideo.parentalRating == "G"){
+                            downloadHelper.deleteVideo(downloadedVideo.videoId)
+                            downloadedVideos.remove(downloadedVideo)
+                        }
+
+                    }else if (kidsMode!= true){
+                        if (downloadedVideo.parentalRating == "Other"){
+                            downloadHelper.deleteVideo(downloadedVideo.videoId)
+                            downloadedVideos.remove(downloadedVideo)
+                        }
+                    }
+
+//                    downloadHelper.deleteVideo(downloadedVideo.videoId)
+//                    downloadedVideos.remove(downloadedVideo)
                     notifyItemRemoved(position)
                     Logger.e("VideoSize", downloadedVideos.size.toString())
                     notifyItemRangeChanged(position, downloadedVideos.size)
@@ -112,6 +127,7 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
         context = activity
         downloadHelper = DownloadHelper(activity, this)
         noDataCallBac=noDataCallBack
+        kidsMode = SharedPrefHelper(activity).kidsMode
         downloadsList.downloadVideos.forEachIndexed { index, downloadedVideo ->
             val b = downloadedVideo.downloadType == MediaTypeConstants.getInstance().series || downloadedVideo.downloadType ==  MediaTypeConstants.getInstance().episode
             Logger.e("ValueOfB", b.toString())
@@ -165,7 +181,7 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
                 }
 
             } else {
-                kidsMode = SharedPrefHelper(activity).kidsMode
+
                 downloadHelper.findOfflineVideoById(downloadedVideo.videoId, object : OfflineCallback<Video> {
                     override fun onSuccess(video: Video) {
                         Logger.e("Video Found", "true")

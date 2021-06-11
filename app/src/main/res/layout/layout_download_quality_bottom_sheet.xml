@@ -23,7 +23,7 @@
             android:paddingTop="20dp"
             android:paddingBottom="20dp"
             android:text="@string/make_quality_default"
-            android:textColor="@color/white"
+            android:textColor="?attr/change_language_text"
             app:layout_constraintBottom_toTopOf="@id/btn_start_download" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:text="@string/available_size"
-            android:textColor="@color/white"
+            android:textColor="?attr/change_language_text"
             app:layout_constraintBottom_toTopOf="@id/recycler_view" />
 
         <TextView
@@ -48,7 +48,7 @@
             android:fontFamily="@font/sukhumvittadmai_bold"
             android:paddingTop="20dp"
             android:text="@string/download_option"
-            android:textColor="@color/white"
+            android:textColor="?attr/change_language_text"
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@id/available_space" />
     </androidx.constraintlayout.widget.ConstraintLayout>

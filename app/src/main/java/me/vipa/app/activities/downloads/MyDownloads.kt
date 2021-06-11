@@ -228,7 +228,7 @@ class MyDownloads : BaseBindingActivity<ActivityMyDownloadsBinding>(), MediaDown
 
                 Handler(Looper.getMainLooper()).postDelayed({
                     downloadHelper.getAllVideosFromDatabase().observe(this, Observer {
-                        if (it.downloadVideos.size > 0) {
+                        if (it.downloadVideos.size > 0 && it.status!=false) {
 
                             it.downloadVideos.forEachIndexed { index, downloadedVideo ->
                                 val b = downloadedVideo.downloadType == MediaTypeConstants.getInstance().series || downloadedVideo.downloadType == MediaTypeConstants.getInstance().episode

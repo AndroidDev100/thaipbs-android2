@@ -1034,15 +1034,15 @@ class DownloadHelper() {
     private class DownloadTask1 : AsyncTask<DownloadDatabase, Any, DownloadModel>() {
         var delegate: AsyncResponse<DownloadModel>? = null
         override fun doInBackground(vararg params: DownloadDatabase): DownloadModel {
-          //  Logger.e("gtgtgtgtgtg", params[0].downloadVideoDao().downloadedVideos.toString())
+            Logger.e("gtgtgtgtgtg", params[0].downloadVideoDao().downloadedVideos.toString())
             val seriesId = params[0].downloadVideoDao().downloadedVideos
-          //  Logger.e("gtgtgtgtgtg", seriesId.toString())
+            Logger.e("gtgtgtgtgtg", seriesId.toString())
             val downloadModel = DownloadModel()
             downloadModel.downloadVideos = seriesId as ArrayList<DownloadedVideo>
 
             seriesId.forEachIndexed { index, downloadVideo ->
                 val downloadedEpisodes = params[0].downloadEpisodeDao().getEpisodesListWithPG(downloadVideo.seriesId, downloadVideo.seasonNumber, "G")
-               // Logger.e("gtgtgtgtgtg", downloadedEpisodes.toString())
+                Logger.e("gtgtgtgtgtg", downloadedEpisodes.toString())
                 downloadVideo.episodeCount = downloadedEpisodes.size.toString()
                 if (downloadVideo.downloadType == MediaTypeConstants.getInstance().series && downloadedEpisodes.size > 0) {
                     downloadVideo.seasonNumber = downloadedEpisodes[0].seasonNumber
