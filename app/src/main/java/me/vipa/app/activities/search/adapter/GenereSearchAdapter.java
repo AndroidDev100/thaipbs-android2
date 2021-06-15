@@ -28,6 +28,7 @@ public class GenereSearchAdapter extends RecyclerView.Adapter<GenereSearchAdapte
     private final GenreListener genreListener;
     private String currentLanguage;
 
+
     public GenereSearchAdapter(Activity ctx, List<Genre> list, GenreListener genreListener) {
         this.genereModels = list;
         this.context = ctx;
