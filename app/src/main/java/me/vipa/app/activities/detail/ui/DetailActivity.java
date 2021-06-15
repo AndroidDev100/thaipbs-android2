@@ -1859,9 +1859,8 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
     public void videoFound(Video video) {
         this.downloadAbleVideo = video;
         if (userInteractionFragment != null) {
-            Log.e("Download", "Video Found=>" + video.toString());
             if (SDKConfig.getInstance().isDownloadEnable()){
-                if (videoDetails!=null){
+                if (videoDetails!=null && video!=null){
                     if (MediaTypeCheck.isMediaTypeSupported(videoDetails.getAssetType())){
                         if (kidsMode){
                             if (videoDetails.getParentalRating().equalsIgnoreCase(parentalRating)){
@@ -1873,6 +1872,7 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
                             }
 
                         }else {
+                            this.downloadAbleVideo = video;
                             userInteractionFragment.setDownloadable(downloadAbleVideo.isOfflinePlaybackAllowed());
                             userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.START);
                         }
