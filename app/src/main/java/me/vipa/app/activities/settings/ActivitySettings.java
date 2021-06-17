@@ -29,6 +29,7 @@ import me.vipa.app.activities.videoquality.ui.VideoQualityActivity;
 import me.vipa.app.baseModels.BaseBindingActivity;
 import me.vipa.app.R;
 import me.vipa.app.databinding.SettingsActivityBinding;
+import me.vipa.app.fragments.dialog.KidsModePinDialogFragment;
 import me.vipa.app.utils.constants.AppConstants;
 
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
@@ -87,10 +88,13 @@ public class ActivitySettings extends BaseBindingActivity<SettingsActivityBindin
         }else {
             getBinding().downloadLayout.setVisibility(View.GONE);
         }
+
         if (KsPreferenceKeys.getInstance().getAppPrefLoginStatus().equalsIgnoreCase(AppConstants.UserStatus.Login.toString())){
             getBinding().contentPreLayout.setVisibility(View.VISIBLE);
+            getBinding().rlKidsModePin.setVisibility(View.VISIBLE);
         }else {
             getBinding().contentPreLayout.setVisibility(View.GONE);
+            getBinding().rlKidsModePin.setVisibility(View.GONE);
         }
         getBinding().downloadLayout.setOnClickListener(this);
         getBinding().contentPreLayout.setOnClickListener(this);
@@ -175,6 +179,18 @@ public class ActivitySettings extends BaseBindingActivity<SettingsActivityBindin
                     intent.setData(Uri.parse("package:" + getApplicationContext().getPackageName()));
                 }
                 ActivitySettings.this.startActivity(intent);
+            }
+        });
+        getBinding().rlKidsModePin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                    KidsModePinDialogFragment dialog = KidsModePinDialogFragment.getInstance();
+                    dialog.show(getSupportFragmentManager(), "KidsModePinDialogFragment");
+
+
+
             }
         });
 
@@ -335,6 +351,10 @@ public class ActivitySettings extends BaseBindingActivity<SettingsActivityBindin
                 startActivity(intent);
             }
             break;
+
+
+
+
         }
     }
 

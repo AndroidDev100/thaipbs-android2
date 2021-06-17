@@ -419,6 +419,8 @@
     <string name="filters">Filters</string>
     <string name="select_one">You need to make at least one selection first!</string>
     <string name="clear_all">Clear All</string>
+    <string name="kids_mode_pin">Kids Mode Pin</string>
+    <string name="kids_mode_pin_set">Set your kids mode pin</string>
 
 
 </resources>

@@ -1,5 +1,7 @@
 package me.vipa.userManagement.bean.LoginResponse
 
+import me.vipa.baseClient.BaseClient
+
 class LoginResponseModel {
 
     //@SerializedName("data")
@@ -24,4 +26,6 @@ class LoginResponseModel {
                 ",responseCode = '" + responseCode + '\''.toString() +
                 "}"
     }
+
+
 }

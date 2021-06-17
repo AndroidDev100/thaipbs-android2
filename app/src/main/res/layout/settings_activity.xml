@@ -364,13 +364,6 @@
                 android:layout_centerInParent="true"
                 android:layout_toRightOf="@+id/content_prefrence"/>
 
-
-
-
-
-
-
-
             <Switch
                 android:visibility="invisible"
                 android:layout_width="wrap_content"
@@ -380,7 +373,47 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginEnd="10dp"
                 android:gravity="center"
-                android:theme="@style/SwitchTheme"
+                android:theme="@style/SwitchTheme"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_kids_mode_pin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginLeft="@dimen/toolbarBackLeft"
+            android:layout_marginTop="@dimen/NontonSize15"
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/iv_kids_image"
+                android:layout_width="wrap_content"
+                android:background="@drawable/vipa_kids"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/kids_mode_pin"
+                android:fontFamily="@font/sukhumvittadmai_normal"
+                android:textSize="@dimen/font_medium_large"
+                android:layout_marginLeft="@dimen/NontonSize15"
+                android:paddingRight="@dimen/NontonSize10"
+                android:textColor="?attr/change_language_text"
+                android:layout_centerInParent="true"
+                android:layout_toRightOf="@+id/iv_kids_image"/>
+
+            <ImageView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="10dp"
+                android:gravity="center"
+                android:src="@drawable/right_direction_icon"
                 />
 
 

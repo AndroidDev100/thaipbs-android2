@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/transparent_background">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="45dp"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="45dp"
+            android:background="@drawable/curve_background">
+
+            <ImageView
+                android:id="@+id/iv_cross"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_gravity="end"
+                android:padding="@dimen/_10sdp"
+                android:background="@drawable/cross"/>
+
+                />
+            <ImageView
+                android:id="@+id/home_icon_kids"
+                android:layout_width="100dp"
+                android:layout_height="37dp"
+                android:layout_gravity="center"
+                android:background="@drawable/vipa_logo_kids"
+                android:contentDescription="TODO"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="@string/kids_mode_pin"
+                android:fontFamily="@font/sukhumvittadmai_normal"
+                android:singleLine="true"
+                android:textColor="?attr/app_edit_text_color"
+                android:textColorHint="?attr/app_edit_text_color"
+                android:textSize="@dimen/TextSize14"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:text="@string/kids_mode_pin_set"
+                android:fontFamily="@font/sukhumvittadmai_normal"
+                android:singleLine="true"
+                android:textColor="?attr/app_edit_text_color"
+                android:textColorHint="?attr/app_edit_text_color"
+                android:textSize="@dimen/TextSize14"/>
+
+
+
+                <me.vipa.app.view.PinView
+                    android:id="@+id/pinViewNumber"
+                    style="@style/PinWidget.PinView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:cursorVisible="true"
+                    android:focusable="true"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:focusableInTouchMode="true"
+                    android:inputType="number"
+                    android:itemBackground="@drawable/pinview_background_selector"
+                    android:padding="@dimen/_5sdp"
+                    android:textColor="@color/transparent_background"
+                    android:textSize="@dimen/_14sdp"
+                    android:textStyle="bold"
+                    app:cursorColor="@color/transparent_background"
+                    app:cursorWidth="2dp"
+                    app:hideLineWhenFilled="false"
+                    app:itemCount="4"
+                    app:itemHeight="@dimen/_35sdp"
+                    app:itemWidth="@dimen/_35sdp"
+                    app:itemRadius="@dimen/_4sdp"
+                    app:itemSpacing="@dimen/_10sdp"
+                    app:lineColor="@color/white_almost_opaque"
+                    app:lineWidth="0dp"
+                    app:viewType="rectangle" />
+
+
+            <LinearLayout
+                android:id="@+id/ll_continue"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/NontonSize45"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/_30sdp"
+                android:layout_marginEnd="@dimen/_30sdp"
+                android:layout_marginBottom="@dimen/_40sdp"
+
+                android:layout_marginTop="@dimen/_20sdp"
+                android:background="@drawable/rounded_button"
+                android:gravity="center">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/sukhumvittadmai_bold"
+                    android:gravity="center_vertical"
+                    android:text="@string/Continue"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/suaRegisterText" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+</layout>
+

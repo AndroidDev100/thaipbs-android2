@@ -9,4 +9,6 @@ class BaseConfiguration {
     fun clientSetup(client: BaseClient) {
         clients=client
     }
+
+
 }
