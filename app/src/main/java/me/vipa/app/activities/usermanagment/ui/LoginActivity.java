@@ -398,6 +398,7 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
                         Gson gson = new Gson();
                         modelLogin = loginResponseModelResponse.getData();
                         String stringJson = gson.toJson(loginResponseModelResponse.getData());
+                        Log.e("LOGIN DATA FB ::::",gson.toJson(loginResponseModelResponse.getData()));
                         saveUserDetails(stringJson, loginResponseModelResponse.getData().getId(), false);
 
                     } else if (loginResponseModelResponse.getResponseCode() == 403) {
@@ -424,6 +425,8 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
                         Gson gson = new Gson();
                         modelLogin = loginResponseModelResponse.getData();
                         String stringJson = gson.toJson(loginResponseModelResponse.getData());
+
+                        Log.e("LOGIN DATA ::::",gson.toJson(loginResponseModelResponse.getData()));
                         saveUserDetails(stringJson, loginResponseModelResponse.getData().getId(), true);
 
                     } else {

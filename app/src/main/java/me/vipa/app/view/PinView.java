@@ -46,7 +46,7 @@ public class PinView extends AppCompatEditText {
 
     private static final int BLINK = 500;
 
-    private static final int DEFAULT_COUNT = 6;
+    private static final int DEFAULT_COUNT = 4;
 
     private static final InputFilter[] NO_FILTERS = new InputFilter[0];
 

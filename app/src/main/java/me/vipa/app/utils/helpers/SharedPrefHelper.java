@@ -179,7 +179,28 @@ public class SharedPrefHelper {
         return text;
     }
 
+    public  void saveNotificationEnable( boolean noti) {
 
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putBoolean("notificationEnable", noti);
+        editor.apply();
+    }
+
+    public  boolean getNotificationEnable() {
+        boolean text = mSharedPreferences.getBoolean("notificationEnable", false);
+        return text;
+    }
+
+    public  void saveVia( String via) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putString("via", via);
+        editor.apply();
+    }
+
+    public  String getVia() {
+        String text = mSharedPreferences.getString("via", "");
+        return text;
+    }
 
 
 }

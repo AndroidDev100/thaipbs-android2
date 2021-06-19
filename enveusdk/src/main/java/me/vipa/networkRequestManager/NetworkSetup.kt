@@ -1,5 +1,6 @@
 package me.vipa.networkRequestManager
 
+import android.util.Log
 import androidx.multidex.BuildConfig
 
 import me.vipa.baseClient.BaseConfiguration
@@ -81,6 +82,8 @@ class NetworkSetup {
         }
 
     fun subscriptionClient(token:String): Retrofit {
+        Log.e("x-api-key",BaseConfiguration.instance.clients!!.getOVPApiKey())
+
 
         val loggingInterceptor = HttpLoggingInterceptor()
         if (BuildConfig.DEBUG)
@@ -98,6 +101,7 @@ class NetworkSetup {
             val request = requestBuilder.build()
 
             chain.proceed(request)
+
         }
         httpClient.readTimeout(120, TimeUnit.SECONDS)
                 .writeTimeout(120, TimeUnit.SECONDS)

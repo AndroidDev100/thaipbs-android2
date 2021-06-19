@@ -50,4 +50,16 @@ public class CustomData {
     @SerializedName("profileAvatar")
     @Expose
     private String profileAvatar;
+
+    public String getParentalPin() {
+        return parentalPin;
+    }
+
+    public void setParentalPin(String parentalPin) {
+        this.parentalPin = parentalPin;
+    }
+
+    @SerializedName("parentalPin")
+    @Expose
+    private String parentalPin;
 }

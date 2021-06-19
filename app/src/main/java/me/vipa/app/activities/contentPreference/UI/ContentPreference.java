@@ -34,7 +34,7 @@ public class ContentPreference extends BaseBindingActivity<ActivityContentPrefer
     private ArrayList<PreferenceBean> selectedList;
     private String contentPreference = "";
     private KsPreferenceKeys preference;
-    private boolean isNotificationEnable = false;
+    private boolean isNotificationEnable;
     @Override
     public ActivityContentPreferenceBinding inflateBindingLayout(@NonNull LayoutInflater inflater) {
         return ActivityContentPreferenceBinding.inflate(inflater);
@@ -43,7 +43,7 @@ public class ContentPreference extends BaseBindingActivity<ActivityContentPrefer
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // isNotificationEnable = getIntent().getExtras().getBoolean("IsNotiEnabled");
+        isNotificationEnable = getIntent().getExtras().getBoolean("IsNotiEnabled");
         callBinding();
         connectObservors();
     }

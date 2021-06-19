@@ -59,6 +59,7 @@ import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.constants.AppConstants;
 import me.vipa.app.utils.helpers.CheckInternetConnection;
 import me.vipa.app.utils.helpers.NetworkConnectivity;
+import me.vipa.app.utils.helpers.SharedPrefHelper;
 import me.vipa.app.utils.helpers.StringUtils;
 import me.vipa.app.utils.helpers.ToastHandler;
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
@@ -78,7 +79,7 @@ public class SignUpThirdPage extends BaseBindingActivity<ActivitySignUpThirdPage
     private TransferUtility transferUtility;
     String imageToUpload = "";
     private String spinnerValue = "";
-    private boolean isNotificationEnable = false;
+    private boolean isNotificationEnable;
     private boolean isSkipClicked = false;
 
     @Override
@@ -311,7 +312,7 @@ public class SignUpThirdPage extends BaseBindingActivity<ActivitySignUpThirdPage
             showLoading(getBinding().progressBar, true);
             String token = preference.getAppPrefAccessToken();
             getBinding().errorMobile.setVisibility(View.INVISIBLE);
-            viewModel.hitUpdateProfile(SignUpThirdPage.this, token, preference.getAppPrefUserName(), getBinding().etMobileNumber.getText().toString(), spinnerValue, dateMilliseconds, getBinding().etAddress.getText().toString(), imageUrlId, via,contentPreference,isNotificationEnable).observe(SignUpThirdPage.this, new Observer<UserProfileResponse>() {
+            viewModel.hitUpdateProfile(SignUpThirdPage.this, token, preference.getAppPrefUserName(), getBinding().etMobileNumber.getText().toString(), spinnerValue, dateMilliseconds, getBinding().etAddress.getText().toString(), imageUrlId, via,contentPreference,isNotificationEnable,"",false).observe(SignUpThirdPage.this, new Observer<UserProfileResponse>() {
                 @Override
                 public void onChanged(UserProfileResponse userProfileResponse) {
                     dismissLoading(getBinding().progressBar);
@@ -400,6 +401,9 @@ public class SignUpThirdPage extends BaseBindingActivity<ActivitySignUpThirdPage
         imageToUpload = "Thumbnail_" + AppCommonMethod.getCurrentTimeStamp() + "Android" + ".jpg";
         imageUrlId = imageToUpload;
         via = "Gallery";
+        new SharedPrefHelper(SignUpThirdPage.this).saveVia(via);
+
+
         TransferObserver transferObserver = transferUtility.upload(
                 "thai-pbs/profile_picture", imageToUpload,
                 fileToUpload
@@ -627,6 +631,7 @@ public class SignUpThirdPage extends BaseBindingActivity<ActivitySignUpThirdPage
 
             imageUrlId = AppCommonMethod.UriId;
             via = "Avatar";
+            new SharedPrefHelper(SignUpThirdPage.this).saveVia(via);
             Glide.with(SignUpThirdPage.this).load(AppCommonMethod.Url)
                     .placeholder(R.drawable.default_profile_pic)
                     .error(R.drawable.default_profile_pic)

@@ -188,6 +188,7 @@ public class ActivitySettings extends BaseBindingActivity<SettingsActivityBindin
 
                     KidsModePinDialogFragment dialog = KidsModePinDialogFragment.getInstance();
                     dialog.show(getSupportFragmentManager(), "KidsModePinDialogFragment");
+                    dialog.setCancelable(false);
 
 
 

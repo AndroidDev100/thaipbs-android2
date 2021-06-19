@@ -14,9 +14,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginStart="45dp"
+            android:layout_marginStart="40dp"
             android:layout_centerInParent="true"
-            android:layout_marginEnd="45dp"
+            android:layout_marginEnd="40dp"
             android:background="@drawable/curve_background">
 
             <ImageView
@@ -71,14 +71,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:cursorVisible="true"
                     android:focusable="true"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:focusableInTouchMode="true"
                     android:inputType="number"
                     android:itemBackground="@drawable/pinview_background_selector"
                     android:padding="@dimen/_5sdp"
-                    android:textColor="@color/transparent_background"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/_14sdp"
                     android:textStyle="bold"
                     app:cursorColor="@color/transparent_background"
@@ -94,19 +93,23 @@
                     app:viewType="rectangle" />
 
 
-            <LinearLayout
-                android:id="@+id/ll_continue"
+            <Button
+                android:id="@+id/bt_continue"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/NontonSize45"
-                android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/_30sdp"
+                android:text="@string/Continue"
+                android:textColor="@color/white"
+                android:textAllCaps="false"
+                android:layout_gravity="center_vertical"
+                android:fontFamily="@font/sukhumvittadmai_bold"
+                android:textSize="@dimen/suaRegisterText"
                 android:layout_marginEnd="@dimen/_30sdp"
                 android:layout_marginBottom="@dimen/_40sdp"
-
                 android:layout_marginTop="@dimen/_20sdp"
                 android:background="@drawable/rounded_button"
-                android:gravity="center">
-                <TextView
+                android:gravity="center"/>
+             <!--   <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -114,10 +117,21 @@
                     android:gravity="center_vertical"
                     android:text="@string/Continue"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/suaRegisterText" />
-            </LinearLayout>
+                    android:textSize="@dimen/suaRegisterText" />-->
+
 
         </LinearLayout>
+        <me.vipa.app.utils.CustomProgressBar
+            android:id="@+id/progress_bar"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:clickable="true"
+            android:indeterminate="true"
+            android:indeterminateTintMode="src_atop"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 </layout>

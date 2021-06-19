@@ -19,8 +19,8 @@ public class ContentPrefernceViewModel extends AndroidViewModel {
         loginRepository = RegistrationLoginRepository.getInstance();
     }
 
-    public LiveData<UserProfileResponse> hitUpdateProfile(Context context, String token, String name, String mobile, String spinnerValue, String dob, String address, String imageUrl, String via, String contentPreference, boolean isNotificationEnable) {
-        return loginRepository.getUpdateProfile(context,token,name,mobile,spinnerValue,dob,address,imageUrl,via,contentPreference,isNotificationEnable);
+    public LiveData<UserProfileResponse> hitUpdateProfile(Context context, String token, String name, String mobile, String spinnerValue, String dob, String address, String imageUrl, String via, String contentPreference, boolean isNotificationEnable,String pin,boolean pinFlow) {
+        return loginRepository.getUpdateProfile(context,token,name,mobile,spinnerValue,dob,address,imageUrl,via,contentPreference,isNotificationEnable,pin,pinFlow);
     }
 
 }

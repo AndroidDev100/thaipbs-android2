@@ -57,6 +57,7 @@ import java.util.regex.Pattern;
 
 import me.vipa.app.R;
 import me.vipa.app.SDKConfig;
+import me.vipa.app.activities.usermanagment.ui.SignUpThirdPage;
 import me.vipa.app.activities.usermanagment.viewmodel.RegistrationLoginViewModel;
 import me.vipa.app.baseModels.BaseBindingActivity;
 import me.vipa.app.beanModel.userProfile.UserProfileResponse;
@@ -66,6 +67,7 @@ import me.vipa.app.fragments.dialog.AlertDialogSingleButtonFragment;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.helpers.CheckInternetConnection;
 import me.vipa.app.utils.helpers.NetworkConnectivity;
+import me.vipa.app.utils.helpers.SharedPrefHelper;
 import me.vipa.app.utils.helpers.StringUtils;
 import me.vipa.app.utils.helpers.ToastHandler;
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
@@ -197,6 +199,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
                     if (userProfileResponse != null) {
                         if (userProfileResponse.getStatus()) {
                             updateUI(userProfileResponse);
+                            Log.e("GETDATA",new Gson().toJson(userProfileResponse));
                         } else {
                             if (userProfileResponse.getResponseCode() == 4302) {
                                 isloggedout = true;
@@ -359,7 +362,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
         if (validateNameEmpty() && validatePhone()) {
             showLoading(getBinding().progressBar, true);
             String token = preference.getAppPrefAccessToken();
-            viewModel.hitUpdateProfile(ProfileActivityNew.this, token, getBinding().etName.getText().toString(), getBinding().etMobileNumber.getText().toString(), spinnerValue, dateMilliseconds, getBinding().etAddress.getText().toString(), imageUrlId, via, contentPreference, isNotificationEnable).observe(ProfileActivityNew.this, new Observer<UserProfileResponse>() {
+            viewModel.hitUpdateProfile(ProfileActivityNew.this, token, getBinding().etName.getText().toString(), getBinding().etMobileNumber.getText().toString(), spinnerValue, dateMilliseconds, getBinding().etAddress.getText().toString(), imageUrlId, via, contentPreference, isNotificationEnable,"",false).observe(ProfileActivityNew.this, new Observer<UserProfileResponse>() {
                 @Override
                 public void onChanged(UserProfileResponse userProfileResponse) {
                     dismissLoading(getBinding().progressBar);
@@ -368,7 +371,10 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
                             Gson gson = new Gson();
                             String userProfileData = gson.toJson(userProfileResponse);
                             KsPreferenceKeys.getInstance().setUserProfileData(userProfileData);
+                            Log.e("DATA update profile",userProfileData);
                             showDialog("", ProfileActivityNew.this.getResources().getString(R.string.profile_update_successfully));
+
+
                             updateUI(userProfileResponse);
                         } else {
                             if (userProfileResponse.getResponseCode() == 4302) {
@@ -520,6 +526,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
         imageToUpload = "Thumbnail_" + AppCommonMethod.getCurrentTimeStamp() + "Android" + ".jpg";
         imageUrlId = imageToUpload;
         via = "Gallery";
+        new SharedPrefHelper(this).saveVia(via);
         TransferObserver transferObserver = transferUtility.upload(
                 "thai-pbs/profile_picture", imageToUpload,
                 fileToUpload
@@ -691,6 +698,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
             if (userProfileResponse.getData().getProfilePicURL() != null && userProfileResponse.getData().getProfilePicURL() != "") {
                 imageUrlId = userProfileResponse.getData().getProfilePicURL().toString();
                 via = "Gallery";
+                new SharedPrefHelper(this).saveVia(via);
 
                 String firstFiveChar = imageUrlId.substring(0, 5);
                 if (firstFiveChar.equalsIgnoreCase("https")){
@@ -712,6 +720,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
                         if (userProfileResponse.getData().getCustomData().getProfileAvatar().equalsIgnoreCase(SDKConfig.getInstance().getAvatarImages().get(i).getIdentifier())) {
                             imageUrlId = SDKConfig.getInstance().getAvatarImages().get(i).getIdentifier();
                             via = "Avatar";
+                            new SharedPrefHelper(this).saveVia(via);
 
                             Glide.with(ProfileActivityNew.this).load(SDKConfig.getInstance().getAvatarImages().get(i).getUrl())
                                     .placeholder(R.drawable.default_profile_pic)
@@ -723,6 +732,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
                 } else {
                     imageUrlId = SDKConfig.getInstance().getAvatarImages().get(0).getIdentifier();
                     via = "Avatar";
+                    new SharedPrefHelper(this).saveVia(via);
                     Glide.with(ProfileActivityNew.this).load(SDKConfig.getInstance().getAvatarImages().get(0).getUrl())
                             .placeholder(R.drawable.default_profile_pic)
                             .error(R.drawable.default_profile_pic)
@@ -782,6 +792,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
 
             imageUrlId = AppCommonMethod.UriId;
             via = "Avatar";
+            new SharedPrefHelper(this).saveVia(via);
             Glide.with(ProfileActivityNew.this).load(AppCommonMethod.Url)
                     .placeholder(R.drawable.default_profile_pic)
                     .error(R.drawable.default_profile_pic)

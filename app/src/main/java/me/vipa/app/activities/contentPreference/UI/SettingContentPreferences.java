@@ -141,7 +141,7 @@ public class SettingContentPreferences extends BaseBindingActivity<ActivityConte
 
     private void updateProfileHit() {
         String token = preference.getAppPrefAccessToken();
-        viewModel.hitUpdateProfile(SettingContentPreferences.this, token, AppCommonMethod.getProfileUserName(newObject), AppCommonMethod.getProfileUserNumber(newObject), AppCommonMethod.getProfileUserGender(newObject), AppCommonMethod.getProfileUserDOB(newObject), AppCommonMethod.getProfileUserAddress(newObject), imageUrlId, via, contentPreference, isNotificationEnable).observe(SettingContentPreferences.this, new Observer<UserProfileResponse>() {
+        viewModel.hitUpdateProfile(SettingContentPreferences.this, token, AppCommonMethod.getProfileUserName(newObject), AppCommonMethod.getProfileUserNumber(newObject), AppCommonMethod.getProfileUserGender(newObject), AppCommonMethod.getProfileUserDOB(newObject), AppCommonMethod.getProfileUserAddress(newObject), imageUrlId, via, contentPreference, isNotificationEnable,"",false).observe(SettingContentPreferences.this, new Observer<UserProfileResponse>() {
             @Override
             public void onChanged(UserProfileResponse userProfileResponse) {
                 dismissLoading(getBinding().progressBar);

@@ -214,12 +214,14 @@ class RequestManager {
         })
     }
 
-    fun userUpdateProfileCall(loginCallBacks: UserProfileCallBack, token: String, name: String, mobile: String, spinnerValue: String, dob: String, address: String, imageUrl: String, via: String, contentPreference: String, notificationEnable: Boolean) {
+    fun userUpdateProfileCall(loginCallBacks: UserProfileCallBack, token: String, name: String, mobile: String, spinnerValue: String, dob: String, address: String, imageUrl: String, via: String, contentPreference: String, notificationEnable: Boolean,pin:String,pinFlow:Boolean) {
         val endPoint = NetworkSetup().subscriptionClient(token).create<EnveuEndpoints>(EnveuEndpoints::class.java)
         val requestParam = JsonObject()
         val customParam = JsonObject()
         try {
-//            customParam.addProperty("NotificationCheck", notificationEnable)
+              customParam.addProperty("NotificationCheck", notificationEnable)
+
+
             if (!contentPreference.equals("")){
                 customParam.addProperty("contentPreferences", contentPreference)
             }
@@ -236,10 +238,23 @@ class RequestManager {
             if (!spinnerValue.equals("")) {
                 requestParam.addProperty("gender", spinnerValue.toUpperCase())
             }
+
+
             requestParam.addProperty("dateOfBirth", dob)
+            if(pinFlow){
+                customParam.addProperty("parentalPin",pin)
+            }
+
+
 //        requestParam.addProperty("address", address)
 //        requestParam.addProperty("profilePicURL", imageUrl)
             requestParam.add("customData", customParam)
+
+            var gson = Gson()
+            //Convert the Json object to JsonString
+            var jsonString:String = gson.toJson(requestParam)
+
+            Log.e("Request DATA", jsonString);
         } catch (e: JSONException) {
 
         }

@@ -129,6 +129,7 @@
     <string name="password_changed_successfully">Password Changed Successfully!</string>
     <string name="confirm_pwd_not_match"> Confirm Password doesn\'t match</string>
     <string name="ok">OK</string>
+
     <string name="verify_account">Verify Account</string>
     <string name="account_verification_link">Are you sure you want to verify your acccount?</string>
     <string name="submit">Submit</string>
@@ -421,6 +422,7 @@
     <string name="clear_all">Clear All</string>
     <string name="kids_mode_pin">Kids Mode Pin</string>
     <string name="kids_mode_pin_set">Set your kids mode pin</string>
+    <string name="plz_enter_valid_pin">Please enter valid pin</string>
 
 
 </resources>

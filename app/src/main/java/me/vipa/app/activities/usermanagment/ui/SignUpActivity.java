@@ -98,7 +98,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
     boolean hasFbEmail;
     private Data modelLogin;
     private final List<String> permissionNeeds = Arrays.asList("email", "public_profile");
-    private boolean isNotificationEnable = false;
+    private boolean isNotificationEnable=false;
     String loginCallingFrom = "";
     private boolean isloggedout = false;
 
@@ -154,10 +154,12 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
                     getBinding().llSignUp.getBackground().setAlpha(225);
                     getBinding().registerText.setTextColor(getResources().getColor(R.color.white));
 
+
                 } else {
                     getBinding().llSignUp.setEnabled(false);
                     getBinding().llSignUp.getBackground().setAlpha(128);
                     getBinding().registerText.setTextColor(getResources().getColor(R.color.greyTextColor));
+
 
                 }
             }
@@ -422,6 +424,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 isNotificationEnable = isChecked;
+                new SharedPrefHelper(SignUpActivity.this).saveNotificationEnable(isNotificationEnable);
             }
         });
 
