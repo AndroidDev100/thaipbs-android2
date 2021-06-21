@@ -71,11 +71,11 @@ interface EnveuEndpoints {
     fun getAllBookmarks(@Query("page") pageNumber: Int, @Query("size") pageSize: Int): Call<GetContinueWatchingBean>
 
     @Headers("x-platform: android")
-    @GET("v3/user/profile")
+    @GET("v4/user/profile")
     fun getUserProfile(): Call<UserProfileResponse>
 
     @Headers("x-platform: android")
-    @PATCH("v3/user/profile/update")
+    @PATCH("v4/user/profile/update")
     fun getUserUpdateProfile(@Body user: JsonObject): Call<UserProfileResponse>
 
     @Headers("x-platform: android")

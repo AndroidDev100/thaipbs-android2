@@ -5,7 +5,9 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.text.SpannableStringBuilder;
 import android.text.style.StrikethroughSpan;
+import android.util.Base64;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 import java.util.Random;
 
@@ -94,38 +96,40 @@ StringUtils {
         return 10000 + new Random().nextInt(9999) + 1;
     }
 
-//    public static String getBase64Data(String rawText) {
-//        byte[] data = new byte[0];
-//        String base64;
-//        try {
-//            data = rawText.getBytes(StandardCharsets.UTF_8);
-//            base64 = Base64.encodeToString(data, Base64.DEFAULT);
-//            if (base64.contains("\n")) {
-//                base64.replace("", "\n");
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return rawText;
-//        }
-////        byte[] data = rawText.getBytes(StandardCharsets.UTF_8);
-////        String base64 = Base64.encodeToString(data, Base64.DEFAULT);
-//        return StringUtils.isNullOrEmpty(base64) ? rawText : base64.trim();
-//    }
+    public static String getConvertBase64Data(String rawText) {
+        byte[] data = new byte[0];
+        String base64;
+        try {
+            data = rawText.getBytes(StandardCharsets.UTF_8);
+            base64 = Base64.encodeToString(data, Base64.DEFAULT);
+            if (base64.contains("\n")) {
+                base64.replace("", "\n");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return rawText;
+        }
+        // byte[] data = rawText.getBytes(StandardCharsets.UTF_8);
+        // String base64 = Base64.encodeToString(data, Base64.DEFAULT);
+        return StringUtils.isNullOrEmpty(base64) ? rawText : base64.trim();
+    }
 
-//    public static String getDataFromBase64(String base64data) {
-//        byte[] data;
-//        String text = null;
-//        try {
-//            data = Base64.decode(base64data, Base64.DEFAULT);
-//            text = new String(data, StandardCharsets.UTF_8);
-//            return text;
-//        } catch (Exception e) {
-//            Logger.d(TAG, "decode" + e);
-//            return base64data;
-//
-//        }
-//
-//    }
+
+
+    public static String getDataFromBase64(String base64data) {
+       byte[] data;
+        String text = null;
+        try {
+           data = Base64.decode(base64data, Base64.DEFAULT);
+           text = new String(data, StandardCharsets.UTF_8);
+            return text;
+       } catch (Exception e) {
+         //  Logger.d(TAG, "decode" + e);
+           return base64data;
+
+       }
+
+  }
 
 //    public static byte[] getBytesUtf8(String string) {
 //        return getBytesUnchecked(string, "UTF_8");

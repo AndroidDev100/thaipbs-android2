@@ -31,6 +31,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Objects;
 
@@ -46,6 +47,7 @@ import me.vipa.app.utils.helpers.CheckInternetConnection;
 import me.vipa.app.utils.helpers.ImageHelper;
 import me.vipa.app.utils.helpers.NetworkConnectivity;
 import me.vipa.app.utils.helpers.SharedPrefHelper;
+import me.vipa.app.utils.helpers.StringUtils;
 import me.vipa.app.utils.helpers.ToastHandler;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 import me.vipa.baseCollection.baseCategoryServices.BaseCategoryServices;
@@ -56,14 +58,11 @@ import static com.amazonaws.mobile.auth.core.internal.util.ThreadUtils.runOnUiTh
 
 public class KidsModePinDialogFragment extends DialogFragment {
     private KidPinPopupLayoutBinding kidPinPopupLayoutBinding;
-    private static KidsModePinDialogFragment mInstance;
-    private String pin="";
+   // private static KidsModePinDialogFragment mInstance;
+   // private String pin="";
     private KsPreferenceKeys preference;
     private RegistrationLoginViewModel viewModel;
     private boolean isloggedout = false;
-
-
-
     UserProfileResponse newObject;
     List<String> saved;
     private String name="";
@@ -73,15 +72,22 @@ public class KidsModePinDialogFragment extends DialogFragment {
     private String address="";
     private String profilePic="";
     private String via="";
+    private String pinGetFromApi="";
     private boolean isNotificationEnable=false;
     private String contentPreference = "";
+    private boolean fromMoreFragment;
 
-    public static KidsModePinDialogFragment getInstance(){
+    private KidsModePinDialogFragment.CallBackListenerOkClick callBackListenerOkClick;
+
+  /*  public static KidsModePinDialogFragment getInstance(){
         if(mInstance == null){
             mInstance = new KidsModePinDialogFragment();
+
         }
+        Log.e("PINGET",pin);
+
         return mInstance;
-    }
+    }*/
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -109,10 +115,16 @@ public class KidsModePinDialogFragment extends DialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        if (getActivity() instanceof KidsModePinDialogFragment.CallBackListenerOkClick)
+            callBackListenerOkClick = (KidsModePinDialogFragment.CallBackListenerOkClick) getActivity();
+
         setClicks();
         viewModel = ViewModelProviders.of(getActivity()).get(RegistrationLoginViewModel.class);
         preference = KsPreferenceKeys.getInstance();
         parseProfile();
+
+
     }
 
     private void setClicks() {
@@ -121,9 +133,11 @@ public class KidsModePinDialogFragment extends DialogFragment {
             public void onClick(View v) {
                 if (!TextUtils.isEmpty(kidPinPopupLayoutBinding.pinViewNumber.getText())) {
                     if (kidPinPopupLayoutBinding.pinViewNumber.getSelectionEnd()==4) {
-                        pin  = String.valueOf(kidPinPopupLayoutBinding.pinViewNumber.getText());
+                     String  pin  = String.valueOf(kidPinPopupLayoutBinding.pinViewNumber.getText());
                         if (NetworkConnectivity.isOnline(getActivity())) {
-                            callUpdateApi(pin);
+                            String encodePin= StringUtils.getConvertBase64Data(pin);
+                            Log.e("Encode pin",encodePin);
+                            callUpdateApi(encodePin);
 
                         } else {
                             new ToastHandler(getActivity()).show(getActivity().getResources().getString(R.string.no_internet_connection));
@@ -182,7 +196,7 @@ public class KidsModePinDialogFragment extends DialogFragment {
             }
         });
         alert.show();
-        alert.getWindow().setLayout(750, 400);
+        //alert.getWindow().setLayout(750, 400);
 
         alert.setCancelable(false);
     }
@@ -201,9 +215,17 @@ public class KidsModePinDialogFragment extends DialogFragment {
                         if (userProfileResponse.getStatus()) {
                            // Gson gson = new Gson();
                            // String userProfileData = gson.toJson(userProfileResponse);
-                            Log.e("PINMODE",new Gson().toJson(userProfileResponse));
+                            Log.e("PINMODE DATA",new Gson().toJson(userProfileResponse));
                             kidPinPopupLayoutBinding.pinViewNumber.setText("");
-                            dismiss();
+                            if(fromMoreFragment){
+                                callBackListenerOkClick.onContinueClick();
+                                dismiss();
+                            }
+                            else {
+                                dismiss();
+                            }
+
+
 
 
 
@@ -368,6 +390,13 @@ public class KidsModePinDialogFragment extends DialogFragment {
 
     private void parseProfile() {
         try {
+
+            Bundle bundle = getArguments();
+            if (bundle != null) {
+                pinGetFromApi=bundle.getString("pin");
+                fromMoreFragment=bundle.getBoolean("fromMoreFragment");
+            }
+            Log.e("PIN :: API",pinGetFromApi);
             saved=new ArrayList<>();
             name="";
             phoneNumber="";
@@ -420,6 +449,13 @@ public class KidsModePinDialogFragment extends DialogFragment {
         }
 
     }
+
+    public interface CallBackListenerOkClick {
+        void onContinueClick();
+
+
+    }
+
 
 }
 

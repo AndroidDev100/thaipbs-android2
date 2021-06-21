@@ -403,6 +403,10 @@
     <string name="take_photo">Take Photo</string>
     <string name="select_from_library">Select from Library</string>
     <string name="select_from_avtar">Select from avatar</string>
+    <string name="kids_mode_pin">Kids Mode Pin</string>
+    <string name="kids_mode_pin_set">Set your kids mode pin</string>
+    <string name="plz_enter_valid_pin">Please enter valid pin</string>
+    <string name="Continue_dialog">Continue</string>
 
 
 </resources>

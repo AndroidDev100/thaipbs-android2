@@ -444,6 +444,10 @@
     <string name="apply_filter">นำไปใช้</string>
     <string name="filters">ตัวกรองการค้นหา</string>
     <string name="clear_all">ลบทั้งหมด</string>
+    <string name="kids_mode_pin">รหัสคิดส์โหมด</string>
+    <string name="kids_mode_pin_set">ตั้งรหัสคิดส์โหมดของคุณ</string>
+    <string name="plz_enter_valid_pin">โปรดระบุรหัสให้ถูกต้อง</string>
+    <string name="Continue_dialog">ดำเนินการ</string>
 
 
 </resources>

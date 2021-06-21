@@ -110,14 +110,12 @@ class NetworkSetup {
                 .addInterceptor(loggingInterceptor)
 
         val client = httpClient.build()
-
         subscriptionManagementRetrofit = Retrofit.Builder()
                 .baseUrl(BaseConfiguration.instance.clients!!.getUserMngmntBaseUrl())
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(client)
                 .build()
-
         return subscriptionManagementRetrofit
     }
 

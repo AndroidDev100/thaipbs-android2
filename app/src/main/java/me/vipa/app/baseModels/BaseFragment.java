@@ -163,6 +163,8 @@ public class BaseFragment extends Fragment {
     public enum FragmentTransactionType {
         ADD, REPLACE, ADD_TO_BACK_STACK_AND_ADD, ADD_TO_BACK_STACK_AND_REPLACE, POP_BACK_STACK_AND_REPLACE, CLEAR_BACK_STACK_AND_REPLACE
     }
+
+
 /*
     @Override
     public void onNetworkConnectionChanged(boolean isConnected) {

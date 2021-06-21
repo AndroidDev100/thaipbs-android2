@@ -13,6 +13,7 @@
             android:id="@+id/llnumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="@dimen/_10sdp"
             android:orientation="vertical"
             android:layout_centerInParent="true">
 
@@ -20,29 +21,35 @@
                 android:id="@+id/tv_error"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+
                 android:layout_gravity="center"
-                android:gravity="center"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:text=""
+
                 android:fontFamily="@font/sukhumvittadmai_bold"
+                android:gravity="center"
                 android:singleLine="true"
-                android:textColor="?attr/app_edit_text_color"
-                android:textColorHint="?attr/app_edit_text_color"
-                android:textSize="@dimen/TextSize14"/>
+                android:text=""
+                android:textColor="?attr/more_item_text_color"
+
+
+                android:textSize="@dimen/TextSize14" />
 
             <View
                 android:id="@+id/seperator"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+
                 android:background="?attr/app_edit_text_color" />
             <TextView
                 android:id="@+id/tvOk"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+
+
                 android:gravity="center"
                 android:text="@string/ok"
-                android:paddingTop="@dimen/_10sdp"
+
                 android:fontFamily="@font/sukhumvittadmai_medium"
                 android:singleLine="true"
                 android:textColor="@color/ligh_blue"

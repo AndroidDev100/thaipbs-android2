@@ -47,8 +47,8 @@
                 android:text="@string/kids_mode_pin"
                 android:fontFamily="@font/sukhumvittadmai_normal"
                 android:singleLine="true"
-                android:textColor="?attr/app_edit_text_color"
-                android:textColorHint="?attr/app_edit_text_color"
+                android:textColor="@color/white_almost_opaque"
+
                 android:textSize="@dimen/TextSize14"/>
             <TextView
                 android:layout_width="match_parent"
@@ -59,8 +59,9 @@
                 android:text="@string/kids_mode_pin_set"
                 android:fontFamily="@font/sukhumvittadmai_normal"
                 android:singleLine="true"
-                android:textColor="?attr/app_edit_text_color"
-                android:textColorHint="?attr/app_edit_text_color"
+                android:textColor="@color/white_almost_opaque"
+
+
                 android:textSize="@dimen/TextSize14"/>
 
 
@@ -98,7 +99,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/NontonSize45"
                 android:layout_marginStart="@dimen/_30sdp"
-                android:text="@string/Continue"
+                android:text="@string/Continue_dialog"
                 android:textColor="@color/white"
                 android:textAllCaps="false"
                 android:layout_gravity="center_vertical"

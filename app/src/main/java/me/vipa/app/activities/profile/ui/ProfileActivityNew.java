@@ -200,6 +200,12 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
                         if (userProfileResponse.getStatus()) {
                             updateUI(userProfileResponse);
                             Log.e("GETDATA",new Gson().toJson(userProfileResponse));
+                       /*   String decodePin =  userProfileResponse.getData().getCustomData().getParentalPin();
+                          String pin3=  StringUtils.getDataFromBase64(decodePin);
+                            Log.e("decodePin",decodePin);
+                            Log.e("pin3",pin3);*/
+
+
                         } else {
                             if (userProfileResponse.getResponseCode() == 4302) {
                                 isloggedout = true;

@@ -17,6 +17,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -49,6 +50,7 @@ import me.vipa.app.beanModel.userProfile.UserProfileResponse;
 import me.vipa.app.cms.HelpActivity;
 import me.vipa.app.fragments.dialog.AlertDialogFragment;
 import me.vipa.app.fragments.dialog.AlertDialogSingleButtonFragment;
+import me.vipa.app.fragments.dialog.KidsModePinDialogFragment;
 import me.vipa.app.fragments.more.adapter.MoreListAdapter;
 import me.vipa.app.R;
 import me.vipa.app.activities.membershipplans.ui.MemberShipPlanActivity;
@@ -95,11 +97,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.amazonaws.mobile.auth.core.internal.util.ThreadUtils.runOnUiThread;
+
 //import com.webstreamindonesia.nonton.activities.membershipPlan.ui.MemberShipPlanActivity;
 
 
 @SuppressWarnings("StatementWithEmptyBody")
-public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> implements MoreItemClickListener, AlertDialogFragment.AlertDialogListener {
+public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> implements MoreItemClickListener, AlertDialogFragment.AlertDialogListener,KidsModePinDialogFragment.CallBackListenerOkClick {
     public IntentFilter intentFilter;
     boolean isloggedout = false;
     boolean isHomeDirect = false;
@@ -117,6 +121,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
     private long mLastClickTime = 0;
     private MoreFragmentInteraction mListener;
     private boolean isKidsMode;
+    private String pin = "";
 
     @Override
     public FragmentMoreBinding inflateBindingLayout(@NonNull LayoutInflater inflater) {
@@ -198,7 +203,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
     @Override
     public void onPause() {
         super.onPause();
-        Log.e("ONPAUSE FRAGMENT","FRAGMENT");
+        Log.e("ONPAUSE FRAGMENT", "FRAGMENT");
         try {
             LocalBroadcastManager.getInstance(Objects.requireNonNull(getActivity())).unregisterReceiver(appSyncBroadcast);
         } catch (IllegalArgumentException e) {
@@ -213,19 +218,19 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
     @Override
     public void onStop() {
         super.onStop();
-        Log.e("onStop FRAGMENT","onStopFRAGMENT");
+
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Log.e("onDestroyViewFRAGMENT","onDestroyViewFRAGMENT");
+
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        Log.e("onDetachFRAGMENT","onDetachFRAGMENT");
+
     }
 
     private void modelCall() {
@@ -248,32 +253,28 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
         mListLogin.addAll(Arrays.asList(label2));
         preference = KsPreferenceKeys.getInstance();
         isLogin = preference.getAppPrefLoginStatus();
-        isKidsMode  = new SharedPrefHelper(getActivity()).getKidsMode();
+        isKidsMode = new SharedPrefHelper(getActivity()).getKidsMode();
         mListKidsMode = new ArrayList<>();
 
-        if(isKidsMode){
+        if (isKidsMode) {
             getBinding().loginBtn.setVisibility(View.GONE);
-        }
-        else {
+        } else {
             getBinding().loginBtn.setVisibility(View.VISIBLE);
         }
 
-        if(isLogin.equalsIgnoreCase(AppConstants.UserStatus.Login.toString())){
-            if(isLogin.equalsIgnoreCase(AppConstants.UserStatus.Login.toString()) && isKidsMode){
+        if (isLogin.equalsIgnoreCase(AppConstants.UserStatus.Login.toString())) {
+            if (isLogin.equalsIgnoreCase(AppConstants.UserStatus.Login.toString()) && isKidsMode) {
                 mListKidsMode.addAll(Arrays.asList(label6));
 
-            }
-            else {
+            } else {
                 mListKidsMode.addAll(Arrays.asList(label4));
 
             }
 
-        }
-        else {
+        } else {
             mListKidsMode.addAll(Arrays.asList(label5));
 
         }
-
 
 
         if (isLogin.equalsIgnoreCase(AppConstants.UserStatus.Login.toString())) {
@@ -293,11 +294,10 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
 //            getBinding().usernameTv.setVisibility(View.VISIBLE);
             getBinding().usernameTv.setVisibility(View.GONE);
 
-            if(isKidsMode){
-                setUIComponets(mListKidsMode, false,isKidsMode);
-            }
-            else {
-                setUIComponets(mListLogOut, false,isKidsMode);
+            if (isKidsMode) {
+                setUIComponets(mListKidsMode, false, isKidsMode);
+            } else {
+                setUIComponets(mListLogOut, false, isKidsMode);
 
             }
 
@@ -305,9 +305,9 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
         }
     }
 
-    private void setUIComponets(List<String> mList, boolean isLogin,boolean isKidsMode) {
+    private void setUIComponets(List<String> mList, boolean isLogin, boolean isKidsMode) {
 
-        MoreListAdapter adapter = new MoreListAdapter(getActivity(), mList, MoreFragment.this, isLogin,isKidsMode);
+        MoreListAdapter adapter = new MoreListAdapter(getActivity(), mList, MoreFragment.this, isLogin, isKidsMode);
         getBinding().recyclerViewMore.hasFixedSize();
         getBinding().recyclerViewMore.setNestedScrollingEnabled(false);
         getBinding().recyclerViewMore.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
@@ -488,46 +488,29 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                 mListener.onLoginClicked();
 
         } else if (caption.equals(getString(R.string.vipa_kids))) {
-            if(loginStatus){
-                String  secondaryId  = new SharedPrefHelper(getActivity()).getSecondaryAccountId();
-                if(secondaryId!=null && !secondaryId.isEmpty()){
+            if (loginStatus) {
+                String secondaryId = new SharedPrefHelper(getActivity()).getSecondaryAccountId();
+                if (secondaryId != null && !secondaryId.isEmpty()) {
                     KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
-                    String authToken=    preference.getAppPrefAccessToken();
-                    switchUserApi(authToken,secondaryId,true);
-                }
-                else {
+                    String authToken = preference.getAppPrefAccessToken();
+                    switchUserApi(authToken, secondaryId, true);
+                } else {
                     KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
-                    String authToken=    preference.getAppPrefAccessToken();
-                    callAllSecondaryAccount(authToken,true);
+                    String authToken = preference.getAppPrefAccessToken();
+                    callAllSecondaryAccount(authToken, true);
                 }
-            }
-            else {
+            } else {
                 new SharedPrefHelper(getActivity()).saveKidsMode(true);
                 new ActivityLauncher(getActivity()).homeScreen(getActivity(), HomeActivity.class);
                 getActivity().setTheme(R.style.MyMaterialTheme_Base_Light);
                 KsPreferenceKeys.getInstance().setCurrentTheme(AppConstants.LIGHT_THEME);
 
             }
-        }
+        } else if (caption.equals(getString(R.string.leave_kids))) {
+            if (loginStatus) {
+                getProfileApi();
 
-        else if (caption.equals(getString(R.string.leave_kids))) {
-            if(loginStatus){
-                String  primaryAccountId  = new SharedPrefHelper(getActivity()).getPrimaryAccountId();
-                if(primaryAccountId!=null && !primaryAccountId.isEmpty()){
-                    KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
-                    String authToken=    preference.getAppPrefAccessToken();
-                    switchUserApi(authToken,primaryAccountId,false);
-                }
-                else {
-                    KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
-                    String authToken=    preference.getAppPrefAccessToken();
-                    callAllSecondaryAccount(authToken,false);
-
-                }
-
-
-            }
-            else {
+            } else {
                 new SharedPrefHelper(getActivity()).saveKidsMode(false);
                 new ActivityLauncher(getActivity()).homeScreen(getActivity(), HomeActivity.class);
                 getActivity().setTheme(R.style.MyMaterialTheme_Base_Dark);
@@ -535,9 +518,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
             }
 
 
-        }
-
-        else if (caption.equals(getString(R.string.my_history))) {
+        } else if (caption.equals(getString(R.string.my_history))) {
             if (loginStatus)
                 new ActivityLauncher(getActivity()).watchHistory(getActivity(), WatchListActivity.class, Objects.requireNonNull(getActivity()).getResources().getString(R.string.my_history), true);
             else
@@ -786,19 +767,17 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                     setUIComponets(mListLogin, true);
                 } else
                     setUIComponets(mListVerify, true);*/
-                if(isKidsMode){
-                    setUIComponets(mListKidsMode, true,isKidsMode);
-                }
-                else {
-                    setUIComponets(mListLogin, true,isKidsMode);
+                if (isKidsMode) {
+                    setUIComponets(mListKidsMode, true, isKidsMode);
+                } else {
+                    setUIComponets(mListLogin, true, isKidsMode);
                 }
 
             } else {
-                if(isKidsMode){
-                    setUIComponets(mListKidsMode, true,isKidsMode);
-                }
-                else {
-                    setUIComponets(mListLogin, true,isKidsMode);
+                if (isKidsMode) {
+                    setUIComponets(mListKidsMode, true, isKidsMode);
+                } else {
+                    setUIComponets(mListLogin, true, isKidsMode);
                 }
 
 
@@ -818,12 +797,11 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
             // getBinding().userNameWords.setText(AppCommonMethod.getUserName(preference.getAppPrefUserName()));
             getBinding().usernameTv.setText(preference.getAppPrefUserName());
 
-            if(isKidsMode){
-                setUIComponets(mListKidsMode, true,isKidsMode);
+            if (isKidsMode) {
+                setUIComponets(mListKidsMode, true, isKidsMode);
 
-            }
-            else {
-                setUIComponets(mListLogin, true,isKidsMode);
+            } else {
+                setUIComponets(mListLogin, true, isKidsMode);
 
             }
 
@@ -856,6 +834,22 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
 
     }
 
+    @Override
+    public void onContinueClick() {
+        Log.e("More Fragmnet CONTINUE","More Fragmnet CONTINUE");
+        String primaryAccountId = new SharedPrefHelper(getActivity()).getPrimaryAccountId();
+        if (primaryAccountId != null && !primaryAccountId.isEmpty()) {
+            KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
+            String authToken = preference.getAppPrefAccessToken();
+            switchUserApi(authToken, primaryAccountId, false);
+        } else {
+            KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
+            String authToken = preference.getAppPrefAccessToken();
+            callAllSecondaryAccount(authToken, false);
+
+        }
+    }
+
     public class AppSyncBroadcast extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -878,54 +872,48 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
         void onLoginClicked();
     }
 
-    public void switchUserApi( String authToken,String accountId,boolean vipaMode) {
+    public void switchUserApi(String authToken, String accountId, boolean vipaMode) {
         if (NetworkConnectivity.isOnline(getActivity()) && isNetworkAvailable(getActivity())) {
             showLoading(getBinding().progressBar, true, getActivity());
-            viewModel.hitSwitchUser(authToken,accountId).observe(getActivity(), switchUserDetails -> {
-                if (switchUserDetails!=null) {
-                     if(switchUserDetails.getResponseCode()!=null){
-                         if(switchUserDetails.getResponseCode()==2000){
-                             dismissLoading(getBinding().progressBar, getActivity());
-                             if(vipaMode){
-                                 new SharedPrefHelper(getActivity()).saveKidsMode(true);
-                                 new ActivityLauncher(getActivity()).homeScreen(getActivity(), HomeActivity.class);
-                                 getActivity().setTheme(R.style.MyMaterialTheme_Base_Light);
-                                 KsPreferenceKeys.getInstance().setCurrentTheme(AppConstants.LIGHT_THEME);
-                             }
-                             else {
-                                 new SharedPrefHelper(getActivity()).saveKidsMode(false);
-                                 new ActivityLauncher(getActivity()).homeScreen(getActivity(), HomeActivity.class);
-                                 getActivity().setTheme(R.style.MyMaterialTheme_Base_Dark);
-                                 KsPreferenceKeys.getInstance().setCurrentTheme(AppConstants.DARK_THEME);
+            viewModel.hitSwitchUser(authToken, accountId).observe(getActivity(), switchUserDetails -> {
+                if (switchUserDetails != null) {
+                    if (switchUserDetails.getResponseCode() != null) {
+                        if (switchUserDetails.getResponseCode() == 2000) {
+                            dismissLoading(getBinding().progressBar, getActivity());
+                            if (vipaMode) {
+                                new SharedPrefHelper(getActivity()).saveKidsMode(true);
+                                new ActivityLauncher(getActivity()).homeScreen(getActivity(), HomeActivity.class);
+                                getActivity().setTheme(R.style.MyMaterialTheme_Base_Light);
+                                KsPreferenceKeys.getInstance().setCurrentTheme(AppConstants.LIGHT_THEME);
+                            } else {
+                                new SharedPrefHelper(getActivity()).saveKidsMode(false);
+                                new ActivityLauncher(getActivity()).homeScreen(getActivity(), HomeActivity.class);
+                                getActivity().setTheme(R.style.MyMaterialTheme_Base_Dark);
+                                KsPreferenceKeys.getInstance().setCurrentTheme(AppConstants.DARK_THEME);
 
-                             }
-                         }
-                         else {
-                             if (switchUserDetails.getDebugMessage() != null && !switchUserDetails.getDebugMessage().equals("")) {
-                                 dismissLoading(getBinding().progressBar, getActivity());
-                                 showDialog(getActivity().getResources().getString(R.string.error), switchUserDetails.getDebugMessage().toString());
-                             } else {
-                                 dismissLoading(getBinding().progressBar, getActivity());
-                                 showDialog(getActivity().getResources().getString(R.string.error),getActivity().getResources().getString(R.string.something_went_wrong));
+                            }
+                        } else {
+                            if (switchUserDetails.getDebugMessage() != null && !switchUserDetails.getDebugMessage().equals("")) {
+                                dismissLoading(getBinding().progressBar, getActivity());
+                                showDialog(getActivity().getResources().getString(R.string.error), switchUserDetails.getDebugMessage().toString());
+                            } else {
+                                dismissLoading(getBinding().progressBar, getActivity());
+                                showDialog(getActivity().getResources().getString(R.string.error), getActivity().getResources().getString(R.string.something_went_wrong));
 
-                             }
+                            }
 
-                         }
-                     }
-                     else {
-                         if (switchUserDetails.getDebugMessage() != null && !switchUserDetails.getDebugMessage().equals("")) {
-                             dismissLoading(getBinding().progressBar, getActivity());
-                             showDialog(getActivity().getResources().getString(R.string.error), switchUserDetails.getDebugMessage().toString());
-                         } else {
-                             dismissLoading(getBinding().progressBar, getActivity());
-                             showDialog(getActivity().getResources().getString(R.string.error),getActivity().getResources().getString(R.string.something_went_wrong));
+                        }
+                    } else {
+                        if (switchUserDetails.getDebugMessage() != null && !switchUserDetails.getDebugMessage().equals("")) {
+                            dismissLoading(getBinding().progressBar, getActivity());
+                            showDialog(getActivity().getResources().getString(R.string.error), switchUserDetails.getDebugMessage().toString());
+                        } else {
+                            dismissLoading(getBinding().progressBar, getActivity());
+                            showDialog(getActivity().getResources().getString(R.string.error), getActivity().getResources().getString(R.string.something_went_wrong));
 
-                         }
+                        }
 
-                     }
-
-
-
+                    }
 
 
                 } else {
@@ -934,7 +922,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                         showDialog(getActivity().getResources().getString(R.string.error), switchUserDetails.getDebugMessage().toString());
                     } else {
                         dismissLoading(getBinding().progressBar, getActivity());
-                        showDialog(getActivity().getResources().getString(R.string.error),getActivity().getResources().getString(R.string.something_went_wrong));
+                        showDialog(getActivity().getResources().getString(R.string.error), getActivity().getResources().getString(R.string.something_went_wrong));
 
                     }
 
@@ -952,7 +940,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
         }
     }
 
-    public void callAllSecondaryAccount(String token,boolean vipaMode) {
+    public void callAllSecondaryAccount(String token, boolean vipaMode) {
         if (CheckInternetConnection.isOnline(getActivity())) {
             showLoading(getBinding().progressBar, true, getActivity());
             registrationLoginViewModel.hitAllSecondaryApi(getActivity(), token).observe(getActivity(), allSecondaryAccountDetails -> {
@@ -973,29 +961,27 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                                 Log.e("allListApiSecondid", secondaryId);
                                 new SharedPrefHelper(getActivity()).savePrimaryAccountId(primaryAccountId);
                                 new SharedPrefHelper(getActivity()).saveSecondaryAccountId(secondaryId);
-                                if(vipaMode){
-                                    switchUserApi(token,secondaryId,vipaMode);
+                                if (vipaMode) {
+                                    switchUserApi(token, secondaryId, vipaMode);
 
-                                }
-                                else {
-                                    switchUserApi(token,primaryAccountId,vipaMode);
+                                } else {
+                                    switchUserApi(token, primaryAccountId, vipaMode);
 
                                 }
 
 
                             } else {
                                 Log.e("allSecondaryEMPTY", new Gson().toJson(allSecondaryAccountDetails));
-                                addSecondaryUserApi(token,vipaMode);
+                                addSecondaryUserApi(token, vipaMode);
                             }
 
-                        }
-                        else {
+                        } else {
                             if (allSecondaryAccountDetails.getDebugMessage() != null) {
                                 dismissLoading(getBinding().progressBar, getActivity());
                                 showDialog(getActivity().getResources().getString(R.string.error), allSecondaryAccountDetails.getDebugMessage().toString());
                             } else {
                                 dismissLoading(getBinding().progressBar, getActivity());
-                                showDialog(getActivity().getResources().getString(R.string.error),getActivity().getResources().getString(R.string.something_went_wrong));
+                                showDialog(getActivity().getResources().getString(R.string.error), getActivity().getResources().getString(R.string.something_went_wrong));
 
                             }
 
@@ -1007,7 +993,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                             showDialog(getActivity().getResources().getString(R.string.error), allSecondaryAccountDetails.getDebugMessage().toString());
                         } else {
                             dismissLoading(getBinding().progressBar, getActivity());
-                            showDialog(getActivity().getResources().getString(R.string.error),getActivity().getResources().getString(R.string.something_went_wrong));
+                            showDialog(getActivity().getResources().getString(R.string.error), getActivity().getResources().getString(R.string.something_went_wrong));
 
                         }
 
@@ -1019,7 +1005,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                         showDialog(getActivity().getResources().getString(R.string.error), allSecondaryAccountDetails.getDebugMessage().toString());
                     } else {
                         dismissLoading(getBinding().progressBar, getActivity());
-                        showDialog(getActivity().getResources().getString(R.string.error),getActivity().getResources().getString(R.string.something_went_wrong));
+                        showDialog(getActivity().getResources().getString(R.string.error), getActivity().getResources().getString(R.string.something_went_wrong));
 
                     }
 
@@ -1037,11 +1023,12 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
 
         }
     }
-    public void addSecondaryUserApi(String token,boolean vipaMode) {
-        if (CheckInternetConnection.isOnline(getActivity() )) {
+
+    public void addSecondaryUserApi(String token, boolean vipaMode) {
+        if (CheckInternetConnection.isOnline(getActivity())) {
             showLoading(getBinding().progressBar, true, getActivity());
-            String userName=KsPreferenceKeys.getInstance().getAppPrefUserName();
-            registrationLoginViewModel.hitSecondaryUser(token,userName).observe(getActivity(), secondaryUserDetails -> {
+            String userName = KsPreferenceKeys.getInstance().getAppPrefUserName();
+            registrationLoginViewModel.hitSecondaryUser(token, userName).observe(getActivity(), secondaryUserDetails -> {
 
                 if (secondaryUserDetails.getResponseCode() != null) {
                     if (Objects.requireNonNull(secondaryUserDetails).getResponseCode() == 2000) {
@@ -1052,12 +1039,11 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                         Log.e("addSecondaryApiSecondid", secondaryAccountId);
                         new SharedPrefHelper(getActivity()).savePrimaryAccountId(primaryAccountId);
                         new SharedPrefHelper(getActivity()).saveSecondaryAccountId(secondaryAccountId);
-                        if(vipaMode){
-                            switchUserApi(token,secondaryAccountId,true);
+                        if (vipaMode) {
+                            switchUserApi(token, secondaryAccountId, true);
 
-                        }
-                        else {
-                            switchUserApi(token,primaryAccountId,false);
+                        } else {
+                            switchUserApi(token, primaryAccountId, false);
 
                         }
 
@@ -1068,7 +1054,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                             showDialog(getActivity().getResources().getString(R.string.error), secondaryUserDetails.getDebugMessage().toString());
                         } else {
                             dismissLoading(getBinding().progressBar, getActivity());
-                            showDialog(getActivity().getResources().getString(R.string.error),getActivity().getResources().getString(R.string.something_went_wrong));
+                            showDialog(getActivity().getResources().getString(R.string.error), getActivity().getResources().getString(R.string.something_went_wrong));
 
                         }
 
@@ -1080,7 +1066,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                         showDialog(getActivity().getResources().getString(R.string.error), secondaryUserDetails.getDebugMessage().toString());
                     } else {
                         dismissLoading(getBinding().progressBar, getActivity());
-                        showDialog(getActivity().getResources().getString(R.string.error),getActivity().getResources().getString(R.string.something_went_wrong));
+                        showDialog(getActivity().getResources().getString(R.string.error), getActivity().getResources().getString(R.string.something_went_wrong));
 
                     }
 
@@ -1097,7 +1083,9 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
             // new ToastHandler(LoginActivity.this).show(LoginActivity.this.getResources().getString(R.string.no_internet_connection));
 
         }
-    }public boolean isNetworkAvailable(Context context) {
+    }
+
+    public boolean isNetworkAvailable(Context context) {
         boolean isOnline = false;
         ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         try {
@@ -1115,6 +1103,84 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
     }
 
 
+    private void getProfileApi() {
+        showLoading(getBinding().progressBar, true, getActivity());
+        String token = preference.getAppPrefAccessToken();
+        viewModel.hitUserProfile(getActivity(), token).observe(getActivity(), new Observer<UserProfileResponse>() {
+            @Override
+            public void onChanged(UserProfileResponse userProfileResponse) {
+                if (userProfileResponse != null) {
+                    if (userProfileResponse.getStatus()) {
+                        updateUI(userProfileResponse);
+                        dismissLoading(getBinding().progressBar, getActivity());
+
+                        if (userProfileResponse.getData().getCustomData().getParentalPin() != null && !userProfileResponse.getData().getCustomData().getParentalPin().isEmpty()) {
+                            String decodePin = userProfileResponse.getData().getCustomData().getParentalPin();
+                            pin = StringUtils.getDataFromBase64(decodePin);
+
+                            Log.e("decodePin", decodePin);
+                            Log.e("pin3", pin);
+                            KidsModePinDialogFragment newFragment = new KidsModePinDialogFragment();
+                            Bundle args = new Bundle();
+                            args.putString("pin", pin);
+                            args.putBoolean("fromMoreFragment",true);
+                            newFragment.setArguments(args);
+                            newFragment.show(getActivity().getSupportFragmentManager(), "KidsModePinDialogFragment");
+                            newFragment.setCancelable(false);
+
+                        } else {
+                            String primaryAccountId = new SharedPrefHelper(getActivity()).getPrimaryAccountId();
+                            if (primaryAccountId != null && !primaryAccountId.isEmpty()) {
+                                KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
+                                String authToken = preference.getAppPrefAccessToken();
+                                switchUserApi(authToken, primaryAccountId, false);
+                            } else {
+                                KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
+                                String authToken = preference.getAppPrefAccessToken();
+                                callAllSecondaryAccount(authToken, false);
+
+                            }
+                        }
 
 
+                    } else {
+                        if (userProfileResponse.getResponseCode() == 4302) {
+                            isloggedout = true;
+                            logoutCall();
+                            try {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        getActivity().onBackPressed();
+                                    }
+                                });
+                            } catch (Exception e) {
+
+                            }
+
+                            // showDialog(getResources().getString(R.string.logged_out), getResources().getString(R.string.you_are_logged_out));
+                        } else if (userProfileResponse.getResponseCode() == 4019) {
+                            showDialog(getActivity().getResources().getString(R.string.error), getActivity().getResources().getString(R.string.number_Cannot_change));
+                        } else if (userProfileResponse.getResponseCode() == 4901) {
+                            showDialog(getActivity().getResources().getString(R.string.error), getActivity().getResources().getString(R.string.already_exist_number));
+                        } else if (userProfileResponse.getDebugMessage() != null) {
+                            showDialog(getActivity().getResources().getString(R.string.error), userProfileResponse.getDebugMessage().toString());
+                        } else {
+                            showDialog(getActivity().getResources().getString(R.string.error), getActivity().getResources().getString(R.string.something_went_wrong));
+                        }
+                    }
+                }
+            }
+        });
+
+    }
+
+    private void logoutCall() {
+        if (CheckInternetConnection.isOnline(Objects.requireNonNull(getActivity()))) {
+            clearCredientials(preference);
+            hitApiLogout(getActivity(), preference.getAppPrefAccessToken());
+        } else {
+            // new ToastHandler(this).show(getResources().getString(R.string.no_internet_connection));
+        }
+    }
 }

@@ -39,7 +39,7 @@ import me.vipa.app.activities.videoquality.ui.VideoQualityActivity;
 import me.vipa.app.baseModels.BaseBindingActivity;
 
 
-public class ActivitySettings extends BaseBindingActivity<SettingsActivityBinding> implements View.OnClickListener {
+public class ActivitySettings extends BaseBindingActivity<SettingsActivityBinding> implements View.OnClickListener,KidsModePinDialogFragment.CallBackListenerOkClick {
     private boolean isNotificationEnable;
 
     @Override
@@ -185,10 +185,16 @@ public class ActivitySettings extends BaseBindingActivity<SettingsActivityBindin
             @Override
             public void onClick(View v) {
 
-
-                    KidsModePinDialogFragment dialog = KidsModePinDialogFragment.getInstance();
+             /*   KidsModePinDialogFragment dialog = KidsModePinDialogFragment.getInstance();
                     dialog.show(getSupportFragmentManager(), "KidsModePinDialogFragment");
-                    dialog.setCancelable(false);
+                    dialog.setCancelable(false);*/
+                KidsModePinDialogFragment newFragment = new KidsModePinDialogFragment();
+                Bundle args = new Bundle();
+                args.putString("pin",null);
+                args.putBoolean("fromMoreFragment",false);
+                newFragment.setArguments(args);
+                newFragment.show(getSupportFragmentManager(), "TAG");
+                newFragment.setCancelable(false);
 
 
 
@@ -357,6 +363,13 @@ public class ActivitySettings extends BaseBindingActivity<SettingsActivityBindin
 
 
         }
+    }
+
+    @Override
+    public void onContinueClick() {
+        Log.e("ACTIVITY CONTINUE","ACTIVITY CONTINUE");
+
+
     }
 
 //    @Override
