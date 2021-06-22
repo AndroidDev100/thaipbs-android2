@@ -108,13 +108,13 @@
                                     <TextView
                                         android:id="@+id/username_tv"
                                         android:layout_width="wrap_content"
-                                        android:textSize="@dimen/moreItemTextSize"
-                                        android:textAllCaps="false"
-                                        android:text="@string/guest_user"
-                                        android:fontFamily="@font/sukhumvittadmai_bold"
+                                        android:layout_height="wrap_content"
                                         android:layout_marginTop="@dimen/_10sdp"
+                                        android:fontFamily="@font/sukhumvittadmai_bold"
+                                        android:text="@string/guest_user"
+                                        android:textAllCaps="false"
                                         android:textColor="?attr/user_name_text_color"
-                                        android:layout_height="wrap_content" />
+                                        android:textSize="@dimen/moreItemTextSize" />
 
                                     <Button
                                         android:id="@+id/login_btn"

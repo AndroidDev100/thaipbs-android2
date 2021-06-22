@@ -136,11 +136,11 @@ public class KidsModePinDialogFragment extends DialogFragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-             /*   if (kidPinPopupLayoutBinding.pinViewNumber.getSelectionEnd()==4) {
+                if (kidPinPopupLayoutBinding.pinViewNumber.getSelectionEnd()==4) {
                     kidPinPopupLayoutBinding.btContinue.setEnabled(true);
                     Log.e("afterTextChanged","afterTextChanged");
 
-                }*/
+                }
 
             }
         });
