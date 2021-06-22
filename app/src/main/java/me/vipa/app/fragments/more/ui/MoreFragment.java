@@ -103,7 +103,7 @@ import static com.amazonaws.mobile.auth.core.internal.util.ThreadUtils.runOnUiTh
 
 
 @SuppressWarnings("StatementWithEmptyBody")
-public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> implements MoreItemClickListener, AlertDialogFragment.AlertDialogListener,KidsModePinDialogFragment.CallBackListenerOkClick {
+public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> implements MoreItemClickListener, AlertDialogFragment.AlertDialogListener, KidsModePinDialogFragment.CallBackListenerOkClick {
     public IntentFilter intentFilter;
     boolean isloggedout = false;
     boolean isHomeDirect = false;
@@ -836,7 +836,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
 
     @Override
     public void onContinueClick() {
-        Log.e("More Fragmnet CONTINUE","More Fragmnet CONTINUE");
+        Log.e("More Fragmnet CONTINUE", "More Fragmnet CONTINUE");
         String primaryAccountId = new SharedPrefHelper(getActivity()).getPrimaryAccountId();
         if (primaryAccountId != null && !primaryAccountId.isEmpty()) {
             KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
@@ -1123,7 +1123,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                             KidsModePinDialogFragment newFragment = new KidsModePinDialogFragment();
                             Bundle args = new Bundle();
                             args.putString("pin", pin);
-                            args.putBoolean("fromMoreFragment",true);
+                            args.putBoolean("fromMoreFragment", true);
                             newFragment.setArguments(args);
                             newFragment.show(getActivity().getSupportFragmentManager(), "KidsModePinDialogFragment");
                             newFragment.setCancelable(false);

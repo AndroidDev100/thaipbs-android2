@@ -1,15 +1,21 @@
 package me.vipa.app.fragments.dialog;
 
+
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
+
+
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -27,7 +33,6 @@ import com.facebook.login.LoginManager;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-import org.jetbrains.annotations.NotNull;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -36,15 +41,14 @@ import java.util.List;
 import java.util.Objects;
 
 import me.vipa.app.R;
-import me.vipa.app.activities.detail.ui.EpisodeActivity;
-import me.vipa.app.activities.profile.ui.ProfileActivityNew;
+
 import me.vipa.app.activities.usermanagment.viewmodel.RegistrationLoginViewModel;
 import me.vipa.app.beanModel.userProfile.UserProfileResponse;
 import me.vipa.app.databinding.KidPinPopupLayoutBinding;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.constants.AppConstants;
 import me.vipa.app.utils.helpers.CheckInternetConnection;
-import me.vipa.app.utils.helpers.ImageHelper;
+
 import me.vipa.app.utils.helpers.NetworkConnectivity;
 import me.vipa.app.utils.helpers.SharedPrefHelper;
 import me.vipa.app.utils.helpers.StringUtils;
@@ -58,22 +62,20 @@ import static com.amazonaws.mobile.auth.core.internal.util.ThreadUtils.runOnUiTh
 
 public class KidsModePinDialogFragment extends DialogFragment {
     private KidPinPopupLayoutBinding kidPinPopupLayoutBinding;
-   // private static KidsModePinDialogFragment mInstance;
-   // private String pin="";
     private KsPreferenceKeys preference;
     private RegistrationLoginViewModel viewModel;
     private boolean isloggedout = false;
-    UserProfileResponse newObject;
-    List<String> saved;
-    private String name="";
-    private String phoneNumber="";
-    private String gender="";
-    private String dob="";
-    private String address="";
-    private String profilePic="";
-    private String via="";
-    private String pinGetFromApi="";
-    private boolean isNotificationEnable=false;
+    private UserProfileResponse newObject;
+    private List<String> saved;
+    private String name = "";
+    private String phoneNumber = "";
+    private String gender = "";
+    private String dob = "";
+    private String address = "";
+    private String profilePic = "";
+    private String via = "";
+    private String pinGetFromApi = "";
+    private boolean isNotificationEnable = false;
     private String contentPreference = "";
     private boolean fromMoreFragment;
 
@@ -107,7 +109,7 @@ public class KidsModePinDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        kidPinPopupLayoutBinding = DataBindingUtil.inflate(inflater, R.layout.kid_pin_popup_layout,container,false);
+        kidPinPopupLayoutBinding = DataBindingUtil.inflate(inflater, R.layout.kid_pin_popup_layout, container, false);
         getDialog().getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         return kidPinPopupLayoutBinding.getRoot();
     }
@@ -123,6 +125,25 @@ public class KidsModePinDialogFragment extends DialogFragment {
         viewModel = ViewModelProviders.of(getActivity()).get(RegistrationLoginViewModel.class);
         preference = KsPreferenceKeys.getInstance();
         parseProfile();
+        kidPinPopupLayoutBinding.pinViewNumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+             /*   if (kidPinPopupLayoutBinding.pinViewNumber.getSelectionEnd()==4) {
+                    kidPinPopupLayoutBinding.btContinue.setEnabled(true);
+                    Log.e("afterTextChanged","afterTextChanged");
+
+                }*/
+
+            }
+        });
 
 
     }
@@ -132,19 +153,28 @@ public class KidsModePinDialogFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 if (!TextUtils.isEmpty(kidPinPopupLayoutBinding.pinViewNumber.getText())) {
-                    if (kidPinPopupLayoutBinding.pinViewNumber.getSelectionEnd()==4) {
-                     String  pin  = String.valueOf(kidPinPopupLayoutBinding.pinViewNumber.getText());
+                    if (kidPinPopupLayoutBinding.pinViewNumber.getSelectionEnd() == 4) {
+                        String pin = String.valueOf(kidPinPopupLayoutBinding.pinViewNumber.getText());
                         if (NetworkConnectivity.isOnline(getActivity())) {
-                            String encodePin= StringUtils.getConvertBase64Data(pin);
-                            Log.e("Encode pin",encodePin);
-                            callUpdateApi(encodePin);
+                            String encodePin = StringUtils.getConvertBase64Data(pin);
+                            Log.e("Encode pin", encodePin);
+                            if (pinGetFromApi != null && !pinGetFromApi.isEmpty()) {
+                                if (pinGetFromApi.equalsIgnoreCase(encodePin)) {
+                                    callUpdateApi(encodePin);
+                                } else {
+                                    showDialog(getResources().getString(R.string.plz_enter_valid_pin));
+                                }
+
+                            } else {
+                                callUpdateApi(encodePin);
+
+                            }
 
                         } else {
                             new ToastHandler(getActivity()).show(getActivity().getResources().getString(R.string.no_internet_connection));
                         }
 
-                    }
-                    else {
+                    } else {
                         showDialog(getResources().getString(R.string.plz_enter_valid_pin));
 
                     }
@@ -152,7 +182,6 @@ public class KidsModePinDialogFragment extends DialogFragment {
                 } else {
                     showDialog(getResources().getString(R.string.plz_enter_valid_pin));
                 }
-
 
 
             }
@@ -178,89 +207,85 @@ public class KidsModePinDialogFragment extends DialogFragment {
 
     }*/
 
-    private void showDialog( String msg) {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
-        View view = getActivity().getLayoutInflater().inflate(R.layout.error_pop_up, null);
-        dialog.setView(view);
-        final AlertDialog alert = dialog.create();
+    private void showDialog(String msg) {
 
-        TextView ok = view.findViewById(R.id.tvOk);
-        TextView tv_error = view.findViewById(R.id.tv_error);
+        ErrorDialogFragment newFragment = new ErrorDialogFragment();
+        Bundle args = new Bundle();
+        args.putString("errorMsg", msg);
+        newFragment.setArguments(args);
+        newFragment.show(getActivity().getSupportFragmentManager(), "ErrorDialogFragment");
+        newFragment.setCancelable(false);
+      /*  LayoutInflater factory = LayoutInflater.from(getActivity());
+        final View deleteDialogView = factory.inflate(R.layout.error_pop_up, null);
+        final AlertDialog deleteDialog = new AlertDialog.Builder(getActivity()).create();
+        deleteDialog.setView(deleteDialogView);
+        TextView tv_error = deleteDialogView.findViewById(R.id.tv_error);
         tv_error.setText(msg);
-        ok.setOnClickListener(new View.OnClickListener() {
+        deleteDialogView.findViewById(R.id.tvOk).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                alert.dismiss();
-
-
+                deleteDialog.dismiss();
             }
         });
-        alert.show();
-        //alert.getWindow().setLayout(750, 400);
+        deleteDialog.show();
 
-        alert.setCancelable(false);
+        deleteDialog.setCancelable(false);*/
+
     }
-    private void callUpdateApi( String pin) {
-//        {"data":null,"responseCode":4019,"debugMessage":"Phone Number cannot be changed after setting once"}
+
+    private void callUpdateApi(String pin) {
+
 
         showLoading(kidPinPopupLayoutBinding.progressBar, true);
-            String token = preference.getAppPrefAccessToken();
-       // Log.e("Token",token);
-        Log.e("VIA",via);
-            viewModel.hitUpdateProfile(getActivity(), token, name, phoneNumber, gender, dob, address, profilePic, via, contentPreference, isNotificationEnable,pin,true).observe(getActivity(), new Observer<UserProfileResponse>() {
-                @Override
-                public void onChanged(UserProfileResponse userProfileResponse) {
-                    dismissLoading(kidPinPopupLayoutBinding.progressBar);
-                    if (userProfileResponse != null) {
-                        if (userProfileResponse.getStatus()) {
-                           // Gson gson = new Gson();
-                           // String userProfileData = gson.toJson(userProfileResponse);
-                            Log.e("PINMODE DATA",new Gson().toJson(userProfileResponse));
-                            kidPinPopupLayoutBinding.pinViewNumber.setText("");
-                            if(fromMoreFragment){
-                                callBackListenerOkClick.onContinueClick();
-                                dismiss();
-                            }
-                            else {
-                                dismiss();
-                            }
-
-
-
-
-
+        String token = preference.getAppPrefAccessToken();
+        Log.e("VIA", via);
+        viewModel.hitUpdateProfile(getActivity(), token, name, phoneNumber, gender, dob, address, profilePic, via, contentPreference, isNotificationEnable, pin, true).observe(getActivity(), new Observer<UserProfileResponse>() {
+            @Override
+            public void onChanged(UserProfileResponse userProfileResponse) {
+                dismissLoading(kidPinPopupLayoutBinding.progressBar);
+                if (userProfileResponse != null) {
+                    if (userProfileResponse.getStatus()) {
+                        // Gson gson = new Gson();
+                        // String userProfileData = gson.toJson(userProfileResponse);
+                        Log.e("PINMODE DATA", new Gson().toJson(userProfileResponse));
+                        kidPinPopupLayoutBinding.pinViewNumber.setText("");
+                        if (fromMoreFragment) {
+                            callBackListenerOkClick.onContinueClick();
+                            dismiss();
+                        } else {
+                            dismiss();
                         }
-                        else {
-                            if (userProfileResponse.getResponseCode() == 4302) {
-                                isloggedout = true;
-                                logoutCall();
-                                try {
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            dismiss();
-                                        }
-                                    });
-                                } catch (Exception e) {
 
-                                }
-                                // showDialog(getResources().getString(R.string.logged_out), getResources().getString(R.string.you_are_logged_out));
+
+                    } else {
+                        if (userProfileResponse.getResponseCode() == 4302) {
+                            isloggedout = true;
+                            logoutCall();
+                            try {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        dismiss();
+                                    }
+                                });
+                            } catch (Exception e) {
 
                             }
-                            else if(userProfileResponse.getResponseCode() == 4019){
+                            // showDialog(getResources().getString(R.string.logged_out), getResources().getString(R.string.you_are_logged_out));
+
+                        } else if (userProfileResponse.getResponseCode() == 4019) {
+                            showDialog(userProfileResponse.getDebugMessage().toString());
+                        } else {
+                            if (userProfileResponse.getDebugMessage() != null) {
                                 showDialog(userProfileResponse.getDebugMessage().toString());
-                            }
-                            else {
-                                if (userProfileResponse.getDebugMessage() != null) {
-                                    showDialog(userProfileResponse.getDebugMessage().toString());
-                                } else {
-                                    showDialog(getResources().getString(R.string.something_went_wrong));
-                                }
+                            } else {
+                                showDialog(getResources().getString(R.string.something_went_wrong));
                             }
                         }
                     }
                 }
-            });
+            }
+        });
 
     }
 
@@ -280,6 +305,7 @@ public class KidsModePinDialogFragment extends DialogFragment {
             getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
     }
+
     private void logoutCall() {
         if (CheckInternetConnection.isOnline(Objects.requireNonNull(getActivity()))) {
             clearCredientials(preference);
@@ -303,10 +329,10 @@ public class KidsModePinDialogFragment extends DialogFragment {
             KsPreferenceKeys.getInstance().setfirstTimeUser(false);
             KsPreferenceKeys.getInstance().setCurrentTheme(strCurrentTheme);
             KsPreferenceKeys.getInstance().setAppLanguage(strCurrentLanguage);
-            AppCommonMethod.updateLanguage(strCurrentLanguage,getActivity());
+            AppCommonMethod.updateLanguage(strCurrentLanguage, getActivity());
             KsPreferenceKeys.getInstance().setBingeWatchEnable(isBingeWatchEnable);
             // new ActivityLauncher(this).homeScreen(this, HomeActivity.class);
-        }catch (Exception e){
+        } catch (Exception e) {
             // new ActivityLauncher(this).homeScreen(this, HomeActivity.class);
 
         }
@@ -319,27 +345,7 @@ public class KidsModePinDialogFragment extends DialogFragment {
         if (isFacebook.equalsIgnoreCase(AppConstants.UserLoginType.FbLogin.toString())) {
             LoginManager.getInstance().logOut();
         }
-        /*hitApiConfig(context);
-        ApiInterface endpoint = RequestConfig.getClientInterceptor(token).create(ApiInterface.class);
 
-        Call<JsonObject> call = endpoint.getLogout(false);
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(@NonNull Call<JsonObject> call, @NonNull retrofit2.Response<JsonObject> response) {
-                if (response.code() == 404) {
-                    Logger.e("BaseActivity", "404 Error");
-                } else if (response.code() == 200 || response.code() == 401) {
-                    KsPreferenceKeys.getInstance().clear();
-                    logoutBackpress = true;
-                    hitApiConfig(context);
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                //pDialog.call();
-            }
-        });*/
 
         BaseCategoryServices.Companion.getInstance().logoutService(token, new LogoutCallBack() {
             @Override
@@ -351,18 +357,18 @@ public class KidsModePinDialogFragment extends DialogFragment {
 
             @Override
             public void success(boolean status, Response<JsonObject> response) {
-                if (status){
+                if (status) {
                     try {
                         if (response.code() == 404) {
                             JsonObject jsonObject = new JsonObject();
                             jsonObject.addProperty(AppConstants.API_RESPONSE_CODE, response.code());
 
-                        }if (response.code() == 403) {
+                        }
+                        if (response.code() == 403) {
                             JsonObject jsonObject = new JsonObject();
                             jsonObject.addProperty(AppConstants.API_RESPONSE_CODE, response.code());
 
-                        }
-                        else if (response.code() == 200) {
+                        } else if (response.code() == 200) {
                             Objects.requireNonNull(response.body()).addProperty(AppConstants.API_RESPONSE_CODE, response.code());
 
                         } else if (response.code() == 401) {
@@ -374,7 +380,7 @@ public class KidsModePinDialogFragment extends DialogFragment {
                             jsonObject.addProperty(AppConstants.API_RESPONSE_CODE, response.code());
 
                         }
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         JsonObject jsonObject = new JsonObject();
                         jsonObject.addProperty(AppConstants.API_RESPONSE_CODE, response.code());
 
@@ -385,7 +391,6 @@ public class KidsModePinDialogFragment extends DialogFragment {
         });
 
 
-
     }
 
     private void parseProfile() {
@@ -393,59 +398,57 @@ public class KidsModePinDialogFragment extends DialogFragment {
 
             Bundle bundle = getArguments();
             if (bundle != null) {
-                pinGetFromApi=bundle.getString("pin");
-                fromMoreFragment=bundle.getBoolean("fromMoreFragment");
+                pinGetFromApi = bundle.getString("pin");
+                fromMoreFragment = bundle.getBoolean("fromMoreFragment");
             }
-            Log.e("PIN :: API",pinGetFromApi);
-            saved=new ArrayList<>();
-            name="";
-            phoneNumber="";
-            gender="";
-            dob="";
-            address="";
-            profilePic="";
-           via="";
-          isNotificationEnable=false;
-          contentPreference = "";
+            Log.e("PIN :: API", pinGetFromApi);
+            saved = new ArrayList<>();
+            name = "";
+            phoneNumber = "";
+            gender = "";
+            dob = "";
+            address = "";
+            profilePic = "";
+            via = "";
+            isNotificationEnable = false;
+            contentPreference = "";
             Gson gson = new Gson();
             String json = KsPreferenceKeys.getInstance().getUserProfileData();
             newObject = gson.fromJson(json, UserProfileResponse.class);
 
-            isNotificationEnable  = new SharedPrefHelper(getActivity()).getNotificationEnable();
-            via  = new SharedPrefHelper(getActivity()).getVia();
-            Log.e("GetDatainPinDialog",gson.toJson(newObject));
-            if (newObject.getData().getCustomData()!=null && newObject.getData().getCustomData().getContentPreferences()!=null && !newObject.getData().getCustomData().getContentPreferences().isEmpty()
-            ){
-                contentPreference=newObject.getData().getCustomData().getContentPreferences();
+            isNotificationEnable = new SharedPrefHelper(getActivity()).getNotificationEnable();
+            via = new SharedPrefHelper(getActivity()).getVia();
+            Log.e("GetDatainPinDialog", gson.toJson(newObject));
+            if (newObject.getData().getCustomData() != null && newObject.getData().getCustomData().getContentPreferences() != null && !newObject.getData().getCustomData().getContentPreferences().isEmpty()
+            ) {
+                contentPreference = newObject.getData().getCustomData().getContentPreferences();
             }
-            if(newObject.getData().getName()!=null && !newObject.getData().getName().isEmpty()){
-               name =newObject.getData().getName();
+            if (newObject.getData().getName() != null && !newObject.getData().getName().isEmpty()) {
+                name = newObject.getData().getName();
             }
-            if(newObject.getData().getPhoneNumber()!=null && !newObject.getData().getPhoneNumber().equals("")){
-                phoneNumber =    String.valueOf(newObject.getData().getPhoneNumber());
+            if (newObject.getData().getPhoneNumber() != null && !newObject.getData().getPhoneNumber().equals("")) {
+                phoneNumber = String.valueOf(newObject.getData().getPhoneNumber());
             }
-            if(newObject.getData().getGender()!=null && !newObject.getData().getGender().equals("")){
-                gender =String.valueOf(newObject.getData().getGender());
+            if (newObject.getData().getGender() != null && !newObject.getData().getGender().equals("")) {
+                gender = String.valueOf(newObject.getData().getGender());
             }
-            if(newObject.getData().getDateOfBirth()!=null && !newObject.getData().getDateOfBirth().equals("")){
-              //  dob = String.valueOf(  newObject.getData().getDateOfBirth());
-
+            if (newObject.getData().getDateOfBirth() != null && !newObject.getData().getDateOfBirth().equals("")) {
                 double longV = (double) newObject.getData().getDateOfBirth();
                 DecimalFormat df = new DecimalFormat("#");
                 df.setMaximumFractionDigits(0);
                 long l = Long.parseLong(df.format(longV));
                 dob = String.valueOf(l);
             }
-            if(newObject.getData().getCustomData().getAddress()!=null && !newObject.getData().getCustomData().getAddress().isEmpty()){
-                address =newObject.getData().getCustomData().getAddress();
+            if (newObject.getData().getCustomData().getAddress() != null && !newObject.getData().getCustomData().getAddress().isEmpty()) {
+                address = newObject.getData().getCustomData().getAddress();
             }
-            if(newObject.getData().getProfilePicURL()!=null && !newObject.getData().getProfilePicURL().equals("")){
-                profilePic =  String.valueOf(newObject.getData().getProfilePicURL());
+            if (newObject.getData().getProfilePicURL() != null && !newObject.getData().getProfilePicURL().equals("")) {
+                profilePic = String.valueOf(newObject.getData().getProfilePicURL());
             }
 
 
-        }catch (Exception ignored){
-            Log.w("savedata3",ignored.toString());
+        } catch (Exception ignored) {
+            Log.w("savedata3", ignored.toString());
         }
 
     }

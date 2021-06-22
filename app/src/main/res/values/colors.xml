@@ -32,7 +32,7 @@
     <color name="blackColor">#000000</color>
     <color name="transBlackColor">#79000000</color>
     <color name="transparentColor">#00000000</color>
-    <color name="transparent_background">#80707070</color>
+    <color name="transparent_background">#99707070</color>
     <color name="white">#ffffff</color>
     <color name="gray_thai">#989898</color>
     <color name="description_title_white">#ffffff</color>

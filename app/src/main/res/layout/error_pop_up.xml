@@ -1,61 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    >
-
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-       >
-
-
+        android:layout_height="match_parent">
         <LinearLayout
-            android:id="@+id/llnumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/_10sdp"
             android:orientation="vertical"
+            android:background="@drawable/curve_background_error"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
             android:layout_centerInParent="true">
-
             <TextView
                 android:id="@+id/tv_error"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:layout_gravity="center"
-
                 android:fontFamily="@font/sukhumvittadmai_bold"
                 android:gravity="center"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
                 android:singleLine="true"
                 android:text=""
-                android:textColor="?attr/more_item_text_color"
-
-
+                android:textColor="@color/white_almost_opaque"
                 android:textSize="@dimen/TextSize14" />
 
             <View
                 android:id="@+id/seperator"
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginTop="@dimen/_5sdp"
-
-                android:background="?attr/app_edit_text_color" />
+                android:layout_height="0.1dp"
+                android:background="@color/white_almost_opaque" />
             <TextView
                 android:id="@+id/tvOk"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-
-
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
                 android:gravity="center"
                 android:text="@string/ok"
-
                 android:fontFamily="@font/sukhumvittadmai_medium"
                 android:singleLine="true"
                 android:textColor="@color/ligh_blue"
                 android:textSize="@dimen/TextSize16"/>
-        </LinearLayout>
 
+        </LinearLayout>
     </RelativeLayout>
 </layout>
 
