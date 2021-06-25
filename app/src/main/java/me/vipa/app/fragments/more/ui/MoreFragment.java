@@ -1,5 +1,6 @@
 package me.vipa.app.fragments.more.ui;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -203,7 +204,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
     @Override
     public void onPause() {
         super.onPause();
-        Log.e("ONPAUSE FRAGMENT", "FRAGMENT");
+
         try {
             LocalBroadcastManager.getInstance(Objects.requireNonNull(getActivity())).unregisterReceiver(appSyncBroadcast);
         } catch (IllegalArgumentException e) {
@@ -354,7 +355,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
 
     private void updateUI(UserProfileResponse userProfileResponse) {
         try {
-            preference.setAppPrefUserName(String.valueOf(userProfileResponse.getData().getName()));
+            preference.setAppPrefUserName(preference.getAppPrefUserName());
             preference.setAppPrefUserEmail(String.valueOf(userProfileResponse.getData().getEmail()));
             //   getBinding().userNameWords.setText(AppCommonMethod.getUserName(preference.getAppPrefUserName()));
             getBinding().usernameTv.setText(preference.getAppPrefUserName());
@@ -948,7 +949,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                     if (allSecondaryAccountDetails.getResponseCode() != null) {
                         if (Objects.requireNonNull(allSecondaryAccountDetails).getResponseCode() == 2000) {
                             if (allSecondaryAccountDetails.getData() != null && !allSecondaryAccountDetails.getData().isEmpty()) {
-                                Log.e("allSecondaryAcco", new Gson().toJson(allSecondaryAccountDetails));
+                               // Log.e("allSecondaryAcco", new Gson().toJson(allSecondaryAccountDetails));
                                 String primaryAccountId = "";
                                 String secondaryId = "";
                                 for (int i = 0; i < allSecondaryAccountDetails.getData().size(); i++) {
@@ -957,8 +958,8 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                                         secondaryId = allSecondaryAccountDetails.getData().get(0).getAccountId();
                                     }
                                 }
-                                Log.e("alllistApiPrimaryid", primaryAccountId);
-                                Log.e("allListApiSecondid", secondaryId);
+                                //Log.e("alllistApiPrimaryid", primaryAccountId);
+                                //Log.e("allListApiSecondid", secondaryId);
                                 new SharedPrefHelper(getActivity()).savePrimaryAccountId(primaryAccountId);
                                 new SharedPrefHelper(getActivity()).saveSecondaryAccountId(secondaryId);
                                 if (vipaMode) {
@@ -1105,30 +1106,53 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
 
     private void getProfileApi() {
         showLoading(getBinding().progressBar, true, getActivity());
-        String token = preference.getAppPrefAccessToken();
-        viewModel.hitUserProfile(getActivity(), token).observe(getActivity(), new Observer<UserProfileResponse>() {
+        KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
+        String authToken = preference.getAppPrefAccessToken();
+       // Log.e("TokenMore",authToken);
+        viewModel.hitUserProfile(getActivity(), authToken).observe(getActivity(), new Observer<UserProfileResponse>() {
             @Override
             public void onChanged(UserProfileResponse userProfileResponse) {
                 if (userProfileResponse != null) {
                     if (userProfileResponse.getStatus()) {
                         updateUI(userProfileResponse);
                         dismissLoading(getBinding().progressBar, getActivity());
+                      //  Log.e("DATA IN LRAVE KIDS",new Gson().toJson(userProfileResponse));
+                        if(userProfileResponse.getData().getPrimaryAccountRef()!=null){
+                            if(userProfileResponse.getData().getPrimaryAccountRef().getCustomData()!=null){
+                                if (userProfileResponse.getData().getPrimaryAccountRef().getCustomData().getParentalPin() != null && !userProfileResponse.getData().getPrimaryAccountRef().getCustomData().getParentalPin().isEmpty()) {
+                                    String decodePin = userProfileResponse.getData().getPrimaryAccountRef().getCustomData().getParentalPin();
+                                    pin = StringUtils.getDataFromBase64(decodePin);
 
-                        if (userProfileResponse.getData().getCustomData().getParentalPin() != null && !userProfileResponse.getData().getCustomData().getParentalPin().isEmpty()) {
-                            String decodePin = userProfileResponse.getData().getCustomData().getParentalPin();
-                            pin = StringUtils.getDataFromBase64(decodePin);
+                                    //Log.e("decodePin", decodePin);
+                                    Log.e("pin3", pin);
+                                    KidsModePinDialogFragment newFragment = new KidsModePinDialogFragment();
+                                    Bundle args = new Bundle();
+                                    args.putString("pin", pin);
+                                    // args.putBoolean("fromMoreFragment", true);
+                                    newFragment.setArguments(args);
+                                    newFragment.setTargetFragment(MoreFragment.this, 0);
+                                    newFragment.show(getFragmentManager(), "KidsModePinDialogFragments");
+                                    newFragment.setCancelable(false);
 
-                            Log.e("decodePin", decodePin);
-                            Log.e("pin3", pin);
-                            KidsModePinDialogFragment newFragment = new KidsModePinDialogFragment();
-                            Bundle args = new Bundle();
-                            args.putString("pin", pin);
-                            args.putBoolean("fromMoreFragment", true);
-                            newFragment.setArguments(args);
-                            newFragment.show(getActivity().getSupportFragmentManager(), "KidsModePinDialogFragment");
-                            newFragment.setCancelable(false);
+                                } else {
+                                    String primaryAccountId = new SharedPrefHelper(getActivity()).getPrimaryAccountId();
+                                    if (primaryAccountId != null && !primaryAccountId.isEmpty()) {
+                                        KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
+                                        String authToken = preference.getAppPrefAccessToken();
+                                        switchUserApi(authToken, primaryAccountId, false);
+                                    } else {
+                                        KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
+                                        String authToken = preference.getAppPrefAccessToken();
+                                        callAllSecondaryAccount(authToken, false);
 
-                        } else {
+                                    }
+                                }
+
+                            }
+
+
+                        }
+                        else {
                             String primaryAccountId = new SharedPrefHelper(getActivity()).getPrimaryAccountId();
                             if (primaryAccountId != null && !primaryAccountId.isEmpty()) {
                                 KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
@@ -1141,6 +1165,8 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
 
                             }
                         }
+
+
 
 
                     } else {
@@ -1183,4 +1209,6 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
             // new ToastHandler(this).show(getResources().getString(R.string.no_internet_connection));
         }
     }
+
+
 }
