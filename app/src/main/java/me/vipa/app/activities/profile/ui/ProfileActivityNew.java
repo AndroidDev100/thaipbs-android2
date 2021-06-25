@@ -94,6 +94,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
     private String contentPreference = "";
     private boolean isNotificationEnable;
     String compareValue="";
+   private String encodePin="";
 
     @Override
     public ProfileActivityNewBinding inflateBindingLayout(@NonNull LayoutInflater inflater) {
@@ -192,18 +193,31 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
             getBinding().spinnerId.setAdapter(spin_adapter);
 
 
-            String token = preference.getAppPrefAccessToken();
-            viewModel.hitUserProfile(ProfileActivityNew.this, token).observe(ProfileActivityNew.this, new Observer<UserProfileResponse>() {
+            KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
+            String authToken = preference.getAppPrefAccessToken();
+          //  Log.e("Token",authToken);
+            showLoading(getBinding().progressBar, true);
+            viewModel.hitUserProfile(ProfileActivityNew.this, authToken).observe(ProfileActivityNew.this, new Observer<UserProfileResponse>() {
                 @Override
                 public void onChanged(UserProfileResponse userProfileResponse) {
                     if (userProfileResponse != null) {
                         if (userProfileResponse.getStatus()) {
                             updateUI(userProfileResponse);
-                            Log.e("GETDATA",new Gson().toJson(userProfileResponse));
-                       /*   String decodePin =  userProfileResponse.getData().getCustomData().getParentalPin();
-                          String pin3=  StringUtils.getDataFromBase64(decodePin);
-                            Log.e("decodePin",decodePin);
-                            Log.e("pin3",pin3);*/
+                            dismissLoading(getBinding().progressBar);
+                           // Log.e("GETDATA",new Gson().toJson(userProfileResponse));
+                            if(userProfileResponse.getData().getCustomData().getParentalPin()!=null && !userProfileResponse.getData().getCustomData().getParentalPin().isEmpty()){
+                                 encodePin =  userProfileResponse.getData().getCustomData().getParentalPin();
+                               // String pin3=  StringUtils.getDataFromBase64(encodePin);
+                            //Log.e("decodePin",encodePin);
+                            //Log.e("pin3",pin3);
+                            }
+
+                            else {
+                                encodePin="";
+                               // Log.e("pin3else",encodePin);
+
+                            }
+
 
 
                         } else {
@@ -243,7 +257,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
             @Override
             public void onClick(View view) {
                 if (NetworkConnectivity.isOnline(ProfileActivityNew.this)) {
-                    callUpdateApi();
+                    callUpdateApi( encodePin);
 
                 } else {
                     new ToastHandler(ProfileActivityNew.this).show(ProfileActivityNew.this.getResources().getString(R.string.no_internet_connection));
@@ -363,12 +377,12 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
         return spinnerValue;
     }
 
-    private void callUpdateApi() {
+    private void callUpdateApi( String pin) {
 //        {"data":null,"responseCode":4019,"debugMessage":"Phone Number cannot be changed after setting once"}
         if (validateNameEmpty() && validatePhone()) {
             showLoading(getBinding().progressBar, true);
             String token = preference.getAppPrefAccessToken();
-            viewModel.hitUpdateProfile(ProfileActivityNew.this, token, getBinding().etName.getText().toString(), getBinding().etMobileNumber.getText().toString(), spinnerValue, dateMilliseconds, getBinding().etAddress.getText().toString(), imageUrlId, via, contentPreference, isNotificationEnable,"",false).observe(ProfileActivityNew.this, new Observer<UserProfileResponse>() {
+            viewModel.hitUpdateProfile(ProfileActivityNew.this, token, getBinding().etName.getText().toString(), getBinding().etMobileNumber.getText().toString(), spinnerValue, dateMilliseconds, getBinding().etAddress.getText().toString(), imageUrlId, via, contentPreference, isNotificationEnable,pin).observe(ProfileActivityNew.this, new Observer<UserProfileResponse>() {
                 @Override
                 public void onChanged(UserProfileResponse userProfileResponse) {
                     dismissLoading(getBinding().progressBar);
@@ -377,9 +391,10 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
                             Gson gson = new Gson();
                             String userProfileData = gson.toJson(userProfileResponse);
                             KsPreferenceKeys.getInstance().setUserProfileData(userProfileData);
-                            Log.e("DATA update profile",userProfileData);
-                            showDialog("", ProfileActivityNew.this.getResources().getString(R.string.profile_update_successfully));
 
+
+                           // Log.e("DATA update profile",userProfileData);
+                            showDialog("", ProfileActivityNew.this.getResources().getString(R.string.profile_update_successfully));
 
                             updateUI(userProfileResponse);
                         } else {
@@ -646,7 +661,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
 
             getBinding().etName.setText(userProfileResponse.getData().getName());
             getBinding().etName.setSelection(getBinding().etName.getText().length());
-            getBinding().etEmail.setText(userProfileResponse.getData().getEmail());
+            getBinding().etEmail.setText(String.valueOf(userProfileResponse.getData().getEmail()));
             preference.setAppPrefUserName(String.valueOf(userProfileResponse.getData().getName()));
             // Log.d("sdsdsdsdsd",new Gson().toJson(userProfileResponse.getData().getCustomData().getProfileAvatar()));
 

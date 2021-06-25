@@ -1,6 +1,7 @@
 package me.vipa.app.fragments.dialog;
 
 
+import android.app.Activity;
 import android.content.Context;
 
 
@@ -42,10 +43,14 @@ import java.util.Objects;
 
 import me.vipa.app.R;
 
+import me.vipa.app.activities.homeactivity.ui.HomeActivity;
+import me.vipa.app.activities.homeactivity.viewmodel.HomeViewModel;
+import me.vipa.app.activities.search.adapter.GenereSearchAdapter;
 import me.vipa.app.activities.usermanagment.viewmodel.RegistrationLoginViewModel;
 import me.vipa.app.beanModel.userProfile.UserProfileResponse;
 import me.vipa.app.databinding.KidPinPopupLayoutBinding;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
+import me.vipa.app.utils.config.bean.Genre;
 import me.vipa.app.utils.constants.AppConstants;
 import me.vipa.app.utils.helpers.CheckInternetConnection;
 
@@ -53,6 +58,7 @@ import me.vipa.app.utils.helpers.NetworkConnectivity;
 import me.vipa.app.utils.helpers.SharedPrefHelper;
 import me.vipa.app.utils.helpers.StringUtils;
 import me.vipa.app.utils.helpers.ToastHandler;
+import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 import me.vipa.baseCollection.baseCategoryServices.BaseCategoryServices;
 import me.vipa.userManagement.callBacks.LogoutCallBack;
@@ -64,6 +70,7 @@ public class KidsModePinDialogFragment extends DialogFragment {
     private KidPinPopupLayoutBinding kidPinPopupLayoutBinding;
     private KsPreferenceKeys preference;
     private RegistrationLoginViewModel viewModel;
+
     private boolean isloggedout = false;
     private UserProfileResponse newObject;
     private List<String> saved;
@@ -77,9 +84,16 @@ public class KidsModePinDialogFragment extends DialogFragment {
     private String pinGetFromApi = "";
     private boolean isNotificationEnable = false;
     private String contentPreference = "";
-    private boolean fromMoreFragment;
+    //private boolean fromMoreFragment;
 
-    private KidsModePinDialogFragment.CallBackListenerOkClick callBackListenerOkClick;
+
+   private  CallBackListenerOkClick callBackListenerOkClick;
+
+    public interface CallBackListenerOkClick {
+        void onContinueClick();
+
+
+    }
 
   /*  public static KidsModePinDialogFragment getInstance(){
         if(mInstance == null){
@@ -91,9 +105,22 @@ public class KidsModePinDialogFragment extends DialogFragment {
         return mInstance;
     }*/
 
+
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
+
+
+        try {
+
+            callBackListenerOkClick = (CallBackListenerOkClick) getTargetFragment();
+            Log.e( "onAttach: " , String.valueOf(callBackListenerOkClick));
+        } catch (ClassCastException e) {
+            Log.e("onAttachClassexception" , e.getMessage());
+        }
+
+
     }
 
     @Override
@@ -118,13 +145,13 @@ public class KidsModePinDialogFragment extends DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if (getActivity() instanceof KidsModePinDialogFragment.CallBackListenerOkClick)
-            callBackListenerOkClick = (KidsModePinDialogFragment.CallBackListenerOkClick) getActivity();
-
         setClicks();
-        viewModel = ViewModelProviders.of(getActivity()).get(RegistrationLoginViewModel.class);
+        viewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(RegistrationLoginViewModel.class);
         preference = KsPreferenceKeys.getInstance();
         parseProfile();
+
+
+
         kidPinPopupLayoutBinding.pinViewNumber.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -138,7 +165,7 @@ public class KidsModePinDialogFragment extends DialogFragment {
             public void afterTextChanged(Editable s) {
                 if (kidPinPopupLayoutBinding.pinViewNumber.getSelectionEnd()==4) {
                     kidPinPopupLayoutBinding.btContinue.setEnabled(true);
-                    Log.e("afterTextChanged","afterTextChanged");
+
 
                 }
 
@@ -157,10 +184,12 @@ public class KidsModePinDialogFragment extends DialogFragment {
                         String pin = String.valueOf(kidPinPopupLayoutBinding.pinViewNumber.getText());
                         if (NetworkConnectivity.isOnline(getActivity())) {
                             String encodePin = StringUtils.getConvertBase64Data(pin);
-                            Log.e("Encode pin", encodePin);
+
                             if (pinGetFromApi != null && !pinGetFromApi.isEmpty()) {
-                                if (pinGetFromApi.equalsIgnoreCase(encodePin)) {
-                                    callUpdateApi(encodePin);
+                                if (pinGetFromApi.equalsIgnoreCase(pin)) {
+                                    callBackListenerOkClick.onContinueClick();
+                                    getDialog().dismiss();
+
                                 } else {
                                     showDialog(getResources().getString(R.string.plz_enter_valid_pin));
                                 }
@@ -190,7 +219,7 @@ public class KidsModePinDialogFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 kidPinPopupLayoutBinding.pinViewNumber.setText("");
-                dismiss();
+                getDialog().dismiss();
             }
         });
     }
@@ -239,7 +268,7 @@ public class KidsModePinDialogFragment extends DialogFragment {
         showLoading(kidPinPopupLayoutBinding.progressBar, true);
         String token = preference.getAppPrefAccessToken();
         Log.e("VIA", via);
-        viewModel.hitUpdateProfile(getActivity(), token, name, phoneNumber, gender, dob, address, profilePic, via, contentPreference, isNotificationEnable, pin, true).observe(getActivity(), new Observer<UserProfileResponse>() {
+        viewModel.hitUpdateProfile(getActivity(), token, name, phoneNumber, gender, dob, address, profilePic, via, contentPreference, isNotificationEnable, pin).observe(getActivity(), new Observer<UserProfileResponse>() {
             @Override
             public void onChanged(UserProfileResponse userProfileResponse) {
                 dismissLoading(kidPinPopupLayoutBinding.progressBar);
@@ -247,14 +276,8 @@ public class KidsModePinDialogFragment extends DialogFragment {
                     if (userProfileResponse.getStatus()) {
                         // Gson gson = new Gson();
                         // String userProfileData = gson.toJson(userProfileResponse);
-                        Log.e("PINMODE DATA", new Gson().toJson(userProfileResponse));
                         kidPinPopupLayoutBinding.pinViewNumber.setText("");
-                        if (fromMoreFragment) {
-                            callBackListenerOkClick.onContinueClick();
-                            dismiss();
-                        } else {
-                            dismiss();
-                        }
+                        getDialog().dismiss();
 
 
                     } else {
@@ -265,7 +288,7 @@ public class KidsModePinDialogFragment extends DialogFragment {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        dismiss();
+                                        getDialog().dismiss();
                                     }
                                 });
                             } catch (Exception e) {
@@ -399,9 +422,9 @@ public class KidsModePinDialogFragment extends DialogFragment {
             Bundle bundle = getArguments();
             if (bundle != null) {
                 pinGetFromApi = bundle.getString("pin");
-                fromMoreFragment = bundle.getBoolean("fromMoreFragment");
+                //fromMoreFragment = bundle.getBoolean("fromMoreFragment");
             }
-            Log.e("PIN :: API", pinGetFromApi);
+
             saved = new ArrayList<>();
             name = "";
             phoneNumber = "";
@@ -418,7 +441,7 @@ public class KidsModePinDialogFragment extends DialogFragment {
 
             isNotificationEnable = new SharedPrefHelper(getActivity()).getNotificationEnable();
             via = new SharedPrefHelper(getActivity()).getVia();
-            Log.e("GetDatainPinDialog", gson.toJson(newObject));
+
             if (newObject.getData().getCustomData() != null && newObject.getData().getCustomData().getContentPreferences() != null && !newObject.getData().getCustomData().getContentPreferences().isEmpty()
             ) {
                 contentPreference = newObject.getData().getCustomData().getContentPreferences();
@@ -453,11 +476,11 @@ public class KidsModePinDialogFragment extends DialogFragment {
 
     }
 
-    public interface CallBackListenerOkClick {
-        void onContinueClick();
 
 
-    }
+
+
+
 
 
 }

@@ -64,7 +64,7 @@ public class ErrorDialogFragment extends DialogFragment {
         errorPopUpBinding.tvOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dismiss();
+                getDialog().dismiss();
             }
         });
 

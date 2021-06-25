@@ -22,6 +22,7 @@ import me.vipa.app.BuildConfig;
 import me.vipa.app.SDKConfig;
 import me.vipa.app.activities.contentPreference.UI.ContentPreference;
 import me.vipa.app.activities.contentPreference.UI.SettingContentPreferences;
+import me.vipa.app.activities.search.adapter.GenereSearchAdapter;
 import me.vipa.app.activities.settings.downloadsettings.DownloadSettings;
 import me.vipa.app.activities.splash.ui.ActivitySplash;
 import me.vipa.app.activities.videoquality.ui.ChangeLanguageActivity;
@@ -39,7 +40,7 @@ import me.vipa.app.activities.videoquality.ui.VideoQualityActivity;
 import me.vipa.app.baseModels.BaseBindingActivity;
 
 
-public class ActivitySettings extends BaseBindingActivity<SettingsActivityBinding> implements View.OnClickListener,KidsModePinDialogFragment.CallBackListenerOkClick {
+public class ActivitySettings extends BaseBindingActivity<SettingsActivityBinding> implements View.OnClickListener {
     private boolean isNotificationEnable;
 
     @Override
@@ -191,7 +192,7 @@ public class ActivitySettings extends BaseBindingActivity<SettingsActivityBindin
                 KidsModePinDialogFragment newFragment = new KidsModePinDialogFragment();
                 Bundle args = new Bundle();
                 args.putString("pin",null);
-                args.putBoolean("fromMoreFragment",false);
+               // args.putBoolean("fromMoreFragment",false);
                 newFragment.setArguments(args);
                 newFragment.show(getSupportFragmentManager(), "TAG");
                 newFragment.setCancelable(false);
@@ -365,12 +366,8 @@ public class ActivitySettings extends BaseBindingActivity<SettingsActivityBindin
         }
     }
 
-    @Override
-    public void onContinueClick() {
-        Log.e("ACTIVITY CONTINUE","ACTIVITY CONTINUE");
 
 
-    }
 
 //    @Override
 //    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

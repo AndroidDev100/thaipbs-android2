@@ -16,8 +16,7 @@
             android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:scaleType="fitXY"
-            />
+            android:scaleType="fitXY"/>
 
 
 

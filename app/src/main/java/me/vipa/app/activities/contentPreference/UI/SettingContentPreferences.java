@@ -39,6 +39,7 @@ import me.vipa.app.utils.config.bean.PreferenceBean;
 import me.vipa.app.utils.constants.AppConstants;
 import me.vipa.app.utils.cropImage.helpers.NetworkConnectivity;
 import me.vipa.app.utils.helpers.CheckInternetConnection;
+import me.vipa.app.utils.helpers.StringUtils;
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 
@@ -53,6 +54,7 @@ public class SettingContentPreferences extends BaseBindingActivity<ActivityConte
     private boolean isNotificationEnable = false;
     private boolean isloggedout = false;
     private int count = 0;
+    private String encodePin="";
     @Override
     public ActivityContentPrefSettingsBinding inflateBindingLayout(@NonNull LayoutInflater inflater) {
         return ActivityContentPrefSettingsBinding.inflate(inflater);
@@ -113,11 +115,22 @@ public class SettingContentPreferences extends BaseBindingActivity<ActivityConte
             String json = KsPreferenceKeys.getInstance().getUserProfileData();
             newObject = gson.fromJson(json, UserProfileResponse.class);
             setUserImage(newObject);
-            Log.w("savedata3",newObject.getData().getCustomData().getContentPreferences());
-            if (newObject.getData().getCustomData()!=null && newObject.getData().getCustomData().getContentPreferences()!=null
-            ){
+            Log.w("data3SettingPrefence",newObject.getData().getCustomData().getContentPreferences());
+            if (newObject.getData().getCustomData()!=null && newObject.getData().getCustomData().getContentPreferences()!=null){
                 contentPreference=newObject.getData().getCustomData().getContentPreferences();
                 saved=AppCommonMethod.createPrefrenceList(newObject);
+            }
+            if(newObject.getData().getCustomData().getParentalPin()!=null && !newObject.getData().getCustomData().getParentalPin().isEmpty()){
+                encodePin =  newObject.getData().getCustomData().getParentalPin();
+                String pin3=  StringUtils.getDataFromBase64(encodePin);
+                //Log.e("decodePin",encodePin);
+                //Log.e("pin3",pin3);
+            }
+
+            else {
+                encodePin="";
+                // Log.e("pin3else",encodePin);
+
             }
 
         }catch (Exception ignored){
@@ -132,16 +145,16 @@ public class SettingContentPreferences extends BaseBindingActivity<ActivityConte
             @Override
             public void onClick(View v) {
                  getBinding().progressBar.setVisibility(View.VISIBLE);
-                  updateProfileHit();
+                  updateProfileHit(encodePin);
             }
         });
 
 
     }
 
-    private void updateProfileHit() {
+    private void updateProfileHit( String encodePin) {
         String token = preference.getAppPrefAccessToken();
-        viewModel.hitUpdateProfile(SettingContentPreferences.this, token, AppCommonMethod.getProfileUserName(newObject), AppCommonMethod.getProfileUserNumber(newObject), AppCommonMethod.getProfileUserGender(newObject), AppCommonMethod.getProfileUserDOB(newObject), AppCommonMethod.getProfileUserAddress(newObject), imageUrlId, via, contentPreference, isNotificationEnable,"",false).observe(SettingContentPreferences.this, new Observer<UserProfileResponse>() {
+        viewModel.hitUpdateProfile(SettingContentPreferences.this, token, AppCommonMethod.getProfileUserName(newObject), AppCommonMethod.getProfileUserNumber(newObject), AppCommonMethod.getProfileUserGender(newObject), AppCommonMethod.getProfileUserDOB(newObject), AppCommonMethod.getProfileUserAddress(newObject), imageUrlId, via, contentPreference, isNotificationEnable,encodePin).observe(SettingContentPreferences.this, new Observer<UserProfileResponse>() {
             @Override
             public void onChanged(UserProfileResponse userProfileResponse) {
                 dismissLoading(getBinding().progressBar);

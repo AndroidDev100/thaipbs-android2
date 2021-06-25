@@ -6,25 +6,221 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class Data{
-	private boolean manualLinked;
-	private Object profileStep;
-	private boolean isFbLinked;
-	private Object gender;
-	private boolean verified;
-	private List<Object> appUserPlans;
-	private Object dateOfBirth;
-	private long verificationDate;
-	private Object expiryDate;
-	private Object accountId;
+	@SerializedName("id")
+	@Expose
+	private Integer id;
+	@SerializedName("email")
+	@Expose
+	private Object email;
+	@SerializedName("password")
+	@Expose
 	private Object password;
-	private Object phoneNumber;
-	private Object profilePicURL;
+	@SerializedName("name")
+	@Expose
 	private String name;
-	private int id;
-	private String email;
+	@SerializedName("verificationDate")
+	@Expose
+	private Long verificationDate;
+	@SerializedName("profilePicURL")
+	@Expose
+	private Object profilePicURL;
+	@SerializedName("dateOfBirth")
+	@Expose
+	private Object dateOfBirth;
+	@SerializedName("gender")
+	@Expose
+	private Object gender;
+	@SerializedName("phoneNumber")
+	@Expose
+	private Object phoneNumber;
+	@SerializedName("status")
+	@Expose
 	private String status;
-	private boolean gplusLinked;
+	@SerializedName("expiryDate")
+	@Expose
+	private Object expiryDate;
+	@SerializedName("profileStep")
+	@Expose
+	private Object profileStep;
+	@SerializedName("isFbLinked")
+	@Expose
+	private Boolean isFbLinked;
+	@SerializedName("appUserPlans")
+	@Expose
+	private Object appUserPlans;
+	@SerializedName("accountId")
+	@Expose
+	private String accountId;
+	@SerializedName("subscriptions")
+	@Expose
+	private Object subscriptions;
+	@SerializedName("customData")
+	@Expose
 	private CustomData customData;
+	@SerializedName("userEconomics")
+	@Expose
+	private Object userEconomics;
+	@SerializedName("killBillSubscriptionId")
+	@Expose
+	private Object killBillSubscriptionId;
+	@SerializedName("entitlementState")
+	@Expose
+	private Object entitlementState;
+	@SerializedName("secondaryAccounts")
+	@Expose
+	private Object secondaryAccounts;
+	@SerializedName("primaryAccountRef")
+	@Expose
+	private PrimaryAccountRef primaryAccountRef;
+	@SerializedName("fbLinked")
+	@Expose
+	private Boolean fbLinked;
+	@SerializedName("gplusLinked")
+	@Expose
+	private Boolean gplusLinked;
+	@SerializedName("manualLinked")
+	@Expose
+	private Boolean manualLinked;
+	@SerializedName("appleLinked")
+	@Expose
+	private Boolean appleLinked;
+	@SerializedName("primaryAccount")
+	@Expose
+	private Boolean primaryAccount;
+	@SerializedName("kidsAccount")
+	@Expose
+	private Boolean kidsAccount;
+	@SerializedName("verified")
+	@Expose
+	private Boolean verified;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Object getEmail() {
+		return email;
+	}
+
+	public void setEmail(Object email) {
+		this.email = email;
+	}
+
+	public Object getPassword() {
+		return password;
+	}
+
+	public void setPassword(Object password) {
+		this.password = password;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Long getVerificationDate() {
+		return verificationDate;
+	}
+
+	public void setVerificationDate(Long verificationDate) {
+		this.verificationDate = verificationDate;
+	}
+
+	public Object getProfilePicURL() {
+		return profilePicURL;
+	}
+
+	public void setProfilePicURL(Object profilePicURL) {
+		this.profilePicURL = profilePicURL;
+	}
+
+	public Object getDateOfBirth() {
+		return dateOfBirth;
+	}
+
+	public void setDateOfBirth(Object dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+
+	public Object getGender() {
+		return gender;
+	}
+
+	public void setGender(Object gender) {
+		this.gender = gender;
+	}
+
+	public Object getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(Object phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Object getExpiryDate() {
+		return expiryDate;
+	}
+
+	public void setExpiryDate(Object expiryDate) {
+		this.expiryDate = expiryDate;
+	}
+
+	public Object getProfileStep() {
+		return profileStep;
+	}
+
+	public void setProfileStep(Object profileStep) {
+		this.profileStep = profileStep;
+	}
+
+	public Boolean getIsFbLinked() {
+		return isFbLinked;
+	}
+
+	public void setIsFbLinked(Boolean isFbLinked) {
+		this.isFbLinked = isFbLinked;
+	}
+
+	public Object getAppUserPlans() {
+		return appUserPlans;
+	}
+
+	public void setAppUserPlans(Object appUserPlans) {
+		this.appUserPlans = appUserPlans;
+	}
+
+	public String getAccountId() {
+		return accountId;
+	}
+
+	public void setAccountId(String accountId) {
+		this.accountId = accountId;
+	}
+
+	public Object getSubscriptions() {
+		return subscriptions;
+	}
+
+	public void setSubscriptions(Object subscriptions) {
+		this.subscriptions = subscriptions;
+	}
 
 	public CustomData getCustomData() {
 		return customData;
@@ -34,173 +230,100 @@ public class Data{
 		this.customData = customData;
 	}
 
-	public void setManualLinked(boolean manualLinked){
-		this.manualLinked = manualLinked;
+	public Object getUserEconomics() {
+		return userEconomics;
 	}
 
-	public boolean isManualLinked(){
-		return manualLinked;
+	public void setUserEconomics(Object userEconomics) {
+		this.userEconomics = userEconomics;
 	}
 
-	public void setProfileStep(Object profileStep){
-		this.profileStep = profileStep;
+	public Object getKillBillSubscriptionId() {
+		return killBillSubscriptionId;
 	}
 
-	public Object getProfileStep(){
-		return profileStep;
+	public void setKillBillSubscriptionId(Object killBillSubscriptionId) {
+		this.killBillSubscriptionId = killBillSubscriptionId;
 	}
 
-	public void setIsFbLinked(boolean isFbLinked){
-		this.isFbLinked = isFbLinked;
+	public Object getEntitlementState() {
+		return entitlementState;
 	}
 
-	public boolean isIsFbLinked(){
-		return isFbLinked;
+	public void setEntitlementState(Object entitlementState) {
+		this.entitlementState = entitlementState;
 	}
 
-	public void setGender(Object gender){
-		this.gender = gender;
+	public Object getSecondaryAccounts() {
+		return secondaryAccounts;
 	}
 
-	public Object getGender(){
-		return gender;
+	public void setSecondaryAccounts(Object secondaryAccounts) {
+		this.secondaryAccounts = secondaryAccounts;
 	}
 
-	public void setVerified(boolean verified){
-		this.verified = verified;
+	public PrimaryAccountRef getPrimaryAccountRef() {
+		return primaryAccountRef;
 	}
 
-	public boolean isVerified(){
-		return verified;
+	public void setPrimaryAccountRef(PrimaryAccountRef primaryAccountRef) {
+		this.primaryAccountRef = primaryAccountRef;
 	}
 
-	public void setAppUserPlans(List<Object> appUserPlans){
-		this.appUserPlans = appUserPlans;
+	public Boolean getFbLinked() {
+		return fbLinked;
 	}
 
-	public List<Object> getAppUserPlans(){
-		return appUserPlans;
+	public void setFbLinked(Boolean fbLinked) {
+		this.fbLinked = fbLinked;
 	}
 
-	public void setDateOfBirth(Object dateOfBirth){
-		this.dateOfBirth = dateOfBirth;
-	}
-
-	public Object getDateOfBirth(){
-		return dateOfBirth;
-	}
-
-	public void setVerificationDate(long verificationDate){
-		this.verificationDate = verificationDate;
-	}
-
-	public long getVerificationDate(){
-		return verificationDate;
-	}
-
-	public void setExpiryDate(Object expiryDate){
-		this.expiryDate = expiryDate;
-	}
-
-	public Object getExpiryDate(){
-		return expiryDate;
-	}
-
-	public void setAccountId(Object accountId){
-		this.accountId = accountId;
-	}
-
-	public Object getAccountId(){
-		return accountId;
-	}
-
-	public void setPassword(Object password){
-		this.password = password;
-	}
-
-	public Object getPassword(){
-		return password;
-	}
-
-	public void setPhoneNumber(Object phoneNumber){
-		this.phoneNumber = phoneNumber;
-	}
-
-	public Object getPhoneNumber(){
-		return phoneNumber;
-	}
-
-	public void setProfilePicURL(Object profilePicURL){
-		this.profilePicURL = profilePicURL;
-	}
-
-	public Object getProfilePicURL(){
-		return profilePicURL;
-	}
-
-	public void setName(String name){
-		this.name = name;
-	}
-
-	public String getName(){
-		return name;
-	}
-
-	public void setId(int id){
-		this.id = id;
-	}
-
-	public int getId(){
-		return id;
-	}
-
-	public void setEmail(String email){
-		this.email = email;
-	}
-
-	public String getEmail(){
-		return email;
-	}
-
-	public void setStatus(String status){
-		this.status = status;
-	}
-
-	public String getStatus(){
-		return status;
-	}
-
-	public void setGplusLinked(boolean gplusLinked){
-		this.gplusLinked = gplusLinked;
-	}
-
-	public boolean isGplusLinked(){
+	public Boolean getGplusLinked() {
 		return gplusLinked;
 	}
 
-	@Override
- 	public String toString(){
-		return 
-			"Data{" + 
-			"manualLinked = '" + manualLinked + '\'' + 
-			",profileStep = '" + profileStep + '\'' + 
-			",isFbLinked = '" + isFbLinked + '\'' + 
-			",gender = '" + gender + '\'' + 
-			",verified = '" + verified + '\'' + 
-			",appUserPlans = '" + appUserPlans + '\'' +
-			",dateOfBirth = '" + dateOfBirth + '\'' +
-			",verificationDate = '" + verificationDate + '\'' + 
-			",expiryDate = '" + expiryDate + '\'' + 
-			",accountId = '" + accountId + '\'' +
-			",password = '" + password + '\'' +
-			",phoneNumber = '" + phoneNumber + '\'' + 
-			",profilePicURL = '" + profilePicURL + '\'' + 
-			",name = '" + name + '\'' + 
-			",id = '" + id + '\'' + 
-			",email = '" + email + '\'' + 
-			",status = '" + status + '\'' + 
-			",gplusLinked = '" + gplusLinked + '\'' +
-			",customData = '" + customData + '\'' +
-			"}";
-		}
+	public void setGplusLinked(Boolean gplusLinked) {
+		this.gplusLinked = gplusLinked;
+	}
+
+	public Boolean getManualLinked() {
+		return manualLinked;
+	}
+
+	public void setManualLinked(Boolean manualLinked) {
+		this.manualLinked = manualLinked;
+	}
+
+	public Boolean getAppleLinked() {
+		return appleLinked;
+	}
+
+	public void setAppleLinked(Boolean appleLinked) {
+		this.appleLinked = appleLinked;
+	}
+
+	public Boolean getPrimaryAccount() {
+		return primaryAccount;
+	}
+
+	public void setPrimaryAccount(Boolean primaryAccount) {
+		this.primaryAccount = primaryAccount;
+	}
+
+	public Boolean getKidsAccount() {
+		return kidsAccount;
+	}
+
+	public void setKidsAccount(Boolean kidsAccount) {
+		this.kidsAccount = kidsAccount;
+	}
+
+	public Boolean getVerified() {
+		return verified;
+	}
+
+	public void setVerified(Boolean verified) {
+		this.verified = verified;
+	}
+
 }

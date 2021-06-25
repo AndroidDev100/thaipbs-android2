@@ -673,7 +673,8 @@ public class PlayerControlsFragment extends Fragment {
         viewHideShowRunnable = () -> ShowAndHideView();
 
         viewHideShowTimeHandler = new Handler();
-        viewHideShowTimeHandler.postDelayed(viewHideShowRunnable, 3000);
+        viewHideShowTimeHandler.postDelayed(viewHideShowRunnable, 10000);
+
     }
 
     private void findId(View view) {

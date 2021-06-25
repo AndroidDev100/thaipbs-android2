@@ -1511,7 +1511,7 @@ public class AppCommonMethod {
         String ratingValue = "";
         String currentLanguage = KsPreferenceKeys.getInstance().getAppLanguage();
         ConfigBean configBean = AppCommonMethod.getConfigResponse();
-        if (configBean.getData().getAppConfig().getSearchFilters() != null) {
+        if(configBean!=null){
             if (configBean.getData().getAppConfig().getParentalControl().getRatings() != null) {
                 for (int i = 0; i < configBean.getData().getAppConfig().getParentalControl().getRatings().size(); i++) {
                     if (currentLanguage.equalsIgnoreCase("Thai")) {
@@ -1528,7 +1528,10 @@ public class AppCommonMethod {
                     }
                 }
             }
+
+
         }
+
         return ratingValue;
     }
 

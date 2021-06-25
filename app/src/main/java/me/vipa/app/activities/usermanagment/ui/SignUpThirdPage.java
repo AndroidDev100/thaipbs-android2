@@ -312,7 +312,7 @@ public class SignUpThirdPage extends BaseBindingActivity<ActivitySignUpThirdPage
             showLoading(getBinding().progressBar, true);
             String token = preference.getAppPrefAccessToken();
             getBinding().errorMobile.setVisibility(View.INVISIBLE);
-            viewModel.hitUpdateProfile(SignUpThirdPage.this, token, preference.getAppPrefUserName(), getBinding().etMobileNumber.getText().toString(), spinnerValue, dateMilliseconds, getBinding().etAddress.getText().toString(), imageUrlId, via,contentPreference,isNotificationEnable,"",false).observe(SignUpThirdPage.this, new Observer<UserProfileResponse>() {
+            viewModel.hitUpdateProfile(SignUpThirdPage.this, token, preference.getAppPrefUserName(), getBinding().etMobileNumber.getText().toString(), spinnerValue, dateMilliseconds, getBinding().etAddress.getText().toString(), imageUrlId, via,contentPreference,isNotificationEnable,"").observe(SignUpThirdPage.this, new Observer<UserProfileResponse>() {
                 @Override
                 public void onChanged(UserProfileResponse userProfileResponse) {
                     dismissLoading(getBinding().progressBar);

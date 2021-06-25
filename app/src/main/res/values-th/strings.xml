@@ -439,11 +439,11 @@
     <string name="privacy"><u>นโยบายความเป็นส่วนตัว</u></string>
     <string name="privacy_other_text">ในการเข้าถึงและใช้งาน VIPA</string>
 
-    <string name="genere">แนวภาพยนตร์</string>
-    <string name="sort">ประเภท</string>
+    <string name="genere">ประเภท</string>
+    <string name="sort">จัดเรียง</string>
     <string name="apply_filter">นำไปใช้</string>
     <string name="filters">ตัวกรองการค้นหา</string>
-    <string name="clear_all">ลบทั้งหมด</string>
+    <string name="clear_all">ล้างข้อมูล</string>
     <string name="kids_mode_pin">รหัสคิดส์โหมด</string>
     <string name="kids_mode_pin_set">ตั้งรหัสคิดส์โหมดของคุณ</string>
     <string name="plz_enter_valid_pin">โปรดระบุรหัสให้ถูกต้อง</string>

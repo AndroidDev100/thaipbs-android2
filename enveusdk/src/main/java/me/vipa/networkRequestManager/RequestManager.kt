@@ -214,7 +214,7 @@ class RequestManager {
         })
     }
 
-    fun  userUpdateProfileCall(loginCallBacks: UserProfileCallBack, token: String, name: String, mobile: String, spinnerValue: String, dob: String, address: String, imageUrl: String, via: String, contentPreference: String, notificationEnable: Boolean,pin:String,pinFlow:Boolean) {
+    fun  userUpdateProfileCall(loginCallBacks: UserProfileCallBack, token: String, name: String, mobile: String, spinnerValue: String, dob: String, address: String, imageUrl: String, via: String, contentPreference: String, notificationEnable: Boolean,pin:String) {
         val endPoint = NetworkSetup().subscriptionClient(token).create<EnveuEndpoints>(EnveuEndpoints::class.java)
         val requestParam = JsonObject()
         val customParam = JsonObject()
@@ -241,7 +241,8 @@ class RequestManager {
 
 
             requestParam.addProperty("dateOfBirth", dob)
-            if(pinFlow){
+
+            if(pin!=null && !pin.isEmpty()){
                 customParam.addProperty("parentalPin",pin)
             }
 
