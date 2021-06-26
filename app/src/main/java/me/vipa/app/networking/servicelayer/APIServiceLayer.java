@@ -120,12 +120,16 @@ public class APIServiceLayer {
                    @Override
                    public void onResponse(Call<EnveuCommonResponse> call, Response<EnveuCommonResponse> response) {
                        if (response.isSuccessful()) {
-                           if (response.body() != null && response.body().getData() != null) {
-                               if (response.body().getResponseCode() == 2000)
+                           if (response.body() != null && response.body().getData() != null && response.body().getData().getItems().size()>0) {
+                               if (response.body().getResponseCode() == 2000){
                                    enveuCommonResponseMutableLiveData.postValue(response.body());
+                               }
                                else {
                                    enveuCommonResponseMutableLiveData.postValue(null);
                                }
+                           }
+                           else {
+                               enveuCommonResponseMutableLiveData.postValue(null);
                            }
                        } else {
                            enveuCommonResponseMutableLiveData.postValue(null);
@@ -142,12 +146,17 @@ public class APIServiceLayer {
                    @Override
                    public void onResponse(Call<EnveuCommonResponse> call, Response<EnveuCommonResponse> response) {
                        if (response.isSuccessful()) {
-                           if (response.body() != null && response.body().getData() != null) {
-                               if (response.body().getResponseCode() == 2000)
+                           if (response.body() != null && response.body().getData() != null && response.body().getData().getItems().size()>0) {
+                               if (response.body().getResponseCode() == 2000){
                                    enveuCommonResponseMutableLiveData.postValue(response.body());
+                               }
                                else {
                                    enveuCommonResponseMutableLiveData.postValue(null);
                                }
+                           }
+                           else {
+                               enveuCommonResponseMutableLiveData.postValue(null);
+
                            }
                        } else {
                            enveuCommonResponseMutableLiveData.postValue(null);

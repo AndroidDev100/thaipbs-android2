@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -49,6 +50,7 @@ import me.vipa.app.activities.search.adapter.GenereSearchAdapter;
 import me.vipa.app.activities.usermanagment.viewmodel.RegistrationLoginViewModel;
 import me.vipa.app.beanModel.userProfile.UserProfileResponse;
 import me.vipa.app.databinding.KidPinPopupLayoutBinding;
+import me.vipa.app.fragments.more.ui.MoreFragment;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.config.bean.Genre;
 import me.vipa.app.utils.constants.AppConstants;
@@ -66,11 +68,10 @@ import retrofit2.Response;
 
 import static com.amazonaws.mobile.auth.core.internal.util.ThreadUtils.runOnUiThread;
 
-public class KidsModePinDialogFragment extends DialogFragment {
+public class KidsModePinDialogFragment extends DialogFragment implements ErrorDialogFragment.CallBackErrorOkClick {
     private KidPinPopupLayoutBinding kidPinPopupLayoutBinding;
     private KsPreferenceKeys preference;
     private RegistrationLoginViewModel viewModel;
-
     private boolean isloggedout = false;
     private UserProfileResponse newObject;
     private List<String> saved;
@@ -86,8 +87,14 @@ public class KidsModePinDialogFragment extends DialogFragment {
     private String contentPreference = "";
     //private boolean fromMoreFragment;
 
+    private  CallBackListenerOkClick callBackListenerOkClick;
 
-   private  CallBackListenerOkClick callBackListenerOkClick;
+    @Override
+    public void okClick() {
+        kidPinPopupLayoutBinding.pinViewNumber.setText("");
+        kidPinPopupLayoutBinding.btContinue.setEnabled(false);
+        kidPinPopupLayoutBinding.btContinue.getBackground().setAlpha(60);
+    }
 
     public interface CallBackListenerOkClick {
         void onContinueClick();
@@ -110,15 +117,13 @@ public class KidsModePinDialogFragment extends DialogFragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-
-
         try {
-
             callBackListenerOkClick = (CallBackListenerOkClick) getTargetFragment();
             Log.e( "onAttach: " , String.valueOf(callBackListenerOkClick));
         } catch (ClassCastException e) {
             Log.e("onAttachClassexception" , e.getMessage());
         }
+
 
 
     }
@@ -144,13 +149,19 @@ public class KidsModePinDialogFragment extends DialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         setClicks();
         viewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(RegistrationLoginViewModel.class);
         preference = KsPreferenceKeys.getInstance();
         parseProfile();
+        if (pinGetFromApi != null && !pinGetFromApi.isEmpty()) {
+            kidPinPopupLayoutBinding.tvSetPin.setText(R.string.kids_mode_pin_enter);
 
-
+        }
+        else {
+            kidPinPopupLayoutBinding.tvSetPin.setText(R.string.kids_mode_pin_set);
+        }
+        kidPinPopupLayoutBinding.btContinue.getBackground().setAlpha(60);
+        kidPinPopupLayoutBinding.pinViewNumber.requestFocus();
 
         kidPinPopupLayoutBinding.pinViewNumber.addTextChangedListener(new TextWatcher() {
             @Override
@@ -159,12 +170,19 @@ public class KidsModePinDialogFragment extends DialogFragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (kidPinPopupLayoutBinding.pinViewNumber.getSelectionEnd()<4) {
+                    kidPinPopupLayoutBinding.btContinue.setEnabled(false);
+                    kidPinPopupLayoutBinding.btContinue.getBackground().setAlpha(60);
+
+
+                }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
                 if (kidPinPopupLayoutBinding.pinViewNumber.getSelectionEnd()==4) {
                     kidPinPopupLayoutBinding.btContinue.setEnabled(true);
+                    kidPinPopupLayoutBinding.btContinue.getBackground().setAlpha(225);
 
 
                 }
@@ -242,7 +260,8 @@ public class KidsModePinDialogFragment extends DialogFragment {
         Bundle args = new Bundle();
         args.putString("errorMsg", msg);
         newFragment.setArguments(args);
-        newFragment.show(getActivity().getSupportFragmentManager(), "ErrorDialogFragment");
+        newFragment.setTargetFragment(KidsModePinDialogFragment.this, 1);
+        newFragment.show(getFragmentManager(), "ErrorDialogFragment");
         newFragment.setCancelable(false);
       /*  LayoutInflater factory = LayoutInflater.from(getActivity());
         final View deleteDialogView = factory.inflate(R.layout.error_pop_up, null);
@@ -264,52 +283,56 @@ public class KidsModePinDialogFragment extends DialogFragment {
 
     private void callUpdateApi(String pin) {
 
+        if (NetworkConnectivity.isOnline(getActivity())) {
 
-        showLoading(kidPinPopupLayoutBinding.progressBar, true);
-        String token = preference.getAppPrefAccessToken();
-        Log.e("VIA", via);
-        viewModel.hitUpdateProfile(getActivity(), token, name, phoneNumber, gender, dob, address, profilePic, via, contentPreference, isNotificationEnable, pin).observe(getActivity(), new Observer<UserProfileResponse>() {
-            @Override
-            public void onChanged(UserProfileResponse userProfileResponse) {
-                dismissLoading(kidPinPopupLayoutBinding.progressBar);
-                if (userProfileResponse != null) {
-                    if (userProfileResponse.getStatus()) {
-                        // Gson gson = new Gson();
-                        // String userProfileData = gson.toJson(userProfileResponse);
-                        kidPinPopupLayoutBinding.pinViewNumber.setText("");
-                        getDialog().dismiss();
+            showLoading(kidPinPopupLayoutBinding.progressBar, true);
+            String token = preference.getAppPrefAccessToken();
+            viewModel.hitUpdateProfile(getActivity(), token, name, phoneNumber, gender, dob, address, profilePic, via, contentPreference, isNotificationEnable, pin).observe(getActivity(), new Observer<UserProfileResponse>() {
+                @Override
+                public void onChanged(UserProfileResponse userProfileResponse) {
+                    dismissLoading(kidPinPopupLayoutBinding.progressBar);
+                    if (userProfileResponse != null) {
+                        if (userProfileResponse.getStatus()) {
+                            // Gson gson = new Gson();
+                            // String userProfileData = gson.toJson(userProfileResponse);
+                            kidPinPopupLayoutBinding.pinViewNumber.setText("");
+                            getDialog().dismiss();
 
 
-                    } else {
-                        if (userProfileResponse.getResponseCode() == 4302) {
-                            isloggedout = true;
-                            logoutCall();
-                            try {
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        getDialog().dismiss();
-                                    }
-                                });
-                            } catch (Exception e) {
-
-                            }
-                            // showDialog(getResources().getString(R.string.logged_out), getResources().getString(R.string.you_are_logged_out));
-
-                        } else if (userProfileResponse.getResponseCode() == 4019) {
-                            showDialog(userProfileResponse.getDebugMessage().toString());
                         } else {
-                            if (userProfileResponse.getDebugMessage() != null) {
+                            if (userProfileResponse.getResponseCode() == 4302) {
+                                isloggedout = true;
+                                logoutCall();
+                                try {
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            getDialog().dismiss();
+                                        }
+                                    });
+                                } catch (Exception e) {
+
+                                }
+                                // showDialog(getResources().getString(R.string.logged_out), getResources().getString(R.string.you_are_logged_out));
+
+                            } else if (userProfileResponse.getResponseCode() == 4019) {
                                 showDialog(userProfileResponse.getDebugMessage().toString());
                             } else {
-                                showDialog(getResources().getString(R.string.something_went_wrong));
+                                if (userProfileResponse.getDebugMessage() != null) {
+                                    showDialog(userProfileResponse.getDebugMessage().toString());
+                                } else {
+                                    showDialog(getResources().getString(R.string.something_went_wrong));
+                                }
                             }
                         }
                     }
                 }
-            }
-        });
-
+            });
+        }
+        else {
+            dismissLoading(kidPinPopupLayoutBinding.progressBar);
+            new ToastHandler(getActivity()).show(getActivity().getResources().getString(R.string.no_internet_connection));
+        }
     }
 
     private void showLoading(ProgressBar progressBar, boolean val) {
@@ -424,7 +447,6 @@ public class KidsModePinDialogFragment extends DialogFragment {
                 pinGetFromApi = bundle.getString("pin");
                 //fromMoreFragment = bundle.getBoolean("fromMoreFragment");
             }
-
             saved = new ArrayList<>();
             name = "";
             phoneNumber = "";

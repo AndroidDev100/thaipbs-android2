@@ -1105,100 +1105,96 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
 
 
     private void getProfileApi() {
-        showLoading(getBinding().progressBar, true, getActivity());
-        KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
-        String authToken = preference.getAppPrefAccessToken();
-       // Log.e("TokenMore",authToken);
-        viewModel.hitUserProfile(getActivity(), authToken).observe(getActivity(), new Observer<UserProfileResponse>() {
-            @Override
-            public void onChanged(UserProfileResponse userProfileResponse) {
-                if (userProfileResponse != null) {
-                    if (userProfileResponse.getStatus()) {
-                        updateUI(userProfileResponse);
-                        dismissLoading(getBinding().progressBar, getActivity());
-                      //  Log.e("DATA IN LRAVE KIDS",new Gson().toJson(userProfileResponse));
-                        if(userProfileResponse.getData().getPrimaryAccountRef()!=null){
-                            if(userProfileResponse.getData().getPrimaryAccountRef().getCustomData()!=null){
-                                if (userProfileResponse.getData().getPrimaryAccountRef().getCustomData().getParentalPin() != null && !userProfileResponse.getData().getPrimaryAccountRef().getCustomData().getParentalPin().isEmpty()) {
-                                    String decodePin = userProfileResponse.getData().getPrimaryAccountRef().getCustomData().getParentalPin();
-                                    pin = StringUtils.getDataFromBase64(decodePin);
+        if (NetworkConnectivity.isOnline(getActivity()) && isNetworkAvailable(getActivity())) {
+            showLoading(getBinding().progressBar, true, getActivity());
+            KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
+            String authToken = preference.getAppPrefAccessToken();
+            viewModel.hitUserProfile(getActivity(), authToken).observe(getActivity(), new Observer<UserProfileResponse>() {
+                @Override
+                public void onChanged(UserProfileResponse userProfileResponse) {
+                    if (userProfileResponse != null) {
+                        if (userProfileResponse.getStatus()) {
+                            updateUI(userProfileResponse);
+                            dismissLoading(getBinding().progressBar, getActivity());
+                             // Log.e("DATA IN LRAVE KIDS",new Gson().toJson(userProfileResponse));
+                            if (userProfileResponse.getData().getPrimaryAccountRef() != null) {
+                                if (userProfileResponse.getData().getPrimaryAccountRef().getCustomData() != null) {
+                                    if (userProfileResponse.getData().getPrimaryAccountRef().getCustomData().getParentalPin() != null && !userProfileResponse.getData().getPrimaryAccountRef().getCustomData().getParentalPin().isEmpty()) {
+                                        String decodePin = userProfileResponse.getData().getPrimaryAccountRef().getCustomData().getParentalPin();
+                                        pin = StringUtils.getDataFromBase64(decodePin);
 
-                                    //Log.e("decodePin", decodePin);
-                                    Log.e("pin3", pin);
-                                    KidsModePinDialogFragment newFragment = new KidsModePinDialogFragment();
-                                    Bundle args = new Bundle();
-                                    args.putString("pin", pin);
-                                    // args.putBoolean("fromMoreFragment", true);
-                                    newFragment.setArguments(args);
-                                    newFragment.setTargetFragment(MoreFragment.this, 0);
-                                    newFragment.show(getFragmentManager(), "KidsModePinDialogFragments");
-                                    newFragment.setCancelable(false);
+                                      // Log.e("pin3", pin);
+                                        KidsModePinDialogFragment newFragment = new KidsModePinDialogFragment();
+                                        Bundle args = new Bundle();
+                                        args.putString("pin", pin);
+                                        newFragment.setArguments(args);
+                                        newFragment.setTargetFragment(MoreFragment.this, 0);
+                                        newFragment.show(getFragmentManager(), "KidsModePinDialogFragments");
+                                        newFragment.setCancelable(false);
 
-                                } else {
-                                    String primaryAccountId = new SharedPrefHelper(getActivity()).getPrimaryAccountId();
-                                    if (primaryAccountId != null && !primaryAccountId.isEmpty()) {
-                                        KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
-                                        String authToken = preference.getAppPrefAccessToken();
-                                        switchUserApi(authToken, primaryAccountId, false);
                                     } else {
-                                        KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
-                                        String authToken = preference.getAppPrefAccessToken();
-                                        callAllSecondaryAccount(authToken, false);
+                                        // when no pin choose from Pin Ui fragmnet
+                                        String primaryAccountId = new SharedPrefHelper(getActivity()).getPrimaryAccountId();
+                                        if (primaryAccountId != null && !primaryAccountId.isEmpty()) {
+                                            KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
+                                            String authToken = preference.getAppPrefAccessToken();
+                                            switchUserApi(authToken, primaryAccountId, false);
+                                        } else {
+                                            KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
+                                            String authToken = preference.getAppPrefAccessToken();
+                                            callAllSecondaryAccount(authToken, false);
+
+                                        }
 
                                     }
+
+                                }
+                                else {
+                                    showDialog(getActivity().getResources().getString(R.string.error), getActivity().getResources().getString(R.string.something_went_wrong));
+
                                 }
 
-                            }
 
-
-                        }
-                        else {
-                            String primaryAccountId = new SharedPrefHelper(getActivity()).getPrimaryAccountId();
-                            if (primaryAccountId != null && !primaryAccountId.isEmpty()) {
-                                KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
-                                String authToken = preference.getAppPrefAccessToken();
-                                switchUserApi(authToken, primaryAccountId, false);
                             } else {
-                                KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
-                                String authToken = preference.getAppPrefAccessToken();
-                                callAllSecondaryAccount(authToken, false);
-
-                            }
-                        }
-
-
-
-
-                    } else {
-                        if (userProfileResponse.getResponseCode() == 4302) {
-                            isloggedout = true;
-                            logoutCall();
-                            try {
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        getActivity().onBackPressed();
-                                    }
-                                });
-                            } catch (Exception e) {
-
+                                showDialog(getActivity().getResources().getString(R.string.error), getActivity().getResources().getString(R.string.something_went_wrong));
                             }
 
-                            // showDialog(getResources().getString(R.string.logged_out), getResources().getString(R.string.you_are_logged_out));
-                        } else if (userProfileResponse.getResponseCode() == 4019) {
-                            showDialog(getActivity().getResources().getString(R.string.error), getActivity().getResources().getString(R.string.number_Cannot_change));
-                        } else if (userProfileResponse.getResponseCode() == 4901) {
-                            showDialog(getActivity().getResources().getString(R.string.error), getActivity().getResources().getString(R.string.already_exist_number));
-                        } else if (userProfileResponse.getDebugMessage() != null) {
-                            showDialog(getActivity().getResources().getString(R.string.error), userProfileResponse.getDebugMessage().toString());
+
                         } else {
-                            showDialog(getActivity().getResources().getString(R.string.error), getActivity().getResources().getString(R.string.something_went_wrong));
+                            if (userProfileResponse.getResponseCode() == 4302) {
+                                isloggedout = true;
+                                logoutCall();
+                                try {
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            getActivity().onBackPressed();
+                                        }
+                                    });
+                                } catch (Exception e) {
+
+                                }
+
+                                // showDialog(getResources().getString(R.string.logged_out), getResources().getString(R.string.you_are_logged_out));
+                            } else if (userProfileResponse.getResponseCode() == 4019) {
+                                showDialog(getActivity().getResources().getString(R.string.error), getActivity().getResources().getString(R.string.number_Cannot_change));
+                            } else if (userProfileResponse.getResponseCode() == 4901) {
+                                showDialog(getActivity().getResources().getString(R.string.error), getActivity().getResources().getString(R.string.already_exist_number));
+                            } else if (userProfileResponse.getDebugMessage() != null) {
+                                showDialog(getActivity().getResources().getString(R.string.error), userProfileResponse.getDebugMessage().toString());
+                            } else {
+                                showDialog(getActivity().getResources().getString(R.string.error), getActivity().getResources().getString(R.string.something_went_wrong));
+                            }
                         }
                     }
                 }
-            }
-        });
+            });
+        }
+        else {
+            dismissLoading(getBinding().progressBar, getActivity());
 
+            new ToastHandler(getActivity()).show(getActivity().getResources().getString(R.string.no_internet_connection));
+        }
     }
 
     private void logoutCall() {

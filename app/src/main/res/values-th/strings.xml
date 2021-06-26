@@ -446,6 +446,7 @@
     <string name="clear_all">ล้างข้อมูล</string>
     <string name="kids_mode_pin">รหัสคิดส์โหมด</string>
     <string name="kids_mode_pin_set">ตั้งรหัสคิดส์โหมดของคุณ</string>
+    <string name="kids_mode_pin_enter">ระบุรหัสคิดส์โหมดของคุณ</string>
     <string name="plz_enter_valid_pin">โปรดระบุรหัสให้ถูกต้อง</string>
     <string name="Continue_dialog">ดำเนินการ</string>
 

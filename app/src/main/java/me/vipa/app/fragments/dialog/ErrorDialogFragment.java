@@ -3,6 +3,7 @@ package me.vipa.app.fragments.dialog;
 import android.content.Context;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,9 +24,24 @@ public class ErrorDialogFragment extends DialogFragment {
     private ErrorPopUpBinding errorPopUpBinding;
     private String errorMsg = "";
 
+    private ErrorDialogFragment.CallBackErrorOkClick callBackListenerOkClick;
+
+    public interface CallBackErrorOkClick {
+        void okClick();
+
+
+    }
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
+        try {
+
+            callBackListenerOkClick = (ErrorDialogFragment.CallBackErrorOkClick) getTargetFragment();
+            Log.e( "onAttach: " , String.valueOf(callBackListenerOkClick));
+        } catch (ClassCastException e) {
+            Log.e("onAttachClassexception" , e.getMessage());
+        }
     }
 
     @Override
@@ -64,6 +80,8 @@ public class ErrorDialogFragment extends DialogFragment {
         errorPopUpBinding.tvOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                callBackListenerOkClick.okClick();
                 getDialog().dismiss();
             }
         });
