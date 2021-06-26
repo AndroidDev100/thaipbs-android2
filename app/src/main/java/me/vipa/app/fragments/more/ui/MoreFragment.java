@@ -1116,7 +1116,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                         if (userProfileResponse.getStatus()) {
                             updateUI(userProfileResponse);
                             dismissLoading(getBinding().progressBar, getActivity());
-                             // Log.e("DATA IN LRAVE KIDS",new Gson().toJson(userProfileResponse));
+                              Log.e("DATA IN LRAVE KIDS",new Gson().toJson(userProfileResponse));
                             if (userProfileResponse.getData().getPrimaryAccountRef() != null) {
                                 if (userProfileResponse.getData().getPrimaryAccountRef().getCustomData() != null) {
                                     if (userProfileResponse.getData().getPrimaryAccountRef().getCustomData().getParentalPin() != null && !userProfileResponse.getData().getPrimaryAccountRef().getCustomData().getParentalPin().isEmpty()) {
