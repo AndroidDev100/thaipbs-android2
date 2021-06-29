@@ -82,6 +82,7 @@
     <string name="or">หรือ</string>
     <string name="or_caps">- หรือ -</string>
     <string name="skip">ข้าม</string>
+    <string name="skip_line"><u>ข้าม</u></string>
     <string name="forgot_password">ลืมพาสเวิร์ด</string>
     <string name="forgot_password_u"><b><u>ลืมรหัสผ่าน?</u></b></string>
 

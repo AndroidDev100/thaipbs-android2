@@ -192,6 +192,7 @@ public class ActivitySettings extends BaseBindingActivity<SettingsActivityBindin
                 KidsModePinDialogFragment newFragment = new KidsModePinDialogFragment();
                 Bundle args = new Bundle();
                 args.putString("pin",null);
+                args.putBoolean("fromVipaKids",false);
                // args.putBoolean("fromMoreFragment",false);
                 newFragment.setArguments(args);
                 newFragment.show(getSupportFragmentManager(), "TAG");

@@ -490,7 +490,9 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
 
         } else if (caption.equals(getString(R.string.vipa_kids))) {
             if (loginStatus) {
-                String secondaryId = new SharedPrefHelper(getActivity()).getSecondaryAccountId();
+                getProfileApi();
+                //Todo
+               /* String secondaryId = new SharedPrefHelper(getActivity()).getSecondaryAccountId();
                 if (secondaryId != null && !secondaryId.isEmpty()) {
                     KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
                     String authToken = preference.getAppPrefAccessToken();
@@ -499,7 +501,9 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                     KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
                     String authToken = preference.getAppPrefAccessToken();
                     callAllSecondaryAccount(authToken, true);
-                }
+                }*/
+
+
             } else {
                 new SharedPrefHelper(getActivity()).saveKidsMode(true);
                 new ActivityLauncher(getActivity()).homeScreen(getActivity(), HomeActivity.class);
@@ -851,6 +855,20 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
         }
     }
 
+    @Override
+    public void onSkipClick() {
+        String secondaryId = new SharedPrefHelper(getActivity()).getSecondaryAccountId();
+        if (secondaryId != null && !secondaryId.isEmpty()) {
+            KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
+            String authToken = preference.getAppPrefAccessToken();
+            switchUserApi(authToken, secondaryId, true);
+        } else {
+            KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
+            String authToken = preference.getAppPrefAccessToken();
+            callAllSecondaryAccount(authToken, true);
+        }
+    }
+
     public class AppSyncBroadcast extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -949,7 +967,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                     if (allSecondaryAccountDetails.getResponseCode() != null) {
                         if (Objects.requireNonNull(allSecondaryAccountDetails).getResponseCode() == 2000) {
                             if (allSecondaryAccountDetails.getData() != null && !allSecondaryAccountDetails.getData().isEmpty()) {
-                               // Log.e("allSecondaryAcco", new Gson().toJson(allSecondaryAccountDetails));
+                                // Log.e("allSecondaryAcco", new Gson().toJson(allSecondaryAccountDetails));
                                 String primaryAccountId = "";
                                 String secondaryId = "";
                                 for (int i = 0; i < allSecondaryAccountDetails.getData().size(); i++) {
@@ -1116,17 +1134,19 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                         if (userProfileResponse.getStatus()) {
                             updateUI(userProfileResponse);
                             dismissLoading(getBinding().progressBar, getActivity());
-                              Log.e("DATA IN LRAVE KIDS",new Gson().toJson(userProfileResponse));
+                            Log.e("DATA IN LRAVE KIDS", new Gson().toJson(userProfileResponse));
+
                             if (userProfileResponse.getData().getPrimaryAccountRef() != null) {
                                 if (userProfileResponse.getData().getPrimaryAccountRef().getCustomData() != null) {
                                     if (userProfileResponse.getData().getPrimaryAccountRef().getCustomData().getParentalPin() != null && !userProfileResponse.getData().getPrimaryAccountRef().getCustomData().getParentalPin().isEmpty()) {
                                         String decodePin = userProfileResponse.getData().getPrimaryAccountRef().getCustomData().getParentalPin();
                                         pin = StringUtils.getDataFromBase64(decodePin);
 
-                                      // Log.e("pin3", pin);
+                                        Log.e("pin3", pin);
                                         KidsModePinDialogFragment newFragment = new KidsModePinDialogFragment();
                                         Bundle args = new Bundle();
                                         args.putString("pin", pin);
+                                        args.putBoolean("fromVipaKids",false);
                                         newFragment.setArguments(args);
                                         newFragment.setTargetFragment(MoreFragment.this, 0);
                                         newFragment.show(getFragmentManager(), "KidsModePinDialogFragments");
@@ -1148,15 +1168,53 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
 
                                     }
 
-                                }
-                                else {
+                                } else {
                                     showDialog(getActivity().getResources().getString(R.string.error), getActivity().getResources().getString(R.string.something_went_wrong));
 
                                 }
 
 
                             } else {
-                                showDialog(getActivity().getResources().getString(R.string.error), getActivity().getResources().getString(R.string.something_went_wrong));
+                                // if user is first Time entry
+                                if (userProfileResponse.getData().getCustomData().getParentalPin() != null && !userProfileResponse.getData().getCustomData().getParentalPin().isEmpty()) {
+                                    String secondaryId = new SharedPrefHelper(getActivity()).getSecondaryAccountId();
+                                    if (secondaryId != null && !secondaryId.isEmpty()) {
+                                        KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
+                                        String authToken = preference.getAppPrefAccessToken();
+                                        switchUserApi(authToken, secondaryId, true);
+                                    } else {
+                                        KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
+                                        String authToken = preference.getAppPrefAccessToken();
+                                        callAllSecondaryAccount(authToken, true);
+                                    }
+                                }
+                                else {
+                                    if(preference.getfirstTimeUserForKidsPin() ){
+                                        KidsModePinDialogFragment newFragment = new KidsModePinDialogFragment();
+                                        Bundle args = new Bundle();
+                                        args.putString("pin", null);
+                                        args.putBoolean("fromVipaKids",true);
+                                        newFragment.setArguments(args);
+                                        newFragment.setTargetFragment(MoreFragment.this, 0);
+                                        newFragment.show(getFragmentManager(), "KidsModePinDialogFragments");
+                                        newFragment.setCancelable(false);
+
+                                    }
+                                    else {
+                                        String secondaryId = new SharedPrefHelper(getActivity()).getSecondaryAccountId();
+                                        if (secondaryId != null && !secondaryId.isEmpty()) {
+                                            KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
+                                            String authToken = preference.getAppPrefAccessToken();
+                                            switchUserApi(authToken, secondaryId, true);
+                                        } else {
+                                            KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
+                                            String authToken = preference.getAppPrefAccessToken();
+                                            callAllSecondaryAccount(authToken, true);
+                                        }
+                                    }
+
+
+                                }
                             }
 
 
@@ -1189,8 +1247,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                     }
                 }
             });
-        }
-        else {
+        } else {
             dismissLoading(getBinding().progressBar, getActivity());
 
             new ToastHandler(getActivity()).show(getActivity().getResources().getString(R.string.no_internet_connection));

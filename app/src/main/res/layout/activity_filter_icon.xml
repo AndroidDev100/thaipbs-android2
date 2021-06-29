@@ -43,12 +43,12 @@
                     android:id="@+id/tv_genre"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_14sdp"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:fontFamily="@font/sukhumvittadmai_normal"
                     android:text="@string/genere"
                     android:textColor="?attr/tab_selected"
                     android:textSize="@dimen/_14sdp"
-                    android:fontFamily="@font/sukhumvittadmai_normal"
-                    android:layout_marginStart="@dimen/_14sdp"
-                    android:layout_marginTop="@dimen/_16sdp"
 
                     />
 

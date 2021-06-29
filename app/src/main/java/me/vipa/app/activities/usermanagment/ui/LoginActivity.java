@@ -468,6 +468,8 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
             Gson gson = new Gson();
             String stringJson = gson.toJson(fbLoginData);
             AppPreference.getInstance(this).clear();
+
+
             counter = 0;
             if (isManual)
                 preference.setAppPrefLoginType(AppConstants.UserLoginType.Manual.toString());

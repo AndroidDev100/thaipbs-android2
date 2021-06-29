@@ -181,6 +181,14 @@ public class KsPreferenceKeys extends SharedPrefHelper {
         setBoolean("isFirstTimeUser", firstTimeUser);
     }
 
+    public Boolean getfirstTimeUserForKidsPin() {
+        return getBoolean("isFirstTimeUserKidsPin", true);
+    }
+
+    public void setfirstTimeUserForKidsPIn(Boolean firstTimeUserKidsPin) {
+        setBoolean("isFirstTimeUserKidsPin", firstTimeUserKidsPin);
+    }
+
     public void setPodId(String id, boolean reminderValue) {
         setBoolean("video_Id"+id, reminderValue);
     }

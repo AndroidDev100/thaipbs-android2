@@ -88,6 +88,7 @@ public class KidsModePinDialogFragment extends DialogFragment implements ErrorDi
     //private boolean fromMoreFragment;
 
     private  CallBackListenerOkClick callBackListenerOkClick;
+    private boolean fromVipaKids;
 
     @Override
     public void okClick() {
@@ -98,6 +99,7 @@ public class KidsModePinDialogFragment extends DialogFragment implements ErrorDi
 
     public interface CallBackListenerOkClick {
         void onContinueClick();
+        void onSkipClick();
 
 
     }
@@ -123,6 +125,8 @@ public class KidsModePinDialogFragment extends DialogFragment implements ErrorDi
         } catch (ClassCastException e) {
             Log.e("onAttachClassexception" , e.getMessage());
         }
+
+
 
 
 
@@ -162,6 +166,11 @@ public class KidsModePinDialogFragment extends DialogFragment implements ErrorDi
         }
         kidPinPopupLayoutBinding.btContinue.getBackground().setAlpha(60);
         kidPinPopupLayoutBinding.pinViewNumber.requestFocus();
+
+        if(preference.getfirstTimeUserForKidsPin() && fromVipaKids ){
+            kidPinPopupLayoutBinding.tvSkip.setVisibility(View.VISIBLE);
+
+        }
 
         kidPinPopupLayoutBinding.pinViewNumber.addTextChangedListener(new TextWatcher() {
             @Override
@@ -213,6 +222,7 @@ public class KidsModePinDialogFragment extends DialogFragment implements ErrorDi
                                 }
 
                             } else {
+
                                 callUpdateApi(encodePin);
 
                             }
@@ -236,10 +246,31 @@ public class KidsModePinDialogFragment extends DialogFragment implements ErrorDi
         kidPinPopupLayoutBinding.ivCross.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(fromVipaKids){
+                    kidPinPopupLayoutBinding.pinViewNumber.setText("");
+                    preference.setfirstTimeUserForKidsPIn(false);
+                    callBackListenerOkClick.onSkipClick();
+                    getDialog().dismiss();
+                }
+                else {
+                    kidPinPopupLayoutBinding.pinViewNumber.setText("");
+                    getDialog().dismiss();
+
+                }
+            }
+        });
+
+        kidPinPopupLayoutBinding.tvSkip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 kidPinPopupLayoutBinding.pinViewNumber.setText("");
+                preference.setfirstTimeUserForKidsPIn(false);
+                callBackListenerOkClick.onSkipClick();
                 getDialog().dismiss();
             }
         });
+
+
     }
 
     @Override
@@ -295,8 +326,18 @@ public class KidsModePinDialogFragment extends DialogFragment implements ErrorDi
                         if (userProfileResponse.getStatus()) {
                             // Gson gson = new Gson();
                             // String userProfileData = gson.toJson(userProfileResponse);
-                            kidPinPopupLayoutBinding.pinViewNumber.setText("");
-                            getDialog().dismiss();
+                            if(fromVipaKids){
+                                kidPinPopupLayoutBinding.pinViewNumber.setText("");
+                                preference.setfirstTimeUserForKidsPIn(false);
+                                callBackListenerOkClick.onSkipClick();
+                                getDialog().dismiss();
+                            }
+                            else {
+                                kidPinPopupLayoutBinding.pinViewNumber.setText("");
+                                getDialog().dismiss();
+
+                            }
+
 
 
                         } else {
@@ -445,7 +486,7 @@ public class KidsModePinDialogFragment extends DialogFragment implements ErrorDi
             Bundle bundle = getArguments();
             if (bundle != null) {
                 pinGetFromApi = bundle.getString("pin");
-                //fromMoreFragment = bundle.getBoolean("fromMoreFragment");
+                fromVipaKids = bundle.getBoolean("fromVipaKids");
             }
             saved = new ArrayList<>();
             name = "";
