@@ -326,6 +326,10 @@ public class KidsModePinDialogFragment extends DialogFragment implements ErrorDi
                         if (userProfileResponse.getStatus()) {
                             // Gson gson = new Gson();
                             // String userProfileData = gson.toJson(userProfileResponse);
+                            Gson gson = new Gson();
+                            String userProfileData = gson.toJson(userProfileResponse);
+                            KsPreferenceKeys.getInstance().setUserProfileData(userProfileData);
+                            Log.e("RESONCE",new Gson().toJson(userProfileResponse));
                             if(fromVipaKids){
                                 kidPinPopupLayoutBinding.pinViewNumber.setText("");
                                 preference.setfirstTimeUserForKidsPIn(false);
@@ -414,6 +418,7 @@ public class KidsModePinDialogFragment extends DialogFragment implements ErrorDi
             preference.setAppPrefRegisterStatus(AppConstants.UserStatus.Logout.toString());
             preference.clear();
             KsPreferenceKeys.getInstance().setfirstTimeUser(false);
+            KsPreferenceKeys.getInstance().setfirstTimeUserForKidsPIn(false);
             KsPreferenceKeys.getInstance().setCurrentTheme(strCurrentTheme);
             KsPreferenceKeys.getInstance().setAppLanguage(strCurrentLanguage);
             AppCommonMethod.updateLanguage(strCurrentLanguage, getActivity());

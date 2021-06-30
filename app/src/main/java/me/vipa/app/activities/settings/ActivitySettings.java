@@ -352,6 +352,7 @@ public class ActivitySettings extends BaseBindingActivity<SettingsActivityBindin
             case R.id.contentPreLayout: {
                 Log.w("savedata3","-->>click");
                 Intent intent = new Intent(ActivitySettings.this, SettingContentPreferences.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
             break;

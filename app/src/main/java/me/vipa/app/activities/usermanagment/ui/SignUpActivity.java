@@ -560,6 +560,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
         Data fbLoginData = new Gson().fromJson(response, Data.class);
         Gson gson = new Gson();
         String stringJson = gson.toJson(fbLoginData);
+        preference.setfirstTimeUserForKidsPIn(true);
 
         if (isManual)
             preference.setAppPrefLoginType(AppConstants.UserLoginType.Manual.toString());
@@ -570,6 +571,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
         preference.setAppPrefUserId(String.valueOf(fbLoginData.getId()));
         preference.setAppPrefUserName(String.valueOf(fbLoginData.getName()));
         preference.setAppPrefUserEmail(String.valueOf(fbLoginData.getEmail()));
+
         AppCommonMethod.userId = String.valueOf(fbLoginData.getId());
 
         callAllSecondaryAccount(preference.getAppPrefAccessToken());

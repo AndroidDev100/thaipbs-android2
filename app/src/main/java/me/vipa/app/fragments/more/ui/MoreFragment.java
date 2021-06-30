@@ -630,6 +630,8 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                 KsPreferenceKeys.getInstance().setAppLanguage(strCurrentLanguage);
                 KsPreferenceKeys.getInstance().setAppPrefLanguagePos(languagePosition);
                 KsPreferenceKeys.getInstance().setfirstTimeUser(false);
+                preference.setfirstTimeUserForKidsPIn(false);
+
                 KsPreferenceKeys.getInstance().setBingeWatchEnable(bingeWatchEnable);
                 getBinding().titleLayout.setVisibility(View.VISIBLE);
                 getBinding().ivProfilePic.setVisibility(View.GONE);
@@ -1247,9 +1249,9 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                     }
                 }
             });
-        } else {
+        }
+        else {
             dismissLoading(getBinding().progressBar, getActivity());
-
             new ToastHandler(getActivity()).show(getActivity().getResources().getString(R.string.no_internet_connection));
         }
     }

@@ -78,7 +78,7 @@
                 android:padding="@dimen/_5sdp"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_14sdp"
-                android:textStyle="bold"
+                android:fontFamily="@font/sukhumvittadmai_bold"
                 app:cursorColor="@color/black"
                 app:cursorWidth="2dp"
                 app:hideLineWhenFilled="false"

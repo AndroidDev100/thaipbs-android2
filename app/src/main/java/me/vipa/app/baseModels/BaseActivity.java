@@ -173,6 +173,8 @@ public class BaseActivity extends AppCompatActivity implements BaseActivityAlert
             preference.setAppPrefRegisterStatus(AppConstants.UserStatus.Logout.toString());
             preference.clear();
             KsPreferenceKeys.getInstance().setfirstTimeUser(false);
+            KsPreferenceKeys.getInstance().setfirstTimeUserForKidsPIn(false);
+
             KsPreferenceKeys.getInstance().setCurrentTheme(strCurrentTheme);
             KsPreferenceKeys.getInstance().setAppLanguage(strCurrentLanguage);
             AppCommonMethod.updateLanguage(strCurrentLanguage,this);

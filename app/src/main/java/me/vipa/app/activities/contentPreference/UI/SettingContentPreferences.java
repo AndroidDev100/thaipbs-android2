@@ -114,24 +114,26 @@ public class SettingContentPreferences extends BaseBindingActivity<ActivityConte
             Gson gson = new Gson();
             String json = KsPreferenceKeys.getInstance().getUserProfileData();
             newObject = gson.fromJson(json, UserProfileResponse.class);
-            setUserImage(newObject);
+            if(newObject.getData().getCustomData().getParentalPin()!=null && !newObject.getData().getCustomData().getParentalPin().isEmpty()){
+                encodePin =  newObject.getData().getCustomData().getParentalPin();
+                String pin3=  StringUtils.getDataFromBase64(encodePin);
+                //Log.e("decodePin",encodePin);
+                Log.e("pin3Content",pin3);
+            }
+
+            else {
+                encodePin="";
+                Log.e("pin3elseContent",encodePin);
+
+            }
             Log.w("data3SettingPrefence",newObject.getData().getCustomData().getContentPreferences());
             if (newObject.getData().getCustomData()!=null && newObject.getData().getCustomData().getContentPreferences()!=null){
                 contentPreference=newObject.getData().getCustomData().getContentPreferences();
                 saved=AppCommonMethod.createPrefrenceList(newObject);
             }
-            if(newObject.getData().getCustomData().getParentalPin()!=null && !newObject.getData().getCustomData().getParentalPin().isEmpty()){
-                encodePin =  newObject.getData().getCustomData().getParentalPin();
-                String pin3=  StringUtils.getDataFromBase64(encodePin);
-                //Log.e("decodePin",encodePin);
-                //Log.e("pin3",pin3);
-            }
+            setUserImage(newObject);
 
-            else {
-                encodePin="";
-                // Log.e("pin3else",encodePin);
 
-            }
 
         }catch (Exception ignored){
             Log.w("savedata3",ignored.toString());
@@ -331,7 +333,7 @@ public class SettingContentPreferences extends BaseBindingActivity<ActivityConte
         if (isloggedout) {
             logoutCall();
         } else {
-            onBackPressed();
+            finish();
         }
     }
 
