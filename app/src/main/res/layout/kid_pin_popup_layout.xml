@@ -114,17 +114,14 @@
                 android:id="@+id/tv_skip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
+                android:layout_gravity="center"
                 android:visibility="invisible"
                 android:padding="@dimen/_5sdp"
                 android:fontFamily="@font/sukhumvittadmai_normal"
                 android:text="@string/skip_line"
                 android:textColor="@color/white"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:layout_marginBottom="@dimen/_10sdp"
-                android:textSize="@dimen/headingToolbar"
-                android:layout_centerInParent="true"
-                />
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:textSize="@dimen/headingToolbar"/>
             <!--   <TextView
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"

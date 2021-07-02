@@ -137,6 +137,7 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 //setFullScreen();
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
@@ -245,10 +246,11 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
             public void onSuccess(Object response) {
                 Logger.e("Animation End","Config Call Started");
                 boolean isTablet = getResources().getBoolean(R.bool.isTablet);
+
                 configBean = AppCommonMethod.getConfigResponse();
                 Gson gson = new Gson();
                 String json = gson.toJson(configBean);
-               // Log.e("configResponseLog", json);
+                Log.e("configResponseLog", json);
                 AppCommonMethod.setConfigConstant(configBean, isTablet);
                 // kid mode id
                 String kidsModeId=SDKConfig.getInstance().getKidsModeId();

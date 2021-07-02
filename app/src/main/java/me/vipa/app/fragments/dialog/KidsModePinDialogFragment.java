@@ -126,10 +126,6 @@ public class KidsModePinDialogFragment extends DialogFragment implements ErrorDi
             Log.e("onAttachClassexception" , e.getMessage());
         }
 
-
-
-
-
     }
 
     @Override
@@ -315,7 +311,6 @@ public class KidsModePinDialogFragment extends DialogFragment implements ErrorDi
     private void callUpdateApi(String pin) {
 
         if (NetworkConnectivity.isOnline(getActivity())) {
-
             showLoading(kidPinPopupLayoutBinding.progressBar, true);
             String token = preference.getAppPrefAccessToken();
             viewModel.hitUpdateProfile(getActivity(), token, name, phoneNumber, gender, dob, address, profilePic, via, contentPreference, isNotificationEnable, pin).observe(getActivity(), new Observer<UserProfileResponse>() {
