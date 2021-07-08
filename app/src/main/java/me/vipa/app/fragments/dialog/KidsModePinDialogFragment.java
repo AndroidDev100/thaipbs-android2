@@ -121,7 +121,6 @@ public class KidsModePinDialogFragment extends DialogFragment implements ErrorDi
         super.onAttach(context);
         try {
             callBackListenerOkClick = (CallBackListenerOkClick) getTargetFragment();
-            Log.e( "onAttach: " , String.valueOf(callBackListenerOkClick));
         } catch (ClassCastException e) {
             Log.e("onAttachClassexception" , e.getMessage());
         }
@@ -324,7 +323,7 @@ public class KidsModePinDialogFragment extends DialogFragment implements ErrorDi
                             Gson gson = new Gson();
                             String userProfileData = gson.toJson(userProfileResponse);
                             KsPreferenceKeys.getInstance().setUserProfileData(userProfileData);
-                            Log.e("RESONCE",new Gson().toJson(userProfileResponse));
+                          //  Log.e("RESONCE",new Gson().toJson(userProfileResponse));
                             if(fromVipaKids){
                                 kidPinPopupLayoutBinding.pinViewNumber.setText("");
                                 preference.setfirstTimeUserForKidsPIn(false);

@@ -86,7 +86,7 @@ public class RegistrationLoginRepository {
                         String token = response.headers().get("x-auth");
                         KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
                         preference.setAppPrefAccessToken(token);
-                        Log.e("X_AUTHTOKEN",token);
+                        //Log.e("X_AUTHTOKEN",token);
                         Gson gson = new Gson();
                         String tmp = gson.toJson(response.body());
                         LoginResponseModel loginItemBean = gson.fromJson(tmp, LoginResponseModel.class);

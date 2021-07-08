@@ -150,15 +150,15 @@ public class FilterIconActivity extends BaseBindingActivity<ActivityFilterIconBi
                     if (filterGenreSelectedList != null && filterGenreSelectedListKeyForApi != null) {
                         new SharedPrefHelper(FilterIconActivity.this).saveDataGenre(filterGenreSelectedList);
                         new SharedPrefHelper(FilterIconActivity.this).saveDataGenreKeyValue(filterGenreSelectedListKeyForApi);
-                        Log.e("SELECTEDLIST", filterGenreSelectedList.toString());
-                        Log.e("SELECTEDLISTKEYValue", filterGenreSelectedListKeyForApi.toString());
+                        //Log.e("SELECTEDLIST", filterGenreSelectedList.toString());
+                        //Log.e("SELECTEDLISTKEYValue", filterGenreSelectedListKeyForApi.toString());
                     }
 
                     if (filterSortSelectedList != null && filterSortSelectedListKeyForApi != null) {
                         new SharedPrefHelper(FilterIconActivity.this).saveDataSort(filterSortSelectedList);
                         new SharedPrefHelper(FilterIconActivity.this).saveDataSortKeyValue(filterSortSelectedListKeyForApi);
-                        Log.e("SELECTEDSort", filterSortSelectedList.toString());
-                        Log.e("SELECTEDSortKEYvalue", filterSortSelectedListKeyForApi.toString());
+                       // Log.e("SELECTEDSort", filterSortSelectedList.toString());
+                       // Log.e("SELECTEDSortKEYvalue", filterSortSelectedListKeyForApi.toString());
 
 
                     }

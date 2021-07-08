@@ -118,12 +118,12 @@ public class SettingContentPreferences extends BaseBindingActivity<ActivityConte
                 encodePin =  newObject.getData().getCustomData().getParentalPin();
                 String pin3=  StringUtils.getDataFromBase64(encodePin);
                 //Log.e("decodePin",encodePin);
-                Log.e("pin3Content",pin3);
+               // Log.e("pin3Content",pin3);
             }
 
             else {
                 encodePin="";
-                Log.e("pin3elseContent",encodePin);
+                //Log.e("pin3elseContent",encodePin);
 
             }
             Log.w("data3SettingPrefence",newObject.getData().getCustomData().getContentPreferences());
