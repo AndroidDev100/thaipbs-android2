@@ -24,6 +24,7 @@ public class VideoDetailLayer {
     private static VideoDetailLayer videoDetailLayerInstance;
     private static ApiInterface endpoint;
     ApiResponseModel callBack;
+    private String languageCode;
 
     private VideoDetailLayer() {
 
@@ -37,7 +38,7 @@ public class VideoDetailLayer {
         return (videoDetailLayerInstance);
     }
 
-    String languageCode;
+
     public void getVideoDetails(String manualImageAssetId, Context context, ApiResponseModel listener) {
         this.callBack = listener;
         callBack.onStart();

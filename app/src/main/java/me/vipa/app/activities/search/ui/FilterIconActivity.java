@@ -243,47 +243,60 @@ public class FilterIconActivity extends BaseBindingActivity<ActivityFilterIconBi
             getBinding().genreRecyclerView.setVisibility(View.GONE);
 
         }*/
+ if(configBean.getData()!=null){
+     if (configBean.getData().getAppConfig().getSearchFilters() != null) {
 
-        if (configBean.getData().getAppConfig().getSearchFilters() != null) {
+         if (configBean.getData().getAppConfig().getSearchFilters().getGenres() != null) {
+             for (int i=0;i<configBean.getData().getAppConfig().getSearchFilters().getGenres().size();i++){
+                 if (currentLanguage.equalsIgnoreCase("Thai")) {
+                     if(configBean.getData().getAppConfig().getSearchFilters().getGenres().get(i).getDisplayName().getTh()!=null){
+                         genereModels = configBean.getData().getAppConfig().getSearchFilters().getGenres();
+                     }
+                     else {
+                         getBinding().tvGenre.setVisibility(View.GONE);
+                         getBinding().vGenre.setVisibility(View.GONE);
+                         getBinding().genreRecyclerView.setVisibility(View.GONE);
+                     }
+                 }
+                 else if (currentLanguage.equalsIgnoreCase("English")) {
+                     if(configBean.getData().getAppConfig().getSearchFilters().getGenres().get(i).getDisplayName().getEnUS()!=null){
+                         genereModels = configBean.getData().getAppConfig().getSearchFilters().getGenres();
+                     }
+                     else {
+                         getBinding().tvGenre.setVisibility(View.GONE);
+                         getBinding().vGenre.setVisibility(View.GONE);
+                         getBinding().genreRecyclerView.setVisibility(View.GONE);
 
-            if (configBean.getData().getAppConfig().getSearchFilters().getGenres() != null) {
-                for (int i=0;i<configBean.getData().getAppConfig().getSearchFilters().getGenres().size();i++){
-                    if (currentLanguage.equalsIgnoreCase("Thai")) {
-                        if(configBean.getData().getAppConfig().getSearchFilters().getGenres().get(i).getDisplayName().getTh()!=null){
-                            genereModels = configBean.getData().getAppConfig().getSearchFilters().getGenres();
-                        }
-                        else {
-                            getBinding().tvGenre.setVisibility(View.GONE);
-                            getBinding().vGenre.setVisibility(View.GONE);
-                            getBinding().genreRecyclerView.setVisibility(View.GONE);
-                        }
-                    }
-                    else if (currentLanguage.equalsIgnoreCase("English")) {
-                        if(configBean.getData().getAppConfig().getSearchFilters().getGenres().get(i).getDisplayName().getEnUS()!=null){
-                            genereModels = configBean.getData().getAppConfig().getSearchFilters().getGenres();
-                        }
-                        else {
-                            getBinding().tvGenre.setVisibility(View.GONE);
-                            getBinding().vGenre.setVisibility(View.GONE);
-                            getBinding().genreRecyclerView.setVisibility(View.GONE);
+                     }
+                 }
+             }
 
-                        }
-                    }
-                }
+         } else {
+             getBinding().tvGenre.setVisibility(View.GONE);
+             getBinding().vGenre.setVisibility(View.GONE);
+             getBinding().genreRecyclerView.setVisibility(View.GONE);
+         }
 
-            } else {
-                getBinding().tvGenre.setVisibility(View.GONE);
-                getBinding().vGenre.setVisibility(View.GONE);
-                getBinding().genreRecyclerView.setVisibility(View.GONE);
-            }
+     } else {
+         getBinding().tvGenre.setVisibility(View.GONE);
+         getBinding().vGenre.setVisibility(View.GONE);
 
-        } else {
-            getBinding().tvGenre.setVisibility(View.GONE);
-            getBinding().vGenre.setVisibility(View.GONE);
+         getBinding().genreRecyclerView.setVisibility(View.GONE);
 
-            getBinding().genreRecyclerView.setVisibility(View.GONE);
+     }
 
-        }
+ }
+
+ else {
+     getBinding().tvGenre.setVisibility(View.GONE);
+     getBinding().vGenre.setVisibility(View.GONE);
+
+     getBinding().genreRecyclerView.setVisibility(View.GONE);
+
+ }
+
+
+
         setRecyclerProperties(getBinding().genreRecyclerView, true);
 
         if (filterGenreSavedList != null) {

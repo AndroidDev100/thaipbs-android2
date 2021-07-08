@@ -396,10 +396,8 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
         if (isTablet) {
             video = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.splashtab);
         }else {
-            video = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.splash);
+            video = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.splashn);
         }
-
-
 
         getBinding().videoView.setVideoURI(video);
         getBinding().videoView.requestFocus();

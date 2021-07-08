@@ -58,56 +58,66 @@ public class ForceUpdateHandler {
         if (configBean!=null){
            application= ((MvHubPlusApplication) activity.getApplication());
            //configBean.getData().getAppConfig().getVersion().setForceUpdate(false);
-           Version version=configBean.getData().getAppConfig().getVersion();
-           if (version.getForceUpdate()){
-               String appversion = application.getVersionName().replace(".", "");
-               int appCurrentVersion = Integer.parseInt(appversion);
-               String configVersion= version.getUpdatedVersion();
-               if (!configVersion.equalsIgnoreCase("")) {
-                   if (configVersion.contains(".")) {
-                       configVersion = configVersion.replace(".", "");
+               if(configBean.getData().getAppConfig()!=null){
+                   Version version=configBean.getData().getAppConfig().getVersion();
+                   if (version.getForceUpdate()){
+                       String appversion = application.getVersionName().replace(".", "");
+                       int appCurrentVersion = Integer.parseInt(appversion);
+                       String configVersion= version.getUpdatedVersion();
                        if (!configVersion.equalsIgnoreCase("")) {
-                           int configAppCurrentVersion = Integer.parseInt(configVersion);
-                              if (appCurrentVersion<configAppCurrentVersion){
-                                  versionValidator.version(false, appCurrentVersion, configAppCurrentVersion,FORCE);
-                              }else {
-                                  versionValidator.version(false, appCurrentVersion, configAppCurrentVersion,FORCE);
-                              }
+                           if (configVersion.contains(".")) {
+                               configVersion = configVersion.replace(".", "");
+                               if (!configVersion.equalsIgnoreCase("")) {
+                                   int configAppCurrentVersion = Integer.parseInt(configVersion);
+                                   if (appCurrentVersion<configAppCurrentVersion){
+                                       versionValidator.version(false, appCurrentVersion, configAppCurrentVersion,FORCE);
+                                   }else {
+                                       versionValidator.version(false, appCurrentVersion, configAppCurrentVersion,FORCE);
+                                   }
+                               }else {
+                                   versionValidator.version(false, appCurrentVersion, 0,FORCE);
+                               }
+                           }
+                           else {
+                               versionValidator.version(false, appCurrentVersion, 0,FORCE);
+                           }
                        }else {
                            versionValidator.version(false, appCurrentVersion, 0,FORCE);
                        }
+
+                   }else if (version.getRecommendedUpdate()){
+                       String appversion = application.getVersionName().replace(".", "");
+                       int appCurrentVersion = Integer.parseInt(appversion);
+                       String configVersion= version.getUpdatedVersion();
+                       if (!configVersion.equalsIgnoreCase("")) {
+                           if (configVersion.contains(".")) {
+                               configVersion = configVersion.replace(".", "");
+                               if (!configVersion.equalsIgnoreCase("")) {
+                                   int configAppCurrentVersion = Integer.parseInt(configVersion);
+                                   if (appCurrentVersion < configAppCurrentVersion) {
+                                       versionValidator.version(false, appCurrentVersion, configAppCurrentVersion, RECOMMENDED);
+                                   } else {
+                                       versionValidator.version(false, appCurrentVersion, configAppCurrentVersion, RECOMMENDED);
+                                   }
+                               } else {
+                                   versionValidator.version(false, appCurrentVersion, 0, RECOMMENDED);
+                               }
+                           } else {
+                               versionValidator.version(false, appCurrentVersion, 0, RECOMMENDED);
+                           }
+                       }
+                   }else {
+                       versionValidator.version(false, 0, 0, RECOMMENDED);
                    }
-                   else {
-                       versionValidator.version(false, appCurrentVersion, 0,FORCE);
-                   }
-               }else {
-                   versionValidator.version(false, appCurrentVersion, 0,FORCE);
+
+
+               }
+               else {
+
                }
 
-           }else if (version.getRecommendedUpdate()){
-               String appversion = application.getVersionName().replace(".", "");
-               int appCurrentVersion = Integer.parseInt(appversion);
-               String configVersion= version.getUpdatedVersion();
-               if (!configVersion.equalsIgnoreCase("")) {
-                   if (configVersion.contains(".")) {
-                       configVersion = configVersion.replace(".", "");
-                       if (!configVersion.equalsIgnoreCase("")) {
-                           int configAppCurrentVersion = Integer.parseInt(configVersion);
-                           if (appCurrentVersion < configAppCurrentVersion) {
-                               versionValidator.version(false, appCurrentVersion, configAppCurrentVersion, RECOMMENDED);
-                           } else {
-                               versionValidator.version(false, appCurrentVersion, configAppCurrentVersion, RECOMMENDED);
-                           }
-                       } else {
-                           versionValidator.version(false, appCurrentVersion, 0, RECOMMENDED);
-                       }
-                   } else {
-                       versionValidator.version(false, appCurrentVersion, 0, RECOMMENDED);
-                   }
-               }
-           }else {
-               versionValidator.version(false, 0, 0, RECOMMENDED);
-           }
+
+
         }
     }
 

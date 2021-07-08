@@ -826,7 +826,6 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
         callBinding();
     }
 
-
     public void comingSoon() {
         if (isLogin.equalsIgnoreCase(AppConstants.UserStatus.Login.toString())) {
             //showDialog(EpisodeActivity.this.getResources().getString(R.string.error), getResources().getString(R.string.you_are_not_entitled));
@@ -840,7 +839,6 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
                 intent.putExtra("responseEntitlement", responseEntitlementModel);
                 startActivity(intent);
             }
-
         } else {
             preference.setAppPrefGotoPurchase(true);
             openLoginPage(getResources().getString(R.string.please_login_play));
@@ -877,7 +875,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
         getBinding().setCrewtext("");
         EnveuVideoItemBean player = new EnveuVideoItemBean();
 
-        Log.d("ftftftftftftft",new Gson().toJson(player));
+       // Log.d("ftftftftftftft",new Gson().toJson(player));
 
         Data data = new Data();
         data.setContentTitle("");

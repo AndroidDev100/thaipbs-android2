@@ -1234,7 +1234,7 @@ public class AppCommonMethod {
     }
 
     public static void setConfigConstant(ConfigBean configResponse, boolean isTablet) {
-        Logger.w("configResponse", configResponse.getData().getAppConfig().getBaseUrl() + "  " + configResponse.getData().getAppConfig().getOvpBaseUrl());
+      //  Logger.w("configResponse", configResponse.getData().getAppConfig().getBaseUrl() + "  " + configResponse.getData().getAppConfig().getOvpBaseUrl());
         SDKConfig.getInstance().setConfigObject(configResponse, isTablet);
 
     }
