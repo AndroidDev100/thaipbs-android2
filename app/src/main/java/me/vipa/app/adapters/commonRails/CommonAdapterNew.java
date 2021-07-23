@@ -1,4 +1,4 @@
-package me.vipa.app.adapters.commonRails;
+ package me.vipa.app.adapters.commonRails;
 
 import android.app.Activity;
 import android.content.Context;

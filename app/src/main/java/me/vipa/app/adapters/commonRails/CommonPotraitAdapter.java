@@ -37,8 +37,8 @@ public class CommonPotraitAdapter extends RecyclerView.Adapter<CommonPotraitAdap
     private final ItemClickListener listener;
     int viewType;
     private long mLastClickTime = 0;
-    private int itemWidth;
-    private int itemHeight;
+    //private int itemWidth;
+    //private int itemHeight;
     private ArrayList<CommonContinueRail> continuelist;
     private boolean isContinueList;
     private String isLogin;
@@ -74,8 +74,8 @@ public class CommonPotraitAdapter extends RecyclerView.Adapter<CommonPotraitAdap
         (mContext).getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
 
         //if you need three fix imageview in width
-        itemWidth = (displaymetrics.widthPixels) / num;
-        itemHeight = (int) (itemWidth * 16) / 9;
+       /* itemWidth = (displaymetrics.widthPixels) / num;
+        itemHeight = (int) (itemWidth * 16) / 9;*/
     }
 
     public void notifydata(List<EnveuVideoItemBean> i) {
@@ -92,8 +92,8 @@ public class CommonPotraitAdapter extends RecyclerView.Adapter<CommonPotraitAdap
 
     @Override
     public void onBindViewHolder(@NonNull SingleItemRowHolder holder, int position) {
-        holder.potraitItemBinding.itemImage.getLayoutParams().width = itemWidth;
-        holder.potraitItemBinding.itemImage.getLayoutParams().height = itemHeight;
+      //  holder.potraitItemBinding.itemImage.getLayoutParams().width = itemWidth;
+       // holder.potraitItemBinding.itemImage.getLayoutParams().height = itemHeight;
 
 
         if (itemsList.size() > 0) {

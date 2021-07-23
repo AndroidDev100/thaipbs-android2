@@ -39,8 +39,8 @@ public class CommonCircleAdapter extends RecyclerView.Adapter<CommonCircleAdapte
     private boolean isContinueList;
     private String isLogin;
     private KsPreferenceKeys preference;
-    private int itemWidth;
-    private int itemHeight;
+  //  private int itemWidth;
+    //private int itemHeight;
 
     public CommonCircleAdapter(Activity context, List<EnveuVideoItemBean> itemsList, String contentType, ArrayList<CommonContinueRail> continuelist, ItemClickListener callback) {
         this.itemsList = itemsList;
@@ -70,8 +70,8 @@ public class CommonCircleAdapter extends RecyclerView.Adapter<CommonCircleAdapte
         (mContext).getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
 
         //if you need three fix imageview in width
-        itemWidth = (displaymetrics.widthPixels) / num;
-        itemHeight = itemWidth;
+       // itemWidth = (displaymetrics.widthPixels) / num;
+     //   itemHeight = itemWidth;
         //this.listener=listener;
     }
 
