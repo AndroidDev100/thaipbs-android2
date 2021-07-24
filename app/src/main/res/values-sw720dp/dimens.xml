@@ -91,6 +91,7 @@
     <dimen name="circle_image_height">220dp</dimen>
 
     <dimen name="square_image_width">250dp</dimen>
+    <dimen name="NontonSize190">190dp</dimen>
     <dimen name="square_image_height">250dp</dimen>
 
     <dimen name="carousel_image_width">510dp</dimen>

@@ -41,11 +41,10 @@
                     style="@style/Custom.Widget.CardView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|center"
                     android:nestedScrollingEnabled="false"
                     android:numColumns="auto_fit"
                     android:overScrollMode="never"
-                    android:stretchMode="columnWidth" />
+                    />
 
                 <LinearLayout
                     android:id="@+id/transparentLayout"

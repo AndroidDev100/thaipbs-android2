@@ -23,8 +23,8 @@ import me.vipa.app.beanModel.beanModel.SectionDataModel;
 
 public class CommonListingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private ArrayList<SectionDataModel> dataList;
-    private int itemWidth;
-    private int itemHeight;
+   /// private int itemWidth;
+   // private int itemHeight;
 
     public CommonListingAdapter(Activity activity) {
         DisplayMetrics displaymetrics = new DisplayMetrics();
@@ -41,8 +41,8 @@ public class CommonListingAdapter extends RecyclerView.Adapter<RecyclerView.View
         }
 
         //if you need three fix imageview in width
-        itemWidth = (displaymetrics.widthPixels - 60) / num;
-        itemHeight = (int) (itemWidth * 16) / 9;
+      //  itemWidth = (displaymetrics.widthPixels - 60) / num;
+       // itemHeight = (int) (itemWidth * 16) / 9;
     }
 
 
@@ -83,8 +83,8 @@ public class CommonListingAdapter extends RecyclerView.Adapter<RecyclerView.View
             ((LandscapeHolder) viewHolder).shimmerFrameLayout.startShimmer();
         } else if (viewHolder instanceof PortrateHolder) {
             ((PortrateHolder) viewHolder).shimmerFrameLayout.startShimmer();
-            ((PortrateHolder) viewHolder).shimmerImage.getLayoutParams().width = itemWidth;
-            ((PortrateHolder) viewHolder).shimmerImage.getLayoutParams().height = itemHeight;
+           // ((PortrateHolder) viewHolder).shimmerImage.getLayoutParams().width = itemWidth;
+          //  ((PortrateHolder) viewHolder).shimmerImage.getLayoutParams().height = itemHeight;
 
         }
     }

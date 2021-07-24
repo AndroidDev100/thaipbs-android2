@@ -26,15 +26,15 @@
                 android:layout_height="wrap_content">
 
                 <RelativeLayout
-                    android:layout_width="@dimen/_90sdp"
-                    android:layout_height="@dimen/NontonSize177">
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_167sdp">
 
                     <ImageView
                         android:id="@+id/itemImage"
                         errorImage="@{@drawable/placeholder_potrait}"
                         placeholder="@{@drawable/placeholder_potrait}"
-                        android:layout_width="@dimen/_90sdp"
-                        android:layout_height="@dimen/NontonSize177"
+                        android:layout_width="@dimen/_100sdp"
+                        android:layout_height="@dimen/_167sdp"
                         android:contentDescription="TODO"
                         android:scaleType="fitXY"/>
 

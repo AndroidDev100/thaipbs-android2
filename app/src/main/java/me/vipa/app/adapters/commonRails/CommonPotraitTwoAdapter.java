@@ -36,8 +36,8 @@ public class CommonPotraitTwoAdapter extends RecyclerView.Adapter<CommonPotraitT
     private final ItemClickListener listener;
     int viewType;
     private long mLastClickTime = 0;
-    private int itemWidth;
-    private int itemHeight;
+    //private int itemWidth;
+   // private int itemHeight;
     private ArrayList<CommonContinueRail> continuelist;
     private boolean isContinueList;
     private String isLogin;
@@ -73,8 +73,8 @@ public class CommonPotraitTwoAdapter extends RecyclerView.Adapter<CommonPotraitT
         (mContext).getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
 
         //if you need three fix imageview in width
-        itemWidth = (displaymetrics.widthPixels) / num;
-        itemHeight = (int) (itemWidth * 16) / 9;
+      //  itemWidth = (displaymetrics.widthPixels) / num;
+        //itemHeight = (int) (itemWidth * 16) / 9;
     }
 
     public void notifydata(List<EnveuVideoItemBean> i) {

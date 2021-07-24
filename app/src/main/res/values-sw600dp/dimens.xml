@@ -152,6 +152,7 @@
     <dimen name="NontonSize55">55dp</dimen>
     <dimen name="NontonSize60">60dp</dimen>
     <dimen name="NontonSize67">67dp</dimen>
+    <dimen name="NontonSize190">190dp</dimen>
     <dimen name="NontonSize85">85dp</dimen>
     <dimen name="NontonSize80">80dp</dimen>
     <dimen name="NontonSize90">90dp</dimen>

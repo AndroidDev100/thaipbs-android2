@@ -19,6 +19,7 @@
 
     <dimen name="splash_logo_width">250dp</dimen>
     <dimen name="splash_logo_height">47dp</dimen>
+    <dimen name="NontonSize190">190dp</dimen>
 
     <dimen name="toolbar_logo_width">100dp</dimen>
     <dimen name="toolbar_logo_height">19dp</dimen>

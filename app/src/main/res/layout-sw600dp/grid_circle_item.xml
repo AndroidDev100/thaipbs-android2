@@ -30,8 +30,8 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/item_image"
-                    android:layout_width="@dimen/_90sdp"
-                    android:layout_height="@dimen/_90sdp"
+                    android:layout_width="@dimen/_87sdp"
+                    android:layout_height="@dimen/_87sdp"
                     android:background="@drawable/placeholder_circle" />
 
                 <TextView
