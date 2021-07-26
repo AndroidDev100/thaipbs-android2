@@ -17,21 +17,25 @@
         rv_centered="true">
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_94sdp"
+            android:layout_marginStart="@dimen/_1sdp"
+            android:layout_gravity="center"
             android:orientation="vertical">
 
             <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_2sdp"
+                android:layout_width="@dimen/_94sdp"
+                android:layout_height="@dimen/_94sdp"
+                android:layout_gravity="center"
                 android:orientation="vertical">
 
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/item_image"
-                    android:layout_width="@dimen/_87sdp"
-                    android:layout_height="@dimen/_87sdp"
+                    android:layout_width="@dimen/_94sdp"
+                    android:layout_gravity="center"
+
+                    android:layout_height="@dimen/_94sdp"
                     android:background="@drawable/placeholder_circle" />
 
                 <TextView

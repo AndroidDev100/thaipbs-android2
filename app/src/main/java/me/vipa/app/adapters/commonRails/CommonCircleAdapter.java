@@ -66,8 +66,8 @@ public class CommonCircleAdapter extends RecyclerView.Adapter<CommonCircleAdapte
             else
                 num = 5;
         }
-        DisplayMetrics displaymetrics = new DisplayMetrics();
-        (mContext).getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+       // DisplayMetrics displaymetrics = new DisplayMetrics();
+       // (mContext).getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
 
         //if you need three fix imageview in width
        // itemWidth = (displaymetrics.widthPixels) / num;
@@ -106,7 +106,8 @@ public class CommonCircleAdapter extends RecyclerView.Adapter<CommonCircleAdapte
 
                     if (contentsItem.getPosterURL() != null && !contentsItem.getPosterURL().equalsIgnoreCase("")) {
                         ImageHelper.getInstance(mContext)
-                                .loadCIRImage(holder.circularItemBinding.itemImage, AppCommonMethod.getListCIRCLEImage(contentsItem.getPosterURL(), mContext),null);
+                                //.loadCIRImage(holder.circularItemBinding.itemImage, AppCommonMethod.getListCIRCLEImage(contentsItem.getPosterURL(), mContext),null);
+                                .loadCIRImage2(holder.circularItemBinding.itemImage, contentsItem.getPosterURL(),null);
                     }
 
                     holder.circularItemBinding.itemImage.setOnClickListener(new View.OnClickListener() {

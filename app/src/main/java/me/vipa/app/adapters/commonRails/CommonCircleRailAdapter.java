@@ -122,7 +122,8 @@ public class CommonCircleRailAdapter extends RecyclerView.Adapter<RecyclerView.V
 
         try {
             if (videos.get(i).getPosterURL() != null && !videos.get(i).getPosterURL().equalsIgnoreCase("")) {
-                ImageHelper.getInstance(mContext).loadCircleImageTo(itemBinding.itemImage, AppCommonMethod.getListCIRCLEImage(videos.get(i).getPosterURL(), mContext));
+               // ImageHelper.getInstance(mContext).loadCircleImageTo(itemBinding.itemImage, AppCommonMethod.getListCIRCLEImage(videos.get(i).getPosterURL(), mContext));
+                ImageHelper.getInstance(mContext).loadCircleImageTo(itemBinding.itemImage, videos.get(i).getPosterURL());
             }
         }catch (Exception ignored){
 
@@ -138,8 +139,8 @@ public class CommonCircleRailAdapter extends RecyclerView.Adapter<RecyclerView.V
 
         try {
             if (videos.get(i).getPosterURL() != null && !videos.get(i).getPosterURL().equalsIgnoreCase("")) {
-                ImageHelper.getInstance(mContext).loadCircleImageTo(itemBinding.itemImage, AppCommonMethod.getListCIRCLEImage(videos.get(i).getPosterURL(), mContext));
-            }
+                // ImageHelper.getInstance(mContext).loadCircleImageTo(itemBinding.itemImage, AppCommonMethod.getListCIRCLEImage(videos.get(i).getPosterURL(), mContext));
+                ImageHelper.getInstance(mContext).loadCircleImageTo(itemBinding.itemImage, videos.get(i).getPosterURL());            }
         }catch (Exception ignored){
 
         }
@@ -155,8 +156,8 @@ public class CommonCircleRailAdapter extends RecyclerView.Adapter<RecyclerView.V
 
         try {
             if (videos.get(i).getPosterURL() != null && !videos.get(i).getPosterURL().equalsIgnoreCase("")) {
-                ImageHelper.getInstance(mContext).loadCircleImageTo(itemBinding.itemImage, AppCommonMethod.getListCIRCLEImage(videos.get(i).getPosterURL(), mContext));
-            }
+                // ImageHelper.getInstance(mContext).loadCircleImageTo(itemBinding.itemImage, AppCommonMethod.getListCIRCLEImage(videos.get(i).getPosterURL(), mContext));
+                ImageHelper.getInstance(mContext).loadCircleImageTo(itemBinding.itemImage, videos.get(i).getPosterURL());            }
         }catch (Exception ignored){
 
         }

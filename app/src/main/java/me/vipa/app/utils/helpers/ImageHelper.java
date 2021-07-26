@@ -127,6 +127,25 @@ public class ImageHelper {
                     .into(imageView);
            }
     }
+    public void loadCIRImage2(ImageView imageView, String url, Drawable placeholder) {
+        if (placeholder==null){
+            if (requestOptions!=null){
+                requestOptions.placeholder(R.drawable.placeholder_circle);
+            }
+            Glide.with(imageView.getContext())
+                    .load(url)
+                    .apply(new RequestOptions().placeholder(placeholder).error(placeholder))
+                    .thumbnail(0.5f)
+                    .into(imageView);
+        }else {
+            Logger.e("ImageHelper", "" + url+"  "+" ");
+            Glide.with(imageView.getContext())
+                    .load(url)
+                    .apply(new RequestOptions().placeholder(placeholder).error(placeholder))
+                    .thumbnail(0.5f)
+                    .into(imageView);
+        }
+    }
 
     public void loadIAPImage(ImageView imageView) {
         Glide.with(imageView.getContext())

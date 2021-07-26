@@ -280,6 +280,12 @@ public class PlayerControlsFragment extends Fragment {
 
     void sendLandscapeCallback() {
         try {
+      /*     RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+            params.setMargins(0,5,0,0);
+            backArrow.setLayoutParams(params);
+            media_route_button.setLayoutParams(params);
+            playerSettingIcon.setLayoutParams(params);*/
+
             fullscreen.setBackgroundResource(R.drawable.exit_full_screen);
             if (videoType.equalsIgnoreCase("1")){
                 playerSettingIcon.setVisibility(View.INVISIBLE);
