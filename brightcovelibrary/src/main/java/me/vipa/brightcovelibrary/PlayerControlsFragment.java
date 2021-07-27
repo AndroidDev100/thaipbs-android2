@@ -45,6 +45,8 @@ import com.google.android.gms.cast.framework.CastButtonFactory;
 import com.google.gson.Gson;
 import com.vipa.brightcovelibrary.R;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,12 +103,15 @@ public class PlayerControlsFragment extends Fragment {
     private String signLangId = "";
 
 
+
     private OnFragmentInteractionListener mListener;
 //    private SeekBarPreview seekBarPreviewSDCard;
 
     public PlayerControlsFragment() {
         // Required empty public constructor
     }
+
+
 
     public PlayerControlsFragment newInstance(String param1, String param2) {
         PlayerControlsFragment fragment = new PlayerControlsFragment();
@@ -232,6 +237,8 @@ public class PlayerControlsFragment extends Fragment {
     }
 
     void sendPortraitCallback() {
+
+
         subtitles.setVisibility(View.GONE);
         Log.w("captionHide", "sendPortraitCallback");
 
@@ -253,12 +260,26 @@ public class PlayerControlsFragment extends Fragment {
         seekBarControl.setLayoutParams(params);
         settingControl.setLayoutParams(params);
 
+        // private RelativeLayout rlbackArrow,rlMedia,rlplayerSettingIcon;
+
+
         RelativeLayout.LayoutParams params1 = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT
         );
         params1.setMargins(0, 0, 0, 0);
         backArrow.setLayoutParams(params1);
+        backArrow.requestFocus();
+
+        //RelativeLayout.LayoutParams paramsMedia = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+    /*    paramsMedia.setMargins(0,0,0,20);
+        media_route_button.setLayoutParams(paramsMedia);
+        media_route_button.requestFocus();*/
+
+  /*      RelativeLayout.LayoutParams paramsSetting = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        paramsSetting.setMargins(0,0,0,20);
+        playerSettingIcon.setLayoutParams(paramsSetting);
+        playerSettingIcon.requestFocus();*/
         //settingLay.setLayoutParams(params1);
 
         try {
@@ -280,13 +301,11 @@ public class PlayerControlsFragment extends Fragment {
 
     void sendLandscapeCallback() {
         try {
-      /*     RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-            params.setMargins(0,5,0,0);
-            backArrow.setLayoutParams(params);
-            media_route_button.setLayoutParams(params);
-            playerSettingIcon.setLayoutParams(params);*/
 
             fullscreen.setBackgroundResource(R.drawable.exit_full_screen);
+
+
+
             if (videoType.equalsIgnoreCase("1")){
                 playerSettingIcon.setVisibility(View.INVISIBLE);
             }else {
@@ -311,13 +330,14 @@ public class PlayerControlsFragment extends Fragment {
                 Utils.setParamstoBackArrow(backArrow);
                 Utils.setParamstoSettinIcon(settingLay);
                 Utils.setParamstoSkipButton(skipBtn);
-                //Utils.setParamstoSetingButton(skipBtn);
             }
         } catch (Exception e) {
 
         }
 
     }
+
+
 
     void showControls() {
         Log.w("CONTROLSVIDEO", videoType);

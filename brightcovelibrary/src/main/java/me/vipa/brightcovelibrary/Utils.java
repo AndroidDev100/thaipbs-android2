@@ -71,7 +71,7 @@ class Utils {
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
-        params.setMargins(0, 60, 0, 0);
+        params.setMargins(0, 70, 0, 0);
         backArrow.setLayoutParams(params);
     }
 
@@ -205,7 +205,7 @@ class Utils {
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
-        params.setMargins(0, 67, 0, 0);
+        params.setMargins(0, 70, 0, 0);
         params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
         playerSettingIcon.setLayoutParams(params);
     }
