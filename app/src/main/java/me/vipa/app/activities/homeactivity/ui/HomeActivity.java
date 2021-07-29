@@ -3,6 +3,7 @@
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -159,6 +160,7 @@ public class HomeActivity extends BaseBindingActivity<ActivityMainBinding> imple
     };
     private BottomNavigationView navigation;
     private boolean kidsMode=false;
+    private int aspectRatio;
 
     @SuppressLint("RestrictedApi")
     public static void removeNavigationShiftMode(BottomNavigationView view) {
@@ -199,6 +201,8 @@ public class HomeActivity extends BaseBindingActivity<ActivityMainBinding> imple
         //setupCrashlytics();
 
         strCurrentTheme = KsPreferenceKeys.getInstance().getCurrentTheme();
+
+
 
 
         kidsMode  = new SharedPrefHelper(HomeActivity.this).getKidsMode();

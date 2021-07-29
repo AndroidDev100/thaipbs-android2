@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -27,6 +28,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatRadioButton;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -102,9 +104,12 @@ public class PlayerControlsFragment extends Fragment {
     private boolean isFromParentRef = false;
     private String signLangId = "";
 
+   // private OnSizeRatioDown onSizeRatioDown;
+
 
 
     private OnFragmentInteractionListener mListener;
+    private int aspectRatio;
 //    private SeekBarPreview seekBarPreviewSDCard;
 
     public PlayerControlsFragment() {
@@ -239,6 +244,7 @@ public class PlayerControlsFragment extends Fragment {
     void sendPortraitCallback() {
 
 
+
         subtitles.setVisibility(View.GONE);
         Log.w("captionHide", "sendPortraitCallback");
 
@@ -297,10 +303,19 @@ public class PlayerControlsFragment extends Fragment {
         Utils.setParamsResetSkipButton(skipBtn);
         //  Utils.setParamstoSettinIcon(playerSettingIcon);
 
+
+
     }
 
     void sendLandscapeCallback() {
         try {
+
+
+
+
+//ratio(screen_width,screen_height);
+
+
 
             fullscreen.setBackgroundResource(R.drawable.exit_full_screen);
 
@@ -331,11 +346,39 @@ public class PlayerControlsFragment extends Fragment {
                 Utils.setParamstoSettinIcon(settingLay);
                 Utils.setParamstoSkipButton(skipBtn);
             }
-        } catch (Exception e) {
+
+          /*  DisplayMetrics displayMetrics = new DisplayMetrics();
+            getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+            int screen_height = displayMetrics.heightPixels;
+            int screen_width = displayMetrics.widthPixels;
+            System.out.println("RATUILand"+ screen_height + " " + screen_width);
+            Log.e("RATUILANDHEIGHT", String.valueOf(screen_height));
+            Log.e("RATUILANDWIDTH", String.valueOf(screen_width));
+
+            *//*    1920 x 1080 pixels[]
+            16:9 Ratio
+
+            It's the standard widescreen aspect ratio for videos. Most smartphones and DSLRs record video at 1920 x 1080 pixels, which is a 16:9 aspect ratio*//*
+            if(screen_width>1920 ){
+
+                Log.e("SIZE GREAAT","SIZE");
+
+               onSizeRatioDown.onSize();
+
+            }*/
+        }
+
+        catch (Exception e) {
 
         }
 
     }
+
+
+
+
+
+
 
 
 
@@ -767,6 +810,7 @@ public class PlayerControlsFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
 
     }
 
