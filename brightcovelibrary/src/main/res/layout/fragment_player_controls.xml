@@ -85,15 +85,12 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
-
                     <ImageView
                         android:id="@+id/playerSettingIcon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="4dp"
-
-
-                        android:src="@drawable/player_setting_icon"
+                        android:background="@drawable/player_setting_icon"
                          />
 
                 </RelativeLayout>

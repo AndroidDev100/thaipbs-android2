@@ -243,11 +243,11 @@ public class PlayerControlsFragment extends Fragment {
 
     void sendPortraitCallback() {
 
-
-
-        subtitles.setVisibility(View.GONE);
-        Log.w("captionHide", "sendPortraitCallback");
-
+        try {
+            subtitles.setVisibility(View.GONE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         if (videoType.equalsIgnoreCase("1")){
             playerSettingIcon.setVisibility(View.INVISIBLE);
         }else {
@@ -411,7 +411,11 @@ public class PlayerControlsFragment extends Fragment {
 
     void hideControls() {
         Log.w("IMATAG", "hideControls");
-        childControl.setVisibility(View.GONE);
+        try {
+            childControl.setVisibility(View.GONE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         backArrow.setVisibility(View.GONE);
     }
 
