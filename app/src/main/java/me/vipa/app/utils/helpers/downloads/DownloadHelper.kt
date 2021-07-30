@@ -82,9 +82,7 @@ class DownloadHelper() {
 
     constructor(activity: Activity) : this() {
         this.activity = activity
-        db = Room.databaseBuilder(
-                MvHubPlusApplication.getApplicationContext(activity),
-                DownloadDatabase::class.java, "enveu.db").build()
+        db = createDatabase()
         init(activity)
     }
 
@@ -92,9 +90,7 @@ class DownloadHelper() {
         this.videoListListener = videoListener as VideoListListener
         this.videoListener = videoListener
         this.activity = activity
-        db = Room.databaseBuilder(
-                MvHubPlusApplication.getApplicationContext(activity),
-                DownloadDatabase::class.java, "enveu.db").build()
+        db = createDatabase()
         init(activity)
     }
 
@@ -251,9 +247,7 @@ class DownloadHelper() {
                 init(activity)
             }
             if (!::db.isInitialized) {
-                db = Room.databaseBuilder(
-                        MvHubPlusApplication.getApplicationContext(activity),
-                        DownloadDatabase::class.java, "enveu.db").build()
+                db = createDatabase()
             }
             val videosList = ArrayList<Video>()
             videosList.addAll(catalog.findAllVideoDownload(DownloadStatus.STATUS_COMPLETE))
@@ -638,9 +632,7 @@ class DownloadHelper() {
     }
 
     private fun insertVideo(downloadedVideo: DownloadedVideo, downloadedEpisodes: DownloadedEpisodes?) {
-        db = Room.databaseBuilder(
-                MvHubPlusApplication.getApplicationContext(activity),
-                DownloadDatabase::class.java, "enveu.db").build()
+        db = createDatabase()
         try {
             AsyncTask.execute {
                 db.downloadVideoDao().insertVideo(downloadedVideo)
@@ -651,6 +643,13 @@ class DownloadHelper() {
         } catch (ex: Exception) {
            Logger.e(TAG, ex.message)
         }
+    }
+
+    private fun createDatabase(): DownloadDatabase {
+        db = Room.databaseBuilder(
+                MvHubPlusApplication.getApplicationContext(activity),
+                DownloadDatabase::class.java, "enveu.db").fallbackToDestructiveMigration().build()
+        return db
     }
 
     public fun deleteVideoFromDatabase(videoId: String) {

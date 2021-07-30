@@ -64,13 +64,14 @@ public class ForceUpdateHandler {
                        String appversion = application.getVersionName().replace(".", "");
                        int appCurrentVersion = Integer.parseInt(appversion);
                        String configVersion= version.getUpdatedVersion();
+
                        if (!configVersion.equalsIgnoreCase("")) {
                            if (configVersion.contains(".")) {
                                configVersion = configVersion.replace(".", "");
                                if (!configVersion.equalsIgnoreCase("")) {
                                    int configAppCurrentVersion = Integer.parseInt(configVersion);
                                    if (appCurrentVersion<configAppCurrentVersion){
-                                       versionValidator.version(false, appCurrentVersion, configAppCurrentVersion,FORCE);
+                                       versionValidator.version(true, appCurrentVersion, configAppCurrentVersion,FORCE);
                                    }else {
                                        versionValidator.version(false, appCurrentVersion, configAppCurrentVersion,FORCE);
                                    }
@@ -95,7 +96,7 @@ public class ForceUpdateHandler {
                                if (!configVersion.equalsIgnoreCase("")) {
                                    int configAppCurrentVersion = Integer.parseInt(configVersion);
                                    if (appCurrentVersion < configAppCurrentVersion) {
-                                       versionValidator.version(false, appCurrentVersion, configAppCurrentVersion, RECOMMENDED);
+                                       versionValidator.version(true, appCurrentVersion, configAppCurrentVersion, RECOMMENDED);
                                    } else {
                                        versionValidator.version(false, appCurrentVersion, configAppCurrentVersion, RECOMMENDED);
                                    }

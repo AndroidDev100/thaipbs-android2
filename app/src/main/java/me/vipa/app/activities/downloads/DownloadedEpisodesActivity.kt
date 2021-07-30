@@ -1,8 +1,10 @@
 package me.vipa.app.activities.downloads
 
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.lifecycle.Observer
@@ -19,10 +21,11 @@ import me.vipa.app.utils.cropImage.helpers.Logger
 import me.vipa.app.utils.helpers.downloads.VideoListListener
 import me.vipa.app.utils.helpers.downloads.room.DownloadModel
 import me.vipa.app.utils.helpers.downloads.room.DownloadedEpisodes
+import me.vipa.brightcovelibrary.BrightcovePlayerFragment
 import java.io.Serializable
 import java.util.ArrayList
 
-class DownloadedEpisodesActivity() : BaseBindingActivity<ActivityDownloadedEpisodesBinding>(), MediaDownloadable.DownloadEventListener, VideoListListener {
+class DownloadedEpisodesActivity() : BaseBindingActivity<ActivityDownloadedEpisodesBinding>(), MediaDownloadable.DownloadEventListener, VideoListListener, BrightcovePlayerFragment.OnPlayerInteractionListener {
     override fun inflateBindingLayout(inflater: LayoutInflater): ActivityDownloadedEpisodesBinding {
         return ActivityDownloadedEpisodesBinding.inflate(inflater)
     }
@@ -36,6 +39,7 @@ class DownloadedEpisodesActivity() : BaseBindingActivity<ActivityDownloadedEpiso
     private val TAG = "DownloadedEpisodeActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         this.seriesId = intent?.getStringExtra("SeriesId")!!
         this.seriesName = intent?.getStringExtra("SeriesName")!!
         this.seasonNumber = intent?.getStringExtra("SeasonNumber")!!
@@ -148,5 +152,33 @@ class DownloadedEpisodesActivity() : BaseBindingActivity<ActivityDownloadedEpiso
 
     override fun deleteVideo(video: Video) {
 
+    }
+
+    override fun onFragmentInteraction(uri: Uri?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onPlayerError(error: String?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onBookmarkCall(currentPosition: Int) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onBookmarkFinish() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onPlayerStart() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onPlayerInProgress() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onAdStarted() {
+        TODO("Not yet implemented")
     }
 }
