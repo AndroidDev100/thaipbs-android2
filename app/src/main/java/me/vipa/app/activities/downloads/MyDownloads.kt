@@ -1,6 +1,7 @@
 package me.vipa.app.activities.downloads
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -26,9 +27,10 @@ import me.vipa.app.utils.helpers.NetworkConnectivity
 import me.vipa.app.utils.helpers.downloads.VideoListListener
 import me.vipa.app.utils.helpers.downloads.room.DownloadModel
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys
+import me.vipa.brightcovelibrary.BrightcovePlayerFragment
 import java.io.Serializable
 
-class MyDownloads : BaseBindingActivity<ActivityMyDownloadsBinding>(), MediaDownloadable.DownloadEventListener, VideoListListener, NoDataCallBack {
+class MyDownloads : BaseBindingActivity<ActivityMyDownloadsBinding>(), MediaDownloadable.DownloadEventListener, VideoListListener, NoDataCallBack, BrightcovePlayerFragment.OnPlayerInteractionListener {
     override fun inflateBindingLayout(inflater: LayoutInflater): ActivityMyDownloadsBinding {
         return ActivityMyDownloadsBinding.inflate(inflater)
     }
@@ -268,5 +270,33 @@ class MyDownloads : BaseBindingActivity<ActivityMyDownloadsBinding>(), MediaDown
             Logger.e("inCondition", exception.message)
         }
 
+    }
+
+    override fun onFragmentInteraction(uri: Uri?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onPlayerError(error: String?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onBookmarkCall(currentPosition: Int) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onBookmarkFinish() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onPlayerStart() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onPlayerInProgress() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onAdStarted() {
+        TODO("Not yet implemented")
     }
 }

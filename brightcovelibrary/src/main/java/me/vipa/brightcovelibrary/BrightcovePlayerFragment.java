@@ -176,61 +176,71 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         ChromecastManager.getInstance().setCallBacks(this);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            videoId = bundle.getString("videoId");
-            // Log.w("IMATAG", videoId);
-            assetType = bundle.getString("assetType");
-            selected_track = bundle.getString("selected_track");
-            //  Log.e("Selectedtrack", selected_track);
-            //Log.d("asasasasas",selected_track);
-            selected_lang = bundle.getString("selected_lang");
-            adRulesURL = bundle.getString("config_vast_tag");
-            bingeWatch = bundle.getBoolean("binge_watch");
+            try {
 
-            signLangParentRefId = bundle.getString("signLangParentRefId");
-            signLangRefId = bundle.getString("signLangId");
+                // Log.w("IMATAG", videoId);
+                assetType = bundle.getString("assetType");
+                selected_track = bundle.getString("selected_track");
+                //  Log.e("Selectedtrack", selected_track);
+                //Log.d("asasasasas",selected_track);
+                selected_lang = bundle.getString("selected_lang");
+                adRulesURL = bundle.getString("config_vast_tag");
+                bingeWatch = bundle.getBoolean("binge_watch");
 
-            if (bundle.getString("podcast") != null) {
-                isPodcast = bundle.getString("podcast");
-            }
+                signLangParentRefId = bundle.getString("signLangParentRefId");
+                signLangRefId = bundle.getString("signLangId");
 
-
-            bingeWatchTimer = bundle.getInt("binge_watch_timer");
+                if (bundle.getString("podcast") != null) {
+                    isPodcast = bundle.getString("podcast");
+                }
 
 
-            isAdShowingToUser = bundle.getBoolean("ads_visibility");
+                bingeWatchTimer = bundle.getInt("binge_watch_timer");
 
-            if (bundle.getString("posterUrl") != null) {
-                poster_url = bundle.getString("posterUrl");
-            }
-            // Log.w("config_vast_tag", adRulesURL);
+
+                isAdShowingToUser = bundle.getBoolean("ads_visibility");
+
+                if (bundle.getString("posterUrl") != null) {
+                    poster_url = bundle.getString("posterUrl");
+                }
+                // Log.w("config_vast_tag", adRulesURL);
 
 //            Log.w("IMATAG ",bundle.getString("vast_tag"));
-            if (bundle.getString("vast_tag") != null && !bundle.getString("vast_tag").equalsIgnoreCase("")) {
-                adRulesURL = bundle.getString("vast_tag");
-            }
-            if (bundle.getString("poster_image") != null && !bundle.getString("poster_image").equalsIgnoreCase("")) {
-                poster_image = bundle.getString("poster_image");
+                if (bundle.getString("vast_tag") != null && !bundle.getString("vast_tag").equalsIgnoreCase("")) {
+                    adRulesURL = bundle.getString("vast_tag");
+                }
+                if (bundle.getString("poster_image") != null && !bundle.getString("poster_image").equalsIgnoreCase("")) {
+                    poster_image = bundle.getString("poster_image");
 
-            }
+                }
 
 
-            bookmarkPosition = bundle.getLong("bookmarkPosition");
-            if (bundle.containsKey("isOffline")) {
-                isOfflineVideo = bundle.getBoolean("isOffline");
-                isOfflinePodcast = bundle.getBoolean("isOfflinePodcast");
-                from = bundle.getInt("from");
-                currentVideo = bundle.getParcelable("videoId");
-                if (isOfflineVideo && mActivity != null) {
-                    if (from == 1) {
-                        mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+                bookmarkPosition = bundle.getLong("bookmarkPosition");
+                if (bundle.containsKey("isOffline")) {
+                    isOfflineVideo = bundle.getBoolean("isOffline");
+                    isOfflinePodcast = bundle.getBoolean("isOfflinePodcast");
+                    from = bundle.getInt("from");
+                    currentVideo = bundle.getParcelable("videoId");
+                    if (isOfflineVideo && mActivity != null) {
+                        if (from == 1) {
+                            mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+                        }
+                    }
+                } else {
+                    if (mActivity != null) {
+                        mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
                     }
                 }
-            } else {
-                if (mActivity != null) {
-                    mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
-                }
-            }
 
+                if (isOfflineVideo){
+
+                }else {
+                    videoId = bundle.getString("videoId");
+                }
+
+            }catch (Exception e){
+                Log.e("gtgtgtgt",e.getMessage());
+            }
         }
     }
 
@@ -1369,12 +1379,16 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
     private void checkBackButtonClickOrientation() {
 
         int orientation = getResources().getConfiguration().orientation;
-        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
-        } else {
+        if (isOfflineVideo) {
+            mActivity.finish();
+        }else {
+            if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+            } else {
 
-            if (baseVideoView != null) {
-                baseVideoView.stopPlayback();
+                if (baseVideoView != null) {
+                    baseVideoView.stopPlayback();
+                }
             }
         }
     }

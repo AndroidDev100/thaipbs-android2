@@ -57,7 +57,6 @@ class DownloadedVideoActivity : BaseBindingActivity<ActivityDownloadedVideoBindi
         Logger.e(TAG, Gson().toJson(intentData))
         var transaction = supportFragmentManager.beginTransaction()
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
-
         var playerFragment = BrightcovePlayerFragment()
         val args = Bundle()
         args.putBoolean("isOffline", true)
@@ -74,5 +73,9 @@ class DownloadedVideoActivity : BaseBindingActivity<ActivityDownloadedVideoBindi
     override fun inflateBindingLayout(inflater: LayoutInflater): ActivityDownloadedVideoBinding {
         return ActivityDownloadedVideoBinding.inflate(inflater)
 
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
     }
 }

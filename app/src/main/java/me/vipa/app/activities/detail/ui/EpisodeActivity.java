@@ -605,6 +605,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
     private void setPlayerFragment(Video video, boolean isOffline, Long bookmarkPosition) {
         Bundle args = new Bundle();
         if (isOffline) {
+            Log.d("gtgtgtgtgt","Enter");
             args.putBoolean("isOffline", isOfflineAvailable);
             args.putParcelable(AppConstants.BUNDLE_VIDEO_ID_BRIGHTCOVE, video);
             boolean value = KsPreferenceKeys.getInstance().getPodId(video.getId());
