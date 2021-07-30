@@ -242,7 +242,6 @@ public class PlayerControlsFragment extends Fragment {
     }
 
     void sendPortraitCallback() {
-
         try {
             subtitles.setVisibility(View.GONE);
         } catch (Exception e) {
@@ -277,16 +276,7 @@ public class PlayerControlsFragment extends Fragment {
         backArrow.setLayoutParams(params1);
         backArrow.requestFocus();
 
-        //RelativeLayout.LayoutParams paramsMedia = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-    /*    paramsMedia.setMargins(0,0,0,20);
-        media_route_button.setLayoutParams(paramsMedia);
-        media_route_button.requestFocus();*/
 
-  /*      RelativeLayout.LayoutParams paramsSetting = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        paramsSetting.setMargins(0,0,0,20);
-        playerSettingIcon.setLayoutParams(paramsSetting);
-        playerSettingIcon.requestFocus();*/
-        //settingLay.setLayoutParams(params1);
 
         try {
                        RelativeLayout.LayoutParams params2 = new RelativeLayout.LayoutParams(
@@ -309,18 +299,7 @@ public class PlayerControlsFragment extends Fragment {
 
     void sendLandscapeCallback() {
         try {
-
-
-
-
-//ratio(screen_width,screen_height);
-
-
-
             fullscreen.setBackgroundResource(R.drawable.exit_full_screen);
-
-
-
             if (videoType.equalsIgnoreCase("1")){
                 playerSettingIcon.setVisibility(View.INVISIBLE);
             }else {
@@ -481,7 +460,6 @@ public class PlayerControlsFragment extends Fragment {
     }
 
     private void performClick() {
-
         //Play pause control for player
         pauseButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -610,7 +588,8 @@ public class PlayerControlsFragment extends Fragment {
             }
         });
 
-        controlLayout.setOnTouchListener(new View.OnTouchListener() {
+        controlLayout.setOnTouchListener(new View.OnTouchListener()
+        {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 //  Toast.makeText(getActivity(),"playerViewClicked",Toast.LENGTH_LONG).show();
