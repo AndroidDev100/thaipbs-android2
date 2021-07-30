@@ -294,16 +294,6 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
     }
 
     private void startClapAnimation(JSONObject jsonObject, String updateType, boolean isTablet) {
-        if (KsPreferenceKeys.getInstance().getfirstTimeUser()){
-            KsPreferenceKeys.getInstance().setfirstTimeUser(false);
-            if (isTablet){
-                new ActivityLauncher(ActivitySplash.this).onBoardingTab(ActivitySplash.this, OnBoardingTab.class);
-            }else {
-                new ActivityLauncher(ActivitySplash.this).onBoardingScreen(ActivitySplash.this, OnBoarding.class);
-            }
-
-
-        }else {
 
             Log.w("branchRedirectors", "onAnimationEnd1");
 
@@ -325,9 +315,20 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
                         public void run() {
                             Log.w("branchRedirectors", "-->>non" + "");
                             //This logic is for now will update later
-                        new ActivityLauncher(ActivitySplash.this).homeScreen(ActivitySplash.this, HomeActivity.class);
+                            if (KsPreferenceKeys.getInstance().getfirstTimeUser()){
+                                KsPreferenceKeys.getInstance().setfirstTimeUser(false);
+                                if (isTablet){
+                                    new ActivityLauncher(ActivitySplash.this).onBoardingTab(ActivitySplash.this, OnBoardingTab.class);
+                                }else {
+                                    new ActivityLauncher(ActivitySplash.this).onBoardingScreen(ActivitySplash.this, OnBoarding.class);
+                                }
 
-                            finish();
+
+                            }else {
+                                new ActivityLauncher(ActivitySplash.this).homeScreen(ActivitySplash.this, HomeActivity.class);
+
+                                finish();
+                            }
                         }
                     }, 1);
                 } else {
@@ -339,16 +340,26 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
                             @Override
                             public void run() {
                                 Log.w("branchRedirectors", "-->>non" + "");
-                                new ActivityLauncher(ActivitySplash.this).homeScreen(ActivitySplash.this, HomeActivity.class);
+                                if (KsPreferenceKeys.getInstance().getfirstTimeUser()){
+                                    KsPreferenceKeys.getInstance().setfirstTimeUser(false);
+                                    if (isTablet){
+                                        new ActivityLauncher(ActivitySplash.this).onBoardingTab(ActivitySplash.this, OnBoardingTab.class);
+                                    }else {
+                                        new ActivityLauncher(ActivitySplash.this).onBoardingScreen(ActivitySplash.this, OnBoarding.class);
+                                    }
 
-                                finish();
+
+                                }else {
+                                    new ActivityLauncher(ActivitySplash.this).homeScreen(ActivitySplash.this, HomeActivity.class);
+
+                                    finish();
+                                }
                             }
                         }, 1);
                     }
                 }
 
             }
-        }
 
     }
 
