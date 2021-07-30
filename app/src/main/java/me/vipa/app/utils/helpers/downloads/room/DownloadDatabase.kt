@@ -30,7 +30,8 @@ abstract class DownloadDatabase : RoomDatabase() {
                 .build()
         val MIGRATION_2_3: Migration = object : Migration(2, 3) {
             override fun migrate(database: SupportSQLiteDatabase) {
-//                database.execSQL("ALTER TABLE downloadedVideos " + " ADD COLUMN download_status INTEGER")
+//                database.execSQL("ALTER TABLE downloadedVideos " + " ADD COLUMN parentalRating TEXT")
+//                database.execSQL("ALTER TABLE downloadedEpisodes " + " ADD COLUMN parentalRating TEXT")
             }
         }
     }
