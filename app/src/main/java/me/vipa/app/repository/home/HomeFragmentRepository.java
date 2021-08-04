@@ -81,7 +81,9 @@ public class HomeFragmentRepository {
 
     public synchronized static HomeFragmentRepository getInstance() {
         if (projectRepository == null) {
-            endpoint = RequestConfig.getEnveuClient().create(ApiInterface.class);
+            if(RequestConfig.getEnveuClient()!=null){
+                endpoint = RequestConfig.getEnveuClient().create(ApiInterface.class);
+            }
             projectRepository = new HomeFragmentRepository();
         }
         return projectRepository;
