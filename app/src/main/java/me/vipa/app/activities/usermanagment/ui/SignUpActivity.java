@@ -113,7 +113,9 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
         // setupUI(getBinding().root);
         getBinding().llSignUp.setEnabled(false);
         getBinding().llSignUp.getBackground().setAlpha(128);
-        getBinding().registerText.setTextColor(getResources().getColor(R.color.greyTextColor));
+        if(getBinding()!=null && getBinding().registerText!=null){
+            getBinding().registerText.setTextColor(getResources().getColor(R.color.greyTextColor));
+        }
         callBinding();
     }
 

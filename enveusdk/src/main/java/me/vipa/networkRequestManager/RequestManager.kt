@@ -64,22 +64,27 @@ class RequestManager {
     }
 
     fun loginCall(userName: String, password: String, loginCallBacks: LoginCallBack) {
-        val endPoint = NetworkSetup().userMngmtClient?.create<EnveuEndpoints>(EnveuEndpoints::class.java)
-        val requestParam = JsonObject()
-        requestParam.addProperty(UserManagement.email.name, userName)
-        requestParam.addProperty(UserManagement.password.name, password)
+        try {
+            val endPoint = NetworkSetup().userMngmtClient?.create<EnveuEndpoints>(EnveuEndpoints::class.java)
+            val requestParam = JsonObject()
+            requestParam.addProperty(UserManagement.email.name, userName)
+            requestParam.addProperty(UserManagement.password.name, password)
 
-        val call = endPoint?.getLogin(requestParam)
-        call?.enqueue(object : Callback<LoginResponseModel> {
-            override fun onResponse(call: Call<LoginResponseModel>, response: Response<LoginResponseModel>) {
-                loginCallBacks.success(true, response)
-            }
+            val call = endPoint?.getLogin(requestParam)
+            call?.enqueue(object : Callback<LoginResponseModel> {
+                override fun onResponse(call: Call<LoginResponseModel>, response: Response<LoginResponseModel>) {
+                    loginCallBacks.success(true, response)
+                }
 
-            override fun onFailure(call: Call<LoginResponseModel>, t: Throwable) {
-                t.message?.let { loginCallBacks.failure(false, 0, it) }
-                loginCallBacks.failure(false, 0, "")
-            }
-        })
+                override fun onFailure(call: Call<LoginResponseModel>, t: Throwable) {
+                    t.message?.let { loginCallBacks.failure(false, 0, it) }
+                    loginCallBacks.failure(false, 0, "")
+                }
+            })
+        }catch (exception : Exception){
+
+        }
+
     }
 
     fun registerCall(userName: String, email: String, password: String, notificationEnable: Boolean, loginCallBacks: LoginCallBack) {
@@ -319,18 +324,22 @@ class RequestManager {
     }
 
     fun addToWatchHistory(token: String, assestId: Int, bookmarkingCallback: BookmarkingCallback) {
-        val endPoint = NetworkSetup().subscriptionClient(token).create<EnveuEndpoints>(EnveuEndpoints::class.java)
-        val call = endPoint.addToWatchHistory(assestId)
-        call.enqueue(object : Callback<BookmarkingResponse> {
-            override fun onResponse(call: Call<BookmarkingResponse>, response: Response<BookmarkingResponse>) {
-                bookmarkingCallback.success(true, response)
-            }
+        try {
+            val endPoint = NetworkSetup().subscriptionClient(token).create<EnveuEndpoints>(EnveuEndpoints::class.java)
+            val call = endPoint.addToWatchHistory(assestId)
+            call.enqueue(object : Callback<BookmarkingResponse> {
+                override fun onResponse(call: Call<BookmarkingResponse>, response: Response<BookmarkingResponse>) {
+                    bookmarkingCallback.success(true, response)
+                }
 
-            override fun onFailure(call: Call<BookmarkingResponse>, t: Throwable) {
-                t.message?.let { bookmarkingCallback.failure(false, 0, it) }
-                bookmarkingCallback.failure(false, 0, "")
-            }
-        })
+                override fun onFailure(call: Call<BookmarkingResponse>, t: Throwable) {
+                    t.message?.let { bookmarkingCallback.failure(false, 0, it) }
+                    bookmarkingCallback.failure(false, 0, "")
+                }
+            })
+        }catch (exception: Exception){
+
+        }
     }
 
     fun deleteFromWatchHistory(token: String, assetId: Int, bookmarkingCallback: BookmarkingCallback) {

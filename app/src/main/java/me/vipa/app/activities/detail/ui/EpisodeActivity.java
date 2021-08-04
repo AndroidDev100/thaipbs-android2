@@ -1896,7 +1896,9 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
             if(newConfig!=null){
                 PictureInPictureManager.getInstance().onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig);
                 ADHelper.getInstance(EpisodeActivity.this).pipActivity(EpisodeActivity.this);
-                playerFragment.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig);
+                if (playerFragment!=null){
+                    playerFragment.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig);
+                }
             }
 
         }

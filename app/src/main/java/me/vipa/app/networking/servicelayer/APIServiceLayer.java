@@ -662,45 +662,43 @@ public class APIServiceLayer {
         List<String> filterGenreSavedListKeyForApi = new SharedPrefHelper(context).getDataGenreListKeyValue();
         List<String> filterSortSavedListKeyForApi = new SharedPrefHelper(context).getDataSortListKeyValue();
 
-
-        ApiInterface endpoint = RequestConfig.getClientSearch().create(ApiInterface.class);
-
-
         MutableLiveData<List<RailCommonData>> responsePopular = new MutableLiveData<>();
-        {
-            try {
+        try {
+            ApiInterface endpoint = RequestConfig.getClientSearch().create(ApiInterface.class);
+
+            {
+
                 // keyword= URLEncoder.encode(keyword, "UTF-8");
                 //String searchValue=
-                Observable<ResponseSearch> call =null;
-                Observable<ResponseSearch> call1=null;
-                Observable<ResponseSearch> call2=null;
-                Observable<ResponseSearch> call3=null;
-                Observable<ResponseSearch> call4=null;
+                Observable<ResponseSearch> call = null;
+                Observable<ResponseSearch> call1 = null;
+                Observable<ResponseSearch> call2 = null;
+                Observable<ResponseSearch> call3 = null;
+                Observable<ResponseSearch> call4 = null;
 
-                if(applyFilter){
-                    if ( filterGenreSavedListKeyForApi != null && filterGenreSavedListKeyForApi.size() > 0||filterSortSavedListKeyForApi != null && filterSortSavedListKeyForApi.size() > 0) {
-                        call = endpoint.getSearchByFilters(keyword, "MOVIES", size, page, languageCode,filterGenreSavedListKeyForApi,filterSortSavedListKeyForApi)
+                if (applyFilter) {
+                    if (filterGenreSavedListKeyForApi != null && filterGenreSavedListKeyForApi.size() > 0 || filterSortSavedListKeyForApi != null && filterSortSavedListKeyForApi.size() > 0) {
+                        call = endpoint.getSearchByFilters(keyword, "MOVIES", size, page, languageCode, filterGenreSavedListKeyForApi, filterSortSavedListKeyForApi)
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(Schedulers.io());
 
-                        call1 = endpoint.getSearchByFilters(keyword, MediaTypeConstants.getInstance().getSeries(), size, page, languageCode,filterGenreSavedListKeyForApi,filterSortSavedListKeyForApi)
+                        call1 = endpoint.getSearchByFilters(keyword, MediaTypeConstants.getInstance().getSeries(), size, page, languageCode, filterGenreSavedListKeyForApi, filterSortSavedListKeyForApi)
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(Schedulers.io());
 
-                        call2 = endpoint.getSearchByFilters(keyword, MediaTypeConstants.getInstance().getLive(), size, page, languageCode,filterGenreSavedListKeyForApi,filterSortSavedListKeyForApi)
+                        call2 = endpoint.getSearchByFilters(keyword, MediaTypeConstants.getInstance().getLive(), size, page, languageCode, filterGenreSavedListKeyForApi, filterSortSavedListKeyForApi)
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(Schedulers.io());
 
-                        call3 = endpoint.getSearchByFilters(keyword, MediaTypeConstants.getInstance().getShow(), size, page, languageCode,filterGenreSavedListKeyForApi,filterSortSavedListKeyForApi)
+                        call3 = endpoint.getSearchByFilters(keyword, MediaTypeConstants.getInstance().getShow(), size, page, languageCode, filterGenreSavedListKeyForApi, filterSortSavedListKeyForApi)
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(Schedulers.io());
 
-                        call4 = endpoint.getSearchByFilters(keyword, MediaTypeConstants.getInstance().getEpisode(), size, page, languageCode,filterGenreSavedListKeyForApi,filterSortSavedListKeyForApi)
+                        call4 = endpoint.getSearchByFilters(keyword, MediaTypeConstants.getInstance().getEpisode(), size, page, languageCode, filterGenreSavedListKeyForApi, filterSortSavedListKeyForApi)
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(Schedulers.io());
                     }
-                }
-                else {
+                } else {
                     call = endpoint.getSearch(keyword, "MOVIES", size, page, languageCode)
                             .subscribeOn(Schedulers.io())
                             .observeOn(Schedulers.io());
@@ -789,14 +787,14 @@ public class APIServiceLayer {
                     }
                 });
 
-            } catch (Exception e) {
-                mModel = new ArrayList<>();
-                RailCommonData railCommonData = new RailCommonData();
-                railCommonData.setStatus(false);
-                mModel.add(railCommonData);
-                responsePopular.postValue(mModel);
-            }
 
+            }
+        }catch (Exception e) {
+            mModel = new ArrayList<>();
+            RailCommonData railCommonData = new RailCommonData();
+            railCommonData.setStatus(false);
+            mModel.add(railCommonData);
+            responsePopular.postValue(mModel);
         }
         return responsePopular;
     }
@@ -804,73 +802,75 @@ public class APIServiceLayer {
     public LiveData<RailCommonData> getSingleCategorySearch(String keyword, String type, int size, int page,boolean applyFilter, Context context) {
         MutableLiveData<RailCommonData> responsePopular;
         Call<ResponseSearch> call = null;
+        responsePopular = new MutableLiveData<>();
         {
             languageCode = LanguageLayer.getCurrentLanguageCode();
             try {
                 // keyword= URLEncoder.encode(keyword, "UTF-8");
-            } catch (Exception e) {
+                ApiInterface backendApi = RequestConfig.getClientSearch().create(ApiInterface.class);
 
-            }
-            responsePopular = new MutableLiveData<>();
-            ApiInterface backendApi = RequestConfig.getClientSearch().create(ApiInterface.class);
-
-            PrintLogging.printLog("", "SearchValues-->>" + keyword + " " + type + " " + size + " " + page);
+                PrintLogging.printLog("", "SearchValues-->>" + keyword + " " + type + " " + size + " " + page);
 
 
-            if(applyFilter){
-                List<String> filterGenreSavedListKeyForApi = new SharedPrefHelper(context).getDataGenreListKeyValue();
-                List<String> filterSortSavedListKeyForApi = new SharedPrefHelper(context).getDataSortListKeyValue();
-                if ( filterGenreSavedListKeyForApi != null && filterGenreSavedListKeyForApi.size() > 0||filterSortSavedListKeyForApi != null && filterSortSavedListKeyForApi.size() > 0) {
-                    call = backendApi.getSearchResultsByFilters(keyword, type, size, page, languageCode,filterGenreSavedListKeyForApi,filterSortSavedListKeyForApi);
+                if(applyFilter){
+                    List<String> filterGenreSavedListKeyForApi = new SharedPrefHelper(context).getDataGenreListKeyValue();
+                    List<String> filterSortSavedListKeyForApi = new SharedPrefHelper(context).getDataSortListKeyValue();
+                    if ( filterGenreSavedListKeyForApi != null && filterGenreSavedListKeyForApi.size() > 0||filterSortSavedListKeyForApi != null && filterSortSavedListKeyForApi.size() > 0) {
+                        call = backendApi.getSearchResultsByFilters(keyword, type, size, page, languageCode,filterGenreSavedListKeyForApi,filterSortSavedListKeyForApi);
+                    }
+
                 }
+                else {
+                    call = backendApi.getSearchResults(keyword, type, size, page, languageCode);
 
-            }
-            else {
-                call = backendApi.getSearchResults(keyword, type, size, page, languageCode);
+                }
+                call.enqueue(new Callback<ResponseSearch>() {
+                    @Override
+                    public void onResponse(@NonNull Call<ResponseSearch> call, @NonNull Response<ResponseSearch> data) {
+                        if (data.code() == 200) {
+                            RailCommonData railCommonData = null;
+                            if (data != null) {
+                                railCommonData = new RailCommonData();
+                                if (data.body().getData() != null && data.body().getData().getItems() != null) {
+                                    railCommonData.setStatus(true);
+                                    List<me.vipa.app.beanModelV3.searchV2.ItemsItem> itemsItem = data.body().getData().getItems();
+                                    enveuVideoItemBeans = new ArrayList<>();
+                                    for (me.vipa.app.beanModelV3.searchV2.ItemsItem videoItem : itemsItem) {
+                                        EnveuVideoItemBean enveuVideoItemBean = new EnveuVideoItemBean(videoItem);
+                                        enveuVideoItemBean.setPosterURL(ImageLayer.getInstance().getPosterImageUrl(videoItem));
+                                        if (type.equalsIgnoreCase(MediaTypeConstants.getInstance().getSeries()) && videoItem.getSeasons() != null)
+                                            enveuVideoItemBean.setSeasonCount(videoItem.getSeasons().size());
 
-            }
-            call.enqueue(new Callback<ResponseSearch>() {
-                @Override
-                public void onResponse(@NonNull Call<ResponseSearch> call, @NonNull Response<ResponseSearch> data) {
-                    if (data.code() == 200) {
-                        RailCommonData railCommonData = null;
-                        if (data != null) {
-                            railCommonData = new RailCommonData();
-                            if (data.body().getData() != null && data.body().getData().getItems() != null) {
-                                railCommonData.setStatus(true);
-                                List<me.vipa.app.beanModelV3.searchV2.ItemsItem> itemsItem = data.body().getData().getItems();
-                                enveuVideoItemBeans = new ArrayList<>();
-                                for (me.vipa.app.beanModelV3.searchV2.ItemsItem videoItem : itemsItem) {
-                                    EnveuVideoItemBean enveuVideoItemBean = new EnveuVideoItemBean(videoItem);
-                                    enveuVideoItemBean.setPosterURL(ImageLayer.getInstance().getPosterImageUrl(videoItem));
-                                    if (type.equalsIgnoreCase(MediaTypeConstants.getInstance().getSeries()) && videoItem.getSeasons() != null)
-                                        enveuVideoItemBean.setSeasonCount(videoItem.getSeasons().size());
+                                        enveuVideoItemBeans.add(enveuVideoItemBean);
+                                    }
 
-                                    enveuVideoItemBeans.add(enveuVideoItemBean);
+                                    railCommonData.setEnveuVideoItemBeans(enveuVideoItemBeans);
+                                    railCommonData.setPageTotal(data.body().getData().getPageInfo().getTotal());
+                                    railCommonData.setStatus(true);
+                                    responsePopular.postValue(railCommonData);
+                                } else {
+                                    railCommonData.setStatus(false);
+                                    responsePopular.postValue(railCommonData);
                                 }
 
-                                railCommonData.setEnveuVideoItemBeans(enveuVideoItemBeans);
-                                railCommonData.setPageTotal(data.body().getData().getPageInfo().getTotal());
-                                railCommonData.setStatus(true);
-                                responsePopular.postValue(railCommonData);
                             } else {
-                                railCommonData.setStatus(false);
                                 responsePopular.postValue(railCommonData);
                             }
-
                         } else {
-                            responsePopular.postValue(railCommonData);
+                            responsePopular.postValue(new RailCommonData());
                         }
-                    } else {
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<ResponseSearch> call, @NonNull Throwable t) {
                         responsePopular.postValue(new RailCommonData());
                     }
-                }
+                });
 
-                @Override
-                public void onFailure(@NonNull Call<ResponseSearch> call, @NonNull Throwable t) {
-                    responsePopular.postValue(new RailCommonData());
-                }
-            });
+            } catch (Exception e) {
+                responsePopular.postValue(new RailCommonData());
+            }
+
 
         }
         return responsePopular;

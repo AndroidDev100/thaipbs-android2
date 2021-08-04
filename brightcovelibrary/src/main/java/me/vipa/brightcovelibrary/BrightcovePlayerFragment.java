@@ -393,7 +393,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         brightcoveCaptionStyle.createCaptionStyle("6",
                 "sans-serif",greenColorValue,greenColorValue,greenColorValue,greenColorValue,greenColorValue,greenColorValue,greenColorValue,greenColorValue);
         BrightcoveClosedCaptioningManager.getInstance(getActivity()).setStyle(brightcoveCaptionStyle);*/
-        if (baseVideoView.getEventEmitter() != null) {
+        if (baseVideoView!=null && baseVideoView.getEventEmitter() != null) {
             eventEmitter = baseVideoView.getEventEmitter();
 
         }

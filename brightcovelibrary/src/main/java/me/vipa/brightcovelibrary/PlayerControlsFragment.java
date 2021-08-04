@@ -248,9 +248,13 @@ public class PlayerControlsFragment extends Fragment {
             e.printStackTrace();
         }
         if (videoType.equalsIgnoreCase("1")){
-            playerSettingIcon.setVisibility(View.INVISIBLE);
+            if (playerSettingIcon!=null){
+                playerSettingIcon.setVisibility(View.INVISIBLE);
+            }
         }else {
-            playerSettingIcon.setVisibility(View.VISIBLE);
+            if (playerSettingIcon!=null){
+                playerSettingIcon.setVisibility(View.VISIBLE);
+            }
         }
 
         media_route_button.setVisibility(View.VISIBLE);
@@ -395,7 +399,9 @@ public class PlayerControlsFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        backArrow.setVisibility(View.GONE);
+        if (backArrow!=null){
+            backArrow.setVisibility(View.GONE);
+        }
     }
 
     void setFragmenmtVisibility() {
