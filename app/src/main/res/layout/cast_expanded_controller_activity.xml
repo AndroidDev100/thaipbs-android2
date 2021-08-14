@@ -344,7 +344,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/seek_bar_indicators">
-
+                <ImageButton
+                    android:id="@+id/button_0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/cast_expanded_controller_control_button_margin"
+                    android:layout_marginRight="@dimen/cast_expanded_controller_control_button_margin"
+                    android:layout_toStartOf="@+id/button_play_pause_toggle"
+                    android:padding="0dp"
+                    tools:ignore="ContentDescription" />
                 <ImageButton
                     android:id="@+id/button_play_pause_toggle"
                     android:layout_width="64dp"
@@ -374,19 +383,6 @@
                 android:layout_below="@id/seek_bar_indicators"
                 android:layout_marginTop="@dimen/cast_expanded_controller_margin_between_seek_bar_and_control_buttons"
                 android:visibility="gone">
-
-                <ImageButton
-                    android:id="@+id/button_0"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="@dimen/cast_expanded_controller_control_button_margin"
-                    android:layout_marginRight="@dimen/cast_expanded_controller_control_button_margin"
-                    android:layout_toStartOf="@+id/button_1"
-                    android:layout_toLeftOf="@+id/button_1"
-                    android:padding="0dp"
-                    android:visibility="gone"
-                    tools:ignore="ContentDescription" />
 
                 <ImageButton
                     android:id="@+id/button_1"
