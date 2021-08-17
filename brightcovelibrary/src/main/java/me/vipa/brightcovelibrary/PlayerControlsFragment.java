@@ -331,8 +331,8 @@ public class PlayerControlsFragment extends Fragment {
                 int screen_height = displayMetrics.heightPixels;
                 int screen_width = displayMetrics.widthPixels;
 
-                Log.e("RATUILANDHEIGHT...", String.valueOf(screen_height));
-                Log.e("RATUILANDWIDTH...", String.valueOf(screen_width));
+               // Log.e("RATUILANDHEIGHT...", String.valueOf(screen_height));
+              //  Log.e("RATUILANDWIDTH...", String.valueOf(screen_width));
 
                 if (screen_width > 1280) {
                     Utils.setParamstoSeekBarControlRatio(seekBarControl);

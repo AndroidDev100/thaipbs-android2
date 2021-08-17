@@ -1607,15 +1607,15 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                     if (adStarted) {
                         baseVideoView.setPadding(0, 15, 10, 15);
                     }
-                    Log.e("R=FULLSCEEN", "R=FULLSCEEN");
+                    //Log.e("R=FULLSCEEN", "R=FULLSCEEN");
 
                     DisplayMetrics displayMetrics = new DisplayMetrics();
                     getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
                     int screen_height = displayMetrics.heightPixels;
                     int screen_width = displayMetrics.widthPixels;
 
-                    Log.e("RATUILANDHEIGHT", String.valueOf(screen_height));
-                    Log.e("RATUILANDWIDTH", String.valueOf(screen_width));
+                    //Log.e("RATUILANDHEIGHT", String.valueOf(screen_height));
+                   // Log.e("RATUILANDWIDTH", String.valueOf(screen_width));
 
                     if (screen_width > 1280) {
                         // Set the video size
@@ -1636,7 +1636,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                     mActivity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
                     currentConfig = newConfig;
                     baseVideoView.setPadding(0, 0, 0, 0);
-                    Log.e("R=PORTRAIT", "R=PORTRAIT");
+                   // Log.e("R=PORTRAIT", "R=PORTRAIT");
                     baseVideoView.getRenderView().setVideoSize(MATCH_PARENT, MATCH_PARENT);
                 }
             }
