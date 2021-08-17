@@ -19,5 +19,6 @@ public interface PlayerCallbacks {
     void changeBitRateRequest(String title,int position);
     void bitRateRequest();
 
+
     void playSignVideo(boolean isSignPlaying, String signLangId, boolean isFromParentRef);
 }

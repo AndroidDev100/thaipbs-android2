@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -110,6 +111,7 @@ import java.util.Set;
 
 import static android.content.Context.TELEPHONY_SERVICE;
 import static android.media.AudioManager.AUDIOFOCUS_LOSS;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.BrightcovePlayerFragment implements PlayerControlsFragment.OnFragmentInteractionListener, PlayerCallbacks, NetworkChangeReceiver.ConnectivityReceiverListener, PhoneListenerCallBack, BackPressCallBack, ChromeCastCallback {
     private static final String PROPERTY_APPLICATION_ID = "com.vipa.app";
@@ -232,14 +234,14 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                     }
                 }
 
-                if (isOfflineVideo){
+                if (isOfflineVideo) {
 
-                }else {
+                } else {
                     videoId = bundle.getString("videoId");
                 }
 
-            }catch (Exception e){
-                Log.e("gtgtgtgt",e.getMessage());
+            } catch (Exception e) {
+                Log.e("gtgtgtgt", e.getMessage());
             }
         }
     }
@@ -393,7 +395,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         brightcoveCaptionStyle.createCaptionStyle("6",
                 "sans-serif",greenColorValue,greenColorValue,greenColorValue,greenColorValue,greenColorValue,greenColorValue,greenColorValue,greenColorValue);
         BrightcoveClosedCaptioningManager.getInstance(getActivity()).setStyle(brightcoveCaptionStyle);*/
-        if (baseVideoView!=null && baseVideoView.getEventEmitter() != null) {
+        if (baseVideoView != null && baseVideoView.getEventEmitter() != null) {
             eventEmitter = baseVideoView.getEventEmitter();
 
         }
@@ -1381,7 +1383,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         int orientation = getResources().getConfiguration().orientation;
         if (isOfflineVideo) {
             mActivity.finish();
-        }else {
+        } else {
             if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
                 mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
             } else {
@@ -1605,6 +1607,26 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                     if (adStarted) {
                         baseVideoView.setPadding(0, 15, 10, 15);
                     }
+                    Log.e("R=FULLSCEEN", "R=FULLSCEEN");
+
+                    DisplayMetrics displayMetrics = new DisplayMetrics();
+                    getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+                    int screen_height = displayMetrics.heightPixels;
+                    int screen_width = displayMetrics.widthPixels;
+
+                    Log.e("RATUILANDHEIGHT", String.valueOf(screen_height));
+                    Log.e("RATUILANDWIDTH", String.valueOf(screen_width));
+
+                    if (screen_width > 1280) {
+                        // Set the video size
+                        Log.e("Greaterr", String.valueOf(screen_width));
+                        baseVideoView.getRenderView().setVideoSize(screen_width, screen_height);
+                        baseVideoView.setPadding(30, 0, 30, 0);
+
+                    }
+
+
+
 
                 } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
                     if (playerControlsFragment != null) {
@@ -1614,6 +1636,8 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                     mActivity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
                     currentConfig = newConfig;
                     baseVideoView.setPadding(0, 0, 0, 0);
+                    Log.e("R=PORTRAIT", "R=PORTRAIT");
+                    baseVideoView.getRenderView().setVideoSize(MATCH_PARENT, MATCH_PARENT);
                 }
             }
         }
@@ -1796,7 +1820,6 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
     public String getRunningAssetId() {
         return brightcoveAccountId;
     }
-
 
 
     public interface OnPlayerInteractionListener {

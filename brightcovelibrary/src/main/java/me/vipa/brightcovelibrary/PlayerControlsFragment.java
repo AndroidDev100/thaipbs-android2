@@ -295,6 +295,7 @@ public class PlayerControlsFragment extends Fragment {
                             }
 
         Utils.setParamsResetSkipButton(skipBtn);
+
         //  Utils.setParamstoSettinIcon(playerSettingIcon);
 
 
@@ -323,12 +324,36 @@ public class PlayerControlsFragment extends Fragment {
                 audioTracks.setVisibility(View.GONE);
             }
             if (!getResources().getBoolean(R.bool.isTablet)) {
-                Utils.setParamstoSeekBarControl(seekBarControl);
-                Utils.setParamstoPlayerSettingControl(settingControl);
-                Utils.setParamstoBackArrow(backArrow);
-                Utils.setParamstoSettinIcon(settingLay);
-                Utils.setParamstoSkipButton(skipBtn);
+
+
+                DisplayMetrics displayMetrics = new DisplayMetrics();
+                getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+                int screen_height = displayMetrics.heightPixels;
+                int screen_width = displayMetrics.widthPixels;
+
+                Log.e("RATUILANDHEIGHT...", String.valueOf(screen_height));
+                Log.e("RATUILANDWIDTH...", String.valueOf(screen_width));
+
+                if (screen_width > 1280) {
+                    Utils.setParamstoSeekBarControlRatio(seekBarControl);
+                    Utils.setParamstoPlayerSettingControl(settingControl);
+                    Utils.setParamstoBackArrowForRatio(backArrow);
+                    Utils.setParamstoSettinIconRatio(settingLay);
+                    Utils.setParamstoSkipButton(skipBtn);
+                }
+                else {
+                    Utils.setParamstoSeekBarControl(seekBarControl);
+                    Utils.setParamstoPlayerSettingControl(settingControl);
+                    Utils.setParamstoBackArrow(backArrow);
+                    Utils.setParamstoSettinIcon(settingLay);
+                    Utils.setParamstoSkipButton(skipBtn);
+
+                }
+
             }
+
+
+
 
           /*  DisplayMetrics displayMetrics = new DisplayMetrics();
             getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -356,14 +381,6 @@ public class PlayerControlsFragment extends Fragment {
         }
 
     }
-
-
-
-
-
-
-
-
 
     void showControls() {
         Log.w("CONTROLSVIDEO", videoType);

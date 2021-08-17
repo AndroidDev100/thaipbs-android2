@@ -126,7 +126,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
                     android:padding="16dp"
                     android:src="@drawable/backward_icon"
                     android:visibility="gone" />
@@ -157,7 +156,7 @@
                     android:id="@+id/forward"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
+
                     android:padding="16dp"
                     android:src="@drawable/forward_icon"
                     android:visibility="gone" />
