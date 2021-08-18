@@ -1017,7 +1017,7 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
     }
 
     public void setUI(EnveuVideoItemBean responseDetailPlayer) {
-        recommendationRailFragment();
+      //  recommendationRailFragment();
 
         if (responseDetailPlayer.getAssetCast().size() > 0 && !responseDetailPlayer.getAssetCast().get(0).equalsIgnoreCase("")) {
             StringBuilder stringBuilder = new StringBuilder();

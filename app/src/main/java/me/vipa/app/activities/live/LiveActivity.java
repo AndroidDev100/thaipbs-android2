@@ -854,7 +854,7 @@ public class LiveActivity extends BaseBindingActivity<LiveDetailBinding> impleme
     }
 
     public void setUI(EnveuVideoItemBean responseDetailPlayer) {
-        recommendationRailFragment();
+       // recommendationRailFragment();
 
        /* if (responseDetailPlayer.getAssetCast().size() > 0) {
             StringBuilder stringBuilder = new StringBuilder();

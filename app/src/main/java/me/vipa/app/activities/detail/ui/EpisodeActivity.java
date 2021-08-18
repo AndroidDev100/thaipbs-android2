@@ -196,7 +196,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
     private boolean isDataUpdated;
     private EpisodeTabAdapter episodeTabAdapter;
     public boolean isSeasonData = false;
-    public boolean isRailData = false;
+    public boolean isRailData = true;
     private AlertDialogSingleButtonFragment errorDialog;
     private boolean errorDialogShown = false;
     private EnveuVideoItemBean videoDetails;
@@ -247,6 +247,8 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Log.e("EPISODE...","EPISODE");
         isActive = true;
         getWindow().setBackgroundDrawableResource(R.color.black);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,
@@ -381,7 +383,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
         }
     }
 
-    RecommendationRailFragment railFragment;
+    //RecommendationRailFragment railFragment;
 
     public void setTabs(String seasonNumber, boolean noEpisode) {
         if (seriesDetailBean != null) {
@@ -392,10 +394,10 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
         getBinding().tabLayout.setSelectedTabIndicatorGravity(TabLayout.INDICATOR_GRAVITY_TOP);
         if (episodeTabAdapter == null) {
             episodeTabAdapter = new EpisodeTabAdapter(getSupportFragmentManager());
-            railFragment = new RecommendationRailFragment();
+         //   railFragment = new RecommendationRailFragment();
             Bundle args = new Bundle();
             args.putString(AppConstants.BUNDLE_TAB_ID, tabId);
-            railFragment.setArguments(args);
+          //  railFragment.setArguments(args);
             seasonTabFragment = new SeasonTabFragment();
             Bundle bundleSeason = new Bundle();
 
@@ -413,7 +415,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
 
             seasonTabFragment.setArguments(bundleSeason);
             episodeTabAdapter.addFragment(seasonTabFragment, getString(R.string.tab_heading_episodes));
-            episodeTabAdapter.addFragment(railFragment, getString(R.string.tab_heading_other));
+          //  episodeTabAdapter.addFragment(railFragment, getString(R.string.tab_heading_other));
             getBinding().viewPager.setAdapter(episodeTabAdapter);
             getBinding().viewPager.setOffscreenPageLimit(2);
             getBinding().tabLayout.setupWithViewPager(getBinding().viewPager);
@@ -472,7 +474,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
 
             Bundle args = new Bundle();
             args.putString(AppConstants.BUNDLE_TAB_ID, tabId);
-            railFragment.getVideoRails(args);
+            //railFragment.getVideoRails(args);
 
             seasonTabFragment.getVideoRails(bundleSeason);
         }
@@ -503,7 +505,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
     public void stopShimmercheck() {
         if (isSeasonData && isRailData) {
             isSeasonData = false;
-            isRailData = false;
+            isRailData = true;
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -523,7 +525,9 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
         if (getBinding().tabLayout.getTabCount() >= 1 && position <= getBinding().tabLayout.getTabCount()) {
             episodeTabAdapter.removeTabPage(position);
             ViewGroup.LayoutParams params = getBinding().tabLayout.getLayoutParams();
-            params.width = (int) getResources().getDimension(R.dimen.tab_layout_single);//(int) getResources().getDimension(R.dimen.tab_layout_single);
+            //params.width = (int) getResources().getDimension(R.dimen.tab_layout_single);
+            params.width = (int) getResources().getDimension(WindowManager.LayoutParams.MATCH_PARENT);
+
             getBinding().tabLayout.setLayoutParams(params);
             //  getBinding().tabLayout.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,height));
 

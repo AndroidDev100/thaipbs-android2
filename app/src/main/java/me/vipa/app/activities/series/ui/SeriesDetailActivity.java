@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -123,11 +124,11 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
     private SeasonTabFragment seasonTabFragment;
     private AlertDialog alertDialog;
     private AlertDialog.Builder builder;
-    private RecommendationRailFragment railFragment;
+  //  private RecommendationRailFragment railFragment;
     private EpisodeTabAdapter episodeTabAdapter;
     private boolean newIntentCall = false;
     public boolean isSeasonData = false;
-    public boolean isRailData = false;
+    public boolean isRailData = true;
     private DownloadHelper downloadHelper;
     private Video downloadAbleVideo;
     private UserInteractionFragment userInteractionFragment;
@@ -135,7 +136,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
     private boolean mFlag = false;
     private boolean kidsMode;
     private String parentalRating = "";
-   // private boolean kidsMode;
+    // private boolean kidsMode;
 
     @Override
     public ActivitySeriesDetailBinding inflateBindingLayout(@NonNull LayoutInflater inflater) {
@@ -218,7 +219,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
     public void stopShimmer() {
         if (isSeasonData && isRailData) {
             isSeasonData = false;
-            isRailData = false;
+            isRailData = true;
             getBinding().seriesShimmer.setVisibility(View.GONE);
             getBinding().llParent.setVisibility(View.VISIBLE);
             getBinding().noConnectionLayout.setVisibility(View.GONE);
@@ -429,6 +430,20 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
             downloadHelper = new DownloadHelper(this, this);
             downloadHelper.setAssetType(MediaTypeConstants.getInstance().getEpisode());
             downloadHelper.setSeriesName(seriesDetailBean.getTitle());
+           // ViewGroup.LayoutParams params = getBinding().tabLayout.getLayoutParams();
+            //params.width = (int) getResources().getDimension(WindowManager.LayoutParams.MATCH_PARENT);
+            getBinding().tabLayout.setTabIndicatorFullWidth(true);
+            getBinding().tabLayout.setTabMode(TabLayout.MODE_FIXED);
+            getBinding().tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+            ViewGroup.LayoutParams params = getBinding().tabLayout.getLayoutParams();
+            params.width = WindowManager.LayoutParams.MATCH_PARENT;
+            params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+
+
+
+            getBinding().tabLayout.setLayoutParams(params);
+
 
             //downloadHelper.findVideo(seriesDetailBean.getBrightcoveVideoId());
         } else {
@@ -464,7 +479,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
             newIntentCall = false;
             Bundle args = new Bundle();
             args.putString(AppConstants.BUNDLE_TAB_ID, tabId);
-            railFragment.setArguments(args);
+            //railFragment.setArguments(args);
 
 
             Bundle bundleSeason = new Bundle();
@@ -475,20 +490,20 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
             seasonTabFragment.setArguments(bundleSeason);
 
             getSupportFragmentManager().beginTransaction().detach(seasonTabFragment).attach(seasonTabFragment).commit();
-            getSupportFragmentManager().beginTransaction().detach(railFragment).attach(railFragment).commit();
+          //  getSupportFragmentManager().beginTransaction().detach(railFragment).attach(railFragment).commit();
 
             TabLayout.Tab tab = getBinding().tabLayout.getTabAt(0);
             tab.select();
         } else {
-            railFragment = new RecommendationRailFragment();
+          //  railFragment = new RecommendationRailFragment();
             seasonTabFragment = new SeasonTabFragment();
-          //  getBinding().tabLayout.setSelectedTabIndicatorGravity(INDICATOR_GRAVITY_BOTTOM);
+            //  getBinding().tabLayout.setSelectedTabIndicatorGravity(INDICATOR_GRAVITY_BOTTOM);
             getBinding().tabLayout.setSelectedTabIndicatorGravity(TabLayout.INDICATOR_GRAVITY_TOP);
             episodeTabAdapter = new EpisodeTabAdapter(getSupportFragmentManager());
 
             Bundle args = new Bundle();
             args.putString(AppConstants.BUNDLE_TAB_ID, tabId);
-            railFragment.setArguments(args);
+           // railFragment.setArguments(args);
 
             Bundle bundleSeason = new Bundle();
             bundleSeason.putInt(AppConstants.BUNDLE_ASSET_ID, seriesId);
@@ -497,10 +512,12 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
             seasonTabFragment.setArguments(bundleSeason);
 
             episodeTabAdapter.addFragment(seasonTabFragment, getString(R.string.tab_heading_episodes));
-            episodeTabAdapter.addFragment(railFragment, getString(R.string.tab_heading_other));
+           // episodeTabAdapter.addFragment(railFragment, getString(R.string.tab_heading_other));
             getBinding().viewPager.setAdapter(episodeTabAdapter);
             getBinding().viewPager.setOffscreenPageLimit(10);
             getBinding().tabLayout.setupWithViewPager(getBinding().viewPager);
+
+
             //AppCommonMethod.customTabWidth(getBinding().tabLayout);
             //AppCommonMethod.customTabWidth2(getBinding().tabLayout);
 
@@ -553,6 +570,10 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
         });
 
         changeTabsFont();
+
+
+
+
     }
 
     private void changeTabsFont() {
@@ -610,6 +631,8 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
             episodeTabAdapter.removeTabPage(position);
             ViewGroup.LayoutParams params = getBinding().tabLayout.getLayoutParams();
             params.width = (int) getResources().getDimension(R.dimen.tab_layout_single);
+
+
             getBinding().tabLayout.setLayoutParams(params);
 
         }
@@ -987,7 +1010,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
 
     @Override
     public void onBackPressed() {
-       // super.onBackPressed();
+        // super.onBackPressed();
 
         if (commentsFragment != null) {
             removeCommentFragment();
@@ -1029,10 +1052,10 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
             commentsFragment = null;
             getBinding().playerFooter.setVisibility(View.VISIBLE);
             getBinding().fragmentComment.setVisibility(View.GONE);
-           // getBinding().interactionSection
+            // getBinding().interactionSection
             getBinding().interactionSection.llLike.setVisibility(View.VISIBLE);
             getBinding().interactionSection.shareWith.setVisibility(View.VISIBLE);
-           // getBinding().interactionSection.showComments.setVisibility(View.VISIBLE);
+            // getBinding().interactionSection.showComments.setVisibility(View.VISIBLE);
         }
     }
 
@@ -1160,7 +1183,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
                                             selectDownloadVideoQuality(video, videoId);
                                         }
                                     } else {
-                                      //  Toast.makeText(SeriesDetailActivity.this, "NoWifi", Toast.LENGTH_LONG).show();
+                                        //  Toast.makeText(SeriesDetailActivity.this, "NoWifi", Toast.LENGTH_LONG).show();
                                     }
                                 } else {
                                     if (videoQuality != 4) {
@@ -1563,4 +1586,6 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
             }
         }
     }
+
+
 }

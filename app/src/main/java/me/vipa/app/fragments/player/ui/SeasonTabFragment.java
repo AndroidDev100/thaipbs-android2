@@ -194,6 +194,7 @@ public class SeasonTabFragment extends BaseBindingFragment<SeasonFragmentLayoutB
         if (context instanceof SeriesDetailActivity) {
             ((SeriesDetailActivity) context).isSeasonData = true;
             ((SeriesDetailActivity) context).stopShimmer();
+
             ((SeriesDetailActivity) context).dismissLoading(((SeriesDetailActivity) context).getBinding().progressBar);
             if (seasonAdapter != null) {
                 ((SeriesDetailActivity) context).numberOfEpisodes(seasonAdapter.getItemCount());
