@@ -24,9 +24,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.anjlab.android.iab.v3.BillingProcessor;
-import com.anjlab.android.iab.v3.SkuDetails;
-import com.anjlab.android.iab.v3.TransactionDetails;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
@@ -73,7 +71,7 @@ import me.vipa.app.baseModels.BaseBindingActivity;
 import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
 
 
-public class PurchaseActivity extends BaseBindingActivity<PurchaseBinding> implements BillingProcessor.IBillingHandler, AlertDialogFragment.AlertDialogListener, PurchaseAdapter.OnPurchaseItemClick {
+public class PurchaseActivity extends BaseBindingActivity<PurchaseBinding>  {
 
 
     private static List<PurchaseModel> alPurchaseOptions;
@@ -81,7 +79,7 @@ public class PurchaseActivity extends BaseBindingActivity<PurchaseBinding> imple
     private EnveuVideoItemBean response;
     private ResponseEntitle responseEntitlementModel;
     private PurchaseAdapter adapterPurchase;
-    private BillingProcessor bp;
+   // private BillingProcessor bp;
     private PurchaseViewModel viewModel;
     private PurchaseModel purchaseModel;
     private KsPreferenceKeys preference;
@@ -109,7 +107,7 @@ public class PurchaseActivity extends BaseBindingActivity<PurchaseBinding> imple
     }
 
     private void callBinding() {
-        boolean isAvailable = BillingProcessor.isIabServiceAvailable(this);
+      /*  boolean isAvailable = BillingProcessor.isIabServiceAvailable(this);
         if (!isAvailable) {
             Toast.makeText(this, "Your device doesn't support IN App Billing", Toast.LENGTH_LONG).show();
             getBinding().bottomLay.setVisibility(View.GONE);
@@ -134,7 +132,7 @@ public class PurchaseActivity extends BaseBindingActivity<PurchaseBinding> imple
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         getBinding().rvPurchase.setLayoutManager(mLayoutManager);
         getBinding().rvPurchase.setItemAnimator(new DefaultItemAnimator());
-        getBinding().rvPurchase.setAdapter(shimmerAdapter);
+        getBinding().rvPurchase.setAdapter(shimmerAdapter);*/
 
     }
 
@@ -169,7 +167,7 @@ public class PurchaseActivity extends BaseBindingActivity<PurchaseBinding> imple
         setImage(response.getPosterURL(), AppConstants.VIDEO_IMAGE_BASE_KEY, getBinding().ivMovie);
         getBinding().toolbar.screenText.setText(getResources().getString(R.string.purchase_options) + " " + response.getTitle());
 
-        adapterPurchase = new PurchaseAdapter(this, alPurchaseOptions, PurchaseActivity.this);
+      //  adapterPurchase = new PurchaseAdapter(this, alPurchaseOptions, PurchaseActivity.this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         getBinding().rvPurchase.setLayoutManager(mLayoutManager);
         getBinding().rvPurchase.setItemAnimator(new DefaultItemAnimator());
@@ -229,7 +227,7 @@ public class PurchaseActivity extends BaseBindingActivity<PurchaseBinding> imple
     }
 
     public void buySubscription() {
-        if (!StringUtils.isNullOrEmptyOrZero(selectedPlanName)) {
+/*        if (!StringUtils.isNullOrEmptyOrZero(selectedPlanName)) {
             showHideProgress(getBinding().progressBar);
             Log.w("planDetails", selectedPlanName + " " + clickedModel.getIdentifier());
             if (selectedPlanName.equalsIgnoreCase(VodOfferType.PERPETUAL.name())) {
@@ -265,7 +263,7 @@ public class PurchaseActivity extends BaseBindingActivity<PurchaseBinding> imple
                 }
             }
 
-        }
+        }*/
     }
 
     private void purchaseTVOD() {
@@ -286,7 +284,7 @@ public class PurchaseActivity extends BaseBindingActivity<PurchaseBinding> imple
 
     public void resetpurchaseAdapter() {
         if (alPurchaseOptions.size() > 0) {
-            adapterPurchase = new PurchaseAdapter(this, alPurchaseOptions, PurchaseActivity.this);
+          //  adapterPurchase = new PurchaseAdapter(this, alPurchaseOptions, PurchaseActivity.this);
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
             getBinding().rvPurchase.setLayoutManager(mLayoutManager);
             getBinding().rvPurchase.setItemAnimator(new DefaultItemAnimator());
@@ -300,17 +298,17 @@ public class PurchaseActivity extends BaseBindingActivity<PurchaseBinding> imple
 
     }
 
-    @Override
+ /*   @Override
     public void onBillingInitialized() {
         getPlayStorePlans();
 
-    }
+    }*/
 
-    SkuDetails skuDetails;
+   // SkuDetails skuDetails;
 
     public void getPlayStorePlans() {
 
-        boolean isOneTimePurchaseSupported = bp.isOneTimePurchaseSupported();
+/*        boolean isOneTimePurchaseSupported = bp.isOneTimePurchaseSupported();
         if (!isOneTimePurchaseSupported) {
             Toast.makeText(this, "Your device doesn't support IN App Billing", Toast.LENGTH_LONG).show();
             getBinding().bottomLay.setVisibility(View.GONE);
@@ -330,7 +328,7 @@ public class PurchaseActivity extends BaseBindingActivity<PurchaseBinding> imple
             }
 
         getBinding().progressBar.setVisibility(View.GONE);
-        resetpurchaseAdapter();
+        resetpurchaseAdapter();*/
 
         /*} catch (NullPointerException e) {
             getBinding().progressBar.setVisibility(View.GONE);
@@ -354,7 +352,7 @@ public class PurchaseActivity extends BaseBindingActivity<PurchaseBinding> imple
 
     private void createList(PurchaseModel purchaseModel, int i, List<PurchaseModel> alPurchaseOptions, String vodOfferType, String subscriptionOfferPeriod) {
 
-        try {
+   /*     try {
             if (subscriptionOfferPeriod != null) {
                 if (responseEntitlementModel.getData().getPurchaseAs().get(i).getOfferType().contains(VodOfferType.RECURRING_SUBSCRIPTION​.name())) {
                     createRecurringSubscriptions(purchaseModel, i, alPurchaseOptions, vodOfferType, subscriptionOfferPeriod, VodOfferType.RECURRING_SUBSCRIPTION​.name());
@@ -392,12 +390,12 @@ public class PurchaseActivity extends BaseBindingActivity<PurchaseBinding> imple
 
         } catch (Exception ignored) {
 
-        }
+        }*/
 
     }
 
     private void createRentalPlan(PurchaseModel purchaseModel, int i, List<PurchaseModel> alPurchaseOptions, String vodOfferType, String subscriptionOfferPeriod, String subscriptionType) {
-        try {
+/*        try {
             if (responseEntitlementModel.getData().getPurchaseAs().get(i).getRentalPeriod().getPeriodType().contains(VodOfferType.DAYS.name())) {
                 try {
                     // skuDetails = bp.getSubscriptionListingDetails("monthly");
@@ -496,11 +494,11 @@ public class PurchaseActivity extends BaseBindingActivity<PurchaseBinding> imple
 
         } catch (Exception e) {
 
-        }
+        }*/
     }
 
     private void createOneTimeSubscriptions(PurchaseModel purchaseModel, int i, List<PurchaseModel> alPurchaseOptions, String vodOfferType, String subscriptionOfferPeriod, String subscriptionType) {
-        try {
+/*        try {
             if (responseEntitlementModel.getData().getPurchaseAs().get(i).getOneTimeOffer().getPeriodType().contains(VodOfferType.DAYS.name())) {
                 try {
                     // skuDetails = bp.getSubscriptionListingDetails("monthly");
@@ -605,11 +603,11 @@ public class PurchaseActivity extends BaseBindingActivity<PurchaseBinding> imple
 
         } catch (Exception e) {
 
-        }
+        }*/
     }
 
     private void createRecurringSubscriptions(PurchaseModel purchaseModel, int i, List<PurchaseModel> alPurchaseOptions, String vodOfferType, String subscriptionOfferPeriod, String subscriptionType) {
-        try {
+       /* try {
             if (responseEntitlementModel.getData().getPurchaseAs().get(i).getRecurringOffer().getOfferPeriod().contains(VodOfferType.WEEKLY.name())) {
                 try {
                     // skuDetails = bp.getSubscriptionListingDetails("monthly");
@@ -723,29 +721,29 @@ public class PurchaseActivity extends BaseBindingActivity<PurchaseBinding> imple
 
         } catch (Exception ignored) {
 
-        }
+        }*/
     }
 
-    @Override
+/*    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (!bp.handleActivityResult(requestCode, resultCode, data)) {
+        *//*if (!bp.handleActivityResult(requestCode, resultCode, data)) {
             super.onActivityResult(requestCode, resultCode, data);
             showHideProgress(getBinding().progressBar);
             //  Toast.makeText(PurchaseActivity.this, "" + data.toString(), Toast.LENGTH_SHORT).show();
-        }
-    }
+        }*//*
+    }*/
 
     private void showDialog(String title, String message) {
         FragmentManager fm = getSupportFragmentManager();
         AlertDialogSingleButtonFragment alertDialog = AlertDialogSingleButtonFragment.newInstance(title, message, getResources().getString(R.string.ok));
         alertDialog.setCancelable(false);
-        alertDialog.setAlertDialogCallBack(this);
+        //alertDialog.setAlertDialogCallBack(this);
         alertDialog.show(fm, "fragment_alert");
     }
 
-    TransactionDetails transactionDetails;
+    //TransactionDetails transactionDetails;
 
-    @Override
+/*    @Override
     public void onProductPurchased(@NonNull String productId, @Nullable TransactionDetails details) {
 //         * Called when requested PRODUCT ID was successfully purchased
         showLoading(getBinding().progressBar, false);
@@ -761,7 +759,7 @@ public class PurchaseActivity extends BaseBindingActivity<PurchaseBinding> imple
             } else {
                 updatePayment("","FAILED","inapp:com.enveu.demo:android.test.purchased", paymentId);
             }
-           /* String orderId=transactionDetails.purchaseInfo.purchaseData.orderId;
+           *//* String orderId=transactionDetails.purchaseInfo.purchaseData.orderId;
             jsonObj = new JsonObject();
 
             if (selectedPlanName.equalsIgnoreCase("TVOD")) {
@@ -812,23 +810,23 @@ public class PurchaseActivity extends BaseBindingActivity<PurchaseBinding> imple
             jsonObjTransactionDetails.add("purchaseInfo", jsonObjectPurchaseInfo);
             jsonObjPurchaseMetaData.add("transactionDetails", jsonObjTransactionDetails);
             jsonObj.add("purchaseMeta", jsonObjPurchaseMetaData);
-*/
-            /*if (details.purchaseInfo.purchaseData.purchaseToken!=null && !details.purchaseInfo.purchaseData.purchaseToken.equalsIgnoreCase("")){
+*//*
+            *//*if (details.purchaseInfo.purchaseData.purchaseToken!=null && !details.purchaseInfo.purchaseData.purchaseToken.equalsIgnoreCase("")){
                 updatePayment(details.purchaseInfo.purchaseData.purchaseToken,paymentId);
-            }*/
+            }*//*
             //
 
             //hitInitiatePayment();
-          /*  if (isTVOD)
+          *//*  if (isTVOD)
                 hitApiDoPurchase();
             else
-                hitCancelSubscription();*/
+                hitCancelSubscription();*//*
         } catch (
                 JsonSyntaxException e) {
             e.printStackTrace();
         }
 
-    }
+    }*/
 
     private void updatePayment(String billingError,String paymentStatus,String purchaseToken, String paymentId) {
         viewModel.updatePurchase(billingError,paymentStatus,strToken, purchaseToken, paymentId, orderId, clickedModel).observe(PurchaseActivity.this, new Observer<PurchaseResponseModel>() {
@@ -995,14 +993,14 @@ public class PurchaseActivity extends BaseBindingActivity<PurchaseBinding> imple
         }
     }
 
-    @Override
+ /*   @Override
     public void onPurchaseHistoryRestored() {
 
-    }
+    }*/
 
 
     String billingError="";
-    @Override
+  /*  @Override
     public void onBillingError(int errorCode, @Nullable Throwable error) {
         if (error != null && error.getMessage() != null) {
             billingError=error.getMessage();
@@ -1012,20 +1010,20 @@ public class PurchaseActivity extends BaseBindingActivity<PurchaseBinding> imple
 
         // Toast.makeText(PurchaseActivity.this, "something went wrong", Toast.LENGTH_SHORT).show();
 
-    }
+    }*/
 
-    @Override
+   /* @Override
     public void onDestroy() {
         if (bp != null) {
             bp.release();
-        }
+        }*/
 
-        purchaseModel = null;
+      /*  purchaseModel = null;
         responseEntitlementModel = null;
         response = null;
         dismissLoading(getBinding().progressBar);
-        super.onDestroy();
-    }
+        super.onDestroy();*/
+   // }
 
     public void setImage(String imageKey, String imageUrl, ImageView view) {
         try {
@@ -1075,7 +1073,7 @@ public class PurchaseActivity extends BaseBindingActivity<PurchaseBinding> imple
 
     }
 
-    @Override
+/*    @Override
     public void onFinishDialog() {
         if (isloggedout) {
             if (CheckInternetConnection.isOnline(Objects.requireNonNull(PurchaseActivity.this))) {
@@ -1083,12 +1081,12 @@ public class PurchaseActivity extends BaseBindingActivity<PurchaseBinding> imple
                 hitApiLogout(PurchaseActivity.this, preference.getAppPrefAccessToken());
             }
         }
-    }
+    }*/
 
 
     PurchaseModel clickedModel;
 
-    @Override
+/*    @Override
     public void onPurchaseCardClick(boolean click, PurchaseModel model) {
         if (click) {
             String selectedPlanName = model.getPurchaseOptions();
@@ -1148,7 +1146,7 @@ public class PurchaseActivity extends BaseBindingActivity<PurchaseBinding> imple
             getBinding().btnBuy.setClickable(false);
         }
 
-    }
+    }*/
 
     @Override
     protected void onResume() {

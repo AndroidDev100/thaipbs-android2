@@ -837,12 +837,12 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
             AppCommonMethod.assetId = assestId;
             AppCommonMethod.seriesId = seriesId;
             if (responseEntitlementModel != null && responseEntitlementModel.getStatus()) {
-                Intent intent = new Intent(EpisodeActivity.this, PurchaseActivity.class);
+               /* Intent intent = new Intent(EpisodeActivity.this, PurchaseActivity.class);
                 intent.putExtra("response", videoDetails);
                 intent.putExtra("assestId", assestId);
                 intent.putExtra("contentType", MediaTypeConstants.getInstance().getEpisode());
                 intent.putExtra("responseEntitlement", responseEntitlementModel);
-                startActivity(intent);
+                startActivity(intent);*/
             }
         } else {
             preference.setAppPrefGotoPurchase(true);
@@ -920,7 +920,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
 
             }*/
         }
-        BuyNowClick();
+      //  BuyNowClick();
     }
 
     //***********************call episode data from below API***************************************//
@@ -1273,7 +1273,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
 
 
     private void BuyNowClick() {
-        getBinding().tvBuyNow.setOnClickListener(view -> comingSoon());
+       // getBinding().tvBuyNow.setOnClickListener(view -> comingSoon());
     }
 
     public void setUserInteractionFragment(int id, EnveuVideoItemBean seriesDetailBean) {

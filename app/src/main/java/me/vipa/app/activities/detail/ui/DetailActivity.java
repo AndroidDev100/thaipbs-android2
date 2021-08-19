@@ -666,12 +666,12 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
             AppCommonMethod.assetId = assestId;
             AppCommonMethod.seriesId = seriesId;
             if (responseEntitlementModel != null && responseEntitlementModel.getStatus()) {
-                Intent intent = new Intent(DetailActivity.this, PurchaseActivity.class);
+             /*   Intent intent = new Intent(DetailActivity.this, PurchaseActivity.class);
                 intent.putExtra("response", videoDetails);
                 intent.putExtra("assestId", assestId);
                 intent.putExtra("contentType", AppConstants.ContentType.VIDEO.toString());
                 intent.putExtra("responseEntitlement", responseEntitlementModel);
-                startActivity(intent);
+                startActivity(intent);*/
             }
 
         } else {
@@ -740,7 +740,7 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
             getAssetDetails();
         }
         //postCommentClick();
-        BuyNowClick();
+        //BuyNowClick();
     }
 
     private void setPlayIconClick() {
@@ -890,7 +890,7 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
                         updateBuyNowText(responseEntitlement, 1);
                     }
                 } else {
-                    getBinding().tvBuyNow.setVisibility(View.VISIBLE);
+                  //  getBinding().tvBuyNow.setVisibility(View.VISIBLE);
                     if (responseEntitlement.getData() != null) {
                         updateBuyNowText(responseEntitlement, 2);
                     }
@@ -1013,7 +1013,7 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
 
 
     private void BuyNowClick() {
-        getBinding().tvBuyNow.setOnClickListener(view -> comingSoon());
+        //getBinding().tvBuyNow.setOnClickListener(view -> comingSoon());
     }
 
     public void setUI(EnveuVideoItemBean responseDetailPlayer) {

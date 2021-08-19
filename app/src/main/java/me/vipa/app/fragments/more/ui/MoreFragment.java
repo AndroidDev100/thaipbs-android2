@@ -544,8 +544,9 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
         } else if (caption.equalsIgnoreCase(getActivity().getResources().getString(R.string.membership_plan))) {
             if (loginStatus) {
                 if (NetworkConnectivity.isOnline(getActivity())) {
-                    Intent intent = new Intent(getActivity(), MemberShipPlanActivity.class);
-                    startActivity(intent);
+                    new ToastHandler(getActivity()).show("Work In Progress");
+                    /*Intent intent = new Intent(getActivity(), MemberShipPlanActivity.class);
+                    startActivity(intent);*/
                 } else {
                     new ToastHandler(getActivity()).show(getResources().getString(R.string.no_connection));
                 }

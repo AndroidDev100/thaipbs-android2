@@ -22,9 +22,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.anjlab.android.iab.v3.BillingProcessor;
-import com.anjlab.android.iab.v3.SkuDetails;
-import com.anjlab.android.iab.v3.TransactionDetails;
+
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import me.vipa.app.activities.membershipplans.adapter.MembershipAdapter;
@@ -61,11 +59,11 @@ import java.util.Objects;
 import me.vipa.app.activities.membershipplans.adapter.MembershipAdapter;
 import me.vipa.app.baseModels.BaseBindingActivity;
 
-public class MemberShipPlanActivity extends BaseBindingActivity<MembershipPlanBinding> implements BillingProcessor.IBillingHandler, MembershipAdapter.OnPurchaseItemClick, AlertDialogFragment.AlertDialogListener {
+public class MemberShipPlanActivity extends BaseBindingActivity<MembershipPlanBinding>  {
     private static String selectedPurchaseOption;
     private static JsonObject jsonObj;
     PurchaseModel model;
-    private BillingProcessor bp;
+    //private BillingProcessor bp;
     private PurchaseViewModel viewModel;
     private KsPreferenceKeys preference;
     private MembershipAdapter adapterPurchase;
@@ -177,8 +175,8 @@ public class MemberShipPlanActivity extends BaseBindingActivity<MembershipPlanBi
         getBinding().rvPurchase.setAdapter(shimmerAdapter);
         String tempBase64 = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAk56pCLKhlJNSOVJo2dPCi4jwvmhxgS+lmFj5N/lc6SKbjH9D5vm/gRj7OgvSYN4sEWflKqZ3nD+eMfYYh8h679pzNHf8AJGxjyriZaaKprYXXsBTKRnOCEIQYzNMsZ4oLyr3sEjuR22fNb3sl2BZbM2sXK0sYFG05Dba9fHPIifYivqc5ci7QFiNJMDFL83Up4zz8jREwHPgeE6VAQvlnNn3NlSzZ1y6yx66pYN4pnqk2hzO/Wcp1ay7A5up+rU2OP4EtIeNBsfWPtZ40Bp9xEQUoeETt3+hSRMnQRlCxIyJK7AgypSAZHNHwrXi979UR7pi7NkDyNX3CTBxuP9NnwIDAQAB";
 
-        bp = new BillingProcessor(this, tempBase64, this);
-        bp.initialize();
+       // bp = new BillingProcessor(this, tempBase64, this);
+       // bp.initialize();
 
 
         getBinding().btnBuy.setOnClickListener(new View.OnClickListener() {
@@ -211,12 +209,12 @@ public class MemberShipPlanActivity extends BaseBindingActivity<MembershipPlanBi
 
     }
 
-    @Override
+ /*   @Override
     public void onFinishDialog() {
         if (isloggedout) {
             forceLogout();
         }
-    }
+    }*/
 
     public void forceLogout() {
         if (isloggedout) {
@@ -230,7 +228,7 @@ public class MemberShipPlanActivity extends BaseBindingActivity<MembershipPlanBi
         FragmentManager fm = getSupportFragmentManager();
         AlertDialogSingleButtonFragment alertDialog = AlertDialogSingleButtonFragment.newInstance(title, message, getResources().getString(R.string.ok));
         alertDialog.setCancelable(false);
-        alertDialog.setAlertDialogCallBack(this);
+       // alertDialog.setAlertDialogCallBack(this);
         alertDialog.show(fm, "fragment_alert");
     }
 
@@ -251,7 +249,7 @@ public class MemberShipPlanActivity extends BaseBindingActivity<MembershipPlanBi
             getBinding().issue.setVisibility(View.VISIBLE);
         }
 
-        adapterPurchase = new MembershipAdapter(this, list, this, isCardClickable, localeCurrency);
+       // adapterPurchase = new MembershipAdapter(this, list, this, isCardClickable, localeCurrency);
         getBinding().rvPurchase.setAdapter(adapterPurchase);
     }
 
@@ -260,15 +258,15 @@ public class MemberShipPlanActivity extends BaseBindingActivity<MembershipPlanBi
         getBinding().noConnectionLayout.setVisibility(View.VISIBLE);
         getBinding().connection.retryTxt.setOnClickListener(view -> connectionObserver());*/
     }
-
+/*
     @Override
     public void onPurchaseHistoryRestored() {
 
-    }
+    }*/
 
     String billingError = "";
 
-    @Override
+ /*   @Override
     public void onBillingError(int errorCode, @Nullable Throwable error) {
         if (error != null && error.getMessage() != null) {
             billingError = error.getMessage();
@@ -276,7 +274,7 @@ public class MemberShipPlanActivity extends BaseBindingActivity<MembershipPlanBi
         }
         updatePayment(billingError, "FAILED", "", paymentId);
 
-    }
+    }*/
     public void createBottomSheet() {
 
         BottomSheetDialog dialog;
@@ -312,7 +310,7 @@ public class MemberShipPlanActivity extends BaseBindingActivity<MembershipPlanBi
 
     }
 
-    @Override
+ /*   @Override
     public void onBillingInitialized() {
         try {
             boolean isOneTimePurchaseSupported = bp.isOneTimePurchaseSupported();
@@ -331,7 +329,7 @@ public class MemberShipPlanActivity extends BaseBindingActivity<MembershipPlanBi
         }
 
 
-    }
+    }*/
 
     private void getPlansApi() {
         String token = preference.getAppPrefAccessToken();
@@ -365,7 +363,7 @@ public class MemberShipPlanActivity extends BaseBindingActivity<MembershipPlanBi
                             if (alPurchaseOptions.size() > 0) {
                                 getBinding().offerLayout.setVisibility(View.VISIBLE);
                                 getBinding().noOfferLayout.setVisibility(View.GONE);
-                                adapterPurchase = new MembershipAdapter(getApplicationContext(), alPurchaseOptions, MemberShipPlanActivity.this, isCardClickable, localeCurrency);
+                               // adapterPurchase = new MembershipAdapter(getApplicationContext(), alPurchaseOptions, MemberShipPlanActivity.this, isCardClickable, localeCurrency);
                                 getBinding().rvPurchase.setAdapter(adapterPurchase);
                             } else {
                                 getBinding().offerLayout.setVisibility(View.GONE);
@@ -393,10 +391,9 @@ public class MemberShipPlanActivity extends BaseBindingActivity<MembershipPlanBi
         }
     }
 
-    SkuDetails skuDetails;
+   // SkuDetails skuDetails;
 
-    private void createRecurringSubscriptions(PurchaseModel purchaseModel, int i, List<PurchaseModel> alPurchaseOptions, String vodOfferType, String subscriptionOfferPeriod, String subscriptionType) {
-        try {
+    private void createRecurringSubscriptions/*   try {
             if (planResponse.getData().get(i).getRecurringOffer().getOfferPeriod().contains(VodOfferType.WEEKLY.name())) {
                 try {
                     // skuDetails = bp.getSubscriptionListingDetails("monthly");
@@ -510,34 +507,39 @@ public class MemberShipPlanActivity extends BaseBindingActivity<MembershipPlanBi
 
         } catch (Exception ignored) {
 
-        }
+        }*/(PurchaseModel purchaseModel, int i, List<PurchaseModel> alPurchaseOptions, String vodOfferType, String subscriptionOfferPeriod, String subscriptionType) {
+
     }
 
 
-    @Override
+    /*@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (!bp.handleActivityResult(requestCode, resultCode, data)) {
+      *//*  if (!bp.handleActivityResult(requestCode, resultCode, data)) {
             super.onActivityResult(requestCode, resultCode, data);
             Toast.makeText(MemberShipPlanActivity.this, "" + data.toString(), Toast.LENGTH_SHORT).show();
-        }
-    }
+        }*//*
+    }*/
 
+/*
     @Override
     protected void onDestroy() {
-        super.onDestroy();
+      */
+/*  super.onDestroy();
         if (bp != null) {
             bp.release();
-        }
+        }*//*
+
 
     }
+*/
 
-    @Override
+  /*  @Override
     public void onProductPurchased(@NonNull String productId, @Nullable TransactionDetails details) {
 //         * Called when requested PRODUCT ID was successfully purchased
         showLoading(getBinding().progressBar, true);
 
         try {
-           /* jsonObj = new JsonObject();
+           *//* jsonObj = new JsonObject();
 
             jsonObj.addProperty("planName", selectedPurchaseOption);
             jsonObj.add("sku", null);
@@ -573,7 +575,7 @@ public class MemberShipPlanActivity extends BaseBindingActivity<MembershipPlanBi
             jsonObjTransactionDetails.add("purchaseInfo", jsonObjectPurchaseInfo);
             jsonObjPurchaseMetaData.add("transactionDetails", jsonObjTransactionDetails);
             jsonObj.add("purchaseMeta", jsonObjPurchaseMetaData);
-*/
+*//*
 
 
             // hitCancelSubscription();
@@ -589,7 +591,7 @@ public class MemberShipPlanActivity extends BaseBindingActivity<MembershipPlanBi
                 JsonSyntaxException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     private void updatePayment(String billinhError, String paymentStatus, String purchaseToken, String paymentId) {
         viewModel.updatePurchase(billingError, paymentStatus, strToken, purchaseToken, paymentId, orderId, model).observe(MemberShipPlanActivity.this, new Observer<PurchaseResponseModel>() {
@@ -673,7 +675,7 @@ public class MemberShipPlanActivity extends BaseBindingActivity<MembershipPlanBi
     }
 
 
-    @Override
+/*    @Override
     public void onPurchaseCardClick(boolean click, int poss, String planName, PurchaseModel purchaseModel) {
         if (isCardClickable) {
             model = purchaseModel;
@@ -692,7 +694,7 @@ public class MemberShipPlanActivity extends BaseBindingActivity<MembershipPlanBi
             getBinding().btnBuy.setEnabled(false);
             getBinding().btnBuy.setClickable(false);
         }
-    }
+    }*/
 
     @Override
     protected void onResume() {
@@ -714,7 +716,7 @@ public class MemberShipPlanActivity extends BaseBindingActivity<MembershipPlanBi
                         paymentId = purchaseResponseModel.getData().getPaymentId().toString();
                         Log.w("orderIdOf", paymentId);
                         //updatePayment("sample_token",paymentId);
-                        buySubscription();
+                       // buySubscription();
                     }
 
                     // hitInitiatePayment();product
@@ -738,7 +740,7 @@ public class MemberShipPlanActivity extends BaseBindingActivity<MembershipPlanBi
 
     }
 
-    public void buySubscription() {
+ /*   public void buySubscription() {
         if (!StringUtils.isNullOrEmptyOrZero(model.getPurchaseOptions())) {
             showHideProgress(getBinding().progressBar);
 
@@ -751,7 +753,7 @@ public class MemberShipPlanActivity extends BaseBindingActivity<MembershipPlanBi
             }
 
         }
-    }
+    }*/
 
 
 }
