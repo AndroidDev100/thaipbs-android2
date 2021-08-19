@@ -814,8 +814,6 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
 
         if (enveuCommonResponse != null && enveuCommonResponse.getEnveuVideoItemBeans().size() > 0) {
             videoDetails = enveuCommonResponse.getEnveuVideoItemBeans().get(0);
-
-
             getBinding().descriptionText.setEllipsize(TextUtils.TruncateAt.END);
             ImageHelper.getInstance(DetailActivity.this).loadListImage(getBinding().playerImage, videoDetails.getPosterURL());
 //            if (videoDetails.isPremium()) {
