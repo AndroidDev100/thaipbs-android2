@@ -358,6 +358,11 @@
                         </LinearLayout>
 
                     </LinearLayout>
+                    <ImageView
+                        android:background="@color/description_title_yellow"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        />
                     <com.google.android.material.tabs.TabLayout
                         android:id="@+id/tabLayout"
                         android:layout_width="match_parent"
@@ -367,7 +372,8 @@
                         android:background="?attr/backgroundColor"
                         android:minHeight="?actionBarSize"
                         app:tabGravity="fill"
-                        app:tabIndicatorColor="@color/description_title_yellow"
+                        app:tabIndicatorColor="@null"
+                        app:tabIndicatorFullWidth="true"
                         app:tabMode="fixed"
                         app:tabSelectedTextColor="?attr/tab_selected"
                         app:tabTextColor="?attr/tab_text_color"
@@ -375,7 +381,7 @@
                     <ImageView
                         android:background="?attr/tab_selected"
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
+                        android:layout_height="0.8dp"
                         />
 
                     <me.vipa.app.utils.helpers.WrappingViewPager
