@@ -376,30 +376,41 @@
 
                     </LinearLayout>
 
-
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/tab_top_margin"
+                            >
+                            <View
+                                android:background="@color/description_title_yellow"
+                                android:layout_width="match_parent"
+                                android:layout_height="2dp"
+                                />
                         <com.google.android.material.tabs.TabLayout
                             android:id="@+id/tabLayout"
-                            android:layout_marginTop="@dimen/tab_top_margin"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="left"
+                            android:layout_marginTop="4dp"
                             android:layout_marginLeft="@dimen/rail_top_margin"
                             android:background="?attr/backgroundColor"
                             android:minHeight="?actionBarSize"
                             app:tabGravity="fill"
-                            app:tabIndicatorColor="@color/description_title_yellow"
+                            app:tabIndicatorColor="@null"
+                            app:tabIndicatorFullWidth="true"
                             app:tabMode="fixed"
                             app:tabSelectedTextColor="?attr/tab_selected"
                             app:tabTextColor="?attr/tab_text_color"
                             app:tabTextAppearance="@style/CusromTabText"/>
+
                         <View
                             android:background="?attr/tab_selected"
                             android:layout_width="match_parent"
                             android:layout_alignBottom="@+id/tabLayout"
-                            android:layout_height="1dp"
+                            android:layout_height="0.8dp"
                             />
 
-
+                        </RelativeLayout>
 
                     <me.vipa.app.utils.helpers.WrappingViewPager
                         android:id="@+id/viewPager"
