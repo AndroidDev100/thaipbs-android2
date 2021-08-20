@@ -1609,22 +1609,22 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                     }
                     //Log.e("R=FULLSCEEN", "R=FULLSCEEN");
 
-                    DisplayMetrics displayMetrics = new DisplayMetrics();
+          /*          DisplayMetrics displayMetrics = new DisplayMetrics();
                     getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
                     int screen_height = displayMetrics.heightPixels;
                     int screen_width = displayMetrics.widthPixels;
 
-                    //Log.e("RATUILANDHEIGHT", String.valueOf(screen_height));
-                   // Log.e("RATUILANDWIDTH", String.valueOf(screen_width));
+                    Log.e("RATUILANDHEIGHT", String.valueOf(screen_height));
+                    Log.e("RATUILANDWIDTH", String.valueOf(screen_width));*/
 
-                    if (screen_width > 1280) {
+           /*         if (screen_width > 1280) {
                         // Set the video size
                         Log.e("Greaterr", String.valueOf(screen_width));
                         baseVideoView.getRenderView().setVideoSize(screen_width, screen_height);
-                        baseVideoView.setPadding(30, 0, 30, 0);
+                        baseVideoView.setPadding(32, 0, 32, 0);
 
                     }
-
+*/
 
 
 
@@ -1637,7 +1637,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                     currentConfig = newConfig;
                     baseVideoView.setPadding(0, 0, 0, 0);
                    // Log.e("R=PORTRAIT", "R=PORTRAIT");
-                    baseVideoView.getRenderView().setVideoSize(MATCH_PARENT, MATCH_PARENT);
+                   // baseVideoView.getRenderView().setVideoSize(MATCH_PARENT, MATCH_PARENT);
                 }
             }
         }

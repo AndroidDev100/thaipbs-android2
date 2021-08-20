@@ -326,15 +326,15 @@ public class PlayerControlsFragment extends Fragment {
             if (!getResources().getBoolean(R.bool.isTablet)) {
 
 
-                DisplayMetrics displayMetrics = new DisplayMetrics();
+              /*  DisplayMetrics displayMetrics = new DisplayMetrics();
                 getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
                 int screen_height = displayMetrics.heightPixels;
-                int screen_width = displayMetrics.widthPixels;
+                int screen_width = displayMetrics.widthPixels;*/
 
                // Log.e("RATUILANDHEIGHT...", String.valueOf(screen_height));
               //  Log.e("RATUILANDWIDTH...", String.valueOf(screen_width));
 
-                if (screen_width > 1280) {
+             /*   if (screen_width > 1280) {
                     Utils.setParamstoSeekBarControlRatio(seekBarControl);
                     Utils.setParamstoPlayerSettingControl(settingControl);
                     Utils.setParamstoBackArrowForRatio(backArrow);
@@ -348,32 +348,17 @@ public class PlayerControlsFragment extends Fragment {
                     Utils.setParamstoSettinIcon(settingLay);
                     Utils.setParamstoSkipButton(skipBtn);
 
-                }
+                }*/
+                Utils.setParamstoSeekBarControl(seekBarControl);
+                Utils.setParamstoPlayerSettingControl(settingControl);
+                Utils.setParamstoBackArrow(backArrow);
+                Utils.setParamstoSettinIcon(settingLay);
+                Utils.setParamstoSkipButton(skipBtn);
 
             }
 
 
 
-
-          /*  DisplayMetrics displayMetrics = new DisplayMetrics();
-            getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-            int screen_height = displayMetrics.heightPixels;
-            int screen_width = displayMetrics.widthPixels;
-            System.out.println("RATUILand"+ screen_height + " " + screen_width);
-            Log.e("RATUILANDHEIGHT", String.valueOf(screen_height));
-            Log.e("RATUILANDWIDTH", String.valueOf(screen_width));
-
-            *//*    1920 x 1080 pixels[]
-            16:9 Ratio
-
-            It's the standard widescreen aspect ratio for videos. Most smartphones and DSLRs record video at 1920 x 1080 pixels, which is a 16:9 aspect ratio*//*
-            if(screen_width>1920 ){
-
-                Log.e("SIZE GREAAT","SIZE");
-
-               onSizeRatioDown.onSize();
-
-            }*/
         }
 
         catch (Exception e) {
