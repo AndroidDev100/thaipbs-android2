@@ -147,7 +147,6 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
                 new ActivityLauncher(SignUpActivity.this).homeScreen(SignUpActivity.this, HomeActivity.class);
             }
         });
-
         Objects.requireNonNull(getBinding().termsPrivacyPolicies).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

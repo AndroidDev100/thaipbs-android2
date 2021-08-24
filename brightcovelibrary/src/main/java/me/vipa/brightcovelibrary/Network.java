@@ -137,9 +137,15 @@ public class Network {
                 context.getSystemService(Context.CONNECTIVITY_SERVICE);
 //		NetworkInfo networkInfo = connMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 //		boolean isWifiConn = networkInfo.isConnected();
+
+
         NetworkInfo networkInfo = connMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-        boolean isMobileConn = networkInfo.isConnected();
-        return  isMobileConn;
+        if(networkInfo!=null){
+            boolean isMobileConnected = networkInfo.isConnected();
+            return  isMobileConnected;
+
+        }
+       return false;
     }
 
     public static boolean isMobileDataNetworkAvailable(Context context) {

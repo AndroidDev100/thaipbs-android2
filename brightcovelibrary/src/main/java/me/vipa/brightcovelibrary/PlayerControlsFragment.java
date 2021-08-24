@@ -67,7 +67,7 @@ public class PlayerControlsFragment extends Fragment {
     private final String ARG_PARAM1 = "param1";
     private final String ARG_PARAM2 = "param2";
     private ImageView pauseButton, forward, rewind, playerSettingIcon,signIcon;
-    private androidx.mediarouter.app.MediaRouteButton media_route_button;
+    private MediaRouteButton media_route_button;
     private LinearLayout skipBtn, bingeBtn;
     private TextView skipduration;
     ConstraintLayout bingeLay;
@@ -257,7 +257,7 @@ public class PlayerControlsFragment extends Fragment {
             }
         }
 
-        media_route_button.setVisibility(View.VISIBLE);
+       // media_route_button.setVisibility(View.VISIBLE);
         audioTracks.setVisibility(View.GONE);
         fullscreen.setBackgroundResource(R.drawable.full_screen);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(

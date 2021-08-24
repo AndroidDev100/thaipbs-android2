@@ -1553,7 +1553,6 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
 
     @Override
     protected void onDestroy() {
-        Logger.e("EpisodeActivity", "onDestroy");
         super.onDestroy();
 
         preference.setAppPrefAssetId(0);

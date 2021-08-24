@@ -82,9 +82,7 @@ class NetworkSetup {
         }
 
     fun subscriptionClient(token:String): Retrofit {
-        Log.e("x-api-key",BaseConfiguration.instance.clients!!.getOVPApiKey())
-
-
+       // Log.e("x-api-key",BaseConfiguration.instance.clients!!.getOVPApiKey())
         val loggingInterceptor = HttpLoggingInterceptor()
         if (BuildConfig.DEBUG)
             loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY

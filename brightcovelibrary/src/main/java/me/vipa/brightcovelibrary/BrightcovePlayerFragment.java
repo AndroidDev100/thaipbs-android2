@@ -160,7 +160,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
     private boolean isBingeWatchTimeCalculate = false;
     boolean isFirstCalled = true;
     private boolean isCastConnected = false;
-    int from = 0;
+    private int from = 0;
     private String signLangParentRefId = "";
     private String signLangRefId = "";
     private String isPodcast = "";
@@ -487,7 +487,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             baseVideoView.stopPlayback();
             baseVideoView.clear();
 
-            if (baseVideoView.getEventEmitter() != null) {
+            if (baseVideoView != null && baseVideoView.getEventEmitter() != null) {
                 eventEmitter = baseVideoView.getEventEmitter();
 
             }
