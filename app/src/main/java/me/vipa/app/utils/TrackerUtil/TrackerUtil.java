@@ -7,6 +7,8 @@ import me.vipa.app.tarcker.EventConstant;
 import me.vipa.app.utils.cropImage.helpers.Logger;
 import me.vipa.app.utils.cropImage.helpers.PrintLogging;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.gson.JsonObject;
@@ -32,7 +34,14 @@ public class TrackerUtil {
             Branch.getAutoInstance(context);
             sAnalytics = GoogleAnalytics.getInstance(context);
             Branch.getInstance().initSession((referringParams, error) -> Logger.d("Branch", "onInitFinished() with deep link data: " + referringParams));
-            MobileAds.initialize(context, "ca-app-pub-3940256099942544~3347511713");
+           // MobileAds.initialize(context, "ca-app-pub-3940256099942544~3347511713");
+
+
+            MobileAds.initialize(context, new OnInitializationCompleteListener() {
+                @Override
+                public void onInitializationComplete(InitializationStatus initializationStatus) {
+                }
+            });
             Logger.d("sdkInitialzed", "successfull");
 
 

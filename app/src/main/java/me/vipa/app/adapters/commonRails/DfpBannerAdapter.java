@@ -18,9 +18,13 @@ import me.vipa.app.databinding.RowDfpBannerBinding;
 import me.vipa.app.utils.constants.AppConstants;
 import me.vipa.app.utils.cropImage.helpers.PrintLogging;
 import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
-import com.google.android.gms.ads.doubleclick.PublisherAdView;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.LoadAdError;
+
+
+import org.jetbrains.annotations.NotNull;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -33,7 +37,7 @@ public class DfpBannerAdapter extends RecyclerView.Adapter<DfpBannerAdapter.View
     private final Context mContext;
     private RailCommonData item;
     private String deviceId;
-    private PublisherAdRequest adRequest;
+    private AdRequest adRequest;
     private String adsType;
 
     public DfpBannerAdapter(Context context, RailCommonData item, String adsType) {
@@ -61,15 +65,15 @@ public class DfpBannerAdapter extends RecyclerView.Adapter<DfpBannerAdapter.View
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) (holder).rowDfpBannerBinding.adMobView.getLayoutParams();
             params.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
             RelativeLayout adContainer = holder.rowDfpBannerBinding.adMobView;
-            PublisherAdView adView = new PublisherAdView(mContext);
+            AdView adView = new AdView(mContext);
             fetchBannerSize(adsType, adView);
             adView.setLayoutParams(params);
             adContainer.addView(adView);
 
             if (BuildConfig.FLAVOR.equalsIgnoreCase("QA")) {
-                adRequest = new PublisherAdRequest.Builder().addTestDevice(deviceId).build();
+                adRequest = new AdRequest.Builder().build();
             } else {
-                adRequest = new PublisherAdRequest.Builder().build();
+                adRequest = new AdRequest.Builder().build();
             }
             adView.loadAd(adRequest);
 
@@ -81,12 +85,13 @@ public class DfpBannerAdapter extends RecyclerView.Adapter<DfpBannerAdapter.View
                     // Code to be executed when an ad finishes loading.
                 }
 
+
                 @Override
-                public void onAdFailedToLoad(int errorCode) {
+                public void onAdFailedToLoad(@NonNull @NotNull LoadAdError loadAdError) {
+                    super.onAdFailedToLoad(loadAdError);
                     // Code to be executed when an ad request fails.
                     holder.rowDfpBannerBinding.bannerRoot.setVisibility(View.GONE);
-                    PrintLogging.printLog("DfpBannerAdapter", "onAdFailedToLoad" + errorCode);
-
+                    PrintLogging.printLog("DfpBannerAdapter", "onAdFailedToLoad" + loadAdError);
                 }
 
                 @Override
@@ -100,10 +105,7 @@ public class DfpBannerAdapter extends RecyclerView.Adapter<DfpBannerAdapter.View
                     // Code to be executed when the user clicks on an ad.
                 }
 
-                @Override
-                public void onAdLeftApplication() {
-                    // Code to be executed when the user has left the app.
-                }
+
 
                 @Override
                 public void onAdClosed() {
@@ -120,16 +122,16 @@ public class DfpBannerAdapter extends RecyclerView.Adapter<DfpBannerAdapter.View
     }
 
 
-    public AdSize fetchBannerSize(String bannerType, PublisherAdView adView) {
+    public AdSize fetchBannerSize(String bannerType, AdView adView) {
         AdSize adSize;
         if (bannerType.equalsIgnoreCase(AppConstants.KEY_MREC)) {
             adSize = AdSize.MEDIUM_RECTANGLE;
             adView.setAdUnitId(item.getScreenWidget().getAdID());
-            adView.setAdSizes(adSize);
+            adView.setAdSize(adSize);
         } else if (bannerType.equalsIgnoreCase(AppConstants.KEY_BANNER)) {
             adSize = AdSize.BANNER;
             adView.setAdUnitId(item.getScreenWidget().getAdID());
-            adView.setAdSizes(adSize);
+            adView.setAdSize(adSize);
         } else adSize = AdSize.MEDIUM_RECTANGLE;
         return adSize;
 

@@ -58,7 +58,7 @@ class NetworkSetup {
                 val original = chain.request()
                 // Request customization: add request headers
                 val requestBuilder = original.newBuilder()
-                        .addHeader("x-api-key", BaseConfiguration.instance.clients!!.getOVPApiKey())
+                        .addHeader("x-api-key", BaseConfiguration.instance.clients!!.getOVPApiKey().toString())
                 val request = requestBuilder.build()
 
                 chain.proceed(request)
@@ -94,7 +94,7 @@ class NetworkSetup {
             val original = chain.request()
             // Request customization: add request headers
             val requestBuilder = original.newBuilder()
-                    .addHeader("x-api-key", BaseConfiguration.instance.clients!!.getOVPApiKey())
+                    .addHeader("x-api-key", BaseConfiguration.instance.clients!!.getOVPApiKey().toString())
                     .addHeader("x-auth",token)
             val request = requestBuilder.build()
 
@@ -132,7 +132,7 @@ class NetworkSetup {
             val original = chain.request()
             // Request customization: add request headers
             val requestBuilder = original.newBuilder()
-                    .addHeader("x-api-key", BaseConfiguration.instance.clients!!.getOVPApiKey())
+                    .addHeader("x-api-key", BaseConfiguration.instance.clients!!.getOVPApiKey().toString())
                     .addHeader("x-auth",token)
             val request = requestBuilder.build()
 
@@ -171,7 +171,7 @@ class NetworkSetup {
             val original = chain.request()
             // Request customization: add request headers
             val requestBuilder = original.newBuilder()
-                    .addHeader("x-api-key", BaseConfiguration.instance.clients!!.getOVPApiKey())
+                    .addHeader("x-api-key", BaseConfiguration.instance.clients!!.getOVPApiKey().toString())
                     .addHeader("x-auth",token)
             val request = requestBuilder.build()
 

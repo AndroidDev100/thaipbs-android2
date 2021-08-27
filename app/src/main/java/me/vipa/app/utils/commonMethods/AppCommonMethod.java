@@ -40,8 +40,7 @@ import me.vipa.enums.WidgetImageType;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
+
 
 import me.vipa.app.MvHubPlusApplication;
 import me.vipa.app.activities.detail.ui.DetailActivity;
@@ -76,6 +75,7 @@ import me.vipa.app.R;
 import me.vipa.app.SDKConfig;
 
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -97,6 +97,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.StringTokenizer;
 import java.util.concurrent.TimeUnit;
 
@@ -1009,7 +1010,26 @@ public class AppCommonMethod {
 
     public static void getPushToken(Activity activity) {
         mActivity = new WeakReference<>(activity);
-        FirebaseInstanceId.getInstance().getInstanceId()
+        FirebaseMessaging.getInstance ().getToken ()
+                .addOnCompleteListener ( task -> {
+                    if (!task.isSuccessful ()) {
+                        //Could not get FirebaseMessagingToken
+                        return;
+                    }
+                    if (null != task.getResult ()) {
+                        //Got FirebaseMessagingToken
+                        String firebaseMessagingToken = Objects.requireNonNull ( task.getResult () );
+                        KsPreferenceKeys.getInstance().setAppPrefFcmToken(firebaseMessagingToken);
+                        Logger.w("FCM_TOKEN", KsPreferenceKeys.getInstance().getAppPrefFcmToken());
+
+
+                        // Log and toast
+                        // String msg = getString(R.string.msg_token_fmt, token);
+                        //Log.d(TAG, msg);
+                        //  Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                    }
+                } );
+      /*  FirebaseInstanceId.getInstance().getInstanceId()
                 .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
                     @Override
                     public void onComplete(@NonNull Task<InstanceIdResult> task) {
@@ -1022,12 +1042,9 @@ public class AppCommonMethod {
                         KsPreferenceKeys.getInstance().setAppPrefFcmToken(token);
                         Logger.w("FCM_TOKEN", KsPreferenceKeys.getInstance().getAppPrefFcmToken());
 
-                        // Log and toast
-                        // String msg = getString(R.string.msg_token_fmt, token);
-                        //Log.d(TAG, msg);
-                        //  Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+
                     }
-                });
+                });*/
     }
 
     public static void showPopupMenu(Context context, View view, int menuItems, PopupMenu.OnMenuItemClickListener onMenuItemClickListener) {

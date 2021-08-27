@@ -19,7 +19,6 @@ import me.vipa.app.databinding.LayoutHeroPosterItemBinding;
 import me.vipa.app.databinding.LayoutHeroPotraitItemBinding;
 import me.vipa.app.databinding.LayoutHeroSquareItemBinding;
 import me.vipa.app.utils.constants.AppConstants;
-import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
 
 import me.vipa.app.beanModel.enveuCommonRailData.RailCommonData;
 import me.vipa.app.callbacks.commonCallbacks.CommonRailtItemClickListner;
@@ -29,7 +28,7 @@ public class CommonHeroRailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private final Context mContext;
     private RailCommonData item;
     private String deviceId;
-    private PublisherAdRequest adRequest;
+//    private PublisherAdRequest adRequest;
     private int viewType;
     private RailCommonData railCommonData;
     private CommonRailtItemClickListner listner;

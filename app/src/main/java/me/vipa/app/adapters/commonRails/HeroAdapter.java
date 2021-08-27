@@ -13,7 +13,9 @@ import me.vipa.app.R;
 import me.vipa.app.databinding.RowHeroLayoutBinding;
 import me.vipa.app.utils.config.ImageLayer;
 import me.vipa.app.utils.helpers.ImageHelper;
-import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
+
+import com.google.android.gms.ads.AdRequest;
+
 
 import me.vipa.app.beanModelV3.playListModelV2.PlayListDetailsResponse;
 
@@ -22,7 +24,7 @@ public class HeroAdapter extends RecyclerView.Adapter<HeroAdapter.ViewHolder> {
     private final Context mContext;
     private PlayListDetailsResponse item;
     private String deviceId;
-    private PublisherAdRequest adRequest;
+    private AdRequest adRequest;
     private String adsType;
 
     public HeroAdapter(Context context, PlayListDetailsResponse item, String adsType) {
