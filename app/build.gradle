@@ -90,6 +90,11 @@ android {
             enableSplit = false
         }
     }
+    packagingOptions {
+        exclude("META-INF/*.kotlin_module")
+    }
+
+
 }
 
 repositories {
@@ -106,7 +111,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:19.0.1'
     implementation 'com.google.android.gms:play-services-analytics:17.0.1'
     implementation 'com.google.android.gms:play-services-auth:19.2.0'
-    implementation 'com.google.ads.interactivemedia.v3:interactivemedia:3.11.2'
+    implementation 'com.google.ads.interactivemedia.v3:interactivemedia:3.24.0'
     implementation 'com.google.android.gms:play-services-ads-identifier:17.0.1'
     implementation 'com.google.firebase:firebase-messaging:22.0.0'
     // Add the dependency for the Performance Monitoring library
@@ -149,7 +154,7 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.6.0'
    // implementation 'com.facebook.android:facebook-android-sdk:5.2.0'
-    implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
+    implementation 'com.facebook.android:facebook-android-sdk:8.2.0'
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
     implementation 'io.reactivex.rxjava2:rxjava:2.2.19'

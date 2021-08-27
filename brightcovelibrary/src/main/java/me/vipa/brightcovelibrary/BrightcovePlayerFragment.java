@@ -79,8 +79,10 @@ import me.vipa.brightcovelibrary.chromecast.ChromecastManager;
 import com.bumptech.glide.Glide;
 import com.google.ads.interactivemedia.v3.api.AdDisplayContainer;
 import com.google.ads.interactivemedia.v3.api.AdError;
+import com.google.ads.interactivemedia.v3.api.AdsLoader;
 import com.google.ads.interactivemedia.v3.api.AdsRequest;
 import com.google.ads.interactivemedia.v3.api.ImaSdkFactory;
+import com.google.ads.interactivemedia.v3.api.ImaSdkSettings;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.SimpleExoPlayer;
@@ -166,6 +168,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
     private String isPodcast = "";
     private boolean isFragmentCalled = false;
     private boolean isOfflinePodcast = false;
+    private AdsLoader adsLoader;
 
 
     public BrightcovePlayerFragment() {
@@ -1945,12 +1948,18 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                     playerControlsFragment.hideControls();
 
                 }
-                containers = sdkFactory.createAdDisplayContainer();
+                /*containers = sdkFactory.createAdDisplayContainer();
                 containers.setPlayer(googleIMAComponent.getVideoAdPlayer());
-                containers.setAdContainer(baseVideoView);
+                containers.setAdContainer(baseVideoView);*/
+
+                ImaSdkSettings imaSdkSettings = sdkFactory.createImaSdkSettings();
+
+                containers = sdkFactory.createAdDisplayContainer(baseVideoView,googleIMAComponent.getVideoAdPlayer());
+                adsLoader = sdkFactory.createAdsLoader(getActivity(), imaSdkSettings, containers);
                 AdsRequest adsRequest = sdkFactory.createAdsRequest();
+
                 adsRequest.setAdTagUrl(adRulesURL);
-                adsRequest.setAdDisplayContainer(containers);
+               // adsRequest.setAdDisplayContainer(containers);
                 ArrayList<AdsRequest> adsRequests = new ArrayList<AdsRequest>(1);
                 adsRequests.add(adsRequest);
                 event.properties.put(GoogleIMAComponent.ADS_REQUESTS, adsRequests);
