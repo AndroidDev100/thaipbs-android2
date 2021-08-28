@@ -193,8 +193,8 @@ dependencies {
 
     //Image upload
     implementation ('com.amazonaws:aws-android-sdk-mobile-client:2.6.7@aar') { transitive = true }
-    implementation 'com.amazonaws:aws-android-sdk-s3:2.6.+'
-    implementation 'com.amazonaws:aws-android-sdk-cognito:2.6.+'
+    implementation 'com.amazonaws:aws-android-sdk-s3:2.6.31'
+    implementation 'com.amazonaws:aws-android-sdk-cognito:2.6.31'
 
  //   testImplementation 'junit:junit:4.12'
     implementation project(':brightcovelibrary')
