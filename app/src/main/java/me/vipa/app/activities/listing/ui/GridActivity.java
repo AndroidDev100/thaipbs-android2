@@ -341,7 +341,8 @@ public class GridActivity extends BaseBindingActivity<ListingActivityBinding> im
                                     } catch (Exception ignored) {
 
                                     }
-                                } else if (getContinueWatchingBean.getResponseCode() == 4302){
+                                }
+                                else if (getContinueWatchingBean.getResponseCode() == 4302){
                                     isloggedout = true;
                                     logoutCall();
                                     try {

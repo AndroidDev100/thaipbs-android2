@@ -147,7 +147,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
                 new ActivityLauncher(SignUpActivity.this).homeScreen(SignUpActivity.this, HomeActivity.class);
             }
         });
-        Objects.requireNonNull(getBinding().termsPrivacyPolicies).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        getBinding().termsPrivacyPolicies.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
@@ -457,13 +457,11 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
                         loginResult.getAccessToken(),
                         (object, response) -> {
 
-                            Logger.i("LoginActivity",
-                                    response.toString());
+                          //  Logger.i("LoginActivity", response.toString());
                             try {
                                 id = object.getString("id");
                                 try {
-                                    profile_pic = new URL(
-                                            "https://graph.facebook.com/" + id + "/picture?type=large");
+                                    profile_pic = new URL("https://graph.facebook.com/" + id + "/picture?type=large");
 
 
                                     Logger.i("profile_pic",

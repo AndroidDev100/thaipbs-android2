@@ -290,7 +290,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
 
             }
         } else {
-            throw new IllegalArgumentException("Activity cannot find  extras " + "Search_Show_All");
+           // throw new IllegalArgumentException("Activity cannot find  extras " + "Search_Show_All");
         }
         //end basic settings
         callBinding();
@@ -1029,7 +1029,9 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
 //        }
 
         if (fromBingWatch) {
-            downloadHelper.findVideo(videoDetails.getBrightcoveVideoId());
+            if(videoDetails.getBrightcoveVideoId()!=null){
+                downloadHelper.findVideo(videoDetails.getBrightcoveVideoId());
+            }
             // getBinding().playIcon.setVisibility(View.GONE);
             if (AppCommonMethod.getCheckBCID(videoDetails.getBrightcoveVideoId())) {
                 isLogin = preference.getAppPrefLoginStatus();

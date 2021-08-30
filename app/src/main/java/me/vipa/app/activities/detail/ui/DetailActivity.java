@@ -1455,8 +1455,7 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
     }
 
     @Override
-    public void onPictureInPictureModeChanged(boolean isInPictureInPictureMode, Configuration
-            newConfig) {
+    public void onPictureInPictureModeChanged(boolean isInPictureInPictureMode, Configuration newConfig) {
         super.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig);
         if (supportsPiPMode()) {
             PictureInPictureManager.getInstance().onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig);

@@ -303,7 +303,7 @@ public class AppCommonMethod {
                 sharingIntent.setType("text/plain");
                 sharingIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 sharingIntent.putExtra(Intent.EXTRA_TEXT, mActivity.get().getResources().getString(R.string.checkout) + " " + title + " " + activity.getResources().getString(R.string.on_enveu) + "\n" + sharingURL);
-                Logger.e("LINK PROPS", new Gson().toJson(sharingIntent));
+               // Logger.e("LINK PROPS", new Gson().toJson(sharingIntent));
 
                 PackageManager pm = MvHubPlusApplication.getInstance().getPackageManager();
                 List<ResolveInfo> activityList = pm.queryIntentActivities(sharingIntent, 0);
@@ -337,7 +337,7 @@ public class AppCommonMethod {
                 .addControlParameter("id", String.valueOf(assetId))
                 .addControlParameter("seriesId", String.valueOf(seriesId))
                 .addControlParameter("seasonNumber", String.valueOf(seasonNumber));
-        Logger.e("LINK PROPS", new Gson().toJson(lp));
+       // Logger.e("LINK PROPS", new Gson().toJson(lp));
         buo.generateShortUrl(activity, lp, (url, error) -> {
             if (error == null) {
                 sharingURL = url;

@@ -645,7 +645,6 @@ public class PlayerControlsFragment extends Fragment {
     }
 
     private void callAnimation() {
-
         if (timer) {
             viewHideShowTimeHandler.removeCallbacks(viewHideShowRunnable);
         }
