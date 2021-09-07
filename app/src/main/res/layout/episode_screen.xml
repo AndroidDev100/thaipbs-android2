@@ -74,9 +74,9 @@
                     placeholder="@{@drawable/placeholder_landscape}"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="visible"
                     android:scaleType="fitXY"
-                    android:src="@drawable/placeholder_landscape"/>
+                    android:src="@drawable/placeholder_landscape"
+                    android:visibility="visible" />
 
 <!--                <ImageView-->
 <!--                    android:id="@+id/play_icon"-->

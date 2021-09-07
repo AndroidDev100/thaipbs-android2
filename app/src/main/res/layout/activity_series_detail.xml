@@ -110,9 +110,10 @@
                             imageUrl="@{playlistItem.posterURL}"
                             placeholder="@{@drawable/placeholder_landscape}"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
+                            android:adjustViewBounds="true"
                             android:background="@drawable/placeholder_landscape"
-                            android:contentDescription="Shimmer Crousel "
+                            android:contentDescription="Shimmer Crousel"
                             android:scaleType="centerCrop" />
 
                         <RelativeLayout
@@ -150,9 +151,9 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
+                            android:layout_height="@dimen/_35sdp"
                             android:layout_alignParentBottom="true"
-                            android:background="@drawable/series_shadow"
-                            android:layout_height="@dimen/_35sdp">
+                            android:background="@drawable/series_shadow">
 
                         </LinearLayout>
 
