@@ -52,7 +52,16 @@ class Utils {
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
-        params.setMargins(0, 0, 0, 60);
+        params.setMargins(0, 0, 0, 40);
+        seekBarControl.setLayoutParams(params);
+    }
+
+    public static void setParamstoSeekBarControl1(View seekBarControl) {
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        params.setMargins(0, 0, 0, 70);
         seekBarControl.setLayoutParams(params);
     }
     public static void setParamstoSeekBarControlRatio(View seekBarControl) {
@@ -69,7 +78,7 @@ class Utils {
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
-        params.setMargins(0, 0, 0, 80);
+        params.setMargins(0, 0, 0, 40);
         params.gravity = Gravity.CENTER;
         settingControl.setLayoutParams(params);
     }
@@ -79,7 +88,7 @@ class Utils {
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
-        params.setMargins(0, 70, 0, 0);
+        params.setMargins(0, 50, 0, 0);
         backArrow.setLayoutParams(params);
     }
 
@@ -222,7 +231,7 @@ class Utils {
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
-        params.setMargins(0, 70, 0, 0);
+        params.setMargins(70, 50, 0, 0);
         params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
         playerSettingIcon.setLayoutParams(params);
     }

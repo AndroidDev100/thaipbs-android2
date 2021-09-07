@@ -66,7 +66,7 @@ public class PlayerControlsFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private final String ARG_PARAM1 = "param1";
     private final String ARG_PARAM2 = "param2";
-    private ImageView pauseButton, forward, rewind, playerSettingIcon,signIcon;
+    private ImageView pauseButton, forward, rewind, playerSettingIcon, signIcon;
     private MediaRouteButton media_route_button;
     private LinearLayout skipBtn, bingeBtn;
     private TextView skipduration;
@@ -104,8 +104,7 @@ public class PlayerControlsFragment extends Fragment {
     private boolean isFromParentRef = false;
     private String signLangId = "";
 
-   // private OnSizeRatioDown onSizeRatioDown;
-
+    // private OnSizeRatioDown onSizeRatioDown;
 
 
     private OnFragmentInteractionListener mListener;
@@ -115,7 +114,6 @@ public class PlayerControlsFragment extends Fragment {
     public PlayerControlsFragment() {
         // Required empty public constructor
     }
-
 
 
     public PlayerControlsFragment newInstance(String param1, String param2) {
@@ -247,17 +245,17 @@ public class PlayerControlsFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (videoType.equalsIgnoreCase("1")){
-            if (playerSettingIcon!=null){
+        if (videoType.equalsIgnoreCase("1")) {
+            if (playerSettingIcon != null) {
                 playerSettingIcon.setVisibility(View.INVISIBLE);
             }
-        }else {
-            if (playerSettingIcon!=null){
+        } else {
+            if (playerSettingIcon != null) {
                 playerSettingIcon.setVisibility(View.VISIBLE);
             }
         }
 
-       // media_route_button.setVisibility(View.VISIBLE);
+        // media_route_button.setVisibility(View.VISIBLE);
         audioTracks.setVisibility(View.GONE);
         fullscreen.setBackgroundResource(R.drawable.full_screen);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -281,23 +279,21 @@ public class PlayerControlsFragment extends Fragment {
         backArrow.requestFocus();
 
 
-
         try {
-                       RelativeLayout.LayoutParams params2 = new RelativeLayout.LayoutParams(
-                                        LinearLayout.LayoutParams.WRAP_CONTENT,
-                                        LinearLayout.LayoutParams.WRAP_CONTENT
-                                       );
-                        params2.setMargins(0, 10, 60, 0);
-                       params2.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-                       settingLay.setLayoutParams(params2);
-                  }catch (Exception ignored){
+            RelativeLayout.LayoutParams params2 = new RelativeLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            );
+            params2.setMargins(0, 10, 60, 0);
+            params2.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+            settingLay.setLayoutParams(params2);
+        } catch (Exception ignored) {
 
-                            }
+        }
 
         Utils.setParamsResetSkipButton(skipBtn);
 
         //  Utils.setParamstoSettinIcon(playerSettingIcon);
-
 
 
     }
@@ -305,9 +301,9 @@ public class PlayerControlsFragment extends Fragment {
     void sendLandscapeCallback() {
         try {
             fullscreen.setBackgroundResource(R.drawable.exit_full_screen);
-            if (videoType.equalsIgnoreCase("1")){
+            if (videoType.equalsIgnoreCase("1")) {
                 playerSettingIcon.setVisibility(View.INVISIBLE);
-            }else {
+            } else {
                 playerSettingIcon.setVisibility(View.VISIBLE);
             }
 //            media_route_button.setVsibility(View.VISIBLE);
@@ -331,8 +327,8 @@ public class PlayerControlsFragment extends Fragment {
                 int screen_height = displayMetrics.heightPixels;
                 int screen_width = displayMetrics.widthPixels;*/
 
-               // Log.e("RATUILANDHEIGHT...", String.valueOf(screen_height));
-              //  Log.e("RATUILANDWIDTH...", String.valueOf(screen_width));
+                // Log.e("RATUILANDHEIGHT...", String.valueOf(screen_height));
+                //  Log.e("RATUILANDWIDTH...", String.valueOf(screen_width));
 
              /*   if (screen_width > 1280) {
                     Utils.setParamstoSeekBarControlRatio(seekBarControl);
@@ -349,19 +345,25 @@ public class PlayerControlsFragment extends Fragment {
                     Utils.setParamstoSkipButton(skipBtn);
 
                 }*/
-                Utils.setParamstoSeekBarControl(seekBarControl);
-                Utils.setParamstoPlayerSettingControl(settingControl);
-                Utils.setParamstoBackArrow(backArrow);
-                Utils.setParamstoSettinIcon(settingLay);
-                Utils.setParamstoSkipButton(skipBtn);
+                if (videoType.equalsIgnoreCase("1")){
+                    Utils.setParamstoSeekBarControl1(seekBarControl);
+                    Utils.setParamstoPlayerSettingControl(settingControl);
+                    Utils.setParamstoBackArrow(backArrow);
+                    Utils.setParamstoSettinIcon(settingLay);
+                    Utils.setParamstoSkipButton(skipBtn);
+                }else {
+                    Utils.setParamstoSeekBarControl(seekBarControl);
+                    Utils.setParamstoPlayerSettingControl(settingControl);
+                    Utils.setParamstoBackArrow(backArrow);
+                    Utils.setParamstoSettinIcon(settingLay);
+                    Utils.setParamstoSkipButton(skipBtn);
+                }
+
 
             }
 
 
-
-        }
-
-        catch (Exception e) {
+        } catch (Exception e) {
 
         }
 
@@ -401,7 +403,7 @@ public class PlayerControlsFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (backArrow!=null){
+        if (backArrow != null) {
             backArrow.setVisibility(View.GONE);
         }
     }
@@ -434,9 +436,9 @@ public class PlayerControlsFragment extends Fragment {
         }
         if (type.equalsIgnoreCase(EventType.COMPLETED)) {
             backArrow.setVisibility(View.VISIBLE);
-            if (videoType.equalsIgnoreCase("1")){
+            if (videoType.equalsIgnoreCase("1")) {
                 replay.setVisibility(View.GONE);
-            }else {
+            } else {
                 replay.setVisibility(View.VISIBLE);
             }
         }
@@ -596,8 +598,7 @@ public class PlayerControlsFragment extends Fragment {
             }
         });
 
-        controlLayout.setOnTouchListener(new View.OnTouchListener()
-        {
+        controlLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 //  Toast.makeText(getActivity(),"playerViewClicked",Toast.LENGTH_LONG).show();
@@ -626,16 +627,16 @@ public class PlayerControlsFragment extends Fragment {
         signIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isSignPlaying){
+                if (!isSignPlaying) {
                     isSignPlaying = true;
                     signIcon.setImageBitmap(null);
                     signIcon.setBackgroundResource(R.drawable.ic_menu_green_sl);
-                    playerCallbacks.playSignVideo(isSignPlaying,signLangId,isFromParentRef);
-                }else {
+                    playerCallbacks.playSignVideo(isSignPlaying, signLangId, isFromParentRef);
+                } else {
                     isSignPlaying = false;
                     signIcon.setImageBitmap(null);
                     signIcon.setBackgroundResource(R.drawable.ic_sl_logo_black);
-                    playerCallbacks.playSignVideo(isSignPlaying,signLangId,isFromParentRef);
+                    playerCallbacks.playSignVideo(isSignPlaying, signLangId, isFromParentRef);
                 }
 
             }
@@ -761,11 +762,10 @@ public class PlayerControlsFragment extends Fragment {
         settingControl = (View) view.findViewById(R.id.playerSetting);
         fullscreen = (ImageView) view.findViewById(R.id.fullscreen);
         settingLay = (LinearLayout) view.findViewById(R.id.settingLay);
-        if (isOffline && from==1) {
+        if (isOffline && from == 1) {
             fullscreen.setVisibility(View.GONE);
             playerSettingIcon.setVisibility(View.INVISIBLE);
-        }
-        else
+        } else
             fullscreen.setVisibility(View.VISIBLE);
 
         seekBar.setEnabled(true);
@@ -775,16 +775,17 @@ public class PlayerControlsFragment extends Fragment {
         hideControls();
     }
 
-    int from=0;
-    public void setIsOffline(boolean isOffline,int from) {
+    int from = 0;
+
+    public void setIsOffline(boolean isOffline, int from) {
         this.isOffline = isOffline;
-        this.from=from;
+        this.from = from;
         if (fullscreen != null) {
-            if (isOffline){
-                if (from==1){
+            if (isOffline) {
+                if (from == 1) {
                     fullscreen.setVisibility(View.GONE);
                 }
-            } else{
+            } else {
                 fullscreen.setVisibility(View.VISIBLE);
             }
         }
@@ -884,21 +885,21 @@ public class PlayerControlsFragment extends Fragment {
 
     public void setIsSignEnable(String signLangParentRefId, String signLangRefId) {
 
-        if(signLangParentRefId!=null && signLangParentRefId!=""){
+        if (signLangParentRefId != null && signLangParentRefId != "") {
             signIcon.setBackgroundResource(R.drawable.ic_menu_green_sl);
             signIcon.setVisibility(View.VISIBLE);
             isSignPlaying = true;
             isFromParentRef = true;
             signLangId = signLangParentRefId;
 
-        }else if (signLangRefId!=null && signLangRefId!=""){
+        } else if (signLangRefId != null && signLangRefId != "") {
 
             signIcon.setVisibility(View.VISIBLE);
             signIcon.setBackgroundResource(R.drawable.ic_sl_logo_black);
             isSignPlaying = false;
             isFromParentRef = false;
             signLangId = signLangRefId;
-        }else {
+        } else {
             signIcon.setVisibility(View.INVISIBLE);
         }
     }
@@ -953,14 +954,14 @@ public class PlayerControlsFragment extends Fragment {
             VideoTracksAdapter videoTracksAdapter = new VideoTracksAdapter(arrayList, selectedTrack);
             recycleview.setAdapter(videoTracksAdapter);
             dialogQuality.show();
-        }else {
+        } else {
 //            Log.d("gtgtgtgt",selectedLang);
 //            if (selectedLang.equalsIgnoreCase("Thai")) {
 //                Utils.updateLanguage("th", getActivity());
 //            } else if (selectedLang.equalsIgnoreCase("English")) {
 //                Utils.updateLanguage("en", getActivity());
 //            }
-            Toast.makeText(getActivity(),getActivity().getResources().getString(R.string.video_tracks_not_available),Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.video_tracks_not_available), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -1008,10 +1009,10 @@ public class PlayerControlsFragment extends Fragment {
                         selectedTrack = tracks.get(position).getTrackName();
                         holder.playbackQualityRadio.setChecked(true);
                     } else {
-                        if (compareName.equalsIgnoreCase(selectedTrack)){
+                        if (compareName.equalsIgnoreCase(selectedTrack)) {
                             selectedTrack = tracks.get(position).getTrackName();
                             holder.playbackQualityRadio.setChecked(true);
-                        }else {
+                        } else {
                             holder.playbackQualityRadio.setChecked(false);
                         }
                     }
