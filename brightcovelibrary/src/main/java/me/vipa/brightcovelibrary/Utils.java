@@ -52,7 +52,7 @@ class Utils {
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
-        params.setMargins(0, 0, 0, 40);
+        params.setMargins(0, 0, 0, 50);
         seekBarControl.setLayoutParams(params);
     }
 
@@ -78,7 +78,7 @@ class Utils {
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
-        params.setMargins(0, 0, 0, 40);
+        params.setMargins(0, 0, 0, 55);
         params.gravity = Gravity.CENTER;
         settingControl.setLayoutParams(params);
     }
