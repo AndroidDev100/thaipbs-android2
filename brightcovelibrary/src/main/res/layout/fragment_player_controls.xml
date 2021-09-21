@@ -78,7 +78,8 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:mediaRouteTypes="user"
-                        app:mediaRouteButtonTint="@color/white" />
+                        app:mediaRouteButtonTint="@color/white"
+                        android:visibility="gone"/>
 
                 </RelativeLayout>
 
