@@ -6,7 +6,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.InsetDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -95,10 +98,41 @@ public class ActivitySearch extends BaseBindingActivity<ActivitySearchBinding> i
         TextView searchText = (TextView) getBinding().toolbar.searchView.findViewById(R.id.search_src_text);
        ImageView imageView = (ImageView) getBinding().toolbar.searchView.findViewById(R.id.search_close_btn);
         if (KsPreferenceKeys.getInstance().getCurrentTheme().equalsIgnoreCase(AppConstants.LIGHT_THEME)) {
-            searchText.setTextColor(getResources().getColor(R.color.white));
-            searchText.setCursorVisible(true);
-            searchText.setTextCursorDrawable(getDrawable(R.drawable.color_cursor));
-            imageView.setColorFilter(ContextCompat.getColor(this, R.color.white), android.graphics.PorterDuff.Mode.MULTIPLY);
+            try {
+                searchText.setTextColor(getResources().getColor(R.color.white));
+                searchText.setCursorVisible(true);
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    if (searchText.getTextCursorDrawable() instanceof InsetDrawable) {
+                        InsetDrawable insetDrawable = (InsetDrawable) searchText.getTextCursorDrawable();
+                        insetDrawable.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+                        searchText.setTextCursorDrawable(insetDrawable);
+                    }
+
+                    if (searchText.getTextSelectHandle() instanceof BitmapDrawable) {
+                        BitmapDrawable insetDrawable = (BitmapDrawable) searchText.getTextSelectHandle();
+                        insetDrawable.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+                        searchText.setTextSelectHandle(insetDrawable);
+                    }
+
+                    if (searchText.getTextSelectHandleRight() instanceof BitmapDrawable) {
+                        BitmapDrawable insetDrawable = (BitmapDrawable) searchText.getTextSelectHandleRight();
+                        insetDrawable.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+                        searchText.setTextSelectHandleRight(insetDrawable);
+                    }
+
+                    if (searchText.getTextSelectHandleLeft() instanceof BitmapDrawable) {
+                        BitmapDrawable insetDrawable = (BitmapDrawable) searchText.getTextSelectHandleLeft();
+                        insetDrawable.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+                        searchText.setTextSelectHandleLeft(insetDrawable);
+                    }
+                }
+
+                //searchText.setTextCursorDrawable(this.getResources().getDrawable(R.drawable.color_cursor));
+                imageView.setColorFilter(ContextCompat.getColor(this, R.color.white), android.graphics.PorterDuff.Mode.MULTIPLY);
+            }catch (Exception ignored){
+
+            }
         }
         searchText.setTypeface(font);
         clickListner();
