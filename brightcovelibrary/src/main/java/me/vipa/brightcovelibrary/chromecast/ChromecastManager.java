@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -77,13 +78,15 @@ public class ChromecastManager {
 
         mCastStateListener = newState -> {
             if (newState != CastState.NO_DEVICES_AVAILABLE) {
+
                 Log.e("Devices A===>", "true");
 
                 showIntroductoryOverlay(context);
                 // mMediaRouteButton.setVisibility(View.VISIBLE);
             } else {
+
                 Log.e("Devices A===>", "false");
-                //  mMediaRouteButton.setVisibility(View.GONE);
+                 // mMediaRouteButton.setVisibility(View.GONE);
                 castContextAttachedListner.onDevicesUnavailable();
 
             }
