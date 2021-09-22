@@ -3,6 +3,7 @@ package me.vipa.app.activities.series.ui;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,6 +19,7 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -101,6 +103,8 @@ import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
 import me.vipa.app.networking.apistatus.APIStatus;
 import me.vipa.app.networking.responsehandler.ResponseModel;
 
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import static com.google.android.material.tabs.TabLayout.INDICATOR_GRAVITY_BOTTOM;
 
 public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDetailBinding> implements AlertDialogFragment.AlertDialogListener, OnDownloadClickInteraction, MediaDownloadable.DownloadEventListener, VideoListListener {
@@ -137,18 +141,22 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
     private boolean kidsMode;
     private String parentalRating = "";
     // private boolean kidsMode;
-
+    private String tabId;
     @Override
     public ActivitySeriesDetailBinding inflateBindingLayout(@NonNull LayoutInflater inflater) {
         return ActivitySeriesDetailBinding.inflate(inflater);
     }
-
-    private String tabId;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setBackgroundDrawableResource(R.color.black);
+//        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+//            getBinding().sliderImage.getLayoutParams().width=WRAP_CONTENT;
+//
+//        }
+//        else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+//            getBinding().sliderImage.getLayoutParams().width=MATCH_PARENT;
+//        }
        /* getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,
                 WindowManager.LayoutParams.FLAG_SECURE);*/
         shimmerCounter = 0;
@@ -163,8 +171,6 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
         if (kidsMode) {
             parentalRating = AppCommonMethod.getParentalRating();
         }
-
-
 
         setupUI(getBinding().llParent);
         seriesId = getIntent().getIntExtra("seriesId", 0);
@@ -437,7 +443,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
             getBinding().tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
             ViewGroup.LayoutParams params = getBinding().tabLayout.getLayoutParams();
-            params.width = WindowManager.LayoutParams.MATCH_PARENT;
+            params.width = MATCH_PARENT;
             params.height = WindowManager.LayoutParams.WRAP_CONTENT;
 
 
@@ -1081,7 +1087,19 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
         new ActivityLauncher(SeriesDetailActivity.this).loginActivity(SeriesDetailActivity.this, LoginActivity.class);
 
     }
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
 
+        // Checks the orientation of the screen
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+
+            Log.d("Daiya", "ORIENTATION_LANDSCAPE");
+
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            Log.d("Daiya", "ORIENTATION_PORTRAIT");
+        }
+    }
 
     @Override
     public void onFinishDialog() {
@@ -1137,8 +1155,8 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
         alertDialog.show();
         WindowManager.LayoutParams lWindowParams = new WindowManager.LayoutParams();
         lWindowParams.copyFrom(alertDialog.getWindow().getAttributes());
-        lWindowParams.width = WindowManager.LayoutParams.MATCH_PARENT; // this is where the magic happens
-        lWindowParams.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lWindowParams.width = MATCH_PARENT; // this is where the magic happens
+        lWindowParams.height = MATCH_PARENT;
         alertDialog.getWindow().setAttributes(lWindowParams);
 
     }

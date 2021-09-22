@@ -306,8 +306,6 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
         getBinding().connection.retryTxt.setOnClickListener(view -> {
             getBinding().llParent.setVisibility(View.VISIBLE);
             getBinding().noConnectionLayout.setVisibility(View.GONE);
-
-
             connectionObserver();
         });
 
@@ -1790,8 +1788,6 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
 
         if (alertDialog.getWindow() != null)
             alertDialog.getWindow().getAttributes().windowAnimations = R.style.SlidingDialogAnimation;
-
-
         alertDialog.show();
         WindowManager.LayoutParams lWindowParams = new WindowManager.LayoutParams();
         lWindowParams.copyFrom(alertDialog.getWindow().getAttributes());
@@ -1929,13 +1925,9 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
         try {
             Log.d("PlayerError",error);
             String errorMessage= "";
-
             getBinding().backButton.setVisibility(View.VISIBLE);
             getBinding().pBar.setVisibility(View.GONE);
             //  String errorMessage = getString(R.string.player_error);
-
-
-
             if (!NetworkConnectivity.isOnline(this)) {
                 if (!isOfflineAvailable) {
                     playerFragment.getBaseVideoView().pause();
@@ -2039,15 +2031,12 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
             getBinding().pBar.setVisibility(View.GONE);
             getBinding().playerImage.setVisibility(View.GONE);
         } catch (Exception ignored) {
-
         }
     }
 
     @Override
     public void onDownloadDeleted(@NotNull String videoId, @NotNull Object source) {
-
     }
-
 
     @Override
     public void onDownloadClicked(String videoId, Object position, Object source) {
@@ -2495,7 +2484,6 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
 
     @Override
     public void downloadStatus(String videoId, DownloadStatus downloadStatus) {
-
     }
 
     @Override

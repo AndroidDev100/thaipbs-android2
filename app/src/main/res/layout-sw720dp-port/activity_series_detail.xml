@@ -437,7 +437,6 @@
                         <include
                             android:id="@+id/connection"
                             layout="@layout/no_connection">
-
                         </include>
                     </LinearLayout>
                 </FrameLayout>

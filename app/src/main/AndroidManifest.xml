@@ -280,8 +280,9 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activities.series.ui.SeriesDetailActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="locked" />
+            android:screenOrientation="sensor"
+            android:configChanges="orientation|screenSize"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".activities.search.ui.ActivityResults"
             android:configChanges="orientation|screenSize"
