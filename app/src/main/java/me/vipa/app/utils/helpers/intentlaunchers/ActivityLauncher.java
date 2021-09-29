@@ -23,7 +23,6 @@ import me.vipa.app.activities.listing.listui.ListActivity;
 import me.vipa.app.activities.listing.ui.GridActivity;
 import me.vipa.app.activities.live.LiveActivity;
 import me.vipa.app.activities.notification.ui.NotificationActivity;
-import me.vipa.app.activities.profile.ui.ProfileActivity;
 import me.vipa.app.activities.profile.ui.ProfileActivityNew;
 import me.vipa.app.activities.search.ui.ActivityResults;
 import me.vipa.app.activities.series.ui.SeriesDetailActivity;
@@ -71,11 +70,7 @@ public class ActivityLauncher {
         activity.startActivity(intent);
     }
 
-    public void ProfileActivity(Activity source, Class<ProfileActivity> destination) {
 
-        Intent intent = new Intent(source, destination);
-        activity.startActivity(intent);
-    }
     public void avatarActivity(Activity source, Class<AvatarImageActivity> destination) {
 
         Intent intent = new Intent(source, destination);
