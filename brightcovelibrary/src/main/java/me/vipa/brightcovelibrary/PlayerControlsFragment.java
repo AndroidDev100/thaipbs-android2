@@ -103,7 +103,6 @@ public class PlayerControlsFragment extends Fragment {
     private boolean isSignPlaying = false;
     private boolean isFromParentRef = false;
     private String signLangId = "";
-    private String isConnected = "";
 
     // private OnSizeRatioDown onSizeRatioDown;
 
@@ -770,11 +769,6 @@ public class PlayerControlsFragment extends Fragment {
             fullscreen.setVisibility(View.VISIBLE);
 
         seekBar.setEnabled(true);
-        if (isConnected.equalsIgnoreCase("connected")){
-            media_route_button.setVisibility(View.VISIBLE);
-        }else {
-            media_route_button.setVisibility(View.GONE);
-        }
 
         CastButtonFactory.setUpMediaRouteButton(getActivity(), media_route_button);
 
@@ -910,11 +904,6 @@ public class PlayerControlsFragment extends Fragment {
         }
     }
 
-    public void isConnected(String isConnected) {
-        Log.d("sjfhsjfhsjd",isConnected);
-        this.isConnected = isConnected;
-
-    }
 
 
     /**
