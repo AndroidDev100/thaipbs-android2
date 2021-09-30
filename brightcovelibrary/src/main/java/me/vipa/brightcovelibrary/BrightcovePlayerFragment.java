@@ -169,6 +169,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
     private boolean isFragmentCalled = false;
     private boolean isOfflinePodcast = false;
     private AdsLoader adsLoader;
+    private String isConnected = "";
 
 
     public BrightcovePlayerFragment() {
@@ -191,6 +192,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                 selected_lang = bundle.getString("selected_lang");
                 adRulesURL = bundle.getString("config_vast_tag");
                 bingeWatch = bundle.getBoolean("binge_watch");
+                isConnected = bundle.getString("IsChromeCastConnected");
 
                 signLangParentRefId = bundle.getString("signLangParentRefId");
                 signLangRefId = bundle.getString("signLangId");
@@ -1193,6 +1195,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                 transaction.commit();
                 playerControlsFragment.setVideoType(videoType);
                 playerControlsFragment.setPlayerCallBacks(this);
+                playerControlsFragment.isConnected(isConnected);
 
                 new Handler().postDelayed(new Runnable() {
                     @Override

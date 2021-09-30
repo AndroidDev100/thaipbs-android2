@@ -1,6 +1,7 @@
 package me.vipa.app.baseModels;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -8,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.databinding.ViewDataBinding;
 import androidx.mediarouter.app.MediaRouteButton;
 
+import me.vipa.app.utils.constants.AppConstants;
 import me.vipa.brightcovelibrary.chromecast.CastContextAttachedListner;
 import me.vipa.brightcovelibrary.chromecast.ChromeCastConnectionListener;
 import me.vipa.brightcovelibrary.chromecast.ChromecastManager;
@@ -44,8 +46,9 @@ public abstract class BaseBindingActivity<B extends ViewDataBinding> extends Bas
 
             @Override
             public void onDevicesUnavailable() {
-                if(mediaRouteButton !=null)
+                if(mediaRouteButton !=null) {
                     mediaRouteButton.setVisibility(View.GONE);
+                }
                 // Toast.makeText(getApplicationContext(),"Device Not Available", Toast.LENGTH_LONG).show();
             }
         }, new ChromeCastConnectionListener() {

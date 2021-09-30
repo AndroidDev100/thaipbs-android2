@@ -622,6 +622,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
         args.putString(AppConstants.IS_SIGN_LANG_ENABLE, signLangParentRefId);
         args.putString(AppConstants.SIGN_LANG_ID, signLangRefId);
         args.putString(AppConstants.IS_PODCAST, isPodcast);
+        args.putString("IsChromeCastConnected",SDKConfig.ApplicationStatus);
         if (videoDetails != null) {
             args.putString("vast_tag", videoDetails.getVastTag());
         }
