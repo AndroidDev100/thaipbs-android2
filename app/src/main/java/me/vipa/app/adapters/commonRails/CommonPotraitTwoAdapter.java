@@ -1,5 +1,6 @@
 package me.vipa.app.adapters.commonRails;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.SystemClock;
 import android.util.DisplayMetrics;
@@ -90,7 +91,7 @@ public class CommonPotraitTwoAdapter extends RecyclerView.Adapter<CommonPotraitT
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SingleItemRowHolder holder, int i) {
+    public void onBindViewHolder(@NonNull SingleItemRowHolder holder, @SuppressLint("RecyclerView") int i) {
         // holder.potraitItemBinding.itemImage.getLayoutParams().width = itemWidth;
         // holder.potraitItemBinding.itemImage.getLayoutParams().height = itemHeight;
 

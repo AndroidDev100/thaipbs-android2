@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.play.core.appupdate.AppUpdateInfo;
 import com.google.android.play.core.install.InstallStateUpdatedListener;
@@ -165,7 +166,7 @@ public class HomeActivity extends BaseBindingActivity<ActivityMainBinding> imple
     @SuppressLint("RestrictedApi")
     public static void removeNavigationShiftMode(BottomNavigationView view) {
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) view.getChildAt(0);
-        menuView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
+        menuView.setLabelVisibilityMode(NavigationBarView.LABEL_VISIBILITY_LABELED);
         menuView.buildMenuView();
     }
 

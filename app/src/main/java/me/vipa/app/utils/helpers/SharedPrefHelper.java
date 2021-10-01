@@ -25,7 +25,7 @@ public class SharedPrefHelper {
 
     @SuppressLint("CommitPrefEdits")
     public SharedPrefHelper(Context context) {
-        mSharedPreferences = context.getSharedPreferences(PREF_FILE, MODE_PRIVATE);
+        mSharedPreferences = context.getSharedPreferences(PREF_FILE, Context.MODE_PRIVATE);
         mEditor = mSharedPreferences.edit();
         cryptUtil = CryptUtil.getInstance();
     }

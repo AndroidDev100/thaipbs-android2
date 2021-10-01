@@ -1,6 +1,7 @@
 package me.vipa.app.activities.settings.downloadsettings.changequality.adapter;
 
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,7 +50,7 @@ public class ChangeDownloadQualityAdapter extends RecyclerView.Adapter<ChangeDow
 
 
     @Override
-    public void onBindViewHolder(@NonNull final SingleItemRowHolder viewHolder, final int position) {
+    public void onBindViewHolder(@NonNull final SingleItemRowHolder viewHolder, @SuppressLint("RecyclerView") final int position) {
         if (pos == position) {
             viewHolder.notificationItemBinding.rightIcon.setVisibility(View.VISIBLE);
         } else {

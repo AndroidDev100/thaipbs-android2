@@ -1,5 +1,6 @@
 package me.vipa.app.adapters.commonRails;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.SystemClock;
 import android.util.DisplayMetrics;
@@ -92,7 +93,7 @@ public class CommonCircleAdapter extends RecyclerView.Adapter<CommonCircleAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SingleItemRowHolder holder, int i) {
+    public void onBindViewHolder(@NonNull SingleItemRowHolder holder, @SuppressLint("RecyclerView") int i) {
         // holder.circularItemBinding.itemImage.getLayoutParams().width = itemWidth;
         // holder.circularItemBinding.itemImage.getLayoutParams().height = itemHeight;
 

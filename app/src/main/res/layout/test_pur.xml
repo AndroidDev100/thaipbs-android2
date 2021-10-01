@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
@@ -39,7 +40,8 @@
                         android:background="@drawable/placeholder_landscape"
                         android:contentDescription="TODO"
                         android:foreground="@drawable/trending_gradient_shape"
-                        android:scaleType="fitXY" />
+                        android:scaleType="fitXY"
+                        tools:ignore="MissingConstraints" />
 
                     <TextView
                         android:id="@+id/tv_title"

@@ -1,6 +1,7 @@
 package me.vipa.app.utils.helpers;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -20,6 +21,7 @@ import me.vipa.app.utils.cropImage.helpers.Logger;
  *
  * @author Wat Chun Pang Gilbert
  */
+@SuppressLint("AppCompatCustomView")
 public class ExpandableTextView extends TextView {
 
     private static final String TAG = ExpandableTextView.class.getSimpleName();

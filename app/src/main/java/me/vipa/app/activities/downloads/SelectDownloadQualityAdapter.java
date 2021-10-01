@@ -1,6 +1,7 @@
 package me.vipa.app.activities.downloads;
 
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,7 +46,7 @@ public class SelectDownloadQualityAdapter extends RecyclerView.Adapter<SelectDow
 
 
     @Override
-    public void onBindViewHolder(@NonNull final SingleItemRowHolder viewHolder, final int position) {
+    public void onBindViewHolder(@NonNull final SingleItemRowHolder viewHolder, @SuppressLint("RecyclerView") final int position) {
         if (pos != -1 && pos == position) {
             viewHolder.notificationItemBinding.rightIcon.setVisibility(View.VISIBLE);
         } else {

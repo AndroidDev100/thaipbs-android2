@@ -38,9 +38,9 @@ public class AlertDialogFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        String title = Objects.requireNonNull(getArguments()).getString("title");
+        String title = requireArguments().getString("title");
         String message = getArguments().getString("message");
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()), R.style.AppAlertTheme);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(requireActivity(), R.style.AppAlertTheme);
         alertDialogBuilder.setTitle(title);
         alertDialogBuilder.setMessage("" + message);
         alertDialogBuilder.setPositiveButton(getArguments().getString("positiveButtonText"), (dialog, which) -> {

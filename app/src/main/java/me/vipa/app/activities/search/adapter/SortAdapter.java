@@ -1,5 +1,6 @@
 package me.vipa.app.activities.search.adapter;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
@@ -51,7 +52,7 @@ public class SortAdapter extends RecyclerView.Adapter<SortAdapter.SingleItemRowH
     }
 
     @Override
-    public void onBindViewHolder(SortAdapter.SingleItemRowHolder holder, int position) {
+    public void onBindViewHolder(SortAdapter.SingleItemRowHolder holder, @SuppressLint("RecyclerView") int position) {
         currentLanguage = KsPreferenceKeys.getInstance().getAppLanguage();
         holder.sortItemBinding.sortItem.setText(sortModels.get(position).getSortLists());
         if (sortModels.get(position).isSortChecked()) {

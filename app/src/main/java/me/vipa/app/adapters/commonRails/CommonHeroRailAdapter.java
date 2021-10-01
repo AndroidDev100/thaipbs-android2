@@ -1,5 +1,6 @@
 package me.vipa.app.adapters.commonRails;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.SystemClock;
 import android.view.LayoutInflater;
@@ -73,7 +74,7 @@ public class CommonHeroRailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
         if (holder instanceof SquareHeroHolder) {
             ((SquareHeroHolder) holder).itemBinding.setPlaylistItem(item.getEnveuVideoItemBeans().get(0));

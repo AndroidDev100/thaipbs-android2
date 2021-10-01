@@ -149,7 +149,7 @@ public class KidsModePinDialogFragment extends DialogFragment implements ErrorDi
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setClicks();
-        viewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(RegistrationLoginViewModel.class);
+        viewModel = ViewModelProviders.of(requireActivity()).get(RegistrationLoginViewModel.class);
         preference = KsPreferenceKeys.getInstance();
         parseProfile();
         if (pinGetFromApi != null && !pinGetFromApi.isEmpty()) {
@@ -392,7 +392,7 @@ public class KidsModePinDialogFragment extends DialogFragment implements ErrorDi
     }
 
     private void logoutCall() {
-        if (CheckInternetConnection.isOnline(Objects.requireNonNull(getActivity()))) {
+        if (CheckInternetConnection.isOnline(requireActivity())) {
             clearCredientials(preference);
             hitApiLogout(getActivity(), preference.getAppPrefAccessToken());
         } else {

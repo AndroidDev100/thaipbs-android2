@@ -451,7 +451,7 @@
                                     android:layout_marginRight="@dimen/NontonSize5"
                                     android:contentDescription="TODO"
                                     android:scaleType="fitXY"
-                                    android:tint="#FFFFFF"
+                                    app:tint="#FFFFFF"
                                     android:visibility="gone"
                                     app:srcCompat="@drawable/register1" />
 

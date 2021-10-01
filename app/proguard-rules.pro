@@ -158,10 +158,10 @@
 #-keep public class * extends android.app.AppCompatActivity {*;}
 
 -keep public class * extends com.bumptech.glide.module.AppGlideModule
--keep class com.bumptech.glide.GeneratedAppGlideModuleImpl
+#-keep class com.bumptech.glide.GeneratedAppGlideModuleImpl
 
 # Gson
--keep class sun.misc.Unsafe { *; }
+#-keep class sun.misc.Unsafe { *; }
 
 # Okio
 -dontwarn okio.**

@@ -1,5 +1,6 @@
 package me.vipa.app.activities.membershipplans.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -59,7 +60,7 @@ public class MembershipAdapter extends RecyclerView.Adapter<MembershipAdapter.Pu
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PurchaseViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PurchaseViewHolder holder, @SuppressLint("RecyclerView") int position) {
         if (list.get(position).isSelected()) {
             rowIndex = position;
         }

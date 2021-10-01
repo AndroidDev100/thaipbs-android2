@@ -194,7 +194,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
         intentFilter = new IntentFilter();
         intentFilter.addAction("NONTON_PROFILE_UPDATE");
         appSyncBroadcast = new AppSyncBroadcast();
-        LocalBroadcastManager.getInstance(Objects.requireNonNull(getActivity())).registerReceiver(appSyncBroadcast, intentFilter);
+        LocalBroadcastManager.getInstance(requireActivity()).registerReceiver(appSyncBroadcast, intentFilter);
         isloggedout = false;
         startMoreFragment();
 
@@ -206,7 +206,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
         super.onPause();
 
         try {
-            LocalBroadcastManager.getInstance(Objects.requireNonNull(getActivity())).unregisterReceiver(appSyncBroadcast);
+            LocalBroadcastManager.getInstance(requireActivity()).unregisterReceiver(appSyncBroadcast);
         } catch (IllegalArgumentException e) {
             if (e.getMessage().contains("Receiver not registered")) {
                 Logger.i("TAG", "Tried to unregister the reciver when it's not registered");
@@ -236,7 +236,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
 
     private void modelCall() {
 
-        viewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(HomeViewModel.class);
+        viewModel = ViewModelProviders.of(requireActivity()).get(HomeViewModel.class);
         registrationLoginViewModel = ViewModelProviders.of(getActivity()).get(RegistrationLoginViewModel.class);
 
         String[] label1 = getActivity().getResources().getStringArray(R.array.more_with_verify);
@@ -460,19 +460,19 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
             else
                 mListener.onLoginClicked();
         } else if (caption.equals(getString(R.string.term_condition))) {
-            Objects.requireNonNull(getActivity()).startActivity(new Intent(getActivity(), HelpActivity.class).putExtra("type", "1"));
+            requireActivity().startActivity(new Intent(getActivity(), HelpActivity.class).putExtra("type", "1"));
         } else if (caption.equals(getString(R.string.privacy_policy))) {
-            Objects.requireNonNull(getActivity()).startActivity(new Intent(getActivity(), HelpActivity.class).putExtra("type", "2"));
+            requireActivity().startActivity(new Intent(getActivity(), HelpActivity.class).putExtra("type", "2"));
         } else if (caption.equals(getString(R.string.contact_us))) {
-            Objects.requireNonNull(getActivity()).startActivity(new Intent(getActivity(), HelpActivity.class).putExtra("type", "3"));
+            requireActivity().startActivity(new Intent(getActivity(), HelpActivity.class).putExtra("type", "3"));
         } else if (caption.equals(getString(R.string.faq))) {
-            Objects.requireNonNull(getActivity()).startActivity(new Intent(getActivity(), HelpActivity.class).putExtra("type", "4"));
+            requireActivity().startActivity(new Intent(getActivity(), HelpActivity.class).putExtra("type", "4"));
         } else if (caption.equals(getString(R.string.about_us))) {
-            Objects.requireNonNull(getActivity()).startActivity(new Intent(getActivity(), HelpActivity.class).putExtra("type", "5"));
+            requireActivity().startActivity(new Intent(getActivity(), HelpActivity.class).putExtra("type", "5"));
         } else if (caption.equals(getString(R.string.feedback))) {
-            Objects.requireNonNull(getActivity()).startActivity(new Intent(getActivity(), HelpActivity.class).putExtra("type", "6"));
+            requireActivity().startActivity(new Intent(getActivity(), HelpActivity.class).putExtra("type", "6"));
         } else if (caption.equals(getString(R.string.other_application))) {
-            Objects.requireNonNull(getActivity()).startActivity(new Intent(getActivity(), HelpActivity.class).putExtra("type", "7"));
+            requireActivity().startActivity(new Intent(getActivity(), HelpActivity.class).putExtra("type", "7"));
             //  new ActivityLauncher(getActivity()).otherActivity(getActivity(), OtherApplication.class);
         } else if (caption.equals(getString(R.string.my_watchlist))) {
 
@@ -525,7 +525,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
 
         } else if (caption.equals(getString(R.string.my_history))) {
             if (loginStatus)
-                new ActivityLauncher(getActivity()).watchHistory(getActivity(), WatchListActivity.class, Objects.requireNonNull(getActivity()).getResources().getString(R.string.my_history), true);
+                new ActivityLauncher(getActivity()).watchHistory(getActivity(), WatchListActivity.class, requireActivity().getResources().getString(R.string.my_history), true);
             else
                 mListener.onLoginClicked();
         } else if (caption.equals(getString(R.string.my_downloads))) {
@@ -533,7 +533,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                 new ActivityLauncher(getActivity()).launchMyDownloads();
             else
                 mListener.onLoginClicked();
-        } else if (caption.equals(Objects.requireNonNull(getActivity()).getResources().getString(R.string.sign_out))) {
+        } else if (caption.equals(requireActivity().getResources().getString(R.string.sign_out))) {
             if (SystemClock.elapsedRealtime() - mLastClickTime < 1200) {
                 return;
             }
@@ -575,7 +575,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
     public void hitApiVerifyUser() {
         getBinding().progressBar.setVisibility(View.VISIBLE);
         getBinding().progressBar.bringToFront();
-        if (CheckInternetConnection.isOnline(Objects.requireNonNull(getActivity()))) {
+        if (CheckInternetConnection.isOnline(requireActivity())) {
             String token = preference.getAppPrefAccessToken();
             getBinding().progressBar.setVisibility(View.VISIBLE);
             viewModel.hitVerify(token).observe(getActivity(), jsonObject ->
@@ -613,7 +613,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
 
     public void hitApiLogout() {
         if (getActivity() != null)
-            if (CheckInternetConnection.isOnline(Objects.requireNonNull(getActivity()))) {
+            if (CheckInternetConnection.isOnline(requireActivity())) {
                 String isFacebook = preference.getAppPrefLoginType();
                 if (isFacebook.equalsIgnoreCase(AppConstants.UserLoginType.FbLogin.toString())) {
                     LoginManager.getInstance().logOut();
@@ -834,7 +834,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
             String url2 = AppConstants.PROFILE_FOLDER;
             stringBuilder = stringBuilder.append(url1).append(url2).append(key);
         }
-        Glide.with(Objects.requireNonNull(getActivity()))
+        Glide.with(requireActivity())
                 .asBitmap()
                 .load(stringBuilder.toString())
                 .apply(AppCommonMethod.options)
@@ -1258,7 +1258,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
     }
 
     private void logoutCall() {
-        if (CheckInternetConnection.isOnline(Objects.requireNonNull(getActivity()))) {
+        if (CheckInternetConnection.isOnline(requireActivity())) {
             clearCredientials(preference);
             hitApiLogout(getActivity(), preference.getAppPrefAccessToken());
         } else {

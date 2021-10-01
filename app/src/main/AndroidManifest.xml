@@ -8,7 +8,8 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
     />
 
@@ -101,7 +102,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="@string/fb_login_protocol_scheme" />
+                <data android:scheme="@string/fb_login_protocol_scheme"
+                    tools:ignore="ManifestResource" />
             </intent-filter>
         </activity>
 
@@ -113,6 +115,7 @@
             android:name=".activities.splash.ui.ActivitySplash"
             android:launchMode="singleTop"
             android:screenOrientation="locked"
+            android:exported="true"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -233,13 +236,14 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-3940256099942544~3347511713" /> <!-- Branch install referrer tracking -->
-        <receiver
-            android:name="io.branch.referral.InstallListener"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.android.vending.INSTALL_REFERRER" />
-            </intent-filter>
-        </receiver>
+<!--        <receiver-->
+<!--            android:name="io.branch.referral.InstallListener"-->
+<!--            android:exported="true"-->
+<!--            tools:ignore="MissingClass">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="com.android.vending.INSTALL_REFERRER" />-->
+<!--            </intent-filter>-->
+<!--        </receiver>-->
 
         <activity
             android:name=".activities.watchList.ui.WatchListActivity"
@@ -389,6 +393,7 @@
             android:launchMode="singleTask"
             android:theme="@style/Theme.BrightcoveCast"
             android:screenOrientation="landscape"
+            android:exported="true"
             android:parentActivityName=".activities.homeactivity.ui.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

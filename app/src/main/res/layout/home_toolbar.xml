@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
     <LinearLayout
@@ -85,7 +86,7 @@
                     android:layout_marginRight="@dimen/NontonSize10"
                     android:contentDescription="TODO"
                     android:src="@drawable/search"
-                    android:tint="@color/white" />
+                    app:tint="@color/white" />
             </LinearLayout>
 
 

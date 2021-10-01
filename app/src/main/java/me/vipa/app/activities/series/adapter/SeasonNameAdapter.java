@@ -1,5 +1,6 @@
 package me.vipa.app.activities.series.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,7 +50,7 @@ public class SeasonNameAdapter extends RecyclerView.Adapter<SeasonNameAdapter.Se
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SeasonNameAdapter.SeasonViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SeasonNameAdapter.SeasonViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Collections.sort(response, new SortSeasonNumber());
         holder.itemBinding.charges.setText("Season" + " " + response.get(position).getSeasonNo() + "");
 

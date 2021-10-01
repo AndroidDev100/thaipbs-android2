@@ -738,7 +738,7 @@ public class UserInteractionFragment extends BaseBindingFragment<DetailWatchlist
     }
 
     private void logoutCall() {
-        if (CheckInternetConnection.isOnline(Objects.requireNonNull(getActivity()))) {
+        if (CheckInternetConnection.isOnline(requireActivity())) {
             clearCredientials(preference);
             hitApiLogout(getBaseActivity(), preference.getAppPrefAccessToken());
         } else {

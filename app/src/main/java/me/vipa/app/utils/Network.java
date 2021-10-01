@@ -1,5 +1,6 @@
 package me.vipa.app.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -92,6 +93,7 @@ public class Network {
         }
     }
 
+    @SuppressLint("MissingPermission")
     public static String CheckNetworkType(Context context, NetworkInfo active_network) {
         if (active_network == null) {
             ConnectivityManager connectivityManager

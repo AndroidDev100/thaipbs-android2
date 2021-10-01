@@ -1,5 +1,6 @@
 package me.vipa.app.activities.profile.adapter;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,7 +58,7 @@ public class AvatarAdapter extends RecyclerView.Adapter<AvatarAdapter.SingleItem
 
 
     @Override
-    public void onBindViewHolder(@NonNull final SingleItemRowHolder viewHolder, final int position) {
+    public void onBindViewHolder(@NonNull final SingleItemRowHolder viewHolder, @SuppressLint("RecyclerView") final int position) {
 
         Glide.with(activity).load(arrayList.get(position).getUrl())
                 .placeholder(R.drawable.placeholder_square)

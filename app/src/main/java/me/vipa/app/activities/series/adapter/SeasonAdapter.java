@@ -1,5 +1,6 @@
 package me.vipa.app.activities.series.adapter;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -113,7 +114,7 @@ public class SeasonAdapter extends RecyclerView.Adapter<SeasonAdapter.SeasonView
 
     RowEpisodeListBinding clickBinding;
     @Override
-    public void onBindViewHolder(@NonNull SeasonAdapter.SeasonViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SeasonAdapter.SeasonViewHolder holder, @SuppressLint("RecyclerView") int position) {
         if (videoItemBeans.get(position) != null) {
             holder.itemBinding.setPlaylistItem(videoItemBeans.get(position));
         }

@@ -359,7 +359,7 @@ android:textColorHint="?attr/app_edit_text_color"
                                     android:layout_marginRight="@dimen/NontonSize5"
                                     android:contentDescription="TODO"
                                     android:scaleType="fitXY"
-                                    android:tint="#FFFFFF"
+                                    app:tint="#FFFFFF"
                                     app:srcCompat="@drawable/register1"
                                     android:visibility="gone"/>
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
     <LinearLayout
@@ -55,7 +56,7 @@
                 android:layout_centerVertical="true"
                 android:src="?attr/close_icon"
                 android:contentDescription="TODO"
-                android:tint="@color/white"
+                app:tint="@color/white"
                 android:visibility="gone" />
         </RelativeLayout>
         <View

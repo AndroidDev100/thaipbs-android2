@@ -1,5 +1,6 @@
 package me.vipa.app.activities.article;
 
+import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -165,6 +166,7 @@ public class ArticleActivity  extends BaseBindingActivity<ArticleActivityBinding
     }
 
 
+    @SuppressLint("WrongConstant")
     private void setValuesInUI(EnveuVideoItemBean videoDetails) {
         if (videoDetails!=null){
             int resId = R.anim.slide_down;
