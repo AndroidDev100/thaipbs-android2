@@ -25,6 +25,7 @@ import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.Pair;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,7 @@ import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.annotation.SuppressLint;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 
@@ -544,6 +546,24 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             }
 
         });
+        eventEmitter.on(EventType.VIDEO_SIZE_KNOWN, new EventListener() {
+            @Override
+            public void processEvent(Event event) {
+                Log.d("VIDEOSIZEKNOWN_EVENT",event.getType());
+//                float width = event.getIntegerProperty(Event.VIDEO_WIDTH);
+//                float height = event.getIntegerProperty(Event.VIDEO_HEIGHT);
+//                float aspectRatio = height/width;
+//
+//                //Get the display metrics
+//                DisplayMetrics metrics = new DisplayMetrics();
+//                getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+//                int videoWidth = metrics.widthPixels; // We cover the entire display's width
+//                int videoHeight = (int) (videoWidth*aspectRatio); //Calculate the height based on the ratio
+//
+//                // Set the layout params
+//                baseVideoView.setLayoutParams(new FrameLayout.LayoutParams(videoWidth,videoHeight));
+            }
+        });
 
         //Callback for player progress
         eventEmitter.on(EventType.PROGRESS, new EventListener() {
@@ -779,8 +799,6 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         eventEmitter.on(EventType.AUDIO_TRACKS, event -> {
 
             tracks = (List) event.properties.get("tracks");
-
-
             if (tracks.size() > 1) {
                 if (playerControlsFragment != null) {
                     playerControlsFragment.sendAudioAvailable(event.getType());
@@ -1121,6 +1139,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                 }
             }
         }
+
        /* progressBar.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
             @Override
             public void onSystemUiVisibilityChange(int visibility) {
@@ -1612,22 +1631,27 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                     }
                     //Log.e("R=FULLSCEEN", "R=FULLSCEEN");
 
-          /*          DisplayMetrics displayMetrics = new DisplayMetrics();
+                    DisplayMetrics displayMetrics = new DisplayMetrics();
                     getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
                     int screen_height = displayMetrics.heightPixels;
-                    int screen_width = displayMetrics.widthPixels;
+                   // int screen_width = displayMetrics.widthPixels;
+                    double ratio = 1.78;
+                    Double screen_Width = screen_height*ratio;
+
 
                     Log.e("RATUILANDHEIGHT", String.valueOf(screen_height));
-                    Log.e("RATUILANDWIDTH", String.valueOf(screen_width));*/
+                   // Log.e("RATUILANDWIDTH", String.valueOf(screen_width));
+                    baseVideoView.setLayoutParams(new FrameLayout.LayoutParams(screen_Width.intValue(),screen_height,Gravity.CENTER));
+                   // ((FrameLayout) baseVideoView).setGravity(Gravity.CENTER);
 
-           /*         if (screen_width > 1280) {
-                        // Set the video size
-                        Log.e("Greaterr", String.valueOf(screen_width));
-                        baseVideoView.getRenderView().setVideoSize(screen_width, screen_height);
-                        baseVideoView.setPadding(32, 0, 32, 0);
+//                    if (screen_width > 1280) {
+//                        // Set the video size
+//                        Log.e("Greaterr", String.valueOf(screen_width));
+//                        baseVideoView.getRenderView().setVideoSize(screen_width, screen_height);
+//                        baseVideoView.setPadding(32, 0, 32, 0);
+//
+//                    }
 
-                    }
-*/
 
 
 
@@ -1640,7 +1664,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                     currentConfig = newConfig;
                     baseVideoView.setPadding(0, 0, 0, 0);
                    // Log.e("R=PORTRAIT", "R=PORTRAIT");
-                   // baseVideoView.getRenderView().setVideoSize(MATCH_PARENT, MATCH_PARENT);
+                    baseVideoView.setLayoutParams(new FrameLayout.LayoutParams(MATCH_PARENT,MATCH_PARENT,Gravity.CENTER));
                 }
             }
         }
