@@ -40,6 +40,7 @@ import android.widget.RelativeLayout;
 import androidx.annotation.NonNull;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.brightcove.cast.GoogleCastComponent;
@@ -120,6 +121,9 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.BrightcovePlayerFragment implements PlayerControlsFragment.OnFragmentInteractionListener, PlayerCallbacks, NetworkChangeReceiver.ConnectivityReceiverListener, PhoneListenerCallBack, BackPressCallBack, ChromeCastCallback {
     private static final String PROPERTY_APPLICATION_ID = "com.vipa.app";
     private static final String TAG = "BrightcovePlayer";
+    private static final String VIDEO_VOD = "0";
+    private static final String VIDEO_LIVE_TV = "1";
+
     private OnPlayerInteractionListener mListener;
     private ChromeCastStartedCallBack chromeCastStartedListener;
     private EventEmitter eventEmitter;
@@ -148,6 +152,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
     private Handler handler;
     private Runnable runnable;
     private long bookmarkPosition = 0l;
+    private AppCompatImageView ivWatermark;
     private ProgressBar progressBar;
     private ImageView posterImage, posterImageDefault;
     private String brightcoveAccountId;
@@ -358,6 +363,12 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             setPlayerWithCallBacks(false, videoId);
         }
 
+        if (VIDEO_VOD.equals(videoType)) {
+            ivWatermark.setVisibility(View.VISIBLE);
+        } else {
+            ivWatermark.setVisibility(View.GONE);
+        }
+
         try {
             int orientation = getResources().getConfiguration().orientation;
             if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -427,9 +438,9 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
 
         if (assetType != null && assetType.equalsIgnoreCase("LIVETV")) {
             //videoId="6125432335001";
-            videoType = "1";
+            videoType = VIDEO_LIVE_TV;
         } else {
-            videoType = "0";
+            videoType = VIDEO_VOD;
         }
 
         if (!isOffline) {
@@ -1096,6 +1107,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
 
     private void findPlayerId(View view) {
         baseVideoView = view.findViewById(R.id.brightcove_video_view);
+        ivWatermark = view.findViewById(R.id.iv_watermark);
         progressBar = view.findViewById(R.id.pBar);
         posterImage = view.findViewById(R.id.poster_image);
         posterImageDefault = view.findViewById(R.id.poster_image_default);
