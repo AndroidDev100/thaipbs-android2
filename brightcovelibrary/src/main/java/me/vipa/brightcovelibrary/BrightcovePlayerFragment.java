@@ -943,8 +943,8 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                 .foregroundOpacity(CaptionConstants.DEFAULT_FOREGROUND_OPACITY) // or your desired text foreground opacity
                 .edgeColor(Color.GREEN) // or your desired text edge color
                 .edgeType(CaptionConstants.DEFAULT_EDGE_TYPE) // or your desired text edge type
-                .backgroundColor(Color.TRANSPARENT) // or your desired text background color
-                .backgroundOpacity(Color.TRANSPARENT) // or your desired text foreground opacity
+                .backgroundColor(Color.BLACK) // or your desired text background color
+                .backgroundOpacity(Color.BLACK) // or your desired text foreground opacity
                 .windowColor(Color.MAGENTA) // or your desired text window color)
                 .windowOpacity(CaptionConstants.DEFAULT_WINDOW_OPACITY) // or your desired text window opacity
                 .build();

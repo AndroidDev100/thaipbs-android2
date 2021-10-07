@@ -1,5 +1,7 @@
  package me.vipa.app.activities.homeactivity.ui;
 
+import static me.vipa.app.utils.helpers.carousel.Slider.TAG;
+
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
@@ -200,6 +202,7 @@ public class HomeActivity extends BaseBindingActivity<ActivityMainBinding> imple
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setupCrashlytics();
+      //  getDeviceSuperInfo();
 
         strCurrentTheme = KsPreferenceKeys.getInstance().getCurrentTheme();
 
@@ -249,6 +252,39 @@ public class HomeActivity extends BaseBindingActivity<ActivityMainBinding> imple
 
         new AnalyticsController(HomeActivity.this).callAnalytics("home_activity", "Action", "Launch");
     }
+
+    private void getDeviceSuperInfo() {
+        Log.i(TAG, "getDeviceSuperInfo");
+
+        try {
+
+            String s = "Debug-infos:";
+            s += "\n OS Version: "      + System.getProperty("os.version")      + "(" + android.os.Build.VERSION.INCREMENTAL + ")";
+            s += "\n OS API Level: "    + android.os.Build.VERSION.SDK_INT;
+            s += "\n Device: "          + android.os.Build.DEVICE;
+            s += "\n Model (and Product): " + android.os.Build.MODEL            + " ("+ android.os.Build.PRODUCT + ")";
+
+            s += "\n RELEASE: "         + android.os.Build.VERSION.RELEASE;
+            s += "\n BRAND: "           + android.os.Build.BRAND;
+            s += "\n DISPLAY: "         + android.os.Build.DISPLAY;
+            s += "\n CPU_ABI: "         + android.os.Build.CPU_ABI;
+            s += "\n CPU_ABI2: "        + android.os.Build.CPU_ABI2;
+            s += "\n UNKNOWN: "         + android.os.Build.UNKNOWN;
+            s += "\n HARDWARE: "        + android.os.Build.HARDWARE;
+            s += "\n Build ID: "        + android.os.Build.ID;
+            s += "\n MANUFACTURER: "    + android.os.Build.MANUFACTURER;
+            s += "\n SERIAL: "          + android.os.Build.SERIAL;
+            s += "\n USER: "            + android.os.Build.USER;
+            s += "\n HOST: "            + android.os.Build.HOST;
+
+
+            Log.i(TAG + " | Device Info > ", s);
+
+        } catch (Exception e) {
+            Log.e(TAG, "Error getting Device INFO");
+        }
+
+    }//end getDeviceSuperInfo
 
     private void setupCrashlytics() {
         throw new RuntimeException("Test crash");
