@@ -17,10 +17,13 @@ import android.webkit.WebViewClient;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
+import me.vipa.app.R;
 import me.vipa.app.baseModels.BaseBindingActivity;
+import me.vipa.app.cms.HelpActivity;
 import me.vipa.app.databinding.ActivityTermsConditionBinding;
 import me.vipa.app.utils.constants.AppConstants;
 import me.vipa.app.baseModels.BaseBindingActivity;
+import me.vipa.app.utils.helpers.ToastHandler;
 
 public class WebViewActivity extends BaseBindingActivity<ActivityTermsConditionBinding> {
 
@@ -113,7 +116,22 @@ public class WebViewActivity extends BaseBindingActivity<ActivityTermsConditionB
 
         @Override
         public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-            handler.proceed();
+            switch (error.getPrimaryError()) {
+                case SslError.SSL_UNTRUSTED:
+
+                    break;
+                case SslError.SSL_EXPIRED:
+
+                    break;
+                case SslError.SSL_IDMISMATCH:
+
+                    break;
+                case SslError.SSL_NOTYETVALID:
+
+                    break;
+            }
+            handler.cancel();
+            showErrorToast();
         }
 
         @Override
@@ -143,6 +161,20 @@ public class WebViewActivity extends BaseBindingActivity<ActivityTermsConditionB
 
     }
 
+    private void showErrorToast() {
+        try {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    new ToastHandler(WebViewActivity.this).show(WebViewActivity.this.getResources().getString(R.string.something_went_wrong_at_our_end));
+                    onBackPressed();
+                }
+            });
+
+        } catch (Exception e) {
+
+        }
+    }
 
 
 }
