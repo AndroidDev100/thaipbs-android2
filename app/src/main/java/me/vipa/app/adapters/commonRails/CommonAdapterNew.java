@@ -410,13 +410,25 @@ public class CommonAdapterNew extends RecyclerView.Adapter<RecyclerView.ViewHold
                         headingRailsBinding.headingTitle.setText(name + " " + mContext.getResources().getString(R.string.For) + " " + KsPreferenceKeys.getInstance().getAppPrefUserName());
                     }
                 } else {
-                    headingRailsBinding.headingTitle.setText((String) item.getScreenWidget().getName() + " " + mContext.getResources().getString(R.string.For) + " " + KsPreferenceKeys.getInstance().getAppPrefUserName());
+                    if (KsPreferenceKeys.getInstance().getAppLanguage().equalsIgnoreCase("Thai")){
+                        headingRailsBinding.headingTitle.setText("ดูต่อสำหรับ" + " " + mContext.getResources().getString(R.string.For) + " " + KsPreferenceKeys.getInstance().getAppPrefUserName());
+                    }else {
+                        headingRailsBinding.headingTitle.setText((String) item.getScreenWidget().getName() + " " + mContext.getResources().getString(R.string.For) + " " + KsPreferenceKeys.getInstance().getAppPrefUserName());
+                    }
                 }
             } else {
-                headingRailsBinding.headingTitle.setText((String) item.getScreenWidget().getName() + " " + mContext.getResources().getString(R.string.For) + " " + KsPreferenceKeys.getInstance().getAppPrefUserName());
+                if (KsPreferenceKeys.getInstance().getAppLanguage().equalsIgnoreCase("Thai")){
+                    headingRailsBinding.headingTitle.setText("ดูต่อสำหรับ" + " " + mContext.getResources().getString(R.string.For) + " " + KsPreferenceKeys.getInstance().getAppPrefUserName());
+                }else {
+                    headingRailsBinding.headingTitle.setText((String) item.getScreenWidget().getName() + " " + mContext.getResources().getString(R.string.For) + " " + KsPreferenceKeys.getInstance().getAppPrefUserName());
+                }
             }
         } catch (Exception ignored) {
-            headingRailsBinding.headingTitle.setText((String) item.getScreenWidget().getName() + " " + mContext.getResources().getString(R.string.For) + " " + KsPreferenceKeys.getInstance().getAppPrefUserName());
+            if (KsPreferenceKeys.getInstance().getAppLanguage().equalsIgnoreCase("Thai")){
+                headingRailsBinding.headingTitle.setText("ดูต่อสำหรับ" + " " + mContext.getResources().getString(R.string.For) + " " + KsPreferenceKeys.getInstance().getAppPrefUserName());
+            }else {
+                headingRailsBinding.headingTitle.setText((String) item.getScreenWidget().getName() + " " + mContext.getResources().getString(R.string.For) + " " + KsPreferenceKeys.getInstance().getAppPrefUserName());
+            }
         }
 
     }
