@@ -644,7 +644,7 @@ public class LivePlayerFragment extends Fragment implements Player.EventListener
 
         final PendingIntent pendingIntent =
                 PendingIntent.getBroadcast(mActivity,
-                        REQUEST_CODE, actionIntent, 0);
+                        REQUEST_CODE, actionIntent, PendingIntent.FLAG_IMMUTABLE);
 
         if (player != null && player.isPlaying()) {
             iconId = R.drawable.ic_pause_24dp;
