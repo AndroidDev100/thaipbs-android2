@@ -87,7 +87,7 @@ public class MvHubPlusMessagingService extends FirebaseMessagingService {
         intent.putExtra("assetType",assetType);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
         NotificationCompat.Builder notificationBuilder;
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
 
