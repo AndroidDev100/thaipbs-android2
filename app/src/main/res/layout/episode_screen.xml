@@ -240,20 +240,13 @@
                                         android:textSize="@dimen/font_small" />
 
                                     <TextView
-                                        android:id="@+id/tv_premium"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_margin="3dp"
-                                        android:fontFamily="@font/sukhumvittadmai_bold"
-                                        android:background="@drawable/rounded_button"
-                                        android:paddingLeft="@dimen/NontonSize8"
-                                        android:paddingTop="@dimen/NontonSize3"
-                                        android:paddingRight="@dimen/NontonSize8"
-                                        android:paddingBottom="@dimen/NontonSize3"
-                                        android:text="@string/exclusive"
-                                        android:textColor="@color/white"
-                                        android:textSize="@dimen/detailPremium"
-                                        android:visibility="gone" />
+                                        android:id="@+id/tv_4k"
+                                        android:layout_width="23dp"
+                                        android:layout_height="15dp"
+                                        android:background="@drawable/image4k"
+                                        android:layout_marginLeft="2dp"
+                                        android:layout_marginTop="2.5dp"
+                                         android:visibility="gone"/>
 
                                 </LinearLayout>
 

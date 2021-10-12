@@ -69,6 +69,15 @@ public class EnveuVideoItemBean implements Serializable {
     private String parentalRating;
     private String signedLangEnabled;
     private String isPodcast;
+    private String is4k;
+
+    public String getIs4k() {
+        return is4k;
+    }
+
+    public void setIs4k(String is4k) {
+        this.is4k = is4k;
+    }
 
     public String getIsPodcast(){
         return isPodcast;
@@ -193,6 +202,11 @@ public class EnveuVideoItemBean implements Serializable {
             if (t.containsKey(CustomeFields.parentalRating)) {
                 String parentalRating = t.get((CustomeFields.parentalRating)).toString();
                 this.parentalRating = parentalRating;
+            }
+
+            if (t.containsKey(CustomeFields.is4k)) {
+                String is4k = t.get((CustomeFields.is4k)).toString();
+                this.is4k = is4k;
             }
 
             if (t.containsKey(CustomeFields.isComingSoon)) {
@@ -328,6 +342,11 @@ public class EnveuVideoItemBean implements Serializable {
                     }
                 }
 
+                if (t.containsKey(CustomeFields.is4k)) {
+                    String is4k = t.get((CustomeFields.is4k)).toString();
+                    this.is4k = is4k;
+                }
+
                 if (t.containsKey(CustomeFields.isComingSoon)) {
                     String isComingSoon = t.get((CustomeFields.isComingSoon)).toString();
                     this.iscomingsoon = isComingSoon;
@@ -377,6 +396,10 @@ public class EnveuVideoItemBean implements Serializable {
                 if (t.containsKey(CustomeFields.rating)){
                     String parentalRating = t.get((CustomeFields.rating)).toString();
                     this.parentalRating = parentalRating;
+                }
+                if (t.containsKey(CustomeFields.is4k)) {
+                    String is4k = t.get((CustomeFields.is4k)).toString();
+                    this.is4k = is4k;
                 }
 
                 if (t.containsKey(CustomeFields.isComingSoon)) {
@@ -513,6 +536,10 @@ public class EnveuVideoItemBean implements Serializable {
                                 this.parentalRating = parentalRating;
                             }
                         }
+                        if (t.containsKey(CustomeFields.is4k)) {
+                            String is4k = t.get((CustomeFields.is4k)).toString();
+                            this.is4k = is4k;
+                        }
 
                         if (t.containsKey(CustomeFields.isComingSoon)) {
                             String isComingSoon = t.get((CustomeFields.isComingSoon)).toString();
@@ -564,6 +591,10 @@ public class EnveuVideoItemBean implements Serializable {
                         if (t.containsKey(CustomeFields.rating)) {
                             String parentalRating = t.get((CustomeFields.rating)).toString();
                             this.parentalRating = parentalRating;
+                        }
+                        if (t.containsKey(CustomeFields.is4k)) {
+                            String is4k = t.get((CustomeFields.is4k)).toString();
+                            this.is4k = is4k;
                         }
 
                         if (t.containsKey(CustomeFields.isComingSoon)) {
@@ -696,6 +727,10 @@ public class EnveuVideoItemBean implements Serializable {
                         this.parentalRating = parentalRating;
                     }
                 }
+                if (t.containsKey(CustomeFields.is4k)) {
+                    String is4k = t.get((CustomeFields.is4k)).toString();
+                    this.is4k = is4k;
+                }
 
                 if (t.containsKey(CustomeFields.isComingSoon)) {
                     String isComingSoon = t.get((CustomeFields.isComingSoon)).toString();
@@ -748,6 +783,10 @@ public class EnveuVideoItemBean implements Serializable {
                 if (t.containsKey(CustomeFields.rating)) {
                     String parentalRating = t.get((CustomeFields.rating)).toString();
                     this.parentalRating = parentalRating;
+                }
+                if (t.containsKey(CustomeFields.is4k)) {
+                    String is4k = t.get((CustomeFields.is4k)).toString();
+                    this.is4k = is4k;
                 }
 
                 if (t.containsKey(CustomeFields.isComingSoon)) {

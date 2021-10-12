@@ -1372,6 +1372,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
 
     private void setCustomeFields(EnveuVideoItemBean responseDetailPlayer, String duration) {
         try {
+
             getBinding().tag.setText("");
             if (responseDetailPlayer.getParentalRating() != null && !responseDetailPlayer.getParentalRating().equalsIgnoreCase("")) {
                 getBinding().tag.setText(responseDetailPlayer.getParentalRating() + " \u2022");
@@ -1391,10 +1392,17 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
                 getBinding().tag.setText(getBinding().tag.getText().toString() + " " + responseDetailPlayer.getYear() + " \u2022");
             }
 
+
             if (getBinding().tag.getText().toString().trim().endsWith("\u2022")) {
                 String customeF = getBinding().tag.getText().toString().substring(0, getBinding().tag.getText().toString().length() - 1);
                 getBinding().tag.setText(customeF);
             }
+
+            if (responseDetailPlayer.getIs4k() != null && !responseDetailPlayer.getIs4k().equalsIgnoreCase("")) {
+                getBinding().tag.setText(getBinding().tag.getText().toString() + "" + "| " + getResources().getString(R.string.feature));
+                getBinding().tv4k.setVisibility(View.VISIBLE);
+            }
+
             if (getBinding().tag.getText().toString().trim().equalsIgnoreCase("")) {
                 // getBinding().customeFieldView.setVisibility(View.GONE);
             }
