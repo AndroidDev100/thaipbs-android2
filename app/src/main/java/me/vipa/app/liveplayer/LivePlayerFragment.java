@@ -642,9 +642,20 @@ public class LivePlayerFragment extends Fragment implements Player.EventListener
             REQUEST_CODE = 2;
         }
 
-        final PendingIntent pendingIntent =
-                PendingIntent.getBroadcast(mActivity,
-                        REQUEST_CODE, actionIntent, PendingIntent.FLAG_IMMUTABLE);
+//        final PendingIntent pendingIntent =
+//                PendingIntent.getBroadcast(mActivity,
+//                        REQUEST_CODE, actionIntent, PendingIntent.FLAG_IMMUTABLE);
+
+        PendingIntent pendingIntent=null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+            pendingIntent =
+                    PendingIntent.getBroadcast(mActivity,
+                            REQUEST_CODE, actionIntent, PendingIntent.FLAG_IMMUTABLE);
+        }else {
+            pendingIntent =
+                    PendingIntent.getBroadcast(mActivity,
+                            REQUEST_CODE, actionIntent, 0);
+        }
 
         if (player != null && player.isPlaying()) {
             iconId = R.drawable.ic_pause_24dp;
