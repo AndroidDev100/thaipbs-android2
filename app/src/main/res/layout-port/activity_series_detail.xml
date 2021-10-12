@@ -244,7 +244,7 @@
                                                     android:background="@drawable/image4k"
                                                     android:layout_marginLeft="2dp"
                                                     android:layout_marginTop="2.5dp"
-                                                    />
+                                                    android:visibility="gone"/>
                                             </LinearLayout>
 
 

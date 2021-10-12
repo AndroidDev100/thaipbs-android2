@@ -277,6 +277,10 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
                 String customeF = getBinding().vodCount.getText().toString().substring(0, getBinding().vodCount.getText().toString().length() - 1);
                 getBinding().vodCount.setText(customeF);
             }
+            if (responseDetailPlayer.getIs4k() != null && !responseDetailPlayer.getIs4k().equalsIgnoreCase("")) {
+                getBinding().vodCount.setText(getBinding().vodCount.getText().toString() + "" + "| " + getResources().getString(R.string.feature));
+                getBinding().tv4k.setVisibility(View.VISIBLE);
+            }
             if (getBinding().vodCount.getText().toString().trim().equalsIgnoreCase("")) {
                 // getBinding().customeFieldView.setVisibility(View.GONE);
             }

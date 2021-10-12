@@ -29,9 +29,11 @@
 
 
     </data>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <FrameLayout
             android:id="@+id/flBackIconImage"
             android:layout_width="wrap_content"
@@ -47,10 +49,12 @@
                 android:contentDescription="Series Backpress "
                 app:srcCompat="@drawable/background_shadow" />
         </FrameLayout>
+
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="false">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -87,10 +91,10 @@
                             <RelativeLayout
                                 android:layout_width="0dp"
                                 android:layout_height="0dp"
-                                app:layout_constraintDimensionRatio="16:9"
                                 android:layout_marginStart="0dp"
                                 android:layout_marginTop="0dp"
                                 android:layout_marginEnd="0dp"
+                                app:layout_constraintDimensionRatio="16:9"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent">
@@ -111,13 +115,13 @@
                                     android:layout_height="wrap_content">
 
                                     <ImageView
-                                        android:layout_centerHorizontal="true"
                                         android:id="@+id/sliderImage"
                                         errorImage="@{@drawable/placeholder_landscape}"
                                         imageUrl="@{playlistItem.posterURL}"
                                         placeholder="@{@drawable/placeholder_landscape}"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
+                                        android:layout_centerHorizontal="true"
                                         android:adjustViewBounds="true"
                                         android:background="@drawable/placeholder_landscape"
                                         android:contentDescription="Shimmer Crousel" />
@@ -221,29 +225,31 @@
                                                 android:textColor="?attr/title_color"
                                                 android:textSize="@dimen/font_large"
                                                 tools:targetApi="p" />
+
                                             <LinearLayout
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content">
 
-                                            <TextView
-                                                android:id="@+id/vod_count"
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:layout_gravity="center_vertical"
-                                                android:layout_marginStart="2dp"
-                                                android:layout_marginEnd="@dimen/movie_metadata_tag_margin_margin_right"
-                                                android:fontFamily="@font/sukhumvittadmai_normal"
-                                                android:text=""
-                                                android:textColor="?attr/sub_title"
-                                                android:textSize="@dimen/font_small" />
- <TextView
-                                                android:id="@+id/tv_4k"
-                                                android:layout_width="23dp"
-                                                android:layout_height="15dp"
-                                                android:background="@drawable/image4k"
-                                                android:layout_marginLeft="2dp"
-                                                android:layout_marginTop="2.5dp"
-                                                />
+                                                <TextView
+                                                    android:id="@+id/vod_count"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center_vertical"
+                                                    android:layout_marginStart="2dp"
+                                                    android:layout_marginEnd="@dimen/movie_metadata_tag_margin_margin_right"
+                                                    android:fontFamily="@font/sukhumvittadmai_normal"
+                                                    android:text=""
+                                                    android:textColor="?attr/sub_title"
+                                                    android:textSize="@dimen/font_small" />
+
+                                                <TextView
+                                                    android:id="@+id/tv_4k"
+                                                    android:layout_width="23dp"
+                                                    android:layout_height="15dp"
+                                                    android:layout_marginLeft="2dp"
+                                                    android:layout_marginTop="2.5dp"
+                                                    android:background="@drawable/image4k"
+                                                    android:visibility="gone"/>
                                             </LinearLayout>
 
                                             <LinearLayout
@@ -403,14 +409,13 @@
                                 <ImageView
                                     android:id="@+id/transparent_layout"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    />
+                                    android:layout_height="match_parent" />
 
                                 <ImageView
                                     android:layout_width="match_parent"
                                     android:layout_height="0.8dp"
                                     android:background="?attr/tab_selected"
-                                    android:visibility="gone"/>
+                                    android:visibility="gone" />
 
                                 <me.vipa.app.utils.helpers.WrappingViewPager
                                     android:id="@+id/viewPager"

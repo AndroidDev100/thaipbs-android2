@@ -948,7 +948,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         BrightcoveClosedCaptioningManager manager = BrightcoveClosedCaptioningManager.getInstance(getActivity());
         BrightcoveCaptionStyle captionStyle = BrightcoveCaptionStyle.builder()
                 .preset(CaptionConstants.PRESET_CUSTOM) // building a custom preset
-                .fontSize("0.6") // or your desired font size
+                .fontSize("0.8") // or your desired font size
                 .typeface("Arial") // or your desired typeFace
                 .foregroundColor(Color.WHITE) // or your desired text foreground color
                 .foregroundOpacity(CaptionConstants.DEFAULT_FOREGROUND_OPACITY) // or your desired text foreground opacity

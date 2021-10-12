@@ -188,11 +188,11 @@ class Utils {
                     track1=true;
                     arrayList.add(new TrackItem(context.getResources().getString(R.string.low), videoTrackArray.get(i).bitrate, context.getString(R.string.low_description),i+1,"Low"));
                 }
-                else if (videoTrackInfo.height>=540 && videoTrackInfo.height<720 && !track2){
+                else if (videoTrackInfo.height>=360 && videoTrackInfo.height<720 && !track2){
                     track2=true;
                     arrayList.add(new TrackItem(context.getResources().getString(R.string.medium), videoTrackInfo.bitrate, context.getString(R.string.medium_description),i+1,"Medium"));
                 }
-                else if (videoTrackInfo.height>=1080 && !track3){
+                else if (videoTrackInfo.height>=720 && !track3){
                     track3=true;
                     arrayList.add(new TrackItem(context.getResources().getString(R.string.high), videoTrackArray.get(i).bitrate, context.getString(R.string.high_description),i+1,"High"));
                 }
