@@ -170,11 +170,12 @@ class Utils {
         return title;
     }
 
-    static boolean track1,track2,track3=false;
-    public static ArrayList<TrackItem> createTrackList(List<Format> videoTrackArray, Activity context) {
+    static boolean track1,track2,track3,track4=false;
+    public static ArrayList<TrackItem> createTrackList(List<Format> videoTrackArray, Activity context, boolean is4kSupported) {
         track1=false;
         track2=false;
         track3=false;
+        track4=false;
         ArrayList<TrackItem> arrayList = new ArrayList<>();
 
         try {
@@ -192,9 +193,14 @@ class Utils {
                     track2=true;
                     arrayList.add(new TrackItem(context.getResources().getString(R.string.medium), videoTrackInfo.bitrate, context.getString(R.string.medium_description),i+1,"Medium"));
                 }
-                else if (videoTrackInfo.height>=720 && !track3){
+                else if (videoTrackInfo.height>=720 && videoTrackInfo.height<1080 && !track3){
                     track3=true;
                     arrayList.add(new TrackItem(context.getResources().getString(R.string.high), videoTrackArray.get(i).bitrate, context.getString(R.string.high_description),i+1,"High"));
+                }
+                else if(is4kSupported && videoTrackInfo.height>=1080 && !track4){
+                    track4=true;
+                    arrayList.add(new TrackItem("4k", videoTrackArray.get(i).bitrate, context.getString(R.string.high_description),i+1,"4k"));
+
                 }
             }
         }catch (Exception e){
@@ -217,6 +223,9 @@ class Utils {
             }
             else if (selected_track.equalsIgnoreCase(context.getResources().getString(R.string.high))){
                 pos=3;
+            }
+            else if (selected_track.equalsIgnoreCase("4k")){
+                pos=4;
             }
         }catch (Exception ignored){
 
