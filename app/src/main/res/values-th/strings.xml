@@ -450,6 +450,18 @@
     <string name="kids_mode_pin_enter">ระบุรหัสคิดส์โหมดของคุณ</string>
     <string name="plz_enter_valid_pin">โปรดระบุรหัสให้ถูกต้อง</string>
     <string name="Continue_dialog">ดำเนินการ</string>
+    <string name="developer_information">ข้อมูลสำหรับนักพัฒนา</string>
+    <string name="about">About</string>
+    <string name="app">App</string>
+    <string name="user_id">User Id : %s</string>
+    <string name="app_version">App Version : %s</string>
+    <string name="device">Device</string>
+    <string name="device_model">Model : %s</string>
+    <string name="device_os">OS : %s</string>
+    <string name="device_os_version">Version: %d</string>
+    <string name="device_platform">Platform : %s</string>
+    <string name="date_time">Date/Time : %s</string>
+    <string name="internet">Internet : https://thaip.bs/helping</string>
 
 
 </resources>

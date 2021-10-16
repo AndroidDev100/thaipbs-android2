@@ -41,7 +41,7 @@ import me.vipa.app.baseModels.BaseBindingActivity;
 
 
 public class ActivitySettings extends BaseBindingActivity<SettingsActivityBinding> implements View.OnClickListener {
-    private boolean isNotificationEnable;
+    private int devInfoCounter = 0;
 
     @Override
     public SettingsActivityBinding inflateBindingLayout(@NonNull LayoutInflater inflater) {
@@ -93,9 +93,11 @@ public class ActivitySettings extends BaseBindingActivity<SettingsActivityBindin
         if (KsPreferenceKeys.getInstance().getAppPrefLoginStatus().equalsIgnoreCase(AppConstants.UserStatus.Login.toString())){
             getBinding().contentPreLayout.setVisibility(View.VISIBLE);
             getBinding().rlKidsModePin.setVisibility(View.VISIBLE);
+            getBinding().rlDeveloperInfo.setVisibility(View.VISIBLE);
         }else {
             getBinding().contentPreLayout.setVisibility(View.GONE);
             getBinding().rlKidsModePin.setVisibility(View.GONE);
+            getBinding().rlDeveloperInfo.setVisibility(View.GONE);
         }
         getBinding().downloadLayout.setOnClickListener(this);
         getBinding().contentPreLayout.setOnClickListener(this);
@@ -230,6 +232,14 @@ public class ActivitySettings extends BaseBindingActivity<SettingsActivityBindin
 //            }
 //
 //        });
+        getBinding().rlDeveloperInfo.setOnClickListener(view -> {
+            devInfoCounter ++;
+            if (devInfoCounter == 3) {
+                new DeveloperInfoDialogFragment().show(getSupportFragmentManager(),
+                        DeveloperInfoDialogFragment.TAG);
+                devInfoCounter = 0;
+            }
+        });
     }
 
     private void setSwitchForBingeWatch() {
