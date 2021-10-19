@@ -1,11 +1,14 @@
 package me.vipa.app.activities.settings
 
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import me.vipa.app.BuildConfig
 import me.vipa.app.R
@@ -24,6 +27,10 @@ class DeveloperInfoDialogFragment : DialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentDeveloperInformationBinding.inflate(inflater)
+
+        dialog?.window?.setBackgroundDrawable(ContextCompat.getDrawable(requireActivity(), R.drawable.bg_dev_info))
+        dialog?.window?.setDimAmount(0.8f)
+
         return binding.root
     }
 

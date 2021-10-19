@@ -451,17 +451,16 @@
     <string name="plz_enter_valid_pin">โปรดระบุรหัสให้ถูกต้อง</string>
     <string name="Continue_dialog">ดำเนินการ</string>
     <string name="developer_information">ข้อมูลสำหรับนักพัฒนา</string>
-    <string name="about">About</string>
-    <string name="app">App</string>
-    <string name="user_id">User Id : %s</string>
-    <string name="app_version">App Version : %s</string>
-    <string name="device">Device</string>
-    <string name="device_model">Model : %s</string>
-    <string name="device_os">OS : %s</string>
-    <string name="device_os_version">Version: %d</string>
-    <string name="device_platform">Platform : %s</string>
-    <string name="date_time">Date/Time : %s</string>
-    <string name="internet">Internet : https://thaip.bs/helping</string>
+    <string name="app">แอปพลิเคชัน</string>
+    <string name="user_id">รหัสผู้ใช้ : %s</string>
+    <string name="app_version">เวอร์ชันของแอปพลิเคชัน : %s</string>
+    <string name="device">อุปกรณ์</string>
+    <string name="device_model">รุ่น : %s</string>
+    <string name="device_os">ระบบปฏิบัติการ : %s</string>
+    <string name="device_os_version">เวอร์ชัน: %d</string>
+    <string name="device_platform">แพลตฟอร์ม : %s</string>
+    <string name="date_time">วันที่ : %s</string>
+    <string name="internet">อินเตอร์เน็ต : https://thaip.bs/helping</string>
 
 
 </resources>
