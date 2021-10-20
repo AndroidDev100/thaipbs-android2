@@ -139,4 +139,6 @@
     <color name="genre_unselected">#FFD8D8D8</color>
     <color name="genre_unselected_text">#393939</color>
 
+    <color name="grey_heading">#999999</color>
+
 </resources>

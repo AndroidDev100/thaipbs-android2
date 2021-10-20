@@ -15,7 +15,7 @@
 
             <include
                 android:id="@+id/toolbar"
-                layout="@layout/toolbar"></include>
+                layout="@layout/toolbar"/>
         </LinearLayout>
 
 
@@ -419,6 +419,47 @@
 
 
         </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/rl_developer_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/toolbarBackLeft"
+            android:layout_marginTop="25dp"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/iv_developer_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerInParent="true"
+                android:background="@drawable/ic_dev_info" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="@dimen/NontonSize15"
+                android:layout_toEndOf="@+id/iv_developer_info"
+                android:fontFamily="@font/sukhumvittadmai_normal"
+                android:paddingEnd="@dimen/NontonSize10"
+                android:text="@string/developer_information"
+                android:textColor="?attr/change_language_text"
+                android:textSize="@dimen/font_medium_large" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="10dp"
+                android:gravity="center"
+                android:src="@drawable/right_direction_icon" />
+        </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -430,7 +471,7 @@
                 android:fontFamily="@font/sukhumvittadmai_normal"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="20dp"
+                android:paddingBottom="20dp"
                 android:textColor="@color/white"
                 android:textSize="12sp"
                 />
