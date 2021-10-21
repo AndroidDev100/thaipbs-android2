@@ -719,32 +719,37 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                             playerControlsFragment.fullscreen.setBackgroundResource(R.drawable.exit_full_screen);
                         }
                     }
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Map<DeliveryType, SourceCollection> map = currentVideo.getSourceCollections();
+                                    SourceCollection sor = map.get(DeliveryType.valueOf("DASH"));
+                                    Set<Source> se = sor.getSources();
+                                    Object[] ar = se.toArray();
+                                    Source hp = (Source) ar[0];
+                                    Log.d("fhutbdhss",new Gson().toJson(hp));
+                                    Map<String, Object> ma = hp.getProperties();
+                                    Log.d("fhutbdhss",new Gson().toJson(ma));
+                                    url = (String) ma.get("url");
 
-                            Map<DeliveryType, SourceCollection> map = currentVideo.getSourceCollections();
-                            SourceCollection sor = map.get(DeliveryType.valueOf("DASH"));
-                            Set<Source> se = sor.getSources();
-                            Object[] ar = se.toArray();
-                            Source hp = (Source) ar[0];
-                            Log.d("fhutbdhss",new Gson().toJson(hp));
-                            Map<String, Object> ma = hp.getProperties();
-                            Log.d("fhutbdhss",new Gson().toJson(ma));
-                            url = (String) ma.get("url");
+                                    if (url.contains("avc1_hvc1_mp4a"));{
+                                        UhdUrl = url;
+                                    }
+                                    if (isDeviceSupported){
+                                        if (!UhdUrl.equalsIgnoreCase("") && UhdUrl.contains("avc1_hvc1_mp4a")){
+                                            is4kSupported = true;
+                                            playerControlsFragment.set4kSupported(is4kSupported);
+                                        }else{
+                                            is4kSupported = false;
+                                        }
+                                    }
 
-                            if (url.contains("avc1_hvc1_mp4a"));{
-                                UhdUrl = url;
-                            }
-                            if (isDeviceSupported){
-                                if (!UhdUrl.equalsIgnoreCase("") && UhdUrl.contains("avc1_hvc1_mp4a")){
-                                    is4kSupported = true;
-                                    playerControlsFragment.set4kSupported(is4kSupported);
-                                }else{
-                                    is4kSupported = false;
+
+
+                                    Log.d("dffdfddf",UhdUrl);
+
                                 }
-                            }
-
-
-
-                    Log.d("dffdfddf",UhdUrl);
+                            },2500);
 
 
 
