@@ -450,7 +450,7 @@
     <string name="kids_mode_pin_enter">ระบุรหัสคิดส์โหมดของคุณ</string>
     <string name="plz_enter_valid_pin">โปรดระบุรหัสให้ถูกต้อง</string>
     <string name="Continue_dialog">ดำเนินการ</string>
-    <string name="developer_information">ข้อมูลสำหรับนักพัฒนา</string>
+    <string name="developer_information">ข้อมูลนักพัฒนา</string>
     <string name="app">แอปพลิเคชัน</string>
     <string name="user_id">รหัสผู้ใช้ : %s</string>
     <string name="app_version">เวอร์ชันของแอปพลิเคชัน : %s</string>
