@@ -13,6 +13,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.media.AudioAttributes;
 import android.media.AudioFocusRequest;
 import android.media.AudioManager;
@@ -25,6 +26,7 @@ import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.Pair;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -94,6 +96,7 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.MappingTrackSelector;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.source.TrackGroup;
+import com.google.android.exoplayer2.util.Util;
 import com.google.android.gms.cast.AdBreakClipInfo;
 import com.google.android.gms.cast.AdBreakInfo;
 import com.google.android.gms.cast.MediaInfo;
@@ -176,6 +179,10 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
     private boolean isFragmentCalled = false;
     private boolean isOfflinePodcast = false;
     private AdsLoader adsLoader;
+    String url = "";
+    private String UhdUrl = "";
+    private boolean isDeviceSupported = false;
+    private boolean is4kSupported = false;
 
 
     public BrightcovePlayerFragment() {
@@ -254,7 +261,61 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                 Log.e("gtgtgtgt", e.getMessage());
             }
         }
+        int is4kValue = isUHD();
+        Log.d("dffdfddf", is4kValue + "");
+        if (is4kValue == 1) {
+            isDeviceSupported = true;
+        } else {
+            isDeviceSupported = false;
+        }
+
     }
+
+    public int isUHD() {
+        Display display = getActivity().getWindowManager().getDefaultDisplay();
+        Point displaySize = getDisplaySize(display);
+        return (displaySize.x >= 3840 && displaySize.y >= 2160) ? 1 : 0;
+    }
+
+    private static Point getDisplaySize(Display display) {
+        Point displaySize = new Point();
+        if (Util.SDK_INT >= 23) {
+            getDisplaySizeV23(display, displaySize);
+        } else if (Util.SDK_INT >= 17) {
+            getDisplaySizeV17(display, displaySize);
+        } else if (Util.SDK_INT >= 16) {
+            getDisplaySizeV16(display, displaySize);
+        } else {
+            getDisplaySizeV9(display, displaySize);
+        }
+        return displaySize;
+    }
+
+    @TargetApi(23)
+    private static void getDisplaySizeV23(Display display, Point outSize) {
+        Display.Mode[] modes = display.getSupportedModes();
+        if (modes.length > 0) {
+            Display.Mode mode = modes[0];
+            outSize.x = mode.getPhysicalWidth();
+            outSize.y = mode.getPhysicalHeight();
+        }
+    }
+
+    @TargetApi(17)
+    private static void getDisplaySizeV17(Display display, Point outSize) {
+        display.getRealSize(outSize);
+    }
+
+    @TargetApi(16)
+    private static void getDisplaySizeV16(Display display, Point outSize) {
+        display.getSize(outSize);
+    }
+
+    private static void getDisplaySizeV9(Display display, Point outSize) {
+        outSize.x = display.getWidth();
+        outSize.y = display.getHeight();
+    }
+
 
     private void requestAudioFocus() {
 
@@ -380,6 +441,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                 container.setLayoutParams(captionParams);
 
             }
+
         } catch (Exception ignored) {
 
         }
@@ -461,6 +523,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                     baseVideoView.start();
                     baseVideoView.seekTo((int) (bookmarkPosition * 1000));
                     callPlayerControlsFragment();
+
                     /*if (playerControlsFragment != null)
                         playerControlsFragment.sendTapCallBack(false);*/
                     if (playerControlsFragment != null) {
@@ -560,7 +623,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         eventEmitter.on(EventType.VIDEO_SIZE_KNOWN, new EventListener() {
             @Override
             public void processEvent(Event event) {
-                Log.d("VIDEOSIZEKNOWN_EVENT",event.getType());
+                Log.d("VIDEOSIZEKNOWN_EVENT", event.getType());
 //                float width = event.getIntegerProperty(Event.VIDEO_WIDTH);
 //                float height = event.getIntegerProperty(Event.VIDEO_HEIGHT);
 //                float aspectRatio = height/width;
@@ -657,6 +720,36 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                             playerControlsFragment.fullscreen.setBackgroundResource(R.drawable.exit_full_screen);
                         }
                     }
+
+                    Map<DeliveryType, SourceCollection> map = currentVideo.getSourceCollections();
+                    SourceCollection sor = map.get(DeliveryType.valueOf("DASH"));
+                    Set<Source> se = sor.getSources();
+                    Object[] ar = se.toArray();
+                    Log.d("dffdfddf", ar.length + "");
+                    for (int i = 0; i < ar.length; i++) {
+
+                        Source hp = (Source) ar[i];
+                        Map<String, Object> ma = hp.getProperties();
+                        url = (String) ma.get("url");
+                        if (url.contains("avc1_hvc1_mp4a")) {
+                            Log.d("dffdfddf", url);
+                            UhdUrl = url;
+                            break;
+                        }
+                    }
+
+
+                    if (isDeviceSupported) {
+                        if (!UhdUrl.equalsIgnoreCase("") && UhdUrl.contains("avc1_hvc1_mp4a")) {
+                            is4kSupported = true;
+                            playerControlsFragment.set4kSupported(is4kSupported);
+                        } else {
+                            is4kSupported = false;
+                        }
+                    }
+
+
+//
 
                 } catch (Exception e) {
 
@@ -948,7 +1041,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         BrightcoveClosedCaptioningManager manager = BrightcoveClosedCaptioningManager.getInstance(getActivity());
         BrightcoveCaptionStyle captionStyle = BrightcoveCaptionStyle.builder()
                 .preset(CaptionConstants.PRESET_CUSTOM) // building a custom preset
-                .fontSize("0.6") // or your desired font size
+                .fontSize("0.8") // or your desired font size
                 .typeface("Arial") // or your desired typeFace
                 .foregroundColor(Color.WHITE) // or your desired text foreground color
                 .foregroundOpacity(CaptionConstants.DEFAULT_FOREGROUND_OPACITY) // or your desired text foreground opacity
@@ -978,8 +1071,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             Object[] ar = se.toArray();
             Source hp = (Source) ar[0];
             Map<String, Object> ma = hp.getProperties();
-            String url = (String) ma.get("url");
-
+            url = (String) ma.get("url");
             MediaMetadata movieMetadata = new MediaMetadata(MediaMetadata.MEDIA_TYPE_MOVIE);
             movieMetadata.putString(MediaMetadata.KEY_TITLE, video.getName());
             movieMetadata.addImage(new WebImage(Uri.parse(video.getPosterImage().toString())));
@@ -1011,6 +1103,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             if (mediaInfo != null) {
                 loadMediaInfo(eventEmitter, video);
             }
+
         } catch (Exception e) {
             if (ChromecastManager.getInstance().getmCastContext(getActivity()) != null && ChromecastManager.getInstance().getmCastContext(getActivity()).getSessionManager() != null) {
                 ChromecastManager.getInstance().getmCastContext(getActivity()).getSessionManager().endCurrentSession(true);
@@ -1646,15 +1739,15 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                     DisplayMetrics displayMetrics = new DisplayMetrics();
                     getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
                     int screen_height = displayMetrics.heightPixels;
-                   // int screen_width = displayMetrics.widthPixels;
+                    // int screen_width = displayMetrics.widthPixels;
                     double ratio = 1.78;
-                    Double screen_Width = screen_height*ratio;
+                    Double screen_Width = screen_height * ratio;
 
 
                     Log.e("RATUILANDHEIGHT", String.valueOf(screen_height));
-                   // Log.e("RATUILANDWIDTH", String.valueOf(screen_width));
-                    baseVideoView.setLayoutParams(new FrameLayout.LayoutParams(screen_Width.intValue(),screen_height,Gravity.CENTER));
-                   // ((FrameLayout) baseVideoView).setGravity(Gravity.CENTER);
+                    // Log.e("RATUILANDWIDTH", String.valueOf(screen_width));
+                    baseVideoView.setLayoutParams(new FrameLayout.LayoutParams(screen_Width.intValue(), screen_height, Gravity.CENTER));
+                    // ((FrameLayout) baseVideoView).setGravity(Gravity.CENTER);
 
 //                    if (screen_width > 1280) {
 //                        // Set the video size
@@ -1665,8 +1758,6 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
 //                    }
 
 
-
-
                 } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
                     if (playerControlsFragment != null) {
                         playerControlsFragment.sendPortraitCallback();
@@ -1675,8 +1766,8 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                     mActivity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
                     currentConfig = newConfig;
                     baseVideoView.setPadding(0, 0, 0, 0);
-                   // Log.e("R=PORTRAIT", "R=PORTRAIT");
-                    baseVideoView.setLayoutParams(new FrameLayout.LayoutParams(MATCH_PARENT,MATCH_PARENT,Gravity.CENTER));
+                    // Log.e("R=PORTRAIT", "R=PORTRAIT");
+                    baseVideoView.setLayoutParams(new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT, Gravity.CENTER));
                 }
             }
         }
@@ -1990,12 +2081,12 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
 
                 ImaSdkSettings imaSdkSettings = sdkFactory.createImaSdkSettings();
 
-                containers = sdkFactory.createAdDisplayContainer(baseVideoView,googleIMAComponent.getVideoAdPlayer());
+                containers = sdkFactory.createAdDisplayContainer(baseVideoView, googleIMAComponent.getVideoAdPlayer());
                 adsLoader = sdkFactory.createAdsLoader(getActivity(), imaSdkSettings, containers);
                 AdsRequest adsRequest = sdkFactory.createAdsRequest();
 
                 adsRequest.setAdTagUrl(adRulesURL);
-               // adsRequest.setAdDisplayContainer(containers);
+                // adsRequest.setAdDisplayContainer(containers);
                 ArrayList<AdsRequest> adsRequests = new ArrayList<AdsRequest>(1);
                 adsRequests.add(adsRequest);
                 event.properties.put(GoogleIMAComponent.ADS_REQUESTS, adsRequests);
@@ -2257,7 +2348,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
 
                 getVideoTracks();
                 if (videoTrackArray != null) {
-                    ArrayList<TrackItem> arrayList = Utils.createTrackList(videoTrackArray, getActivity());
+                    ArrayList<TrackItem> arrayList = Utils.createTrackList(videoTrackArray, getActivity(), is4kSupported);
                     if (position > 0) {
                         if (position < arrayList.size()) {
                             updateVideoTrack(position);

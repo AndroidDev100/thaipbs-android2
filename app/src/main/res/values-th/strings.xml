@@ -189,7 +189,7 @@
     <string name="error">พบข้อผิดพลาด</string>
     <string name="forgot_pwd">ลืมพาสเวิร์ด</string>
     <string name="share">แบ่งปัน</string>
-    <string name="watchlist">รายการโปรด</string>
+    <string name="watchlist">เพิ่มในรายการโปรด</string>
     <string name="like">ชอบ</string>
     <string name="crew">ประเภทรายการ: </string>
     <string name="cast">พิธีกร/นักแสดง: </string>
@@ -319,6 +319,7 @@
     <string name="name_validation_profile">ต้องการชื่อ</string>
     <string name="profile_registered_successfully">การลงทะเบียนสำเร็จ!</string>
     <string name="email_id">อีเมลสำหรับเข้าสู่ระบบ FB </string>
+    <string name="feature">FEATURE</string>
     <string name="check_connection_text">ตรวจสอบการเชื่อมต่ออินเทอร์เน็ต.</string>
     <string name="checkout">เช็คเอาท์</string>
     <string name="verify_user">ตรวจสอบบัญชี</string>

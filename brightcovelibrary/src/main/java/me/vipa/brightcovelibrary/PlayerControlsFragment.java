@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -28,9 +27,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatRadioButton;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
-import androidx.core.content.ContextCompat;
-import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.mediarouter.app.MediaRouteButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -44,10 +40,7 @@ import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.ui.DefaultTimeBar;
 import com.google.android.exoplayer2.ui.TimeBar;
 import com.google.android.gms.cast.framework.CastButtonFactory;
-import com.google.gson.Gson;
 import com.vipa.brightcovelibrary.R;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,6 +96,7 @@ public class PlayerControlsFragment extends Fragment {
     private boolean isSignPlaying = false;
     private boolean isFromParentRef = false;
     private String signLangId = "";
+    private boolean is4kSupported = false;
 
     // private OnSizeRatioDown onSizeRatioDown;
 
@@ -904,6 +898,9 @@ public class PlayerControlsFragment extends Fragment {
         }
     }
 
+    public void set4kSupported(boolean is4kSupported) {
+        this.is4kSupported = is4kSupported;
+    }
 
 
     /**
@@ -951,7 +948,7 @@ public class PlayerControlsFragment extends Fragment {
         }
         if (array.size() > 0) {
             videoTrackArray = array;
-            ArrayList<TrackItem> arrayList = Utils.createTrackList(videoTrackArray, getActivity());
+            ArrayList<TrackItem> arrayList = Utils.createTrackList(videoTrackArray, getActivity(), is4kSupported);
             VideoTracksAdapter videoTracksAdapter = new VideoTracksAdapter(arrayList, selectedTrack);
             recycleview.setAdapter(videoTracksAdapter);
             dialogQuality.show();
@@ -983,6 +980,8 @@ public class PlayerControlsFragment extends Fragment {
                 selectedIndex = 2;
             } else if (selectedTrack.equalsIgnoreCase(getActivity().getResources().getString(R.string.high))) {
                 selectedIndex = 3;
+            }else if (selectedTrack.equalsIgnoreCase("4k")) {
+                selectedIndex = 4;
             } else {
                 selectedIndex = 0;
             }

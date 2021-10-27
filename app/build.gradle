@@ -63,8 +63,8 @@ android {
         }
         prod {
             dimension 'default'
-            versionCode 1027
-            versionName "1.1.27"
+            versionCode 1028
+            versionName "1.1.28"
             applicationId "me.vipa.app"
         }
     }
@@ -196,6 +196,7 @@ dependencies {
     implementation ('com.amazonaws:aws-android-sdk-mobile-client:2.16.8@aar') { transitive = true }
     implementation 'com.amazonaws:aws-android-sdk-s3:2.16.7'
     implementation 'com.amazonaws:aws-android-sdk-cognito:2.16.7'
+    implementation 'androidx.work:work-runtime-ktx:2.7.0-rc01'
 
  //   testImplementation 'junit:junit:4.12'
     implementation project(':brightcovelibrary')
