@@ -1747,6 +1747,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                     Log.e("RATUILANDHEIGHT", String.valueOf(screen_height));
                     // Log.e("RATUILANDWIDTH", String.valueOf(screen_width));
                     baseVideoView.setLayoutParams(new FrameLayout.LayoutParams(screen_Width.intValue(), screen_height, Gravity.CENTER));
+                    ivWatermark.setLayoutParams(new FrameLayout.LayoutParams(screen_Width.intValue(), screen_height, Gravity.CENTER));
                     // ((FrameLayout) baseVideoView).setGravity(Gravity.CENTER);
 
 //                    if (screen_width > 1280) {
@@ -1768,6 +1769,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                     baseVideoView.setPadding(0, 0, 0, 0);
                     // Log.e("R=PORTRAIT", "R=PORTRAIT");
                     baseVideoView.setLayoutParams(new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT, Gravity.CENTER));
+                    ivWatermark.setLayoutParams(new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT, Gravity.CENTER));
                 }
             }
         }
