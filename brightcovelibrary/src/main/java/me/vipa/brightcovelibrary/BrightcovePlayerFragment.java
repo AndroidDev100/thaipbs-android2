@@ -34,6 +34,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.annotation.SuppressLint;
@@ -1747,7 +1748,17 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                     Log.e("RATUILANDHEIGHT", String.valueOf(screen_height));
                     // Log.e("RATUILANDWIDTH", String.valueOf(screen_width));
                     baseVideoView.setLayoutParams(new FrameLayout.LayoutParams(screen_Width.intValue(), screen_height, Gravity.CENTER));
-                    ivWatermark.setLayoutParams(new FrameLayout.LayoutParams(screen_Width.intValue(), screen_height, Gravity.CENTER));
+
+                    FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                            FrameLayout.LayoutParams.WRAP_CONTENT,
+                            FrameLayout.LayoutParams.WRAP_CONTENT,
+                            Gravity.CENTER
+                    );
+                    params.setMargins(0, 40, 0, 0);
+                    ivWatermark.setLayoutParams(params);
+
+
+                   // ivWatermark.setLayoutParams(new FrameLayout.LayoutParams(screen_Width.intValue(), screen_height, Gravity.CENTER));
                     // ((FrameLayout) baseVideoView).setGravity(Gravity.CENTER);
 
 //                    if (screen_width > 1280) {
