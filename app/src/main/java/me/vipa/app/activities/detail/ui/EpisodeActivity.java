@@ -1740,6 +1740,49 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
 
     }
 
+    @Override
+    public String nextVideoId() {
+        String nextEpisdoeId = null;
+        if (seasonEpisodesList != null && !seasonEpisodesList.isEmpty()) {
+            final int total = seasonEpisodesList.size();
+            for (int i = 0; i < total; i++) {
+                int id = seasonEpisodesList.get(i).getId();
+                if (id == assestId && i < total - 1) {
+                    nextEpisdoeId = seasonEpisodesList.get(i + 1).getBrightcoveVideoId();
+                    nextEpisode = seasonEpisodesList.get(i + 1);
+                    isHitPlayerApi = false;
+                    fromBingWatch = true;
+                    break;
+                }
+            }
+        }
+        return nextEpisdoeId;
+    }
+
+    @Override
+    public String previousVideoId() {
+        String prevEpisodeId = null;
+        if (seasonEpisodesList != null && !seasonEpisodesList.isEmpty()) {
+            final int total = seasonEpisodesList.size();
+            for (int i = total - 1; i >= 0; i--) {
+                int id = seasonEpisodesList.get(i).getId();
+                if (id == assestId && i > 0) {
+                    prevEpisodeId = seasonEpisodesList.get(i - 1).getBrightcoveVideoId();
+                    nextEpisode = seasonEpisodesList.get(i - 1);
+                    isHitPlayerApi = false;
+                    fromBingWatch = true;
+                    break;
+                }
+            }
+        }
+        return prevEpisodeId;
+    }
+
+    @Override
+    public void onEpisodeSkip() {
+        getEpisodeDetails();
+    }
+
     List<EnveuVideoItemBean> seasonEpisodesList;
 
     public void episodesList(List<EnveuVideoItemBean> seasonEpisodes) {

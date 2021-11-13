@@ -104,7 +104,6 @@ import com.google.android.gms.cast.MediaInfo;
 import com.google.android.gms.cast.MediaMetadata;
 import com.google.android.gms.cast.VastAdsRequest;
 import com.google.android.gms.common.images.WebImage;
-import com.google.gson.Gson;
 import com.vipa.brightcovelibrary.R;
 
 import org.json.JSONObject;
@@ -1954,6 +1953,16 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                 bingeWatch = false;
             }
         }
+
+        if (totalEpisodes == 1) {
+            playerControlsFragment.showPlayPrevious(false);
+            playerControlsFragment.showPlayNext(false);
+        } else {
+            if (runningEpisodes == 1) {
+                playerControlsFragment.showPlayPrevious(false);
+            }
+            playerControlsFragment.showPlayNext(runningEpisodes < totalEpisodes);
+        }
     }
 
     public void bingeWatchStatus(boolean b) {
@@ -1991,6 +2000,15 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
 
         }
 
+        default String nextVideoId() {
+            return null;
+        }
+
+        default String previousVideoId() {
+            return null;
+        }
+
+        default void onEpisodeSkip() {}
 
     }
 
@@ -2284,6 +2302,32 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             Utils.updateLanguage("en", getActivity());
         }
         gettingVideoTracks("");
+    }
+
+    @Override
+    public void playPrevious() {
+        String previousId = mListener.previousVideoId();
+        Log.d(TAG, "playPrevious: " + previousId);
+        if (previousId != null) {
+            skipEpisodeTo(previousId);
+        }
+    }
+
+    @Override
+    public void playNext() {
+        String nextId = mListener.nextVideoId();
+        Log.d(TAG, "playNext: " + nextId);
+        if (nextId != null) {
+            skipEpisodeTo(nextId);
+        }
+    }
+
+    private void skipEpisodeTo(@Nullable String videoId) {
+        if (videoId != null) {
+            baseVideoView.seekTo(0);
+            startPlayer(videoId);
+            mListener.onEpisodeSkip();
+        }
     }
 
     @Override

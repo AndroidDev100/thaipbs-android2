@@ -28,6 +28,7 @@
     <string name="select_video_quality">เลือกคุณภาพวีดีโอ</string>
     <string name="cancel">ยกเลิก</string>
     <string name="next_episode">ตอนต่อไป</string>
+    <string name="previous_episode">ตอนก่อนหน้า</string>
     <string name="live">สด</string>
     <string name="skip_intro">ข้ามตอนต้น</string>
     <string name="video_tracks_not_available">ไม่มีแทร็กวิดีโอสำหรับเนื้อหาน</string>

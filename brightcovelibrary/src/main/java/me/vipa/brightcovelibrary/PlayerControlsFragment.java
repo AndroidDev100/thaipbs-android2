@@ -27,6 +27,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatRadioButton;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
 import androidx.mediarouter.app.MediaRouteButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -76,6 +77,8 @@ public class PlayerControlsFragment extends Fragment {
     private PlayerCallbacks playerCallbacks;
     private ConstraintLayout controlLayout;
     private ConstraintLayout childControl, progressView;
+    private ConstraintLayout clSkipEpisode;
+    private RelativeLayout rlPrevious, rlNext;
     private RelativeLayout audioTracks, subtitles;
     public ImageView backArrow;
     private View seekBarControl, settingControl;
@@ -287,6 +290,13 @@ public class PlayerControlsFragment extends Fragment {
 
         Utils.setParamsResetSkipButton(skipBtn);
 
+        ConstraintSet skipSet = new ConstraintSet();
+        skipSet.clone(clSkipEpisode);
+        skipSet.setHorizontalBias(R.id.rl_episode_prev, 1.0f);
+        skipSet.setHorizontalBias(R.id.rl_episode_next, 0.0f);
+
+        clSkipEpisode.setConstraintSet(skipSet);
+
         //  Utils.setParamstoSettinIcon(playerSettingIcon);
 
 
@@ -356,6 +366,12 @@ public class PlayerControlsFragment extends Fragment {
 
             }
 
+            ConstraintSet skipSet = new ConstraintSet();
+            skipSet.clone(clSkipEpisode);
+            skipSet.setHorizontalBias(R.id.rl_episode_prev, 0.5f);
+            skipSet.setHorizontalBias(R.id.rl_episode_next, 0.5f);
+
+            clSkipEpisode.setConstraintSet(skipSet);
 
         } catch (Exception e) {
 
@@ -636,7 +652,25 @@ public class PlayerControlsFragment extends Fragment {
             }
         });
 
+        rlPrevious.setOnClickListener(view -> {
+            if (playerCallbacks != null) {
+                playerCallbacks.playPrevious();
+            }
+        });
 
+        rlNext.setOnClickListener(view -> {
+            if (playerCallbacks != null) {
+                playerCallbacks.playNext();
+            }
+        });
+    }
+
+    public void showPlayPrevious(boolean show) {
+        rlPrevious.setVisibility(show ? View.VISIBLE : View.GONE);
+    }
+
+    public void showPlayNext(boolean show) {
+        rlNext.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
     private void callAnimation() {
@@ -756,6 +790,9 @@ public class PlayerControlsFragment extends Fragment {
         settingControl = (View) view.findViewById(R.id.playerSetting);
         fullscreen = (ImageView) view.findViewById(R.id.fullscreen);
         settingLay = (LinearLayout) view.findViewById(R.id.settingLay);
+        clSkipEpisode = view.findViewById(R.id.cl_skip_episode);
+        rlPrevious = view.findViewById(R.id.rl_episode_prev);
+        rlNext = view.findViewById(R.id.rl_episode_next);
         if (isOffline && from == 1) {
             fullscreen.setVisibility(View.GONE);
             playerSettingIcon.setVisibility(View.INVISIBLE);
