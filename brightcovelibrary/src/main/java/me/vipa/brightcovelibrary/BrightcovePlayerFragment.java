@@ -197,11 +197,11 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         if (bundle != null) {
             try {
 
-                // Log.w("IMATAG", videoId);
+                // Logger.w("IMATAG " + videoId);
                 assetType = bundle.getString("assetType");
                 selected_track = bundle.getString("selected_track");
-                //  Log.e("Selectedtrack", selected_track);
-                //Log.d("asasasasas",selected_track);
+                //  Logger.e("Selectedtrack " + selected_track);
+                //Logger.d("asasasasas " + selected_track);
                 selected_lang = bundle.getString("selected_lang");
                 adRulesURL = bundle.getString("config_vast_tag");
                 bingeWatch = bundle.getBoolean("binge_watch");
@@ -222,9 +222,9 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                 if (bundle.getString("posterUrl") != null) {
                     poster_url = bundle.getString("posterUrl");
                 }
-                // Log.w("config_vast_tag", adRulesURL);
+                // Logger.w("config_vast_tag" + adRulesURL);
 
-//            Log.w("IMATAG ",bundle.getString("vast_tag"));
+//            Logger.w("IMATAG " + bundle.getString("vast_tag"));
                 if (bundle.getString("vast_tag") != null && !bundle.getString("vast_tag").equalsIgnoreCase("")) {
                     adRulesURL = bundle.getString("vast_tag");
                 }
@@ -258,11 +258,11 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                 }
 
             } catch (Exception e) {
-                Log.e("gtgtgtgt", e.getMessage());
+                Logger.e(e);
             }
         }
         int is4kValue = isUHD();
-        Log.d("dffdfddf", is4kValue + "");
+        Logger.d(is4kValue + "");
         if (is4kValue == 1) {
             isDeviceSupported = true;
         } else {
@@ -338,7 +338,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                         @Override
                         public void onAudioFocusChange(int i) {
                             if (i == AUDIOFOCUS_LOSS) {
-                                Log.w("windowFocusChanged===", AUDIOFOCUS_LOSS + " " + exitFromPIP);
+                                Logger.w("windowFocusChanged=== " + AUDIOFOCUS_LOSS + " " + exitFromPIP);
                                 if (!exitFromPIP) {
                                     baseVideoView.pause();
                                 }
@@ -367,7 +367,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
         }*/
         View result = inflater.inflate(R.layout.fragment_blank, container, false);
-        Log.w("IMATAG", "view");
+        Logger.w("IMATAG view");
         findPlayerId(result);
         super.onCreateView(inflater, container, savedInstanceState);
         bottomMargin = (int) getResources().getDimension(R.dimen.caption_margin);
@@ -405,7 +405,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             if (bundle != null) {
                 brightcoveAccountId = bundle.getString("brightcove_account_id");
                 brightcovePolicyKey = bundle.getString("brightcove_policy_key");
-                Log.w("IMATAG", brightcoveAccountId + "  " + brightcovePolicyKey);
+                Logger.w("IMATAG " +brightcoveAccountId + "  " + brightcovePolicyKey);
 
             }
         } catch (
@@ -506,13 +506,13 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         }
 
         if (!isOffline) {
-            Log.w("IMATAG", "catalog");
+            Logger.w("IMATAG catalog");
             progressBar.setVisibility(View.VISIBLE);
             Catalog catalog = new Catalog(eventEmitter, brightcoveAccountId, brightcovePolicyKey);
             catalog.findVideoByID(videoId, new VideoListener() {
                 @Override
                 public void onVideo(Video video) {
-                    Log.w("IMATAG", "catalogin");
+                    Logger.w("IMATAG catalogin");
                     progressBar.setVisibility(View.VISIBLE);
                     currentVideo = video;
                     cuePointsList = new ArrayList<>();
@@ -533,7 +533,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                     }
 
 
-                    Log.w("videoFound", "inUp");
+                    Logger.w("videoFound inUp");
                     /*if (ChromecastManager.getInstance().getRunningVideoId()!=null && !ChromecastManager.getInstance().getRunningVideoId().equalsIgnoreCase("")){
                         if (ChromecastManager.getInstance().getRunningVideoId().equalsIgnoreCase(videoId)){
                             onStatusUpdate();
@@ -558,7 +558,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                 public void onError(@NonNull List<CatalogError> errors) {
                     super.onError(errors);
                     if (!baseVideoView.isPlaying())
-                        Log.d("gtgtgtgt", errors.get(0).getCatalogErrorSubcode());
+                        Logger.d("gtgtgtgt " + errors.get(0).getCatalogErrorSubcode());
                     showErrorDialog(errors.get(0).getCatalogErrorSubcode());
                 }
             });
@@ -588,7 +588,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         eventEmitter.on(EventType.DID_SET_VIDEO, new EventListener() {
             @Override
             public void processEvent(Event event) {
-                Log.w("IMATAG", "DID_SET_VIDEO");
+                Logger.w("IMATAG DID_SET_VIDEO");
                 if (progressBar != null) {
                     progressBar.setVisibility(View.VISIBLE);
                 }
@@ -612,7 +612,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
 
                             }
                         });
-                        // Log.v(TAG, "onDID_SET_VIDEO: ExoPlayer = " + simpleExoPlayer+" "+trackGroupArray.get(0));
+                        // Logger.v("onDID_SET_VIDEO: ExoPlayer = " + simpleExoPlayer+" "+trackGroupArray.get(0));
 
 
                     }
@@ -623,7 +623,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         eventEmitter.on(EventType.VIDEO_SIZE_KNOWN, new EventListener() {
             @Override
             public void processEvent(Event event) {
-                Log.d("VIDEOSIZEKNOWN_EVENT", event.getType());
+                Logger.d("VIDEOSIZEKNOWN_EVENT " + event.getType());
 //                float width = event.getIntegerProperty(Event.VIDEO_WIDTH);
 //                float height = event.getIntegerProperty(Event.VIDEO_HEIGHT);
 //                float aspectRatio = height/width;
@@ -647,7 +647,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                     if (playerControlsFragment != null) {
                         playerControlsFragment.setTotalDuration(baseVideoView.getDuration());
                         playerControlsFragment.setCurrentPosition(baseVideoView.getCurrentPosition());
-                        Log.d("Progress", "playerProgress");
+                        Logger.d("Progress playerProgress");
                         if (mListener != null) {
                             mListener = (OnPlayerInteractionListener) mActivity;
                             mListener.onPlayerInProgress();
@@ -661,7 +661,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                             playerControlsFragment.hideSkipIntro();
                         }
                     }
-                    Log.w("progressValuess", bingeWatch + " " + currentPosition + " " + bingeWatchTimer + "  " + baseVideoView.getDuration());
+                    Logger.w("progressValuess " + bingeWatch + " " + currentPosition + " " + bingeWatchTimer + "  " + baseVideoView.getDuration());
                     if (bingeWatch && bingeWatchTimer > 0) {
                         if (currentPosition >= bingeWatchTimer) {
                             willBingWatchShow = true;
@@ -690,7 +690,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         eventEmitter.on(EventType.PLAY, new EventListener() {
             @Override
             public void processEvent(Event event) {
-                Log.w("IMATAG", "PLAY");
+                Logger.w("IMATAG PLAY");
 
                 if (progressBar != null) {
                     progressBar.setVisibility(View.GONE);
@@ -705,7 +705,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                             mListener.onPlayerStart();
                         }
 
-                        Log.w("Playerstart", "PLAY");
+                        Logger.w("Playerstart PLAY");
 
                         if (playerControlsFragment != null) {
                             if (!isInPictureinPicture) {
@@ -725,14 +725,14 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                     SourceCollection sor = map.get(DeliveryType.valueOf("DASH"));
                     Set<Source> se = sor.getSources();
                     Object[] ar = se.toArray();
-                    Log.d("dffdfddf", ar.length + "");
+                    Logger.d("dffdfddf " + ar.length);
                     for (int i = 0; i < ar.length; i++) {
 
                         Source hp = (Source) ar[i];
                         Map<String, Object> ma = hp.getProperties();
                         url = (String) ma.get("url");
                         if (url.contains("avc1_hvc1_mp4a")) {
-                            Log.d("dffdfddf", url);
+                            Logger.d("dffdfddf " + url);
                             UhdUrl = url;
                             break;
                         }
@@ -761,7 +761,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             @Override
             public void processEvent(Event event) {
                 if (Network.HaveNetworkConnection(mActivity)) {
-                    Log.w("IMATAG", "BUFFERING_STARTED");
+                    Logger.w("IMATAG BUFFERING_STARTED");
                     progressBar.setVisibility(View.VISIBLE);
                 } else {
                     showErrorDialog(getString(R.string.no_internet));
@@ -772,7 +772,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         eventEmitter.on(EventType.BUFFERING_COMPLETED, new EventListener() {
             @Override
             public void processEvent(Event event) {
-                Log.w("IMATAG", "BUFFERING_COMPLETE");
+                Logger.w("IMATAG BUFFERING_COMPLETE");
                 progressBar.setVisibility(View.GONE);
 //                if (mListener != null) {
 //                    mListener = (OnPlayerInteractionListener) mActivity;
@@ -820,7 +820,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             @Override
             public void processEvent(Event event) {
                 Exception exception = (Exception) event.properties.get(Event.ERROR);
-                Log.w("IMATAG", exception + "");
+                Logger.w("IMATAG " + exception);
                 if (assetType != null && assetType.equalsIgnoreCase("LIVETV")) {
 
                 } else {
@@ -870,9 +870,9 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         eventEmitter.on(EventType.CAPTIONS_AVAILABLE, new EventListener() {
             @Override
             public void processEvent(Event event) {
-                Log.w("captionHide", "CAPTIONS_AVAILABLE");
+                Logger.w("captionHide CAPTIONS_AVAILABLE");
                 if (baseVideoView.getClosedCaptioningController().checkIfCaptionsExist(currentVideo)) {
-                    Log.w("captionHide", "in");
+                    Logger.w("captionHide in");
                     captionStyleUpdate();
                     if (playerControlsFragment != null) {
                         playerControlsFragment.sendCaptionAvailable(event.getType());
@@ -883,7 +883,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         eventEmitter.on(EventType.CAPTIONS_LANGUAGES, new EventListener() {
             @Override
             public void processEvent(Event event) {
-                Log.w("captionHide", "CAPTIONS_LANGUAGES");
+                Logger.w("captionHide CAPTIONS_LANGUAGES");
                 List captions = (List) event.properties.get("languages");
                 if (captions.size() >= 1)
                     captionStyleUpdate();
@@ -929,9 +929,9 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             public void processEvent(Event event) {
                 if (playerControlsFragment != null) {
                     if (!isBingeWatchTimeCalculate) {
-                        Log.w("totalDuartion", baseVideoView.getDuration() + "");
-                        Log.w("totalDuartion", bingeWatchTimer * 1000 + "");
-                        Log.w("totalDuartion", baseVideoView.getDuration() - bingeWatchTimer * 1000 + "");
+                        Logger.w("totalDuartion " + baseVideoView.getDuration());
+                        Logger.w("totalDuartion " + bingeWatchTimer * 1000);
+                        Logger.w("totalDuartion " + (baseVideoView.getDuration() - bingeWatchTimer * 1000));
                         int timeCalculation = baseVideoView.getDuration() - bingeWatchTimer * 1000;
                         if (timeCalculation > bingeWatchTimer) {
                             isBingeWatchTimeCalculate = true;
@@ -992,7 +992,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             @Override
             public void processEvent(Event event) {
                 boolean playing = ChromecastManager.getInstance().updatePlayingId(BrightcovePlayerFragment.this.videoId);
-                Log.w("videoFound", "inDown");
+                Logger.w("videoFound inDown");
                 ChromecastManager.getInstance().loadRemoteMediaOtt(BrightcovePlayerFragment.this.videoId);
                 if (baseVideoView != null) {
                     baseVideoView.pause();
@@ -1004,7 +1004,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         eventEmitter.on(GoogleCastEventType.LOAD_MEDIA_INFO, new EventListener() {
             @Override
             public void processEvent(Event event) {
-                Log.w("mediaInfo", event.toString());
+                Logger.w("mediaInfo " + event.toString());
                 //googleCastComponent.loadMediaInfo(mediaInfo);
             }
         });
@@ -1080,7 +1080,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("adTagUrl", adRulesURL);
 
-            Log.w("chromecastUrl", url);
+            Logger.w("chromecastUrl " + url);
 
             List<AdBreakClipInfo> adBreakClipInfoList = new ArrayList<>();
             VastAdsRequest vastRequest = new VastAdsRequest.Builder().setAdTagUrl("https://pubads.g.doubleclick.net/gampad/ads?sz=640x480&iu=/124319096/external/ad_rule_samples&ciu_szs=300x250&ad_rule=1&impl=s&gdfp_req=1&env=vp&output=vmap&unviewed_position_start=1&cust_params=deployment%3Ddevsite%26sample_ar%3Dpreonly&cmsid=496&vid=short_onecue&correlator=").build();
@@ -1099,7 +1099,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                     .setStreamDuration(video.getDuration() * 1000)
                     .build();
 
-            Log.w("mediaInfo", mediaInfo.toString());
+            Logger.w("mediaInfo " + mediaInfo.toString());
             if (mediaInfo != null) {
                 loadMediaInfo(eventEmitter, video);
             }
@@ -1137,7 +1137,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Log.w("IMATAG", "BUFFERING_COMPLETED");
+                        Logger.w("IMATAG BUFFERING_COMPLETED");
                         progressBar.setVisibility(View.GONE);
                     }
                 }, 1400);
@@ -1167,7 +1167,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                             mListener = (OnPlayerInteractionListener) mActivity;
                             mListener.onBookmarkFinish();
                         }
-                        Log.d("PercentagePlayed", percentagePlayed + "");
+                        Logger.d("PercentagePlayed " + percentagePlayed + "");
                     } else {
                         if (handler != null) {
                             handler.postDelayed(this, 10000);
@@ -1204,7 +1204,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         progressBar = view.findViewById(R.id.pBar);
         posterImage = view.findViewById(R.id.poster_image);
         posterImageDefault = view.findViewById(R.id.poster_image_default);
-        Log.w("IMATAG", "viewFind");
+        Logger.w("IMATAG viewFind");
         progressBar.setVisibility(View.VISIBLE);
         container = view.findViewById(R.id.container);
         if (!isOfflineVideo) {
@@ -1298,8 +1298,8 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                 }
 
             }
-        } catch (Exception ignored) {
-            Log.w("IMATAG", ignored.toString());
+        } catch (Exception ex) {
+            Logger.w(ex);
         }
 
     }
@@ -1338,7 +1338,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
 
     @Override
     public void playPause() {
-        Log.w("windowFocusChanged=3", exitFromPIP + "");
+        Logger.w("windowFocusChanged=3 " + exitFromPIP);
         if (baseVideoView != null) {
             if (baseVideoView.isPlaying()) {
                 baseVideoView.pause();
@@ -1734,7 +1734,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                     if (adStarted) {
                         baseVideoView.setPadding(0, 15, 10, 15);
                     }
-                    //Log.e("R=FULLSCEEN", "R=FULLSCEEN");
+                    //Logger.e("R=FULLSCEEN R=FULLSCEEN");
 
                     DisplayMetrics displayMetrics = new DisplayMetrics();
                     getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -1744,8 +1744,8 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                     Double screen_Width = screen_height * ratio;
 
 
-                    Log.e("RATUILANDHEIGHT", String.valueOf(screen_height));
-                    // Log.e("RATUILANDWIDTH", String.valueOf(screen_width));
+                    Logger.e("RATUILANDHEIGHT " + String.valueOf(screen_height));
+                    // Logger.e("RATUILANDWIDTH " + String.valueOf(screen_width));
                     baseVideoView.setLayoutParams(new FrameLayout.LayoutParams(screen_Width.intValue(), screen_height, Gravity.CENTER));
 
                     FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
@@ -1762,7 +1762,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
 
 //                    if (screen_width > 1280) {
 //                        // Set the video size
-//                        Log.e("Greaterr", String.valueOf(screen_width));
+//                        Logger.e("Greaterr", String.valueOf(screen_width));
 //                        baseVideoView.getRenderView().setVideoSize(screen_width, screen_height);
 //                        baseVideoView.setPadding(32, 0, 32, 0);
 //
@@ -1777,7 +1777,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                     mActivity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
                     currentConfig = newConfig;
                     baseVideoView.setPadding(0, 0, 0, 0);
-                    // Log.e("R=PORTRAIT", "R=PORTRAIT");
+                    // Logger.e("R=PORTRAIT", "R=PORTRAIT");
                     baseVideoView.setLayoutParams(new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT, Gravity.CENTER));
                     ivWatermark.setLayoutParams(new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT, Gravity.CENTER));
                 }
@@ -1798,7 +1798,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
 
 
         this.isInPictureinPicture = isInPictureInPictureMode;
-        Log.w("windowFocusChanged=2", isInPictureInPictureMode + "");
+        Logger.w("windowFocusChanged=2 " + isInPictureInPictureMode);
         if (isInPictureInPictureMode) {
             exitFromPIP = true;
             if (playerControlsFragment != null) {
@@ -1817,14 +1817,14 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Log.w("windowFocusChanged=4", isInPictureInPictureMode + "");
+                        Logger.w("windowFocusChanged=4 " + isInPictureInPictureMode);
 
                         //Do something after 100ms
 
                        /* Video video=baseVideoView.getCurrentVideo();
-                        Log.w("currentVideo",video+"");*/
+                        Logger.w("currentVideo",video+"");*/
                         if (!adRunning) {
-                            Log.w("conditionCheck", willBingWatchShow + " " + isContentCompleted + " " + adRunning);
+                            Logger.w("conditionCheck " + willBingWatchShow + " " + isContentCompleted + " " + adRunning);
                             adRunning = false;
                             if (isContentCompleted) {
                                 playerControlsFragment.sendVideoCompletedState(EventType.COMPLETED);
@@ -1892,7 +1892,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                 //  playerControlsFragment.hideControls();
 
             }
-            Log.d("Progress", "playerProgress");
+            Logger.d("Progress playerProgress");
 
         }
     }
@@ -1945,7 +1945,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
 
     public void currentEpisodes(int i) {
         runningEpisodes = i;
-        Log.w("totalZies", totalEpisodes + " " + runningEpisodes);
+        Logger.w("totalZies " + totalEpisodes + " " + runningEpisodes);
         if (bingeWatch) {
             if (runningEpisodes < totalEpisodes) {
                 bingeWatch = true;
@@ -2027,8 +2027,8 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         eventEmitter.on(EventType.DID_SET_SOURCE, new EventListener() {
             @Override
             public void processEvent(Event event) {
-                Log.w("IMATAG", (Source) event.properties.get(Event.SOURCE) + "");
-                Log.w("IMATAG", event.properties + "");
+                Logger.w("IMATAG " + (Source) event.properties.get(Event.SOURCE) + "");
+                Logger.w("IMATAG " + event.properties + "");
                 // setupCuePoints((Source) event.properties.get(Event.SOURCE),0);
             }
         });
@@ -2040,7 +2040,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         eventEmitter.on(EventType.AD_STARTED, new EventListener() {
             @Override
             public void processEvent(Event event) {
-                Log.w("IMATAG", "AD_STARTED");
+                Logger.w("IMATAG AD_STARTED");
                 if (playerControlsFragment != null) {
                     progressBar.setVisibility(View.GONE);
                     adStarted = true;
@@ -2064,7 +2064,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         eventEmitter.on(EventType.AD_ERROR, new EventListener() {
             @Override
             public void processEvent(Event event) {
-                Log.w("IMATAG", "AD_ERROR");
+                Logger.w("IMATAG AD_ERROR");
                 if (playerControlsFragment != null) {
                     progressBar.setVisibility(View.GONE);
                     adRunning = false;
@@ -2077,7 +2077,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         eventEmitter.on(GoogleIMAEventType.DID_FAIL_TO_PLAY_AD, new EventListener() {
             @Override
             public void processEvent(Event event) {
-                Log.w("IMATAG", "DID_FAIL_TO_PLAY_AD");
+                Logger.w("IMATAG DID_FAIL_TO_PLAY_AD");
 //                 playerControlsFragment.showControls();
             }
         });
@@ -2086,7 +2086,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         eventEmitter.on(EventType.AD_COMPLETED, new EventListener() {
             @Override
             public void processEvent(Event event) {
-                Log.w("IMATAG", "AD_COMPLETED");
+                Logger.w("IMATAG AD_COMPLETED");
                 adRunning = false;
 //                 playerControlsFragment.showControls();
             }
@@ -2098,8 +2098,8 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         eventEmitter.on(GoogleIMAEventType.ADS_REQUEST_FOR_VIDEO, new EventListener() {
             @Override
             public void processEvent(Event event) {
-                Log.w("IMATAG", event.properties + "");
-                Log.w("IMATAG", "ADS_REQUEST_FOR_VIDEO");
+                Logger.w("IMATAG " + event.properties + "");
+                Logger.w("IMATAG ADS_REQUEST_FOR_VIDEO");
                 progressBar.setVisibility(View.VISIBLE);
                 if (playerControlsFragment != null) {
                     playerControlsFragment.removeTimer();
@@ -2141,7 +2141,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             details.put(Event.CUE_POINT, cuePoint);
             eventEmitter.emit(EventType.SET_CUE_POINT, details);
         } catch (Exception e) {
-            Log.d("EXCEPTION", e.getMessage());
+            Logger.w(e);
         }
 
         // preroll
@@ -2232,9 +2232,9 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         selected_track = title;
         VideoDisplayComponent videoDisplayComponent = baseVideoView.getVideoDisplay();
         if (videoDisplayComponent instanceof ExoPlayerVideoDisplayComponent) {
-            Log.d("SelectedTrackName -->>", title + "  " + position);
+            Logger.d("SelectedTrackName -->> " + title + "  " + position);
             if (title.equalsIgnoreCase(getActivity().getResources().getString(R.string.auto)) || title.equalsIgnoreCase(Constants.AUTO)) {
-                Log.d("SelectedTrackName -->>", title + "  " + Constants.AUTO + "  " + trackSelector);
+                Logger.d("SelectedTrackName -->> " + title + "  " + Constants.AUTO + "  " + trackSelector);
                 updateVideoTrack(position);
 
             } else {
@@ -2266,8 +2266,8 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                             trackSelectedPosition = position;
                             DefaultTrackSelector.SelectionOverride selectiveBitRateOverride = null;
                             if (position > 0) {
-                                Log.d("selectedPosition", position + "  " + videoTrackArray.get(position - 1).height + "  " + videoTrackArray.get(position - 1).bitrate);
-                                Log.w("", videoTrackArray.get(position - 1).bitrate + "");
+                                Logger.d("selectedPosition " + position + "  " + videoTrackArray.get(position - 1).height + "  " + videoTrackArray.get(position - 1).bitrate);
+                                Logger.w(videoTrackArray.get(position - 1).bitrate + "");
                                 selectiveBitRateOverride = new DefaultTrackSelector.SelectionOverride(0, position - 1);
 
                             } else {
@@ -2307,7 +2307,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
     @Override
     public void playPrevious() {
         String previousId = mListener.previousVideoId();
-        Log.d(TAG, "playPrevious: " + previousId);
+        Logger.d("playPrevious: " + previousId);
         if (previousId != null) {
             skipEpisodeTo(previousId);
         }
@@ -2316,7 +2316,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
     @Override
     public void playNext() {
         String nextId = mListener.nextVideoId();
-        Log.d(TAG, "playNext: " + nextId);
+        Logger.d("playNext: " + nextId);
         if (nextId != null) {
             skipEpisodeTo(nextId);
         }
@@ -2359,7 +2359,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             catalog.findVideoByID(videoId, new VideoListener() {
                 @Override
                 public void onVideo(Video video) {
-                    Log.w("IMATAG", "catalogin");
+                    Logger.w("IMATAG catalogin");
                     progressBar.setVisibility(View.VISIBLE);
                     currentVideo = video;
                     cuePointsList = new ArrayList<>();
@@ -2379,7 +2379,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                     }
 
 
-                    Log.w("videoFound", "inUp");
+                    Logger.w("videoFound inUp");
                     /*if (ChromecastManager.getInstance().getRunningVideoId()!=null && !ChromecastManager.getInstance().getRunningVideoId().equalsIgnoreCase("")){
                         if (ChromecastManager.getInstance().getRunningVideoId().equalsIgnoreCase(videoId)){
                             onStatusUpdate();
@@ -2401,7 +2401,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             @Override
             public void run() {
                 int position = Utils.getSelectedTrackPosition(selected_track, getActivity());
-                Log.w("selectedPositionNew", position + "" + " " + selected_track);
+                Logger.w("selectedPositionNew " + position + " " + selected_track);
 
                 getVideoTracks();
                 if (videoTrackArray != null) {
@@ -2444,7 +2444,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                                     group = trackGroups.get(i);
 
                                     for (int j = 0; j < trackGroups.get(i).length; j++) {
-                                        Log.d("selectedPosition", trackGroups.get(i).getFormat(j).height + " " + trackGroups.get(i).getFormat(j).width + "  " + trackGroups.get(i).getFormat(j).bitrate);
+                                        Logger.d("selectedPosition " + trackGroups.get(i).getFormat(j).height + " " + trackGroups.get(i).getFormat(j).width + "  " + trackGroups.get(i).getFormat(j).bitrate);
                                         videoTrackArray.add(trackGroups.get(i).getFormat(j));
                                     }
                                 }
@@ -2474,7 +2474,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
 
         if (videoTrackArray != null || videoTrackArray == null) {
             videoTrackArray = new ArrayList<>();
-            Log.d("DID_SET_VIDEO", msg);
+            Logger.d("DID_SET_VIDEO " + msg);
             VideoDisplayComponent component = baseVideoView.getVideoDisplay();
             if (component instanceof ExoPlayerVideoDisplayComponent) {
                 ExoPlayerVideoDisplayComponent exoComponent = (ExoPlayerVideoDisplayComponent) component;
@@ -2494,7 +2494,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                                 group = trackGroups.get(i);
 
                                 for (int j = 0; j < trackGroups.get(i).length; j++) {
-                                    Log.d("selectedPosition", trackGroups.get(i).getFormat(j).height + " " + trackGroups.get(i).getFormat(j).width + "  " + trackGroups.get(i).getFormat(j).bitrate);
+                                    Logger.d("selectedPosition " + trackGroups.get(i).getFormat(j).height + " " + trackGroups.get(i).getFormat(j).width + "  " + trackGroups.get(i).getFormat(j).bitrate);
                                     videoTrackArray.add(trackGroups.get(i).getFormat(j));
                                 }
                             }
