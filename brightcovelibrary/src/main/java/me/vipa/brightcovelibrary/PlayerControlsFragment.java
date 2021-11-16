@@ -122,6 +122,10 @@ public class PlayerControlsFragment extends Fragment {
         return fragment;
     }
 
+    public void setListener(OnFragmentInteractionListener listener) {
+        this.mListener = listener;
+    }
+
     public void startHandler() {
         callHandler();
 
@@ -237,6 +241,8 @@ public class PlayerControlsFragment extends Fragment {
     }
 
     void sendPortraitCallback() {
+        Logger.d("method called");
+        mListener.updateNextPreviousVisibility();
         try {
             subtitles.setVisibility(View.GONE);
         } catch (Exception e) {
@@ -303,7 +309,9 @@ public class PlayerControlsFragment extends Fragment {
     }
 
     void sendLandscapeCallback() {
+        Logger.d("method called");
         try {
+            mListener.updateNextPreviousVisibility();
             fullscreen.setBackgroundResource(R.drawable.exit_full_screen);
             if (videoType.equalsIgnoreCase("1")) {
                 playerSettingIcon.setVisibility(View.INVISIBLE);
@@ -374,7 +382,7 @@ public class PlayerControlsFragment extends Fragment {
             clSkipEpisode.setConstraintSet(skipSet);
 
         } catch (Exception e) {
-
+            Logger.w(e);
         }
 
     }
@@ -838,8 +846,8 @@ public class PlayerControlsFragment extends Fragment {
 
     @Override
     public void onDetach() {
-        super.onDetach();
         mListener = null;
+        super.onDetach();
     }
 
     public void setPlayerCallBacks(PlayerCallbacks playerCallbacks) {
@@ -952,6 +960,7 @@ public class PlayerControlsFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
+        void updateNextPreviousVisibility();
     }
 
 

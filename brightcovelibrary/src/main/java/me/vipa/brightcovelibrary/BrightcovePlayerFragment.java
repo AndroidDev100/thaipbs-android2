@@ -1313,6 +1313,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                 transaction.commit();
                 playerControlsFragment.setVideoType(videoType);
                 playerControlsFragment.setPlayerCallBacks(this);
+                playerControlsFragment.setListener(this);
 
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -1949,7 +1950,12 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                 bingeWatch = false;
             }
         }
+        updateNextPreviousVisibility();
+    }
 
+    @Override
+    public void updateNextPreviousVisibility() {
+        Logger.d("running Episodes: " + runningEpisodes + " | totalEpisodes: "  +totalEpisodes);
         if (totalEpisodes == 1) {
             playerControlsFragment.showPlayPrevious(false);
             playerControlsFragment.showPlayNext(false);
@@ -1959,6 +1965,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             }
             playerControlsFragment.showPlayNext(runningEpisodes < totalEpisodes);
         }
+        Logger.d("1running Episodes: " + runningEpisodes + " | totalEpisodes: "  +totalEpisodes);
     }
 
     public void bingeWatchStatus(boolean b) {
