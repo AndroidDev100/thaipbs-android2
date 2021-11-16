@@ -1,6 +1,11 @@
 package me.vipa.brightcovelibrary;
 
 
+import static android.content.Context.TELEPHONY_SERVICE;
+import static android.media.AudioManager.AUDIOFOCUS_LOSS;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -21,10 +26,10 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.Pair;
 import android.view.Display;
 import android.view.Gravity;
@@ -34,14 +39,10 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
-import android.annotation.SuppressLint;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.FragmentTransaction;
@@ -75,13 +76,6 @@ import com.brightcove.player.model.VideoFields;
 import com.brightcove.player.pictureinpicture.PictureInPictureManager;
 import com.brightcove.player.util.StringUtil;
 import com.brightcove.player.view.BaseVideoView;
-
-import me.vipa.brightcovelibrary.callBacks.BackPressCallBack;
-import me.vipa.brightcovelibrary.callBacks.PhoneListenerCallBack;
-import me.vipa.brightcovelibrary.callBacks.PlayerCallbacks;
-import me.vipa.brightcovelibrary.chromecast.ChromeCastCallback;
-import me.vipa.brightcovelibrary.chromecast.ChromecastManager;
-
 import com.bumptech.glide.Glide;
 import com.google.ads.interactivemedia.v3.api.AdDisplayContainer;
 import com.google.ads.interactivemedia.v3.api.AdError;
@@ -92,11 +86,11 @@ import com.google.ads.interactivemedia.v3.api.ImaSdkSettings;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.source.TrackGroup;
 import com.google.android.exoplayer2.source.TrackGroupArray;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.MappingTrackSelector;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
-import com.google.android.exoplayer2.source.TrackGroup;
 import com.google.android.exoplayer2.util.Util;
 import com.google.android.gms.cast.AdBreakClipInfo;
 import com.google.android.gms.cast.AdBreakInfo;
@@ -117,9 +111,11 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import static android.content.Context.TELEPHONY_SERVICE;
-import static android.media.AudioManager.AUDIOFOCUS_LOSS;
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import me.vipa.brightcovelibrary.callBacks.BackPressCallBack;
+import me.vipa.brightcovelibrary.callBacks.PhoneListenerCallBack;
+import me.vipa.brightcovelibrary.callBacks.PlayerCallbacks;
+import me.vipa.brightcovelibrary.chromecast.ChromeCastCallback;
+import me.vipa.brightcovelibrary.chromecast.ChromecastManager;
 
 public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.BrightcovePlayerFragment implements PlayerControlsFragment.OnFragmentInteractionListener, PlayerCallbacks, NetworkChangeReceiver.ConnectivityReceiverListener, PhoneListenerCallBack, BackPressCallBack, ChromeCastCallback {
     private static final String PROPERTY_APPLICATION_ID = "com.vipa.app";
@@ -647,7 +643,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                     if (playerControlsFragment != null) {
                         playerControlsFragment.setTotalDuration(baseVideoView.getDuration());
                         playerControlsFragment.setCurrentPosition(baseVideoView.getCurrentPosition());
-                        Logger.d("Progress playerProgress");
+//                        Logger.d("Progress playerProgress");
                         if (mListener != null) {
                             mListener = (OnPlayerInteractionListener) mActivity;
                             mListener.onPlayerInProgress();
@@ -661,7 +657,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                             playerControlsFragment.hideSkipIntro();
                         }
                     }
-                    Logger.w("progressValuess " + bingeWatch + " " + currentPosition + " " + bingeWatchTimer + "  " + baseVideoView.getDuration());
+//                    Logger.d("progressValuess " + bingeWatch + " " + currentPosition + " " + bingeWatchTimer + "  " + baseVideoView.getDuration());
                     if (bingeWatch && bingeWatchTimer > 0) {
                         if (currentPosition >= bingeWatchTimer) {
                             willBingWatchShow = true;
@@ -1271,9 +1267,9 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (!(mActivity instanceof OnPlayerInteractionListener)) {
+        if (mActivity != null && !(mActivity instanceof OnPlayerInteractionListener)) {
             try {
-                throw new Exception("Activity must implement OnPlayerInteractionListener");
+                throw new Exception("Activity (" + mActivity + ") must implement OnPlayerInteractionListener");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -2324,9 +2320,8 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
 
     private void skipEpisodeTo(@Nullable String videoId) {
         if (videoId != null) {
-            baseVideoView.seekTo(0);
-            startPlayer(videoId);
-            mListener.onEpisodeSkip();
+            baseVideoView.stopPlayback();
+            new Handler(Looper.myLooper()).postDelayed(() -> mListener.onEpisodeSkip(), 200);
         }
     }
 

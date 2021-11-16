@@ -105,7 +105,6 @@ import me.vipa.enums.Layouts;
 import me.vipa.brightcovelibrary.BrightcovePlayerFragment;
 import me.vipa.app.R;
 import me.vipa.app.activities.detail.viewModel.DetailViewModel;
-import me.vipa.app.activities.purchase.ui.PurchaseActivity;
 import me.vipa.app.activities.purchase.ui.VodOfferType;
 import me.vipa.app.adapters.player.EpisodeTabAdapter;
 import me.vipa.app.beanModel.AppUserModel;
@@ -114,7 +113,7 @@ import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
 import me.vipa.app.databinding.EpisodeScreenBinding;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.constants.AppConstants;
-import me.vipa.app.utils.cropImage.helpers.Logger;
+import me.vipa.brightcovelibrary.Logger;
 import me.vipa.app.utils.cropImage.helpers.NetworkConnectivity;
 import me.vipa.app.utils.helpers.RailInjectionHelper;
 
@@ -1743,13 +1742,19 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
     @Override
     public String nextVideoId() {
         String nextEpisdoeId = null;
+        Logger.d("assetId: " + assestId);
         if (seasonEpisodesList != null && !seasonEpisodesList.isEmpty()) {
             final int total = seasonEpisodesList.size();
             for (int i = 0; i < total; i++) {
                 int id = seasonEpisodesList.get(i).getId();
                 if (id == assestId && i < total - 1) {
-                    nextEpisdoeId = seasonEpisodesList.get(i + 1).getBrightcoveVideoId();
-                    nextEpisode = seasonEpisodesList.get(i + 1);
+                    Logger.d("id: " + id);
+                    final EnveuVideoItemBean nextEpisodeItem = seasonEpisodesList.get(i + 1);
+                    nextEpisdoeId = nextEpisodeItem.getBrightcoveVideoId();
+                    this.assestId = nextEpisodeItem.getId();
+                    Logger.d("next id: " + nextEpisdoeId);
+                    Logger.d("next assetId: " + assestId);
+                    nextEpisode = nextEpisodeItem;
                     isHitPlayerApi = false;
                     fromBingWatch = true;
                     break;
@@ -1762,13 +1767,19 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
     @Override
     public String previousVideoId() {
         String prevEpisodeId = null;
+        Logger.d("assetId: " + assestId);
         if (seasonEpisodesList != null && !seasonEpisodesList.isEmpty()) {
             final int total = seasonEpisodesList.size();
             for (int i = total - 1; i >= 0; i--) {
                 int id = seasonEpisodesList.get(i).getId();
                 if (id == assestId && i > 0) {
-                    prevEpisodeId = seasonEpisodesList.get(i - 1).getBrightcoveVideoId();
-                    nextEpisode = seasonEpisodesList.get(i - 1);
+                    Logger.d("id: " + id);
+                    final EnveuVideoItemBean previousEpisodeItem = seasonEpisodesList.get(i - 1);
+                    prevEpisodeId = previousEpisodeItem.getBrightcoveVideoId();
+                    this.assestId = previousEpisodeItem.getId();
+                    Logger.d("previous id: " + prevEpisodeId);
+                    Logger.d("previous assetId: " + assestId);
+                    nextEpisode = previousEpisodeItem;
                     isHitPlayerApi = false;
                     fromBingWatch = true;
                     break;
@@ -1780,7 +1791,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
 
     @Override
     public void onEpisodeSkip() {
-        getEpisodeDetails();
+        refreshDetailPage(this.assestId);
     }
 
     List<EnveuVideoItemBean> seasonEpisodesList;

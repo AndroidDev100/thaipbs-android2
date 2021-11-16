@@ -11,6 +11,18 @@ public final class Logger {
     private Logger() {
     }
 
+    public static void i(@NonNull String message) {
+        if (BuildConfig.DEBUG) {
+            i(getTag(), message);
+        }
+    }
+
+    public static void i(@NonNull String tag, @NonNull String message) {
+        if (BuildConfig.DEBUG) {
+            Log.i(tag, message);
+        }
+    }
+
     public static void d(@NonNull String message) {
         if (BuildConfig.DEBUG) {
             d(getTag(), message);
