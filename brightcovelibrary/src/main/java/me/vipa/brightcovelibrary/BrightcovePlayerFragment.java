@@ -138,6 +138,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
     String assetType = "";
     String selected_track = "";
     String selected_lang = "";
+    String applicationLanguage = "";
     private String adRulesURL = "";
     private String poster_image = "";
     private String poster_url = "";
@@ -1717,10 +1718,11 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
     Configuration currentConfig = null;
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
         if (!isCastConnected) {
             super.onConfigurationChanged(newConfig);
             if (!isOfflineVideo) {
+                Utils.updateLanguage(applicationLanguage, mActivity);
                 if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
                     mActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
                     if (playerControlsFragment != null) {
@@ -1930,6 +1932,10 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
 
     public void updateEpisodesList(String seasonEpisodes) {
 
+    }
+
+    public void updateLanguage(String language) {
+        applicationLanguage = language;
     }
 
     int totalEpisodes = 0;

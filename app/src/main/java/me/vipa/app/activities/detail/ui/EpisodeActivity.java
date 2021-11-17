@@ -1,5 +1,7 @@
 package me.vipa.app.activities.detail.ui;
 
+import static android.media.AudioManager.AUDIOFOCUS_LOSS;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -52,80 +54,9 @@ import com.brightcove.player.model.Video;
 import com.brightcove.player.network.DownloadStatus;
 import com.brightcove.player.offline.MediaDownloadable;
 import com.brightcove.player.pictureinpicture.PictureInPictureManager;
-
-import me.vipa.app.activities.homeactivity.ui.HomeActivity;
-import me.vipa.app.activities.series.ui.SeriesDetailActivity;
-import me.vipa.app.utils.helpers.ADHelper;
-import me.vipa.app.utils.helpers.downloads.MediaTypeCheck;
-import me.vipa.bookmarking.bean.GetBookmarkResponse;
-
-import me.vipa.app.activities.purchase.callBack.EntitlementStatus;
-import me.vipa.app.activities.purchase.planslayer.GetPlansLayer;
-import me.vipa.app.beanModel.entitle.EntitledAs;
-import me.vipa.app.utils.helpers.CheckInternetConnection;
-import me.vipa.app.utils.helpers.ImageHelper;
-
-import com.google.gson.Gson;
-import com.mmtv.utils.helpers.downloads.DownloadHelper;
-
-import me.vipa.app.Bookmarking.BookmarkingViewModel;
-import me.vipa.app.activities.detail.adapter.AllCommentAdapter;
-import me.vipa.app.activities.downloads.NetworkHelper;
-import me.vipa.app.activities.downloads.WifiPreferenceListener;
-import me.vipa.app.activities.listing.listui.ListActivity;
-import me.vipa.app.activities.usermanagment.ui.LoginActivity;
-import me.vipa.app.baseModels.BaseBindingActivity;
-import me.vipa.app.beanModel.allComments.ItemsItem;
-import me.vipa.app.beanModel.entitle.ResponseEntitle;
-import me.vipa.app.beanModel.responseModels.detailPlayer.Data;
-import me.vipa.app.beanModel.responseModels.detailPlayer.ResponseDetailPlayer;
-import me.vipa.app.beanModel.responseModels.series.SeriesResponse;
-import me.vipa.app.beanModel.responseModels.series.season.SeasonResponse;
-import me.vipa.app.beanModel.selectedSeason.SelectedSeasonModel;
-import me.vipa.app.callbacks.commonCallbacks.CommonRailtItemClickListner;
-import me.vipa.app.callbacks.commonCallbacks.MoreClickListner;
-import me.vipa.app.callbacks.commonCallbacks.NetworkChangeReceiver;
-import me.vipa.app.fragments.dialog.AlertDialogFragment;
-import me.vipa.app.fragments.dialog.AlertDialogSingleButtonFragment;
-import me.vipa.app.fragments.player.ui.CommentsFragment;
-import me.vipa.app.fragments.player.ui.NontonPlayerExtended;
-import me.vipa.app.fragments.player.ui.RecommendationRailFragment;
-import me.vipa.app.fragments.player.ui.SeasonTabFragment;
-import me.vipa.app.fragments.player.ui.UserInteractionFragment;
-import me.vipa.app.networking.apistatus.APIStatus;
-import me.vipa.app.networking.responsehandler.ResponseModel;
-import me.vipa.app.SDKConfig;
-
-import me.vipa.app.utils.MediaTypeConstants;
-import me.vipa.app.utils.constants.SharedPrefesConstants;
-import me.vipa.app.utils.helpers.SharedPrefHelper;
-import me.vipa.app.utils.helpers.downloads.OnDownloadClickInteraction;
-import me.vipa.app.utils.helpers.downloads.VideoListListener;
-import me.vipa.enums.Layouts;
-import me.vipa.brightcovelibrary.BrightcovePlayerFragment;
-import me.vipa.app.R;
-import me.vipa.app.activities.detail.viewModel.DetailViewModel;
-import me.vipa.app.activities.purchase.ui.VodOfferType;
-import me.vipa.app.adapters.player.EpisodeTabAdapter;
-import me.vipa.app.beanModel.AppUserModel;
-import me.vipa.app.beanModel.enveuCommonRailData.RailCommonData;
-import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
-import me.vipa.app.databinding.EpisodeScreenBinding;
-import me.vipa.app.utils.commonMethods.AppCommonMethod;
-import me.vipa.app.utils.constants.AppConstants;
-import me.vipa.brightcovelibrary.Logger;
-import me.vipa.app.utils.cropImage.helpers.NetworkConnectivity;
-import me.vipa.app.utils.helpers.RailInjectionHelper;
-
-import me.vipa.app.utils.helpers.StringUtils;
-import me.vipa.app.utils.helpers.ToastHandler;
-import me.vipa.app.utils.helpers.ToolBarHandler;
-import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
-
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.tabs.TabLayout;
-
-import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
+import com.mmtv.utils.helpers.downloads.DownloadHelper;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -136,7 +67,66 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
-import static android.media.AudioManager.AUDIOFOCUS_LOSS;
+import me.vipa.app.Bookmarking.BookmarkingViewModel;
+import me.vipa.app.R;
+import me.vipa.app.SDKConfig;
+import me.vipa.app.activities.detail.adapter.AllCommentAdapter;
+import me.vipa.app.activities.detail.viewModel.DetailViewModel;
+import me.vipa.app.activities.downloads.NetworkHelper;
+import me.vipa.app.activities.downloads.WifiPreferenceListener;
+import me.vipa.app.activities.listing.listui.ListActivity;
+import me.vipa.app.activities.purchase.callBack.EntitlementStatus;
+import me.vipa.app.activities.purchase.planslayer.GetPlansLayer;
+import me.vipa.app.activities.purchase.ui.VodOfferType;
+import me.vipa.app.activities.usermanagment.ui.LoginActivity;
+import me.vipa.app.adapters.player.EpisodeTabAdapter;
+import me.vipa.app.baseModels.BaseBindingActivity;
+import me.vipa.app.beanModel.AppUserModel;
+import me.vipa.app.beanModel.allComments.ItemsItem;
+import me.vipa.app.beanModel.entitle.EntitledAs;
+import me.vipa.app.beanModel.entitle.ResponseEntitle;
+import me.vipa.app.beanModel.enveuCommonRailData.RailCommonData;
+import me.vipa.app.beanModel.responseModels.detailPlayer.Data;
+import me.vipa.app.beanModel.responseModels.detailPlayer.ResponseDetailPlayer;
+import me.vipa.app.beanModel.responseModels.series.SeriesResponse;
+import me.vipa.app.beanModel.responseModels.series.season.SeasonResponse;
+import me.vipa.app.beanModel.selectedSeason.SelectedSeasonModel;
+import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
+import me.vipa.app.callbacks.commonCallbacks.CommonRailtItemClickListner;
+import me.vipa.app.callbacks.commonCallbacks.MoreClickListner;
+import me.vipa.app.callbacks.commonCallbacks.NetworkChangeReceiver;
+import me.vipa.app.databinding.EpisodeScreenBinding;
+import me.vipa.app.fragments.dialog.AlertDialogFragment;
+import me.vipa.app.fragments.dialog.AlertDialogSingleButtonFragment;
+import me.vipa.app.fragments.player.ui.CommentsFragment;
+import me.vipa.app.fragments.player.ui.NontonPlayerExtended;
+import me.vipa.app.fragments.player.ui.SeasonTabFragment;
+import me.vipa.app.fragments.player.ui.UserInteractionFragment;
+import me.vipa.app.networking.apistatus.APIStatus;
+import me.vipa.app.networking.responsehandler.ResponseModel;
+import me.vipa.app.utils.MediaTypeConstants;
+import me.vipa.app.utils.commonMethods.AppCommonMethod;
+import me.vipa.app.utils.config.LanguageLayer;
+import me.vipa.app.utils.constants.AppConstants;
+import me.vipa.app.utils.constants.SharedPrefesConstants;
+import me.vipa.app.utils.cropImage.helpers.NetworkConnectivity;
+import me.vipa.app.utils.helpers.ADHelper;
+import me.vipa.app.utils.helpers.CheckInternetConnection;
+import me.vipa.app.utils.helpers.ImageHelper;
+import me.vipa.app.utils.helpers.RailInjectionHelper;
+import me.vipa.app.utils.helpers.SharedPrefHelper;
+import me.vipa.app.utils.helpers.StringUtils;
+import me.vipa.app.utils.helpers.ToastHandler;
+import me.vipa.app.utils.helpers.ToolBarHandler;
+import me.vipa.app.utils.helpers.downloads.MediaTypeCheck;
+import me.vipa.app.utils.helpers.downloads.OnDownloadClickInteraction;
+import me.vipa.app.utils.helpers.downloads.VideoListListener;
+import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
+import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
+import me.vipa.bookmarking.bean.GetBookmarkResponse;
+import me.vipa.brightcovelibrary.BrightcovePlayerFragment;
+import me.vipa.brightcovelibrary.Logger;
+import me.vipa.enums.Layouts;
 
 public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> implements AlertDialogFragment.AlertDialogListener, NetworkChangeReceiver.ConnectivityReceiverListener, AudioManager.OnAudioFocusChangeListener, CommonRailtItemClickListner, MoreClickListner, BrightcovePlayerFragment.OnPlayerInteractionListener, OnDownloadClickInteraction, MediaDownloadable.DownloadEventListener, VideoListListener, BrightcovePlayerFragment.ChromeCastStartedCallBack {
     public static boolean isActive = false;
@@ -1636,6 +1626,9 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
+        Logger.d("configuration changed: " + newConfig.orientation);
+        Logger.d("language: " + LanguageLayer.getCurrentLanguageCode());
+        playerFragment.updateLanguage(LanguageLayer.getCurrentLanguageCode());
         if (!isCastConnected) {
             super.onConfigurationChanged(newConfig);
             AppCommonMethod.isOrientationChanged = true;
