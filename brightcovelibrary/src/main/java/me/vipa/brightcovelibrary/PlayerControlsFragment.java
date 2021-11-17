@@ -34,9 +34,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.brightcove.player.event.EventType;
-
-import me.vipa.brightcovelibrary.callBacks.PlayerCallbacks;
-
 import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.ui.DefaultTimeBar;
 import com.google.android.exoplayer2.ui.TimeBar;
@@ -45,6 +42,8 @@ import com.vipa.brightcovelibrary.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import me.vipa.brightcovelibrary.callBacks.PlayerCallbacks;
 
 
 /**
@@ -241,12 +240,12 @@ public class PlayerControlsFragment extends Fragment {
     }
 
     void sendPortraitCallback() {
-        Logger.d("method called");
+        Logger.d("method called from " + Logger.getTag());
         mListener.updateNextPreviousVisibility();
         try {
             subtitles.setVisibility(View.GONE);
         } catch (Exception e) {
-            e.printStackTrace();
+            Logger.w(e);
         }
         if (videoType.equalsIgnoreCase("1")) {
             if (playerSettingIcon != null) {
@@ -290,8 +289,8 @@ public class PlayerControlsFragment extends Fragment {
             params2.setMargins(0, 10, 60, 0);
             params2.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
             settingLay.setLayoutParams(params2);
-        } catch (Exception ignored) {
-
+        } catch (Exception ex) {
+            Logger.w(ex);
         }
 
         Utils.setParamsResetSkipButton(skipBtn);
@@ -309,7 +308,7 @@ public class PlayerControlsFragment extends Fragment {
     }
 
     void sendLandscapeCallback() {
-        Logger.d("method called");
+        Logger.d("method called from " + Logger.getTag());
         try {
             mListener.updateNextPreviousVisibility();
             fullscreen.setBackgroundResource(R.drawable.exit_full_screen);

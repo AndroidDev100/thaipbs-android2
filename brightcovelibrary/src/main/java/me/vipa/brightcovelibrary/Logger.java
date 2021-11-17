@@ -72,7 +72,7 @@ public final class Logger {
     }
 
     @NonNull
-    private static String getTag() {
+    public static String getTag() {
         StackTraceElement element = Thread.currentThread().getStackTrace()[4];
         String tag = getSimpleClassName(element.getClassName()) + ':' + element.getMethodName()
                 + "() ";

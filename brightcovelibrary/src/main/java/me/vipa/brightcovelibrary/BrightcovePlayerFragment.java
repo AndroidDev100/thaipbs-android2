@@ -1302,6 +1302,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
     }
 
     private void callPlayerControlsFragment() {
+        Logger.d("method called from " + Logger.getTag());
         if (!isAdded()) return;
 
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
@@ -1316,18 +1317,18 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                 playerControlsFragment.setPlayerCallBacks(this);
                 playerControlsFragment.setListener(this);
 
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (playerControlsFragment != null) {
-                            playerControlsFragment.setIsSignEnable(signLangParentRefId, signLangRefId);
-
-                        }
+                new Handler(Looper.myLooper()).postDelayed(() -> {
+                    if (playerControlsFragment != null) {
+                        playerControlsFragment.setIsSignEnable(signLangParentRefId, signLangRefId);
                     }
                 }, 1500);
 
-            } catch (Exception ignored) {
-
+                FrameLayout.LayoutParams captionParams = (FrameLayout.LayoutParams) container.getLayoutParams();
+                captionParams.bottomMargin = (int) 0;
+                captionParams.topMargin = (int) 0;
+                container.setLayoutParams(captionParams);
+            } catch (Exception ex) {
+                Logger.w(ex);
             }
 
 
@@ -1733,19 +1734,15 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                     if (adStarted) {
                         baseVideoView.setPadding(0, 15, 10, 15);
                     }
-                    //Logger.e("R=FULLSCEEN R=FULLSCEEN");
 
                     DisplayMetrics displayMetrics = new DisplayMetrics();
                     getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-                    int screen_height = displayMetrics.heightPixels;
-                    // int screen_width = displayMetrics.widthPixels;
+                    int screenHeight = displayMetrics.heightPixels;
                     double ratio = 1.78;
-                    Double screen_Width = screen_height * ratio;
+                    Double screenWidth = screenHeight * ratio;
 
-
-                    Logger.e("RATUILANDHEIGHT " + String.valueOf(screen_height));
-                    // Logger.e("RATUILANDWIDTH " + String.valueOf(screen_width));
-                    baseVideoView.setLayoutParams(new FrameLayout.LayoutParams(screen_Width.intValue(), screen_height, Gravity.CENTER));
+                    Logger.d("screen dimen h: " + screenHeight + " | w: " + screenWidth);
+                    baseVideoView.setLayoutParams(new FrameLayout.LayoutParams(screenWidth.intValue(), screenHeight, Gravity.CENTER));
 
                     FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
                             FrameLayout.LayoutParams.WRAP_CONTENT,
@@ -1754,20 +1751,6 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                     );
                     params.setMargins(0, 40, 0, 0);
                     ivWatermark.setLayoutParams(params);
-
-
-                   // ivWatermark.setLayoutParams(new FrameLayout.LayoutParams(screen_Width.intValue(), screen_height, Gravity.CENTER));
-                    // ((FrameLayout) baseVideoView).setGravity(Gravity.CENTER);
-
-//                    if (screen_width > 1280) {
-//                        // Set the video size
-//                        Logger.e("Greaterr", String.valueOf(screen_width));
-//                        baseVideoView.getRenderView().setVideoSize(screen_width, screen_height);
-//                        baseVideoView.setPadding(32, 0, 32, 0);
-//
-//                    }
-
-
                 } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
                     if (playerControlsFragment != null) {
                         playerControlsFragment.sendPortraitCallback();
@@ -1776,7 +1759,6 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                     mActivity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
                     currentConfig = newConfig;
                     baseVideoView.setPadding(0, 0, 0, 0);
-                    // Logger.e("R=PORTRAIT", "R=PORTRAIT");
                     baseVideoView.setLayoutParams(new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT, Gravity.CENTER));
                     ivWatermark.setLayoutParams(new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT, Gravity.CENTER));
                 }
