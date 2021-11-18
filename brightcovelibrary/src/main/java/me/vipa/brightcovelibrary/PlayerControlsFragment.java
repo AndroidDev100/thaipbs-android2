@@ -27,7 +27,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatRadioButton;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
 import androidx.mediarouter.app.MediaRouteButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -76,9 +75,7 @@ public class PlayerControlsFragment extends Fragment {
     private PlayerCallbacks playerCallbacks;
     private ConstraintLayout controlLayout;
     private ConstraintLayout childControl, progressView;
-    private ConstraintLayout clSkipEpisode;
-    private RelativeLayout rlPrevious, rlNext;
-    private RelativeLayout audioTracks, subtitles;
+    private View flNextEpisode, flPreviousEpisode, flAudioTracks, flSubtitle;
     public ImageView backArrow;
     private View seekBarControl, settingControl;
     public ImageView fullscreen;
@@ -212,16 +209,16 @@ public class PlayerControlsFragment extends Fragment {
     void sendCaptionAvailable(String type) {
         if (type.equalsIgnoreCase(EventType.CAPTIONS_LANGUAGES) || type.equalsIgnoreCase(EventType.CAPTIONS_AVAILABLE)) {
             isCaptionAvailable = true;
-            if (subtitles.getVisibility() == View.VISIBLE) {
+            if (flSubtitle.getVisibility() == View.VISIBLE) {
 
             } else {
-                subtitles.setVisibility(View.GONE);
+                flSubtitle.setVisibility(View.GONE);
             }
 
             Log.w("captionHide", "sendCaptionAvailableif");
         } else {
             isCaptionAvailable = false;
-            subtitles.setVisibility(View.GONE);
+            flSubtitle.setVisibility(View.GONE);
             Log.w("captionHide", "sendCaptionAvailableelse");
         }
 
@@ -232,10 +229,10 @@ public class PlayerControlsFragment extends Fragment {
     void sendAudioAvailable(String type) {
         if (type.equalsIgnoreCase(EventType.AUDIO_TRACKS)) {
             isAudioAvailable = true;
-            audioTracks.setVisibility(View.GONE);
+            flAudioTracks.setVisibility(View.GONE);
         } else {
             isAudioAvailable = false;
-            audioTracks.setVisibility(View.GONE);
+            flAudioTracks.setVisibility(View.GONE);
         }
     }
 
@@ -243,7 +240,7 @@ public class PlayerControlsFragment extends Fragment {
         Logger.d("method called from " + Logger.getTag());
         mListener.updateNextPreviousVisibility();
         try {
-            subtitles.setVisibility(View.GONE);
+            flSubtitle.setVisibility(View.GONE);
         } catch (Exception e) {
             Logger.w(e);
         }
@@ -258,7 +255,7 @@ public class PlayerControlsFragment extends Fragment {
         }
 
         // media_route_button.setVisibility(View.VISIBLE);
-        audioTracks.setVisibility(View.GONE);
+        flAudioTracks.setVisibility(View.GONE);
         fullscreen.setBackgroundResource(R.drawable.full_screen);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -294,17 +291,6 @@ public class PlayerControlsFragment extends Fragment {
         }
 
         Utils.setParamsResetSkipButton(skipBtn);
-
-        ConstraintSet skipSet = new ConstraintSet();
-        skipSet.clone(clSkipEpisode);
-        skipSet.setHorizontalBias(R.id.rl_episode_prev, 1.0f);
-        skipSet.setHorizontalBias(R.id.rl_episode_next, 0.0f);
-
-        clSkipEpisode.setConstraintSet(skipSet);
-
-        //  Utils.setParamstoSettinIcon(playerSettingIcon);
-
-
     }
 
     void sendLandscapeCallback() {
@@ -320,15 +306,15 @@ public class PlayerControlsFragment extends Fragment {
 //            media_route_button.setVsibility(View.VISIBLE);
             if (isCaptionAvailable) {
                 Log.w("captionHide", "sendLandscapeCallbackif");
-                subtitles.setVisibility(View.VISIBLE);
+                flSubtitle.setVisibility(View.VISIBLE);
             } else {
-                subtitles.setVisibility(View.GONE);
+                flSubtitle.setVisibility(View.GONE);
                 Log.w("captionHide", "sendLandscapeCallbackelse");
             }
             if (isAudioAvailable) {
-                audioTracks.setVisibility(View.VISIBLE);
+                flAudioTracks.setVisibility(View.VISIBLE);
             } else {
-                audioTracks.setVisibility(View.GONE);
+                flAudioTracks.setVisibility(View.GONE);
             }
             if (!getResources().getBoolean(R.bool.isTablet)) {
 
@@ -369,21 +355,10 @@ public class PlayerControlsFragment extends Fragment {
                     Utils.setParamstoSettinIcon(settingLay);
                     Utils.setParamstoSkipButton(skipBtn);
                 }
-
-
             }
-
-            ConstraintSet skipSet = new ConstraintSet();
-            skipSet.clone(clSkipEpisode);
-            skipSet.setHorizontalBias(R.id.rl_episode_prev, 0.5f);
-            skipSet.setHorizontalBias(R.id.rl_episode_next, 0.5f);
-
-            clSkipEpisode.setConstraintSet(skipSet);
-
         } catch (Exception e) {
             Logger.w(e);
         }
-
     }
 
     void showControls() {
@@ -404,8 +379,8 @@ public class PlayerControlsFragment extends Fragment {
         currentPosition.setVisibility(View.INVISIBLE);
         totalDuration.setVisibility(View.INVISIBLE);
         seekBar.setVisibility(View.INVISIBLE);
-        audioTracks.setVisibility(View.GONE);
-        subtitles.setVisibility(View.GONE);
+        flAudioTracks.setVisibility(View.GONE);
+        flSubtitle.setVisibility(View.GONE);
         pauseButton.setVisibility(View.GONE);
         Log.w("captionHide", "hideControlsForLive");
         settingControl.setVisibility(View.GONE);
@@ -542,7 +517,7 @@ public class PlayerControlsFragment extends Fragment {
         });
 
         //Subtitles view click
-        subtitles.setOnClickListener(new View.OnClickListener() {
+        flSubtitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (playerCallbacks != null) {
@@ -552,7 +527,7 @@ public class PlayerControlsFragment extends Fragment {
         });
 
         //Audio track popup
-        audioTracks.setOnClickListener(new View.OnClickListener() {
+        flAudioTracks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (playerCallbacks != null) {
@@ -659,13 +634,13 @@ public class PlayerControlsFragment extends Fragment {
             }
         });
 
-        rlPrevious.setOnClickListener(view -> {
+        flPreviousEpisode.setOnClickListener(view -> {
             if (playerCallbacks != null) {
                 playerCallbacks.playPrevious();
             }
         });
 
-        rlNext.setOnClickListener(view -> {
+        flNextEpisode.setOnClickListener(view -> {
             if (playerCallbacks != null) {
                 playerCallbacks.playNext();
             }
@@ -673,11 +648,11 @@ public class PlayerControlsFragment extends Fragment {
     }
 
     public void showPlayPrevious(boolean show) {
-        rlPrevious.setVisibility(show ? View.VISIBLE : View.GONE);
+        flPreviousEpisode.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
     public void showPlayNext(boolean show) {
-        rlNext.setVisibility(show ? View.VISIBLE : View.GONE);
+        flNextEpisode.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
     private void callAnimation() {
@@ -790,16 +765,15 @@ public class PlayerControlsFragment extends Fragment {
         liveTag = (TextView) view.findViewById(R.id.tag);
         controlLayout = view.findViewById(R.id.controlslayout);
         childControl = (ConstraintLayout) view.findViewById(R.id.childControl);
-        audioTracks = (RelativeLayout) view.findViewById(R.id.audio_tracks);
-        subtitles = (RelativeLayout) view.findViewById(R.id.subtitle_parent_view);
+        flAudioTracks = view.findViewById(R.id.fl_audio_tracks);
+        flSubtitle = view.findViewById(R.id.fl_subtitle);
         backArrow = (ImageView) view.findViewById(R.id.backArrow);
         seekBarControl = (View) view.findViewById(R.id.seekbarLayout);
         settingControl = (View) view.findViewById(R.id.playerSetting);
         fullscreen = (ImageView) view.findViewById(R.id.fullscreen);
         settingLay = (LinearLayout) view.findViewById(R.id.settingLay);
-        clSkipEpisode = view.findViewById(R.id.cl_skip_episode);
-        rlPrevious = view.findViewById(R.id.rl_episode_prev);
-        rlNext = view.findViewById(R.id.rl_episode_next);
+        flPreviousEpisode = view.findViewById(R.id.fl_episode_prev);
+        flNextEpisode = view.findViewById(R.id.fl_episode_next);
         if (isOffline && from == 1) {
             fullscreen.setVisibility(View.GONE);
             playerSettingIcon.setVisibility(View.INVISIBLE);
