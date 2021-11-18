@@ -3,6 +3,7 @@ package me.vipa.brightcovelibrary;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -222,6 +223,10 @@ public class PlayerControlsFragment extends Fragment {
             Log.w("captionHide", "sendCaptionAvailableelse");
         }
 
+        final int orientation = getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE && isCaptionAvailable) {
+            flSubtitle.setVisibility(View.VISIBLE);
+        }
     }
 
     boolean isAudioAvailable = false;
@@ -233,6 +238,11 @@ public class PlayerControlsFragment extends Fragment {
         } else {
             isAudioAvailable = false;
             flAudioTracks.setVisibility(View.GONE);
+        }
+
+        final int orientation = getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE && isAudioAvailable) {
+            flAudioTracks.setVisibility(View.VISIBLE);
         }
     }
 

@@ -1943,17 +1943,24 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
 
     @Override
     public void updateNextPreviousVisibility() {
-        Logger.d("running Episodes: " + runningEpisodes + " | totalEpisodes: "  +totalEpisodes);
+        Logger.d(Logger.getTag() + " running Episodes: " + runningEpisodes + " | totalEpisodes: " + totalEpisodes);
         if (totalEpisodes == 1) {
             playerControlsFragment.showPlayPrevious(false);
             playerControlsFragment.showPlayNext(false);
-        } else {
-            if (runningEpisodes == 1) {
-                playerControlsFragment.showPlayPrevious(false);
-            }
-            playerControlsFragment.showPlayNext(runningEpisodes < totalEpisodes);
+            Logger.d("1");
+        } else if (runningEpisodes == 1 && totalEpisodes > runningEpisodes) {
+            playerControlsFragment.showPlayPrevious(false);
+            playerControlsFragment.showPlayNext(true);
+            Logger.d("2");
+        } else if (runningEpisodes > 1 && totalEpisodes > runningEpisodes) {
+            playerControlsFragment.showPlayPrevious(true);
+            playerControlsFragment.showPlayNext(true);
+            Logger.d("3");
+        } else if (runningEpisodes > 1 && totalEpisodes == runningEpisodes) {
+            playerControlsFragment.showPlayPrevious(true);
+            playerControlsFragment.showPlayNext(false);
+            Logger.d("4");
         }
-        Logger.d("1running Episodes: " + runningEpisodes + " | totalEpisodes: "  +totalEpisodes);
     }
 
     public void bingeWatchStatus(boolean b) {
