@@ -24,4 +24,7 @@ public interface CustomeFields {
     String SIGNEDLANGUAGEREFRENCEID = "signed_language_reference_id";
     String IS_PODCAST = "is_podcast";
     String is4k = "is4k";
+    String isClosedCaption = "is_close_caption";
+    String isSoundTrack = "is_sound_track";
+    String isAudioDescription = "is_audio_description";
 }

@@ -225,8 +225,9 @@
 
 
 
-                                <LinearLayout
+                                <me.vipa.app.utils.CustomFlowLayout
                                     android:layout_width="match_parent"
+                                    app:lineSpacing="8dp"
                                     android:layout_height="wrap_content">
 
                                     <TextView
@@ -239,16 +240,52 @@
                                         android:textColor="?attr/sub_title"
                                         android:textSize="@dimen/font_small" />
 
-                                    <TextView
-                                        android:id="@+id/tv_4k"
+                                    <androidx.appcompat.widget.AppCompatImageView
+                                        android:id="@+id/iv_4k"
                                         android:layout_width="23dp"
                                         android:layout_height="15dp"
-                                        android:background="@drawable/image4k"
-                                        android:layout_marginLeft="2dp"
+                                        android:layout_marginStart="6dp"
+                                        android:visibility="gone"
                                         android:layout_marginTop="2.5dp"
-                                         android:visibility="gone"/>
+                                        app:srcCompat="@drawable/image4k" />
 
-                                </LinearLayout>
+                                    <androidx.appcompat.widget.AppCompatImageView
+                                        android:id="@+id/iv_audio_desc"
+                                        android:layout_width="23dp"
+                                        android:layout_height="15dp"
+                                        android:layout_marginStart="6dp"
+                                        android:layout_marginTop="2.5dp"
+                                        android:visibility="gone"
+                                        app:srcCompat="@drawable/ic_audio_desc" />
+
+                                    <androidx.appcompat.widget.AppCompatImageView
+                                        android:id="@+id/iv_sign_lang"
+                                        android:layout_width="23dp"
+                                        android:layout_height="15dp"
+                                        android:layout_marginStart="6dp"
+                                        android:layout_marginTop="2.5dp"
+                                        android:visibility="gone"
+                                        app:srcCompat="@drawable/ic_sign_language" />
+
+                                    <androidx.appcompat.widget.AppCompatImageView
+                                        android:id="@+id/iv_audio_track"
+                                        android:layout_width="23dp"
+                                        android:layout_height="15dp"
+                                        android:layout_marginStart="6dp"
+                                        android:layout_marginTop="2.5dp"
+                                        android:visibility="gone"
+                                        app:srcCompat="@drawable/ic_audio_track" />
+
+                                    <androidx.appcompat.widget.AppCompatImageView
+                                        android:id="@+id/iv_closed_caption"
+                                        android:layout_width="23dp"
+                                        android:layout_height="15dp"
+                                        android:layout_marginStart="6dp"
+                                        android:layout_marginTop="2.5dp"
+                                        android:visibility="gone"
+                                        app:srcCompat="@drawable/ic_closed_caption" />
+
+                                </me.vipa.app.utils.CustomFlowLayout>
 
 
 

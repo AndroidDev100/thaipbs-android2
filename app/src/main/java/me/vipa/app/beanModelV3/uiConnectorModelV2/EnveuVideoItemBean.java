@@ -1,27 +1,25 @@
 package me.vipa.app.beanModelV3.uiConnectorModelV2;
 
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 
 import androidx.core.content.ContextCompat;
 
 import com.google.gson.internal.LinkedTreeMap;
-import me.vipa.app.beanModelV3.continueWatching.DataItem;
-import me.vipa.app.beanModelV3.playListModelV2.VideosItem;
-import me.vipa.app.beanModelV3.searchV2.ItemsItem;
-import me.vipa.app.beanModelV3.videoDetailsV2.EnveuVideoDetailsBean;
-import me.vipa.app.utils.config.ImageLayer;
-import me.vipa.app.utils.cropImage.helpers.Logger;
-import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
-import me.vipa.app.MvHubPlusApplication;
-import me.vipa.app.R;
-import me.vipa.app.utils.CustomeFields;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.vipa.app.MvHubPlusApplication;
+import me.vipa.app.R;
 import me.vipa.app.beanModelV3.continueWatching.DataItem;
+import me.vipa.app.beanModelV3.playListModelV2.VideosItem;
+import me.vipa.app.beanModelV3.searchV2.ItemsItem;
+import me.vipa.app.beanModelV3.videoDetailsV2.EnveuVideoDetailsBean;
+import me.vipa.app.utils.CustomeFields;
+import me.vipa.app.utils.config.ImageLayer;
+import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
+import me.vipa.brightcovelibrary.Logger;
 
 public class EnveuVideoItemBean implements Serializable {
     private ArrayList seasons;
@@ -70,6 +68,9 @@ public class EnveuVideoItemBean implements Serializable {
     private String signedLangEnabled;
     private String isPodcast;
     private String is4k;
+    private String isClosedCaption;
+    private String isSoundTrack;
+    private String isAudioDesc;
 
     public String getIs4k() {
         return is4k;
@@ -77,6 +78,38 @@ public class EnveuVideoItemBean implements Serializable {
 
     public void setIs4k(String is4k) {
         this.is4k = is4k;
+    }
+
+    public String getIsClosedCaption() {
+        return isClosedCaption;
+    }
+
+    public void setIsClosedCaption(String isClosedCaption) {
+        this.isClosedCaption = isClosedCaption;
+    }
+
+    public String getIsSoundTrack() {
+        return isSoundTrack;
+    }
+
+    public void setIsSoundTrack(String isSoundTrack) {
+        this.isSoundTrack = isSoundTrack;
+    }
+
+    public String getIsAudioDesc() {
+        return isAudioDesc;
+    }
+
+    public void setIsAudioDesc(String isAudioDesc) {
+        this.isAudioDesc = isAudioDesc;
+    }
+
+    public String getIscomingsoon() {
+        return iscomingsoon;
+    }
+
+    public void setIscomingsoon(String iscomingsoon) {
+        this.iscomingsoon = iscomingsoon;
     }
 
     public String getIsPodcast(){
@@ -265,6 +298,26 @@ public class EnveuVideoItemBean implements Serializable {
                 this.isPodcast = isNew;
             }
 
+            if (t.containsKey(CustomeFields.isClosedCaption)) {
+                final Object obj = t.get((CustomeFields.isClosedCaption));
+                if (obj != null) {
+                    this.isClosedCaption = obj.toString();
+                }
+            }
+
+            if (t.containsKey(CustomeFields.isSoundTrack)) {
+                final Object obj = t.get(CustomeFields.isSoundTrack);
+                if (obj != null) {
+                    this.isSoundTrack = obj.toString();
+                }
+            }
+
+            if (t.containsKey(CustomeFields.isAudioDescription)) {
+                final Object obj = t.get(CustomeFields.isAudioDescription);
+                if (obj != null) {
+                    this.isAudioDesc = obj.toString();
+                }
+            }
 
             this.longDescription = details.getData().getLongDescription() == null ? "" : details.getData().getLongDescription().toString().trim();
 
@@ -282,6 +335,7 @@ public class EnveuVideoItemBean implements Serializable {
 
         } catch (Exception e) {
             Logger.e("parsing error", e.getMessage());
+            Logger.w(e);
         }
 
     }
@@ -315,7 +369,7 @@ public class EnveuVideoItemBean implements Serializable {
           //  this.tvod = details.getTvod() == null ? "" : details.getTvod();
             this.episodeNo = details.getEpisodeNumber() == null ? "" : details.getEpisodeNumber();
             this.assetType = details.getContentType() == null ? "" : details.getContentType();
-                Log.w("assetType",assetType);
+                Logger.w("assetType",assetType);
             this.brightcoveVideoId = details.getBrightcoveContentId() == null ? "" : details.getBrightcoveContentId();
 
             this.series = "";
