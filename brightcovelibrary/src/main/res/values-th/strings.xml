@@ -32,6 +32,9 @@
     <string name="live">สด</string>
     <string name="skip_intro">ข้ามตอนต้น</string>
     <string name="video_tracks_not_available">ไม่มีแทร็กวิดีโอสำหรับเนื้อหาน</string>
+    <string name="settings">การตั้งค่า</string>
+    <string name="video_quality">คุณภาพวีดีโอ</string>
+    <string name="audio_tracks">แทร็กเสียง</string>
 
 
 </resources>

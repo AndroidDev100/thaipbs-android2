@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatRadioButton;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
@@ -44,6 +45,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.vipa.brightcovelibrary.callBacks.PlayerCallbacks;
+import me.vipa.brightcovelibrary.utils.ObjectHelper;
 
 
 /**
@@ -621,8 +623,7 @@ public class PlayerControlsFragment extends Fragment {
         playerSettingIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                chooseVideoquality();
-                //showSettingOptions();
+                showSettingDialog();
             }
         });
 
@@ -946,9 +947,75 @@ public class PlayerControlsFragment extends Fragment {
         void updateNextPreviousVisibility();
     }
 
+    private void showSettingDialog() {
+        if (playerCallbacks != null) {
+
+            final String titleVideoQuality = getString(R.string.video_quality);
+            final String titleAudio = getString(R.string.audio_tracks);
+            final String titleSubtitles = getString(R.string.subtitles);
+
+            final List<VideoSettingItem> data = new ArrayList<>();
+            if (!isOffline || from != 1 || ObjectHelper.isNotSame(videoType, "1")) {
+                data.add(new VideoSettingItem(titleVideoQuality));
+            }
+
+            if (isCaptionAvailable) {
+                data.add(new VideoSettingItem(titleSubtitles));
+            }
+
+            if (isAudioAvailable) {
+                data.add(new VideoSettingItem(titleAudio));
+            }
+
+            if (ObjectHelper.isNotEmpty(data)) {
+                callHandler();
+            } else {
+                return;
+            }
+
+            if (ObjectHelper.getCount(data) == 1) {
+                final String title = data.get(0).getTitle();
+                if (ObjectHelper.isSame(title, titleVideoQuality)) {
+                    chooseVideoquality();
+                } else if (ObjectHelper.isSame(title, titleAudio)) {
+                    playerCallbacks.audioTrackPopup();
+                } else if (ObjectHelper.isSame(title, titleSubtitles)) {
+                    playerCallbacks.subtitlePopup();
+                }
+            } else {
+                final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                final View view = LayoutInflater.from(getActivity()).inflate(
+                        R.layout.layout_dialog_settings, null, false);
+                builder.setView(view);
+                final AlertDialog dialog = builder.create();
+                final RecyclerView recyclerView = view.findViewById(R.id.recycleview);
+                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                final VideoSettingAdapter adapter = new VideoSettingAdapter(data);
+                adapter.setItemClickListener(item -> {
+                    final String title = item.getTitle();
+                    if (ObjectHelper.isSame(title, titleVideoQuality)) {
+                        chooseVideoquality();
+                    } else if (ObjectHelper.isSame(title, titleAudio)) {
+                        playerCallbacks.audioTrackPopup();
+                    } else if (ObjectHelper.isSame(title, titleSubtitles)) {
+                        playerCallbacks.subtitlePopup();
+                    }
+                    dialog.dismiss();
+                });
+                recyclerView.setAdapter(adapter);
+                final TextView tvTitle = view.findViewById(R.id.title_video);
+                final Button btnClose = view.findViewById(R.id.close);
+                dialog.show();
+                btnClose.setOnClickListener(v -> dialog.dismiss());
+
+                tvTitle.setText(R.string.settings);
+                btnClose.setText(R.string.cancel);
+            }
+        }
+    }
 
     private Dialog dialogQuality;
-    RecyclerView recycleview;
+    private RecyclerView recycleview;
 
     private void chooseVideoquality() {
         if (playerCallbacks != null) {
@@ -1024,7 +1091,7 @@ public class PlayerControlsFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
+        public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
             try {
 
                 String trackName = tracks.get(position).getTrackName() + "";
