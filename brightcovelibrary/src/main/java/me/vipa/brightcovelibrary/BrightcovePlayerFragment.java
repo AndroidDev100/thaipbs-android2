@@ -910,6 +910,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             if (selectedTrack != null) {
                 for (int i = 0; i < tracks.size(); ++i) {
                     if (tracks.get(i).equals(selectedTrack)) {
+                        currentAudioLanguage = i;
                         break;
                     }
                 }
