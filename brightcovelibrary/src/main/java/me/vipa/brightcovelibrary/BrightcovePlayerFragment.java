@@ -4,6 +4,7 @@ package me.vipa.brightcovelibrary;
 import static android.content.Context.TELEPHONY_SERVICE;
 import static android.media.AudioManager.AUDIOFOCUS_LOSS;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -29,6 +30,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.Pair;
 import android.view.Display;
 import android.view.Gravity;
@@ -1720,11 +1723,13 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
 
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        Log.d("sbdbhdbsh",exitFromPIP+"");
         if (!isCastConnected) {
             super.onConfigurationChanged(newConfig);
             if (!isOfflineVideo) {
                 Utils.updateLanguage(applicationLanguage, mActivity);
                 if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                    Log.d("sbdbhdbsh","enter1");
                     mActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
                     if (playerControlsFragment != null) {
                         playerControlsFragment.sendLandscapeCallback();
@@ -1735,14 +1740,14 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                         baseVideoView.setPadding(0, 15, 10, 15);
                     }
 
-//                    DisplayMetrics displayMetrics = new DisplayMetrics();
-//                    getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-//                    int screenHeight = displayMetrics.heightPixels;
-//                    double ratio = 1.78;
-//                    Double screenWidth = screenHeight * ratio;
+                    DisplayMetrics displayMetrics = new DisplayMetrics();
+                    getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+                    int screenHeight = displayMetrics.heightPixels;
+                    double ratio = 1.78;
+                    Double screenWidth = screenHeight * ratio;
 
-//                    Logger.d("screen dimen h: " + screenHeight + " | w: " + screenWidth);
-//                    baseVideoView.setLayoutParams(new FrameLayout.LayoutParams(screenWidth.intValue(), screenHeight, Gravity.CENTER));
+                    Logger.d("screen dimen h: " + screenHeight + " | w: " + screenWidth);
+                    baseVideoView.setLayoutParams(new FrameLayout.LayoutParams(screenWidth.intValue(), screenHeight, Gravity.CENTER));
 
                     FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
                             FrameLayout.LayoutParams.WRAP_CONTENT,
@@ -1752,6 +1757,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                     params.setMargins(0, 40, 0, 0);
                     ivWatermark.setLayoutParams(params);
                 } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+                    Log.d("sbdbhdbsh","enter2");
                     if (playerControlsFragment != null) {
                         playerControlsFragment.sendPortraitCallback();
                     }
@@ -1792,13 +1798,14 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             }
         } else {
             if (playerControlsFragment != null) {
-
                 final Handler handler = new Handler();
                 mListener.isInPip(false);
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         Logger.w("windowFocusChanged=4 " + isInPictureInPictureMode);
+                        mActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                        baseVideoView.setLayoutParams(new FrameLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT, Gravity.CENTER));
 
                         //Do something after 100ms
 
@@ -1816,7 +1823,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                                     playerControlsFragment.sendTapCallBack(true);
                                     playerControlsFragment.startHandler();
                                     playerControlsFragment.showControls();
-                                }
+                                    }
                             }
 
                         }
