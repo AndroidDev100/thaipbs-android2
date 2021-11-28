@@ -126,7 +126,6 @@ import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 import me.vipa.bookmarking.bean.GetBookmarkResponse;
 import me.vipa.brightcovelibrary.BrightcovePlayerFragment;
 import me.vipa.brightcovelibrary.Logger;
-import me.vipa.brightcovelibrary.utils.ObjectHelper;
 import me.vipa.enums.Layouts;
 
 public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> implements AlertDialogFragment.AlertDialogListener, NetworkChangeReceiver.ConnectivityReceiverListener, AudioManager.OnAudioFocusChangeListener, CommonRailtItemClickListner, MoreClickListner, BrightcovePlayerFragment.OnPlayerInteractionListener, OnDownloadClickInteraction, MediaDownloadable.DownloadEventListener, VideoListListener, BrightcovePlayerFragment.ChromeCastStartedCallBack {
@@ -1449,14 +1448,6 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
 
         }
 
-    }
-
-    private void updateVisibility(View view, String value) {
-        if (ObjectHelper.isNotEmpty(value)) {
-            view.setVisibility(View.VISIBLE);
-        } else {
-            view.setVisibility(View.GONE);
-        }
     }
 
     private void addToWatchHistory() {

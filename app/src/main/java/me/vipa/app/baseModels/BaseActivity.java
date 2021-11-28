@@ -25,15 +25,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import me.vipa.baseCollection.baseCategoryServices.BaseCategoryServices;
-import me.vipa.userManagement.callBacks.LogoutCallBack;
 import com.facebook.login.LoginManager;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.play.core.install.model.InstallStatus;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+
+import java.util.Objects;
+
 import me.vipa.app.R;
-import me.vipa.app.activities.detail.ui.DetailActivity;
 import me.vipa.app.activities.homeactivity.ui.HomeActivity;
 import me.vipa.app.beanModel.configBean.ResponseConfig;
 import me.vipa.app.networking.apiendpoints.ApiInterface;
@@ -43,12 +43,9 @@ import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.constants.AppConstants;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 import me.vipa.app.utils.inAppUpdate.ApplicationUpdateManager;
-
-import java.util.Objects;
-
-import me.vipa.app.networking.apiendpoints.ApiInterface;
-import me.vipa.app.networking.apiendpoints.RequestConfig;
 import me.vipa.baseCollection.baseCategoryServices.BaseCategoryServices;
+import me.vipa.brightcovelibrary.Logger;
+import me.vipa.brightcovelibrary.utils.ObjectHelper;
 import me.vipa.userManagement.callBacks.LogoutCallBack;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -527,4 +524,16 @@ public class BaseActivity extends AppCompatActivity implements BaseActivityAlert
         snackbar.show();
     }
 
+    public void updateVisibility(View view, String value) {
+        try {
+            Logger.d(Logger.getTag(), "updateVisibility called " + view + " " + value);
+            if (ObjectHelper.isNotEmpty(value)) {
+                view.setVisibility(View.VISIBLE);
+            } else {
+                view.setVisibility(View.GONE);
+            }
+        } catch (Exception ex) {
+            Logger.w(ex);
+        }
+    }
 }

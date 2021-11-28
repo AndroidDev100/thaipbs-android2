@@ -1,5 +1,7 @@
 package me.vipa.app.activities.series.ui;
 
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -9,7 +11,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.text.TextUtils;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +20,6 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,52 +40,10 @@ import com.brightcove.player.edge.VideoListener;
 import com.brightcove.player.model.Video;
 import com.brightcove.player.network.DownloadStatus;
 import com.brightcove.player.offline.MediaDownloadable;
-import com.mmtv.utils.helpers.downloads.DownloadHelper;
-
-import me.vipa.app.activities.detail.ui.EpisodeActivity;
-import me.vipa.app.activities.downloads.NetworkHelper;
-import me.vipa.app.activities.downloads.WifiPreferenceListener;
-import me.vipa.app.activities.homeactivity.ui.HomeActivity;
-import me.vipa.app.activities.series.viewmodel.SeriesViewModel;
-import me.vipa.app.activities.usermanagment.ui.LoginActivity;
-import me.vipa.app.baseModels.BaseBindingActivity;
-import me.vipa.app.beanModel.AssetHistoryContinueWatching.ItemsItem;
-import me.vipa.app.networking.apistatus.APIStatus;
-import me.vipa.app.networking.responsehandler.ResponseModel;
-import me.vipa.app.SDKConfig;
-import me.vipa.app.beanModel.enveuCommonRailData.RailCommonData;
-import me.vipa.app.utils.MediaTypeConstants;
-import me.vipa.app.utils.constants.SharedPrefesConstants;
-import me.vipa.app.utils.helpers.SharedPrefHelper;
-import me.vipa.app.utils.helpers.downloads.OnDownloadClickInteraction;
-import me.vipa.app.utils.helpers.downloads.VideoListListener;
-import me.vipa.app.utils.helpers.downloads.room.DownloadedEpisodes;
-import me.vipa.app.R;
-import me.vipa.app.adapters.player.EpisodeTabAdapter;
-import me.vipa.app.beanModel.AppUserModel;
-import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
-import me.vipa.app.beanModel.selectedSeason.SelectedSeasonModel;
-import me.vipa.app.databinding.ActivitySeriesDetailBinding;
-import me.vipa.app.fragments.dialog.AlertDialogFragment;
-import me.vipa.app.fragments.dialog.AlertDialogSingleButtonFragment;
-import me.vipa.app.fragments.player.ui.CommentsFragment;
-import me.vipa.app.fragments.player.ui.RecommendationRailFragment;
-import me.vipa.app.fragments.player.ui.SeasonTabFragment;
-import me.vipa.app.fragments.player.ui.UserInteractionFragment;
-import me.vipa.app.utils.commonMethods.AppCommonMethod;
-import me.vipa.app.utils.constants.AppConstants;
-import me.vipa.app.utils.cropImage.helpers.Logger;
-import me.vipa.app.utils.cropImage.helpers.NetworkConnectivity;
-import me.vipa.app.utils.helpers.RailInjectionHelper;
-
-import me.vipa.app.utils.helpers.ToolBarHandler;
-import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-
-import me.vipa.app.utils.helpers.ksPreferenceKeys.KidsModeSinglton;
-import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
+import com.mmtv.utils.helpers.downloads.DownloadHelper;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -94,18 +52,41 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import me.vipa.app.R;
+import me.vipa.app.SDKConfig;
 import me.vipa.app.activities.downloads.NetworkHelper;
 import me.vipa.app.activities.downloads.WifiPreferenceListener;
 import me.vipa.app.activities.series.viewmodel.SeriesViewModel;
 import me.vipa.app.activities.usermanagment.ui.LoginActivity;
+import me.vipa.app.adapters.player.EpisodeTabAdapter;
 import me.vipa.app.baseModels.BaseBindingActivity;
+import me.vipa.app.beanModel.AppUserModel;
+import me.vipa.app.beanModel.AssetHistoryContinueWatching.ItemsItem;
+import me.vipa.app.beanModel.enveuCommonRailData.RailCommonData;
+import me.vipa.app.beanModel.selectedSeason.SelectedSeasonModel;
 import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
+import me.vipa.app.databinding.ActivitySeriesDetailBinding;
+import me.vipa.app.fragments.dialog.AlertDialogFragment;
+import me.vipa.app.fragments.dialog.AlertDialogSingleButtonFragment;
+import me.vipa.app.fragments.player.ui.CommentsFragment;
+import me.vipa.app.fragments.player.ui.SeasonTabFragment;
+import me.vipa.app.fragments.player.ui.UserInteractionFragment;
 import me.vipa.app.networking.apistatus.APIStatus;
 import me.vipa.app.networking.responsehandler.ResponseModel;
-
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-import static com.google.android.material.tabs.TabLayout.INDICATOR_GRAVITY_BOTTOM;
+import me.vipa.app.utils.MediaTypeConstants;
+import me.vipa.app.utils.commonMethods.AppCommonMethod;
+import me.vipa.app.utils.constants.AppConstants;
+import me.vipa.app.utils.constants.SharedPrefesConstants;
+import me.vipa.app.utils.cropImage.helpers.NetworkConnectivity;
+import me.vipa.app.utils.helpers.RailInjectionHelper;
+import me.vipa.app.utils.helpers.SharedPrefHelper;
+import me.vipa.app.utils.helpers.ToolBarHandler;
+import me.vipa.app.utils.helpers.downloads.OnDownloadClickInteraction;
+import me.vipa.app.utils.helpers.downloads.VideoListListener;
+import me.vipa.app.utils.helpers.downloads.room.DownloadedEpisodes;
+import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
+import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
+import me.vipa.brightcovelibrary.Logger;
 
 public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDetailBinding> implements AlertDialogFragment.AlertDialogListener, OnDownloadClickInteraction, MediaDownloadable.DownloadEventListener, VideoListListener {
     private final String TAG = this.getClass().getSimpleName();
@@ -277,17 +258,17 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
                 String customeF = getBinding().vodCount.getText().toString().substring(0, getBinding().vodCount.getText().toString().length() - 1);
                 getBinding().vodCount.setText(customeF);
             }
-            if (responseDetailPlayer.getIs4k() != null && !responseDetailPlayer.getIs4k().equalsIgnoreCase("")) {
-                getBinding().vodCount.setText(getBinding().vodCount.getText().toString() + "" + "| " + getResources().getString(R.string.feature));
-                getBinding().tv4k.setVisibility(View.VISIBLE);
-            }
             if (getBinding().vodCount.getText().toString().trim().equalsIgnoreCase("")) {
                 // getBinding().customeFieldView.setVisibility(View.GONE);
             }
-        } catch (Exception ignored) {
-
+            updateVisibility(getBinding().iv4k, seriesDetailBean.getIs4k());
+            updateVisibility(getBinding().ivSignLang, seriesDetailBean.getSignedLangEnabled());
+            updateVisibility(getBinding().ivAudioDesc, seriesDetailBean.getIsAudioDesc());
+            updateVisibility(getBinding().ivClosedCaption, seriesDetailBean.getIsClosedCaption());
+            updateVisibility(getBinding().ivAudioTrack, seriesDetailBean.getIsSoundTrack());
+        } catch (Exception ex) {
+            Logger.w(ex);
         }
-
     }
 
 
@@ -356,7 +337,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
         likeCounter = 0;
         AppCommonMethod.isSeriesPage = true;
         if (NetworkConnectivity.isOnline(this)) {
-            Logger.e("SeriesDetailActivity", "isOnline");
+            Logger.d("isOnline");
         } else {
             noConnectionLayout();
         }
@@ -431,7 +412,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
 
     private void parseSeriesData(RailCommonData enveuCommonResponse) {
         if (enveuCommonResponse != null && enveuCommonResponse.getEnveuVideoItemBeans().size() > 0) {
-            Logger.e("enveuCommonResponse", "" + enveuCommonResponse.getEnveuVideoItemBeans().get(0).toString());
+            Logger.d( "" + enveuCommonResponse.getEnveuVideoItemBeans().get(0).toString());
             seriesDetailBean = enveuCommonResponse.getEnveuVideoItemBeans().get(0);
             seriesId = seriesDetailBean.getId();
             setUserInteractionFragment(seriesId);
@@ -677,7 +658,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
             } else {
                 getBinding().llCrewView.setVisibility(View.GONE);
             }
-            Logger.e("SeriesResponse", new Gson().toJson(seriesResponse));
+            Logger.d("SeriesResponse", new Gson().toJson(seriesResponse));
 
             getBinding().setPlaylistItem(seriesResponse);
             getBinding().bannerlabel.setText(seriesResponse.getName());
@@ -893,7 +874,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
         String imgUrl = seriesDetailBean.getPosterURL();
         int id = seriesDetailBean.getId();
         String title = seriesDetailBean.getTitle();
-        Logger.e("openShareDialogue", new Gson().toJson(seriesDetailBean));
+        Logger.d(new Gson().toJson(seriesDetailBean));
         imgUrl = AppCommonMethod.getBranchUrl(imgUrl,SeriesDetailActivity.this);
         AppCommonMethod.openShareDialog(SeriesDetailActivity.this, title, id, MediaTypeConstants.getInstance().getSeries(), imgUrl, String.valueOf(seriesId), seriesDetailBean.getSeason());
         new Handler().postDelayed(() -> dismissLoading(getBinding().progressBar), 2000);
@@ -919,7 +900,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
             if (responseWatchList.isStatus()) {
                 getBinding().interactionSection.addIcon.setImageResource(R.drawable.add_to_watchlist);
                 resetWatchList();
-                Logger.e("", "hitApiAddWatchList");
+                Logger.d( "hitApiAddWatchList");
             } else {
                 if (responseWatchList.getResponseCode() == 401) {
                     isloggedout = true;
@@ -929,7 +910,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
                     //   showDialog(SeriesDetailActivity.this.getResources().getString(R.string.logged_out), getResources().getString(R.string.you_are_logged_out));
                 }
 
-                Logger.e("", "something went wrong");
+                Logger.d("something went wrong");
                 // new ToastHandler(SeriesDetailActivity.this).show(SeriesDetailActivity.this.getResources().getString(R.string.something_went_wrong));
             }
         });
@@ -954,7 +935,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
                     }
                     //  showDialog(SeriesDetailActivity.this.getResources().getString(R.string.logged_out), getResources().getString(R.string.you_are_logged_out));
                 }
-                Logger.e("", "hitApiAddWatchList");
+                Logger.d("hitApiAddWatchList");
             }
         });
 
@@ -1012,7 +993,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
                     }
                     //    showDialog(SeriesDetailActivity.this.getResources().getString(R.string.logged_out), getResources().getString(R.string.you_are_logged_out));
                 }
-                Logger.e("", "hitApiAddWatchList");
+                Logger.d("hitApiAddWatchList");
             }
         });
     }
@@ -1185,7 +1166,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
                             @Override
                             public void onError(String error) {
                                 super.onError(error);
-                                Logger.e(TAG, error);
+                                Logger.d(error);
                             }
                         });
                     } else {
@@ -1219,7 +1200,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
                             @Override
                             public void onError(String error) {
                                 super.onError(error);
-                                Logger.e(TAG, error);
+                                Logger.d(error);
                             }
                         });
                     } else {
@@ -1250,7 +1231,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
                                 @Override
                                 public void onError(String error) {
                                     super.onError(error);
-                                    Logger.e(TAG, error);
+                                    Logger.d(error);
                                 }
                             });
 
@@ -1297,7 +1278,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
                             @Override
                             public void onError(String error) {
                                 super.onError(error);
-                                Logger.e(TAG, error);
+                                Logger.d(error);
                             }
                         });
                     } else {
@@ -1326,7 +1307,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
                 @Override
                 public void onVideo(Video video) {
                     if (video.isOfflinePlaybackAllowed()) {
-                        Logger.e(TAG, String.valueOf(video.isOfflinePlaybackAllowed()));
+                        Logger.d(String.valueOf(video.isOfflinePlaybackAllowed()));
                         downloadableEpisodes.add(enveuVideoItemBean);
                     }
                 }
@@ -1399,7 +1380,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
 
     @Override
     public void onDownloadRequested(@androidx.annotation.NonNull Video video) {
-        Logger.i(TAG, String.format(
+        Logger.d(String.format(
                 "Starting to process '%s' video download request", video.getName()));
         if (seasonTabFragment.getSeasonAdapter() != null) {
             seasonTabFragment.getSeasonAdapter().onDownloadRequested(video);
@@ -1409,7 +1390,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
     @Override
     public void onDownloadStarted(@androidx.annotation.NonNull Video video, long l,
                                   @androidx.annotation.NonNull Map<String, Serializable> map) {
-        Logger.e(TAG, "onDownloadStarted");
+        Logger.d("onDownloadStarted");
         if (downloadAbleVideo != null && video.getId().equals(downloadAbleVideo.getId()))
             userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.DOWNLOADING);
         if (seasonTabFragment.getSeasonAdapter() != null) {
@@ -1424,7 +1405,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
     public void onDownloadProgress(@androidx.annotation.NonNull Video
                                            video, @androidx.annotation.NonNull com.brightcove.player.network.DownloadStatus
                                            downloadStatus) {
-        Logger.e(TAG, "onDownloadProgress" + downloadStatus.getProgress());
+        Logger.d("onDownloadProgress" + downloadStatus.getProgress());
         if (downloadAbleVideo != null && video.getId().equals(downloadAbleVideo.getId())) {
             userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.DOWNLOADING);
             userInteractionFragment.setDownloadProgress((float) downloadStatus.getProgress());
@@ -1438,7 +1419,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
     public void onDownloadPaused(@androidx.annotation.NonNull Video
                                          video, @androidx.annotation.NonNull com.brightcove.player.network.DownloadStatus
                                          downloadStatus) {
-        Logger.e(TAG, "onDownloadPaused");
+        Logger.d("onDownloadPaused");
         if (downloadAbleVideo != null && video.getId().equals(downloadAbleVideo.getId()))
             userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.PAUSE);
         if (seasonTabFragment.getSeasonAdapter() != null) {
@@ -1450,7 +1431,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
     public void onDownloadCompleted(@androidx.annotation.NonNull Video
                                             video, @androidx.annotation.NonNull com.brightcove.player.network.DownloadStatus
                                             downloadStatus) {
-        Logger.e(TAG, "onDownloadCompleted");
+        Logger.d("onDownloadCompleted");
         if (downloadAbleVideo != null && video.getId().equals(downloadAbleVideo.getId()))
             userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.DOWNLOADED);
         seasonTabFragment.getSeasonAdapter().onDownloadCompleted(video, downloadStatus);
@@ -1459,7 +1440,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
 
     @Override
     public void onDownloadCanceled(@androidx.annotation.NonNull Video video) {
-        Logger.e(TAG, "onDownloadCanceled");
+        Logger.d("onDownloadCanceled");
         if (downloadAbleVideo != null && video.getId().equals(downloadAbleVideo.getId())) {
             userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.START);
             userInteractionFragment.setDownloadProgress(0);
@@ -1471,7 +1452,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
 
     @Override
     public void onDownloadDeleted(@androidx.annotation.NonNull Video video) {
-        Logger.e(TAG, "onDownloadDeleted");
+        Logger.d("onDownloadDeleted");
         if (downloadAbleVideo != null && video.getId().equals(downloadAbleVideo.getId()))
             userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.START);
         seasonTabFragment.getSeasonAdapter().onDownloadDeleted(video);
@@ -1481,7 +1462,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
     public void onDownloadFailed(@androidx.annotation.NonNull Video
                                          video, @androidx.annotation.NonNull com.brightcove.player.network.DownloadStatus
                                          downloadStatus) {
-        Logger.e(TAG, "onDownloadFailed");
+        Logger.d("onDownloadFailed");
 
     }
 
@@ -1530,12 +1511,12 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
 
     @Override
     public void downloadStatus(String videoId, DownloadStatus downloadStatus) {
-        Logger.e(TAG, "onDownloadFailed" + downloadStatus);
+        Logger.d("onDownloadFailed" + downloadStatus);
     }
 
     @Override
     public void onDownloadDeleted(@NotNull String videoId, @NotNull Object source) {
-        Logger.e(TAG, "onDownloadDeleted" + videoId);
+        Logger.d("onDownloadDeleted" + videoId);
         try {
             downloadHelper = new DownloadHelper(this, this);
             downloadHelper.setAssetType(MediaTypeConstants.getInstance().getEpisode());
