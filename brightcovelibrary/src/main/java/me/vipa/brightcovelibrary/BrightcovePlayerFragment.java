@@ -29,7 +29,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
-import android.util.DisplayMetrics;
 import android.util.Pair;
 import android.view.Display;
 import android.view.Gravity;
@@ -1736,14 +1735,14 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                         baseVideoView.setPadding(0, 15, 10, 15);
                     }
 
-                    DisplayMetrics displayMetrics = new DisplayMetrics();
-                    getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-                    int screenHeight = displayMetrics.heightPixels;
-                    double ratio = 1.78;
-                    Double screenWidth = screenHeight * ratio;
+//                    DisplayMetrics displayMetrics = new DisplayMetrics();
+//                    getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+//                    int screenHeight = displayMetrics.heightPixels;
+//                    double ratio = 1.78;
+//                    Double screenWidth = screenHeight * ratio;
 
-                    Logger.d("screen dimen h: " + screenHeight + " | w: " + screenWidth);
-                    baseVideoView.setLayoutParams(new FrameLayout.LayoutParams(screenWidth.intValue(), screenHeight, Gravity.CENTER));
+//                    Logger.d("screen dimen h: " + screenHeight + " | w: " + screenWidth);
+//                    baseVideoView.setLayoutParams(new FrameLayout.LayoutParams(screenWidth.intValue(), screenHeight, Gravity.CENTER));
 
                     FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
                             FrameLayout.LayoutParams.WRAP_CONTENT,
