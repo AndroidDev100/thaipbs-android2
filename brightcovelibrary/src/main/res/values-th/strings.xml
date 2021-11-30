@@ -35,6 +35,7 @@
     <string name="settings">การตั้งค่า</string>
     <string name="video_quality">คุณภาพวีดีโอ</string>
     <string name="audio_tracks">แทร็กเสียง</string>
+    <string name="unsupportes_resolution">อุปกรณ์ของท่านไม่รองรับ ความละเอียด 4K</string>
 
 
 </resources>

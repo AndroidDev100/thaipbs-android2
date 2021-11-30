@@ -99,6 +99,7 @@ public class PlayerControlsFragment extends Fragment {
     private String signLangId = "";
     private boolean is4kSupported = false;
 
+
     // private OnSizeRatioDown onSizeRatioDown;
 
 
@@ -965,7 +966,7 @@ public class PlayerControlsFragment extends Fragment {
 
     List<Format> videoTrackArray;
 
-    public void setVideoFormate(List<Format> array, String selectedTrack, String selectedLang) {
+    public void setVideoFormate(List<Format> array, String selectedTrack, String selectedLang, boolean isDeviceSupported) {
         if (selectedLang.equalsIgnoreCase("Thai")) {
             Utils.updateLanguage("th", getActivity());
         } else if (selectedLang.equalsIgnoreCase("English")) {
@@ -974,7 +975,7 @@ public class PlayerControlsFragment extends Fragment {
         if (array.size() > 0) {
             videoTrackArray = array;
             ArrayList<TrackItem> arrayList = Utils.createTrackList(videoTrackArray, getActivity(), is4kSupported);
-            VideoTracksAdapter videoTracksAdapter = new VideoTracksAdapter(arrayList, selectedTrack);
+            VideoTracksAdapter videoTracksAdapter = new VideoTracksAdapter(arrayList, selectedTrack,isDeviceSupported);
             recycleview.setAdapter(videoTracksAdapter);
             dialogQuality.show();
         } else {
@@ -993,9 +994,11 @@ public class PlayerControlsFragment extends Fragment {
     class VideoTracksAdapter extends RecyclerView.Adapter<ViewHolder> {
         final List<TrackItem> tracks;
         private int selectedIndex = -1;
+        private boolean isDeviceSupport = false;
 
-        private VideoTracksAdapter(List<TrackItem> videoTracks, String selectedTrck) {
+        private VideoTracksAdapter(List<TrackItem> videoTracks, String selectedTrck, boolean isDeviceSupported) {
             this.tracks = videoTracks;
+            this.isDeviceSupport = isDeviceSupported;
             selectedTrack = selectedTrck;
             if (selectedTrack.equalsIgnoreCase(getActivity().getResources().getString(R.string.auto))) {
                 selectedIndex = 0;
@@ -1046,26 +1049,60 @@ public class PlayerControlsFragment extends Fragment {
                 holder.lay.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        selectedTrack = tracks.get(position).getTrackName();
-                        holder.playbackQualityRadio.setChecked(true);
-                        if (playerCallbacks != null) {
-                            playerCallbacks.changeBitRateRequest(selectedTrack, tracks.get(position).getBitRatePosition());
-                            dialogQuality.dismiss();
+                        if (tracks.get(position).getTrackName().equalsIgnoreCase("4k") ){
+                            if (isDeviceSupport== false) {
+                                Toast.makeText(getActivity(),R.string.unsupportes_resolution,Toast.LENGTH_LONG).show();
+                                return;
+                            }else {
+                                selectedTrack = tracks.get(position).getTrackName();
+                                holder.playbackQualityRadio.setChecked(true);
+                                if (playerCallbacks != null) {
+                                    playerCallbacks.changeBitRateRequest(selectedTrack, tracks.get(position).getBitRatePosition());
+                                    dialogQuality.dismiss();
+                                }
+                                notifyDataSetChanged();
+                            }
+                        }else {
+
+                            selectedTrack = tracks.get(position).getTrackName();
+                            holder.playbackQualityRadio.setChecked(true);
+                            if (playerCallbacks != null) {
+                                playerCallbacks.changeBitRateRequest(selectedTrack, tracks.get(position).getBitRatePosition());
+                                dialogQuality.dismiss();
+                            }
+                            notifyDataSetChanged();
                         }
-                        notifyDataSetChanged();
                     }
                 });
 
                 holder.playbackQualityRadio.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        selectedTrack = tracks.get(position).getTrackName();
-                        holder.playbackQualityRadio.setChecked(true);
-                        if (playerCallbacks != null) {
-                            playerCallbacks.changeBitRateRequest(selectedTrack, tracks.get(position).getBitRatePosition());
-                            dialogQuality.dismiss();
+
+                        if (tracks.get(position).getTrackName().equalsIgnoreCase("4k")) {
+                            if (isDeviceSupport == false) {
+                                Toast.makeText(getActivity(),R.string.unsupportes_resolution,Toast.LENGTH_LONG).show();
+                                return;
+                            } else {
+                                selectedTrack = tracks.get(position).getTrackName();
+                                holder.playbackQualityRadio.setChecked(true);
+                                if (playerCallbacks != null) {
+                                    playerCallbacks.changeBitRateRequest(selectedTrack, tracks.get(position).getBitRatePosition());
+                                    dialogQuality.dismiss();
+                                }
+                                notifyDataSetChanged();
+                            }
+                        } else {
+
+
+                            selectedTrack = tracks.get(position).getTrackName();
+                            holder.playbackQualityRadio.setChecked(true);
+                            if (playerCallbacks != null) {
+                                playerCallbacks.changeBitRateRequest(selectedTrack, tracks.get(position).getBitRatePosition());
+                                dialogQuality.dismiss();
+                            }
+                            notifyDataSetChanged();
                         }
-                        notifyDataSetChanged();
                     }
                 });
 

@@ -738,14 +738,14 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                     }
 
 
-                    if (isDeviceSupported) {
+
                         if (!UhdUrl.equalsIgnoreCase("") && UhdUrl.contains("avc1_hvc1_mp4a")) {
                             is4kSupported = true;
                             playerControlsFragment.set4kSupported(is4kSupported);
                         } else {
                             is4kSupported = false;
                         }
-                    }
+
 
 
 //
@@ -2508,7 +2508,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                             DefaultTrackSelector.Parameters pp = trackSelector.getParameters();
                             trackSelectedPosition = position;
                             if (playerControlsFragment != null) {
-                                playerControlsFragment.setVideoFormate(videoTrackArray, selected_track, selected_lang);
+                                playerControlsFragment.setVideoFormate(videoTrackArray, selected_track, selected_lang,isDeviceSupported);
                             }
                         }
 
