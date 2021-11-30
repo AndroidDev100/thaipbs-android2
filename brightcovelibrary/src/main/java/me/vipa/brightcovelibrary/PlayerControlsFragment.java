@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -309,13 +310,13 @@ public class PlayerControlsFragment extends Fragment {
                     Utils.setParamstoSkipButton(skipBtn);
 
                 }*/
-                if (videoType.equalsIgnoreCase("1")){
+                if (videoType.equalsIgnoreCase("1")) {
                     Utils.setParamstoSeekBarControl1(seekBarControl);
                     Utils.setParamstoPlayerSettingControl(settingControl);
                     Utils.setParamstoBackArrow(backArrow);
                     Utils.setParamstoSettinIcon(settingLay);
                     Utils.setParamstoSkipButton(skipBtn);
-                }else {
+                } else {
                     Utils.setParamstoSeekBarControl(seekBarControl);
 //                    Utils.setParamstoPlayerSettingControl(settingControl);
                     Utils.setParamstoBackArrow(backArrow);
@@ -874,6 +875,7 @@ public class PlayerControlsFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
+
         void updateNextPreviousVisibility();
     }
 
@@ -975,7 +977,7 @@ public class PlayerControlsFragment extends Fragment {
         if (array.size() > 0) {
             videoTrackArray = array;
             ArrayList<TrackItem> arrayList = Utils.createTrackList(videoTrackArray, getActivity(), is4kSupported);
-            VideoTracksAdapter videoTracksAdapter = new VideoTracksAdapter(arrayList, selectedTrack,isDeviceSupported);
+            VideoTracksAdapter videoTracksAdapter = new VideoTracksAdapter(arrayList, selectedTrack, isDeviceSupported);
             recycleview.setAdapter(videoTracksAdapter);
             dialogQuality.show();
         } else {
@@ -1008,7 +1010,7 @@ public class PlayerControlsFragment extends Fragment {
                 selectedIndex = 2;
             } else if (selectedTrack.equalsIgnoreCase(getActivity().getResources().getString(R.string.high))) {
                 selectedIndex = 3;
-            }else if (selectedTrack.equalsIgnoreCase("4k")) {
+            } else if (selectedTrack.equalsIgnoreCase("4k")) {
                 selectedIndex = 4;
             } else {
                 selectedIndex = 0;
@@ -1033,10 +1035,17 @@ public class PlayerControlsFragment extends Fragment {
                     holder.playbackQualityRadio.setChecked(false);
                 } else {
                     String compareName = tracks.get(position).getTrackName();
-                    if (position == selectedIndex) {
+                    if (selectedTrack.equalsIgnoreCase("Auto")) {
                         selectedTrack = tracks.get(position).getTrackName();
                         holder.playbackQualityRadio.setChecked(true);
-                    } else {
+                    }
+//                    if (position == selectedIndex) {
+//                        Log.d("dgdgdgd",position+"");
+//                        Log.d("dgdgdgd",selectedIndex+"");
+//                        selectedTrack = tracks.get(position).getTrackName();
+//                        holder.playbackQualityRadio.setChecked(true);
+//                    } else {
+                    else {
                         if (compareName.equalsIgnoreCase(selectedTrack)) {
                             selectedTrack = tracks.get(position).getTrackName();
                             holder.playbackQualityRadio.setChecked(true);
@@ -1044,16 +1053,18 @@ public class PlayerControlsFragment extends Fragment {
                             holder.playbackQualityRadio.setChecked(false);
                         }
                     }
+//                    }
                 }
 
                 holder.lay.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (tracks.get(position).getTrackName().equalsIgnoreCase("4k") ){
-                            if (isDeviceSupport== false) {
-                                Toast.makeText(getActivity(),R.string.unsupportes_resolution,Toast.LENGTH_LONG).show();
+                        if (tracks.get(position).getTrackName().equalsIgnoreCase("4k")) {
+                            if (isDeviceSupport == false) {
+                                Toast.makeText(getActivity(), R.string.unsupportes_resolution, Toast.LENGTH_LONG).show();
+                                dialogQuality.dismiss();
                                 return;
-                            }else {
+                            } else {
                                 selectedTrack = tracks.get(position).getTrackName();
                                 holder.playbackQualityRadio.setChecked(true);
                                 if (playerCallbacks != null) {
@@ -1062,7 +1073,7 @@ public class PlayerControlsFragment extends Fragment {
                                 }
                                 notifyDataSetChanged();
                             }
-                        }else {
+                        } else {
 
                             selectedTrack = tracks.get(position).getTrackName();
                             holder.playbackQualityRadio.setChecked(true);
@@ -1081,7 +1092,8 @@ public class PlayerControlsFragment extends Fragment {
 
                         if (tracks.get(position).getTrackName().equalsIgnoreCase("4k")) {
                             if (isDeviceSupport == false) {
-                                Toast.makeText(getActivity(),R.string.unsupportes_resolution,Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(), R.string.unsupportes_resolution, Toast.LENGTH_LONG).show();
+                                dialogQuality.dismiss();
                                 return;
                             } else {
                                 selectedTrack = tracks.get(position).getTrackName();
