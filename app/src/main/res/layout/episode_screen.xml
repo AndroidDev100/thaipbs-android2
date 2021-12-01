@@ -245,18 +245,10 @@
                                         android:layout_width="23dp"
                                         android:layout_height="15dp"
                                         android:layout_marginStart="6dp"
-                                        android:visibility="gone"
-                                        android:layout_marginTop="2.5dp"
-                                        app:srcCompat="@drawable/image4k" />
-
-                                    <androidx.appcompat.widget.AppCompatImageView
-                                        android:id="@+id/iv_audio_desc"
-                                        android:layout_width="23dp"
-                                        android:layout_height="15dp"
-                                        android:layout_marginStart="6dp"
                                         android:layout_marginTop="2.5dp"
                                         android:visibility="gone"
-                                        app:srcCompat="@drawable/ic_audio_desc" />
+                                        app:srcCompat="@drawable/image4k"
+                                        tools:visibility="visible" />
 
                                     <androidx.appcompat.widget.AppCompatImageView
                                         android:id="@+id/iv_sign_lang"
@@ -265,16 +257,8 @@
                                         android:layout_marginStart="6dp"
                                         android:layout_marginTop="2.5dp"
                                         android:visibility="gone"
-                                        app:srcCompat="@drawable/ic_sign_language" />
-
-                                    <androidx.appcompat.widget.AppCompatImageView
-                                        android:id="@+id/iv_audio_track"
-                                        android:layout_width="23dp"
-                                        android:layout_height="15dp"
-                                        android:layout_marginStart="6dp"
-                                        android:layout_marginTop="2.5dp"
-                                        android:visibility="gone"
-                                        app:srcCompat="@drawable/ic_audio_track" />
+                                        app:srcCompat="@drawable/ic_sign_language"
+                                        tools:visibility="visible" />
 
                                     <androidx.appcompat.widget.AppCompatImageView
                                         android:id="@+id/iv_closed_caption"
@@ -283,7 +267,28 @@
                                         android:layout_marginStart="6dp"
                                         android:layout_marginTop="2.5dp"
                                         android:visibility="gone"
-                                        app:srcCompat="@drawable/ic_closed_caption" />
+                                        app:srcCompat="@drawable/ic_closed_caption"
+                                        tools:visibility="visible" />
+
+                                    <androidx.appcompat.widget.AppCompatImageView
+                                        android:id="@+id/iv_audio_desc"
+                                        android:layout_width="23dp"
+                                        android:layout_height="15dp"
+                                        android:layout_marginStart="6dp"
+                                        android:layout_marginTop="2.5dp"
+                                        android:visibility="gone"
+                                        app:srcCompat="@drawable/ic_audio_desc"
+                                        tools:visibility="visible" />
+
+                                    <androidx.appcompat.widget.AppCompatImageView
+                                        android:id="@+id/iv_audio_track"
+                                        android:layout_width="23dp"
+                                        android:layout_height="15dp"
+                                        android:layout_marginStart="6dp"
+                                        android:layout_marginTop="2.5dp"
+                                        android:visibility="gone"
+                                        app:srcCompat="@drawable/ic_audio_track"
+                                        tools:visibility="visible" />
 
                                 </me.vipa.app.utils.CustomFlowLayout>
 
