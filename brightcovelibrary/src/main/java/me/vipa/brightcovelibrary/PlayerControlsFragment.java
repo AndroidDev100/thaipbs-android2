@@ -3,6 +3,7 @@ package me.vipa.brightcovelibrary;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -592,11 +593,21 @@ public class PlayerControlsFragment extends Fragment {
     }
 
     public void showPlayPrevious(boolean show) {
-        flPreviousEpisode.setVisibility(show ? View.VISIBLE : View.GONE);
+        int orientation = getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            flPreviousEpisode.setVisibility(View.GONE);
+        } else {
+            flPreviousEpisode.setVisibility(show ? View.VISIBLE : View.GONE);
+        }
     }
 
     public void showPlayNext(boolean show) {
-        flNextEpisode.setVisibility(show ? View.VISIBLE : View.GONE);
+        int orientation = getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            flNextEpisode.setVisibility(View.GONE);
+        } else {
+            flNextEpisode.setVisibility(show ? View.VISIBLE : View.GONE);
+        }
     }
 
     private void callAnimation() {
