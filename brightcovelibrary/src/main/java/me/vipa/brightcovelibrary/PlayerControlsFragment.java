@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -99,7 +98,7 @@ public class PlayerControlsFragment extends Fragment {
     private boolean isFromParentRef = false;
     private String signLangId = "";
     private boolean is4kSupported = false;
-
+    private long lastCalledTimeHandler = -1;
 
     // private OnSizeRatioDown onSizeRatioDown;
 
@@ -676,17 +675,19 @@ public class PlayerControlsFragment extends Fragment {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Logger.w(e);
         }
     }
 
     private void callHandler() {
-        Logger.d("conditionCheck-->>", "in");
-        timer = true;
-        viewHideShowRunnable = this::ShowAndHideView;
+        if (System.currentTimeMillis() - lastCalledTimeHandler > 1000) {
+            lastCalledTimeHandler = System.currentTimeMillis();
+            timer = true;
+            viewHideShowRunnable = this::ShowAndHideView;
 
-        viewHideShowTimeHandler = new Handler(Looper.myLooper());
-        viewHideShowTimeHandler.postDelayed(viewHideShowRunnable, 10000);
+            viewHideShowTimeHandler = new Handler(Looper.myLooper());
+            viewHideShowTimeHandler.postDelayed(viewHideShowRunnable, 10000);
+        }
     }
 
     private void findId(View view) {
