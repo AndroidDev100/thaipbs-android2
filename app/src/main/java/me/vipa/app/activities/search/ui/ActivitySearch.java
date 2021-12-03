@@ -1,6 +1,8 @@
 package me.vipa.app.activities.search.ui;
 
 
+import static me.vipa.app.R.font.sukhumvittadmai_normal;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -19,11 +21,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.exoplayer2.util.Log;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -37,6 +34,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+
+import me.vipa.app.R;
+import me.vipa.app.SDKConfig;
 import me.vipa.app.activities.detail.ui.DetailActivity;
 import me.vipa.app.activities.search.adapter.CategoriedSearchAdapter;
 import me.vipa.app.activities.search.adapter.CommonSearchAdapter;
@@ -48,29 +55,21 @@ import me.vipa.app.baseModels.BaseBindingActivity;
 import me.vipa.app.beanModel.KeywordList;
 import me.vipa.app.beanModel.enveuCommonRailData.RailCommonData;
 import me.vipa.app.beanModel.popularSearch.ItemsItem;
-import me.vipa.app.callbacks.commonCallbacks.SearchClickCallbacks;
-import me.vipa.app.utils.constants.AppConstants;
-import me.vipa.app.utils.cropImage.helpers.NetworkConnectivity;
-import me.vipa.app.utils.helpers.AppPreference;
-import me.vipa.app.utils.helpers.SharedPrefHelper;
-import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
-import me.vipa.app.R;
-import me.vipa.app.SDKConfig;
 import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
+import me.vipa.app.callbacks.commonCallbacks.SearchClickCallbacks;
 import me.vipa.app.databinding.ActivitySearchBinding;
 import me.vipa.app.utils.MediaTypeConstants;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
+import me.vipa.app.utils.constants.AppConstants;
+import me.vipa.app.utils.cropImage.helpers.NetworkConnectivity;
+import me.vipa.app.utils.helpers.AppPreference;
 import me.vipa.app.utils.helpers.RailInjectionHelper;
 import me.vipa.app.utils.helpers.RecyclerAnimator;
+import me.vipa.app.utils.helpers.SharedPrefHelper;
 import me.vipa.app.utils.helpers.ToastHandler;
+import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-
-import static me.vipa.app.R.font.sukhumvittadmai_normal;
+import me.vipa.brightcovelibrary.Logger;
 
 //import com.webstreamindonesia.nonton.db.search.SearchedKeywords;
 
@@ -588,10 +587,10 @@ public class ActivitySearch extends BaseBindingActivity<ActivitySearchBinding> i
             } catch (Exception e) {
 
             }
-            if (query!=null && query.trim().length()>2){
+            if (query != null && query.trim().length() > 0) {
                 applyFilter = Boolean.parseBoolean(KsPreferenceKeys.getInstance().getFilterApply());
                 searchText = query.trim();
-                Log.e("SEARCHYTEXT", searchText);
+                Logger.d("SEARCH TEXT " + searchText);
                 hitApiSearchKeyword(query.trim(), ActivitySearch.this, applyFilter);
 
             }
@@ -616,7 +615,7 @@ public class ActivitySearch extends BaseBindingActivity<ActivitySearchBinding> i
 
         if (requestCode == FILTER_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
-                Log.e("RETURNWITHDATA", "RETURNWITHDATA");
+                Logger.d("RETURNWITHDATA");
 
                 if (searchText != null && searchText.trim().length() > 2) {
                     applyFilter = Boolean.parseBoolean(KsPreferenceKeys.getInstance().getFilterApply());
