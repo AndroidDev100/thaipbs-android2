@@ -392,6 +392,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
                 bundleSeason.putInt(AppConstants.BUNDLE_ASSET_ID, seriesId);
                 bundleSeason.putInt(AppConstants.BUNDLE_CURRENT_ASSET_ID, assestId);
                 bundleSeason.putParcelableArrayList(AppConstants.BUNDLE_SEASON_ARRAY, seriesDetailBean.getSeasons());
+                bundleSeason.putString(AppConstants.BUNDLE_SEASON_NAME, seriesDetailBean.getSeasonName());
                 bundleSeason.putInt(AppConstants.BUNDLE_SEASON_COUNT, seriesDetailBean.getSeasonCount());
                 if (seriesDetailBean.getSeasonCount() > 0)
                     bundleSeason.putInt(AppConstants.BUNDLE_SELECTED_SEASON, Integer.parseInt(seasonNumber));
@@ -450,6 +451,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
                 bundleSeason.putInt(AppConstants.BUNDLE_ASSET_ID, seriesId);
                 bundleSeason.putInt(AppConstants.BUNDLE_CURRENT_ASSET_ID, assestId);
                 bundleSeason.putParcelableArrayList(AppConstants.BUNDLE_SEASON_ARRAY, seriesDetailBean.getSeasons());
+                bundleSeason.putString(AppConstants.BUNDLE_SEASON_NAME, seriesDetailBean.getSeasonName());
 
                 bundleSeason.putInt(AppConstants.BUNDLE_SEASON_COUNT, seriesDetailBean.getSeasonCount());
                 if (seriesDetailBean.getSeasonCount() > 0)

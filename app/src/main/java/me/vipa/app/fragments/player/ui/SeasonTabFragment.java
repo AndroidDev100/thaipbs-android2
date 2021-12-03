@@ -3,7 +3,6 @@ package me.vipa.app.fragments.player.ui;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -11,43 +10,34 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SimpleItemAnimator;
 
-import com.google.gson.Gson;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
+import me.vipa.app.R;
+import me.vipa.app.activities.detail.ui.EpisodeActivity;
 import me.vipa.app.activities.series.adapter.SeasonAdapter;
 import me.vipa.app.activities.series.ui.SeriesDetailActivity;
 import me.vipa.app.baseModels.BaseBindingFragment;
+import me.vipa.app.beanModel.enveuCommonRailData.RailCommonData;
+import me.vipa.app.beanModel.selectedSeason.SelectedSeasonModel;
+import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
+import me.vipa.app.databinding.SeasonFragmentLayoutBinding;
 import me.vipa.app.networking.apistatus.APIStatus;
 import me.vipa.app.networking.responsehandler.ResponseModel;
-import me.vipa.app.R;
-import me.vipa.app.activities.detail.ui.EpisodeActivity;
-import me.vipa.app.beanModel.enveuCommonRailData.RailCommonData;
-import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
-import me.vipa.app.beanModel.selectedSeason.SelectedSeasonModel;
-import me.vipa.app.databinding.SeasonFragmentLayoutBinding;
 import me.vipa.app.utils.MediaTypeConstants;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.constants.AppConstants;
-import me.vipa.app.utils.cropImage.helpers.Logger;
 import me.vipa.app.utils.helpers.RailInjectionHelper;
 import me.vipa.app.utils.helpers.RecyclerAnimator;
 import me.vipa.app.utils.helpers.SpacingItemDecoration;
 import me.vipa.app.utils.helpers.StringUtils;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import me.vipa.app.activities.detail.ui.EpisodeActivity;
-import me.vipa.app.activities.series.adapter.SeasonAdapter;
-import me.vipa.app.activities.series.ui.SeriesDetailActivity;
-import me.vipa.app.baseModels.BaseBindingFragment;
-import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
-import me.vipa.app.networking.apistatus.APIStatus;
-import me.vipa.app.networking.responsehandler.ResponseModel;
+import me.vipa.brightcovelibrary.Logger;
+import me.vipa.brightcovelibrary.utils.ObjectHelper;
 
 
 public class SeasonTabFragment extends BaseBindingFragment<SeasonFragmentLayoutBinding> implements SeasonAdapter.EpisodeItemClick {
@@ -57,6 +47,7 @@ public class SeasonTabFragment extends BaseBindingFragment<SeasonFragmentLayoutB
     private int seasonCount;
     private int selectedSeason = 0;
     private ArrayList seasonArray;
+    private ArrayList<String> seasonNameList = new ArrayList<>();
     private Bundle bundle;
     private Context context;
     private ArrayList<SelectedSeasonModel> seasonList;
@@ -95,22 +86,24 @@ public class SeasonTabFragment extends BaseBindingFragment<SeasonFragmentLayoutB
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Logger.e("ON VIEW CREATED-----", "TRUE");
+        Logger.d("ON VIEW CREATED-----", "TRUE");
         bundle = getArguments();
 
         seasonArray = bundle.getParcelableArrayList(AppConstants.BUNDLE_SEASON_ARRAY);
-        Log.w("", seasonArray + "");
+        Logger.d("seasonArray: " + seasonArray);
+
+        final String seasonName = bundle.getString(AppConstants.BUNDLE_SEASON_NAME);
+        if (ObjectHelper.isNotEmpty(seasonName)) {
+            seasonNameList.addAll(Arrays.asList(seasonName.split(",")));
+        }
+        Logger.d("season name: " + seasonNameList);
 
         try {
             getVideoRails(bundle);
         } catch (Exception e) {
+            Logger.w(e);
         }
     }
 
@@ -172,12 +165,17 @@ public class SeasonTabFragment extends BaseBindingFragment<SeasonFragmentLayoutB
             mLastClickTime = SystemClock.elapsedRealtime();
             if (seasonList != null)
                 seasonList.clear();
+            if (seasonList == null) {
+                seasonList = new ArrayList<>();
+            }
             for (int i = 0; i < seasonArray.size(); i++) {
-
-                if (selectedSeason == (int) seasonArray.get(i))
-                    seasonList.add(new SelectedSeasonModel(getResources().getString(R.string.season) + " " + seasonArray.get(i), (int) seasonArray.get(i), true));
-                else
-                    seasonList.add(new SelectedSeasonModel(getResources().getString(R.string.season) + " " + seasonArray.get(i), (int) seasonArray.get(i), false));
+                final boolean isSelected = selectedSeason == (int) seasonArray.get(i);
+                final String seasonName = getSeasonName(i);
+                if (ObjectHelper.isEmpty(seasonName)) {
+                    seasonList.add(new SelectedSeasonModel(getResources().getString(R.string.season) + " " + seasonArray.get(i), (int) seasonArray.get(i), isSelected));
+                } else {
+                    seasonList.add(new SelectedSeasonModel(seasonName, (int) seasonArray.get(i), isSelected));
+                }
             }
             if (context instanceof SeriesDetailActivity) {
                 ((SeriesDetailActivity) context).showSeasonList(seasonList, selectedSeason + 1);
@@ -189,6 +187,14 @@ public class SeasonTabFragment extends BaseBindingFragment<SeasonFragmentLayoutB
 
     }
 
+    @Nullable
+    private String getSeasonName(int index) {
+        if (index > -1 && ObjectHelper.isNotEmpty(seasonNameList)
+                && ObjectHelper.getCount(seasonNameList) > index) {
+            return seasonNameList.get(index);
+        }
+        return null;
+    }
 
     public void hideProgressBar() {
         if (context instanceof SeriesDetailActivity) {
@@ -212,7 +218,7 @@ public class SeasonTabFragment extends BaseBindingFragment<SeasonFragmentLayoutB
     private void getEpisodeList() {
         getBinding().seriesRecyclerView.addItemDecoration(new SpacingItemDecoration(8, SpacingItemDecoration.HORIZONTAL));
         railInjectionHelper = ViewModelProviders.of(this).get(RailInjectionHelper.class);
-       Log.w("seasonCount-->>",seasonCount+"");
+       Logger.d("seasonCount-->> " + seasonCount);
         if (seasonCount > 0) {
             getSeasonEpisodes();
         } else {
@@ -352,7 +358,14 @@ public class SeasonTabFragment extends BaseBindingFragment<SeasonFragmentLayoutB
 
                 if (seasonAdapter == null) {
                     seasonEpisodes = railCommonData.getEnveuVideoItemBeans();
-                    getBinding().seasonHeader.setText(getResources().getString(R.string.season) + " " + railCommonData.getSeasonNumber());
+
+                    final String seasonName = getSeasonName(railCommonData.getSeasonNumber() - 1);
+                    if (ObjectHelper.isEmpty(seasonName)) {
+                        getBinding().seasonHeader.setText(getResources().getString(R.string.season) + " " + railCommonData.getSeasonNumber());
+                    } else {
+                        getBinding().seasonHeader.setText(seasonName);
+                    }
+
                     getBinding().seasonHeader.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.arrow_down, 0);
                     getBinding().comingSoon.setVisibility(View.GONE);
                     new RecyclerAnimator(getActivity()).animate(getBinding().seriesRecyclerView);

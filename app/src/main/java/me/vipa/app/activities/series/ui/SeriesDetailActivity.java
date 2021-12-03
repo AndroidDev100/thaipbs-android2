@@ -476,6 +476,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
             Bundle bundleSeason = new Bundle();
             bundleSeason.putInt(AppConstants.BUNDLE_ASSET_ID, seriesId);
             bundleSeason.putParcelableArrayList(AppConstants.BUNDLE_SEASON_ARRAY, seriesDetailBean.getSeasons());
+            bundleSeason.putString(AppConstants.BUNDLE_SEASON_NAME, seriesDetailBean.getSeasonName());
 
             bundleSeason.putInt(AppConstants.BUNDLE_SEASON_COUNT, seriesDetailBean.getSeasonCount());
             seasonTabFragment.setArguments(bundleSeason);
@@ -499,6 +500,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
             Bundle bundleSeason = new Bundle();
             bundleSeason.putInt(AppConstants.BUNDLE_ASSET_ID, seriesId);
             bundleSeason.putParcelableArrayList(AppConstants.BUNDLE_SEASON_ARRAY, seriesDetailBean.getSeasons());
+            bundleSeason.putString(AppConstants.BUNDLE_SEASON_NAME, seriesDetailBean.getSeasonName());
             bundleSeason.putInt(AppConstants.BUNDLE_SEASON_COUNT, seriesDetailBean.getSeasonCount());
             seasonTabFragment.setArguments(bundleSeason);
 

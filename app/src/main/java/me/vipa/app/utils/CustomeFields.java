@@ -27,4 +27,5 @@ public interface CustomeFields {
     String isClosedCaption = "is_close_caption";
     String isSoundTrack = "is_sound_track";
     String isAudioDescription = "is_audio_description";
+    String seasonName = "season_name";
 }

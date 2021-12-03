@@ -71,6 +71,7 @@ public class EnveuVideoItemBean implements Serializable {
     private String isClosedCaption;
     private String isSoundTrack;
     private String isAudioDesc;
+    private String seasonName;
 
     public String getIs4k() {
         return is4k;
@@ -102,6 +103,14 @@ public class EnveuVideoItemBean implements Serializable {
 
     public void setIsAudioDesc(String isAudioDesc) {
         this.isAudioDesc = isAudioDesc;
+    }
+
+    public String getSeasonName() {
+        return seasonName;
+    }
+
+    public void setSeasonName(String seasonName) {
+        this.seasonName = seasonName;
     }
 
     public String getIscomingsoon() {
@@ -316,6 +325,13 @@ public class EnveuVideoItemBean implements Serializable {
                 final Object obj = t.get(CustomeFields.isAudioDescription);
                 if (obj != null) {
                     this.isAudioDesc = obj.toString();
+                }
+            }
+
+            if (t.containsKey(CustomeFields.seasonName)) {
+                final Object obj = t.get(CustomeFields.seasonName);
+                if (obj != null) {
+                    this.seasonName = obj.toString();
                 }
             }
 

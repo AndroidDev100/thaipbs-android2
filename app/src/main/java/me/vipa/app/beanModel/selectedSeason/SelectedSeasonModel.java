@@ -1,9 +1,9 @@
 package me.vipa.app.beanModel.selectedSeason;
 
 public class SelectedSeasonModel {
-    String list;
-    int selectedId;
-    boolean selected;
+    private String list;
+    private int selectedId;
+    private boolean selected;
 
     public boolean isSelected() {
         return selected;
