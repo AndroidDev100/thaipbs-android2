@@ -23,7 +23,7 @@ class VideoSettingAdapter(val data: List<VideoSettingItem>): RecyclerView.Adapte
     }
 
     override fun getItemCount(): Int {
-        return ObjectHelper.getCount(data)
+        return ObjectHelper.getSize(data)
     }
 
     inner class SettingViewHolder(view: View): RecyclerView.ViewHolder(view) {

@@ -190,7 +190,7 @@ public class SeasonTabFragment extends BaseBindingFragment<SeasonFragmentLayoutB
     @Nullable
     private String getSeasonName(int index) {
         if (index > -1 && ObjectHelper.isNotEmpty(seasonNameList)
-                && ObjectHelper.getCount(seasonNameList) > index) {
+                && ObjectHelper.getSize(seasonNameList) > index) {
             return seasonNameList.get(index);
         }
         return null;

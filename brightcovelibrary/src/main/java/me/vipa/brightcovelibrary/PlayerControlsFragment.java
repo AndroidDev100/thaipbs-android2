@@ -917,7 +917,7 @@ public class PlayerControlsFragment extends Fragment {
                 return;
             }
 
-            if (ObjectHelper.getCount(data) == 1) {
+            if (ObjectHelper.getSize(data) == 1) {
                 final String title = data.get(0).getTitle();
                 if (ObjectHelper.isSame(title, titleVideoQuality)) {
                     chooseVideoquality();
