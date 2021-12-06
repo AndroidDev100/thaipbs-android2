@@ -1,6 +1,13 @@
 package me.vipa.app.networking.apiendpoints;
 
 
+import com.google.gson.JsonObject;
+
+import org.json.JSONObject;
+
+import java.util.List;
+
+import io.reactivex.Observable;
 import me.vipa.app.beanModel.AssetHistoryContinueWatching.ResponseAssetHistory;
 import me.vipa.app.beanModel.changePassword.ResponseChangePassword;
 import me.vipa.app.beanModel.configBean.ResponseConfig;
@@ -22,21 +29,8 @@ import me.vipa.app.beanModelV3.searchV2.ResponseSearch;
 import me.vipa.app.beanModelV3.videoDetailsV2.EnveuVideoDetailsBean;
 import me.vipa.app.redeemcoupon.RedeemCouponResponseModel;
 import me.vipa.app.userAssetList.ResponseUserAssetList;
-import com.google.gson.JsonObject;
 import me.vipa.app.utils.config.bean.ConfigBean;
 import me.vipa.app.utils.recoSense.bean.RecosenceResponse;
-
-import org.json.JSONObject;
-
-import java.util.List;
-
-import io.reactivex.Observable;
-import me.vipa.app.beanModelV3.continueWatching.ContinueWatchingModel;
-import me.vipa.app.beanModelV3.playListModelV2.EnveuCommonResponse;
-import me.vipa.app.beanModelV3.searchV2.ResponseSearch;
-import me.vipa.app.beanModelV3.videoDetailsV2.EnveuVideoDetailsBean;
-import me.vipa.app.redeemcoupon.RedeemCouponResponseModel;
-import me.vipa.app.userAssetList.ResponseUserAssetList;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -182,6 +176,11 @@ public interface ApiInterface {
     @GET("v4/search")
     io.reactivex.Observable<ResponseSearch> getSearch(@Query("keyword") String keyword, @Query("contentType") String type, @Query("size") int size, @Query("offset") int page, @Query("locale") String locale);
 
+
+    @Headers("x-platform: android")
+    @GET("v4/search")
+    io.reactivex.Observable<ResponseSearch> getSearch(@Query("keyword") String keyword, @Query("contentType") List<String> type, @Query("size") int size, @Query("offset") int page, @Query("locale") String locale);
+
     @Headers("x-platform: android")
     @GET("v4/search")
     io.reactivex.Observable<ResponseSearch> getSearchByFilters(@Query("keyword") String keyword, @Query("contentType") String type, @Query("size") int size, @Query("offset") int page, @Query("locale") String locale,
@@ -189,12 +188,25 @@ public interface ApiInterface {
 
     @Headers("x-platform: android")
     @GET("v4/search")
+    io.reactivex.Observable<ResponseSearch> getSearchByFilters(@Query("keyword") String keyword, @Query("contentType") List<String> type, @Query("size") int size, @Query("offset") int page, @Query("locale") String locale,
+                                                               @Query("filters") List<String> filterGenreSavedListKeyForApi, @Query("sort") List<String> filterSortSavedListKeyForApi);
+
+    @Headers("x-platform: android")
+    @GET("v4/search")
     Call<ResponseSearch> getSearchResults(@Query("keyword") String keyword, @Query("contentType") String type, @Query("size") int size, @Query("offset") int page, @Query("locale") String locale);
 
+    @Headers("x-platform: android")
+    @GET("v4/search")
+    Call<ResponseSearch> getSearchResults(@Query("keyword") String keyword, @Query("contentType") List<String> type, @Query("size") int size, @Query("offset") int page, @Query("locale") String locale);
 
     @Headers("x-platform: android")
     @GET("v4/search")
     Call<ResponseSearch> getSearchResultsByFilters(@Query("keyword") String keyword, @Query("contentType") String type, @Query("size") int size, @Query("offset") int page, @Query("locale") String locale,
+                                                   @Query("filters") List<String> filterGenreSavedListKeyForApi, @Query("sort") List<String> filterSortSavedListKeyForApi);
+
+    @Headers("x-platform: android")
+    @GET("v4/search")
+    Call<ResponseSearch> getSearchResultsByFilters(@Query("keyword") String keyword, @Query("contentType") List<String> type, @Query("size") int size, @Query("offset") int page, @Query("locale") String locale,
                                                    @Query("filters") List<String> filterGenreSavedListKeyForApi, @Query("sort") List<String> filterSortSavedListKeyForApi);
 
 

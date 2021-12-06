@@ -254,7 +254,7 @@
     <string name="slider_image_content_discription">This is view pager slider Image</string>
     <string name="image_description">Content description</string>
     <string name="error_branch_sharing_url">Unable to share currently. Please try again later.</string>
-    <string name="show_comment">Sfhow Comment</string>
+    <string name="show_comment">Show Comment</string>
     <string name="tab_heading_episodes">EPISODES</string>
     <string name="tab_heading_other">RECOMMENDED CONTENT</string>
     <string name="coming_soon">Coming Soon</string>
@@ -361,6 +361,7 @@
     <string name="heading_live">Live</string>
     <string name="heading_shows">Shows</string>
     <string name="heading_episodes">Episodes</string>
+    <string name="heading_program">Program</string>
     <string name="live_tag">•Live</string>
     <string name="check_connection">Check Connection</string>
     <string name="password_regex_error">Password is not strong enough</string>

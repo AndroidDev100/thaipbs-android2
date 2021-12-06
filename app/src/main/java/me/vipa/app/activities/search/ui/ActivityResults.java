@@ -7,23 +7,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 import me.vipa.app.R;
-import me.vipa.app.activities.search.adapter.CommonSearchAdapter;
-import me.vipa.app.activities.search.viewmodel.SearchViewModel;
-import me.vipa.app.activities.series.ui.SeriesDetailActivity;
-import me.vipa.app.baseModels.BaseBindingActivity;
-import me.vipa.app.beanModel.popularSearch.ItemsItem;
 import me.vipa.app.activities.detail.ui.DetailActivity;
 import me.vipa.app.activities.detail.ui.EpisodeActivity;
+import me.vipa.app.activities.search.adapter.CommonSearchAdapter;
 import me.vipa.app.activities.search.adapter.RowSearchAdapter;
+import me.vipa.app.activities.search.viewmodel.SearchViewModel;
+import me.vipa.app.activities.series.ui.SeriesDetailActivity;
 import me.vipa.app.adapters.CommonShimmerAdapter;
-import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
+import me.vipa.app.baseModels.BaseBindingActivity;
+import me.vipa.app.beanModel.enveuCommonRailData.RailCommonData;
+import me.vipa.app.beanModel.popularSearch.ItemsItem;
 import me.vipa.app.beanModel.popularSearch.ResponsePopularSearch;
+import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
 import me.vipa.app.databinding.ActivityResultBinding;
 import me.vipa.app.utils.MediaTypeConstants;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
@@ -33,10 +39,7 @@ import me.vipa.app.utils.helpers.NetworkConnectivity;
 import me.vipa.app.utils.helpers.RailInjectionHelper;
 import me.vipa.app.utils.helpers.RecyclerAnimator;
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import me.vipa.brightcovelibrary.utils.ObjectHelper;
 
 
 public class ActivityResults extends BaseBindingActivity<ActivityResultBinding> implements CommonSearchAdapter.CommonSearchListener, RowSearchAdapter.RowSearchListener {
@@ -171,23 +174,11 @@ public class ActivityResults extends BaseBindingActivity<ActivityResultBinding> 
 
     private void localizeHeader(String searchType) {
         getBinding().toolbar.tvSearchResultHeader.setAllCaps(true);
-        if (searchType.equalsIgnoreCase(MediaTypeConstants.getInstance().getSeries())){
-            getBinding().toolbar.tvSearchResultHeader.setText(getString(R.string.series));
-        }else if (searchType.equalsIgnoreCase(MediaTypeConstants.getInstance().getEpisode())){
+        if (searchType.equalsIgnoreCase(MediaTypeConstants.getInstance().getEpisode())) {
             getBinding().toolbar.tvSearchResultHeader.setText(getString(R.string.tab_heading_episodes));
+        } else if (ObjectHelper.isSame(searchType, AppConstants.SEARCH_TYPE_PROGRAM)) {
+            getBinding().toolbar.tvSearchResultHeader.setText(getString(R.string.heading_program));
         }
-        else if (searchType.equalsIgnoreCase(MediaTypeConstants.getInstance().getMovie())){
-            getBinding().toolbar.tvSearchResultHeader.setText(getString(R.string.heading_movies));
-        }
-        else if (searchType.equalsIgnoreCase(MediaTypeConstants.getInstance().getShow())){
-            getBinding().toolbar.tvSearchResultHeader.setText(getString(R.string.heading_shows));
-        }
-        else if (searchType.equalsIgnoreCase(MediaTypeConstants.getInstance().getLive())){
-            getBinding().toolbar.tvSearchResultHeader.setText(getString(R.string.heading_live));
-        }else {
-            getBinding().toolbar.tvSearchResultHeader.setText("");
-        }
-
     }
 
     private void recyclerViewScroll() {
@@ -232,9 +223,9 @@ public class ActivityResults extends BaseBindingActivity<ActivityResultBinding> 
         recyclerView.setLayoutManager(mLayoutManager);
     }
 
-    private void hitApiSearchKeyword(String type, String searchKeyword, boolean applyFilter, Context context) {
+    private void hitApiSearchKeyword(String keyword, String type, boolean applyFilter, Context context) {
 
-        railInjectionHelper.getSearchSingleCategory(type, searchKeyword, AppConstants.PAGE_SIZE, counter,applyFilter,context).observe(ActivityResults.this, data -> {
+        final Observer<RailCommonData> searchObserver = data -> {
             if (data != null) {
                 if (counter == 0) {
                     new RecyclerAnimator(this).animate(getBinding().resultRecycler);
@@ -249,8 +240,15 @@ public class ActivityResults extends BaseBindingActivity<ActivityResultBinding> 
                     isLastPage = true;
             }
             getBinding().progressBar.setVisibility(View.GONE);
-        });
+        };
 
+        if (ObjectHelper.isSame(type, AppConstants.SEARCH_TYPE_PROGRAM)) {
+            railInjectionHelper.getSearchProgram(keyword, AppConstants.PAGE_SIZE,
+                    counter, applyFilter, context).observe(ActivityResults.this, searchObserver);
+        } else {
+            railInjectionHelper.getSearchSingleCategory(keyword, type, AppConstants.PAGE_SIZE,
+                    counter, applyFilter, context).observe(ActivityResults.this, searchObserver);
+        }
     }
 
     private void callShimmer(RecyclerView recyclerView) {

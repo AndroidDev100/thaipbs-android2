@@ -70,6 +70,7 @@ import me.vipa.app.utils.helpers.ToastHandler;
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 import me.vipa.brightcovelibrary.Logger;
+import me.vipa.brightcovelibrary.utils.ObjectHelper;
 
 //import com.webstreamindonesia.nonton.db.search.SearchedKeywords;
 
@@ -267,26 +268,23 @@ public class ActivitySearch extends BaseBindingActivity<ActivitySearchBinding> i
                     getBinding().rootView.setVisibility(View.GONE);
                     getBinding().toolbar.filter.setVisibility(View.VISIBLE);
                     for (int i = 0; i < data.size(); i++) {
-                        if (data.get(i).getPageTotal() > 0) {
-                            if (data.get(i).getStatus()) {
+                        final RailCommonData railCommonData = data.get(i);
+                        if (railCommonData.getPageTotal() > 0) {
+                            if (railCommonData.getStatus()) {
                                 RailCommonData temp = new RailCommonData();
-                                temp.setEnveuVideoItemBeans(data.get(i).getEnveuVideoItemBeans());
-                                if (data.get(i).getEnveuVideoItemBeans().size() > 0) {
-                                    temp.setAssetType(data.get(i).getEnveuVideoItemBeans().get(0).getAssetType());
+                                temp.setEnveuVideoItemBeans(railCommonData.getEnveuVideoItemBeans());
+                                if (railCommonData.getEnveuVideoItemBeans().size() > 0) {
+                                    final EnveuVideoItemBean enveuVideoItemBean =
+                                            railCommonData.getEnveuVideoItemBeans().get(0);
+                                    temp.setAssetType(enveuVideoItemBean.getAssetType());
                                     temp.setStatus(true);
-                                    if (data.get(i).getEnveuVideoItemBeans().get(0).getAssetType().equalsIgnoreCase(MediaTypeConstants.getInstance().getShow())) {
-                                        temp.setLayoutType(0);
-                                    } else if (data.get(i).getEnveuVideoItemBeans().get(0).getAssetType().equalsIgnoreCase(MediaTypeConstants.getInstance().getEpisode())) {
+                                    if (ObjectHelper.isSame(enveuVideoItemBean.getAssetType(), MediaTypeConstants.getInstance().getEpisode())) {
                                         temp.setLayoutType(1);
-                                    } else if (data.get(i).getEnveuVideoItemBeans().get(0).getAssetType().equalsIgnoreCase(MediaTypeConstants.getInstance().getMovie())) {
-                                        temp.setLayoutType(2);
-                                    } else if (data.get(i).getEnveuVideoItemBeans().get(0).getAssetType().equalsIgnoreCase(MediaTypeConstants.getInstance().getSeries())) {
-                                        temp.setLayoutType(3);
-                                    } else if (data.get(i).getEnveuVideoItemBeans().get(0).getAssetType().equalsIgnoreCase(MediaTypeConstants.getInstance().getLive())) {
-                                        temp.setLayoutType(4);
+                                    } else {
+                                        temp.setLayoutType(0);
                                     }
                                     temp.setSearchKey(searchKeyword);
-                                    temp.setTotalCount(data.get(i).getPageTotal());
+                                    temp.setTotalCount(railCommonData.getPageTotal());
                                     model.add(temp);
                                 }
 
@@ -294,7 +292,7 @@ public class ActivitySearch extends BaseBindingActivity<ActivitySearchBinding> i
                         }
                     }
                 } catch (Exception e) {
-
+                    Logger.w(e);
                 }
 
                 if (model.size() > 0) {
@@ -516,6 +514,14 @@ public class ActivitySearch extends BaseBindingActivity<ActivitySearchBinding> i
             applyFilter = Boolean.parseBoolean(KsPreferenceKeys.getInstance().getFilterApply());
             new ActivityLauncher(ActivitySearch.this).resultActivityBundle(ActivitySearch.this, ActivityResults.class, itemValue.getAssetType(), itemValue.getSearchKey(), itemValue.getTotalCount(),applyFilter);
 
+        }
+    }
+
+    @Override
+    public void onShowAllProgramClicked(RailCommonData itemValue) {
+        if (itemValue != null && itemValue.getStatus()) {
+            applyFilter = Boolean.parseBoolean(KsPreferenceKeys.getInstance().getFilterApply());
+            new ActivityLauncher(ActivitySearch.this).resultActivityBundle(ActivitySearch.this, ActivityResults.class, AppConstants.SEARCH_TYPE_PROGRAM, itemValue.getSearchKey(), itemValue.getTotalCount(),applyFilter);
         }
     }
 

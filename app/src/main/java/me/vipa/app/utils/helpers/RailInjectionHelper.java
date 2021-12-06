@@ -12,11 +12,13 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProviders;
 
-import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
-import me.vipa.bookmarking.bean.continuewatching.ContinueWatchingBookmark;
-import me.vipa.enums.Layouts;
-import me.vipa.watchHistory.beans.ItemsItem;
+import com.google.gson.JsonObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import me.vipa.app.Bookmarking.BookmarkingViewModel;
+import me.vipa.app.ObservableRxList;
 import me.vipa.app.beanModel.emptyResponse.ResponseEmpty;
 import me.vipa.app.beanModel.enveuCommonRailData.RailCommonData;
 import me.vipa.app.beanModel.responseGetWatchlist.ResponseGetIsWatchlist;
@@ -29,6 +31,7 @@ import me.vipa.app.layersV2.ListPaginationDataLayer;
 import me.vipa.app.layersV2.SearchLayer;
 import me.vipa.app.layersV2.SeasonEpisodesList;
 import me.vipa.app.layersV2.SeriesDataLayer;
+import me.vipa.app.layersV2.VideoDetailLayer;
 import me.vipa.app.networking.apistatus.APIStatus;
 import me.vipa.app.networking.errormodel.ApiErrorModel;
 import me.vipa.app.networking.responsehandler.ResponseModel;
@@ -37,13 +40,11 @@ import me.vipa.app.repository.home.HomeFragmentRepository;
 import me.vipa.app.repository.userManagement.RegistrationLoginRepository;
 import me.vipa.app.utils.constants.AppConstants;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
-import me.vipa.app.ObservableRxList;
-import me.vipa.app.layersV2.VideoDetailLayer;
-import com.google.gson.JsonObject;
+import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
+import me.vipa.bookmarking.bean.continuewatching.ContinueWatchingBookmark;
+import me.vipa.enums.Layouts;
 import me.vipa.enums.PlaylistType;
-
-import java.util.ArrayList;
-import java.util.List;
+import me.vipa.watchHistory.beans.ItemsItem;
 
 
 public class RailInjectionHelper extends AndroidViewModel {
@@ -332,11 +333,13 @@ public class RailInjectionHelper extends AndroidViewModel {
         return SearchLayer.getInstance().getSearchData(context,"MOVIE",keyword, size, page,applyFilter);
     }
 
-    public LiveData<RailCommonData> getSearchSingleCategory(String type, String keyword, int size, int page,boolean applyFilter, Context context) {
-        return SearchLayer.getInstance().getSingleCategorySearch(type, keyword, size, page,applyFilter,context);
+    public LiveData<RailCommonData> getSearchSingleCategory(String keyword, String type, int size, int page,boolean applyFilter, Context context) {
+        return SearchLayer.getInstance().getSingleCategorySearch(keyword, type, size, page,applyFilter,context);
     }
 
-
+    public LiveData<RailCommonData> getSearchProgram(String keyword, int size, int page,boolean applyFilter, Context context) {
+        return SearchLayer.getInstance().getProgramSearch(keyword, size, page,applyFilter,context);
+    }
 
     public LiveData<ResponseGetIsWatchlist> hitApiIsWatchList(String token, int seriesId) {
         return HomeFragmentRepository.getInstance().hitApiIsToWatchList(token, seriesId);

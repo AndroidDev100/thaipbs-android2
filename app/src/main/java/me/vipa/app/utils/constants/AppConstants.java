@@ -227,6 +227,7 @@ public interface AppConstants {
     String BUNDLE_ASSET_TYPE = "assetType";
     String BUNDLE_CURRENT_ASSET_ID = "currentAssetId";
     String KIDS_MODE = "KIDS_MODE";
+    String SEARCH_TYPE_PROGRAM = "search_type_program";
 
     enum UserLoginType {
         Manual,
