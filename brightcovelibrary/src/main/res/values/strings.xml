@@ -39,6 +39,12 @@
     <string name="video_quality">Video Quality</string>
     <string name="audio_tracks">Audio Tracks</string>
     <string name="unsupportes_resolution">Device is unsupported 4K resolution</string>
-
+    <string name="none">None</string>
+    <string name="lang_english">English</string>
+    <string name="lang_thai">Thai</string>
+    <string name="lang_chinese_simp">Chinese (Simplified)</string>
+    <string name="lang_chinese_trad">Chinese (Traditional)</string>
+    <string name="lang_german">German</string>
+    <string name="lang_japanese">Japanese</string>
 
 </resources>

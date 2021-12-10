@@ -109,7 +109,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -118,6 +117,7 @@ import me.vipa.brightcovelibrary.callBacks.PhoneListenerCallBack;
 import me.vipa.brightcovelibrary.callBacks.PlayerCallbacks;
 import me.vipa.brightcovelibrary.chromecast.ChromeCastCallback;
 import me.vipa.brightcovelibrary.chromecast.ChromecastManager;
+import me.vipa.brightcovelibrary.utils.ObjectHelper;
 
 public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.BrightcovePlayerFragment implements PlayerControlsFragment.OnFragmentInteractionListener, PlayerCallbacks, NetworkChangeReceiver.ConnectivityReceiverListener, PhoneListenerCallBack, BackPressCallBack, ChromeCastCallback {
     private static final String PROPERTY_APPLICATION_ID = "com.vipa.app";
@@ -900,15 +900,15 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
 
         //Checking Audio Availabilty
         eventEmitter.on(EventType.AUDIO_TRACKS, event -> {
-
-            tracks = (List) event.properties.get("tracks");
+            Logger.d(EventType.AUDIO_TRACKS + " properties: " + event);
+            tracks = (List) event.properties.get(Event.TRACKS);
             if (tracks.size() > 1) {
                 if (playerControlsFragment != null) {
                     playerControlsFragment.sendAudioAvailable(event.getType());
                 }
             }
 
-            String selectedTrack = (String) event.properties.get("track");
+            String selectedTrack = (String) event.properties.get(Event.SELECTED_TRACK);
             if (selectedTrack != null) {
                 for (int i = 0; i < tracks.size(); ++i) {
                     if (tracks.get(i).equals(selectedTrack)) {
@@ -1181,22 +1181,41 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
 
     private void showAudioTracksDialog() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(mActivity, R.style.CustomDialogTheme);
-        alertDialog.setTitle(mActivity.getResources().getString(R.string.audio_track_selection)).setSingleChoiceItems(audioTracks, currentAudioLanguage, (dialog, which) -> {
+        String[] labeledTrack = new String[audioTracks.length];
+        for (int i = 0, audioTracksLength = audioTracks.length; i < audioTracksLength; i++) {
+            labeledTrack[i] = getLanguageLabel(audioTracks[i].toString());
+        }
+        alertDialog.setTitle(mActivity.getResources().getString(R.string.audio_track_selection)).setSingleChoiceItems(labeledTrack, currentAudioLanguage, (dialog, which) -> {
             currentAudioLanguage = which;
             selectAudioTrack(which);
 
         }).setPositiveButton(mActivity.getResources().getString(R.string.ok), (dialog, which) -> dialog.dismiss()).show();
     }
 
+    private String getLanguageLabel(String code) {
+        if (ObjectHelper.isSame(code, "en-US")) {
+            return getString(R.string.lang_english);
+        } else if (ObjectHelper.isSame(code, "th-Th")) {
+            return getString(R.string.lang_thai);
+        } else if (ObjectHelper.isSame(code, "zh-Hans")) {
+            return getString(R.string.lang_chinese_simp);
+        } else if (ObjectHelper.isSame(code, "zh-Hant")) {
+            return getString(R.string.lang_chinese_trad);
+        } else if (ObjectHelper.isSame(code, "de")) {
+            return getString(R.string.lang_german);
+        } else if (ObjectHelper.isSame(code, "ja-JP")) {
+            return getString(R.string.lang_japanese);
+        } else {
+            return code;
+        }
+    }
 
     protected void selectAudioTrack(int trackIndex) {
         String track = this.tracks.get(trackIndex);
-        Map<String, Object> properties = new HashMap();
-        properties.put("track", track);
-        this.eventEmitter.emit("selectAudioTrack", properties);
+        Map<String, Object> properties = new HashMap<>();
+        properties.put(Event.SELECTED_TRACK, track);
+        this.eventEmitter.emit(EventType.SELECT_AUDIO_TRACK, properties);
     }
-
-    FrameLayout playerRoot;
 
     private void findPlayerId(View view) {
         baseVideoView = view.findViewById(R.id.brightcove_video_view);
@@ -1421,13 +1440,12 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         availableCapitonsListDisplay = new CharSequence[pairs.size() + 1];
 
         int i = 0;
-        availableCapitonsList[i] = "None";
-        availableCapitonsListDisplay[i] = "None";
-        for (Pair<Uri, BrightcoveCaptionFormat> pair : pairs
-        ) {
+        availableCapitonsList[i] = getString(R.string.none);
+        availableCapitonsListDisplay[i] = getString(R.string.none);
+        for (Pair<Uri, BrightcoveCaptionFormat> pair : pairs) {
             i++;
             availableCapitonsList[i] = pair.second.language();
-            availableCapitonsListDisplay[i] = new Locale(pair.second.language()).getDisplayLanguage();
+            availableCapitonsListDisplay[i] = getLanguageLabel(pair.second.language());
         }
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(mActivity, R.style.CustomDialogTheme);
         alertDialog.setTitle(mActivity.getResources().getString(R.string.caption_selection)).setSingleChoiceItems(availableCapitonsListDisplay, currentCaptionLanguage, (dialog, which) -> {
@@ -1454,11 +1472,11 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                     properties.put("captionFormat", pair.second);
                     properties.put("captionUri", pair.first);
 
-                    this.eventEmitter.emit("selectClosedCaptionTrack", properties);
+                    this.eventEmitter.emit(EventType.SELECT_CLOSED_CAPTION_TRACK, properties);
                 } else {
                     properties = new HashMap();
                     properties.put("boolean", true);
-                    this.eventEmitter.emit("toggleClosedCaptions", properties);
+                    this.eventEmitter.emit(EventType.TOGGLE_CLOSED_CAPTIONS, properties);
                 }
             }
         } else {

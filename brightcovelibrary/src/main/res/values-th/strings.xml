@@ -36,6 +36,13 @@
     <string name="video_quality">คุณภาพวีดีโอ</string>
     <string name="audio_tracks">แทร็กเสียง</string>
     <string name="unsupportes_resolution">อุปกรณ์ของท่านไม่รองรับ ความละเอียด 4K</string>
+    <string name="lang_english">อังกฤษ</string>
+    <string name="lang_thai">ไทย</string>
+    <string name="lang_chinese_simp">จีน</string>
+    <string name="lang_chinese_trad">จีน (ดั้งเดิม)</string>
+    <string name="lang_german">เยอรมัน</string>
+    <string name="lang_japanese">ญี่ปุ่น</string>
+    <string name="none">None</string>
 
 
 </resources>
