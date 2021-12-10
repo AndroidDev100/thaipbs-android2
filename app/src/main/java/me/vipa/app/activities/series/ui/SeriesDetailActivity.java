@@ -455,6 +455,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
         Bundle args = new Bundle();
         args.putInt(AppConstants.BUNDLE_ASSET_ID, id);
         args.putSerializable(AppConstants.BUNDLE_SERIES_DETAIL, seriesDetailBean);
+        args.putString(AppConstants.BUNDLE_TRAILER_REF_ID, seriesDetailBean.getTrailerReferenceId());
 
         userInteractionFragment = new UserInteractionFragment();
         userInteractionFragment.setArguments(args);

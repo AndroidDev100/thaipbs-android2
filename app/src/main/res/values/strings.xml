@@ -184,6 +184,7 @@
     <string name="you_are_not_subscribed">You are not subscribed</string>
     <string name="can_not_play_error">Cannot play this video. If issue persists, contact us.</string>
     <string name="comments">Comments</string>
+    <string name="trailer">Trailer</string>
     <string name="add_comment">Add a comment...</string>
     <string name="add_comment_fail">Adding comment fail please retry</string>
     <string name="please_login_post">Login to post</string>

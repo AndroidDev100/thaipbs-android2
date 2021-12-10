@@ -422,6 +422,7 @@
     <string name="device_platform">Platform : %s</string>
     <string name="date_time">Date/Time : %s</string>
     <string name="internet">Internet : https://thaip.bs/helping</string>
+    <string name="trailer">Trailer</string>
 
 
 </resources>

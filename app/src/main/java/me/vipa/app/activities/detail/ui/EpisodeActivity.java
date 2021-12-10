@@ -21,7 +21,6 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.DisplayCutout;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -210,7 +209,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
     boolean isLoggedIn = false;
 
     private void setFullScreen() {
-        Log.e("Tag", "Inset: " + Build.VERSION.SDK_INT);
+        Logger.d( "Inset: " + Build.VERSION.SDK_INT);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             final WindowInsetsController insetsController = getWindow().getInsetsController();
             if (insetsController != null) {
@@ -220,7 +219,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
             attribs.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS;
             getWindow().getDecorView().setOnApplyWindowInsetsListener((view, windowInsets) -> {
                         DisplayCutout inset = windowInsets.getDisplayCutout();
-                        Log.d("Tag", "Inset: " + inset);
+                        Logger.d("Inset: " + inset);
                         return windowInsets;
                     }
             );
@@ -237,7 +236,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.e("EPISODE...","EPISODE");
+        Logger.d("EPISODE");
         isActive = true;
         getWindow().setBackgroundDrawableResource(R.color.black);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,
@@ -598,7 +597,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
     private void setPlayerFragment(Video video, boolean isOffline, Long bookmarkPosition) {
         Bundle args = new Bundle();
         if (isOffline) {
-            Log.d("gtgtgtgtgt","Enter");
+            Logger.d("Enter setPlayerFragment");
             args.putBoolean("isOffline", isOfflineAvailable);
             args.putParcelable(AppConstants.BUNDLE_VIDEO_ID_BRIGHTCOVE, video);
             boolean value = KsPreferenceKeys.getInstance().getPodId(video.getId());
@@ -624,7 +623,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
             args.putString(AppConstants.POSTER_URL, videoDetails.getPosterURL());
         }
 
-        Log.w("totalZies", KsPreferenceKeys.getInstance().getBingeWatchEnable() + "");
+        Logger.d("getBingeWatchEnable " + KsPreferenceKeys.getInstance().getBingeWatchEnable());
         args.putString("config_vast_tag", SDKConfig.getInstance().getConfigVastTag());
         args.putBoolean("binge_watch", KsPreferenceKeys.getInstance().getBingeWatchEnable());
         args.putInt("binge_watch_timer", SDKConfig.getInstance().getTimer());
@@ -976,7 +975,8 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
 
 
         sharingClick(videoDetails);
-        ImageHelper.getInstance(EpisodeActivity.this).loadListImage(getBinding().playerImage, videoDetails.getPosterURL());Log.w("videoPrimium",videoDetails.getBrightcoveVideoId());
+        ImageHelper.getInstance(EpisodeActivity.this).loadListImage(getBinding().playerImage, videoDetails.getPosterURL());
+        Logger.d("getBrightcoveVideoId " + videoDetails.getBrightcoveVideoId());
 //        if (videoDetails.isPremium()) {
 //            getBinding().tvPurchased.setVisibility(View.GONE);
 //            getBinding().tvPremium.setVisibility(View.GONE);
@@ -1275,6 +1275,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
         args.putInt(AppConstants.BUNDLE_ASSET_ID, id);
         args.putSerializable(AppConstants.BUNDLE_SERIES_DETAIL, videoDetails);
         args.putString(AppConstants.BUNDLE_SERIES_ID, seriesId);
+        args.putString(AppConstants.BUNDLE_TRAILER_REF_ID, seriesDetailBean.getTrailerReferenceId());
 
         userInteractionFragment = new UserInteractionFragment();
         userInteractionFragment.setArguments(args);
@@ -1980,7 +1981,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
     @Override
     public void onPlayerError(String error) {
         try {
-            Log.d("PlayerError",error);
+            Logger.w("PlayerError " + error);
             String errorMessage= "";
             getBinding().backButton.setVisibility(View.VISIBLE);
             getBinding().pBar.setVisibility(View.GONE);
@@ -2042,7 +2043,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
     @Override
     public void onPlayerStart() {
         try {
-            Log.w("onPlayerStart", "");
+            Logger.d("onPlayerStart");
             getBinding().backButton.setVisibility(View.GONE);
             getBinding().playerImage.setVisibility(View.GONE);
             getBinding().pBar.setVisibility(View.GONE);
@@ -2060,7 +2061,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
                 for (int i = 0; i < seasonEpisodesList.size(); i++) {
 
                     int id = seasonEpisodesList.get(i).getId();
-                    Log.w("episodesId", id + "  " + assestId + "  " + i);
+                    Logger.d("episodesId " + id + "  " + assestId + "  " + i);
                     if (id == assestId) {
                         playerFragment.currentEpisodes(i + 1);
                         break;
@@ -2103,7 +2104,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
                 new ActivityLauncher(this).loginActivity(this, LoginActivity.class);
             else {
                 int videoQuality = new SharedPrefHelper(this).getInt(SharedPrefesConstants.DOWNLOAD_QUALITY_INDEX, 4);
-                Log.w("downloadClick",videoQuality+"");
+                Logger.d("downloadClick " + videoQuality);
                 if (KsPreferenceKeys.getInstance().getDownloadOverWifi() == 1 && NetworkHelper.INSTANCE.isWifiEnabled(this)) {
                     if (source instanceof UserInteractionFragment) {
                         if (videoQuality != 4) {
@@ -2255,10 +2256,9 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
                     // Toast.makeText(this, "NoWifi", Toast.LENGTH_LONG).show();
                 }
             }
-        }catch (Exception ignored){
-            Log.w("downloadCrash",ignored.toString());
+        }catch (Exception ex){
+            Logger.w(ex);
         }
-
     }
 
     private void showWifiSettings(Video video, String brightcoveVideoId, int seasonNumber, String episodeNumber, int videoQuality) {
@@ -2351,11 +2351,11 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
         if (source instanceof UserInteractionFragment) {
             // downloadHelper.resumeDownload(downloadAbleVideo.getId());
 
-            Log.w("pauseClicked","in2");
+            Logger.d("pauseClicked in2");
             if (NetworkConnectivity.isOnline(this)) {
                 if (KsPreferenceKeys.getInstance().getDownloadOverWifi() == 1) {
                     if (NetworkHelper.INSTANCE.isWifiEnabled(this)) {
-                        Log.w("pauseClicked","in3");
+                        Logger.d("pauseClicked in3");
                         userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.REQUESTED);
                         downloadHelper.resumeDownload(downloadAbleVideo.getId());
                     } else {
@@ -2363,7 +2363,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
                     }
                 } else {
                     userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.REQUESTED);
-                    Log.w("pauseClicked","in4");
+                    Logger.d("pauseClicked in4");
                     downloadHelper.resumeDownload(downloadAbleVideo.getId());
                 }
             }else {
@@ -2372,11 +2372,11 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
 
         } else {
             //downloadHelper.resumeDownload(videoId);
-            Log.w("pauseClicked","in2");
+            Logger.d("pauseClicked in2");
             if (NetworkConnectivity.isOnline(this)) {
                 if (KsPreferenceKeys.getInstance().getDownloadOverWifi() == 1) {
                     if (NetworkHelper.INSTANCE.isWifiEnabled(this)) {
-                        Log.w("pauseClicked","in3");
+                        Logger.d("pauseClicked in3");
                         userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.REQUESTED);
                         downloadHelper.resumeDownload(downloadAbleVideo.getId());
                     } else {
@@ -2384,7 +2384,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
                     }
                 } else {
                     userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.REQUESTED);
-                    Log.w("pauseClicked","in4");
+                    Logger.d("pauseClicked in4");
                     downloadHelper.resumeDownload(downloadAbleVideo.getId());
                 }
             }else {

@@ -210,6 +210,7 @@ public interface AppConstants {
     String BUNDLE_SEASON_COUNT="seasonCount";
     String BUNDLE_SEASON_ARRAY="seasonArray";
     String BUNDLE_SEASON_NAME = "seasonName";
+    String BUNDLE_TRAILER_REF_ID = "trailerRefId";
 
     String IS_SIGN_LANG_ENABLE = "signLangParentRefId";
     String SIGN_LANG_ID = "signLangId";

@@ -463,6 +463,7 @@
     <string name="device_platform">แพลตฟอร์ม : %s</string>
     <string name="date_time">วันที่ : %s</string>
     <string name="internet">อินเตอร์เน็ต : https://thaip.bs/helping</string>
+    <string name="trailer">วิดีโอตัวอย่าง</string>
 
 
 </resources>

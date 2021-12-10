@@ -28,4 +28,5 @@ public interface CustomeFields {
     String isSoundTrack = "is_sound_track";
     String isAudioDescription = "is_audio_description";
     String seasonName = "season_name";
+    String trailerReferenceId = "trailer_reference_id";
 }

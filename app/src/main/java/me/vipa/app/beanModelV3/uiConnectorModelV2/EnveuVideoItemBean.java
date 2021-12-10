@@ -72,6 +72,7 @@ public class EnveuVideoItemBean implements Serializable {
     private String isSoundTrack;
     private String isAudioDesc;
     private String seasonName;
+    private String trailerReferenceId;
 
     public String getIs4k() {
         return is4k;
@@ -111,6 +112,14 @@ public class EnveuVideoItemBean implements Serializable {
 
     public void setSeasonName(String seasonName) {
         this.seasonName = seasonName;
+    }
+
+    public String getTrailerReferenceId() {
+        return trailerReferenceId;
+    }
+
+    public void setTrailerReferenceId(String trailerReferenceId) {
+        this.trailerReferenceId = trailerReferenceId;
     }
 
     public String getIscomingsoon() {
@@ -332,6 +341,13 @@ public class EnveuVideoItemBean implements Serializable {
                 final Object obj = t.get(CustomeFields.seasonName);
                 if (obj != null) {
                     this.seasonName = obj.toString();
+                }
+            }
+
+            if (t.containsKey(CustomeFields.trailerReferenceId)) {
+                final Object obj = t.get(CustomeFields.trailerReferenceId);
+                if (obj != null) {
+                    this.trailerReferenceId = obj.toString();
                 }
             }
 
@@ -1355,6 +1371,7 @@ public class EnveuVideoItemBean implements Serializable {
                         ",plans = '" + plans + '\'' +
                         ",publishedDate = '" + publishedDate + '\'' +
                         ",status = '" + status + '\'' +
+                        ",trailerReferenceId = '" + trailerReferenceId + '\'' +
                         "}";
     }
 

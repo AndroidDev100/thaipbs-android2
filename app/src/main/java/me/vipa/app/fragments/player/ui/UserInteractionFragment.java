@@ -17,33 +17,8 @@ import androidx.core.widget.ImageViewCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.google.gson.JsonObject;
 import com.brightcove.player.model.Video;
-import me.vipa.app.Bookmarking.BookmarkingViewModel;
-import me.vipa.app.activities.article.ArticleActivity;
-import me.vipa.app.activities.live.LiveActivity;
-import me.vipa.app.activities.series.ui.SeriesDetailActivity;
-import me.vipa.app.baseModels.BaseBindingFragment;
-import me.vipa.app.enums.DownloadStatus;
-import me.vipa.app.utils.MediaTypeConstants;
-import me.vipa.app.utils.helpers.ActivityTrackers;
-import me.vipa.app.utils.helpers.SharedPrefHelper;
-import me.vipa.app.utils.helpers.downloads.OnDownloadClickInteraction;
-import me.vipa.app.R;
-import me.vipa.app.activities.detail.ui.DetailActivity;
-import me.vipa.app.activities.detail.ui.EpisodeActivity;
-import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
-import me.vipa.app.databinding.DetailWatchlistLikeShareViewBinding;
-import me.vipa.app.fragments.dialog.AlertDialogFragment;
-import me.vipa.app.fragments.dialog.AlertDialogSingleButtonFragment;
-import me.vipa.app.utils.commonMethods.AppCommonMethod;
-import me.vipa.app.utils.constants.AppConstants;
-import me.vipa.app.utils.helpers.CheckInternetConnection;
-
-import me.vipa.app.utils.helpers.StringUtils;
-import me.vipa.app.utils.helpers.ToastHandler;
-import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
-
+import com.google.gson.JsonObject;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -51,6 +26,7 @@ import java.util.Objects;
 
 import io.reactivex.annotations.NonNull;
 import me.vipa.app.Bookmarking.BookmarkingViewModel;
+import me.vipa.app.R;
 import me.vipa.app.activities.article.ArticleActivity;
 import me.vipa.app.activities.detail.ui.DetailActivity;
 import me.vipa.app.activities.detail.ui.EpisodeActivity;
@@ -58,6 +34,22 @@ import me.vipa.app.activities.live.LiveActivity;
 import me.vipa.app.activities.series.ui.SeriesDetailActivity;
 import me.vipa.app.baseModels.BaseBindingFragment;
 import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
+import me.vipa.app.databinding.DetailWatchlistLikeShareViewBinding;
+import me.vipa.app.enums.DownloadStatus;
+import me.vipa.app.fragments.dialog.AlertDialogFragment;
+import me.vipa.app.fragments.dialog.AlertDialogSingleButtonFragment;
+import me.vipa.app.utils.MediaTypeConstants;
+import me.vipa.app.utils.commonMethods.AppCommonMethod;
+import me.vipa.app.utils.constants.AppConstants;
+import me.vipa.app.utils.helpers.ActivityTrackers;
+import me.vipa.app.utils.helpers.CheckInternetConnection;
+import me.vipa.app.utils.helpers.SharedPrefHelper;
+import me.vipa.app.utils.helpers.StringUtils;
+import me.vipa.app.utils.helpers.ToastHandler;
+import me.vipa.app.utils.helpers.downloads.OnDownloadClickInteraction;
+import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
+import me.vipa.brightcovelibrary.Logger;
+import me.vipa.brightcovelibrary.utils.ObjectHelper;
 
 public class UserInteractionFragment extends BaseBindingFragment<DetailWatchlistLikeShareViewBinding> implements AlertDialogFragment.AlertDialogListener, View.OnClickListener {
     private final String TAG = this.getClass().getSimpleName();
@@ -69,6 +61,7 @@ public class UserInteractionFragment extends BaseBindingFragment<DetailWatchlist
     private int likeCounter = 0;
     private boolean loginStatus;
     private EnveuVideoItemBean seriesDetailBean;
+    private String trailerRefId;
     private BookmarkingViewModel bookmarkingViewModel;
     private long mLastClickTime = 0;
     private boolean isloggedout = false;
@@ -167,7 +160,7 @@ public class UserInteractionFragment extends BaseBindingFragment<DetailWatchlist
     }
 
     private void setClickListeners() {
-        // getBinding().llLike.setOnClickListener(this);
+        // llLike.setOnClickListener(this);
         getBinding().shareWith.setOnClickListener(this);
         getBinding().showComments.setOnClickListener(this);
         //  getBinding().watchList.setOnClickListener(this);
@@ -178,7 +171,7 @@ public class UserInteractionFragment extends BaseBindingFragment<DetailWatchlist
         getBinding().pauseDownload.setOnClickListener(this);
         getBinding().setDownloadStatus(DownloadStatus.START);
         if (context instanceof SeriesDetailActivity) {
-            getBinding().down.setVisibility(View.GONE);
+            getBinding().download.setVisibility(View.GONE);
         }
 
     }
@@ -189,6 +182,7 @@ public class UserInteractionFragment extends BaseBindingFragment<DetailWatchlist
             this.likeCounter = 0;
             this.assestId = bundle.getInt(AppConstants.BUNDLE_ASSET_ID);
             seriesDetailBean = (EnveuVideoItemBean) bundle.getSerializable(AppConstants.BUNDLE_SERIES_DETAIL);
+            trailerRefId = bundle.getString(AppConstants.BUNDLE_TRAILER_REF_ID);
             videoId = seriesDetailBean.getBrightcoveVideoId();
             seriesId = bundle.getString(AppConstants.BUNDLE_SERIES_ID);
         }
@@ -203,11 +197,11 @@ public class UserInteractionFragment extends BaseBindingFragment<DetailWatchlist
             resetLike();
             resetWatchList();
         }
-        UIintialization();
+        uiInitialisation();
     }
 
 
-    public void UIintialization() {
+    public void uiInitialisation() {
         likeClick();
         watchListClick();
         //  Toast.makeText(getActivity(), "UI Initiala", Toast.LENGTH_LONG).show();
@@ -228,6 +222,11 @@ public class UserInteractionFragment extends BaseBindingFragment<DetailWatchlist
             /*if(context instanceof  SeriesDetailActivity){
                 ((SeriesDetailActivity) context).openCommentSection();
             }*/
+        });
+
+        setTrailerColor();
+        getBinding().llTrailer.setOnClickListener(v -> {
+
         });
 
     }
@@ -646,6 +645,28 @@ public class UserInteractionFragment extends BaseBindingFragment<DetailWatchlist
             }
         }
 
+    }
+
+    public void setTrailerColor() {
+        Logger.d(seriesDetailBean.getTitle() + " | trailer_reference_id: " + trailerRefId);
+        if (ObjectHelper.isEmpty(trailerRefId)) {
+            getBinding().llTrailer.setVisibility(View.GONE);
+        } else {
+            getBinding().llTrailer.setVisibility(View.VISIBLE);
+        }
+
+        if (KsPreferenceKeys.getInstance().getCurrentTheme().equalsIgnoreCase(
+                AppConstants.LIGHT_THEME)) {
+            getBinding().tvTrailer.setTextColor(
+                    ContextCompat.getColor(getActivity(), R.color.navy_blue));
+            ImageViewCompat.setImageTintList(getBinding().ivTrailer,
+                    ColorStateList.valueOf(getResources().getColor(R.color.navy_blue)));
+        } else {
+            getBinding().tvTrailer.setTextColor(
+                    ContextCompat.getColor(getActivity(), R.color.more_text_color_dark));
+            ImageViewCompat.setImageTintList(getBinding().ivTrailer,
+                    ColorStateList.valueOf(getResources().getColor(R.color.more_text_color_dark)));
+        }
     }
 
 

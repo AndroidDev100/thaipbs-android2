@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -21,21 +22,22 @@
         <import type="me.vipa.app.enums.DownloadStatus" />
     </data>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <HorizontalScrollView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:scrollbars="none">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:id="@+id/watchList"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="40dp"
                 android:layout_gravity="center"
+                android:layout_marginEnd="20dp"
                 android:orientation="vertical">
 
                 <me.vipa.app.utils.CustomProgressBar
@@ -53,7 +55,7 @@
                     android:layout_height="@dimen/watch_ListHeight"
                     android:layout_gravity="center"
                     android:layout_margin="@dimen/NontonSize6"
-                    android:contentDescription="TODO"
+                    android:contentDescription="@string/watchlist"
                     app:srcCompat="?attr/watchlist_icon_color" />
 
                 <TextView
@@ -68,20 +70,12 @@
                     android:textSize="@dimen/font_small" />
             </LinearLayout>
 
-
-        </RelativeLayout>
-
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
             <LinearLayout
                 android:id="@+id/llLike"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginRight="40dp"
+                android:layout_marginEnd="20dp"
                 android:orientation="vertical">
 
                 <me.vipa.app.utils.CustomProgressBar
@@ -99,7 +93,7 @@
                     android:layout_height="@dimen/watchListHeight"
                     android:layout_gravity="center|center_horizontal"
                     android:layout_margin="@dimen/NontonSize8"
-                    android:contentDescription="TODO"
+                    android:contentDescription="@string/like"
                     app:srcCompat="?attr/like_icon" />
 
                 <TextView
@@ -114,57 +108,52 @@
                     android:textSize="@dimen/font_small" />
             </LinearLayout>
 
-        </RelativeLayout>
-
-
-        <LinearLayout
-            android:id="@+id/shareWith"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="@dimen/watchListWidth"
-                android:layout_height="@dimen/watchListHeight"
-                android:layout_gravity="center"
-                android:layout_margin="@dimen/NontonSize8"
-                android:contentDescription="TODO"
-                app:srcCompat="?attr/share_icon" />
-
-            <TextView
+            <LinearLayout
+                android:id="@+id/shareWith"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:fontFamily="@font/sukhumvittadmai_medium"
-                android:gravity="center"
-                android:text="@string/share"
-                android:textColor="?attr/watchlist_icon_text"
-                android:textSize="@dimen/font_small" />
-        </LinearLayout>
+                android:layout_marginEnd="20dp"
+                android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/down"
-            android:orientation="vertical"
-            android:layout_gravity="center"
-            android:layout_marginLeft="40dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="@dimen/watchListWidth"
+                    android:layout_height="@dimen/watchListHeight"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/NontonSize8"
+                    android:contentDescription="@string/share"
+                    app:srcCompat="?attr/share_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/sukhumvittadmai_medium"
+                    android:gravity="center"
+                    android:text="@string/share"
+                    android:textColor="?attr/watchlist_icon_text"
+                    android:textSize="@dimen/font_small" />
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/download"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="20dp"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="gone"
+                tools:visibility="visible">
+
                 <ImageView
                     android:id="@+id/download_video"
                     android:layout_width="@dimen/watchListWidth"
                     android:layout_height="@dimen/watchListHeight"
                     android:layout_gravity="center"
                     android:layout_margin="@dimen/NontonSize8"
-                    android:contentDescription="TODO"
-                    android:visibility='@{downloadStatus==DownloadStatus.START ? View.VISIBLE : View.GONE, default="gone"}'/>
+                    android:contentDescription="@string/download"
+                    android:visibility='@{downloadStatus==DownloadStatus.START ? View.VISIBLE : View.GONE, default="gone"}'
+                    tools:visibility="visible" />
 
                 <me.vipa.app.utils.DownloadProgressBar
                     android:id="@+id/video_downloading"
@@ -182,7 +171,7 @@
                     android:layout_height="@dimen/watchListHeight"
                     android:layout_gravity="center"
                     android:layout_margin="@dimen/NontonSize8"
-                    android:contentDescription="TODO"
+                    android:contentDescription="@string/download"
                     android:visibility='@{downloadStatus==DownloadStatus.DOWNLOADED ? View.VISIBLE : View.GONE, default="gone"}'
                     app:srcCompat="@drawable/download_icon" />
 
@@ -192,7 +181,7 @@
                     android:layout_height="@dimen/watchListHeight"
                     android:layout_gravity="center"
                     android:layout_margin="@dimen/NontonSize8"
-                    android:contentDescription="TODO"
+                    android:contentDescription="@string/pause_download"
                     android:visibility='@{downloadStatus==DownloadStatus.PAUSE ? View.VISIBLE : View.GONE, default="gone"}'
                     app:srcCompat="?attr/pause_download" />
 
@@ -200,8 +189,8 @@
                     android:id="@+id/loading_download"
                     android:layout_width="@dimen/watch_ListWidth"
                     android:layout_height="@dimen/watch_ListWidth"
-                    android:layout_margin="@dimen/NontonSize5"
                     android:layout_gravity="center"
+                    android:layout_margin="@dimen/NontonSize5"
                     android:visibility='@{downloadStatus==DownloadStatus.REQUESTED ? View.VISIBLE : View.GONE, default="gone"}' />
 
                 <TextView
@@ -215,43 +204,64 @@
                     android:textSize="@dimen/font_small" />
             </LinearLayout>
 
-        </LinearLayout>
-
-
-
-
-        <LinearLayout
-            android:id="@+id/show_comments"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/NontonSize15"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <ImageView
-                android:layout_width="@dimen/watchListWidth"
-                android:layout_height="@dimen/watchListHeight"
-                android:layout_gravity="center"
-                android:layout_margin="@dimen/NontonSize8"
-                android:contentDescription="TODO"
-                app:srcCompat="@drawable/chat_icon" />
-
-            <TextView
+            <LinearLayout
+                android:id="@+id/show_comments"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:fontFamily="@font/sukhumvittadmai_medium"
-                android:gravity="center"
-                android:text="@string/comments"
-                android:textColor="@color/white"
-                android:textSize="@dimen/font_small" />
+                android:layout_marginEnd="20dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="@dimen/watchListWidth"
+                    android:layout_height="@dimen/watchListHeight"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/NontonSize8"
+                    android:contentDescription="@string/comments"
+                    app:srcCompat="@drawable/chat_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/sukhumvittadmai_medium"
+                    android:gravity="center"
+                    android:text="@string/comments"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_small" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_trailer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="20dp"
+                android:orientation="vertical"
+                android:visibility="visible"
+                tools:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/iv_trailer"
+                    android:layout_width="@dimen/watchListWidth"
+                    android:layout_height="@dimen/watchListHeight"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/NontonSize8"
+                    android:contentDescription="@string/trailer"
+                    app:srcCompat="@drawable/ic_trailer" />
+
+                <TextView
+                    android:id="@+id/tv_trailer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/sukhumvittadmai_medium"
+                    android:gravity="center"
+                    android:text="@string/trailer"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_small" />
+            </LinearLayout>
         </LinearLayout>
-
-
-    </LinearLayout>
+    </HorizontalScrollView>
 </layout>
-    <!--
-   android:visibility='@{isDownloadable ? View.VISIBLE : View.GONE,default="gone"}'  android:id="@+id/downloadm-->
-
-    <!--app:srcCompat="@drawable/ic_start_download"  android:id="@+id/download_video"-->
