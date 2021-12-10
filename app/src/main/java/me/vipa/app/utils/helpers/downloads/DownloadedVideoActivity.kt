@@ -5,7 +5,6 @@ import android.content.pm.ActivityInfo
 import android.net.Uri
 import android.os.Bundle
 import android.os.Parcelable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import com.brightcove.player.model.Video
@@ -14,9 +13,9 @@ import me.vipa.app.R
 import me.vipa.app.baseModels.BaseBindingActivity
 import me.vipa.app.databinding.ActivityDownloadedVideoBinding
 import me.vipa.app.utils.constants.AppConstants
-import me.vipa.app.utils.cropImage.helpers.Logger
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys
 import me.vipa.brightcovelibrary.BrightcovePlayerFragment
+import me.vipa.brightcovelibrary.Logger
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -46,25 +45,27 @@ class DownloadedVideoActivity : BaseBindingActivity<ActivityDownloadedVideoBindi
        // TODO("Not yet implemented")
     }
 
-
-    private var TAG = this.javaClass.simpleName
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
         actionBar?.hide()
-        var intentData = intent.getParcelableExtra<Video>("DownloadedVideoId")
-        Logger.e(TAG, Gson().toJson(intentData))
-        var transaction = supportFragmentManager.beginTransaction()
+        val intentData = intent.getParcelableExtra<Video>("DownloadedVideoId")
+        Logger.d(Gson().toJson(intentData))
+        val transaction = supportFragmentManager.beginTransaction()
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
-        var playerFragment = BrightcovePlayerFragment()
-        val args = Bundle()
-        args.putBoolean("isOffline", true)
-        args.putInt("from", 1)
-        args.putParcelable(AppConstants.BUNDLE_VIDEO_ID_BRIGHTCOVE, intentData as Parcelable)
-        val value = KsPreferenceKeys.getInstance().getPodId(intentData.id)
-        args.putBoolean("isOfflinePodcast", value)
-        //Log.d("frfrfrfrfr", video.toString() + "")
+        var args = Bundle()
+        val playerFragment = BrightcovePlayerFragment()
+        if (intent.hasExtra(AppConstants.EXTRA_TRAILER_DETAILS)) {
+            args = intent.getBundleExtra(AppConstants.EXTRA_TRAILER_DETAILS) ?: Bundle()
+        } else {
+            args.putBoolean("isOffline", true)
+            args.putInt("from", 1)
+            args.putParcelable(AppConstants.BUNDLE_VIDEO_ID_BRIGHTCOVE, intentData as Parcelable)
+            val value = KsPreferenceKeys.getInstance().getPodId(intentData.id)
+            args.putBoolean("isOfflinePodcast", value)
+        }
+        Logger.d("args: $args")
 
         playerFragment.arguments = args
         transaction.add(R.id.playerFragmentFrame, playerFragment).commit()

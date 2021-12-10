@@ -1,6 +1,7 @@
 package me.vipa.app.fragments.player.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.os.Handler;
@@ -46,6 +47,7 @@ import me.vipa.app.utils.helpers.CheckInternetConnection;
 import me.vipa.app.utils.helpers.SharedPrefHelper;
 import me.vipa.app.utils.helpers.StringUtils;
 import me.vipa.app.utils.helpers.ToastHandler;
+import me.vipa.app.utils.helpers.downloads.DownloadedVideoActivity;
 import me.vipa.app.utils.helpers.downloads.OnDownloadClickInteraction;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 import me.vipa.brightcovelibrary.Logger;
@@ -226,9 +228,19 @@ public class UserInteractionFragment extends BaseBindingFragment<DetailWatchlist
 
         setTrailerColor();
         getBinding().llTrailer.setOnClickListener(v -> {
-
+            showTrailer();
         });
 
+    }
+
+    private void showTrailer() {
+        Bundle args = new Bundle();
+        args.putString(AppConstants.BUNDLE_VIDEO_ID_BRIGHTCOVE, String.valueOf(trailerRefId));
+        args.putBoolean("from_binge", false);
+
+        final Intent intent = new Intent(getActivity(), DownloadedVideoActivity.class);
+        intent.putExtra(AppConstants.EXTRA_TRAILER_DETAILS, args);
+        startActivity(intent);
     }
 
     GestureDetector gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
