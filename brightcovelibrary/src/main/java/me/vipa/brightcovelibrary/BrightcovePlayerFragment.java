@@ -1193,9 +1193,11 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
     }
 
     private String getLanguageLabel(String code) {
-        if (ObjectHelper.isSame(code, "en-US")) {
+        if (ObjectHelper.isEmpty(code)) {
+            return "";
+        } else if (ObjectHelper.isSame(code, "en-US") || ObjectHelper.startWith(code, "en")) {
             return getString(R.string.lang_english);
-        } else if (ObjectHelper.isSame(code, "th-Th")) {
+        } else if (ObjectHelper.isSame(code, "th-Th") || ObjectHelper.startWith(code, "th")) {
             return getString(R.string.lang_thai);
         } else if (ObjectHelper.isSame(code, "zh-Hans")) {
             return getString(R.string.lang_chinese_simp);
@@ -1203,7 +1205,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             return getString(R.string.lang_chinese_trad);
         } else if (ObjectHelper.isSame(code, "de")) {
             return getString(R.string.lang_german);
-        } else if (ObjectHelper.isSame(code, "ja-JP")) {
+        } else if (ObjectHelper.isSame(code, "ja-JP") || ObjectHelper.startWith(code, "ja")) {
             return getString(R.string.lang_japanese);
         } else {
             return code;

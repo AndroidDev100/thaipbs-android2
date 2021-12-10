@@ -5,6 +5,7 @@ import android.widget.TextView;
 
 import java.lang.reflect.Array;
 import java.util.Collection;
+import java.util.Locale;
 import java.util.Map;
 
 public final class ObjectHelper {
@@ -68,5 +69,10 @@ public final class ObjectHelper {
 
     public static int getSize(Collection<?> collection) {
         return isEmpty(collection) ? 0 : collection.size();
+    }
+
+    public static boolean startWith(String str, String startsWith) {
+        if (isEmpty(str) || isEmpty(startsWith)) return false;
+        return str.toLowerCase(Locale.ROOT).startsWith(startsWith.toLowerCase(Locale.ROOT));
     }
 }
