@@ -10,8 +10,8 @@
 <!--    <string name="low_description">Basic video quality, less data usage</string>-->
 <!--    <string name="medium_description">Standard video quality, moderate data usage</string>-->
 <!--    <string name="high_description">Best video quality, high data usage</string>-->
-    <string name="audio_track_selection">Audio Track Selection</string>
-    <string name="caption_selection">Caption Selection</string>
+    <string name="audio_track_selection">Select Audio Tracks</string>
+    <string name="caption_selection">Select Subtitles</string>
     <string name="ok">Ok</string>
     <string name="subtitles">Subtitles</string>
     <string name="audio">Audio</string>

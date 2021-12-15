@@ -10,8 +10,8 @@
 <!--    <string name="low_description">คุณภาพวิดีโอขั้นพื้นฐานและใช้ข้อมูลน้อย</string>-->
 <!--    <string name="medium_description">คุณภาพวิดีโอมาตราฐานและใช้ข้อมูลปานกลาง</string>-->
 <!--    <string name="high_description">คุณภาพวิดีโอที่ดีที่สุดและใช้ข้อมูลสูง</string>-->
-    <string name="audio_track_selection">การเลือกแทร็กเสียง</string>
-    <string name="caption_selection">การเลือกคำบรรยายภาพ</string>
+    <string name="audio_track_selection">เลือกแทร็กเสียง</string>
+    <string name="caption_selection">เลือกคำบรรยาย</string>
     <string name="ok">ตกลง</string>
     <string name="subtitles">คำบรรยาย</string>
     <string name="audio">เสียง</string>
@@ -42,7 +42,7 @@
     <string name="lang_chinese_trad">จีน (ดั้งเดิม)</string>
     <string name="lang_german">เยอรมัน</string>
     <string name="lang_japanese">ญี่ปุ่น</string>
-    <string name="none">None</string>
+    <string name="none">ปิด</string>
 
 
 </resources>

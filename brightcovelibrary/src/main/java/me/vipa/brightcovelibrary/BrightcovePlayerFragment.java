@@ -1185,7 +1185,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         for (int i = 0, audioTracksLength = audioTracks.length; i < audioTracksLength; i++) {
             labeledTrack[i] = getLanguageLabel(audioTracks[i].toString());
         }
-        alertDialog.setTitle(mActivity.getResources().getString(R.string.audio_track_selection)).setSingleChoiceItems(labeledTrack, currentAudioLanguage, (dialog, which) -> {
+        alertDialog.setTitle(getString(R.string.audio_track_selection)).setSingleChoiceItems(labeledTrack, currentAudioLanguage, (dialog, which) -> {
             currentAudioLanguage = which;
             selectAudioTrack(which);
 
@@ -1450,7 +1450,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             availableCapitonsListDisplay[i] = getLanguageLabel(pair.second.language());
         }
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(mActivity, R.style.CustomDialogTheme);
-        alertDialog.setTitle(mActivity.getResources().getString(R.string.caption_selection)).setSingleChoiceItems(availableCapitonsListDisplay, currentCaptionLanguage, (dialog, which) -> {
+        alertDialog.setTitle(getString(R.string.caption_selection)).setSingleChoiceItems(availableCapitonsListDisplay, currentCaptionLanguage, (dialog, which) -> {
             currentCaptionLanguage = which;
             selectCaptions(currentCaptionLanguage);
         }).setPositiveButton(mActivity.getResources().getString(R.string.ok), (dialog, which) -> dialog.dismiss()).show();

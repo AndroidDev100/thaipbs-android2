@@ -966,7 +966,6 @@ public class PlayerControlsFragment extends Fragment {
             callHandler();
             dialogQuality = new Dialog(getActivity());
             dialogQuality.setContentView(R.layout.layout_dialog_settings);
-            dialogQuality.setTitle("Video Quality");
             recycleview = dialogQuality.findViewById(R.id.recycleview);
             recycleview.setLayoutManager(new LinearLayoutManager(getActivity()));
             playerCallbacks.bitRateRequest();
