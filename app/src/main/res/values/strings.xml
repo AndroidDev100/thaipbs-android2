@@ -362,7 +362,7 @@
     <string name="heading_live">Live</string>
     <string name="heading_shows">Shows</string>
     <string name="heading_episodes">Episodes</string>
-    <string name="heading_program">Program</string>
+    <string name="heading_program">Programs</string>
     <string name="live_tag">•Live</string>
     <string name="check_connection">Check Connection</string>
     <string name="password_regex_error">Password is not strong enough</string>
