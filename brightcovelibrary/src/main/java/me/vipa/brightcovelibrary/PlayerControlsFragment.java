@@ -93,6 +93,7 @@ public class PlayerControlsFragment extends Fragment {
     private String videoType = "1";
     private boolean isPipEnabled = false;
     private boolean isOffline = false;
+    private boolean fromTrailer = false;
     private LinearLayout settingLay;
     private CountDownTimer mTimer;
     private boolean isSignPlaying = false;
@@ -734,6 +735,10 @@ public class PlayerControlsFragment extends Fragment {
         } else
             fullscreen.setVisibility(View.VISIBLE);
 
+        if (fromTrailer) {
+            fullscreen.setVisibility(View.GONE);
+        }
+
         seekBar.setEnabled(true);
 
         CastButtonFactory.setUpMediaRouteButton(getActivity(), media_route_button);
@@ -751,9 +756,18 @@ public class PlayerControlsFragment extends Fragment {
                 if (from == 1) {
                     fullscreen.setVisibility(View.GONE);
                 }
+            } else if (fromTrailer) {
+                fullscreen.setVisibility(View.GONE);
             } else {
                 fullscreen.setVisibility(View.VISIBLE);
             }
+        }
+    }
+
+    public void setFromTrailer(boolean fromTrailer) {
+        this.fromTrailer = fromTrailer;
+        if (fullscreen != null && fromTrailer) {
+            fullscreen.setVisibility(View.GONE);
         }
     }
 

@@ -31,7 +31,6 @@ import android.os.Looper;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.Pair;
 import android.view.Display;
 import android.view.Gravity;
@@ -121,6 +120,7 @@ import me.vipa.brightcovelibrary.utils.ObjectHelper;
 
 public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.BrightcovePlayerFragment implements PlayerControlsFragment.OnFragmentInteractionListener, PlayerCallbacks, NetworkChangeReceiver.ConnectivityReceiverListener, PhoneListenerCallBack, BackPressCallBack, ChromeCastCallback {
     private static final String PROPERTY_APPLICATION_ID = "com.vipa.app";
+    public static final String EXTRA_FROM_TRAILER = "extra_from_trailer";
     private static final String TAG = "BrightcovePlayer";
     private static final String VIDEO_VOD = "0";
     private static final String VIDEO_LIVE_TV = "1";
@@ -136,6 +136,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
     private boolean bingeWatch = false;
     private int bingeWatchTimer = 0;
     private GoogleIMAComponent googleIMAComponent;
+    private boolean fromTrailer = false;
     String videoId = "";
     String assetType = "";
     String selected_track = "";
@@ -197,6 +198,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             try {
 
                 // Logger.w("IMATAG " + videoId);
+                fromTrailer = bundle.getBoolean(EXTRA_FROM_TRAILER, false);
                 assetType = bundle.getString("assetType");
                 selected_track = bundle.getString("selected_track");
                 //  Logger.e("Selectedtrack " + selected_track);
@@ -239,17 +241,19 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                     isOfflinePodcast = bundle.getBoolean("isOfflinePodcast");
                     from = bundle.getInt("from");
                     currentVideo = bundle.getParcelable("videoId");
-                    if (isOfflineVideo && mActivity != null) {
-                        if (from == 1) {
-                            mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
-                        }
+                }
+
+                if ((isOfflineVideo || fromTrailer) && mActivity != null) {
+                    if (from == 1) {
+                        Logger.d("setting landscape");
+                        mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
                     }
                 } else {
                     if (mActivity != null) {
+                        Logger.d("setting orientation no sensor");
                         mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
                     }
                 }
-
                 if (isOfflineVideo) {
 
                 } else {
@@ -376,7 +380,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (isOfflineVideo) {
+        if (isOfflineVideo || fromTrailer) {
             FrameLayout.LayoutParams captionParams = (FrameLayout.LayoutParams) container.getLayoutParams();
             captionParams.bottomMargin = (int) getResources().getDimension(R.dimen.offline_player_padding);
             captionParams.topMargin = (int) getResources().getDimension(R.dimen.offline_player_padding);
@@ -413,14 +417,14 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         }
         if (isOfflineVideo) {
             setPlayerWithCallBacks(true, "");
-            if (mActivity != null) {
-                if (from == 1) {
-                    mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-                    mActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-                }
-            }
         } else {
             setPlayerWithCallBacks(false, videoId);
+        }
+
+        if ((isOfflineVideo || fromTrailer) && mActivity != null && from == 1) {
+            Logger.d("setting landscape");
+            mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            mActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
 
         if (VIDEO_VOD.equals(videoType)) {
@@ -528,7 +532,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                     if (playerControlsFragment != null) {
                         playerControlsFragment.sendTapCallBack(false);
                         playerControlsFragment.setIsOffline(false, from);
-
+                        playerControlsFragment.setFromTrailer(fromTrailer);
                     }
 
 
@@ -955,7 +959,9 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             public void processEvent(Event event) {
                 if (!isOffline) {
                     getSelectedTrack();
-                    mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+                    if (!fromTrailer) {
+                        mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+                    }
                 }
             }
         });
@@ -1530,7 +1536,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
     private void checkBackButtonClickOrientation() {
 
         int orientation = getResources().getConfiguration().orientation;
-        if (isOfflineVideo) {
+        if (isOfflineVideo || fromTrailer) {
             mActivity.finish();
         } else {
             if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -1566,7 +1572,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
 
     private void _isOrienataion(int i, ImageView id) {
         int orientation = mActivity.getResources().getConfiguration().orientation;
-        if (isOfflineVideo) {
+        if (isOfflineVideo || fromTrailer) {
             mActivity.finish();
         }
         {
@@ -1743,13 +1749,13 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
 
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
-        Log.d("sbdbhdbsh",exitFromPIP+"");
+        Logger.d("sbdbhdbsh " + exitFromPIP+"");
         if (!isCastConnected) {
             super.onConfigurationChanged(newConfig);
-            if (!isOfflineVideo) {
+            if (!isOfflineVideo || !fromTrailer) {
                 Utils.updateLanguage(applicationLanguage, mActivity);
                 if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                    Log.d("sbdbhdbsh","enter1");
+                    Logger.d("sbdbhdbsh " + "enter1");
                     mActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
                     if (playerControlsFragment != null) {
                         playerControlsFragment.sendLandscapeCallback();
@@ -1777,7 +1783,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                     params.setMargins(0, 40, 0, 0);
                     ivWatermark.setLayoutParams(params);
                 } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-                    Log.d("sbdbhdbsh","enter2");
+                    Logger.d("sbdbhdbsh " + "enter2");
                     if (playerControlsFragment != null) {
                         playerControlsFragment.sendPortraitCallback();
                     }

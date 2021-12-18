@@ -50,6 +50,7 @@ import me.vipa.app.utils.helpers.ToastHandler;
 import me.vipa.app.utils.helpers.downloads.DownloadedVideoActivity;
 import me.vipa.app.utils.helpers.downloads.OnDownloadClickInteraction;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
+import me.vipa.brightcovelibrary.BrightcovePlayerFragment;
 import me.vipa.brightcovelibrary.Logger;
 import me.vipa.brightcovelibrary.utils.ObjectHelper;
 
@@ -237,6 +238,10 @@ public class UserInteractionFragment extends BaseBindingFragment<DetailWatchlist
         Bundle args = new Bundle();
         args.putString(AppConstants.BUNDLE_VIDEO_ID_BRIGHTCOVE, String.valueOf(trailerRefId));
         args.putBoolean("from_binge", false);
+        args.putBoolean(BrightcovePlayerFragment.EXTRA_FROM_TRAILER, true);
+        args.putInt("from", 1);
+        args.putString("selected_lang", KsPreferenceKeys.getInstance().getAppLanguage());
+        args.putString("selected_track", KsPreferenceKeys.getInstance().getQualityName());
 
         final Intent intent = new Intent(getActivity(), DownloadedVideoActivity.class);
         intent.putExtra(AppConstants.EXTRA_TRAILER_DETAILS, args);
