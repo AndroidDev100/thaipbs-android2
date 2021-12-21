@@ -60,12 +60,14 @@ android {
             versionCode 9
             versionName "1.8"
             applicationId "me.vipa.app.dev"
+            buildConfigField "String", "MOENGAGE_APP_ID", "\"YS5121TU5BI4PSBU3T7CK4AM\""
         }
         prod {
             dimension 'default'
             versionCode 1031
             versionName "1.1.31"
             applicationId "me.vipa.app"
+            buildConfigField "String", "MOENGAGE_APP_ID", "\"YS5121TU5BI4PSBU3T7CK4AM\""
         }
     }
 
@@ -202,6 +204,10 @@ dependencies {
     implementation project(':enveusdk')
    // implementation project(':flutter')
 
+    implementation("androidx.lifecycle:lifecycle-process:2.4.0")
+    implementation("com.moengage:moe-android-sdk:11.4.02")
+    implementation "com.moengage:addon-inbox:6.0.2"
+    implementation("com.moengage:inbox-core:1.0.00")
 }
 
 // Apply the Performance Monitoring plugin

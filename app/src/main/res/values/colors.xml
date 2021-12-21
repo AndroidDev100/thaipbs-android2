@@ -141,5 +141,6 @@
 
     <color name="grey_heading">#999999</color>
     <color name="link">#007AFF</color>
+    <color name="alert_badge">#EB5757</color>
 
 </resources>

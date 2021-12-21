@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
 
     <LinearLayout
@@ -24,7 +25,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/toolbarBackLeft"
+                    android:layout_marginStart="@dimen/toolbarBackLeft"
                     android:background="?attr/toolbar_back_arrow"
                     android:contentDescription="TODO" />
             </LinearLayout>
@@ -34,8 +35,8 @@
                 android:id="@+id/title_text"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/toolbarTitleMargin"
-                android:layout_toRightOf="@+id/back_layout"
+                android:layout_marginStart="@dimen/toolbarTitleMargin"
+                android:layout_toEndOf="@+id/back_layout"
                 android:gravity="center_vertical"
                 android:visibility="gone">
 
@@ -62,25 +63,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/toolbarHomeLeft"
-                    android:layout_toRightOf="@+id/back_layout"
+                    android:layout_marginStart="@dimen/toolbarHomeLeft"
+                    android:layout_toEndOf="@+id/back_layout"
                     android:contentDescription="TODO"
                     android:fontFamily="@font/sukhumvittadmai_normal"
                     android:text="enveu"
                     android:textColor="@color/moretitlecolor"
                     android:textSize="32sp"
                     android:visibility="gone" />
-
-                <!--<ImageView
-                    android:id="@+id/home_icon"
-                    android:layout_width="150dp"
-                    android:layout_height="12dp"
-                    android:visibility="visible"
-                    android:layout_marginLeft="@dimen/toolbarHomeLeft"
-                    android:layout_toRightOf="@+id/back_layout"
-
-                    android:contentDescription="TODO"
-                    />-->
 
                 <ImageView
                     android:id="@+id/home_icon"
@@ -89,7 +79,7 @@
                     android:layout_gravity="center"
                     android:visibility="gone"
                     android:background="@drawable/vipalogo180"
-                    android:layout_toRightOf="@+id/back_layout"
+                    android:layout_toEndOf="@+id/back_layout"
                     android:contentDescription="TODO"
                     />
                 <ImageView
@@ -99,7 +89,7 @@
                     android:layout_gravity="center"
                     android:visibility="gone"
                     android:background="@drawable/vipa_logo_kids"
-                    android:layout_toRightOf="@+id/back_layout"
+                    android:layout_toEndOf="@+id/back_layout"
                     android:contentDescription="TODO"
                     />
 
@@ -111,9 +101,9 @@
                 android:layout_centerVertical="true"
                 android:gravity="center"
                 android:visibility="gone"
-                android:layout_marginRight="@dimen/_6sdp"
+                android:layout_marginEnd="@dimen/_6sdp"
                 android:orientation="horizontal"
-                android:layout_toLeftOf="@+id/llSearchIcon">
+                android:layout_toStartOf="@+id/llSearchIcon">
 
                 <androidx.mediarouter.app.MediaRouteButton
                     android:id="@+id/media_route_button"
@@ -130,22 +120,92 @@
                 android:id="@+id/llSearchIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:paddingLeft="@dimen/toolbarSearchLeft"
-                android:paddingRight="@dimen/toolbarSearchRight">
+                android:paddingStart="@dimen/toolbarSearchLeft"
+                android:paddingEnd="@dimen/toolbarSearchRight">
 
                 <ImageView
                     android:id="@+id/search_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginRight="@dimen/NontonSize10"
-                    android:contentDescription="TODO"
+                    android:contentDescription="@string/search_mv_hub"
                     android:transitionName="imageMain"
                     android:background="?attr/search_icon_background"
                     app:tint="@color/white" />
             </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_notification"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="4dp"
+                android:layout_toStartOf="@id/llSearchIcon"
+                android:paddingStart="@dimen/toolbarSearchLeft"
+                android:paddingEnd="@dimen/toolbarSearchRight"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/iv_notification"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/notification"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_notification"
+                    app:tint="@color/white" />
+
+                <TextView
+                    android:id="@+id/tv_notification"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:background="@drawable/alert_badge"
+                    android:fontFamily="@font/sukhumvittadmai_bold"
+                    android:maxLength="2"
+                    android:singleLine="true"
+                    android:textColor="@color/white"
+                    android:textSize="8sp"
+                    android:visibility="gone"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    app:layout_constraintCircle="@id/iv_notification"
+                    app:layout_constraintCircleAngle="45"
+                    app:layout_constraintCircleRadius="8dp"
+                    app:layout_constraintEnd_toEndOf="@id/iv_notification"
+                    app:layout_constraintTop_toTopOf="@id/iv_notification"
+                    tools:ignore="SmallSp"
+                    tools:text="99+"
+                    tools:visibility="visible" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="4dp"
+                android:paddingStart="@dimen/toolbarSearchLeft"
+                android:paddingEnd="@dimen/toolbarSearchRight"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/iv_delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/delete"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_delete"
+                    app:tint="@color/white" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
             <LinearLayout
                 android:id="@+id/clear_text"
                 android:layout_width="wrap_content"

@@ -101,6 +101,7 @@
 
         <item name="toolbar_background">@color/toolbar_bg_color_light</item>
         <item name="search_icon_background">@drawable/search</item>
+        <item name="toolbar_icon_notification">@drawable/ic_notification</item>
         <item name="more_layout_background_color">@color/white</item>
         <item name="more_recyclerview_background_color">@color/white</item>
         <item name="more_item_text_color">@color/black</item>

@@ -11,7 +11,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
-    />
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
@@ -30,6 +29,7 @@
         android:supportsRtl="true"
         android:theme="@style/MyMaterialTheme"
         android:usesCleartextTraffic="true"
+        android:fullBackupContent="@xml/backup_descriptor"
         tools:replace="allowBackup">
         <activity android:name=".activities.search.ui.FilterIconActivity"></activity>
         <activity android:name=".activities.ManageAccount.UI.ManageAccount"></activity>

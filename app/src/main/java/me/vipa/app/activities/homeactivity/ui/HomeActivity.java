@@ -1,66 +1,58 @@
  package me.vipa.app.activities.homeactivity.ui;
 
-import static me.vipa.app.utils.helpers.carousel.Slider.TAG;
+ import android.annotation.SuppressLint;
+ import android.os.Bundle;
+ import android.os.Handler;
+ import android.view.LayoutInflater;
+ import android.view.MenuItem;
+ import android.view.View;
 
-import android.annotation.SuppressLint;
-import android.os.Bundle;
-import android.os.Handler;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
+ import androidx.annotation.NonNull;
+ import androidx.fragment.app.Fragment;
+ import androidx.fragment.app.FragmentManager;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
+ import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
+ import com.google.android.material.bottomnavigation.BottomNavigationView;
+ import com.google.android.material.navigation.NavigationBarView;
+ import com.google.android.material.snackbar.Snackbar;
+ import com.google.android.play.core.appupdate.AppUpdateInfo;
+ import com.google.android.play.core.install.InstallStateUpdatedListener;
+ import com.google.android.play.core.install.model.AppUpdateType;
+ import com.google.android.play.core.install.model.InstallStatus;
 
-import com.google.android.material.navigation.NavigationBarView;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.play.core.appupdate.AppUpdateInfo;
-import com.google.android.play.core.install.InstallStateUpdatedListener;
-import com.google.android.play.core.install.model.AppUpdateType;
-import com.google.android.play.core.install.model.InstallStatus;
-import me.vipa.app.activities.usermanagment.ui.LoginActivity;
-import me.vipa.app.baseModels.BaseBindingActivity;
-import me.vipa.app.R;
-import me.vipa.app.callbacks.commonCallbacks.FragmentClickNetwork;
-import me.vipa.app.callbacks.commonCallbacks.HomeClickNetwork;
-import me.vipa.app.callbacks.commonCallbacks.OriginalFragmentClick;
-import me.vipa.app.callbacks.commonCallbacks.PremiumClick;
-import me.vipa.app.callbacks.commonCallbacks.SinetronClick;
-import me.vipa.app.databinding.ActivityMainBinding;
-import me.vipa.app.fragments.home.ui.HomeFragment;
-import me.vipa.app.fragments.more.ui.MoreFragment;
-import me.vipa.app.fragments.news.ui.NewsFragment;
-import me.vipa.app.fragments.shows.ui.ShowsFragment;
-import me.vipa.app.fragments.movies.ui.MovieFragment;
-import me.vipa.app.utils.commonMethods.AppCommonMethod;
-import me.vipa.app.utils.constants.AppConstants;
-import me.vipa.app.utils.cropImage.helpers.Logger;
-import me.vipa.app.utils.helpers.ActivityTrackers;
-import me.vipa.app.utils.helpers.AnalyticsController;
+ import org.jetbrains.annotations.NotNull;
 
-import me.vipa.app.utils.helpers.SharedPrefHelper;
-import me.vipa.app.utils.helpers.StringUtils;
-import me.vipa.app.utils.helpers.ToolBarHandler;
-import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
-import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.bottomnavigation.LabelVisibilityMode;
-
-import me.vipa.app.utils.helpers.ksPreferenceKeys.KidsModeSinglton;
-import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
-import me.vipa.app.utils.inAppUpdate.AppUpdateCallBack;
-import me.vipa.app.utils.inAppUpdate.ApplicationUpdateManager;
-
-import org.jetbrains.annotations.NotNull;
-
-import me.vipa.app.activities.usermanagment.ui.LoginActivity;
-import me.vipa.app.baseModels.BaseBindingActivity;
+ import me.vipa.app.R;
+ import me.vipa.app.activities.usermanagment.ui.LoginActivity;
+ import me.vipa.app.baseModels.BaseBindingActivity;
+ import me.vipa.app.callbacks.commonCallbacks.FragmentClickNetwork;
+ import me.vipa.app.callbacks.commonCallbacks.HomeClickNetwork;
+ import me.vipa.app.callbacks.commonCallbacks.OriginalFragmentClick;
+ import me.vipa.app.callbacks.commonCallbacks.PremiumClick;
+ import me.vipa.app.callbacks.commonCallbacks.SinetronClick;
+ import me.vipa.app.databinding.ActivityMainBinding;
+ import me.vipa.app.fragments.home.ui.HomeFragment;
+ import me.vipa.app.fragments.more.ui.MoreFragment;
+ import me.vipa.app.fragments.movies.ui.MovieFragment;
+ import me.vipa.app.fragments.news.ui.NewsFragment;
+ import me.vipa.app.fragments.shows.ui.ShowsFragment;
+ import me.vipa.app.manager.MoEngageNotificationManager;
+ import me.vipa.app.utils.commonMethods.AppCommonMethod;
+ import me.vipa.app.utils.constants.AppConstants;
+ import me.vipa.app.utils.helpers.ActivityTrackers;
+ import me.vipa.app.utils.helpers.AnalyticsController;
+ import me.vipa.app.utils.helpers.SharedPrefHelper;
+ import me.vipa.app.utils.helpers.StringUtils;
+ import me.vipa.app.utils.helpers.ToolBarHandler;
+ import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
+ import me.vipa.app.utils.helpers.ksPreferenceKeys.KidsModeSinglton;
+ import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
+ import me.vipa.app.utils.inAppUpdate.AppUpdateCallBack;
+ import me.vipa.app.utils.inAppUpdate.ApplicationUpdateManager;
+ import me.vipa.brightcovelibrary.Logger;
 
 
-public class HomeActivity extends BaseBindingActivity<ActivityMainBinding> implements MoreFragment.MoreFragmentInteraction, AppUpdateCallBack {
+ public class HomeActivity extends BaseBindingActivity<ActivityMainBinding> implements MoreFragment.MoreFragmentInteraction, AppUpdateCallBack {
 
     public Fragment active;
     private KsPreferenceKeys preference;
@@ -220,10 +212,7 @@ public class HomeActivity extends BaseBindingActivity<ActivityMainBinding> imple
 
         }
 
-
-
-
-
+        setUnreadNotificationCount();
 
         preference = KsPreferenceKeys.getInstance();
         callBinding();
@@ -254,7 +243,7 @@ public class HomeActivity extends BaseBindingActivity<ActivityMainBinding> imple
     }
 
     private void getDeviceSuperInfo() {
-        Log.i(TAG, "getDeviceSuperInfo");
+        Logger.i("getDeviceSuperInfo");
 
         try {
 
@@ -277,17 +266,27 @@ public class HomeActivity extends BaseBindingActivity<ActivityMainBinding> imple
             s += "\n USER: "            + android.os.Build.USER;
             s += "\n HOST: "            + android.os.Build.HOST;
 
-
-            Log.i(TAG + " | Device Info > ", s);
-
+            Logger.i("Device Info > " + s);
         } catch (Exception e) {
-            Log.e(TAG, "Error getting Device INFO");
+            Logger.d("Error getting Device INFO");
         }
 
     }//end getDeviceSuperInfo
 
     private void setupCrashlytics() {
         throw new RuntimeException("Test crash");
+    }
+
+    private void setUnreadNotificationCount() {
+        MoEngageNotificationManager.INSTANCE.getUnreadCount().observe(this, value -> {
+            if (value > 0) {
+                getBinding().toolbar.tvNotification.setText(String.valueOf(value));
+                getBinding().toolbar.tvNotification.setVisibility(View.VISIBLE);
+            } else {
+                getBinding().toolbar.tvNotification.setText("");
+                getBinding().toolbar.tvNotification.setVisibility(View.GONE);
+            }
+        });
     }
 
     private void callBinding() {
@@ -309,6 +308,7 @@ public class HomeActivity extends BaseBindingActivity<ActivityMainBinding> imple
 
     public void switchToHomeFragment() {
         getBinding().toolbar.llSearchIcon.setVisibility(View.VISIBLE);
+        getBinding().toolbar.clNotification.setVisibility(View.VISIBLE);
         fragmentManager.beginTransaction().hide(active).show(homeFragment).commit();
         active = homeFragment;
         ((HomeFragment)homeFragment).updateList();
@@ -317,6 +317,7 @@ public class HomeActivity extends BaseBindingActivity<ActivityMainBinding> imple
 
     public void switchToOriginalFragment() {
         getBinding().toolbar.llSearchIcon.setVisibility(View.VISIBLE);
+        getBinding().toolbar.clNotification.setVisibility(View.INVISIBLE);
         fragmentManager.beginTransaction().hide(active).show(originalFragment).commit();
         active = originalFragment;
 
@@ -325,6 +326,7 @@ public class HomeActivity extends BaseBindingActivity<ActivityMainBinding> imple
 
     public void switchToMoreFragment() {
         getBinding().toolbar.llSearchIcon.setVisibility(View.INVISIBLE);
+        getBinding().toolbar.clNotification.setVisibility(View.INVISIBLE);
         fragmentManager.beginTransaction().hide(active).show(moreFragment).commit();
         active = moreFragment;
 
@@ -333,6 +335,7 @@ public class HomeActivity extends BaseBindingActivity<ActivityMainBinding> imple
 
     public void switchToPremiumFragment() {
         getBinding().toolbar.llSearchIcon.setVisibility(View.VISIBLE);
+        getBinding().toolbar.clNotification.setVisibility(View.INVISIBLE);
         fragmentManager.beginTransaction().hide(active).show(premiumFragment).commit();
         active = premiumFragment;
 
@@ -340,6 +343,7 @@ public class HomeActivity extends BaseBindingActivity<ActivityMainBinding> imple
 
     public void switchToSinetronFragment() {
         getBinding().toolbar.llSearchIcon.setVisibility(View.VISIBLE);
+        getBinding().toolbar.clNotification.setVisibility(View.INVISIBLE);
         fragmentManager.beginTransaction().hide(active).show(sinetronFragment).commit();
         active = sinetronFragment;
 
@@ -366,6 +370,7 @@ public class HomeActivity extends BaseBindingActivity<ActivityMainBinding> imple
             navigation.getMenu().findItem(R.id.navigation_sinetron).setVisible(false);
         }
         else {
+            getBinding().toolbar.clNotification.setVisibility(View.VISIBLE);
             getBinding().toolbar.rlToolBar.setBackgroundColor(HomeActivity.this.getResources().getColor(R.color.black));
             getBinding().toolbar.homeIconKids.setVisibility(View.GONE);
             getBinding().toolbar.homeIcon.setVisibility(View.VISIBLE);
@@ -390,7 +395,7 @@ public class HomeActivity extends BaseBindingActivity<ActivityMainBinding> imple
     @Override
     protected void onResume() {
         super.onResume();
-        Log.e("onResume","onResume");
+        Logger.d("onResume");
         AppCommonMethod.resetFilter(HomeActivity.this);
         if (preference == null)
             preference = KsPreferenceKeys.getInstance();

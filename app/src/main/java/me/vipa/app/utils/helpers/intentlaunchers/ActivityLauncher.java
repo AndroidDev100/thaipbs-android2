@@ -1,20 +1,19 @@
 package me.vipa.app.utils.helpers.intentlaunchers;
 
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
 import android.app.Activity;
 import android.app.TaskStackBuilder;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.google.gson.Gson;
+
 import me.vipa.app.activities.ManageAccount.UI.ManageAccount;
 import me.vipa.app.activities.OtherApplication.UI.OtherApplication;
-import me.vipa.app.activities.contentPreference.UI.ContentPreference;
-import me.vipa.app.activities.onBoarding.UI.OnBoarding;
-import me.vipa.app.activities.onBoarding.UI.OnBoardingTab;
-import me.vipa.app.activities.profile.ui.AvatarImageActivity;
-import me.vipa.app.activities.usermanagment.ui.SignUpThirdPage;
-import me.vipa.app.utils.helpers.ADHelper;
-import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
 import me.vipa.app.activities.article.ArticleActivity;
+import me.vipa.app.activities.contentPreference.UI.ContentPreference;
 import me.vipa.app.activities.detail.ui.DetailActivity;
 import me.vipa.app.activities.detail.ui.EpisodeActivity;
 import me.vipa.app.activities.downloads.MyDownloads;
@@ -23,27 +22,28 @@ import me.vipa.app.activities.listing.listui.ListActivity;
 import me.vipa.app.activities.listing.ui.GridActivity;
 import me.vipa.app.activities.live.LiveActivity;
 import me.vipa.app.activities.notification.ui.NotificationActivity;
+import me.vipa.app.activities.onBoarding.UI.OnBoarding;
+import me.vipa.app.activities.onBoarding.UI.OnBoardingTab;
+import me.vipa.app.activities.profile.ui.AvatarImageActivity;
 import me.vipa.app.activities.profile.ui.ProfileActivityNew;
 import me.vipa.app.activities.search.ui.ActivityResults;
+import me.vipa.app.activities.search.ui.ActivitySearch;
 import me.vipa.app.activities.series.ui.SeriesDetailActivity;
 import me.vipa.app.activities.usermanagment.ui.ChangePasswordActivity;
 import me.vipa.app.activities.usermanagment.ui.ForceLoginFbActivity;
 import me.vipa.app.activities.usermanagment.ui.ForgotPasswordActivity;
 import me.vipa.app.activities.usermanagment.ui.LoginActivity;
 import me.vipa.app.activities.usermanagment.ui.SignUpActivity;
+import me.vipa.app.activities.usermanagment.ui.SignUpThirdPage;
 import me.vipa.app.activities.usermanagment.ui.SkipActivity;
 import me.vipa.app.activities.watchList.ui.WatchListActivity;
 import me.vipa.app.beanModel.responseModels.SignUp.DataModel;
 import me.vipa.app.utils.constants.AppConstants;
-import me.vipa.app.utils.cropImage.helpers.Logger;
-import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
-import me.vipa.app.activities.search.ui.ActivitySearch;
-
+import me.vipa.app.utils.helpers.ADHelper;
 import me.vipa.app.utils.helpers.StringUtils;
-import com.google.gson.Gson;
-
-import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
-import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
+import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
+import me.vipa.brightcovelibrary.Logger;
 
 
 public class ActivityLauncher {
@@ -206,7 +206,7 @@ public class ActivityLauncher {
         intent.setFlags(FLAG_ACTIVITY_CLEAR_TOP);
         KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
         preference.setAppPrefAssetId(0);
-        Logger.e("JSON SENT",new Gson().toJson(args));
+        Logger.d("JSON SENT: " + new Gson().toJson(args));
         if (ADHelper.getInstance(activity).getPipAct()!=null){
             ADHelper.getInstance(activity).getPipAct().moveTaskToBack(false);
             ADHelper.getInstance(activity).getPipAct().finish();
@@ -236,7 +236,7 @@ public class ActivityLauncher {
         intent.setFlags(FLAG_ACTIVITY_CLEAR_TOP);
         KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
         preference.setAppPrefAssetId(0);
-        Logger.e("JSON SENT",new Gson().toJson(args));
+        Logger.d("JSON SENT: " + new Gson().toJson(args));
         activity.startActivity(intent);
     }
 

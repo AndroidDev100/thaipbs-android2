@@ -13,15 +13,14 @@ import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.os.Build;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
-import me.vipa.app.activities.splash.ui.ActivitySplash;
-import me.vipa.app.utils.cropImage.helpers.Logger;
-import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
-import me.vipa.app.R;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.google.gson.Gson;
+import com.moengage.firebase.MoEFireBaseHelper;
+import com.moengage.pushbase.MoEPushHelper;
 
 import org.json.JSONObject;
 
@@ -29,55 +28,53 @@ import java.io.IOException;
 import java.net.URL;
 
 import me.vipa.app.activities.splash.ui.ActivitySplash;
-import me.vipa.app.utils.cropImage.helpers.Logger;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
+import me.vipa.brightcovelibrary.Logger;
 
 public class MvHubPlusMessagingService extends FirebaseMessagingService {
     String assetId,assetType;
     @Override
-    public void onNewToken(String s) {
+    public void onNewToken(@NonNull String s) {
         super.onNewToken(s);
-        Logger.e("onNEwToken", s);
+        Logger.d("onNewToken: " + s);
     }
 
     @Override
-    public void onMessageReceived(RemoteMessage remoteMessage) {
+    public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         // If the application is in the foreground handle or display both data and notification FCM messages here.
         // Here is where you can display your own notifications built from a received FCM message.
         super.onMessageReceived(remoteMessage);
-        Logger.e("TAG", "From: " + remoteMessage.getFrom());
-        if (remoteMessage.getData().size() > 0) {
+        Logger.d("From: " + remoteMessage.getFrom());
+        Logger.d("Received message: " + remoteMessage.getData());
+        if (MoEPushHelper.getInstance().isFromMoEngagePlatform(remoteMessage.getData())) {
+            Logger.d("MoEngage notification received");
+            MoEFireBaseHelper.getInstance()
+                    .passPushPayload(getApplicationContext(), remoteMessage.getData());
+        } else if (remoteMessage.getData().size() > 0) {
             JSONObject jsonData = new JSONObject(remoteMessage.getData());
-            Logger.w("FCM_Payload", new Gson().toJson(remoteMessage)+"");
-            Logger.w("FCM_Payload", jsonData+"");
-            Logger.e("TAG", "Message data payload: " + remoteMessage.getData());
+            Logger.d("FCM_Payload: " + new Gson().toJson(remoteMessage));
+            Logger.d("FCM_Payload: " + jsonData);
+            Logger.d("Message data payload: " + remoteMessage.getData());
         }
         if (remoteMessage.getNotification() != null) {
             try {
-
-            }catch (Exception e){
-
-            }
-
-            try {
                 JSONObject jsonData = new JSONObject(remoteMessage.getData());
-                Logger.w("FCM_Payload_final", jsonData+"");
-                if (jsonData.has("id")){
-                    assetId=jsonData.getString("id");
-                    if (jsonData.has("contentType")){
-                        assetType=jsonData.getString("contentType");
+                Logger.d("FCM_Payload_final: " + jsonData);
+                if (jsonData.has("id")) {
+                    assetId = jsonData.getString("id");
+                    if (jsonData.has("contentType")) {
+                        assetType = jsonData.getString("contentType");
                     }
-                    Logger.w("FCM_Payload_final", assetId+" "+assetType);
-                    KsPreferenceKeys.getInstance().setNotificationPayload(assetId,jsonData);
+                    Logger.d("FCM_Payload_final: " + assetId + " " + assetType);
+                    KsPreferenceKeys.getInstance().setNotificationPayload(assetId, jsonData);
                 }
-            }catch (Exception e){
-
+            } catch (Exception e) {
+                Logger.w(e);
             }
 
-
-            Logger.e("TAG", "Message Notification Body: " + new Gson().toJson(remoteMessage.getNotification()));
+            Logger.d("Message Notification Body: " + new Gson().toJson(remoteMessage.getNotification()));
+            displayNotification(remoteMessage.getNotification());
         }
-        displayNotification(remoteMessage.getNotification());
     }
 
     private void displayNotification(RemoteMessage.Notification notification) {
@@ -135,7 +132,7 @@ public class MvHubPlusMessagingService extends FirebaseMessagingService {
                 );
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.w(e);
         }
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 

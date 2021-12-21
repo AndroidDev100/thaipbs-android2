@@ -8,24 +8,18 @@ import android.os.AsyncTask;
 import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
 
-import me.vipa.app.utils.helpers.SharedPrefHelper;
-import me.vipa.baseClient.BaseDeviceType;
-import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.crashlytics.FirebaseCrashlytics;
-import me.vipa.app.dependencies.EnveuComponent;
-import me.vipa.app.dependencies.modules.UserPreferencesModule;
-import me.vipa.app.utils.TrackerUtil.TrackerUtil;
-import me.vipa.app.utils.constants.AppConstants;
-import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
-import me.vipa.app.R;
-import me.vipa.app.dependencies.DaggerEnveuComponent;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
+import com.moengage.firebase.MoEFireBaseHelper;
 
 import io.branch.referral.Branch;
+import me.vipa.app.dependencies.DaggerEnveuComponent;
 import me.vipa.app.dependencies.EnveuComponent;
 import me.vipa.app.dependencies.modules.UserPreferencesModule;
+import me.vipa.app.manager.MoEngageManager;
 import me.vipa.app.utils.TrackerUtil.TrackerUtil;
 import me.vipa.app.utils.constants.AppConstants;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
@@ -86,6 +80,7 @@ public class MvHubPlusApplication extends MultiDexApplication {
         // Obtain the FirebaseAnalytics instance.
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         firebaseCrashlyticSetup();
+        setupMoEngage();
     }
 
 
@@ -98,6 +93,10 @@ public class MvHubPlusApplication extends MultiDexApplication {
         }
     }
 
+    private void setupMoEngage() {
+        MoEngageManager.INSTANCE.init(this);
+        MoEFireBaseHelper.getInstance().addEventListener(MoEngageManager.INSTANCE);
+    }
 
     /**
      * Gets the default {@link Tracker} for this {@link Application}.

@@ -8,12 +8,11 @@ import android.widget.LinearLayout;
 
 import androidx.core.app.ActivityOptionsCompat;
 
+import me.vipa.app.R;
+import me.vipa.app.activities.notification.ui.NotificationActivity;
 import me.vipa.app.activities.search.ui.ActivitySearch;
 import me.vipa.app.databinding.ActivityHelpBinding;
 import me.vipa.app.databinding.ActivityOtherApplicationBinding;
-import me.vipa.app.utils.cropImage.helpers.Logger;
-import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
-import me.vipa.app.R;
 import me.vipa.app.databinding.ActivitySeriesDetailBinding;
 import me.vipa.app.databinding.DetailScreenBinding;
 import me.vipa.app.databinding.EpisodeScreenBinding;
@@ -22,10 +21,8 @@ import me.vipa.app.databinding.LiveDetailBinding;
 import me.vipa.app.databinding.LoginBinding;
 import me.vipa.app.databinding.ProfileScreenBinding;
 import me.vipa.app.databinding.ToolbarBinding;
-
-import me.vipa.app.activities.search.ui.ActivitySearch;
-import me.vipa.app.utils.cropImage.helpers.Logger;
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
+import me.vipa.brightcovelibrary.Logger;
 
 @SuppressWarnings("EmptyMethod")
 public class ToolBarHandler {
@@ -39,28 +36,28 @@ public class ToolBarHandler {
 
     public void setAction(final DetailScreenBinding binding) {
         binding.lessButton.setOnClickListener(view -> {
-            Logger.i("click", "less");
+            Logger.i("click less");
             //  binding.lessText.setText("Less");
         });
     }
 
     public void setAction(final LiveDetailBinding binding) {
         binding.lessButton.setOnClickListener(view -> {
-            Logger.i("click", "less");
+            Logger.i("click less");
             //  binding.lessText.setText("Less");
         });
     }
 
     public void setEpisodeAction(final EpisodeScreenBinding binding) {
         binding.lessButton.setOnClickListener(view -> {
-            Logger.i("click", "less");
+            Logger.i("click less");
             //  binding.lessText.setText("Less");
         });
     }
 
     public void setAction2(final ActivitySeriesDetailBinding binding) {
         binding.lessButton.setOnClickListener(view -> {
-            Logger.i("click", "less");
+            Logger.i("click less");
             //  binding.lessText.setText("Less");
         });
     }
@@ -135,7 +132,7 @@ public class ToolBarHandler {
                 break;
             case "notification":
                 toolbar.backLayout.setVisibility(View.VISIBLE);
-                toolbar.screenText.setText("Notification");
+                toolbar.screenText.setText(R.string.notification);
                 toolbar.titleText.setVisibility(View.VISIBLE);
                 toolbar.llSearchIcon.setVisibility(View.GONE);
                 toolbar.homeIcon.setVisibility(View.GONE);
@@ -193,6 +190,15 @@ public class ToolBarHandler {
 
     }
 
+    private boolean allowClick() {
+        long currentTime = SystemClock.elapsedRealtime();
+        boolean allow = currentTime - mLastClickTime > 1200;
+        if (allow) {
+            mLastClickTime = currentTime;
+        }
+        return allow;
+    }
+
     public void setMoreListner(LinearLayout more_text, int id, String title, int flag, int type) {
 
         more_text.setOnClickListener(view -> {
@@ -207,20 +213,23 @@ public class ToolBarHandler {
 
     public void setHomeAction(ToolbarBinding toolbar, Activity context) {
         toolbar.llSearchIcon.setOnClickListener(view -> {
-            //  if (NetworkConnectivity.isOnline(context)) {
-            if (SystemClock.elapsedRealtime() - mLastClickTime < 1200) {
-                return;
+            if (allowClick()) {
+                ActivityOptionsCompat activityOptionsCompat =
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(context,
+                                toolbar.searchIcon, "imageMain");
+                Intent in = new Intent(context, ActivitySearch.class);
+                context.startActivity(in, activityOptionsCompat.toBundle());
             }
-            mLastClickTime = SystemClock.elapsedRealtime();
-            ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(context,toolbar.searchIcon,"imageMain");
-            Intent in = new Intent(context,ActivitySearch.class);
-            context.startActivity(in,activityOptionsCompat.toBundle());
-           // new ActivityLauncher(activity).searchActivity(activity, ActivitySearch.class);
-            // }
-            //       else
-            //        new ToastHandler(activity).show(activity.getResources().getString(R.string.no_internet_connection));
-
         });
+        toolbar.clNotification.setOnClickListener(view -> {
+            if (allowClick()) {
+                new ActivityLauncher(activity).notificationActivity(activity, NotificationActivity.class);
+            }
+        });
+    }
+
+    public void setNotificationAction(ToolbarBinding toolbar) {
+        toolbar.backLayout.setOnClickListener(view -> activity.onBackPressed());
     }
 
     public void setSeriesAction(ActivitySeriesDetailBinding binding) {
