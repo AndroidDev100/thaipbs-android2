@@ -386,7 +386,7 @@
     <string name="heading_live">รายการสด</string>
     <string name="heading_shows">รายการ</string>
     <string name="heading_episodes">ตอน</string>
-    <string name="heading_program">โปรแกรม</string>
+    <string name="heading_program">รายการ</string>
     <string name="live_tag">รายการสด</string>
     <string name="skip_intro">ข้ามตอนต้น</string>
     <string name="streaming_settings">การตั้งค่าความคมชัดเริ่มต้น</string>
