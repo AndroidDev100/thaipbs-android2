@@ -20,7 +20,7 @@
     </string-array>
     <string-array name="more_with_login_fb">
         <item>ข้อมูลของฉัน</item>
-        <item>รายการของฉัน</item>
+        <item>รายการโปรดของฉัน</item>
         <item>ประวัติการรับชม</item>
         <item>ดาวน์โหลด</item>
         <item>แลกคูปอง</item>
@@ -32,7 +32,7 @@
 
     <string-array name="more_with_verify">
         <item>จัดการบัญชี</item>
-        <item>รายการของฉัน</item>
+        <item>รายการโปรดของฉัน</item>
         <item>ประวัติการรับชม</item>
         <item>ดาวน์โหลด</item>
         <item>ติดต่อเรา</item>

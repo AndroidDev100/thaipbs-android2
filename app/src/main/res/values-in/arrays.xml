@@ -3,7 +3,7 @@
 
     <string-array name="more_with_login">
         <item>Manage Account</item>
-        <item>My Watchlist</item>
+        <item>My Favorite</item>
         <item>My Watch History</item>
         <item>My Downloads</item>
         <item>VIPA Kids</item>
@@ -31,7 +31,7 @@
 
     <string-array name="more_with_verify">
         <item>Manage Account</item>
-        <item>My Watchlist</item>
+        <item>My Favorite</item>
         <item>My Watch History</item>
         <item>My Downloads</item>
         <item>Contact Us</item>
@@ -45,7 +45,7 @@
 
     <string-array name="more_logout">
         <item>Manage Account</item>
-        <item>My Watchlist</item>
+        <item>My Favorite</item>
         <item>My Watch History</item>
         <item>My Downloads</item>
         <item>VIPA Kids</item>

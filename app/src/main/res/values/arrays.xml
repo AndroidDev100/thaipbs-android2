@@ -3,7 +3,7 @@
 
     <string-array name="more_with_login">
         <item>Manage Account</item>
-        <item>My Watchlist</item>
+        <item>My Favorite</item>
         <item>My Watch History</item>
         <item>My Downloads</item>
         <item>VIPA Kids</item>
@@ -20,7 +20,7 @@
 
     <string-array name="more_with_login_fb">
         <item>My Profile</item>
-        <item>My Watchlist</item>
+        <item>My Favorite</item>
         <item>My Watch History</item>
         <item>Membership and Plans</item>
         <item>Redeem Coupon</item>
@@ -32,7 +32,7 @@
 
     <string-array name="more_with_verify">
         <item>Manage Account</item>
-        <item>My Watchlist</item>
+        <item>My Favorite</item>
         <item>My Watch History</item>
         <item>My Downloads</item>
         <item>Contact Us</item>
@@ -47,7 +47,7 @@
     <string-array name="more_logout">
 
         <item>Manage Account</item>
-        <item>My Watchlist</item>
+        <item>My Favorite</item>
         <item>My Watch History</item>
         <item>My Downloads</item>
         <item>VIPA Kids</item>
@@ -73,7 +73,7 @@
     </string-array>
     <string-array name="more_kids_mode_login_watchlist_condition">
         <item>Leave Kids Mode</item>
-        <item>My Watchlist</item>
+        <item>My Favorite</item>
         <item>My Watch History</item>
         <item>My Downloads</item>
         <item>Contact Us</item>
