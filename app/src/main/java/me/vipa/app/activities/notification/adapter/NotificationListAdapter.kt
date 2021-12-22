@@ -23,6 +23,24 @@ class NotificationListAdapter :
     private val data: ArrayList<InboxMessage> = ArrayList()
     var listener: OnItemClickListener? = null
 
+    fun getDataList() = data.toList()
+
+    fun updateItem(item: InboxMessage) {
+        val idx = data.indexOf(item)
+        if (idx > -1 && !data[idx].isClicked) {
+            data[idx].isClicked = true
+            notifyItemChanged(idx)
+        }
+    }
+
+    fun deleteItem(item: InboxMessage) {
+        val idx = data.indexOf(item)
+        if (idx > -1) {
+            data.removeAt(idx)
+            notifyItemRemoved(idx)
+        }
+    }
+
     fun setupData(data: List<InboxMessage>) {
         this.data.clear()
         this.data.addAll(data)

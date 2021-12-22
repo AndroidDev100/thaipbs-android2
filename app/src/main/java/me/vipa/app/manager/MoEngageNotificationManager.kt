@@ -30,8 +30,8 @@ object MoEngageNotificationManager {
             mUnreadNotificationCountLiveData.postValue(count.toInt())
         }
 
-    fun refreshNotification() {
-        getAllNotifications()
+    private fun refreshNotificationCount() {
+        getUnreadCount()
     }
 
     fun getAllNotifications(): LiveData<List<InboxMessage>> {
@@ -53,14 +53,14 @@ object MoEngageNotificationManager {
     fun markAsRead(inboxMessage: InboxMessage) {
         CoroutineScope(Dispatchers.IO).launch {
             MoEInboxHelper.getInstance().trackMessageClicked(MvHubPlusApplication.getInstance(), inboxMessage)
-            refreshNotification()
+            refreshNotificationCount()
         }
     }
 
     fun deleteNotification(inboxMessage: InboxMessage) {
         CoroutineScope(Dispatchers.IO).launch {
             MoEInboxHelper.getInstance().deleteMessage(MvHubPlusApplication.getInstance(), inboxMessage)
-            refreshNotification()
+            refreshNotificationCount()
         }
     }
 
@@ -69,7 +69,7 @@ object MoEngageNotificationManager {
             for (message in inboxMessages) {
                 MoEInboxHelper.getInstance().deleteMessage(MvHubPlusApplication.getInstance(), message)
             }
-            refreshNotification()
+            refreshNotificationCount()
         }
     }
 

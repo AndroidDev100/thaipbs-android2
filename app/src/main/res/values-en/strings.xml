@@ -425,5 +425,7 @@
     <string name="trailer">Trailer</string>
     <string name="today">Today</string>
     <string name="no_notification">No new notifications</string>
+    <string name="delete_notification_all">Are you sure you want to delete all notifications?</string>
+    <string name="delete_notification_single">Are you sure you want to delete this notification?</string>
 
 </resources>

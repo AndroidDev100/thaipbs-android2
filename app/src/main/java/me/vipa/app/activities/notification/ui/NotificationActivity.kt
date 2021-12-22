@@ -1,5 +1,6 @@
 package me.vipa.app.activities.notification.ui
 
+import android.app.AlertDialog
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -29,10 +30,21 @@ class NotificationActivity : BaseBindingActivity<ActivityNotificationBinding?>()
         object : NotificationListAdapter.OnItemClickListener {
             override fun onItemClicked(inboxMessage: InboxMessage) {
                 MoEngageNotificationManager.markAsRead(inboxMessage)
+                notificationAdapter?.updateItem(inboxMessage)
             }
 
             override fun onDeleteClicked(inboxMessage: InboxMessage) {
-                MoEngageNotificationManager.deleteNotification(inboxMessage)
+                showAlertDialog(
+                    title = getString(R.string.delete),
+                    message = getString(R.string.delete_notification_single),
+                    positiveLabel = getString(R.string.ok),
+                    positiveAction = {
+                        MoEngageNotificationManager.deleteNotification(inboxMessage)
+                        notificationAdapter?.deleteItem(inboxMessage)
+                    },
+                    negativeLabel = getString(R.string.cancel),
+                    negativeAction = {}
+                )
             }
         }
 
@@ -56,6 +68,7 @@ class NotificationActivity : BaseBindingActivity<ActivityNotificationBinding?>()
     override fun onDestroy() {
         itemClickListener = null
         notificationAdapter = null
+        binding?.toolbar?.clDelete?.setOnClickListener(null)
         super.onDestroy()
     }
 
@@ -82,6 +95,20 @@ class NotificationActivity : BaseBindingActivity<ActivityNotificationBinding?>()
                 binding?.toolbar?.clDelete?.visibility = View.GONE
             } else {
                 binding?.toolbar?.clDelete?.visibility = View.VISIBLE
+                binding?.toolbar?.clDelete?.setOnClickListener {
+                    notificationAdapter?.getDataList()?.let { dataList ->
+                        showAlertDialog(
+                            title = getString(R.string.delete),
+                            message = getString(R.string.delete_notification_all),
+                            positiveLabel = getString(R.string.ok),
+                            positiveAction = {
+                                MoEngageNotificationManager.deleteAllNotifications(dataList)
+                            },
+                            negativeLabel = getString(R.string.cancel),
+                            negativeAction = {}
+                        )
+                    }
+                }
                 initRecyclerView(list)
             }
         }
@@ -121,4 +148,27 @@ class NotificationActivity : BaseBindingActivity<ActivityNotificationBinding?>()
             rv.adapter = notificationAdapter
         }
     }
+
+    private fun showAlertDialog(
+        title: String,
+        message: String,
+        positiveLabel: String,
+        positiveAction: () -> Unit,
+        negativeLabel: String,
+        negativeAction: () -> Unit,
+    ) {
+        val builder = AlertDialog.Builder(this@NotificationActivity)
+        builder.setTitle(title)
+        builder.setMessage(message)
+        builder.setPositiveButton(positiveLabel) { dialog, _ ->
+            positiveAction()
+            dialog.dismiss()
+        }
+        builder.setNegativeButton(negativeLabel) { dialog, _ ->
+            negativeAction()
+            dialog.dismiss()
+        }
+        builder.create().show()
+    }
+
 }
