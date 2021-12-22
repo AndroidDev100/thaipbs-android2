@@ -423,6 +423,7 @@
     <string name="date_time">Date/Time : %s</string>
     <string name="internet">Internet : https://thaip.bs/helping</string>
     <string name="trailer">Trailer</string>
-
+    <string name="today">Today</string>
+    <string name="no_notification">No new notifications</string>
 
 </resources>

@@ -9,6 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.vipa.app.MvHubPlusApplication
+import kotlin.coroutines.CoroutineContext
 
 object MoEngageNotificationManager {
 
@@ -17,13 +18,59 @@ object MoEngageNotificationManager {
 
     fun getUnreadCount(): LiveData<Int> {
         CoroutineScope(Dispatchers.IO).launch {
-            getUnreadNotificationCount()
+            getUnreadNotificationCount(this.coroutineContext)
         }
         return mUnreadNotificationCountLiveData
     }
 
-    private suspend fun getUnreadNotificationCount() = withContext(Dispatchers.IO) {
-        val count = MoEInboxHelper.getInstance().getUnClickedMessagesCount(MvHubPlusApplication.getInstance())
-        mUnreadNotificationCountLiveData.postValue(count.toInt())
+    private suspend fun getUnreadNotificationCount(coroutineContext: CoroutineContext) =
+        withContext(coroutineContext) {
+            val count = MoEInboxHelper.getInstance()
+                .getUnClickedMessagesCount(MvHubPlusApplication.getInstance())
+            mUnreadNotificationCountLiveData.postValue(count.toInt())
+        }
+
+    fun refreshNotification() {
+        getAllNotifications()
     }
+
+    fun getAllNotifications(): LiveData<List<InboxMessage>> {
+        CoroutineScope(Dispatchers.IO).launch {
+            getAllNotificationList(this.coroutineContext)
+            getUnreadNotificationCount(this.coroutineContext)
+        }
+        return mNotificationsLiveData
+    }
+
+    private suspend fun getAllNotificationList(coroutineContext: CoroutineContext) =
+        withContext(coroutineContext) {
+            mNotificationsLiveData.postValue(
+                MoEInboxHelper.getInstance().fetchAllMessages(MvHubPlusApplication.getInstance())
+            )
+
+        }
+
+    fun markAsRead(inboxMessage: InboxMessage) {
+        CoroutineScope(Dispatchers.IO).launch {
+            MoEInboxHelper.getInstance().trackMessageClicked(MvHubPlusApplication.getInstance(), inboxMessage)
+            refreshNotification()
+        }
+    }
+
+    fun deleteNotification(inboxMessage: InboxMessage) {
+        CoroutineScope(Dispatchers.IO).launch {
+            MoEInboxHelper.getInstance().deleteMessage(MvHubPlusApplication.getInstance(), inboxMessage)
+            refreshNotification()
+        }
+    }
+
+    fun deleteAllNotifications(inboxMessages: List<InboxMessage>) {
+        CoroutineScope(Dispatchers.IO).launch {
+            for (message in inboxMessages) {
+                MoEInboxHelper.getInstance().deleteMessage(MvHubPlusApplication.getInstance(), message)
+            }
+            refreshNotification()
+        }
+    }
+
 }
