@@ -1,6 +1,7 @@
 package me.vipa.app.fragments.more.ui;
 
-import android.app.Activity;
+import static com.amazonaws.mobile.auth.core.internal.util.ThreadUtils.runOnUiThread;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +11,6 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,80 +25,60 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
+import com.google.gson.Gson;
+import com.mmtv.utils.helpers.downloads.DownloadHelper;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 import me.vipa.app.MvHubPlusApplication;
+import me.vipa.app.R;
 import me.vipa.app.SDKConfig;
 import me.vipa.app.activities.ManageAccount.UI.ManageAccount;
-import me.vipa.app.activities.OtherApplication.UI.OtherApplication;
-import me.vipa.app.activities.downloads.MyDownloads;
 import me.vipa.app.activities.homeactivity.ui.HomeActivity;
 import me.vipa.app.activities.homeactivity.viewmodel.HomeViewModel;
 import me.vipa.app.activities.notification.ui.NotificationActivity;
-import me.vipa.app.activities.onBoarding.UI.OnBoardingTab;
-import me.vipa.app.activities.profile.ui.ProfileActivityNew;
-import me.vipa.app.activities.purchase.callBack.EntitlementStatus;
-import me.vipa.app.activities.purchase.planslayer.GetPlansLayer;
 import me.vipa.app.activities.redeemcoupon.RedeemCouponActivity;
-import me.vipa.app.activities.search.ui.FilterIconActivity;
 import me.vipa.app.activities.settings.ActivitySettings;
-import me.vipa.app.activities.splash.ui.ActivitySplash;
 import me.vipa.app.activities.usermanagment.ui.ChangePasswordActivity;
-import me.vipa.app.activities.usermanagment.ui.LoginActivity;
 import me.vipa.app.activities.usermanagment.viewmodel.RegistrationLoginViewModel;
 import me.vipa.app.activities.watchList.ui.WatchListActivity;
 import me.vipa.app.baseModels.BaseBindingFragment;
+import me.vipa.app.beanModel.AppUserModel;
+import me.vipa.app.beanModel.configBean.ResponseConfig;
+import me.vipa.app.beanModel.responseModels.RegisterSignUpModels.DataResponseRegister;
+import me.vipa.app.beanModel.userProfile.Data;
 import me.vipa.app.beanModel.userProfile.UserProfileResponse;
+import me.vipa.app.callbacks.commonCallbacks.MoreItemClickListener;
 import me.vipa.app.cms.HelpActivity;
+import me.vipa.app.databinding.FragmentMoreBinding;
 import me.vipa.app.fragments.dialog.AlertDialogFragment;
 import me.vipa.app.fragments.dialog.AlertDialogSingleButtonFragment;
 import me.vipa.app.fragments.dialog.KidsModePinDialogFragment;
 import me.vipa.app.fragments.more.adapter.MoreListAdapter;
-import me.vipa.app.R;
-import me.vipa.app.activities.membershipplans.ui.MemberShipPlanActivity;
-import me.vipa.app.beanModel.AppUserModel;
-import me.vipa.app.beanModel.configBean.ResponseConfig;
-import me.vipa.app.beanModel.responseModels.RegisterSignUpModels.DataResponseRegister;
-import me.vipa.app.callbacks.commonCallbacks.MoreItemClickListener;
-import me.vipa.app.databinding.FragmentMoreBinding;
+import me.vipa.app.manager.MoEUserTracker;
 import me.vipa.app.networking.apiendpoints.ApiInterface;
 import me.vipa.app.networking.apiendpoints.RequestConfig;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.constants.AppConstants;
 import me.vipa.app.utils.cropImage.helpers.Logger;
 import me.vipa.app.utils.helpers.CheckInternetConnection;
-
 import me.vipa.app.utils.helpers.NetworkConnectivity;
 import me.vipa.app.utils.helpers.SharedPrefHelper;
 import me.vipa.app.utils.helpers.StringUtils;
 import me.vipa.app.utils.helpers.ToastHandler;
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
-
-import com.facebook.FacebookSdk;
-import com.facebook.login.LoginManager;
-import com.google.gson.Gson;
-import com.mmtv.utils.helpers.downloads.DownloadHelper;
-
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
-
-import org.jetbrains.annotations.NotNull;
-
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.net.HttpURLConnection;
-import java.net.InetAddress;
-import java.net.URL;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-
+import me.vipa.brightcovelibrary.utils.ObjectHelper;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.amazonaws.mobile.auth.core.internal.util.ThreadUtils.runOnUiThread;
 
 //import com.webstreamindonesia.nonton.activities.membershipPlan.ui.MemberShipPlanActivity;
 
@@ -370,10 +350,22 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
             UserProfileResponse newObject = gson.fromJson(json, UserProfileResponse.class);
             Log.w("savedata3", newObject.toString());
 
+            setMoEngageProperties(userProfileResponse.getData());
 
         } catch (Exception e) {
 
         }
+    }
+
+    private void setMoEngageProperties(Data data) {
+        MoEUserTracker.INSTANCE.setUsername(getActivity(), preference.getAppPrefUserName());
+        if (ObjectHelper.isNotEmpty(data.getDateOfBirth())) {
+            MoEUserTracker.INSTANCE.setDob(getActivity(), (double) data.getDateOfBirth());
+        }
+        MoEUserTracker.INSTANCE.setEmail(getActivity(), preference.getAppPrefUserEmail());
+        MoEUserTracker.INSTANCE.setPhone(getActivity(), String.valueOf(data.getPhoneNumber()));
+        MoEUserTracker.INSTANCE.setGender(getActivity(), String.valueOf(data.getGender()));
+        MoEUserTracker.INSTANCE.setUniqueId(getActivity(), preference.getAppPrefUserId());
     }
 
     private String imageUrlId = "";
@@ -738,6 +730,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
         if (flagLogIn) {
 //            AppCommonMethod.guestTitle(getBaseActivity(),getBinding().userNameWords, getBinding().usernameTv, preference);
             hitApiLogout();
+            MoEUserTracker.INSTANCE.logout(getActivity());
 
             flagLogIn = false;
             //  getBinding().userNameWords.setVisibility(View.GONE);
