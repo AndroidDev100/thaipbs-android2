@@ -464,7 +464,7 @@
     <string name="date_time">วันที่ : %s</string>
     <string name="internet">อินเตอร์เน็ต : https://thaip.bs/helping</string>
     <string name="trailer">วิดีโอตัวอย่าง</string>
-    <string name="today">Today</string>
+    <string name="today">วันนี้</string>
     <string name="no_notification">ไม่มีการแจ้งเตือนใหม่</string>
     <string name="delete_notification_all">ลบการแจ้งเตือนทั้งหมด</string>
     <string name="delete_notification_single">ลบการแจ้งเตือนนี้</string>

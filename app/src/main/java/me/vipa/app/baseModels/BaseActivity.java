@@ -31,22 +31,33 @@ import com.google.android.play.core.install.model.InstallStatus;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import org.json.JSONObject;
+
 import java.util.Objects;
 
 import me.vipa.app.R;
+import me.vipa.app.SDKConfig;
+import me.vipa.app.activities.article.ArticleActivity;
+import me.vipa.app.activities.detail.ui.DetailActivity;
+import me.vipa.app.activities.detail.ui.EpisodeActivity;
 import me.vipa.app.activities.homeactivity.ui.HomeActivity;
+import me.vipa.app.activities.live.LiveActivity;
+import me.vipa.app.activities.series.ui.SeriesDetailActivity;
 import me.vipa.app.beanModel.configBean.ResponseConfig;
 import me.vipa.app.networking.apiendpoints.ApiInterface;
 import me.vipa.app.networking.apiendpoints.RequestConfig;
 import me.vipa.app.utils.BaseActivityAlertDialog;
+import me.vipa.app.utils.MediaTypeConstants;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.constants.AppConstants;
+import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 import me.vipa.app.utils.inAppUpdate.ApplicationUpdateManager;
 import me.vipa.baseCollection.baseCategoryServices.BaseCategoryServices;
 import me.vipa.brightcovelibrary.Logger;
 import me.vipa.brightcovelibrary.utils.ObjectHelper;
 import me.vipa.userManagement.callBacks.LogoutCallBack;
+import me.vipa.utils.ClickHandler;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -305,6 +316,82 @@ public class BaseActivity extends AppCompatActivity implements BaseActivityAlert
         updateLanguage(currentLanguage);
 
 
+    }
+
+    public void branchRedirections(JSONObject jsonObject) {
+        try {
+            Logger.d("branchRedirections: " + jsonObject);
+            if (jsonObject != null && jsonObject.has("contentType") && jsonObject.has("id")) {
+                int assetId = 0;
+                String contentType = jsonObject.getString("contentType");
+                String id = jsonObject.optString("id");
+                if (id != null && !id.equalsIgnoreCase("")) {
+                    assetId = Integer.parseInt(id);
+                    if (contentType.equalsIgnoreCase(
+                            MediaTypeConstants.getInstance().getSeries())) {
+                        if (ClickHandler.INSTANCE.disallowClick()) {
+                            return;
+                        }
+                        new ActivityLauncher(this).homeScreen(this, HomeActivity.class);
+                        new ActivityLauncher(BaseActivity.this).seriesDetailScreen(
+                                BaseActivity.this, SeriesDetailActivity.class, assetId);
+                        finish();
+                    } else if (contentType.equalsIgnoreCase(AppConstants.ContentType.VIDEO.name())
+                            || contentType.equalsIgnoreCase(
+                            MediaTypeConstants.getInstance().getMovie())) {
+                        if (ClickHandler.INSTANCE.disallowClick()) {
+                            return;
+                        }
+                        new ActivityLauncher(this).homeScreen(this, HomeActivity.class);
+                        new ActivityLauncher(BaseActivity.this).detailScreen(BaseActivity.this,
+                                DetailActivity.class, assetId, "0", false);
+                        finish();
+                    } else if (contentType.equalsIgnoreCase(
+                            MediaTypeConstants.getInstance().getShow())) {
+                        if (ClickHandler.INSTANCE.disallowClick()) {
+                            return;
+                        }
+                        new ActivityLauncher(this).homeScreen(this, HomeActivity.class);
+                        new ActivityLauncher(BaseActivity.this).detailScreen(BaseActivity.this,
+                                DetailActivity.class, assetId, "0", false);
+                        finish();
+                    } else if (contentType.equalsIgnoreCase(
+                            MediaTypeConstants.getInstance().getLive())) {
+                        if (ClickHandler.INSTANCE.disallowClick()) {
+                            return;
+                        }
+                        new ActivityLauncher(this).homeScreen(this, HomeActivity.class);
+                        new ActivityLauncher(BaseActivity.this).liveScreenBrightCove(
+                                BaseActivity.this, LiveActivity.class, 0l, assetId, "0", false,
+                                SDKConfig.getInstance().getLiveDetailId());
+                        finish();
+                    } else if (contentType.equalsIgnoreCase(
+                            MediaTypeConstants.getInstance().getEpisode())) {
+                        if (ClickHandler.INSTANCE.disallowClick()) {
+                            return;
+                        }
+                        new ActivityLauncher(this).homeScreen(this, HomeActivity.class);
+                        new ActivityLauncher(BaseActivity.this).episodeScreen(BaseActivity.this,
+                                EpisodeActivity.class, assetId, "0", false);
+                        finish();
+                    } else if (contentType.equalsIgnoreCase(
+                            AppConstants.ContentType.ARTICLE.toString())) {
+                        if (ClickHandler.INSTANCE.disallowClick()) {
+                            return;
+                        }
+                        new ActivityLauncher(this).homeScreen(this, HomeActivity.class);
+                        new ActivityLauncher(BaseActivity.this).articleScreen(BaseActivity.this,
+                                ArticleActivity.class, assetId, "0", false);
+                        finish();
+                    }
+                } else {
+                    new ActivityLauncher(this).homeScreen(this, HomeActivity.class);
+                    finish();
+                }
+            }
+        } catch (Exception e) {
+            Logger.w(e);
+        }
     }
 
     public void updateLanguage(String currentLanguage) {

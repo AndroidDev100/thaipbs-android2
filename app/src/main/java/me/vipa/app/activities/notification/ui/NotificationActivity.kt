@@ -20,7 +20,9 @@ import me.vipa.app.databinding.ActivityNotificationBinding
 import me.vipa.app.manager.MoEngageNotificationManager
 import me.vipa.app.utils.helpers.NetworkConnectivity
 import me.vipa.app.utils.helpers.ToolBarHandler
+import me.vipa.brightcovelibrary.Logger
 import me.vipa.brightcovelibrary.utils.ObjectHelper
+import org.json.JSONObject
 
 class NotificationActivity : BaseBindingActivity<ActivityNotificationBinding?>() {
     private var viewModel: NotificationViewModel? = null
@@ -31,6 +33,24 @@ class NotificationActivity : BaseBindingActivity<ActivityNotificationBinding?>()
             override fun onItemClicked(inboxMessage: InboxMessage) {
                 MoEngageNotificationManager.markAsRead(inboxMessage)
                 notificationAdapter?.updateItem(inboxMessage)
+
+                Logger.d("clicked on : $inboxMessage")
+                val assetType: String? = inboxMessage.payload.getString("contentType")
+                val assetId: String? = inboxMessage.payload.getString("id")
+                val seriesId: String? = inboxMessage.payload.getString("seriesId")
+                val seasonNumber: String? = inboxMessage.payload.getString("seasonNumber")
+
+                Logger.d("assetType: $assetType | assetId: $assetId | seriesId: $seriesId | seasonNumber: $seasonNumber")
+
+                val json = JSONObject()
+                json.apply {
+                    put("contentType", assetType)
+                    put("id", assetId)
+                    put("seriesId", seriesId)
+                    put("seasonNumber", seasonNumber)
+                }
+
+                branchRedirections(json)
             }
 
             override fun onDeleteClicked(inboxMessage: InboxMessage) {

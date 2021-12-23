@@ -9,7 +9,6 @@ import com.moengage.core.config.NotificationConfig
 import com.moengage.firebase.MoEFireBaseHelper
 import com.moengage.firebase.listener.FirebaseEventListener
 import com.moengage.pushbase.MoEPushHelper
-import com.moengage.pushbase.push.PushMessageListener
 import me.vipa.app.BuildConfig
 import me.vipa.app.MvHubPlusApplication
 import me.vipa.app.R
@@ -21,8 +20,8 @@ object MoEngageManager: FirebaseEventListener() {
         val moEngage = MoEngage.Builder(context, BuildConfig.MOENGAGE_APP_ID)
             .configureNotificationMetaData(
                 NotificationConfig(
-                    R.drawable.enveu_logo_small,
-                    R.drawable.enveu_blue_logo, R.color.google_color, null,
+                    R.drawable.notification_icon,
+                    R.drawable.notification_icon, R.color.google_color, "sound",
                     isMultipleNotificationInDrawerEnabled = true,
                     isBuildingBackStackEnabled = true,
                     isLargeIconDisplayEnabled = true
@@ -33,7 +32,7 @@ object MoEngageManager: FirebaseEventListener() {
             .build()
         MoEngage.initialise(moEngage)
 
-        MoEPushHelper.getInstance().messageListener = PushMessageListener()
+        MoEPushHelper.getInstance().messageListener = MoEPushMessageListener()
     }
 
     override fun onTokenAvailable(token: String) {

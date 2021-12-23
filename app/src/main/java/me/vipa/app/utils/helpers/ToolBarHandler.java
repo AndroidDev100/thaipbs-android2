@@ -23,6 +23,7 @@ import me.vipa.app.databinding.ProfileScreenBinding;
 import me.vipa.app.databinding.ToolbarBinding;
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
 import me.vipa.brightcovelibrary.Logger;
+import me.vipa.utils.ClickHandler;
 
 @SuppressWarnings("EmptyMethod")
 public class ToolBarHandler {
@@ -190,15 +191,6 @@ public class ToolBarHandler {
 
     }
 
-    private boolean allowClick() {
-        long currentTime = SystemClock.elapsedRealtime();
-        boolean allow = currentTime - mLastClickTime > 1200;
-        if (allow) {
-            mLastClickTime = currentTime;
-        }
-        return allow;
-    }
-
     public void setMoreListner(LinearLayout more_text, int id, String title, int flag, int type) {
 
         more_text.setOnClickListener(view -> {
@@ -213,7 +205,7 @@ public class ToolBarHandler {
 
     public void setHomeAction(ToolbarBinding toolbar, Activity context) {
         toolbar.llSearchIcon.setOnClickListener(view -> {
-            if (allowClick()) {
+            if (ClickHandler.INSTANCE.allowClick()) {
                 ActivityOptionsCompat activityOptionsCompat =
                         ActivityOptionsCompat.makeSceneTransitionAnimation(context,
                                 toolbar.searchIcon, "imageMain");
@@ -222,7 +214,7 @@ public class ToolBarHandler {
             }
         });
         toolbar.clNotification.setOnClickListener(view -> {
-            if (allowClick()) {
+            if (ClickHandler.INSTANCE.allowClick()) {
                 new ActivityLauncher(activity).notificationActivity(activity, NotificationActivity.class);
             }
         });

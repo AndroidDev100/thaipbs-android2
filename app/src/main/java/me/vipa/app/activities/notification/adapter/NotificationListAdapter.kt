@@ -2,6 +2,7 @@ package me.vipa.app.activities.notification.adapter
 
 import android.text.format.DateUtils
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -74,16 +75,6 @@ class NotificationListAdapter :
             binding.tvTitle.text = message.payload.getString(MoEConstants.PUSH_NOTIFICATION_TITLE)
             binding.tvMessage.text = message.payload.getString(MoEConstants.PUSH_NOTIFICATION_MESSAGE)
 
-            val textColor = if (message.isClicked) {
-                R.color.white
-            } else {
-                R.color.description_title_yellow
-            }
-
-            binding.tvTitle.setTextColor(ContextCompat.getColor(binding.tvTitle.context, textColor))
-            binding.tvMessage.setTextColor(ContextCompat.getColor(binding.tvMessage.context, R.color.notification_message))
-            binding.tvDate.setTextColor(ContextCompat.getColor(binding.tvDate.context, R.color.white))
-
             val receivedTime = message.payload.getLong("MOE_MSG_RECEIVED_TIME")
             if (DateUtils.isToday(receivedTime)) {
                 binding.tvDate.setText(R.string.today)
@@ -93,14 +84,39 @@ class NotificationListAdapter :
             }
 
             val imageUrl = message.payload.optString(MoEConstants.PUSH_NOTIFICATION_IMAGE_URL)
-            Glide.with(binding.ivBanner.context).load(imageUrl)
-                .placeholder(R.drawable.placeholder_landscape)
-                .error(R.drawable.placeholder_landscape)
-                .into(binding.ivBanner)
-
+            if (ObjectHelper.isEmpty(imageUrl)) {
+                binding.ivBanner.visibility = View.GONE
+            } else {
+                binding.ivBanner.visibility = View.VISIBLE
+                Glide.with(binding.ivBanner.context).load(imageUrl)
+                    .placeholder(R.drawable.placeholder_landscape)
+                    .error(R.drawable.placeholder_landscape)
+                    .into(binding.ivBanner)
+            }
             binding.root.setOnClickListener { listener?.onItemClicked(message) }
             binding.ivDelete.setOnClickListener { listener?.onDeleteClicked(message) }
+
+            if (message.isClicked) {
+                styleReadMsg()
+            } else {
+                styleUnreadMsg()
+            }
         }
+
+        private fun styleReadMsg() {
+            binding.tvTitle.setTextColor(ContextCompat.getColor(binding.tvTitle.context, R.color.sub_heading))
+            binding.tvMessage.setTextColor(ContextCompat.getColor(binding.tvMessage.context, R.color.grey_heading))
+            binding.tvDate.setTextColor(ContextCompat.getColor(binding.tvDate.context, R.color.sub_heading))
+            binding.ivDelete.setColorFilter(ContextCompat.getColor(binding.ivDelete.context, R.color.grey_heading))
+        }
+
+        private fun styleUnreadMsg() {
+            binding.tvTitle.setTextColor(ContextCompat.getColor(binding.tvTitle.context, R.color.white))
+            binding.tvMessage.setTextColor(ContextCompat.getColor(binding.tvMessage.context, R.color.white))
+            binding.tvDate.setTextColor(ContextCompat.getColor(binding.tvDate.context, R.color.white))
+            binding.ivDelete.setColorFilter(ContextCompat.getColor(binding.ivDelete.context, R.color.white))
+        }
+
     }
 
     interface OnItemClickListener {

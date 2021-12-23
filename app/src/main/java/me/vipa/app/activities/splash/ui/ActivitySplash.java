@@ -1,18 +1,15 @@
 package me.vipa.app.activities.splash.ui;
 
-import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
-import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.SystemClock;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
@@ -23,66 +20,18 @@ import android.view.WindowInsets;
 import android.view.WindowInsetsController;
 import android.view.WindowManager;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.Observer;
-import androidx.vectordrawable.graphics.drawable.Animatable2Compat;
 
-import me.vipa.app.activities.onBoarding.UI.OnBoarding;
-import me.vipa.app.activities.onBoarding.UI.OnBoardingTab;
-import me.vipa.app.utils.cropImage.helpers.PrintLogging;
-import me.vipa.app.utils.helpers.downloads.room.DownloadModel;
-import me.vipa.baseClient.BaseClient;
-import me.vipa.baseClient.BaseConfiguration;
-import me.vipa.baseClient.BaseDeviceType;
-import me.vipa.baseClient.BaseGateway;
-import me.vipa.baseClient.BasePlatform;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.load.resource.gif.GifDrawable;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.security.ProviderInstaller;
 import com.google.gson.Gson;
 import com.mmtv.utils.helpers.downloads.DownloadHelper;
-import me.vipa.app.activities.article.ArticleActivity;
-import me.vipa.app.activities.homeactivity.ui.HomeActivity;
-import me.vipa.app.activities.live.LiveActivity;
-import me.vipa.app.activities.splash.dialog.ConfigFailDialog;
-import me.vipa.app.baseModels.BaseBindingActivity;
-import me.vipa.app.callbacks.commonCallbacks.DialogInterface;
-import me.vipa.app.dependencies.providers.DTGPrefrencesProvider;
-import me.vipa.app.BuildConfig;
-import me.vipa.app.MvHubPlusApplication;
-import me.vipa.app.R;
-import me.vipa.app.SDKConfig;
-import me.vipa.app.activities.detail.ui.DetailActivity;
-import me.vipa.app.activities.detail.ui.EpisodeActivity;
-import me.vipa.app.activities.series.ui.SeriesDetailActivity;
-import me.vipa.app.callbacks.apicallback.ApiResponseModel;
-import me.vipa.app.callbacks.commonCallbacks.VersionValidator;
-import me.vipa.app.databinding.ActivitySplashBinding;
-import me.vipa.app.fragments.dialog.AlertDialogFragment;
-import me.vipa.app.networking.errormodel.ApiErrorModel;
-import me.vipa.app.utils.MediaTypeConstants;
-import me.vipa.app.utils.commonMethods.AppCommonMethod;
-import me.vipa.app.utils.config.ConfigManager;
-import me.vipa.app.utils.config.bean.ConfigBean;
-import me.vipa.app.utils.constants.AppConstants;
-import me.vipa.app.utils.cropImage.helpers.Logger;
-import me.vipa.app.utils.helpers.AnalyticsController;
-import me.vipa.app.utils.helpers.ForceUpdateHandler;
-import me.vipa.app.utils.helpers.NetworkConnectivity;
-
-import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
-import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -91,16 +40,36 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import javax.inject.Inject;
-import javax.sql.DataSource;
 
 import io.branch.referral.Branch;
 import io.branch.referral.BranchError;
-import me.vipa.app.activities.article.ArticleActivity;
+import me.vipa.app.BuildConfig;
+import me.vipa.app.MvHubPlusApplication;
+import me.vipa.app.R;
+import me.vipa.app.SDKConfig;
 import me.vipa.app.activities.homeactivity.ui.HomeActivity;
+import me.vipa.app.activities.onBoarding.UI.OnBoarding;
+import me.vipa.app.activities.onBoarding.UI.OnBoardingTab;
 import me.vipa.app.activities.splash.dialog.ConfigFailDialog;
 import me.vipa.app.baseModels.BaseBindingActivity;
+import me.vipa.app.callbacks.apicallback.ApiResponseModel;
+import me.vipa.app.callbacks.commonCallbacks.DialogInterface;
+import me.vipa.app.callbacks.commonCallbacks.VersionValidator;
+import me.vipa.app.databinding.ActivitySplashBinding;
 import me.vipa.app.dependencies.providers.DTGPrefrencesProvider;
+import me.vipa.app.fragments.dialog.AlertDialogFragment;
 import me.vipa.app.networking.errormodel.ApiErrorModel;
+import me.vipa.app.utils.commonMethods.AppCommonMethod;
+import me.vipa.app.utils.config.ConfigManager;
+import me.vipa.app.utils.config.bean.ConfigBean;
+import me.vipa.app.utils.cropImage.helpers.Logger;
+import me.vipa.app.utils.cropImage.helpers.PrintLogging;
+import me.vipa.app.utils.helpers.AnalyticsController;
+import me.vipa.app.utils.helpers.ForceUpdateHandler;
+import me.vipa.app.utils.helpers.NetworkConnectivity;
+import me.vipa.app.utils.helpers.downloads.room.DownloadModel;
+import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
+import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 import me.vipa.baseClient.BaseClient;
 import me.vipa.baseClient.BaseConfiguration;
 import me.vipa.baseClient.BaseDeviceType;
@@ -299,11 +268,11 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
 
             if (jsonObject != null) {
                 if (updateType != null && updateType.equalsIgnoreCase(ForceUpdateHandler.RECOMMENDED)) {
-                    brachRedirections(jsonObject);
+                    branchRedirections(jsonObject);
                 } else {
                     boolean updateValue = getForceUpdateValue(jsonObject, 1);
                     if (!updateValue) {
-                        brachRedirections(jsonObject);
+                        branchRedirections(jsonObject);
                     }
                 }
             } else {
@@ -720,85 +689,6 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
 
         }
     }
-
-    private void brachRedirections(JSONObject jsonObject) {
-        try {
-            Log.e("branchRedirectors", new Gson().toJson(jsonObject));
-            if (jsonObject != null && jsonObject.has("contentType") && jsonObject.has("id")) {
-                int assestId = 0;
-                String contentType = jsonObject.getString("contentType");
-                String id = jsonObject.getString("id");
-                if (id != null && !id.equalsIgnoreCase("")) {
-                    assestId = Integer.parseInt(id);
-                    if (contentType.equalsIgnoreCase(MediaTypeConstants.getInstance().getSeries())) {
-                        if (SystemClock.elapsedRealtime() - mLastClickTime < 1200) {
-                            return;
-                        }
-                        mLastClickTime = SystemClock.elapsedRealtime();
-                        launchSeriesPage(contentType, assestId);
-                        new ActivityLauncher(this).homeScreen(this, HomeActivity.class);
-                        new ActivityLauncher(ActivitySplash.this).seriesDetailScreen(ActivitySplash.this, SeriesDetailActivity.class, assestId);
-                        finish();
-                    } else if (contentType.equalsIgnoreCase(AppConstants.ContentType.VIDEO.name()) || contentType.equalsIgnoreCase(MediaTypeConstants.getInstance().getMovie())) {
-                        if (SystemClock.elapsedRealtime() - mLastClickTime < 1200) {
-                            return;
-                        }
-                        mLastClickTime = SystemClock.elapsedRealtime();
-                        //new ActivityLauncher(ActivitySplash.this).articleScreen(ActivitySplash.this, ArticleActivity.class, assestId, "0", false);
-                        new ActivityLauncher(this).homeScreen(this, HomeActivity.class);
-                        new ActivityLauncher(ActivitySplash.this).detailScreen(ActivitySplash.this, DetailActivity.class, assestId, "0", false);
-                        finish();
-                    } else if (contentType.equalsIgnoreCase(MediaTypeConstants.getInstance().getShow())) {
-                        if (SystemClock.elapsedRealtime() - mLastClickTime < 1200) {
-                            return;
-                        }
-                        mLastClickTime = SystemClock.elapsedRealtime();
-                        //new ActivityLauncher(ActivitySplash.this).articleScreen(ActivitySplash.this, ArticleActivity.class, assestId, "0", false);
-                        new ActivityLauncher(this).homeScreen(this, HomeActivity.class);
-                        new ActivityLauncher(ActivitySplash.this).detailScreen(ActivitySplash.this, DetailActivity.class, assestId, "0", false);
-                        finish();
-                    } else if (contentType.equalsIgnoreCase(MediaTypeConstants.getInstance().getLive())) {
-                        if (SystemClock.elapsedRealtime() - mLastClickTime < 1200) {
-                            return;
-                        }
-                        mLastClickTime = SystemClock.elapsedRealtime();
-                        //new ActivityLauncher(ActivitySplash.this).articleScreen(ActivitySplash.this, ArticleActivity.class, assestId, "0", false);
-                        new ActivityLauncher(this).homeScreen(this, HomeActivity.class);
-                        new ActivityLauncher(ActivitySplash.this).liveScreenBrightCove(ActivitySplash.this, LiveActivity.class, 0l, assestId, "0", false, SDKConfig.getInstance().getLiveDetailId());
-                        finish();
-                    } else if (contentType.equalsIgnoreCase(MediaTypeConstants.getInstance().getEpisode())) {
-                        if (SystemClock.elapsedRealtime() - mLastClickTime < 1200) {
-                            return;
-                        }
-                        mLastClickTime = SystemClock.elapsedRealtime();
-                        new ActivityLauncher(this).homeScreen(this, HomeActivity.class);
-                        new ActivityLauncher(ActivitySplash.this).episodeScreen(ActivitySplash.this, EpisodeActivity.class, assestId, "0", false);
-                        finish();
-                    } else if (contentType.equalsIgnoreCase(AppConstants.ContentType.ARTICLE.toString())) {
-                        if (SystemClock.elapsedRealtime() - mLastClickTime < 1200) {
-                            return;
-                        }
-                        mLastClickTime = SystemClock.elapsedRealtime();
-                        new ActivityLauncher(this).homeScreen(this, HomeActivity.class);
-                        new ActivityLauncher(ActivitySplash.this).articleScreen(ActivitySplash.this, ArticleActivity.class, assestId, "0", false);
-                        finish();
-                    }
-                } else {
-                    new ActivityLauncher(this).homeScreen(this, HomeActivity.class);
-                    finish();
-                }
-
-            }
-
-        } catch (Exception e) {
-
-        }
-    }
-
-    private void launchSeriesPage(String contentType, int assestId) {
-
-    }
-
 
     private void connectionObserver() {
         if (NetworkConnectivity.isOnline(this)) {

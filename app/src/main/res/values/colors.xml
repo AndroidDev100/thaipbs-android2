@@ -142,7 +142,7 @@
     <color name="grey_heading">#999999</color>
     <color name="link">#007AFF</color>
     <color name="alert_badge">#EB5757</color>
-    <color name="notification_message">#9B9B9B</color>
+    <color name="sub_heading">#B3B3B3</color>
     <color name="notification_divider">#8A8783</color>
 
 </resources>

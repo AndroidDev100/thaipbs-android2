@@ -317,7 +317,7 @@
 
     public void switchToOriginalFragment() {
         getBinding().toolbar.llSearchIcon.setVisibility(View.VISIBLE);
-        getBinding().toolbar.clNotification.setVisibility(View.INVISIBLE);
+        getBinding().toolbar.clNotification.setVisibility(View.VISIBLE);
         fragmentManager.beginTransaction().hide(active).show(originalFragment).commit();
         active = originalFragment;
 
@@ -335,7 +335,7 @@
 
     public void switchToPremiumFragment() {
         getBinding().toolbar.llSearchIcon.setVisibility(View.VISIBLE);
-        getBinding().toolbar.clNotification.setVisibility(View.INVISIBLE);
+        getBinding().toolbar.clNotification.setVisibility(View.VISIBLE);
         fragmentManager.beginTransaction().hide(active).show(premiumFragment).commit();
         active = premiumFragment;
 
@@ -343,7 +343,7 @@
 
     public void switchToSinetronFragment() {
         getBinding().toolbar.llSearchIcon.setVisibility(View.VISIBLE);
-        getBinding().toolbar.clNotification.setVisibility(View.INVISIBLE);
+        getBinding().toolbar.clNotification.setVisibility(View.VISIBLE);
         fragmentManager.beginTransaction().hide(active).show(sinetronFragment).commit();
         active = sinetronFragment;
 
