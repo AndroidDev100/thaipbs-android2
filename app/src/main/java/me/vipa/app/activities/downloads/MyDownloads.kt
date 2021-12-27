@@ -272,31 +272,19 @@ class MyDownloads : BaseBindingActivity<ActivityMyDownloadsBinding>(), MediaDown
 
     }
 
-    override fun onFragmentInteraction(uri: Uri?) {
-        TODO("Not yet implemented")
-    }
+    override fun onFragmentInteraction(uri: Uri?) {}
 
-    override fun onPlayerError(error: String?) {
-        TODO("Not yet implemented")
-    }
+    override fun onPlayerError(error: String?) {}
 
-    override fun onBookmarkCall(currentPosition: Int) {
-        TODO("Not yet implemented")
-    }
+    override fun onBookmarkCall(currentPosition: Int) {}
 
-    override fun onBookmarkFinish() {
-        TODO("Not yet implemented")
-    }
+    override fun onBookmarkFinish() {}
 
-    override fun onPlayerStart() {
-        TODO("Not yet implemented")
-    }
+    override fun onPlayerStart() {}
 
-    override fun onPlayerInProgress() {
-        TODO("Not yet implemented")
-    }
+    override fun onPlayerInProgress() {}
 
-    override fun onAdStarted() {
-        TODO("Not yet implemented")
-    }
+    override fun onAdStarted() {}
+
+    override fun finishActivity() {}
 }

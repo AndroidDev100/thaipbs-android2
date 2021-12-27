@@ -42,8 +42,9 @@ class DownloadedVideoActivity : BaseBindingActivity<ActivityDownloadedVideoBindi
     }
 
     override fun onPlayerInProgress() {
-       // TODO("Not yet implemented")
     }
+
+    override fun finishActivity() {}
 
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {

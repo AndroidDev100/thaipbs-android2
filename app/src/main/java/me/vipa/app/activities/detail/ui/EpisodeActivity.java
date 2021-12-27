@@ -73,6 +73,7 @@ import me.vipa.app.activities.detail.adapter.AllCommentAdapter;
 import me.vipa.app.activities.detail.viewModel.DetailViewModel;
 import me.vipa.app.activities.downloads.NetworkHelper;
 import me.vipa.app.activities.downloads.WifiPreferenceListener;
+import me.vipa.app.activities.homeactivity.ui.HomeActivity;
 import me.vipa.app.activities.listing.listui.ListActivity;
 import me.vipa.app.activities.purchase.callBack.EntitlementStatus;
 import me.vipa.app.activities.purchase.planslayer.GetPlansLayer;
@@ -1521,7 +1522,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
             AppCommonMethod.seasonId = -1;
             int orientation = this.getResources().getConfiguration().orientation;
             if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-                finish();
+                finishActivity();
             } else {
                 if (playerFragment != null) {
                     playerFragment.BackPressClicked(2);
@@ -1936,11 +1937,29 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
                 if (playerFragment != null) {
                     playerFragment.hideControls();
                 }
-            } catch (Exception ignored) {
-
+            } catch (Exception ex) {
+                Logger.w(ex);
             }
 
         }
+    }
+
+    int gcd(int p, int q) {
+        if (q == 0) return p;
+        else return gcd(q, p % q);
+    }
+
+    void ratio(int a, int b) {
+        final int gcd = gcd(a,b);
+        if(a > b) {
+            showAnswer(a/gcd, b/gcd);
+        } else {
+            showAnswer(b/gcd, a/gcd);
+        }
+    }
+
+    void showAnswer(int a, int b) {
+        System.out.println(a + " " + b);
     }
 
     @Override
@@ -2089,6 +2108,15 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
             getBinding().pBar.setVisibility(View.GONE);
             getBinding().playerImage.setVisibility(View.GONE);
         } catch (Exception ignored) {
+        }
+    }
+
+    @Override
+    public void finishActivity() {
+        if (isTaskRoot()) {
+            startActivity(new Intent(EpisodeActivity.this, HomeActivity.class));
+        } else {
+            finish();
         }
     }
 

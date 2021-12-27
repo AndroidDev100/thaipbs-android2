@@ -4,7 +4,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.lifecycle.Observer
@@ -14,16 +13,15 @@ import com.brightcove.player.model.Video
 import com.brightcove.player.network.DownloadStatus
 import com.brightcove.player.offline.MediaDownloadable
 import com.mmtv.utils.helpers.downloads.DownloadHelper
-import me.vipa.app.databinding.ActivityDownloadedEpisodesBinding
 import kotlinx.android.synthetic.main.activity_my_downloads.*
 import me.vipa.app.baseModels.BaseBindingActivity
+import me.vipa.app.databinding.ActivityDownloadedEpisodesBinding
 import me.vipa.app.utils.cropImage.helpers.Logger
 import me.vipa.app.utils.helpers.downloads.VideoListListener
-import me.vipa.app.utils.helpers.downloads.room.DownloadModel
 import me.vipa.app.utils.helpers.downloads.room.DownloadedEpisodes
 import me.vipa.brightcovelibrary.BrightcovePlayerFragment
 import java.io.Serializable
-import java.util.ArrayList
+import java.util.*
 
 class DownloadedEpisodesActivity() : BaseBindingActivity<ActivityDownloadedEpisodesBinding>(), MediaDownloadable.DownloadEventListener, VideoListListener, BrightcovePlayerFragment.OnPlayerInteractionListener {
     override fun inflateBindingLayout(inflater: LayoutInflater): ActivityDownloadedEpisodesBinding {
@@ -154,31 +152,19 @@ class DownloadedEpisodesActivity() : BaseBindingActivity<ActivityDownloadedEpiso
 
     }
 
-    override fun onFragmentInteraction(uri: Uri?) {
-        TODO("Not yet implemented")
-    }
+    override fun onFragmentInteraction(uri: Uri?) {}
 
-    override fun onPlayerError(error: String?) {
-        TODO("Not yet implemented")
-    }
+    override fun onPlayerError(error: String?) {}
 
-    override fun onBookmarkCall(currentPosition: Int) {
-        TODO("Not yet implemented")
-    }
+    override fun onBookmarkCall(currentPosition: Int) {}
 
-    override fun onBookmarkFinish() {
-        TODO("Not yet implemented")
-    }
+    override fun onBookmarkFinish() {}
 
-    override fun onPlayerStart() {
-        TODO("Not yet implemented")
-    }
+    override fun onPlayerStart() {}
 
-    override fun onPlayerInProgress() {
-        TODO("Not yet implemented")
-    }
+    override fun onPlayerInProgress() {}
 
-    override fun onAdStarted() {
-        TODO("Not yet implemented")
-    }
+    override fun onAdStarted() {}
+
+    override fun finishActivity() {}
 }

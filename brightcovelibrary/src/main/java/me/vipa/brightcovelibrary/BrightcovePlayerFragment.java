@@ -1537,7 +1537,11 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
 
         int orientation = getResources().getConfiguration().orientation;
         if (isOfflineVideo || fromTrailer) {
-            mActivity.finish();
+            if (mListener != null) {
+                mListener.finishActivity();
+            } else {
+                mActivity.finish();
+            }
         } else {
             if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
                 mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
@@ -1573,11 +1577,19 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
     private void _isOrienataion(int i, ImageView id) {
         int orientation = mActivity.getResources().getConfiguration().orientation;
         if (isOfflineVideo || fromTrailer) {
-            mActivity.finish();
+            if (mListener != null) {
+                mListener.finishActivity();
+            } else {
+                mActivity.finish();
+            }
         }
         {
             if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-                mActivity.finish();
+                if (mListener != null) {
+                    mListener.finishActivity();
+                } else {
+                    mActivity.finish();
+                }
             } else {
                 mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
                 //id.setBackgroundResource(R.drawable.full_screen);
@@ -1890,7 +1902,11 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         } else {
             if (baseVideoView != null) {
                 baseVideoView.stopPlayback();
-                mActivity.finish();
+                if (mListener != null) {
+                    mListener.finishActivity();
+                } else {
+                    mActivity.finish();
+                }
             }
         }
     }
@@ -2040,6 +2056,8 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         }
 
         default void onEpisodeSkip() {}
+
+        void finishActivity();
 
     }
 

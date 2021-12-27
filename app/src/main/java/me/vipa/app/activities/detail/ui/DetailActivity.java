@@ -20,7 +20,6 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.DisplayCutout;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -61,6 +60,7 @@ import me.vipa.app.SDKConfig;
 import me.vipa.app.activities.detail.viewModel.DetailViewModel;
 import me.vipa.app.activities.downloads.NetworkHelper;
 import me.vipa.app.activities.downloads.WifiPreferenceListener;
+import me.vipa.app.activities.homeactivity.ui.HomeActivity;
 import me.vipa.app.activities.listing.listui.ListActivity;
 import me.vipa.app.activities.purchase.callBack.EntitlementStatus;
 import me.vipa.app.activities.purchase.planslayer.GetPlansLayer;
@@ -91,7 +91,6 @@ import me.vipa.app.utils.MediaTypeConstants;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.constants.AppConstants;
 import me.vipa.app.utils.constants.SharedPrefesConstants;
-import me.vipa.app.utils.cropImage.helpers.Logger;
 import me.vipa.app.utils.cropImage.helpers.NetworkConnectivity;
 import me.vipa.app.utils.cropImage.helpers.PrintLogging;
 import me.vipa.app.utils.helpers.ADHelper;
@@ -108,6 +107,7 @@ import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 import me.vipa.bookmarking.bean.GetBookmarkResponse;
 import me.vipa.brightcovelibrary.BrightcovePlayerFragment;
+import me.vipa.brightcovelibrary.Logger;
 import me.vipa.enums.Layouts;
 
 
@@ -439,7 +439,7 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
     }
 
     private void setFullScreen() {
-        Log.e("Tag", "Inset: " + Build.VERSION.SDK_INT);
+        Logger.d( "Inset: " + Build.VERSION.SDK_INT);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             final WindowInsetsController insetsController = getWindow().getInsetsController();
             if (insetsController != null) {
@@ -449,7 +449,7 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
             attribs.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS;
             getWindow().getDecorView().setOnApplyWindowInsetsListener((view, windowInsets) -> {
                         DisplayCutout inset = windowInsets.getDisplayCutout();
-                        Log.d("Tag", "Inset: " + inset);
+                        Logger.d("Inset: " + inset);
                         return windowInsets;
                     }
             );
@@ -1256,7 +1256,7 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
             int orientation = this.getResources().getConfiguration().orientation;
             if (orientation == Configuration.ORIENTATION_PORTRAIT) {
                 // code for portrait mode
-                finish();
+                finishActivity();
             } else {
                 if (playerFragment != null) {
                     playerFragment.BackPressClicked(2);
@@ -1445,8 +1445,8 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
                 if (playerFragment != null) {
                     playerFragment.hideControls();
                 }
-            } catch (Exception ignored) {
-
+            } catch (Exception ex) {
+                Logger.w(ex);
             }
         }
     }
@@ -1480,6 +1480,15 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    @Override
+    public void finishActivity() {
+        if (isTaskRoot()) {
+            startActivity(new Intent(DetailActivity.this, HomeActivity.class));
+        } else {
+            finish();
+        }
     }
 
     @Override
@@ -1666,7 +1675,7 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
                     downloadHelper.cancelVideo(downloadAbleVideo.getId());
                     break;
                 case R.id.pause_download:
-                    Log.w("pauseVideo","pop");
+                    Logger.d("pauseVideo","pop");
                     userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.REQUESTED);
                     downloadHelper.pauseVideo(downloadAbleVideo.getId());
                     break;
@@ -1692,11 +1701,11 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
 
     @Override
     public void onPauseClicked(String videoId, Object source) {
-        Log.w("pauseClicked","in2");
+        Logger.d("pauseClicked","in2");
         if (NetworkConnectivity.isOnline(this)) {
             if (KsPreferenceKeys.getInstance().getDownloadOverWifi() == 1) {
             if (NetworkHelper.INSTANCE.isWifiEnabled(this)) {
-                Log.w("pauseClicked","in3");
+                Logger.d("pauseClicked","in3");
                 userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.REQUESTED);
                 downloadHelper.resumeDownload(downloadAbleVideo.getId());
             } else {
@@ -1704,7 +1713,7 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
             }
         } else {
             userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.REQUESTED);
-            Log.w("pauseClicked","in4");
+            Logger.d("pauseClicked","in4");
             downloadHelper.resumeDownload(downloadAbleVideo.getId());
         }
         }else {
@@ -1798,13 +1807,13 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
     public void onDownloadFailed(@androidx.annotation.NonNull Video
                                          video, @androidx.annotation.NonNull com.brightcove.player.network.DownloadStatus
                                          downloadStatus) {
-        Log.w("downloadFailed", "onDownloadFailed");
+        Logger.d("downloadFailed", "onDownloadFailed");
         try {
             if (downloadHelper!=null){
             downloadHelper.cancelVideo(downloadAbleVideo.getId());
             }
-        }catch (Exception ignored){
-
+        }catch (Exception ex){
+            Logger.w(ex);
         }
     }
 
@@ -1815,7 +1824,7 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
 
     @Override
     public void pauseVideoDownload(Video video) {
-        Log.w("pauseVideo","pop2");
+        Logger.w("pauseVideo","pop2");
         if (userInteractionFragment != null) {
             userInteractionFragment.setDownloadStatus(me.vipa.app.enums.DownloadStatus.DOWNLOADING);
         }

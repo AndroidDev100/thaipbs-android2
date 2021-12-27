@@ -1,5 +1,7 @@
 package me.vipa.app.activities.live;
 
+import static android.media.AudioManager.AUDIOFOCUS_LOSS;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -29,56 +31,6 @@ import com.brightcove.player.model.Video;
 import com.brightcove.player.network.DownloadStatus;
 import com.brightcove.player.offline.MediaDownloadable;
 import com.brightcove.player.pictureinpicture.PictureInPictureManager;
-import me.vipa.app.SDKConfig;
-import me.vipa.app.activities.purchase.callBack.EntitlementStatus;
-import me.vipa.app.activities.purchase.planslayer.GetPlansLayer;
-import me.vipa.app.beanModel.entitle.EntitledAs;
-import me.vipa.app.databinding.LiveDetailBinding;
-import me.vipa.app.Bookmarking.BookmarkingViewModel;
-import me.vipa.app.activities.chromecast.ExpandedControlsActivity;
-import me.vipa.app.activities.listing.listui.ListActivity;
-import me.vipa.app.activities.purchase.ui.PurchaseActivity;
-import me.vipa.app.activities.purchase.ui.VodOfferType;
-import me.vipa.app.activities.usermanagment.ui.LoginActivity;
-import me.vipa.app.adapters.commonRails.CommonAdapterNew;
-import me.vipa.app.baseModels.BaseBindingActivity;
-import me.vipa.app.beanModel.AppUserModel;
-import me.vipa.app.beanModel.entitle.ResponseEntitle;
-import me.vipa.app.beanModel.enveuCommonRailData.RailCommonData;
-import me.vipa.app.beanModel.responseModels.detailPlayer.Data;
-import me.vipa.app.beanModel.responseModels.detailPlayer.ResponseDetailPlayer;
-import me.vipa.app.callbacks.commonCallbacks.CommonRailtItemClickListner;
-import me.vipa.app.callbacks.commonCallbacks.MoreClickListner;
-import me.vipa.app.callbacks.commonCallbacks.NetworkChangeReceiver;
-import me.vipa.app.fragments.dialog.AlertDialogFragment;
-import me.vipa.app.fragments.dialog.AlertDialogSingleButtonFragment;
-import me.vipa.app.fragments.player.ui.CommentsFragment;
-import me.vipa.app.fragments.player.ui.NontonPlayerExtended;
-import me.vipa.app.fragments.player.ui.RecommendationRailFragment;
-import me.vipa.app.fragments.player.ui.UserInteractionFragment;
-import me.vipa.app.networking.apistatus.APIStatus;
-import me.vipa.app.networking.responsehandler.ResponseModel;
-import me.vipa.app.utils.MediaTypeConstants;
-import me.vipa.app.utils.helpers.CheckInternetConnection;
-import me.vipa.app.utils.helpers.downloads.OnDownloadClickInteraction;
-import me.vipa.app.utils.helpers.downloads.VideoListListener;
-import me.vipa.enums.Layouts;
-import me.vipa.brightcovelibrary.BrightcovePlayerFragment;
-import me.vipa.app.R;
-import me.vipa.app.activities.detail.viewModel.DetailViewModel;
-import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
-import me.vipa.app.utils.commonMethods.AppCommonMethod;
-import me.vipa.app.utils.constants.AppConstants;
-import me.vipa.app.utils.cropImage.helpers.Logger;
-import me.vipa.app.utils.cropImage.helpers.NetworkConnectivity;
-import me.vipa.app.utils.cropImage.helpers.PrintLogging;
-import me.vipa.app.utils.helpers.ImageHelper;
-import me.vipa.app.utils.helpers.RailInjectionHelper;
-
-import me.vipa.app.utils.helpers.ToastHandler;
-import me.vipa.app.utils.helpers.ToolBarHandler;
-import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
-import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -89,7 +41,55 @@ import java.util.Objects;
 import java.util.Timer;
 import java.util.concurrent.TimeUnit;
 
-import static android.media.AudioManager.AUDIOFOCUS_LOSS;
+import me.vipa.app.Bookmarking.BookmarkingViewModel;
+import me.vipa.app.R;
+import me.vipa.app.SDKConfig;
+import me.vipa.app.activities.chromecast.ExpandedControlsActivity;
+import me.vipa.app.activities.detail.viewModel.DetailViewModel;
+import me.vipa.app.activities.homeactivity.ui.HomeActivity;
+import me.vipa.app.activities.listing.listui.ListActivity;
+import me.vipa.app.activities.purchase.callBack.EntitlementStatus;
+import me.vipa.app.activities.purchase.planslayer.GetPlansLayer;
+import me.vipa.app.activities.purchase.ui.VodOfferType;
+import me.vipa.app.activities.usermanagment.ui.LoginActivity;
+import me.vipa.app.adapters.commonRails.CommonAdapterNew;
+import me.vipa.app.baseModels.BaseBindingActivity;
+import me.vipa.app.beanModel.AppUserModel;
+import me.vipa.app.beanModel.entitle.EntitledAs;
+import me.vipa.app.beanModel.entitle.ResponseEntitle;
+import me.vipa.app.beanModel.enveuCommonRailData.RailCommonData;
+import me.vipa.app.beanModel.responseModels.detailPlayer.Data;
+import me.vipa.app.beanModel.responseModels.detailPlayer.ResponseDetailPlayer;
+import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
+import me.vipa.app.callbacks.commonCallbacks.CommonRailtItemClickListner;
+import me.vipa.app.callbacks.commonCallbacks.MoreClickListner;
+import me.vipa.app.callbacks.commonCallbacks.NetworkChangeReceiver;
+import me.vipa.app.databinding.LiveDetailBinding;
+import me.vipa.app.fragments.dialog.AlertDialogFragment;
+import me.vipa.app.fragments.dialog.AlertDialogSingleButtonFragment;
+import me.vipa.app.fragments.player.ui.CommentsFragment;
+import me.vipa.app.fragments.player.ui.NontonPlayerExtended;
+import me.vipa.app.fragments.player.ui.RecommendationRailFragment;
+import me.vipa.app.fragments.player.ui.UserInteractionFragment;
+import me.vipa.app.networking.apistatus.APIStatus;
+import me.vipa.app.networking.responsehandler.ResponseModel;
+import me.vipa.app.utils.MediaTypeConstants;
+import me.vipa.app.utils.commonMethods.AppCommonMethod;
+import me.vipa.app.utils.constants.AppConstants;
+import me.vipa.app.utils.cropImage.helpers.Logger;
+import me.vipa.app.utils.cropImage.helpers.NetworkConnectivity;
+import me.vipa.app.utils.cropImage.helpers.PrintLogging;
+import me.vipa.app.utils.helpers.CheckInternetConnection;
+import me.vipa.app.utils.helpers.ImageHelper;
+import me.vipa.app.utils.helpers.RailInjectionHelper;
+import me.vipa.app.utils.helpers.ToastHandler;
+import me.vipa.app.utils.helpers.ToolBarHandler;
+import me.vipa.app.utils.helpers.downloads.OnDownloadClickInteraction;
+import me.vipa.app.utils.helpers.downloads.VideoListListener;
+import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
+import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
+import me.vipa.brightcovelibrary.BrightcovePlayerFragment;
+import me.vipa.enums.Layouts;
 
 
 public class LiveActivity extends BaseBindingActivity<LiveDetailBinding> implements AlertDialogFragment.AlertDialogListener, NetworkChangeReceiver.ConnectivityReceiverListener, AudioManager.OnAudioFocusChangeListener, CommonRailtItemClickListner, MoreClickListner, BrightcovePlayerFragment.OnPlayerInteractionListener, OnDownloadClickInteraction, MediaDownloadable.DownloadEventListener, VideoListListener, BrightcovePlayerFragment.ChromeCastStartedCallBack {
@@ -1056,7 +1056,7 @@ public class LiveActivity extends BaseBindingActivity<LiveDetailBinding> impleme
 
             int orientation = this.getResources().getConfiguration().orientation;
             if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-                finish();
+                finishActivity();
             } else {
                 if (playerFragment != null) {
                     playerFragment.BackPressClicked(2);
@@ -1365,6 +1365,15 @@ public class LiveActivity extends BaseBindingActivity<LiveDetailBinding> impleme
     @Override
     public void onPlayerInProgress() {
 
+    }
+
+    @Override
+    public void finishActivity() {
+        if (isTaskRoot()) {
+            startActivity(new Intent(LiveActivity.this, HomeActivity.class));
+        } else {
+            finish();
+        }
     }
 
     @Override
