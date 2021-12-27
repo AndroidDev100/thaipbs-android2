@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.text.Editable;
-import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -57,13 +56,13 @@ import java.util.regex.Pattern;
 
 import me.vipa.app.R;
 import me.vipa.app.SDKConfig;
-import me.vipa.app.activities.usermanagment.ui.SignUpThirdPage;
 import me.vipa.app.activities.usermanagment.viewmodel.RegistrationLoginViewModel;
 import me.vipa.app.baseModels.BaseBindingActivity;
 import me.vipa.app.beanModel.userProfile.UserProfileResponse;
 import me.vipa.app.databinding.ProfileActivityNewBinding;
 import me.vipa.app.fragments.dialog.AlertDialogFragment;
 import me.vipa.app.fragments.dialog.AlertDialogSingleButtonFragment;
+import me.vipa.app.manager.MoEUserTracker;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.helpers.CheckInternetConnection;
 import me.vipa.app.utils.helpers.NetworkConnectivity;
@@ -391,6 +390,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
                             Gson gson = new Gson();
                             String userProfileData = gson.toJson(userProfileResponse);
                             KsPreferenceKeys.getInstance().setUserProfileData(userProfileData);
+                            MoEUserTracker.INSTANCE.setUserProperties(ProfileActivityNew.this);
 
 
                            // Log.e("DATA update profile",userProfileData);

@@ -1,10 +1,9 @@
 package me.vipa.app.fragments.dialog;
 
 
-import android.app.Activity;
+import static com.amazonaws.mobile.auth.core.internal.util.ThreadUtils.runOnUiThread;
+
 import android.content.Context;
-
-
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -13,21 +12,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -35,38 +26,27 @@ import com.facebook.login.LoginManager;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 import java.util.Objects;
 
 import me.vipa.app.R;
-
-import me.vipa.app.activities.homeactivity.ui.HomeActivity;
-import me.vipa.app.activities.homeactivity.viewmodel.HomeViewModel;
-import me.vipa.app.activities.search.adapter.GenereSearchAdapter;
 import me.vipa.app.activities.usermanagment.viewmodel.RegistrationLoginViewModel;
 import me.vipa.app.beanModel.userProfile.UserProfileResponse;
 import me.vipa.app.databinding.KidPinPopupLayoutBinding;
-import me.vipa.app.fragments.more.ui.MoreFragment;
+import me.vipa.app.manager.MoEUserTracker;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
-import me.vipa.app.utils.config.bean.Genre;
 import me.vipa.app.utils.constants.AppConstants;
 import me.vipa.app.utils.helpers.CheckInternetConnection;
-
 import me.vipa.app.utils.helpers.NetworkConnectivity;
 import me.vipa.app.utils.helpers.SharedPrefHelper;
 import me.vipa.app.utils.helpers.StringUtils;
 import me.vipa.app.utils.helpers.ToastHandler;
-import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 import me.vipa.baseCollection.baseCategoryServices.BaseCategoryServices;
 import me.vipa.userManagement.callBacks.LogoutCallBack;
 import retrofit2.Response;
-
-import static com.amazonaws.mobile.auth.core.internal.util.ThreadUtils.runOnUiThread;
 
 public class KidsModePinDialogFragment extends DialogFragment implements ErrorDialogFragment.CallBackErrorOkClick {
     private KidPinPopupLayoutBinding kidPinPopupLayoutBinding;
@@ -323,7 +303,8 @@ public class KidsModePinDialogFragment extends DialogFragment implements ErrorDi
                             Gson gson = new Gson();
                             String userProfileData = gson.toJson(userProfileResponse);
                             KsPreferenceKeys.getInstance().setUserProfileData(userProfileData);
-                          //  Log.e("RESONCE",new Gson().toJson(userProfileResponse));
+                            MoEUserTracker.INSTANCE.setUserProperties(getActivity());
+                            //  Log.e("RESONCE",new Gson().toJson(userProfileResponse));
                             if(fromVipaKids){
                                 kidPinPopupLayoutBinding.pinViewNumber.setText("");
                                 preference.setfirstTimeUserForKidsPIn(false);

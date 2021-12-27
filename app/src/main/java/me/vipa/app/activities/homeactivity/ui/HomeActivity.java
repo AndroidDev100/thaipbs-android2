@@ -36,6 +36,7 @@
  import me.vipa.app.fragments.movies.ui.MovieFragment;
  import me.vipa.app.fragments.news.ui.NewsFragment;
  import me.vipa.app.fragments.shows.ui.ShowsFragment;
+ import me.vipa.app.manager.MoEUserTracker;
  import me.vipa.app.manager.MoEngageNotificationManager;
  import me.vipa.app.utils.commonMethods.AppCommonMethod;
  import me.vipa.app.utils.constants.AppConstants;
@@ -212,6 +213,7 @@
 
         }
 
+        MoEUserTracker.INSTANCE.setUserProperties(HomeActivity.this);
         setUnreadNotificationCount();
 
         preference = KsPreferenceKeys.getInstance();

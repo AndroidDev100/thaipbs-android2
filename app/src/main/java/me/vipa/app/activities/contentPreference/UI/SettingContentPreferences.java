@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.xiaofeng.flowlayoutmanager.FlowLayoutManager;
 
@@ -24,23 +23,19 @@ import me.vipa.app.R;
 import me.vipa.app.SDKConfig;
 import me.vipa.app.activities.contentPreference.adapter.ContentPreferenceAdapter;
 import me.vipa.app.activities.contentPreference.viewModel.ContentPrefernceViewModel;
-import me.vipa.app.activities.profile.ui.ProfileActivityNew;
-import me.vipa.app.activities.usermanagment.ui.SignUpThirdPage;
-import me.vipa.app.activities.usermanagment.viewmodel.RegistrationLoginViewModel;
 import me.vipa.app.baseModels.BaseBindingActivity;
 import me.vipa.app.beanModel.userProfile.UserProfileResponse;
 import me.vipa.app.callbacks.commonCallbacks.ContentPreferenceCallback;
 import me.vipa.app.databinding.ActivityContentPrefSettingsBinding;
-import me.vipa.app.databinding.ActivityContentPreferenceBinding;
 import me.vipa.app.fragments.dialog.AlertDialogFragment;
 import me.vipa.app.fragments.dialog.AlertDialogSingleButtonFragment;
+import me.vipa.app.manager.MoEUserTracker;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.config.bean.PreferenceBean;
 import me.vipa.app.utils.constants.AppConstants;
 import me.vipa.app.utils.cropImage.helpers.NetworkConnectivity;
 import me.vipa.app.utils.helpers.CheckInternetConnection;
 import me.vipa.app.utils.helpers.StringUtils;
-import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 
 public class SettingContentPreferences extends BaseBindingActivity<ActivityContentPrefSettingsBinding> implements ContentPreferenceCallback , AlertDialogFragment.AlertDialogListener {
@@ -165,6 +160,7 @@ public class SettingContentPreferences extends BaseBindingActivity<ActivityConte
                         Gson gson = new Gson();
                         String userProfileData = gson.toJson(userProfileResponse);
                         KsPreferenceKeys.getInstance().setUserProfileData(userProfileData);
+                        MoEUserTracker.INSTANCE.setUserProperties(SettingContentPreferences.this);
                         showDialog("", SettingContentPreferences.this.getResources().getString(R.string.profile_update_successfully));
                     } else {
                         if (userProfileResponse.getResponseCode() == 4302) {

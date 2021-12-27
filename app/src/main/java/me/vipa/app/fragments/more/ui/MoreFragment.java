@@ -11,7 +11,6 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -53,7 +52,6 @@ import me.vipa.app.baseModels.BaseBindingFragment;
 import me.vipa.app.beanModel.AppUserModel;
 import me.vipa.app.beanModel.configBean.ResponseConfig;
 import me.vipa.app.beanModel.responseModels.RegisterSignUpModels.DataResponseRegister;
-import me.vipa.app.beanModel.userProfile.Data;
 import me.vipa.app.beanModel.userProfile.UserProfileResponse;
 import me.vipa.app.callbacks.commonCallbacks.MoreItemClickListener;
 import me.vipa.app.cms.HelpActivity;
@@ -67,7 +65,6 @@ import me.vipa.app.networking.apiendpoints.ApiInterface;
 import me.vipa.app.networking.apiendpoints.RequestConfig;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.constants.AppConstants;
-import me.vipa.app.utils.cropImage.helpers.Logger;
 import me.vipa.app.utils.helpers.CheckInternetConnection;
 import me.vipa.app.utils.helpers.NetworkConnectivity;
 import me.vipa.app.utils.helpers.SharedPrefHelper;
@@ -75,7 +72,7 @@ import me.vipa.app.utils.helpers.StringUtils;
 import me.vipa.app.utils.helpers.ToastHandler;
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
-import me.vipa.brightcovelibrary.utils.ObjectHelper;
+import me.vipa.brightcovelibrary.Logger;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -164,7 +161,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
             }
         }
 
-        Logger.i("TAG", "Tried to unregister the reciver when it's not registered");
+        Logger.i("Tried to unregister the receiver when it's not registered");
 
     }
 
@@ -327,8 +324,8 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
             }
 
 
-        } catch (Exception ignored) {
-            Log.w("ProfileClick", ignored.toString());
+        } catch (Exception ex) {
+            Logger.w(ex);
         }
 
     }
@@ -345,27 +342,15 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
             Gson gson = new Gson();
             String userProfileData = gson.toJson(userProfileResponse);
             KsPreferenceKeys.getInstance().setUserProfileData(userProfileData);
-            Log.w("savedata2", KsPreferenceKeys.getInstance().getUserProfileData());
+            Logger.d("savedata2 " + KsPreferenceKeys.getInstance().getUserProfileData());
             String json = KsPreferenceKeys.getInstance().getUserProfileData();
             UserProfileResponse newObject = gson.fromJson(json, UserProfileResponse.class);
-            Log.w("savedata3", newObject.toString());
+            Logger.d("savedata3 " + newObject.toString());
 
-            setMoEngageProperties(userProfileResponse.getData());
-
+            MoEUserTracker.INSTANCE.setUserProperties(getActivity());
         } catch (Exception e) {
-
+            Logger.w(e);
         }
-    }
-
-    private void setMoEngageProperties(Data data) {
-        MoEUserTracker.INSTANCE.setUsername(getActivity(), preference.getAppPrefUserName());
-        if (ObjectHelper.isNotEmpty(data.getDateOfBirth())) {
-            MoEUserTracker.INSTANCE.setDob(getActivity(), (double) data.getDateOfBirth());
-        }
-        MoEUserTracker.INSTANCE.setEmail(getActivity(), preference.getAppPrefUserEmail());
-        MoEUserTracker.INSTANCE.setPhone(getActivity(), String.valueOf(data.getPhoneNumber()));
-        MoEUserTracker.INSTANCE.setGender(getActivity(), String.valueOf(data.getGender()));
-        MoEUserTracker.INSTANCE.setUniqueId(getActivity(), preference.getAppPrefUserId());
     }
 
     private String imageUrlId = "";
@@ -606,6 +591,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
     public void hitApiLogout() {
         if (getActivity() != null)
             if (CheckInternetConnection.isOnline(requireActivity())) {
+                MoEUserTracker.INSTANCE.logout(getActivity());
                 String isFacebook = preference.getAppPrefLoginType();
                 if (isFacebook.equalsIgnoreCase(AppConstants.UserLoginType.FbLogin.toString())) {
                     LoginManager.getInstance().logOut();
@@ -730,7 +716,6 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
         if (flagLogIn) {
 //            AppCommonMethod.guestTitle(getBaseActivity(),getBinding().userNameWords, getBinding().usernameTv, preference);
             hitApiLogout();
-            MoEUserTracker.INSTANCE.logout(getActivity());
 
             flagLogIn = false;
             //  getBinding().userNameWords.setVisibility(View.GONE);
@@ -837,7 +822,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
 
     @Override
     public void onContinueClick() {
-        Log.e("More Fragmnet CONTINUE", "More Fragmnet CONTINUE");
+        Logger.w("More Fragment CONTINUE");
         String primaryAccountId = new SharedPrefHelper(getActivity()).getPrimaryAccountId();
         if (primaryAccountId != null && !primaryAccountId.isEmpty()) {
             KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
@@ -986,7 +971,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
 
 
                             } else {
-                                Log.e("allSecondaryEMPTY", new Gson().toJson(allSecondaryAccountDetails));
+                                Logger.d("allSecondaryEMPTY: " + new Gson().toJson(allSecondaryAccountDetails));
                                 addSecondaryUserApi(token, vipaMode);
                             }
 
@@ -1050,8 +1035,8 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
 
                         String primaryAccountId = secondaryUserDetails.getData().getPrimaryAccountRef().getAccountId();
                         String secondaryAccountId = secondaryUserDetails.getData().getAccountId();
-                        Log.e("addSecondaryApPrimaryid", primaryAccountId);
-                        Log.e("addSecondaryApiSecondid", secondaryAccountId);
+                        Logger.d("addSecondaryApPrimaryid " + primaryAccountId);
+                        Logger.d("addSecondaryApiSecondid " + secondaryAccountId);
                         new SharedPrefHelper(getActivity()).savePrimaryAccountId(primaryAccountId);
                         new SharedPrefHelper(getActivity()).saveSecondaryAccountId(secondaryAccountId);
                         if (vipaMode) {
@@ -1130,7 +1115,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                         if (userProfileResponse.getStatus()) {
                             updateUI(userProfileResponse);
                             dismissLoading(getBinding().progressBar, getActivity());
-                            Log.e("DATA IN LRAVE KIDS", new Gson().toJson(userProfileResponse));
+                            Logger.d("DATA IN LEAVE KIDS " + new Gson().toJson(userProfileResponse));
 
                             if (userProfileResponse.getData().getPrimaryAccountRef() != null) {
                                 if (userProfileResponse.getData().getPrimaryAccountRef().getCustomData() != null) {
@@ -1138,7 +1123,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                                         String decodePin = userProfileResponse.getData().getPrimaryAccountRef().getCustomData().getParentalPin();
                                         pin = StringUtils.getDataFromBase64(decodePin);
 
-                                        Log.e("pin3", pin);
+                                        Logger.d("pin3 " +  pin);
                                         KidsModePinDialogFragment newFragment = new KidsModePinDialogFragment();
                                         Bundle args = new Bundle();
                                         args.putString("pin", pin);
