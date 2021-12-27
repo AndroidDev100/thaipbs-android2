@@ -1,22 +1,18 @@
 package me.vipa.app.activities.usermanagment.ui;
 
+import static me.vipa.app.R.font.sukhumvittadmai_normal;
+
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.text.Editable;
 import android.text.InputType;
-import android.text.SpannableString;
-import android.text.SpannableStringBuilder;
 import android.text.TextWatcher;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CompoundButton;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,36 +20,6 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-
-import me.vipa.app.activities.contentPreference.UI.ContentPreference;
-import me.vipa.app.activities.contentPreference.UI.SettingContentPreferences;
-import me.vipa.app.activities.homeactivity.ui.HomeActivity;
-import me.vipa.app.activities.onBoarding.UI.OnBoarding;
-import me.vipa.app.activities.profile.ui.ProfileActivityNew;
-import me.vipa.app.activities.settings.ActivitySettings;
-import me.vipa.app.activities.usermanagment.viewmodel.RegistrationLoginViewModel;
-import me.vipa.app.baseModels.BaseBindingActivity;
-import me.vipa.app.R;
-import me.vipa.app.beanModel.responseModels.LoginResponse.Data;
-import me.vipa.app.beanModel.responseModels.LoginResponse.LoginResponseModel;
-import me.vipa.app.beanModel.userProfile.UserProfileResponse;
-import me.vipa.app.cms.HelpActivity;
-import me.vipa.app.databinding.ActivityMainBinding;
-import me.vipa.app.databinding.SignupActivityBinding;
-import me.vipa.app.fragments.dialog.AlertDialogFragment;
-import me.vipa.app.fragments.dialog.AlertDialogSingleButtonFragment;
-import me.vipa.app.tarcker.EventConstant;
-import me.vipa.app.tarcker.FCMEvents;
-import me.vipa.app.utils.commonMethods.AppCommonMethod;
-import me.vipa.app.utils.constants.AppConstants;
-import me.vipa.app.utils.cropImage.helpers.Logger;
-import me.vipa.app.utils.helpers.CheckInternetConnection;
-import me.vipa.app.utils.helpers.NetworkConnectivity;
-
-import me.vipa.app.utils.helpers.SharedPrefHelper;
-import me.vipa.app.utils.helpers.StringUtils;
-import me.vipa.app.utils.helpers.ToastHandler;
-import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookAuthorizationException;
@@ -68,20 +34,38 @@ import com.google.gson.JsonObject;
 
 import org.json.JSONException;
 
-import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import me.vipa.app.R;
+import me.vipa.app.activities.contentPreference.UI.ContentPreference;
+import me.vipa.app.activities.homeactivity.ui.HomeActivity;
 import me.vipa.app.activities.usermanagment.viewmodel.RegistrationLoginViewModel;
 import me.vipa.app.baseModels.BaseBindingActivity;
-
-import static me.vipa.app.R.font.sukhumvittadmai_normal;
+import me.vipa.app.beanModel.responseModels.LoginResponse.Data;
+import me.vipa.app.beanModel.responseModels.LoginResponse.LoginResponseModel;
+import me.vipa.app.beanModel.userProfile.UserProfileResponse;
+import me.vipa.app.cms.HelpActivity;
+import me.vipa.app.databinding.SignupActivityBinding;
+import me.vipa.app.fragments.dialog.AlertDialogFragment;
+import me.vipa.app.fragments.dialog.AlertDialogSingleButtonFragment;
+import me.vipa.app.manager.MoEUserTracker;
+import me.vipa.app.tarcker.EventConstant;
+import me.vipa.app.tarcker.FCMEvents;
+import me.vipa.app.utils.commonMethods.AppCommonMethod;
+import me.vipa.app.utils.constants.AppConstants;
+import me.vipa.app.utils.cropImage.helpers.Logger;
+import me.vipa.app.utils.helpers.CheckInternetConnection;
+import me.vipa.app.utils.helpers.NetworkConnectivity;
+import me.vipa.app.utils.helpers.SharedPrefHelper;
+import me.vipa.app.utils.helpers.StringUtils;
+import me.vipa.app.utils.helpers.ToastHandler;
+import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
+import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 
 public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> implements AlertDialogFragment.AlertDialogListener {
 
@@ -267,8 +251,12 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
                             if (signupResponseAccessToken.getResponseModel().getResponseCode() == 200) {
                                 Gson gson = new Gson();
                                 preference.setAppPrefAccessToken(signupResponseAccessToken.getAccessToken());
-                                String stringJson = gson.toJson(signupResponseAccessToken.getResponseModel().getData());
-                                saveUserDetails(stringJson, signupResponseAccessToken.getResponseModel().getData().getId(), true);
+                                final Data signUpData = signupResponseAccessToken.getResponseModel().getData();
+                                String stringJson = gson.toJson(signUpData);
+                                saveUserDetails(stringJson, signUpData.getId(), true);
+                                MoEUserTracker.INSTANCE.setUniqueId(SignUpActivity.this, String.valueOf(signUpData.getId()));
+                                MoEUserTracker.INSTANCE.setEmail(SignUpActivity.this, signUpData.getEmail());
+                                MoEUserTracker.INSTANCE.setUsername(SignUpActivity.this, signUpData.getName());
 
                                 // onBackPressed();
                                 //new ActivityLauncher(SignUpActivity.this).homeScreen(SignUpActivity.this, HomeActivity.class);

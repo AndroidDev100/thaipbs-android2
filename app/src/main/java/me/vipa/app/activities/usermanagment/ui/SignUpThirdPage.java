@@ -1,10 +1,5 @@
 package me.vipa.app.activities.usermanagment.ui;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -12,13 +7,17 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
@@ -46,21 +45,19 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import me.vipa.app.R;
-import me.vipa.app.SDKConfig;
 import me.vipa.app.activities.profile.ui.AvatarImageActivity;
-import me.vipa.app.activities.profile.ui.ProfileActivityNew;
 import me.vipa.app.activities.usermanagment.viewmodel.RegistrationLoginViewModel;
 import me.vipa.app.baseModels.BaseBindingActivity;
 import me.vipa.app.beanModel.userProfile.UserProfileResponse;
 import me.vipa.app.databinding.ActivitySignUpThirdPageBinding;
 import me.vipa.app.fragments.dialog.AlertDialogFragment;
 import me.vipa.app.fragments.dialog.AlertDialogSingleButtonFragment;
+import me.vipa.app.manager.MoEUserTracker;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.constants.AppConstants;
 import me.vipa.app.utils.helpers.CheckInternetConnection;
 import me.vipa.app.utils.helpers.NetworkConnectivity;
 import me.vipa.app.utils.helpers.SharedPrefHelper;
-import me.vipa.app.utils.helpers.StringUtils;
 import me.vipa.app.utils.helpers.ToastHandler;
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
@@ -129,7 +126,7 @@ public class SignUpThirdPage extends BaseBindingActivity<ActivitySignUpThirdPage
 
 
     private void callModel() {
-        viewModel = ViewModelProviders.of(SignUpThirdPage.this).get(RegistrationLoginViewModel.class);
+        viewModel = new ViewModelProvider(SignUpThirdPage.this).get(RegistrationLoginViewModel.class);
     }
 
     private void connectionValidation(boolean connected) {
@@ -322,6 +319,10 @@ public class SignUpThirdPage extends BaseBindingActivity<ActivitySignUpThirdPage
                                 preference.setAppPrefRegisterStatus(AppConstants.UserStatus.Login.toString());
                                 onBackPressed();
                             }else {
+                                Gson gson = new Gson();
+                                String userProfileData = gson.toJson(userProfileResponse);
+                                KsPreferenceKeys.getInstance().setUserProfileData(userProfileData);
+                                MoEUserTracker.INSTANCE.setUserProperties(SignUpThirdPage.this);
                                 showDialog("", SignUpThirdPage.this.getResources().getString(R.string.profile_update_successfully));
                             }
                             //updateUI(userProfileResponse);
