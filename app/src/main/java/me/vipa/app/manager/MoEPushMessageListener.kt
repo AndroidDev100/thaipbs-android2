@@ -1,6 +1,7 @@
 package me.vipa.app.manager
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.moengage.pushbase.push.PushMessageListener
@@ -27,5 +28,10 @@ class MoEPushMessageListener: PushMessageListener() {
         }
 
         activity.startActivity(intent)
+    }
+
+    override fun onNotificationReceived(context: Context, payload: Bundle) {
+        super.onNotificationReceived(context, payload)
+        MoEngageNotificationManager.getAllNotifications()
     }
 }

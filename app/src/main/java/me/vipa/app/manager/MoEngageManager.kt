@@ -6,11 +6,9 @@ import com.moengage.core.MoEngage
 import com.moengage.core.config.FcmConfig
 import com.moengage.core.config.LogConfig
 import com.moengage.core.config.NotificationConfig
-import com.moengage.firebase.MoEFireBaseHelper
 import com.moengage.firebase.listener.FirebaseEventListener
 import com.moengage.pushbase.MoEPushHelper
 import me.vipa.app.BuildConfig
-import me.vipa.app.MvHubPlusApplication
 import me.vipa.app.R
 import me.vipa.brightcovelibrary.Logger
 
@@ -37,7 +35,6 @@ object MoEngageManager: FirebaseEventListener() {
 
     override fun onTokenAvailable(token: String) {
         super.onTokenAvailable(token)
-        Logger.d("token: $token")
-        MoEFireBaseHelper.getInstance().passPushToken(MvHubPlusApplication.getInstance(), token)
+        Logger.d("firebase token: $token")
     }
 }

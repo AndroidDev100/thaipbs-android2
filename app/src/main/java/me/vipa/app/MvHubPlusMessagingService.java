@@ -34,9 +34,10 @@ import me.vipa.brightcovelibrary.Logger;
 public class MvHubPlusMessagingService extends FirebaseMessagingService {
     String assetId,assetType;
     @Override
-    public void onNewToken(@NonNull String s) {
-        super.onNewToken(s);
-        Logger.d("onNewToken: " + s);
+    public void onNewToken(@NonNull String token) {
+        super.onNewToken(token);
+        Logger.d("firebase onNewToken: " + token);
+        MoEFireBaseHelper.getInstance().passPushToken(MvHubPlusApplication.getInstance(), token);
     }
 
     @Override
