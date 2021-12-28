@@ -1,6 +1,5 @@
 package me.vipa.app.activities.notification.ui
 
-import android.app.AlertDialog
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,12 +16,14 @@ import me.vipa.app.activities.notification.adapter.NotificationListAdapter
 import me.vipa.app.activities.notification.viewmodel.NotificationViewModel
 import me.vipa.app.baseModels.BaseBindingActivity
 import me.vipa.app.databinding.ActivityNotificationBinding
+import me.vipa.app.fragments.dialog.AlertDialogFragment
 import me.vipa.app.manager.MoEngageNotificationManager
 import me.vipa.app.utils.helpers.NetworkConnectivity
 import me.vipa.app.utils.helpers.ToolBarHandler
 import me.vipa.brightcovelibrary.Logger
 import me.vipa.brightcovelibrary.utils.ObjectHelper
 import org.json.JSONObject
+import java.util.*
 
 class NotificationActivity : BaseBindingActivity<ActivityNotificationBinding?>() {
     private var viewModel: NotificationViewModel? = null
@@ -55,7 +56,6 @@ class NotificationActivity : BaseBindingActivity<ActivityNotificationBinding?>()
 
             override fun onDeleteClicked(inboxMessage: InboxMessage) {
                 showAlertDialog(
-                    title = getString(R.string.delete),
                     message = getString(R.string.delete_notification_single),
                     positiveLabel = getString(R.string.ok),
                     positiveAction = {
@@ -63,7 +63,6 @@ class NotificationActivity : BaseBindingActivity<ActivityNotificationBinding?>()
                         notificationAdapter?.deleteItem(inboxMessage)
                     },
                     negativeLabel = getString(R.string.cancel),
-                    negativeAction = {}
                 )
             }
         }
@@ -78,6 +77,8 @@ class NotificationActivity : BaseBindingActivity<ActivityNotificationBinding?>()
         notificationAdapter = NotificationListAdapter()
 
         setupToolbarIcons()
+        setupListener()
+
         if (NetworkConnectivity.isOnline(this@NotificationActivity)) {
             getNotifications()
         } else {
@@ -104,31 +105,31 @@ class NotificationActivity : BaseBindingActivity<ActivityNotificationBinding?>()
         }
     }
 
+    private fun setupListener() {
+        binding?.toolbar?.clDelete?.setOnClickListener {
+            notificationAdapter?.getDataList()?.let { dataList ->
+                showAlertDialog(
+                    message = getString(R.string.delete_notification_all),
+                    positiveLabel = getString(R.string.ok),
+                    positiveAction = {
+                        MoEngageNotificationManager.deleteAllNotifications(dataList)
+                        notificationAdapter?.clearData()
+                        initNoData(false)
+                    },
+                    negativeLabel = getString(R.string.cancel),
+                )
+            }
+        }
+    }
+
     private fun getNotifications() {
         MoEngageNotificationManager.getAllNotifications().observe(this) { list ->
             binding?.noConnectionLayout?.visibility = View.GONE
 
-            val hasData = ObjectHelper.isEmpty(list)
+            val hasData = ObjectHelper.isNotEmpty(list)
             initNoData(hasData)
 
             if (hasData) {
-                binding?.toolbar?.clDelete?.visibility = View.GONE
-            } else {
-                binding?.toolbar?.clDelete?.visibility = View.VISIBLE
-                binding?.toolbar?.clDelete?.setOnClickListener {
-                    notificationAdapter?.getDataList()?.let { dataList ->
-                        showAlertDialog(
-                            title = getString(R.string.delete),
-                            message = getString(R.string.delete_notification_all),
-                            positiveLabel = getString(R.string.ok),
-                            positiveAction = {
-                                MoEngageNotificationManager.deleteAllNotifications(dataList)
-                            },
-                            negativeLabel = getString(R.string.cancel),
-                            negativeAction = {}
-                        )
-                    }
-                }
                 initRecyclerView(list)
             }
         }
@@ -140,13 +141,15 @@ class NotificationActivity : BaseBindingActivity<ActivityNotificationBinding?>()
             ?.setOnClickListener { getNotifications() }
     }
 
-    private fun initNoData(show: Boolean) {
-        if (show) {
-            binding?.grpNoData?.visibility = View.VISIBLE
-            binding?.rvNotification?.visibility = View.GONE
-        } else {
+    private fun initNoData(hasData: Boolean) {
+        if (hasData) {
             binding?.grpNoData?.visibility = View.GONE
             binding?.rvNotification?.visibility = View.VISIBLE
+            binding?.toolbar?.clDelete?.visibility = View.VISIBLE
+        } else {
+            binding?.grpNoData?.visibility = View.VISIBLE
+            binding?.rvNotification?.visibility = View.GONE
+            binding?.toolbar?.clDelete?.visibility = View.GONE
         }
     }
 
@@ -170,25 +173,17 @@ class NotificationActivity : BaseBindingActivity<ActivityNotificationBinding?>()
     }
 
     private fun showAlertDialog(
-        title: String,
         message: String,
         positiveLabel: String,
         positiveAction: () -> Unit,
         negativeLabel: String,
-        negativeAction: () -> Unit,
     ) {
-        val builder = AlertDialog.Builder(this@NotificationActivity)
-        builder.setTitle(title)
-        builder.setMessage(message)
-        builder.setPositiveButton(positiveLabel) { dialog, _ ->
+        val alertDialog = AlertDialogFragment.newInstance("", message, positiveLabel, negativeLabel)
+        alertDialog.setAlertDialogCallBack {
             positiveAction()
-            dialog.dismiss()
+            initNoData((notificationAdapter?.itemCount ?: 0) > 0)
         }
-        builder.setNegativeButton(negativeLabel) { dialog, _ ->
-            negativeAction()
-            dialog.dismiss()
-        }
-        builder.create().show()
+        alertDialog.show(Objects.requireNonNull(supportFragmentManager), "fragment_notification")
     }
 
 }

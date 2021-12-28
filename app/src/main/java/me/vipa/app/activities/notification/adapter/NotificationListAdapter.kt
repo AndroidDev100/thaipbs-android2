@@ -47,6 +47,12 @@ class NotificationListAdapter :
         this.data.addAll(data)
     }
 
+    fun clearData() {
+        val prevSize = ObjectHelper.getSize(this.data)
+        this.data.clear()
+        notifyItemRangeRemoved(0, prevSize)
+    }
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int

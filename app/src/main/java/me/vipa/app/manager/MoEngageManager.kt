@@ -18,8 +18,8 @@ object MoEngageManager: FirebaseEventListener() {
         val moEngage = MoEngage.Builder(context, BuildConfig.MOENGAGE_APP_ID)
             .configureNotificationMetaData(
                 NotificationConfig(
-                    R.drawable.notification_icon,
-                    R.drawable.notification_icon, R.color.google_color, "sound",
+                    R.mipmap.ic_launcher,
+                    -1, R.color.more_text_color_dark, "sound",
                     isMultipleNotificationInDrawerEnabled = true,
                     isBuildingBackStackEnabled = true,
                     isLargeIconDisplayEnabled = true
