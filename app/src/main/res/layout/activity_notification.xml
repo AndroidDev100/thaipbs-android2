@@ -46,7 +46,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed"
-            app:srcCompat="@drawable/ic_notification" />
+            app:srcCompat="@drawable/ic_bell" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_no_data"

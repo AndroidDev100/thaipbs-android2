@@ -156,7 +156,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_notification"
+                    app:srcCompat="@drawable/ic_bell"
                     app:tint="@color/white" />
 
                 <TextView
