@@ -14,35 +14,34 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
+import com.mmtv.utils.helpers.downloads.DownloadHelper;
 
-import me.vipa.app.utils.helpers.downloads.room.DownloadModel;
-import me.vipa.app.utils.helpers.ksPreferenceKeys.KidsModeSinglton;
-import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
-import me.vipa.enums.LandingPageType;
-import me.vipa.enums.Layouts;
-import me.vipa.enums.ListingLayoutType;
-import me.vipa.enums.PDFTarget;
+import java.util.ArrayList;
+import java.util.List;
+
+import me.vipa.app.R;
+import me.vipa.app.SDKConfig;
 import me.vipa.app.activities.listing.listui.ListActivity;
 import me.vipa.app.activities.listing.ui.GridActivity;
 import me.vipa.app.activities.privacypolicy.ui.WebViewActivity;
+import me.vipa.app.activities.search.ui.ActivitySearch;
 import me.vipa.app.activities.usermanagment.ui.LoginActivity;
 import me.vipa.app.activities.watchList.ui.WatchListActivity;
+import me.vipa.app.adapters.commonRails.CommonAdapter;
+import me.vipa.app.adapters.commonRails.CommonAdapterNew;
+import me.vipa.app.adapters.shimmer.ShimmerAdapter;
 import me.vipa.app.baseModels.BaseBindingFragment;
 import me.vipa.app.baseModels.HomeBaseViewModel;
 import me.vipa.app.beanModel.enveuCommonRailData.RailCommonData;
 import me.vipa.app.callbacks.commonCallbacks.CommonApiCallBack;
 import me.vipa.app.callbacks.commonCallbacks.CommonRailtItemClickListner;
 import me.vipa.app.callbacks.commonCallbacks.MoreClickListner;
+import me.vipa.app.databinding.FragmentHomeBinding;
 import me.vipa.app.fragments.home.viewModel.HomeFragmentViewModel;
 import me.vipa.app.fragments.movies.viewModel.MovieFragmentViewModel;
 import me.vipa.app.fragments.news.viewModel.NewsFragmentViewModel;
 import me.vipa.app.fragments.shows.viewModel.ShowsFragmentViewModel;
-import me.vipa.app.SDKConfig;
-import me.vipa.app.activities.search.ui.ActivitySearch;
-import me.vipa.app.adapters.commonRails.CommonAdapter;
-import me.vipa.app.adapters.commonRails.CommonAdapterNew;
-import me.vipa.app.adapters.shimmer.ShimmerAdapter;
-import me.vipa.app.databinding.FragmentHomeBinding;
 import me.vipa.app.utils.MediaTypeConstants;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.constants.AppConstants;
@@ -51,15 +50,16 @@ import me.vipa.app.utils.cropImage.helpers.ShimmerDataModel;
 import me.vipa.app.utils.helpers.NetworkConnectivity;
 import me.vipa.app.utils.helpers.RailInjectionHelper;
 import me.vipa.app.utils.helpers.RecyclerAnimator;
-
+import me.vipa.app.utils.helpers.downloads.room.DownloadModel;
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
-import com.google.gson.Gson;
-import com.mmtv.utils.helpers.downloads.DownloadHelper;
-
+import me.vipa.app.utils.helpers.ksPreferenceKeys.KidsModeSinglton;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
-
-import java.util.ArrayList;
-import java.util.List;
+import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
+import me.vipa.brightcovelibrary.utils.ObjectHelper;
+import me.vipa.enums.LandingPageType;
+import me.vipa.enums.Layouts;
+import me.vipa.enums.ListingLayoutType;
+import me.vipa.enums.PDFTarget;
 
 
 public class TabsBaseFragment<T extends HomeBaseViewModel> extends BaseBindingFragment<FragmentHomeBinding> implements CommonRailtItemClickListner, MoreClickListner {
@@ -543,7 +543,9 @@ public class TabsBaseFragment<T extends HomeBaseViewModel> extends BaseBindingFr
         String name="";
         try {
             if (multilingualTitle.equalsIgnoreCase("")){
-                if (screenWidget!=null && screenWidget.getName()!=null){
+                if (ObjectHelper.isSame(screenWidget.getReferenceName(), AppConstants.ContentType.MY_WATCHLIST.name())) {
+                    name = getString(R.string.my_watchlist);
+                } else if (screenWidget!=null && screenWidget.getName()!=null){
                     name=screenWidget.getName().toString();
                 }
             }else {

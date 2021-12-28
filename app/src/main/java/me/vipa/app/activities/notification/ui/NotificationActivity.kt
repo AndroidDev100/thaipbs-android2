@@ -36,10 +36,10 @@ class NotificationActivity : BaseBindingActivity<ActivityNotificationBinding?>()
                 notificationAdapter?.updateItem(inboxMessage)
 
                 Logger.d("clicked on : $inboxMessage")
-                val assetType: String? = inboxMessage.payload.getString("contentType")
-                val assetId: String? = inboxMessage.payload.getString("id")
-                val seriesId: String? = inboxMessage.payload.getString("seriesId")
-                val seasonNumber: String? = inboxMessage.payload.getString("seasonNumber")
+                val assetType: String? = inboxMessage.payload.optString("contentType")
+                val assetId: String? = inboxMessage.payload.optString("id")
+                val seriesId: String? = inboxMessage.payload.optString("seriesId")
+                val seasonNumber: String? = inboxMessage.payload.optString("seasonNumber")
 
                 Logger.d("assetType: $assetType | assetId: $assetId | seriesId: $seriesId | seasonNumber: $seasonNumber")
 

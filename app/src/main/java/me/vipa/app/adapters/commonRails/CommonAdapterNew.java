@@ -1,56 +1,5 @@
  package me.vipa.app.adapters.commonRails;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.res.Configuration;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.SnapHelper;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-
-import me.vipa.app.SDKConfig;
-import me.vipa.app.beanModel.enveuCommonRailData.RailCommonData;
-import me.vipa.app.callbacks.commonCallbacks.CommonRailtItemClickListner;
-import me.vipa.app.callbacks.commonCallbacks.MoreClickListner;
-import me.vipa.app.R;
-import me.vipa.app.databinding.CircleRecyclerItemBinding;
-import me.vipa.app.databinding.DfpBannerLayoutBinding;
-import me.vipa.app.databinding.HeaderRecyclerItemBinding;
-import me.vipa.app.databinding.HeadingRailsBinding;
-import me.vipa.app.databinding.HeroAdsLayoutBinding;
-import me.vipa.app.databinding.LandscapeRecyclerItemBinding;
-import me.vipa.app.databinding.PosterPotraitRecyclerItemBinding;
-import me.vipa.app.databinding.PotraitRecyclerItemBinding;
-import me.vipa.app.databinding.SquareRecyclerItemBinding;
-import me.vipa.app.utils.CustomLayoutManager;
-import me.vipa.app.utils.commonMethods.AppCommonMethod;
-import me.vipa.app.utils.constants.AppConstants;
-import me.vipa.app.utils.cropImage.helpers.Logger;
-import me.vipa.app.utils.helpers.GravitySnapHelper;
-import me.vipa.app.utils.helpers.SpacingItemDecoration;
-
-import java.util.List;
-
-import me.vipa.app.beanModel.enveuCommonRailData.RailCommonData;
-import me.vipa.app.callbacks.commonCallbacks.CommonRailtItemClickListner;
-import me.vipa.app.callbacks.commonCallbacks.MoreClickListner;
-import me.vipa.app.utils.helpers.ksPreferenceKeys.KidsModeSinglton;
-import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
-
 import static me.vipa.app.utils.constants.AppConstants.ADS_BANNER;
 import static me.vipa.app.utils.constants.AppConstants.ADS_MREC;
 import static me.vipa.app.utils.constants.AppConstants.CAROUSEL_CIR_CIRCLE;
@@ -73,7 +22,52 @@ import static me.vipa.app.utils.constants.AppConstants.HORIZONTAL_PR_POSTER;
 import static me.vipa.app.utils.constants.AppConstants.HORIZONTAL_PR_POTRAIT;
 import static me.vipa.app.utils.constants.AppConstants.HORIZONTAL_SQR_SQUARE;
 
-public class CommonAdapterNew extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+import android.app.Activity;
+import android.content.Context;
+import android.content.res.Configuration;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.widget.LinearLayout;
+
+import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
+import java.util.List;
+
+import me.vipa.app.R;
+import me.vipa.app.SDKConfig;
+import me.vipa.app.beanModel.enveuCommonRailData.RailCommonData;
+import me.vipa.app.callbacks.commonCallbacks.CommonRailtItemClickListner;
+import me.vipa.app.callbacks.commonCallbacks.MoreClickListner;
+import me.vipa.app.databinding.CircleRecyclerItemBinding;
+import me.vipa.app.databinding.DfpBannerLayoutBinding;
+import me.vipa.app.databinding.HeaderRecyclerItemBinding;
+import me.vipa.app.databinding.HeadingRailsBinding;
+import me.vipa.app.databinding.HeroAdsLayoutBinding;
+import me.vipa.app.databinding.LandscapeRecyclerItemBinding;
+import me.vipa.app.databinding.PosterPotraitRecyclerItemBinding;
+import me.vipa.app.databinding.PotraitRecyclerItemBinding;
+import me.vipa.app.databinding.SquareRecyclerItemBinding;
+import me.vipa.app.utils.CustomLayoutManager;
+import me.vipa.app.utils.commonMethods.AppCommonMethod;
+import me.vipa.app.utils.constants.AppConstants;
+import me.vipa.app.utils.cropImage.helpers.Logger;
+import me.vipa.app.utils.helpers.GravitySnapHelper;
+import me.vipa.app.utils.helpers.SpacingItemDecoration;
+import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
+import me.vipa.brightcovelibrary.utils.ObjectHelper;
+
+ public class CommonAdapterNew extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
     private List<RailCommonData> mList;
@@ -308,7 +302,9 @@ public class CommonAdapterNew extends RecyclerView.Adapter<RecyclerView.ViewHold
             //TODO COLOURS
 
 
-            if (item.isContinueWatching()) {
+            if (ObjectHelper.isSame(item.getScreenWidget().getReferenceName(), AppConstants.ContentType.MY_WATCHLIST.name())) {
+                headingRailsBinding.headingTitle.setText(R.string.my_watchlist);
+            } else if (item.isContinueWatching()) {
                 //headingRailsBinding.headingTitle.setText((String) item.getScreenWidget().getName()+" "+mContext.getResources().getString(R.string.For)+" "+ KsPreferenceKeys.getInstance().getAppPrefUserName());
                 setContinueWatchMultiLngTitle(item, headingRailsBinding);
             } else {
