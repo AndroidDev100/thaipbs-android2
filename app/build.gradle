@@ -64,8 +64,8 @@ android {
         }
         prod {
             dimension 'default'
-            versionCode 1031
-            versionName "1.1.31"
+            versionCode 1032
+            versionName "1.1.32"
             applicationId "me.vipa.app"
             buildConfigField "String", "MOENGAGE_APP_ID", "\"YS5121TU5BI4PSBU3T7CK4AM\""
         }
