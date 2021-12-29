@@ -286,5 +286,7 @@ class MyDownloads : BaseBindingActivity<ActivityMyDownloadsBinding>(), MediaDown
 
     override fun onAdStarted() {}
 
-    override fun finishActivity() {}
+    override fun finishActivity() {
+        finish()
+    }
 }

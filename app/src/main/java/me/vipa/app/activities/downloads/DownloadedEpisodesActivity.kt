@@ -166,5 +166,7 @@ class DownloadedEpisodesActivity() : BaseBindingActivity<ActivityDownloadedEpiso
 
     override fun onAdStarted() {}
 
-    override fun finishActivity() {}
+    override fun finishActivity() {
+        finish()
+    }
 }

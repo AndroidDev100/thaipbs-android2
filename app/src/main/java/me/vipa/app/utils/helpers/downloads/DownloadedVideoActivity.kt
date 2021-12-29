@@ -44,7 +44,10 @@ class DownloadedVideoActivity : BaseBindingActivity<ActivityDownloadedVideoBindi
     override fun onPlayerInProgress() {
     }
 
-    override fun finishActivity() {}
+    override fun finishActivity() {
+        Logger.d("finish the activity")
+        finish()
+    }
 
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
