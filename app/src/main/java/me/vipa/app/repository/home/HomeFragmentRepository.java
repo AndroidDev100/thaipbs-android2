@@ -6,35 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
-import me.vipa.baseCollection.baseCategoryServices.BaseCategoryServices;
-import me.vipa.bookmarking.bean.continuewatching.ContinueWatchingBookmark;
-import me.vipa.callBacks.EnveuCallBacks;
-import me.vipa.watchHistory.beans.ItemsItem;
-import me.vipa.watchHistory.beans.ResponseWatchHistoryAssetList;
-import me.vipa.app.beanModelV3.videoDetailsV2.EnveuVideoDetailsBean;
-import me.vipa.app.userAssetList.ResponseUserAssetList;
-import me.vipa.app.beanModel.AssetHistoryContinueWatching.ResponseAssetHistory;
-import me.vipa.app.beanModel.emptyResponse.ResponseEmpty;
-import me.vipa.app.beanModel.enveuCommonRailData.RailCommonData;
-import me.vipa.app.beanModel.mobileAds.DataItem;
-import me.vipa.app.beanModel.mobileAds.ResponseMobileAds;
-import me.vipa.app.beanModel.responseGetWatchlist.ResponseGetIsWatchlist;
-import me.vipa.app.beanModel.responseIsLike.ResponseIsLike;
-import me.vipa.app.beanModel.responseModels.landingTabResponses.CommonRailData;
-import me.vipa.app.beanModel.responseModels.landingTabResponses.playlistResponse.PlaylistResponses;
-import me.vipa.app.beanModel.responseModels.landingTabResponses.playlistResponse.PlaylistsItem;
-import me.vipa.app.beanModel.responseModels.landingTabResponses.railData.PlaylistRailData;
-import me.vipa.app.callbacks.apicallback.ApiResponseModel;
-import me.vipa.app.callbacks.commonCallbacks.CommonApiCallBack;
-import me.vipa.app.networking.errormodel.ApiErrorModel;
-import me.vipa.app.networking.apiendpoints.ApiInterface;
-import me.vipa.app.networking.apiendpoints.RequestConfig;
-import me.vipa.app.utils.config.LanguageLayer;
-import me.vipa.app.utils.constants.AppConstants;
-import me.vipa.app.utils.cropImage.helpers.Logger;
-import me.vipa.app.utils.cropImage.helpers.PrintLogging;
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
@@ -54,11 +25,30 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
+import me.vipa.app.beanModel.AssetHistoryContinueWatching.ResponseAssetHistory;
+import me.vipa.app.beanModel.emptyResponse.ResponseEmpty;
+import me.vipa.app.beanModel.enveuCommonRailData.RailCommonData;
+import me.vipa.app.beanModel.mobileAds.DataItem;
+import me.vipa.app.beanModel.mobileAds.ResponseMobileAds;
+import me.vipa.app.beanModel.responseGetWatchlist.ResponseGetIsWatchlist;
+import me.vipa.app.beanModel.responseIsLike.ResponseIsLike;
+import me.vipa.app.beanModel.responseModels.landingTabResponses.CommonRailData;
+import me.vipa.app.beanModel.responseModels.landingTabResponses.playlistResponse.PlaylistResponses;
+import me.vipa.app.beanModel.responseModels.landingTabResponses.playlistResponse.PlaylistsItem;
+import me.vipa.app.beanModel.responseModels.landingTabResponses.railData.PlaylistRailData;
 import me.vipa.app.beanModelV3.videoDetailsV2.EnveuVideoDetailsBean;
+import me.vipa.app.callbacks.apicallback.ApiResponseModel;
+import me.vipa.app.callbacks.commonCallbacks.CommonApiCallBack;
+import me.vipa.app.networking.apiendpoints.ApiInterface;
+import me.vipa.app.networking.apiendpoints.RequestConfig;
+import me.vipa.app.networking.errormodel.ApiErrorModel;
 import me.vipa.app.userAssetList.ResponseUserAssetList;
+import me.vipa.app.utils.config.LanguageLayer;
+import me.vipa.app.utils.constants.AppConstants;
 import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
 import me.vipa.baseCollection.baseCategoryServices.BaseCategoryServices;
 import me.vipa.bookmarking.bean.continuewatching.ContinueWatchingBookmark;
+import me.vipa.brightcovelibrary.Logger;
 import me.vipa.callBacks.EnveuCallBacks;
 import me.vipa.watchHistory.beans.ItemsItem;
 import me.vipa.watchHistory.beans.ResponseWatchHistoryAssetList;
@@ -138,7 +128,7 @@ public class HomeFragmentRepository {
 
             @Override
             public void onFailure(@NonNull Call<PlaylistResponses> call, @NonNull Throwable t) {
-                PrintLogging.printLog("", t.toString());
+                Logger.w(t);
                 playlistResponsesMutableLiveData.postValue(new ArrayList<>());
 
             }
@@ -431,9 +421,9 @@ public class HomeFragmentRepository {
         languageCode= LanguageLayer.getCurrentLanguageCode();
         endpoint.getVideoDetails(manualImageAssetId,languageCode).enqueue(new Callback<EnveuVideoDetailsBean>() {
             @Override
-            public void onResponse(Call<EnveuVideoDetailsBean> call, Response<EnveuVideoDetailsBean> response) {
+            public void onResponse(@NonNull Call<EnveuVideoDetailsBean> call, @NonNull Response<EnveuVideoDetailsBean> response) {
                 if (response.body() != null && response.isSuccessful()) {
-                    Logger.e("WATCH RESPONSE", new Gson().toJson(response.isSuccessful()));
+                    Logger.d("WATCH RESPONSE: " + response.isSuccessful());
                    /* ArrayList<EnveuVideoDetails> enveuVideoDetailsArrayList = new ArrayList<>();
                     ArrayList<EnveuVideoDetails> enveuVideoDetails = (ArrayList<EnveuVideoDetails>) response.body().getData();
                     for (com.enveu.watchHistory.beans.ItemsItem historyItem : continueWatchingBookmarkList
@@ -453,7 +443,8 @@ public class HomeFragmentRepository {
             }
 
             @Override
-            public void onFailure(Call<EnveuVideoDetailsBean> call, Throwable t) {
+            public void onFailure(@NonNull Call<EnveuVideoDetailsBean> call, @NonNull Throwable t) {
+                Logger.w(t);
                 commonApiCallBack.onFailure(new Throwable("Details Not Found"));
 
             }

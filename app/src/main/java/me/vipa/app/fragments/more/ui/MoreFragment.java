@@ -51,7 +51,6 @@ import me.vipa.app.activities.watchList.ui.WatchListActivity;
 import me.vipa.app.baseModels.BaseBindingFragment;
 import me.vipa.app.beanModel.AppUserModel;
 import me.vipa.app.beanModel.configBean.ResponseConfig;
-import me.vipa.app.beanModel.responseModels.RegisterSignUpModels.DataResponseRegister;
 import me.vipa.app.beanModel.userProfile.UserProfileResponse;
 import me.vipa.app.callbacks.commonCallbacks.MoreItemClickListener;
 import me.vipa.app.cms.HelpActivity;
@@ -773,9 +772,6 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
     }
 
     public void setVerifyApi(String tempResponse) {
-        DataResponseRegister ddModel;
-        ddModel = new Gson().fromJson(tempResponse, DataResponseRegister.class);
-
         if (!StringUtils.isNullOrEmptyOrZero(tempResponse)) {
             getBinding().loginBtn.setVisibility(View.GONE);
             getBinding().usernameTv.setVisibility(View.VISIBLE);
@@ -971,7 +967,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
 
 
                             } else {
-                                Logger.d("allSecondaryEMPTY: " + new Gson().toJson(allSecondaryAccountDetails));
+                                Logger.d("allSecondaryEMPTY: " + allSecondaryAccountDetails);
                                 addSecondaryUserApi(token, vipaMode);
                             }
 
@@ -1115,7 +1111,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                         if (userProfileResponse.getStatus()) {
                             updateUI(userProfileResponse);
                             dismissLoading(getBinding().progressBar, getActivity());
-                            Logger.d("DATA IN LEAVE KIDS " + new Gson().toJson(userProfileResponse));
+                            Logger.d("DATA IN LEAVE KIDS " + userProfileResponse);
 
                             if (userProfileResponse.getData().getPrimaryAccountRef() != null) {
                                 if (userProfileResponse.getData().getPrimaryAccountRef().getCustomData() != null) {

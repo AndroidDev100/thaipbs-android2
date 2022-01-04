@@ -9,7 +9,6 @@ import android.os.SystemClock;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -58,7 +57,6 @@ import me.vipa.app.tarcker.EventConstant;
 import me.vipa.app.tarcker.FCMEvents;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.constants.AppConstants;
-import me.vipa.app.utils.cropImage.helpers.Logger;
 import me.vipa.app.utils.helpers.CheckInternetConnection;
 import me.vipa.app.utils.helpers.NetworkConnectivity;
 import me.vipa.app.utils.helpers.SharedPrefHelper;
@@ -66,6 +64,7 @@ import me.vipa.app.utils.helpers.StringUtils;
 import me.vipa.app.utils.helpers.ToastHandler;
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
+import me.vipa.brightcovelibrary.Logger;
 
 public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> implements AlertDialogFragment.AlertDialogListener {
 
@@ -439,7 +438,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
                 System.out.println("onSuccess");
 
                 accessTokenFB = loginResult.getAccessToken().getToken();
-                Logger.i("accessToken", accessTokenFB);
+                Logger.i("accessToken: " + accessTokenFB);
 
                 GraphRequest request = GraphRequest.newMeRequest(
                         loginResult.getAccessToken(),
@@ -762,7 +761,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
                 if (allSecondaryAccountDetails != null) {
                     if (allSecondaryAccountDetails.getResponseCode() != null) {
                         if (allSecondaryAccountDetails.getData() != null && !allSecondaryAccountDetails.getData().isEmpty()) {
-                            Log.e("allSecondaryAcco", new Gson().toJson(allSecondaryAccountDetails));
+                            Logger.d("allSecondaryAccountDetails: " + allSecondaryAccountDetails);
                             String primaryAccountId = "";
                             String secondaryId = "";
                             for (int i = 0; i < allSecondaryAccountDetails.getData().size(); i++) {
@@ -772,8 +771,8 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
 
                                 }
                             }
-                            Log.e("alllistApiPrimaryid", primaryAccountId);
-                            Log.e("allListApiSecondid", secondaryId);
+                            Logger.d("alllistApiPrimaryid: " + primaryAccountId);
+                            Logger.d("allListApiSecondid " + secondaryId);
                             new SharedPrefHelper(SignUpActivity.this).savePrimaryAccountId(primaryAccountId);
                             new SharedPrefHelper(SignUpActivity.this).saveSecondaryAccountId(secondaryId);
                             if (isFbLoginClick) {
@@ -784,7 +783,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
                             //saveUserDetails(stringJson, id, true);
 
                         } else {
-                            Log.e("allSecondaryEMPTY", new Gson().toJson(allSecondaryAccountDetails));
+                            Logger.d("allSecondaryEMPTY: " + allSecondaryAccountDetails);
                             addSecondaryUserApi(token);
 
                         }
@@ -828,8 +827,8 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
 
                         String primaryAccountId = secondaryUserDetails.getData().getPrimaryAccountRef().getAccountId();
                         String secondaryAccountId = secondaryUserDetails.getData().getAccountId();
-                        Log.e("addSecondaryApPrimaryid", primaryAccountId);
-                        Log.e("addSecondaryApiSecondid", secondaryAccountId);
+                        Logger.d("addSecondaryApPrimaryid: " + primaryAccountId);
+                        Logger.d("addSecondaryApiSecondid: " + secondaryAccountId);
                         new SharedPrefHelper(SignUpActivity.this).savePrimaryAccountId(primaryAccountId);
                         new SharedPrefHelper(SignUpActivity.this).saveSecondaryAccountId(secondaryAccountId);
                         if (isFbLoginClick) {

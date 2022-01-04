@@ -2,6 +2,8 @@
 package me.vipa.app.beanModel.responseModels.listAllAccounts;
 
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -295,4 +297,36 @@ public class Datum {
         this.kidsAccount = kidsAccount;
     }
 
+    @NonNull
+    @Override
+    public String toString() {
+        return "Datum{" +
+                "id=" + id +
+                ", email=" + email +
+                ", password=" + password +
+                ", name='" + name + '\'' +
+                ", verificationDate=" + verificationDate +
+                ", profilePicURL=" + profilePicURL +
+                ", dateOfBirth=" + dateOfBirth +
+                ", gender=" + gender +
+                ", phoneNumber=" + phoneNumber +
+                ", status='" + status + '\'' +
+                ", expiryDate=" + expiryDate +
+                ", profileStep=" + profileStep +
+                ", isFbLinked=" + isFbLinked +
+                ", appUserPlans=" + appUserPlans +
+                ", accountId='" + accountId + '\'' +
+                ", subscriptions=" + subscriptions +
+                ", customData=" + customData +
+                ", userEconomics=" + userEconomics +
+                ", secondaryAccounts=" + secondaryAccounts +
+                ", primaryAccountRef=" + primaryAccountRef +
+                ", fbLinked=" + fbLinked +
+                ", gplusLinked=" + gplusLinked +
+                ", manualLinked=" + manualLinked +
+                ", verified=" + verified +
+                ", primaryAccount=" + primaryAccount +
+                ", kidsAccount=" + kidsAccount +
+                '}';
+    }
 }

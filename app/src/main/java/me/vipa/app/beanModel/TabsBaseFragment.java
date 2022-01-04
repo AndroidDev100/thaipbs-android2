@@ -14,7 +14,6 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.Gson;
 import com.mmtv.utils.helpers.downloads.DownloadHelper;
 
 import java.util.ArrayList;
@@ -45,7 +44,6 @@ import me.vipa.app.fragments.shows.viewModel.ShowsFragmentViewModel;
 import me.vipa.app.utils.MediaTypeConstants;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.constants.AppConstants;
-import me.vipa.app.utils.cropImage.helpers.Logger;
 import me.vipa.app.utils.cropImage.helpers.ShimmerDataModel;
 import me.vipa.app.utils.helpers.NetworkConnectivity;
 import me.vipa.app.utils.helpers.RailInjectionHelper;
@@ -55,6 +53,7 @@ import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KidsModeSinglton;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
+import me.vipa.brightcovelibrary.Logger;
 import me.vipa.brightcovelibrary.utils.ObjectHelper;
 import me.vipa.enums.LandingPageType;
 import me.vipa.enums.Layouts;
@@ -241,7 +240,7 @@ public class TabsBaseFragment<T extends HomeBaseViewModel> extends BaseBindingFr
            // PerformanceTracking performanceTracking=new PerformanceTracking();
 
         }catch (Exception e){
-            Logger.w("streamValues  --",e.toString()+"");
+            Logger.w(e);
         }
         getBaseCategories();
 
@@ -492,7 +491,7 @@ public class TabsBaseFragment<T extends HomeBaseViewModel> extends BaseBindingFr
                     }
                 }
             } else if (landingPageType.equals(LandingPageType.PLT.name())) {
-                Logger.e("MORE RAIL CLICK", new Gson().toJson(railCommonData));
+                Logger.e("MORE RAIL CLICK: " + railCommonData);
                 moreRailClick(railCommonData, 0,"");
             }
         }

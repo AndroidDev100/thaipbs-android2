@@ -1,6 +1,8 @@
 
 package me.vipa.app.beanModel.responseModels.listAllAccounts;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -43,4 +45,13 @@ public class AllSecondaryAccountDetails {
         this.debugMessage = debugMessage;
     }
 
+    @NonNull
+    @Override
+    public String toString() {
+        return "AllSecondaryAccountDetails{" +
+                "data=" + data +
+                ", responseCode=" + responseCode +
+                ", debugMessage=" + debugMessage +
+                '}';
+    }
 }

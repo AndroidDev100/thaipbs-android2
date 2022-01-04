@@ -12,20 +12,18 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
-import me.vipa.enums.LandingPageType;
-import me.vipa.enums.Layouts;
-import me.vipa.enums.ListingLayoutType;
-import me.vipa.enums.PDFTarget;
+import java.util.ArrayList;
+import java.util.List;
+
+import me.vipa.app.activities.detail.ui.EpisodeActivity;
 import me.vipa.app.activities.listing.listui.ListActivity;
 import me.vipa.app.activities.listing.ui.GridActivity;
 import me.vipa.app.activities.privacypolicy.ui.WebViewActivity;
+import me.vipa.app.activities.search.ui.ActivitySearch;
 import me.vipa.app.activities.series.ui.SeriesDetailActivity;
 import me.vipa.app.activities.usermanagment.ui.LoginActivity;
-import me.vipa.app.baseModels.BaseBindingFragment;
-import me.vipa.app.activities.detail.ui.EpisodeActivity;
-import me.vipa.app.activities.search.ui.ActivitySearch;
 import me.vipa.app.adapters.commonRails.CommonAdapterNew;
+import me.vipa.app.baseModels.BaseBindingFragment;
 import me.vipa.app.beanModel.enveuCommonRailData.RailCommonData;
 import me.vipa.app.callbacks.commonCallbacks.CommonApiCallBack;
 import me.vipa.app.callbacks.commonCallbacks.CommonRailtItemClickListner;
@@ -34,13 +32,14 @@ import me.vipa.app.databinding.DetailFooterFragmentBinding;
 import me.vipa.app.utils.MediaTypeConstants;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.constants.AppConstants;
-import me.vipa.app.utils.cropImage.helpers.Logger;
 import me.vipa.app.utils.helpers.RailInjectionHelper;
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
-import com.google.gson.Gson;
-
-import java.util.ArrayList;
-import java.util.List;
+import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
+import me.vipa.brightcovelibrary.Logger;
+import me.vipa.enums.LandingPageType;
+import me.vipa.enums.Layouts;
+import me.vipa.enums.ListingLayoutType;
+import me.vipa.enums.PDFTarget;
 
 public class RecommendationRailFragment extends BaseBindingFragment<DetailFooterFragmentBinding> implements CommonRailtItemClickListner, MoreClickListner {
 
@@ -248,7 +247,7 @@ public class RecommendationRailFragment extends BaseBindingFragment<DetailFooter
                     }
                 }
             } else if (landingPageType.equals(LandingPageType.PLT.name())) {
-                Logger.e("MORE RAIL CLICK", new Gson().toJson(railCommonData));
+                Logger.e("MORE RAIL CLICK " + railCommonData);
                 moreRailClick(railCommonData, 0,"");
             }
         }
@@ -325,7 +324,7 @@ public class RecommendationRailFragment extends BaseBindingFragment<DetailFooter
             if (bundle != null) {
                 if (requestCode == 1001) {
                     if (resultCode == 10001) {
-                        Logger.e("Bundle", new Gson().toJson(bundle));
+                        Logger.d("Bundle: " + bundle);
                         getActivity().finish();
                         AppCommonMethod.launchDetailScreen(getActivity(), bundle.getLong(AppConstants.BUNDLE_VIDEO_ID_BRIGHTCOVE, 0l), bundle.getString(AppConstants.BUNDLE_ASSET_TYPE), bundle.getInt(AppConstants.BUNDLE_ASSET_ID, 0), bundle.getString(AppConstants.BUNDLE_DURATION), bundle.getBoolean(AppConstants.BUNDLE_IS_PREMIUM, false));
                     }

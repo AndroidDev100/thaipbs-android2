@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,43 +20,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-//import com.amazonaws.auth.CognitoCachingCredentialsProvider;
-//import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener;
-//import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver;
-//import com.amazonaws.mobileconnectors.s3.transferutility.TransferState;
-//import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
-//import com.amazonaws.regions.Region;
-//import com.amazonaws.regions.Regions;
-//import com.amazonaws.services.s3.AmazonS3;
-//import com.amazonaws.services.s3.AmazonS3Client;
-import me.vipa.app.activities.homeactivity.ui.HomeActivity;
-import me.vipa.app.activities.purchase.callBack.EntitlementStatus;
-import me.vipa.app.activities.purchase.planslayer.GetPlansLayer;
-import me.vipa.app.activities.usermanagment.viewmodel.RegistrationLoginViewModel;
-import me.vipa.app.baseModels.BaseBindingActivity;
-import me.vipa.app.R;
-import me.vipa.app.beanModel.responseModels.LoginResponse.Data;
-import me.vipa.app.beanModel.responseModels.LoginResponse.LoginResponseModel;
-import me.vipa.app.databinding.ActivityMainBinding;
-import me.vipa.app.databinding.LoginBinding;
-import me.vipa.app.fragments.dialog.AlertDialogFragment;
-import me.vipa.app.fragments.dialog.AlertDialogSingleButtonFragment;
-import me.vipa.app.tarcker.EventConstant;
-import me.vipa.app.tarcker.EventEnum;
-import me.vipa.app.tarcker.FCMEvents;
-import me.vipa.app.utils.commonMethods.AppCommonMethod;
-import me.vipa.app.utils.constants.AppConstants;
-import me.vipa.app.utils.cropImage.helpers.Logger;
-import me.vipa.app.utils.cropImage.helpers.NetworkConnectivity;
-import me.vipa.app.utils.cropImage.helpers.PrintLogging;
-import me.vipa.app.utils.helpers.AppPreference;
-import me.vipa.app.utils.helpers.CheckInternetConnection;
-
-import me.vipa.app.utils.helpers.SharedPrefHelper;
-import me.vipa.app.utils.helpers.StringUtils;
-import me.vipa.app.utils.helpers.ToastHandler;
-import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
-
 import com.facebook.CallbackManager;
 import com.facebook.FacebookAuthorizationException;
 import com.facebook.FacebookCallback;
@@ -68,8 +30,6 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-
-import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 
 import org.json.JSONException;
 
@@ -85,11 +45,35 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import me.vipa.app.R;
+import me.vipa.app.activities.homeactivity.ui.HomeActivity;
+import me.vipa.app.activities.purchase.callBack.EntitlementStatus;
+import me.vipa.app.activities.purchase.planslayer.GetPlansLayer;
 import me.vipa.app.activities.usermanagment.viewmodel.RegistrationLoginViewModel;
 import me.vipa.app.baseModels.BaseBindingActivity;
+import me.vipa.app.beanModel.responseModels.LoginResponse.Data;
+import me.vipa.app.beanModel.responseModels.LoginResponse.LoginResponseModel;
+import me.vipa.app.databinding.ActivityMainBinding;
+import me.vipa.app.databinding.LoginBinding;
+import me.vipa.app.fragments.dialog.AlertDialogFragment;
+import me.vipa.app.fragments.dialog.AlertDialogSingleButtonFragment;
+import me.vipa.app.tarcker.EventConstant;
+import me.vipa.app.tarcker.EventEnum;
+import me.vipa.app.tarcker.FCMEvents;
+import me.vipa.app.utils.commonMethods.AppCommonMethod;
+import me.vipa.app.utils.constants.AppConstants;
+import me.vipa.app.utils.cropImage.helpers.NetworkConnectivity;
+import me.vipa.app.utils.cropImage.helpers.PrintLogging;
+import me.vipa.app.utils.helpers.AppPreference;
+import me.vipa.app.utils.helpers.CheckInternetConnection;
+import me.vipa.app.utils.helpers.SharedPrefHelper;
+import me.vipa.app.utils.helpers.StringUtils;
+import me.vipa.app.utils.helpers.ToastHandler;
+import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
+import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
+import me.vipa.brightcovelibrary.Logger;
 
 
 public class LoginActivity extends BaseBindingActivity<LoginBinding> implements AlertDialogFragment.AlertDialogListener {
@@ -115,8 +99,8 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
     private String loginCallingFrom = "";
 
     public static String getFileNameFromUrl(String url) {
-        Logger.e("", "ProfilePic Name" + url.substring(url.lastIndexOf('/') + 1).split("\\?")[0].split("#")[0]);
-        Logger.e("", "ProfilePic path" + url);
+        Logger.e("ProfilePic Name" + url.substring(url.lastIndexOf('/') + 1).split("\\?")[0].split("#")[0]);
+        Logger.e("ProfilePic path" + url);
 
 
         return url.substring(url.lastIndexOf('/') + 1).split("\\?")[0].split("#")[0];
@@ -398,7 +382,7 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
                         Gson gson = new Gson();
                         modelLogin = loginResponseModelResponse.getData();
                         String stringJson = gson.toJson(loginResponseModelResponse.getData());
-                        Log.e("LOGIN DATA FB ::::",gson.toJson(loginResponseModelResponse.getData()));
+                        Logger.d("LOGIN DATA FB :::: " + stringJson);
                         saveUserDetails(stringJson, loginResponseModelResponse.getData().getId(), false);
 
                     } else if (loginResponseModelResponse.getResponseCode() == 403) {
@@ -426,7 +410,7 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
                         modelLogin = loginResponseModelResponse.getData();
                         String stringJson = gson.toJson(loginResponseModelResponse.getData());
 
-                        Log.e("LOGIN DATA ::::",gson.toJson(loginResponseModelResponse.getData()));
+                        Logger.d("LOGIN DATA :::: " + stringJson);
                         saveUserDetails(stringJson, loginResponseModelResponse.getData().getId(), true);
 
                     } else {
@@ -490,7 +474,7 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
             trackEvent(String.valueOf(fbLoginData.getName()), isManual);
 
         } catch (Exception e) {
-            Log.d("Exception", e.getMessage());
+            Logger.w(e);
         }
 
         //new ActivityLauncher(LoginActivity.this).homeScreen(LoginActivity.this, HomeActivity.class);
@@ -843,7 +827,7 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
                     if (allSecondaryAccountDetails.getResponseCode() != null) {
                         if (Objects.requireNonNull(allSecondaryAccountDetails).getResponseCode() == 2000) {
                             if (allSecondaryAccountDetails.getData() != null && !allSecondaryAccountDetails.getData().isEmpty()) {
-                                Log.e("allSecondaryAcco", new Gson().toJson(allSecondaryAccountDetails));
+                                Logger.d("allSecondaryAccountDetails: " + allSecondaryAccountDetails);
                                 String primaryAccountId = "";
                                 String secondaryId = "";
                                 for (int i = 0; i < allSecondaryAccountDetails.getData().size(); i++) {
@@ -852,8 +836,8 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
                                         secondaryId = allSecondaryAccountDetails.getData().get(0).getAccountId();
                                     }
                                 }
-                                Log.e("alllistApiPrimaryid", primaryAccountId);
-                                Log.e("allListApiSecondid", secondaryId);
+                                Logger.d("alllistApiPrimaryid: " + primaryAccountId);
+                                Logger.d("allListApiSecondid: " + secondaryId);
                                 new SharedPrefHelper(LoginActivity.this).savePrimaryAccountId(primaryAccountId);
                                 new SharedPrefHelper(LoginActivity.this).saveSecondaryAccountId(secondaryId);
                                 ////
@@ -870,7 +854,7 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
                                 ///
                                // saveUserDetails(stringJson, id, true);
                             } else {
-                                Log.e("allSecondaryEMPTY", new Gson().toJson(allSecondaryAccountDetails));
+                                Logger.d("allSecondaryEMPTY: " + allSecondaryAccountDetails);
                                 addSecondaryUserApi(token);
                             }
 
@@ -946,8 +930,8 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
 
                         String primaryAccountId = secondaryUserDetails.getData().getPrimaryAccountRef().getAccountId();
                         String secondaryAccountId = secondaryUserDetails.getData().getAccountId();
-                        Log.e("addSecondaryApPrimaryid", primaryAccountId);
-                        Log.e("addSecondaryApiSecondid", secondaryAccountId);
+                        Logger.d("addSecondaryApPrimaryid: " + primaryAccountId);
+                        Logger.d("addSecondaryApiSecondid: " + secondaryAccountId);
                         new SharedPrefHelper(LoginActivity.this).savePrimaryAccountId(primaryAccountId);
                         new SharedPrefHelper(LoginActivity.this).saveSecondaryAccountId(secondaryAccountId);
                         ////

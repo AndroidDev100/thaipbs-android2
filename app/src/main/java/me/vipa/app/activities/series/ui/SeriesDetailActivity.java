@@ -41,7 +41,6 @@ import com.brightcove.player.model.Video;
 import com.brightcove.player.network.DownloadStatus;
 import com.brightcove.player.offline.MediaDownloadable;
 import com.google.android.material.tabs.TabLayout;
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.mmtv.utils.helpers.downloads.DownloadHelper;
 
@@ -661,7 +660,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
             } else {
                 getBinding().llCrewView.setVisibility(View.GONE);
             }
-            Logger.d("SeriesResponse", new Gson().toJson(seriesResponse));
+            Logger.d("SeriesResponse: " + seriesResponse);
 
             getBinding().setPlaylistItem(seriesResponse);
             getBinding().bannerlabel.setText(seriesResponse.getName());
@@ -877,7 +876,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
         String imgUrl = seriesDetailBean.getPosterURL();
         int id = seriesDetailBean.getId();
         String title = seriesDetailBean.getTitle();
-        Logger.d(new Gson().toJson(seriesDetailBean));
+        Logger.d("seriesDetailBean: " + seriesDetailBean);
         imgUrl = AppCommonMethod.getBranchUrl(imgUrl,SeriesDetailActivity.this);
         AppCommonMethod.openShareDialog(SeriesDetailActivity.this, title, id, MediaTypeConstants.getInstance().getSeries(), imgUrl, String.valueOf(seriesId), seriesDetailBean.getSeason());
         new Handler().postDelayed(() -> dismissLoading(getBinding().progressBar), 2000);

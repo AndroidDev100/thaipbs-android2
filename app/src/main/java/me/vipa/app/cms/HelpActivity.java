@@ -5,11 +5,6 @@ import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebResourceError;
@@ -18,17 +13,16 @@ import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.google.gson.Gson;
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+
 import me.vipa.app.R;
 import me.vipa.app.SDKConfig;
 import me.vipa.app.baseModels.BaseBindingActivity;
 import me.vipa.app.databinding.ActivityHelpBinding;
 import me.vipa.app.utils.helpers.ToastHandler;
 import me.vipa.app.utils.helpers.ToolBarHandler;
-import me.vipa.app.SDKConfig;
-import me.vipa.app.baseModels.BaseBindingActivity;
-import me.vipa.app.utils.helpers.ToastHandler;
-import me.vipa.app.utils.helpers.ToolBarHandler;
+import me.vipa.brightcovelibrary.Logger;
 
 
 public class HelpActivity extends BaseBindingActivity<ActivityHelpBinding> {
@@ -101,7 +95,7 @@ public class HelpActivity extends BaseBindingActivity<ActivityHelpBinding> {
         else {
             url = "https://www.google.co.in/";
         }
-        Log.e("LOAD ERROR", url);
+        Logger.e("LOAD ERROR: " + url);
 
         getBinding().webView.loadUrl(url);
         getBinding().webView.getSettings().setBuiltInZoomControls(false);
@@ -135,7 +129,7 @@ public class HelpActivity extends BaseBindingActivity<ActivityHelpBinding> {
 
         @Override
         public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-            Log.e("LOAD ERROR", new Gson().toJson(error));
+            Logger.e("LOAD ERROR: " + error);
 
             switch (error.getPrimaryError()) {
                 case SslError.SSL_UNTRUSTED:
@@ -193,7 +187,7 @@ public class HelpActivity extends BaseBindingActivity<ActivityHelpBinding> {
             });
 
         } catch (Exception e) {
-
+            Logger.w(e);
         }
     }
 

@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Base64;
-import android.util.Log;
 import android.view.DisplayCutout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,7 +61,6 @@ import me.vipa.app.networking.errormodel.ApiErrorModel;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.config.ConfigManager;
 import me.vipa.app.utils.config.bean.ConfigBean;
-import me.vipa.app.utils.cropImage.helpers.Logger;
 import me.vipa.app.utils.cropImage.helpers.PrintLogging;
 import me.vipa.app.utils.helpers.AnalyticsController;
 import me.vipa.app.utils.helpers.ForceUpdateHandler;
@@ -75,6 +73,7 @@ import me.vipa.baseClient.BaseConfiguration;
 import me.vipa.baseClient.BaseDeviceType;
 import me.vipa.baseClient.BaseGateway;
 import me.vipa.baseClient.BasePlatform;
+import me.vipa.brightcovelibrary.Logger;
 
 public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> implements AlertDialogFragment.AlertDialogListener {
     private final String TAG = this.getClass().getSimpleName();
@@ -142,7 +141,7 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
         connectionObserver();
         getBinding().noConnectionLayout.retryTxt.setOnClickListener(view -> connectionObserver());
         getBinding().noConnectionLayout.btnMyDownloads.setOnClickListener(view -> new ActivityLauncher(this).launchMyDownloads());
-        Logger.e("IntentData", new Gson().toJson(this.getIntent().getData()));
+        Logger.d("IntentData: " + this.getIntent().getData());
 
         /*try {
             PackageInfo info = getPackageManager().getPackageInfo(
@@ -180,7 +179,7 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
     }
 
     private void setFullScreen() {
-        Log.e("Tag", "Inset: " + Build.VERSION.SDK_INT);
+        Logger.d("Inset: " + Build.VERSION.SDK_INT);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             final WindowInsetsController insetsController = getWindow().getInsetsController();
             if (insetsController != null) {
@@ -190,7 +189,7 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
             attribs.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS;
             getWindow().getDecorView().setOnApplyWindowInsetsListener((view, windowInsets) -> {
                         DisplayCutout inset = windowInsets.getDisplayCutout();
-                        Log.d("Tag", "Inset: " + inset);
+                        Logger.d("Inset: " + inset);
                         return windowInsets;
                     }
             );
@@ -219,7 +218,7 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
                 configBean = AppCommonMethod.getConfigResponse();
                 Gson gson = new Gson();
                 String json = gson.toJson(configBean);
-                Log.e("configResponseLog", json);
+                Logger.d("configResponseLog: " + json);
                 AppCommonMethod.setConfigConstant(configBean, isTablet);
                 // kid mode id
                 String kidsModeId=SDKConfig.getInstance().getKidsModeId();
@@ -264,7 +263,7 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
 
     private void startClapAnimation(JSONObject jsonObject, String updateType, boolean isTablet) {
 
-            Log.w("branchRedirectors", "onAnimationEnd1");
+            Logger.d("branchRedirectors onAnimationEnd1");
 
             if (jsonObject != null) {
                 if (updateType != null && updateType.equalsIgnoreCase(ForceUpdateHandler.RECOMMENDED)) {
@@ -277,12 +276,12 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
                 }
             } else {
                 if (updateType != null && updateType.equalsIgnoreCase(ForceUpdateHandler.RECOMMENDED)) {
-                    Log.w("branchRedirectors", "-->>config" + "");
+                    Logger.d("branchRedirectors -->>config");
                     // homeRedirection();
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            Log.w("branchRedirectors", "-->>non" + "");
+                            Logger.d("branchRedirectors -->>non");
                             //This logic is for now will update later
                             if (KsPreferenceKeys.getInstance().getfirstTimeUser()){
                                 KsPreferenceKeys.getInstance().setfirstTimeUser(false);
@@ -303,12 +302,12 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
                 } else {
                     boolean updateValue = getForceUpdateValue(null, 3);
                     if (!updateValue) {
-                        Log.w("branchRedirectors", "-->>config" + "");
+                        Logger.d("branchRedirectors -->>config");
                         // homeRedirection();
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                Log.w("branchRedirectors", "-->>non" + "");
+                                Logger.d("branchRedirectors -->>non");
                                 if (KsPreferenceKeys.getInstance().getfirstTimeUser()){
                                     KsPreferenceKeys.getInstance().setfirstTimeUser(false);
                                     if (isTablet){
@@ -350,7 +349,7 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
                         }
 
                     } else {
-                        Log.d ("myApplication--->>>", getIntent().toString());
+                        Logger.d("myApplication--->>>" + getIntent());
                         onNewIntent(getIntent());
                     }
 
@@ -562,7 +561,7 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
         @Override
         public void onInitFinished(@Nullable JSONObject referringParams, @Nullable BranchError error) {
             if (error == null) {
-                Log.i("returnedObject er", referringParams + "");
+                Logger.d("returnedObject er " + referringParams);
                 if (referringParams != null) {
                     Logger.e("BranchCall", String.valueOf(referringParams));
                     int assestId = 0;
@@ -580,7 +579,7 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
                             KsPreferenceKeys.getInstance().setAppPrefBranchIo(true);
                             KsPreferenceKeys.getInstance().setAppPrefJumpBackId(assestId);
                             redirections(referringParams);
-                            Log.w("redirectionss", "redirections");
+                            Logger.d("redirectionss redirections");
                         } else {
                             redirectToHome();
                         }
@@ -593,7 +592,7 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
                 }
             } else {
                 redirectToHome();
-                Log.i("returnedObject er", error.getMessage());
+                Logger.d("returnedObject er : " + error.getMessage());
             }
         }
     };
@@ -601,15 +600,15 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
     private void redirectToHome() {
         boolean updateValue = getForceUpdateValue(null, 2);
         if (!updateValue) {
-            Log.w("branchRedirectors", "homeRedirection");
+            Logger.w("branchRedirectors homeRedirection");
             homeRedirection();
         }
     }
 
     private void homeRedirection() {
-        Log.w("branchRedirectors", configCall + "");
+        Logger.w("branchRedirectors " + configCall);
         if (configCall == 1) {
-            Log.w("branchRedirectors", configCall + "");
+            Logger.d("branchRedirectors " + configCall);
             configCall = 2;
             callConfig(null, null);
         }
@@ -768,7 +767,7 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
     boolean forceUpdate = false;
 
     private boolean getForceUpdateValue(JSONObject jsonObject, int type) {
-        Log.i("branchRedirectors er", "forceupdate");
+        Logger.d("branchRedirectors er forceupdate");
         if (KsPreferenceKeys.getInstance().getAppLanguage().equalsIgnoreCase("Thai") || KsPreferenceKeys.getInstance().getAppLanguage().equalsIgnoreCase("हिंदी")) {
             AppCommonMethod.updateLanguage("th", MvHubPlusApplication.getInstance());
         } else if (KsPreferenceKeys.getInstance().getAppLanguage().equalsIgnoreCase("English")) {

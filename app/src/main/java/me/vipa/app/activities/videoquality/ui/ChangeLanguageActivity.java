@@ -5,36 +5,27 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.google.gson.Gson;
+import java.util.ArrayList;
+
+import me.vipa.app.R;
+import me.vipa.app.activities.homeactivity.ui.HomeActivity;
 import me.vipa.app.activities.videoquality.adapter.ChangeLanguageAdapter;
 import me.vipa.app.activities.videoquality.bean.LanguageItem;
 import me.vipa.app.activities.videoquality.callBack.ItemClick;
 import me.vipa.app.activities.videoquality.viewModel.VideoQualityViewModel;
 import me.vipa.app.baseModels.BaseBindingActivity;
-import me.vipa.app.R;
-import me.vipa.app.activities.homeactivity.ui.HomeActivity;
 import me.vipa.app.databinding.VideoQualityActivityBinding;
 import me.vipa.app.fragments.dialog.ChangeLanguageDialog;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
-import me.vipa.app.utils.cropImage.helpers.Logger;
 import me.vipa.app.utils.helpers.NetworkConnectivity;
-
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
-
-import java.util.ArrayList;
-
-import me.vipa.app.activities.videoquality.adapter.ChangeLanguageAdapter;
-import me.vipa.app.activities.videoquality.bean.LanguageItem;
-import me.vipa.app.activities.videoquality.callBack.ItemClick;
-import me.vipa.app.activities.videoquality.viewModel.VideoQualityViewModel;
-import me.vipa.app.baseModels.BaseBindingActivity;
+import me.vipa.brightcovelibrary.Logger;
 
 public class ChangeLanguageActivity extends BaseBindingActivity<VideoQualityActivityBinding> implements ItemClick, ChangeLanguageDialog.AlertDialogListener {
     private VideoQualityViewModel viewModel;
@@ -51,7 +42,7 @@ public class ChangeLanguageActivity extends BaseBindingActivity<VideoQualityActi
         super.onCreate(savedInstanceState);
         preference = KsPreferenceKeys.getInstance();
         Configuration config = new Configuration(getResources().getConfiguration());
-        Logger.e("Locale", config.locale.getDisplayLanguage());
+        Logger.d("Locale: " + config.locale.getDisplayLanguage());
         toolBar();
         callModel();
         connectionObserver();
@@ -67,12 +58,7 @@ public class ChangeLanguageActivity extends BaseBindingActivity<VideoQualityActi
 
         getBinding().toolbar.screenText.setText(getResources().getString(R.string.change_language));
 
-        getBinding().toolbar.backLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
+        getBinding().toolbar.backLayout.setOnClickListener(view -> onBackPressed());
 
     }
 
@@ -110,7 +96,7 @@ public class ChangeLanguageActivity extends BaseBindingActivity<VideoQualityActi
                 }
             }
             arrayList = trackItems;
-            Logger.e("LanguageList", new Gson().toJson(arrayList));
+            Logger.e("LanguageList: " + arrayList);
 
             uiInitialization();
             setAdapter();

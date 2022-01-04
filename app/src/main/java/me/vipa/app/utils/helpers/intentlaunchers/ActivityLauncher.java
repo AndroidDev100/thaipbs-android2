@@ -8,8 +8,6 @@ import android.app.TaskStackBuilder;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.gson.Gson;
-
 import me.vipa.app.activities.ManageAccount.UI.ManageAccount;
 import me.vipa.app.activities.OtherApplication.UI.OtherApplication;
 import me.vipa.app.activities.article.ArticleActivity;
@@ -236,7 +234,7 @@ public class ActivityLauncher {
         intent.setFlags(FLAG_ACTIVITY_CLEAR_TOP);
         KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
         preference.setAppPrefAssetId(0);
-        Logger.d("JSON SENT: " + new Gson().toJson(args));
+        Logger.d("JSON SENT: " + args);
         activity.startActivity(intent);
     }
 

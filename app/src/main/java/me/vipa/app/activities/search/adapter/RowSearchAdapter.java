@@ -11,23 +11,20 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
-import me.vipa.app.utils.constants.AppConstants;
-import me.vipa.app.utils.cropImage.helpers.Logger;
-import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
+
+import java.util.List;
+
 import me.vipa.app.R;
 import me.vipa.app.activities.search.ui.ActivitySearch;
 import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
 import me.vipa.app.databinding.CommonSearchAdapterBinding;
 import me.vipa.app.utils.MediaTypeConstants;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
+import me.vipa.app.utils.constants.AppConstants;
 import me.vipa.app.utils.helpers.ImageHelper;
-
 import me.vipa.app.utils.helpers.StringUtils;
-
-import java.util.List;
-
-import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
+import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
+import me.vipa.brightcovelibrary.Logger;
 
 public class RowSearchAdapter extends RecyclerView.Adapter<RowSearchAdapter.SingleItemRowHolder> {
     private static final int ITEM = 0;
@@ -187,7 +184,7 @@ public class RowSearchAdapter extends RecyclerView.Adapter<RowSearchAdapter.Sing
     }
 
     private void setSeasonEpisodeValue(EnveuVideoItemBean enveuVideoItemBean, TextView tvEpisode) {
-        Logger.e("Seasons", new Gson().toJson(enveuVideoItemBean));
+        Logger.e("Seasons: " + enveuVideoItemBean);
         if (enveuVideoItemBean != null) {
             if (enveuVideoItemBean.getSeasonCount() > 0 && enveuVideoItemBean.getVodCount() > 0) {
                 tvEpisode.setText(context.getResources().getString(R.string.seasons) + " " + enveuVideoItemBean.getSeasonCount() + "  " + context.getResources().getString(R.string.episodes) + " " + enveuVideoItemBean.getVodCount() + "");

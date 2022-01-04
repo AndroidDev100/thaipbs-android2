@@ -26,54 +26,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.PopupMenu;
 
-import androidx.annotation.NonNull;
-
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-
-import me.vipa.app.beanModel.userProfile.UserProfileResponse;
-import me.vipa.app.utils.helpers.SharedPrefHelper;
-import me.vipa.app.utils.helpers.downloads.room.DownloadedVideo;
-import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
-import me.vipa.enums.ImageType;
-import me.vipa.enums.WidgetImageType;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-
-
-import me.vipa.app.MvHubPlusApplication;
-import me.vipa.app.activities.detail.ui.DetailActivity;
-import me.vipa.app.activities.detail.ui.EpisodeActivity;
-import me.vipa.app.activities.live.LiveActivity;
-import me.vipa.app.activities.series.ui.SeriesDetailActivity;
-import me.vipa.app.baseModels.BaseActivity;
-import me.vipa.app.beanModel.configBean.ResponseConfig;
-import me.vipa.app.beanModel.enveuCommonRailData.RailCommonData;
-import me.vipa.app.beanModel.responseModels.landingTabResponses.CommonRailData;
-import me.vipa.app.beanModel.responseModels.landingTabResponses.railData.PlaylistRailData;
-import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
-import me.vipa.app.beanModelV3.videoDetailsV2.EnveuVideoDetails;
-import me.vipa.app.beanModelV3.videoDetailsV2.EnveuVideoDetailsBean;
-import me.vipa.app.fragments.player.ui.UserInteractionFragment;
-import me.vipa.app.tarcker.EventConstant;
-import me.vipa.app.tarcker.FCMEvents;
-import me.vipa.app.utils.MediaTypeConstants;
-import me.vipa.app.utils.config.bean.ConfigBean;
-import me.vipa.app.utils.constants.AppConstants;
-import me.vipa.app.utils.cropImage.helpers.Logger;
-import me.vipa.app.utils.cropImage.helpers.PrintLogging;
-import me.vipa.app.utils.helpers.ActivityTrackers;
-import me.vipa.app.utils.helpers.ImageHelper;
-import me.vipa.app.utils.helpers.StringUtils;
-import me.vipa.app.utils.helpers.ToastHandler;
-import me.vipa.app.utils.helpers.carousel.model.Slide;
-import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
-import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
-import me.vipa.app.utils.recoSense.RecoSenceManager;
-import me.vipa.app.R;
-import me.vipa.app.SDKConfig;
-
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
@@ -104,6 +58,43 @@ import java.util.concurrent.TimeUnit;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.branch.indexing.BranchUniversalObject;
 import io.branch.referral.util.LinkProperties;
+import me.vipa.app.MvHubPlusApplication;
+import me.vipa.app.R;
+import me.vipa.app.SDKConfig;
+import me.vipa.app.activities.detail.ui.DetailActivity;
+import me.vipa.app.activities.detail.ui.EpisodeActivity;
+import me.vipa.app.activities.live.LiveActivity;
+import me.vipa.app.activities.series.ui.SeriesDetailActivity;
+import me.vipa.app.baseModels.BaseActivity;
+import me.vipa.app.beanModel.configBean.ResponseConfig;
+import me.vipa.app.beanModel.enveuCommonRailData.RailCommonData;
+import me.vipa.app.beanModel.responseModels.landingTabResponses.CommonRailData;
+import me.vipa.app.beanModel.responseModels.landingTabResponses.railData.PlaylistRailData;
+import me.vipa.app.beanModel.userProfile.UserProfileResponse;
+import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
+import me.vipa.app.beanModelV3.videoDetailsV2.EnveuVideoDetails;
+import me.vipa.app.beanModelV3.videoDetailsV2.EnveuVideoDetailsBean;
+import me.vipa.app.fragments.player.ui.UserInteractionFragment;
+import me.vipa.app.tarcker.EventConstant;
+import me.vipa.app.tarcker.FCMEvents;
+import me.vipa.app.utils.MediaTypeConstants;
+import me.vipa.app.utils.config.bean.ConfigBean;
+import me.vipa.app.utils.constants.AppConstants;
+import me.vipa.app.utils.cropImage.helpers.Logger;
+import me.vipa.app.utils.cropImage.helpers.PrintLogging;
+import me.vipa.app.utils.helpers.ActivityTrackers;
+import me.vipa.app.utils.helpers.ImageHelper;
+import me.vipa.app.utils.helpers.SharedPrefHelper;
+import me.vipa.app.utils.helpers.StringUtils;
+import me.vipa.app.utils.helpers.ToastHandler;
+import me.vipa.app.utils.helpers.carousel.model.Slide;
+import me.vipa.app.utils.helpers.downloads.room.DownloadedVideo;
+import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
+import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
+import me.vipa.app.utils.recoSense.RecoSenceManager;
+import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
+import me.vipa.enums.ImageType;
+import me.vipa.enums.WidgetImageType;
 import retrofit2.Response;
 
 
@@ -303,7 +294,7 @@ public class AppCommonMethod {
                 sharingIntent.setType("text/plain");
                 sharingIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 sharingIntent.putExtra(Intent.EXTRA_TEXT, mActivity.get().getResources().getString(R.string.checkout) + " " + title + " " + activity.getResources().getString(R.string.on_enveu) + "\n" + sharingURL);
-               // Logger.e("LINK PROPS", new Gson().toJson(sharingIntent));
+               // Logger.e("LINK PROPS", sharingIntent);
 
                 PackageManager pm = MvHubPlusApplication.getInstance().getPackageManager();
                 List<ResolveInfo> activityList = pm.queryIntentActivities(sharingIntent, 0);
@@ -337,7 +328,7 @@ public class AppCommonMethod {
                 .addControlParameter("id", String.valueOf(assetId))
                 .addControlParameter("seriesId", String.valueOf(seriesId))
                 .addControlParameter("seasonNumber", String.valueOf(seasonNumber));
-       // Logger.e("LINK PROPS", new Gson().toJson(lp));
+       // Logger.e("LINK PROPS", lp);
         buo.generateShortUrl(activity, lp, (url, error) -> {
             if (error == null) {
                 sharingURL = url;
