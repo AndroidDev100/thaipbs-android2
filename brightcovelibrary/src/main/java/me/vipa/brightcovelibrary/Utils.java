@@ -64,12 +64,13 @@ class Utils {
         params.setMargins(0, 0, 0, 70);
         seekBarControl.setLayoutParams(params);
     }
-    public static void setParamstoSeekBarControlRatio(View seekBarControl) {
+
+    public static void setParamsToSeekBarControlRatio(View seekBarControl) {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
-        params.setMargins(0, 0, 10, 60);
+        params.setMargins(0, 0, 10, 90);
         seekBarControl.setLayoutParams(params);
     }
 
@@ -92,7 +93,7 @@ class Utils {
         backArrow.setLayoutParams(params);
     }
 
-    public static void setParamstoBackArrowForRatio(ImageView backArrow) {
+    public static void setParamsToBackArrowForRatio(ImageView backArrow) {
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
@@ -245,13 +246,13 @@ class Utils {
         playerSettingIcon.setLayoutParams(params);
     }
 
-    public static void setParamstoSettinIconRatio(LinearLayout playerSettingIcon) {
+    public static void setParamsToSettingIconRatio(LinearLayout playerSettingIcon) {
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
-        params.setMargins(0, 70, 40, 0);
+        params.setMargins(0, 70, 0, 0);
         params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
         playerSettingIcon.setLayoutParams(params);
     }

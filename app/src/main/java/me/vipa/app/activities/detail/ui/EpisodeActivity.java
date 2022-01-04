@@ -1944,24 +1944,6 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
         }
     }
 
-    int gcd(int p, int q) {
-        if (q == 0) return p;
-        else return gcd(q, p % q);
-    }
-
-    void ratio(int a, int b) {
-        final int gcd = gcd(a,b);
-        if(a > b) {
-            showAnswer(a/gcd, b/gcd);
-        } else {
-            showAnswer(b/gcd, a/gcd);
-        }
-    }
-
-    void showAnswer(int a, int b) {
-        System.out.println(a + " " + b);
-    }
-
     @Override
     public void isInPip(boolean status) {
         DetailActivity.isBackStacklost = status;

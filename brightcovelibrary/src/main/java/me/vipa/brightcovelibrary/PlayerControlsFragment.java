@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -41,6 +42,7 @@ import com.google.android.exoplayer2.ui.TimeBar;
 import com.google.android.gms.cast.framework.CastButtonFactory;
 import com.vipa.brightcovelibrary.R;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -247,8 +249,13 @@ public class PlayerControlsFragment extends Fragment {
         params.gravity = Gravity.CENTER;
         seekBarControl.setLayoutParams(params);
 
-        // private RelativeLayout rlbackArrow,rlMedia,rlplayerSettingIcon;
-
+        LinearLayout.LayoutParams paramsFullscreen = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        paramsFullscreen.setMargins(0, 0, 30, 0);
+        paramsFullscreen.gravity = Gravity.CENTER;
+        fullscreen.setLayoutParams(paramsFullscreen);
 
         RelativeLayout.LayoutParams params1 = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
@@ -264,7 +271,7 @@ public class PlayerControlsFragment extends Fragment {
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
             );
-            params2.setMargins(0, 10, 60, 0);
+            params2.setMargins(0, 10, 30, 0);
             params2.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
             settingLay.setLayoutParams(params2);
         } catch (Exception ex) {
@@ -288,10 +295,12 @@ public class PlayerControlsFragment extends Fragment {
             if (!getResources().getBoolean(R.bool.isTablet)) {
 
 
-              /*  DisplayMetrics displayMetrics = new DisplayMetrics();
+                DisplayMetrics displayMetrics = new DisplayMetrics();
                 getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-                int screen_height = displayMetrics.heightPixels;
-                int screen_width = displayMetrics.widthPixels;*/
+                int screenHeight = displayMetrics.heightPixels;
+                int screenWidth = displayMetrics.widthPixels;
+
+                boolean shouldHandleTVP401 = checkRatio(screenWidth, screenHeight);
 
                 // Log.e("RATUILANDHEIGHT...", String.valueOf(screen_height));
                 //  Log.e("RATUILANDWIDTH...", String.valueOf(screen_width));
@@ -318,16 +327,42 @@ public class PlayerControlsFragment extends Fragment {
                     Utils.setParamstoSettinIcon(settingLay);
                     Utils.setParamstoSkipButton(skipBtn);
                 } else {
-                    Utils.setParamstoSeekBarControl(seekBarControl);
 //                    Utils.setParamstoPlayerSettingControl(settingControl);
-                    Utils.setParamstoBackArrow(backArrow);
-                    Utils.setParamstoSettinIcon(settingLay);
+                    if (shouldHandleTVP401) {
+                        Utils.setParamsToSeekBarControlRatio(seekBarControl);
+                        Utils.setParamsToBackArrowForRatio(backArrow);
+                        Utils.setParamsToSettingIconRatio(settingLay);
+                    } else {
+                        Utils.setParamstoSeekBarControl(seekBarControl);
+                        Utils.setParamstoBackArrow(backArrow);
+                        Utils.setParamstoSettinIcon(settingLay);
+                    }
                     Utils.setParamstoSkipButton(skipBtn);
                 }
             }
         } catch (Exception e) {
             Logger.w(e);
         }
+    }
+
+    private boolean checkRatio(int width, int height) {
+        if (width < height) {
+            return checkRatio(height, width);
+        }
+        float checkWith = 21.5f / 9; // TPV-401
+        float ratio = (width * 1.0f) / height;
+
+        BigDecimal r1 = new BigDecimal(ratio);
+        BigDecimal r2 = new BigDecimal(checkWith);
+        r1 = r1.setScale(2, BigDecimal.ROUND_UP);
+        r2 = r2.setScale(2, BigDecimal.ROUND_UP);
+
+        final boolean equals = r1.equals(r2);
+
+        Logger.d(r1 + " | " + r2 + " big decimal: " + equals);
+        Logger.d(width + " : " + height);
+
+        return !equals;
     }
 
     void showControls() {
