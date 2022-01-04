@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -300,7 +301,8 @@ public class PlayerControlsFragment extends Fragment {
                 int screenHeight = displayMetrics.heightPixels;
                 int screenWidth = displayMetrics.widthPixels;
 
-                boolean shouldHandleTVP401 = checkRatio(screenWidth, screenHeight);
+                boolean shouldHandleTVP401 = Build.VERSION.SDK_INT > Build.VERSION_CODES.R
+                        && checkRatio(screenWidth, screenHeight);
 
                 // Log.e("RATUILANDHEIGHT...", String.valueOf(screen_height));
                 //  Log.e("RATUILANDWIDTH...", String.valueOf(screen_width));
@@ -362,7 +364,7 @@ public class PlayerControlsFragment extends Fragment {
         Logger.d(r1 + " | " + r2 + " big decimal: " + equals);
         Logger.d(width + " : " + height);
 
-        return !equals;
+        return equals;
     }
 
     void showControls() {
