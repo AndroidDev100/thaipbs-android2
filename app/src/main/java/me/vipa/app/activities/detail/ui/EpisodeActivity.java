@@ -1632,7 +1632,9 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
     public void onConfigurationChanged(Configuration newConfig) {
         Logger.d("configuration changed: " + newConfig.orientation);
         Logger.d("language: " + LanguageLayer.getCurrentLanguageCode());
-        playerFragment.updateLanguage(LanguageLayer.getCurrentLanguageCode());
+        if (playerFragment != null) {
+            playerFragment.updateLanguage(LanguageLayer.getCurrentLanguageCode());
+        }
         if (!isCastConnected) {
             super.onConfigurationChanged(newConfig);
             AppCommonMethod.isOrientationChanged = true;
