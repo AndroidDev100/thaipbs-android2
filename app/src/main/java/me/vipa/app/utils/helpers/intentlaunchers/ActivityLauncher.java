@@ -206,7 +206,7 @@ public class ActivityLauncher {
         intent.setFlags(FLAG_ACTIVITY_CLEAR_TOP);
         KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
         preference.setAppPrefAssetId(0);
-        Logger.d("JSON SENT: " + new Gson().toJson(args));
+        Logger.d("JSON SENT: " + args);
         if (ADHelper.getInstance(activity).getPipAct()!=null){
             ADHelper.getInstance(activity).getPipAct().moveTaskToBack(false);
             ADHelper.getInstance(activity).getPipAct().finish();
