@@ -288,7 +288,6 @@ public class LiveActivity extends BaseBindingActivity<LiveDetailBinding> impleme
 
 
 
-
 //        getBinding().pBar.setVisibility(View.VISIBLE);
 //        getBinding().backButton.setVisibility(View.GONE);
 //        long bookmarkPosition = 0l;

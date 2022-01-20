@@ -157,7 +157,6 @@
     private BottomNavigationView navigation;
     private boolean kidsMode=false;
     private int aspectRatio;
-
     @SuppressLint("RestrictedApi")
     public static void removeNavigationShiftMode(BottomNavigationView view) {
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) view.getChildAt(0);
@@ -198,10 +197,6 @@
       //  getDeviceSuperInfo();
 
         strCurrentTheme = KsPreferenceKeys.getInstance().getCurrentTheme();
-
-
-
-
         kidsMode  = new SharedPrefHelper(HomeActivity.this).getKidsMode();
 
         KidsModeSinglton.getInstance().aBoolean=kidsMode; 
@@ -340,7 +335,6 @@
         getBinding().toolbar.clNotification.setVisibility(View.VISIBLE);
         fragmentManager.beginTransaction().hide(active).show(premiumFragment).commit();
         active = premiumFragment;
-
     }
 
     public void switchToSinetronFragment() {
@@ -460,7 +454,9 @@
 
     @Override
     protected void onStart() {
+
         super.onStart();
+        Moengage.getInstance().showInApp(this);
         try {
             ((HomeFragment)homeFragment).updateAdList();
         }catch (Exception e){
