@@ -19,6 +19,7 @@
  import com.google.android.play.core.install.InstallStateUpdatedListener;
  import com.google.android.play.core.install.model.AppUpdateType;
  import com.google.android.play.core.install.model.InstallStatus;
+ import com.moengage.inapp.MoEInAppHelper;
 
  import org.jetbrains.annotations.NotNull;
 
@@ -456,7 +457,7 @@
     protected void onStart() {
 
         super.onStart();
-        Moengage.getInstance().showInApp(this);
+        MoEInAppHelper.getInstance().showInApp(this);
         try {
             ((HomeFragment)homeFragment).updateAdList();
         }catch (Exception e){
