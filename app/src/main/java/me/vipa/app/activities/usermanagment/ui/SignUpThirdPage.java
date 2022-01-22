@@ -292,7 +292,7 @@ public class SignUpThirdPage extends BaseBindingActivity<ActivitySignUpThirdPage
                         galleryIntent();
                     } else if (items[item].equals(getResources().getString(R.string.select_from_avtar))) {
                         // userChoosenTask = "Choose from Library";
-                        new ActivityLauncher(SignUpThirdPage.this).avatarActivity(SignUpThirdPage.this, AvatarImageActivity.class);
+                        ActivityLauncher.getInstance().avatarActivity(SignUpThirdPage.this, AvatarImageActivity.class);
                     } else if (items[item].equals(getResources().getString(R.string.cancel))) {
                         dialog.dismiss();
                     }
@@ -402,7 +402,7 @@ public class SignUpThirdPage extends BaseBindingActivity<ActivitySignUpThirdPage
         imageToUpload = "Thumbnail_" + AppCommonMethod.getCurrentTimeStamp() + "Android" + ".jpg";
         imageUrlId = imageToUpload;
         via = "Gallery";
-        new SharedPrefHelper(SignUpThirdPage.this).saveVia(via);
+        SharedPrefHelper.getInstance(SignUpThirdPage.this).saveVia(via);
 
 
         TransferObserver transferObserver = transferUtility.upload(
@@ -632,7 +632,7 @@ public class SignUpThirdPage extends BaseBindingActivity<ActivitySignUpThirdPage
 
             imageUrlId = AppCommonMethod.UriId;
             via = "Avatar";
-            new SharedPrefHelper(SignUpThirdPage.this).saveVia(via);
+            SharedPrefHelper.getInstance(SignUpThirdPage.this).saveVia(via);
             Glide.with(SignUpThirdPage.this).load(AppCommonMethod.Url)
                     .placeholder(R.drawable.default_profile_pic)
                     .error(R.drawable.default_profile_pic)

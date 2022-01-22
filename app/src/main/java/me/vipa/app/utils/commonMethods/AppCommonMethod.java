@@ -832,25 +832,25 @@ public class AppCommonMethod {
 
         if (screenType.toUpperCase().equalsIgnoreCase(MediaTypeConstants.getInstance().getShow())) {
             if (SDKConfig.getInstance().getShowDetailId().equalsIgnoreCase("")) {
-                //new ActivityLauncher((BaseActivity) context).detailScreenBrightCove((BaseActivity) context, DetailActivity.class, videoId, id, duration, isPremium, AppConstants.SHOW_ENVEU);
+                //ActivityLauncher.getInstance().detailScreenBrightCove((BaseActivity) context, DetailActivity.class, videoId, id, duration, isPremium, AppConstants.SHOW_ENVEU);
             } else {
-                new ActivityLauncher((BaseActivity) context).detailScreenBrightCove((BaseActivity) context, DetailActivity.class, videoId, id, duration, isPremium, SDKConfig.getInstance().getShowDetailId());
+                ActivityLauncher.getInstance().detailScreenBrightCove((BaseActivity) context, DetailActivity.class, videoId, id, duration, isPremium, SDKConfig.getInstance().getShowDetailId());
             }
         } else if (screenType.toUpperCase().equalsIgnoreCase(MediaTypeConstants.getInstance().getEpisode())) {
-            new ActivityLauncher((BaseActivity) context).episodeScreenBrightcove((BaseActivity) context, EpisodeActivity.class, videoId, id, duration, isPremium);
+            ActivityLauncher.getInstance().episodeScreenBrightcove((BaseActivity) context, EpisodeActivity.class, videoId, id, duration, isPremium);
         } else if (screenType.toUpperCase().equalsIgnoreCase(MediaTypeConstants.getInstance().getSeries())) {
-            new ActivityLauncher((BaseActivity) context).seriesDetailScreen((BaseActivity) context, SeriesDetailActivity.class, id);
+            ActivityLauncher.getInstance().seriesDetailScreen((BaseActivity) context, SeriesDetailActivity.class, id);
         } else if (screenType.toUpperCase().equalsIgnoreCase(MediaTypeConstants.getInstance().getLive()) || screenType.toUpperCase().equalsIgnoreCase("LIVE")) {
             if (SDKConfig.getInstance().getLiveDetailId().equalsIgnoreCase("")) {
-                // new ActivityLauncher((BaseActivity) context).detailScreenBrightCove((BaseActivity) context, DetailActivity.class, videoId, id, duration, isPremium, AppConstants.MOVIE_ENVEU);
+                // ActivityLauncher.getInstance().detailScreenBrightCove((BaseActivity) context, DetailActivity.class, videoId, id, duration, isPremium, AppConstants.MOVIE_ENVEU);
             } else {
-                new ActivityLauncher((BaseActivity) context).liveScreenBrightCove((BaseActivity) context, LiveActivity.class, videoId, id, duration, isPremium, SDKConfig.getInstance().getMovieDetailId());
+                ActivityLauncher.getInstance().liveScreenBrightCove((BaseActivity) context, LiveActivity.class, videoId, id, duration, isPremium, SDKConfig.getInstance().getMovieDetailId());
             }
         } else if (screenType.toUpperCase().equalsIgnoreCase(MediaTypeConstants.getInstance().getMovie())) {
             if (SDKConfig.getInstance().getMovieDetailId().equalsIgnoreCase("")) {
-                // new ActivityLauncher((BaseActivity) context).detailScreenBrightCove((BaseActivity) context, DetailActivity.class, videoId, id, duration, isPremium, AppConstants.MOVIE_ENVEU);
+                // ActivityLauncher.getInstance().detailScreenBrightCove((BaseActivity) context, DetailActivity.class, videoId, id, duration, isPremium, AppConstants.MOVIE_ENVEU);
             } else {
-                new ActivityLauncher((BaseActivity) context).detailScreenBrightCove((BaseActivity) context, DetailActivity.class, videoId, id, duration, isPremium, SDKConfig.getInstance().getMovieDetailId());
+                ActivityLauncher.getInstance().detailScreenBrightCove((BaseActivity) context, DetailActivity.class, videoId, id, duration, isPremium, SDKConfig.getInstance().getMovieDetailId());
             }
         }
         RecoSenceManager.getInstance().sendClickEvent(screenType, id);
@@ -859,39 +859,39 @@ public class AppCommonMethod {
         switch (screenType.toUpperCase()) {
             case MediaTypeConstants.Show:
                 if (SDKConfig.getInstance().getShowDetailId().equalsIgnoreCase("")){
-                    //new ActivityLauncher((BaseActivity) context).detailScreenBrightCove((BaseActivity) context, DetailActivity.class, videoId, id, duration, isPremium, AppConstants.SHOW_ENVEU);
+                    //ActivityLauncher.getInstance().detailScreenBrightCove((BaseActivity) context, DetailActivity.class, videoId, id, duration, isPremium, AppConstants.SHOW_ENVEU);
                 }else {
-                    new ActivityLauncher((BaseActivity) context).detailScreenBrightCove((BaseActivity) context, DetailActivity.class, videoId, id, duration, isPremium, SDKConfig.getInstance().getShowDetailId());
+                    ActivityLauncher.getInstance().detailScreenBrightCove((BaseActivity) context, DetailActivity.class, videoId, id, duration, isPremium, SDKConfig.getInstance().getShowDetailId());
                 }
 
                 break;
             case MediaTypeConstants.Episode:
-                new ActivityLauncher((BaseActivity) context).episodeScreenBrightcove((BaseActivity) context, EpisodeActivity.class, videoId, id, duration, isPremium);
+                ActivityLauncher.getInstance().episodeScreenBrightcove((BaseActivity) context, EpisodeActivity.class, videoId, id, duration, isPremium);
                 break;
             case MediaTypeConstants.Series:
-                new ActivityLauncher((BaseActivity) context).seriesDetailScreen((BaseActivity) context, SeriesDetailActivity.class, id);
+                ActivityLauncher.getInstance().seriesDetailScreen((BaseActivity) context, SeriesDetailActivity.class, id);
                 break;
             case MediaTypeConstants.Live:
                 if (SDKConfig.getInstance().getMovieDetailId().equalsIgnoreCase("")){
-                   // new ActivityLauncher((BaseActivity) context).detailScreenBrightCove((BaseActivity) context, DetailActivity.class, videoId, id, duration, isPremium, AppConstants.MOVIE_ENVEU);
+                   // ActivityLauncher.getInstance().detailScreenBrightCove((BaseActivity) context, DetailActivity.class, videoId, id, duration, isPremium, AppConstants.MOVIE_ENVEU);
                 }else {
-                    new ActivityLauncher((BaseActivity) context).liveScreenBrightCove((BaseActivity) context, LiveActivity.class, videoId, id, duration, isPremium, SDKConfig.getInstance().getMovieDetailId());
+                    ActivityLauncher.getInstance().liveScreenBrightCove((BaseActivity) context, LiveActivity.class, videoId, id, duration, isPremium, SDKConfig.getInstance().getMovieDetailId());
                 }
 
                 break;
             case MediaTypeConstants.Article:
                 if (SDKConfig.getInstance().getMovieDetailId().equalsIgnoreCase("")){
-                   // new ActivityLauncher((BaseActivity) context).detailScreenBrightCove((BaseActivity) context, DetailActivity.class, videoId, id, duration, isPremium, AppConstants.MOVIE_ENVEU);
+                   // ActivityLauncher.getInstance().detailScreenBrightCove((BaseActivity) context, DetailActivity.class, videoId, id, duration, isPremium, AppConstants.MOVIE_ENVEU);
                 }else {
-                    new ActivityLauncher((BaseActivity) context).articleScreen((BaseActivity) context, ArticleActivity.class, id, "0", false);
+                    ActivityLauncher.getInstance().articleScreen((BaseActivity) context, ArticleActivity.class, id, "0", false);
                 }
 
                 break;
             default:
                 if (SDKConfig.getInstance().getMovieDetailId().equalsIgnoreCase("")){
-                   // new ActivityLauncher((BaseActivity) context).detailScreenBrightCove((BaseActivity) context, DetailActivity.class, videoId, id, duration, isPremium, AppConstants.MOVIE_ENVEU);
+                   // ActivityLauncher.getInstance().detailScreenBrightCove((BaseActivity) context, DetailActivity.class, videoId, id, duration, isPremium, AppConstants.MOVIE_ENVEU);
                 }else {
-                    new ActivityLauncher((BaseActivity) context).detailScreenBrightCove((BaseActivity) context, DetailActivity.class, videoId, id, duration, isPremium, SDKConfig.getInstance().getMovieDetailId());
+                    ActivityLauncher.getInstance().detailScreenBrightCove((BaseActivity) context, DetailActivity.class, videoId, id, duration, isPremium, SDKConfig.getInstance().getMovieDetailId());
                 }
                 break;
         }
@@ -1479,10 +1479,10 @@ public class AppCommonMethod {
     public static void resetFilter(Context context) {
    /*     KsPreferenceKeys.getInstance().setFilterGenre("");
         KsPreferenceKeys.getInstance().setFilterGenreSelection("");*/
-        new SharedPrefHelper(context).saveDataGenre(null);
-        new SharedPrefHelper(context).saveDataGenreKeyValue(null);
-        new SharedPrefHelper(context).saveDataSort(null);
-        new SharedPrefHelper(context).saveDataSortKeyValue(null);
+        SharedPrefHelper.getInstance(context).saveDataGenre(null);
+        SharedPrefHelper.getInstance(context).saveDataGenreKeyValue(null);
+        SharedPrefHelper.getInstance(context).saveDataSort(null);
+        SharedPrefHelper.getInstance(context).saveDataSortKeyValue(null);
        /* KsPreferenceKeys.getInstance().setFilterSort("");
         KsPreferenceKeys.getInstance().setFilterSortSelection("");*/
         KsPreferenceKeys.getInstance().setFilterApply("false");

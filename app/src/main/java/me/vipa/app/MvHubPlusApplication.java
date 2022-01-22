@@ -3,8 +3,10 @@ package me.vipa.app;
 import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.os.AsyncTask;
 
+import androidx.annotation.NonNull;
 import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
 
@@ -13,9 +15,17 @@ import com.google.android.gms.analytics.Tracker;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
+import com.moengage.core.MoEngage;
+import com.moengage.core.config.InAppConfig;
 import com.moengage.firebase.MoEFireBaseHelper;
+import com.moengage.inapp.MoEInAppHelper;
+
+import java.io.InputStreamReader;
+import java.util.HashSet;
+import java.util.Set;
 
 import io.branch.referral.Branch;
+import me.vipa.app.activities.splash.ui.ActivitySplash;
 import me.vipa.app.dependencies.DaggerEnveuComponent;
 import me.vipa.app.dependencies.EnveuComponent;
 import me.vipa.app.dependencies.modules.UserPreferencesModule;
@@ -62,7 +72,7 @@ public class MvHubPlusApplication extends MultiDexApplication {
         mvHubPlusApplication = this;
         KsPreferenceKeys.getInstance();
         MultiDex.install(this);
-      //  new SharedPrefHelper(mvHubPlusApplication).saveKidsMode("false");
+      //  SharedPrefHelper.getInstance(mvHubPlusApplication).saveKidsMode("false");
         if (BuildConfig.FLAVOR.equals("dev"))
             Branch.enableTestMode();
         AsyncTask.execute(new Runnable() {
@@ -82,9 +92,11 @@ public class MvHubPlusApplication extends MultiDexApplication {
         firebaseCrashlyticSetup();
         setupMoEngage();
     }
-
-
-
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        MoEInAppHelper.getInstance().onConfigurationChanged();
+    }
     private void firebaseCrashlyticSetup() {
 
         if (KsPreferenceKeys.getInstance().getAppPrefLoginStatus().equalsIgnoreCase(AppConstants.UserStatus.Login.toString())) {
@@ -96,8 +108,16 @@ public class MvHubPlusApplication extends MultiDexApplication {
     private void setupMoEngage() {
         MoEngageManager.INSTANCE.init(this);
         MoEFireBaseHelper.getInstance().addEventListener(MoEngageManager.INSTANCE);
+//        addMoengageScreenExclusions(MvHubPlusApplication.this);
     }
+    private void addMoengageScreenExclusions(Application application) {
+        Set<Class<?>> inAppOptOut = new HashSet<>();
+        inAppOptOut.add(ActivitySplash.class);
 
+        MoEngage.Builder builder = new MoEngage.Builder(application, BuildConfig.MOENGAGE_APP_ID)
+                .configureInApps(new InAppConfig(true, inAppOptOut));
+        MoEngage.initialise(builder.build());
+    }
     /**
      * Gets the default {@link Tracker} for this {@link Application}.
      *

@@ -193,7 +193,7 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
             // code for landscape mode
             hideVideoDetail();
         }
-        kidsMode  = new SharedPrefHelper(DetailActivity.this).getKidsMode();
+        kidsMode  = SharedPrefHelper.getInstance(DetailActivity.this).getKidsMode();
         if (kidsMode) {
             parentalRating = AppCommonMethod.getParentalRating();
         }else {
@@ -681,7 +681,7 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
         preference.setAppPrefJumpBack(true);
         preference.setAppPrefIsEpisode(false);
         preference.setAppPrefJumpBackId(assestId);
-        new ActivityLauncher(DetailActivity.this).loginActivity(DetailActivity.this, LoginActivity.class);
+        ActivityLauncher.getInstance().loginActivity(DetailActivity.this, LoginActivity.class);
 
     }
 
@@ -1187,9 +1187,9 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
         getBinding().connection.btnMyDownloads.setOnClickListener(view -> {
             boolean loginStatus = preference.getAppPrefLoginStatus().equalsIgnoreCase(AppConstants.UserStatus.Login.toString());
             if (loginStatus)
-                new ActivityLauncher(this).launchMyDownloads();
+                ActivityLauncher.getInstance().launchMyDownloads(DetailActivity.this);
             else
-                new ActivityLauncher(this).loginActivity(this, LoginActivity.class);
+                ActivityLauncher.getInstance().loginActivity(this, LoginActivity.class);
         });
     }
 
@@ -1429,9 +1429,9 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
         if (data.getScreenWidget() != null && data.getScreenWidget().getContentID() != null) {
             String playListId = data.getScreenWidget().getContentID();
             if (data.getScreenWidget().getName() != null) {
-                new ActivityLauncher(DetailActivity.this).listActivity(DetailActivity.this, ListActivity.class, playListId, data.getScreenWidget().getName().toString(), 0, 0, data.getScreenWidget());
+                ActivityLauncher.getInstance().listActivity(DetailActivity.this, ListActivity.class, playListId, data.getScreenWidget().getName().toString(), 0, 0, data.getScreenWidget());
             } else {
-                new ActivityLauncher(DetailActivity.this).listActivity(DetailActivity.this, ListActivity.class, playListId, "", 0, 0, data.getScreenWidget());
+                ActivityLauncher.getInstance().listActivity(DetailActivity.this, ListActivity.class, playListId, "", 0, 0, data.getScreenWidget());
             }
         }
     }
@@ -1489,6 +1489,14 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
         } else {
             finish();
         }
+    }
+
+    @Override
+    public void notifyMoEngageOnPlayerStart() {
+    }
+
+    @Override
+    public void notifyMoEngageOnPlayerEnd() {
     }
 
     @Override
@@ -1606,9 +1614,9 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
         if (source instanceof UserInteractionFragment) {
             boolean loginStatus = preference.getAppPrefLoginStatus().equalsIgnoreCase(AppConstants.UserStatus.Login.toString());
             if (!loginStatus)
-                new ActivityLauncher(this).loginActivity(this, LoginActivity.class);
+                ActivityLauncher.getInstance().loginActivity(this, LoginActivity.class);
             else {
-                int videoQuality = new SharedPrefHelper(this).getInt(SharedPrefesConstants.DOWNLOAD_QUALITY_INDEX, 4);
+                int videoQuality = SharedPrefHelper.getInstance(this).getInt(SharedPrefesConstants.DOWNLOAD_QUALITY_INDEX, 4);
                 if (KsPreferenceKeys.getInstance().getDownloadOverWifi() == 1) {
                     if (NetworkHelper.INSTANCE.isWifiEnabled(this)) {
                         if (videoQuality != 4) {
@@ -1692,7 +1700,7 @@ public class DetailActivity extends BaseBindingActivity<DetailScreenBinding> imp
                     downloadHelper.deleteVideo(downloadAbleVideo);
                     break;
                 case R.id.my_Download:
-                    new ActivityLauncher(this).launchMyDownloads();
+                    ActivityLauncher.getInstance().launchMyDownloads(DetailActivity.this);
                     break;
             }
             return false;

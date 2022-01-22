@@ -2,7 +2,6 @@ package me.vipa.app.activities.series.adapter;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,22 +19,6 @@ import com.brightcove.player.network.DownloadStatus;
 import com.brightcove.player.offline.MediaDownloadable;
 import com.mmtv.utils.helpers.downloads.DownloadHelper;
 
-import me.vipa.app.SDKConfig;
-import me.vipa.app.utils.cropImage.helpers.Logger;
-import me.vipa.app.utils.helpers.downloads.MediaTypeCheck;
-import me.vipa.app.utils.helpers.downloads.OnDownloadClickInteraction;
-import me.vipa.app.utils.helpers.downloads.VideoListListener;
-import me.vipa.app.R;
-import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
-import me.vipa.app.databinding.RowEpisodeListBinding;
-import me.vipa.app.utils.commonMethods.AppCommonMethod;
-import me.vipa.app.utils.cropImage.helpers.PrintLogging;
-import me.vipa.app.utils.helpers.ImageHelper;
-
-import me.vipa.app.utils.helpers.StringUtils;
-import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
-import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
-
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
@@ -43,7 +26,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import me.vipa.app.R;
+import me.vipa.app.SDKConfig;
 import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
+import me.vipa.app.databinding.RowEpisodeListBinding;
+import me.vipa.app.utils.commonMethods.AppCommonMethod;
+import me.vipa.app.utils.cropImage.helpers.Logger;
+import me.vipa.app.utils.cropImage.helpers.PrintLogging;
+import me.vipa.app.utils.helpers.ImageHelper;
+import me.vipa.app.utils.helpers.StringUtils;
+import me.vipa.app.utils.helpers.downloads.MediaTypeCheck;
+import me.vipa.app.utils.helpers.downloads.OnDownloadClickInteraction;
+import me.vipa.app.utils.helpers.downloads.VideoListListener;
+import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
+import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 
 public class SeasonAdapter extends RecyclerView.Adapter<SeasonAdapter.SeasonViewHolder> implements MediaDownloadable.DownloadEventListener, VideoListListener {
     private final Activity context;
@@ -230,7 +226,7 @@ public class SeasonAdapter extends RecyclerView.Adapter<SeasonAdapter.SeasonView
                         onDownloadClickInteraction.onDownloadDeleted(enveuVideoItemBean.getBrightcoveVideoId(),enveuVideoItemBean);
                         break;
                     case R.id.my_Download:
-                        new ActivityLauncher(context).launchMyDownloads();
+                        ActivityLauncher.getInstance().launchMyDownloads(context);
                         break;
                 }
                 return false;

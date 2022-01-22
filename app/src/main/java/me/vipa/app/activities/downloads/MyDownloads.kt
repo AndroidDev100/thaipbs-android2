@@ -289,4 +289,10 @@ class MyDownloads : BaseBindingActivity<ActivityMyDownloadsBinding>(), MediaDown
     override fun finishActivity() {
         finish()
     }
+
+    override fun notifyMoEngageOnPlayerStart() {
+    }
+
+    override fun notifyMoEngageOnPlayerEnd() {
+    }
 }

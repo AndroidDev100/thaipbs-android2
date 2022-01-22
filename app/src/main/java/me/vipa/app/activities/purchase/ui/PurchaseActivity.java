@@ -16,14 +16,11 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.GlideException;
@@ -31,8 +28,15 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.gson.JsonObject;
+
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+import me.vipa.app.R;
 import me.vipa.app.activities.purchase.ui.adapter.PurchaseAdapter;
-import me.vipa.app.activities.purchase.ui.adapter.PurchaseShimmerAdapter;
 import me.vipa.app.activities.purchase.ui.viewmodel.PurchaseViewModel;
 import me.vipa.app.baseModels.BaseBindingActivity;
 import me.vipa.app.beanModel.cancelPurchase.ResponseCancelPurchase;
@@ -40,35 +44,18 @@ import me.vipa.app.beanModel.entitle.ResponseEntitle;
 import me.vipa.app.beanModel.membershipAndPlan.ResponseMembershipAndPlan;
 import me.vipa.app.beanModel.purchaseModel.PurchaseModel;
 import me.vipa.app.beanModel.purchaseModel.PurchaseResponseModel;
-import me.vipa.app.cms.HelpActivity;
-import me.vipa.app.fragments.dialog.AlertDialogFragment;
-import me.vipa.app.fragments.dialog.AlertDialogSingleButtonFragment;
-import me.vipa.app.R;
 import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
+import me.vipa.app.cms.HelpActivity;
 import me.vipa.app.databinding.PurchaseBinding;
+import me.vipa.app.fragments.dialog.AlertDialogSingleButtonFragment;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.constants.AppConstants;
 import me.vipa.app.utils.cropImage.helpers.Logger;
-
-import me.vipa.app.utils.helpers.CheckInternetConnection;
 import me.vipa.app.utils.helpers.ImageHelper;
 import me.vipa.app.utils.helpers.NetworkConnectivity;
 import me.vipa.app.utils.helpers.StringUtils;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
 import me.vipa.app.utils.helpers.ToastHandler;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
-
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-
-import me.vipa.app.activities.purchase.ui.adapter.PurchaseAdapter;
-import me.vipa.app.activities.purchase.ui.adapter.PurchaseShimmerAdapter;
-import me.vipa.app.activities.purchase.ui.viewmodel.PurchaseViewModel;
-import me.vipa.app.baseModels.BaseBindingActivity;
-import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
 
 
 public class PurchaseActivity extends BaseBindingActivity<PurchaseBinding>  {
@@ -934,7 +921,7 @@ public class PurchaseActivity extends BaseBindingActivity<PurchaseBinding>  {
 
                     // hitInitiatePayment();product
                     // finish();
-                    //  new ActivityLauncher(PurchaseActivity.this).detailScreen(PurchaseActivity.this, DetailActivity.class, assetId, "0", true);
+                    //  ActivityLauncher.getInstance().detailScreen(PurchaseActivity.this, DetailActivity.class, assetId, "0", true);
                 } else if (purchaseResponseModel.getResponseCode() == 4302) {
                     isloggedout = true;
                     dismissLoading(getBinding().progressBar);

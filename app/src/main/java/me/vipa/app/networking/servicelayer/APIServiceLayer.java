@@ -101,7 +101,7 @@ public class APIServiceLayer {
         MutableLiveData<EnveuCommonResponse> enveuCommonResponseMutableLiveData = new MutableLiveData<>();
         languageCode = LanguageLayer.getCurrentLanguageCode();
         if (endpoint!=null) {
-           boolean isKidsMode  = new SharedPrefHelper(activity).getKidsMode();
+           boolean isKidsMode  = SharedPrefHelper.getInstance(activity).getKidsMode();
            if (isKidsMode){
                String parentalRating = AppCommonMethod.getParentalRating();
                endpoint.getPlaylistDetailsByIdWithPG(playListId, languageCode, pageNumber, pageSize,parentalRating).enqueue(new Callback<EnveuCommonResponse>() {
@@ -165,7 +165,7 @@ public class APIServiceLayer {
         languageCode = LanguageLayer.getCurrentLanguageCode();
         if (endpoint!=null) {
 
-            boolean isKidsMode  = new SharedPrefHelper(context).getKidsMode();
+            boolean isKidsMode  = SharedPrefHelper.getInstance(context).getKidsMode();
             if (isKidsMode) {
                 String parentalRating = AppCommonMethod.getParentalRating();
                 endpoint.getVideoDetailsPG(manualImageAssetId, languageCode,parentalRating).enqueue(new Callback<EnveuVideoDetailsBean>() {
@@ -217,7 +217,7 @@ public class APIServiceLayer {
         languageCode = LanguageLayer.getCurrentLanguageCode();
         if (endpoint!=null) {
 
-            boolean isKidsMode  = new SharedPrefHelper(context).getKidsMode();
+            boolean isKidsMode  = SharedPrefHelper.getInstance(context).getKidsMode();
             if (isKidsMode){
                 String parentalRating = AppCommonMethod.getParentalRating();
                 endpoint.getPlaylistDetailsByIdWithPG(playlistID, languageCode, pageNumber, pageSize,parentalRating).enqueue(new Callback<EnveuCommonResponse>() {
@@ -273,7 +273,7 @@ public class APIServiceLayer {
         languageCode = LanguageLayer.getCurrentLanguageCode();
         if (endpoint!=null) {
 
-            boolean isKidsMode  = new SharedPrefHelper(activity).getKidsMode();
+            boolean isKidsMode  = SharedPrefHelper.getInstance(activity).getKidsMode();
             if (isKidsMode) {
                 String parentalRating = AppCommonMethod.getParentalRating();
                 endpoint.getRelatedContentPG(seriesId, seasonNumber, pageNumber, size, languageCode,parentalRating).enqueue(new Callback<EnveuCommonResponse>() {
@@ -313,7 +313,7 @@ public class APIServiceLayer {
         callBack.onStart();
         languageCode = LanguageLayer.getCurrentLanguageCode();
         if (endpoint!=null) {
-            boolean isKidsMode  = new SharedPrefHelper(activity).getKidsMode();
+            boolean isKidsMode  = SharedPrefHelper.getInstance(activity).getKidsMode();
             if (isKidsMode) {
                 String parentalRating = AppCommonMethod.getParentalRating();
                 endpoint.getRelatedContentWithoutSNoPG(seriesId, pageNumber, size, languageCode,parentalRating).enqueue(new Callback<EnveuCommonResponse>() {
@@ -380,7 +380,7 @@ public class APIServiceLayer {
         callBack.onStart();
         languageCode = LanguageLayer.getCurrentLanguageCode();
         if (endpoint!=null) {
-            boolean isKidsMode  = new SharedPrefHelper(context).getKidsMode();
+            boolean isKidsMode  = SharedPrefHelper.getInstance(context).getKidsMode();
             if (isKidsMode) {
                 String parentalRating = AppCommonMethod.getParentalRating();
                 endpoint.getVideoDetailsPG(assetID, languageCode,parentalRating).enqueue(new Callback<EnveuVideoDetailsBean>() {
@@ -445,7 +445,7 @@ public class APIServiceLayer {
         languageCode = LanguageLayer.getCurrentLanguageCode();
         if (endpoint!=null) {
 
-            boolean isKidsMode  = new SharedPrefHelper(context).getKidsMode();
+            boolean isKidsMode  = SharedPrefHelper.getInstance(context).getKidsMode();
             if (isKidsMode){
                 String parentalRating = AppCommonMethod.getParentalRating();
                 endpoint.getPlaylistDetailsByIdWithPG(playlistID, languageCode, pageNumber, pageSize,parentalRating).enqueue(new Callback<EnveuCommonResponse>() {
@@ -502,7 +502,7 @@ public class APIServiceLayer {
         languageCode = LanguageLayer.getCurrentLanguageCode();
         if (endpoint!=null) {
 
-            boolean isKidsMode  = new SharedPrefHelper(context).getKidsMode();
+            boolean isKidsMode  = SharedPrefHelper.getInstance(context).getKidsMode();
             if (isKidsMode) {
                 String parentalRating = AppCommonMethod.getParentalRating();
                 endpoint.getVideosPG(manualImageAssetId, languageCode,parentalRating).enqueue(new Callback<ContinueWatchingModel>() {
@@ -575,7 +575,7 @@ public class APIServiceLayer {
         languageCode = LanguageLayer.getCurrentLanguageCode();
         if (endpoint!=null) {
 
-            boolean isKidsMode  = new SharedPrefHelper(activity).getKidsMode();
+            boolean isKidsMode  = SharedPrefHelper.getInstance(activity).getKidsMode();
             if (isKidsMode) {
                 String parentalRating = AppCommonMethod.getParentalRating();
                 endpoint.getVideosPG(manualImageAssetId, languageCode,parentalRating).enqueue(new Callback<ContinueWatchingModel>() {
@@ -647,8 +647,8 @@ public class APIServiceLayer {
 
     public LiveData<List<RailCommonData>> getSearchData(Context context, String type, String keyword, int size, int page, boolean applyFilter) {
         languageCode = LanguageLayer.getCurrentLanguageCode();
-        List<String> filterGenreSavedListKeyForApi = new SharedPrefHelper(context).getDataGenreListKeyValue();
-        List<String> filterSortSavedListKeyForApi = new SharedPrefHelper(context).getDataSortListKeyValue();
+        List<String> filterGenreSavedListKeyForApi = SharedPrefHelper.getInstance(context).getDataGenreListKeyValue();
+        List<String> filterSortSavedListKeyForApi = SharedPrefHelper.getInstance(context).getDataSortListKeyValue();
 
         MutableLiveData<List<RailCommonData>> responsePopular = new MutableLiveData<>();
         try {
@@ -772,8 +772,8 @@ public class APIServiceLayer {
 
 
                 if(applyFilter){
-                    List<String> filterGenreSavedListKeyForApi = new SharedPrefHelper(context).getDataGenreListKeyValue();
-                    List<String> filterSortSavedListKeyForApi = new SharedPrefHelper(context).getDataSortListKeyValue();
+                    List<String> filterGenreSavedListKeyForApi = SharedPrefHelper.getInstance(context).getDataGenreListKeyValue();
+                    List<String> filterSortSavedListKeyForApi = SharedPrefHelper.getInstance(context).getDataSortListKeyValue();
                     if ( filterGenreSavedListKeyForApi != null && filterGenreSavedListKeyForApi.size() > 0||filterSortSavedListKeyForApi != null && filterSortSavedListKeyForApi.size() > 0) {
                         call = backendApi.getSearchResultsByFilters(keyword, type, size, page, languageCode,filterGenreSavedListKeyForApi,filterSortSavedListKeyForApi);
                     }
@@ -852,8 +852,8 @@ public class APIServiceLayer {
                     MediaTypeConstants.getInstance().getShow());
 
             if (applyFilter) {
-                List<String> filterGenreSavedListKeyForApi = new SharedPrefHelper(context).getDataGenreListKeyValue();
-                List<String> filterSortSavedListKeyForApi = new SharedPrefHelper(context).getDataSortListKeyValue();
+                List<String> filterGenreSavedListKeyForApi = SharedPrefHelper.getInstance(context).getDataGenreListKeyValue();
+                List<String> filterSortSavedListKeyForApi = SharedPrefHelper.getInstance(context).getDataSortListKeyValue();
                 if (filterGenreSavedListKeyForApi != null && filterGenreSavedListKeyForApi.size() > 0 || filterSortSavedListKeyForApi != null && filterSortSavedListKeyForApi.size() > 0) {
                     call = backendApi.getSearchResultsByFilters(keyword, contentTypes, size, page, languageCode, filterGenreSavedListKeyForApi, filterSortSavedListKeyForApi);
                 }

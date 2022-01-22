@@ -1,10 +1,13 @@
 package me.vipa.app.activities.deeplink;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.os.SystemClock;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import org.json.JSONException;
+
+import io.branch.referral.Branch;
 import me.vipa.app.R;
 import me.vipa.app.activities.article.ArticleActivity;
 import me.vipa.app.activities.detail.ui.EpisodeActivity;
@@ -12,13 +15,8 @@ import me.vipa.app.activities.series.ui.SeriesDetailActivity;
 import me.vipa.app.utils.MediaTypeConstants;
 import me.vipa.app.utils.constants.AppConstants;
 import me.vipa.app.utils.cropImage.helpers.Logger;
-
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
-
-import org.json.JSONException;
-
-import io.branch.referral.Branch;
 
 public class DeepLinkActivity extends AppCompatActivity {
 
@@ -62,19 +60,19 @@ public class DeepLinkActivity extends AppCompatActivity {
                     return;
                 }
                 mLastClickTime = SystemClock.elapsedRealtime();
-                new ActivityLauncher(DeepLinkActivity.this).seriesDetailScreen(DeepLinkActivity.this, SeriesDetailActivity.class, assestId);
+                ActivityLauncher.getInstance().seriesDetailScreen(DeepLinkActivity.this, SeriesDetailActivity.class, assestId);
             } else if (contentType.equalsIgnoreCase(AppConstants.ContentType.VIDEO.toString())) {
                 if (SystemClock.elapsedRealtime() - mLastClickTime < 1200) {
                     return;
                 }
                 mLastClickTime = SystemClock.elapsedRealtime();
-                new ActivityLauncher(DeepLinkActivity.this).articleScreen(DeepLinkActivity.this, ArticleActivity.class, assestId, "0", false);
+                ActivityLauncher.getInstance().articleScreen(DeepLinkActivity.this, ArticleActivity.class, assestId, "0", false);
             } else if (contentType.equalsIgnoreCase(MediaTypeConstants.getInstance().getEpisode())) {
                 if (SystemClock.elapsedRealtime() - mLastClickTime < 1200) {
                     return;
                 }
                 mLastClickTime = SystemClock.elapsedRealtime();
-                new ActivityLauncher(DeepLinkActivity.this).episodeScreen(DeepLinkActivity.this, EpisodeActivity.class, assestId, "0", false);
+                ActivityLauncher.getInstance().episodeScreen(DeepLinkActivity.this, EpisodeActivity.class, assestId, "0", false);
             }
             finish();
         });

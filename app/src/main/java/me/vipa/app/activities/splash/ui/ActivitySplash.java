@@ -140,7 +140,7 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
 
         connectionObserver();
         getBinding().noConnectionLayout.retryTxt.setOnClickListener(view -> connectionObserver());
-        getBinding().noConnectionLayout.btnMyDownloads.setOnClickListener(view -> new ActivityLauncher(this).launchMyDownloads());
+        getBinding().noConnectionLayout.btnMyDownloads.setOnClickListener(view -> ActivityLauncher.getInstance().launchMyDownloads(ActivitySplash.this));
         Logger.d("IntentData: " + this.getIntent().getData());
 
         /*try {
@@ -286,14 +286,14 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
                             if (KsPreferenceKeys.getInstance().getfirstTimeUser()){
                                 KsPreferenceKeys.getInstance().setfirstTimeUser(false);
                                 if (isTablet){
-                                    new ActivityLauncher(ActivitySplash.this).onBoardingTab(ActivitySplash.this, OnBoardingTab.class);
+                                    ActivityLauncher.getInstance().onBoardingTab(ActivitySplash.this, OnBoardingTab.class);
                                 }else {
-                                    new ActivityLauncher(ActivitySplash.this).onBoardingScreen(ActivitySplash.this, OnBoarding.class);
+                                    ActivityLauncher.getInstance().onBoardingScreen(ActivitySplash.this, OnBoarding.class);
                                 }
 
 
                             }else {
-                                new ActivityLauncher(ActivitySplash.this).homeScreen(ActivitySplash.this, HomeActivity.class);
+                                ActivityLauncher.getInstance().homeScreen(ActivitySplash.this, HomeActivity.class);
 
                                 finish();
                             }
@@ -311,14 +311,14 @@ public class ActivitySplash extends BaseBindingActivity<ActivitySplashBinding> i
                                 if (KsPreferenceKeys.getInstance().getfirstTimeUser()){
                                     KsPreferenceKeys.getInstance().setfirstTimeUser(false);
                                     if (isTablet){
-                                        new ActivityLauncher(ActivitySplash.this).onBoardingTab(ActivitySplash.this, OnBoardingTab.class);
+                                        ActivityLauncher.getInstance().onBoardingTab(ActivitySplash.this, OnBoardingTab.class);
                                     }else {
-                                        new ActivityLauncher(ActivitySplash.this).onBoardingScreen(ActivitySplash.this, OnBoarding.class);
+                                        ActivityLauncher.getInstance().onBoardingScreen(ActivitySplash.this, OnBoarding.class);
                                     }
 
 
                                 }else {
-                                    new ActivityLauncher(ActivitySplash.this).homeScreen(ActivitySplash.this, HomeActivity.class);
+                                    ActivityLauncher.getInstance().homeScreen(ActivitySplash.this, HomeActivity.class);
 
                                     finish();
                                 }

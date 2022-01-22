@@ -49,6 +49,12 @@ class DownloadedVideoActivity : BaseBindingActivity<ActivityDownloadedVideoBindi
         finish()
     }
 
+    override fun notifyMoEngageOnPlayerStart() {
+    }
+
+    override fun notifyMoEngageOnPlayerEnd() {
+    }
+
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

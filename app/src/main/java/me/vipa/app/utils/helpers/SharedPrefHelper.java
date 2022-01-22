@@ -13,10 +13,9 @@ import java.util.List;
 
 import me.vipa.app.utils.constants.AppConstants;
 import me.vipa.app.utils.security.CryptUtil;
-import me.vipa.app.utils.constants.AppConstants;
-import me.vipa.app.utils.security.CryptUtil;
 
 public class SharedPrefHelper {
+    private static SharedPrefHelper instance;
     private static final String PREF_FILE = "Session";
     private final SharedPreferences mSharedPreferences;
     private final SharedPreferences.Editor mEditor;
@@ -24,10 +23,17 @@ public class SharedPrefHelper {
     private CryptUtil cryptUtil;
 
     @SuppressLint("CommitPrefEdits")
-    public SharedPrefHelper(Context context) {
+    protected SharedPrefHelper(Context context) {
         mSharedPreferences = context.getSharedPreferences(PREF_FILE, Context.MODE_PRIVATE);
         mEditor = mSharedPreferences.edit();
         cryptUtil = CryptUtil.getInstance();
+    }
+
+    public static SharedPrefHelper getInstance(Context context) {
+        if (instance == null) {
+            instance = new SharedPrefHelper(context);
+        }
+        return instance;
     }
 
     @SuppressLint("CommitPrefEdits")

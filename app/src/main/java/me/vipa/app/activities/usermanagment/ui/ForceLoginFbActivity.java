@@ -9,10 +9,16 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 
-import me.vipa.app.activities.usermanagment.viewmodel.RegistrationLoginViewModel;
-import me.vipa.app.baseModels.BaseBindingActivity;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
+import com.google.gson.Gson;
+
+import java.util.Objects;
+
 import me.vipa.app.R;
 import me.vipa.app.activities.homeactivity.ui.HomeActivity;
+import me.vipa.app.activities.usermanagment.viewmodel.RegistrationLoginViewModel;
+import me.vipa.app.baseModels.BaseBindingActivity;
 import me.vipa.app.beanModel.configBean.ResponseConfig;
 import me.vipa.app.beanModel.responseModels.LoginResponse.Data;
 import me.vipa.app.databinding.ActivityForceLoginBinding;
@@ -22,19 +28,10 @@ import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.constants.AppConstants;
 import me.vipa.app.utils.cropImage.helpers.Logger;
 import me.vipa.app.utils.helpers.CheckInternetConnection;
-
 import me.vipa.app.utils.helpers.StringUtils;
 import me.vipa.app.utils.helpers.ToastHandler;
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
-import com.facebook.FacebookSdk;
-import com.facebook.login.LoginManager;
-import com.google.gson.Gson;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
-
-import java.util.Objects;
-
-import me.vipa.app.activities.usermanagment.viewmodel.RegistrationLoginViewModel;
-import me.vipa.app.baseModels.BaseBindingActivity;
 
 public class ForceLoginFbActivity extends BaseBindingActivity<ActivityForceLoginBinding> implements AlertDialogFragment.AlertDialogListener {
     private RegistrationLoginViewModel viewModel;
@@ -146,7 +143,7 @@ public class ForceLoginFbActivity extends BaseBindingActivity<ActivityForceLogin
         preference.setAppPrefUserName(String.valueOf(fbLoginData.getName()));
         preference.setAppPrefUserEmail(String.valueOf(fbLoginData.getEmail()));
         AppCommonMethod.userId = String.valueOf(fbLoginData.getId());
-        new ActivityLauncher(ForceLoginFbActivity.this).homeScreen(ForceLoginFbActivity.this, HomeActivity.class);
+        ActivityLauncher.getInstance().homeScreen(ForceLoginFbActivity.this, HomeActivity.class);
     }
 
 

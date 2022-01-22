@@ -302,8 +302,8 @@ public class ActivitySearch extends BaseBindingActivity<ActivitySearchBinding> i
                 } else {
                     getBinding().noResult.setVisibility(View.VISIBLE);
 
-                    List<String> filterGenreSavedListKeyForApi = new SharedPrefHelper(this).getDataGenreListKeyValue();
-                    List<String> filterSortSavedListKeyForApi = new SharedPrefHelper(this).getDataSortListKeyValue();
+                    List<String> filterGenreSavedListKeyForApi = SharedPrefHelper.getInstance(this).getDataGenreListKeyValue();
+                    List<String> filterSortSavedListKeyForApi = SharedPrefHelper.getInstance(this).getDataSortListKeyValue();
                     if (filterGenreSavedListKeyForApi != null && filterGenreSavedListKeyForApi.size() > 0 || filterSortSavedListKeyForApi != null && filterSortSavedListKeyForApi.size() > 0) {
                         getBinding().toolbar.filter.setVisibility(View.VISIBLE);
                     } else {
@@ -316,8 +316,8 @@ public class ActivitySearch extends BaseBindingActivity<ActivitySearchBinding> i
             } else {
                 getBinding().noResult.setVisibility(View.VISIBLE);
                 //  getBinding().noResult1.setVisibility(View.VISIBLE);
-                List<String> filterGenreSavedListKeyForApi = new SharedPrefHelper(this).getDataGenreListKeyValue();
-                List<String> filterSortSavedListKeyForApi = new SharedPrefHelper(this).getDataSortListKeyValue();
+                List<String> filterGenreSavedListKeyForApi = SharedPrefHelper.getInstance(this).getDataGenreListKeyValue();
+                List<String> filterSortSavedListKeyForApi = SharedPrefHelper.getInstance(this).getDataSortListKeyValue();
                 if (filterGenreSavedListKeyForApi != null && filterGenreSavedListKeyForApi.size() > 0 || filterSortSavedListKeyForApi != null && filterSortSavedListKeyForApi.size() > 0) {
                     getBinding().toolbar.filter.setVisibility(View.VISIBLE);
                 } else {
@@ -512,7 +512,7 @@ public class ActivitySearch extends BaseBindingActivity<ActivitySearchBinding> i
 
         if (itemValue != null && itemValue.getStatus()) {
             applyFilter = Boolean.parseBoolean(KsPreferenceKeys.getInstance().getFilterApply());
-            new ActivityLauncher(ActivitySearch.this).resultActivityBundle(ActivitySearch.this, ActivityResults.class, itemValue.getAssetType(), itemValue.getSearchKey(), itemValue.getTotalCount(),applyFilter);
+            ActivityLauncher.getInstance().resultActivityBundle(ActivitySearch.this, ActivityResults.class, itemValue.getAssetType(), itemValue.getSearchKey(), itemValue.getTotalCount(),applyFilter);
 
         }
     }
@@ -521,7 +521,7 @@ public class ActivitySearch extends BaseBindingActivity<ActivitySearchBinding> i
     public void onShowAllProgramClicked(RailCommonData itemValue) {
         if (itemValue != null && itemValue.getStatus()) {
             applyFilter = Boolean.parseBoolean(KsPreferenceKeys.getInstance().getFilterApply());
-            new ActivityLauncher(ActivitySearch.this).resultActivityBundle(ActivitySearch.this, ActivityResults.class, AppConstants.SEARCH_TYPE_PROGRAM, itemValue.getSearchKey(), itemValue.getTotalCount(),applyFilter);
+            ActivityLauncher.getInstance().resultActivityBundle(ActivitySearch.this, ActivityResults.class, AppConstants.SEARCH_TYPE_PROGRAM, itemValue.getSearchKey(), itemValue.getTotalCount(),applyFilter);
         }
     }
 
@@ -538,7 +538,7 @@ public class ActivitySearch extends BaseBindingActivity<ActivitySearchBinding> i
             }
             mLastClickTime = SystemClock.elapsedRealtime();
             if (NetworkConnectivity.isOnline(ActivitySearch.this)) {
-                new ActivityLauncher(ActivitySearch.this).seriesDetailScreen(ActivitySearch.this, SeriesDetailActivity.class, itemValue.getId());
+                ActivityLauncher.getInstance().seriesDetailScreen(ActivitySearch.this, SeriesDetailActivity.class, itemValue.getId());
             } else {
                 new ToastHandler(ActivitySearch.this).show(ActivitySearch.this.getResources().getString(R.string.no_internet_connection));
             }
@@ -550,7 +550,7 @@ public class ActivitySearch extends BaseBindingActivity<ActivitySearchBinding> i
             mLastClickTime = SystemClock.elapsedRealtime();
 
             if (NetworkConnectivity.isOnline(ActivitySearch.this)) {
-                new ActivityLauncher(ActivitySearch.this).detailScreen(ActivitySearch.this, DetailActivity.class, itemValue.getId(), "0", false);
+                ActivityLauncher.getInstance().detailScreen(ActivitySearch.this, DetailActivity.class, itemValue.getId(), "0", false);
             } else
                 new ToastHandler(ActivitySearch.this).show(ActivitySearch.this.getResources().getString(R.string.no_internet_connection));
         }

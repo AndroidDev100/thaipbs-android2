@@ -241,40 +241,48 @@ public class PlayerControlsFragment extends Fragment {
         }
 
         // media_route_button.setVisibility(View.VISIBLE);
-        fullscreen.setBackgroundResource(R.drawable.full_screen);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-        );
-        params.setMargins(0, 0, 0, 0);
-        params.gravity = Gravity.CENTER;
-        seekBarControl.setLayoutParams(params);
-
-        LinearLayout.LayoutParams paramsFullscreen = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-        );
-        paramsFullscreen.setMargins(0, 0, 30, 0);
-        paramsFullscreen.gravity = Gravity.CENTER;
-        fullscreen.setLayoutParams(paramsFullscreen);
-
-        RelativeLayout.LayoutParams params1 = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT
-        );
-        params1.setMargins(0, 0, 0, 0);
-        backArrow.setLayoutParams(params1);
-        backArrow.requestFocus();
-
-
         try {
-            RelativeLayout.LayoutParams params2 = new RelativeLayout.LayoutParams(
+            fullscreen.setBackgroundResource(R.drawable.full_screen);
+            LinearLayout.LayoutParams paramsFullscreen = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
             );
-            params2.setMargins(0, 10, 30, 0);
-            params2.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-            settingLay.setLayoutParams(params2);
+            paramsFullscreen.setMargins(0, 0, 30, 0);
+            paramsFullscreen.gravity = Gravity.CENTER;
+            fullscreen.setLayoutParams(paramsFullscreen);
+        } catch (Exception ex) {
+            Logger.w(ex);
+        }
+
+        try {
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.setMargins(0, 0, 0, 0);
+            params.gravity = Gravity.CENTER;
+            seekBarControl.setLayoutParams(params);
+        } catch (Exception ex) {
+            Logger.w(ex);
+        }
+
+        try {
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.WRAP_CONTENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT
+            );
+            params.setMargins(0, 0, 0, 0);
+            backArrow.setLayoutParams(params);
+            backArrow.requestFocus();
+        } catch (Exception ex) {
+            Logger.w(ex);
+        }
+
+        try {
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            );
+            params.setMargins(0, 10, 30, 0);
+            params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+            settingLay.setLayoutParams(params);
         } catch (Exception ex) {
             Logger.w(ex);
         }

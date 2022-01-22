@@ -169,4 +169,10 @@ class DownloadedEpisodesActivity() : BaseBindingActivity<ActivityDownloadedEpiso
     override fun finishActivity() {
         finish()
     }
+
+    override fun notifyMoEngageOnPlayerStart() {
+    }
+
+    override fun notifyMoEngageOnPlayerEnd() {
+    }
 }

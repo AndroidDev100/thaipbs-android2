@@ -114,6 +114,7 @@ import java.util.Set;
 import me.vipa.brightcovelibrary.callBacks.BackPressCallBack;
 import me.vipa.brightcovelibrary.callBacks.PhoneListenerCallBack;
 import me.vipa.brightcovelibrary.callBacks.PlayerCallbacks;
+import me.vipa.brightcovelibrary.callBacks.VideoStateListener;
 import me.vipa.brightcovelibrary.chromecast.ChromeCastCallback;
 import me.vipa.brightcovelibrary.chromecast.ChromecastManager;
 import me.vipa.brightcovelibrary.utils.ObjectHelper;
@@ -134,6 +135,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
     private boolean enable = true;
     private boolean imaEnable = false;
     private boolean bingeWatch = false;
+    private VideoStateListener videoStateListener;
     private int bingeWatchTimer = 0;
     private GoogleIMAComponent googleIMAComponent;
     private boolean fromTrailer = false;
@@ -495,7 +497,6 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             }
         }
 
-
         if (brightcoveAccountId.isEmpty() || brightcovePolicyKey.isEmpty()) {
             showErrorDialog(getString(R.string.implement_brightcove_creds));
             return;
@@ -576,8 +577,6 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             eventEmitter.enable();
             baseVideoView.setMediaController((MediaController) null);
             baseVideoView.seekTo((int) (bookmarkPosition * 1000));
-
-
             baseVideoView.add(currentVideo);
             baseVideoView.start();
 
@@ -706,6 +705,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                         mListener = (OnPlayerInteractionListener) mActivity;
                         if (baseVideoView != null && !baseVideoView.isPlaying()) {
                             mListener.onPlayerStart();
+                            mListener.notifyMoEngageOnPlayerStart();
                         }
 
                         Logger.w("Playerstart PLAY");
@@ -791,11 +791,13 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         eventEmitter.on(EventType.COMPLETED, new EventListener() {
             @Override
             public void processEvent(Event event) {
+
                 baseVideoView.stopPlayback();
                 isContentCompleted = true;
                 willBingWatchShow = false;
                 baseVideoView.seekTo(baseVideoView.getDuration());
                 if (playerControlsFragment != null) {
+                    mListener.notifyMoEngageOnPlayerEnd();
                     playerControlsFragment.hideControls();
                     if (!isInPictureinPicture) {
                         if (playerControlsFragment.bingeLay.getVisibility() == View.VISIBLE) {
@@ -2059,6 +2061,9 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
 
         void finishActivity();
 
+        void notifyMoEngageOnPlayerStart();
+
+        void notifyMoEngageOnPlayerEnd();
     }
 
     public interface ChromeCastStartedCallBack {

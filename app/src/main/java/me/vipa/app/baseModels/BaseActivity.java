@@ -187,9 +187,9 @@ public class BaseActivity extends AppCompatActivity implements BaseActivityAlert
             KsPreferenceKeys.getInstance().setAppLanguage(strCurrentLanguage);
             AppCommonMethod.updateLanguage(strCurrentLanguage,this);
             KsPreferenceKeys.getInstance().setBingeWatchEnable(isBingeWatchEnable);
-           // new ActivityLauncher(this).homeScreen(this, HomeActivity.class);
+           // ActivityLauncher.getInstance().homeScreen(this, HomeActivity.class);
         }catch (Exception e){
-           // new ActivityLauncher(this).homeScreen(this, HomeActivity.class);
+           // ActivityLauncher.getInstance().homeScreen(this, HomeActivity.class);
 
         }
     }
@@ -332,8 +332,8 @@ public class BaseActivity extends AppCompatActivity implements BaseActivityAlert
                         if (ClickHandler.INSTANCE.disallowClick()) {
                             return;
                         }
-                        new ActivityLauncher(this).homeScreen(this, HomeActivity.class);
-                        new ActivityLauncher(BaseActivity.this).seriesDetailScreen(
+                        ActivityLauncher.getInstance().homeScreen(this, HomeActivity.class);
+                        ActivityLauncher.getInstance().seriesDetailScreen(
                                 BaseActivity.this, SeriesDetailActivity.class, assetId);
                         finish();
                     } else if (contentType.equalsIgnoreCase(AppConstants.ContentType.VIDEO.name())
@@ -342,8 +342,8 @@ public class BaseActivity extends AppCompatActivity implements BaseActivityAlert
                         if (ClickHandler.INSTANCE.disallowClick()) {
                             return;
                         }
-                        new ActivityLauncher(this).homeScreen(this, HomeActivity.class);
-                        new ActivityLauncher(BaseActivity.this).detailScreen(BaseActivity.this,
+                        ActivityLauncher.getInstance().homeScreen(this, HomeActivity.class);
+                        ActivityLauncher.getInstance().detailScreen(BaseActivity.this,
                                 DetailActivity.class, assetId, "0", false);
                         finish();
                     } else if (contentType.equalsIgnoreCase(
@@ -351,8 +351,8 @@ public class BaseActivity extends AppCompatActivity implements BaseActivityAlert
                         if (ClickHandler.INSTANCE.disallowClick()) {
                             return;
                         }
-                        new ActivityLauncher(this).homeScreen(this, HomeActivity.class);
-                        new ActivityLauncher(BaseActivity.this).detailScreen(BaseActivity.this,
+                        ActivityLauncher.getInstance().homeScreen(this, HomeActivity.class);
+                        ActivityLauncher.getInstance().detailScreen(BaseActivity.this,
                                 DetailActivity.class, assetId, "0", false);
                         finish();
                     } else if (contentType.equalsIgnoreCase(
@@ -360,8 +360,8 @@ public class BaseActivity extends AppCompatActivity implements BaseActivityAlert
                         if (ClickHandler.INSTANCE.disallowClick()) {
                             return;
                         }
-                        new ActivityLauncher(this).homeScreen(this, HomeActivity.class);
-                        new ActivityLauncher(BaseActivity.this).liveScreenBrightCove(
+                        ActivityLauncher.getInstance().homeScreen(this, HomeActivity.class);
+                        ActivityLauncher.getInstance().liveScreenBrightCove(
                                 BaseActivity.this, LiveActivity.class, 0l, assetId, "0", false,
                                 SDKConfig.getInstance().getLiveDetailId());
                         finish();
@@ -370,8 +370,8 @@ public class BaseActivity extends AppCompatActivity implements BaseActivityAlert
                         if (ClickHandler.INSTANCE.disallowClick()) {
                             return;
                         }
-                        new ActivityLauncher(this).homeScreen(this, HomeActivity.class);
-                        new ActivityLauncher(BaseActivity.this).episodeScreen(BaseActivity.this,
+                        ActivityLauncher.getInstance().homeScreen(this, HomeActivity.class);
+                        ActivityLauncher.getInstance().episodeScreen(BaseActivity.this,
                                 EpisodeActivity.class, assetId, "0", false);
                         finish();
                     } else if (contentType.equalsIgnoreCase(
@@ -379,13 +379,13 @@ public class BaseActivity extends AppCompatActivity implements BaseActivityAlert
                         if (ClickHandler.INSTANCE.disallowClick()) {
                             return;
                         }
-                        new ActivityLauncher(this).homeScreen(this, HomeActivity.class);
-                        new ActivityLauncher(BaseActivity.this).articleScreen(BaseActivity.this,
+                        ActivityLauncher.getInstance().homeScreen(this, HomeActivity.class);
+                        ActivityLauncher.getInstance().articleScreen(BaseActivity.this,
                                 ArticleActivity.class, assetId, "0", false);
                         finish();
                     }
                 } else {
-                    new ActivityLauncher(this).homeScreen(this, HomeActivity.class);
+                    ActivityLauncher.getInstance().homeScreen(this, HomeActivity.class);
                     finish();
                 }
             }

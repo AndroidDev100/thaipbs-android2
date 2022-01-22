@@ -15,34 +15,27 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
+
+import me.vipa.app.R;
 import me.vipa.app.activities.usermanagment.ui.LoginActivity;
 import me.vipa.app.baseModels.BaseBindingActivity;
-import me.vipa.app.networking.apistatus.APIStatus;
-import me.vipa.app.networking.responsehandler.ResponseModel;
-import me.vipa.app.R;
 import me.vipa.app.beanModel.enveuCommonRailData.RailCommonData;
 import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
 import me.vipa.app.databinding.ArticleActivityBinding;
 import me.vipa.app.fragments.dialog.AlertDialogFragment;
 import me.vipa.app.fragments.dialog.AlertDialogSingleButtonFragment;
 import me.vipa.app.fragments.player.ui.UserInteractionFragment;
+import me.vipa.app.networking.apistatus.APIStatus;
+import me.vipa.app.networking.responsehandler.ResponseModel;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.constants.AppConstants;
 import me.vipa.app.utils.cropImage.helpers.Logger;
 import me.vipa.app.utils.helpers.ImageHelper;
 import me.vipa.app.utils.helpers.RailInjectionHelper;
-
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
-
-import java.util.Objects;
-import java.util.concurrent.TimeUnit;
-
-import me.vipa.app.activities.usermanagment.ui.LoginActivity;
-import me.vipa.app.baseModels.BaseBindingActivity;
-import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
-import me.vipa.app.networking.apistatus.APIStatus;
-import me.vipa.app.networking.responsehandler.ResponseModel;
 
 public class ArticleActivity  extends BaseBindingActivity<ArticleActivityBinding> implements AlertDialogFragment.AlertDialogListener {
 
@@ -263,7 +256,7 @@ public class ArticleActivity  extends BaseBindingActivity<ArticleActivityBinding
         preference.setAppPrefJumpBack(true);
         preference.setAppPrefIsEpisode(false);
         preference.setAppPrefJumpBackId(assestId);
-        new ActivityLauncher(ArticleActivity.this).loginActivity(ArticleActivity.this, LoginActivity.class);
+        ActivityLauncher.getInstance().loginActivity(ArticleActivity.this, LoginActivity.class);
 
     }
 

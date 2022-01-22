@@ -55,7 +55,6 @@ import me.vipa.brightcovelibrary.Logger;
 import me.vipa.brightcovelibrary.utils.ObjectHelper;
 
 public class UserInteractionFragment extends BaseBindingFragment<DetailWatchlistLikeShareViewBinding> implements AlertDialogFragment.AlertDialogListener, View.OnClickListener {
-    private final String TAG = this.getClass().getSimpleName();
     private int assestId;
     private Context context;
     private KsPreferenceKeys preference;
@@ -119,7 +118,7 @@ public class UserInteractionFragment extends BaseBindingFragment<DetailWatchlist
                 getBinding().llLike.setVisibility(View.GONE);
             }
 
-            kidsMode  = new SharedPrefHelper(context).getKidsMode();
+            kidsMode  = SharedPrefHelper.getInstance(context).getKidsMode();
              isLogins = preference.getAppPrefLoginStatus();
 
              setKidsMode(kidsMode);
@@ -358,7 +357,7 @@ public class UserInteractionFragment extends BaseBindingFragment<DetailWatchlist
     }
 
     private void hitApiRemoveList() {
-        bookmarkingViewModel.hitRemoveWatchlist(token, assestId).observe(this, responseEmpty -> {
+        bookmarkingViewModel.hitRemoveWatchlist(token, assestId).observe(getViewLifecycleOwner(), responseEmpty -> {
             getBinding().wProgressBar.setVisibility(View.GONE);
             getBinding().addIcon.setVisibility(View.VISIBLE);
             if (Objects.requireNonNull(responseEmpty).isStatus()) {
@@ -410,7 +409,7 @@ public class UserInteractionFragment extends BaseBindingFragment<DetailWatchlist
 
 
     public void hitApiAddLike(int from) {
-        bookmarkingViewModel.hitApiAddLike(token, assestId).observe(this, responseEmpty -> {
+        bookmarkingViewModel.hitApiAddLike(token, assestId).observe(getViewLifecycleOwner(), responseEmpty -> {
             getBinding().lProgressBar.setVisibility(View.GONE);
             getBinding().likeIcon.setVisibility(View.VISIBLE);
             if (Objects.requireNonNull(responseEmpty).isStatus()) {
@@ -438,7 +437,7 @@ public class UserInteractionFragment extends BaseBindingFragment<DetailWatchlist
 
     public void hitApiRemoveLike() {
 
-        bookmarkingViewModel.hitApiDeleteLike(token, assestId).observe(this, responseEmpty -> {
+        bookmarkingViewModel.hitApiDeleteLike(token, assestId).observe(getViewLifecycleOwner(), responseEmpty -> {
             getBinding().lProgressBar.setVisibility(View.GONE);
             getBinding().likeIcon.setVisibility(View.VISIBLE);
             if (Objects.requireNonNull(responseEmpty).isStatus()) {
@@ -464,7 +463,7 @@ public class UserInteractionFragment extends BaseBindingFragment<DetailWatchlist
             JsonObject requestParam = new JsonObject();
             requestParam.addProperty(AppConstants.API_PARAM_LIKE_ID, assestId);
             requestParam.addProperty(AppConstants.API_PARAM_LIKE_TYPE, MediaTypeConstants.getInstance().getSeries());
-            bookmarkingViewModel.hitApiIsLike(token, assestId).observe(this, responseEmpty -> {
+            bookmarkingViewModel.hitApiIsLike(token, assestId).observe(getViewLifecycleOwner(), responseEmpty -> {
 
                 if (Objects.requireNonNull(responseEmpty).isStatus()) {
                     if (StringUtils.isNullOrEmptyOrZero(responseEmpty.getData().getId())) {

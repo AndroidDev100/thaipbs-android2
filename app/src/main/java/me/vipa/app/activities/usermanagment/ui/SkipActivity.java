@@ -16,23 +16,23 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 
-//import com.amazonaws.auth.CognitoCachingCredentialsProvider;
-//import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener;
-//import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver;
-//import com.amazonaws.mobileconnectors.s3.transferutility.TransferState;
-//import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
-//import com.amazonaws.regions.Region;
-//import com.amazonaws.regions.Regions;
-//import com.amazonaws.services.s3.AmazonS3;
-//import com.amazonaws.services.s3.AmazonS3Client;
 import com.bumptech.glide.Glide;
-import me.vipa.app.activities.usermanagment.viewmodel.RegistrationLoginViewModel;
-import me.vipa.app.baseModels.BaseBindingActivity;
+import com.facebook.login.LoginManager;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
+
+import java.io.File;
+import java.util.Objects;
+
 import me.vipa.app.R;
 import me.vipa.app.activities.detail.ui.DetailActivity;
 import me.vipa.app.activities.detail.ui.EpisodeActivity;
 import me.vipa.app.activities.homeactivity.ui.HomeActivity;
 import me.vipa.app.activities.series.ui.SeriesDetailActivity;
+import me.vipa.app.activities.usermanagment.viewmodel.RegistrationLoginViewModel;
+import me.vipa.app.baseModels.BaseBindingActivity;
 import me.vipa.app.beanModel.configBean.ResponseConfig;
 import me.vipa.app.beanModel.requestParamModel.RequestParamRegisterUser;
 import me.vipa.app.beanModel.responseModels.RegisterSignUpModels.DataResponseRegister;
@@ -50,22 +50,19 @@ import me.vipa.app.utils.helpers.CheckInternetConnection;
 import me.vipa.app.utils.helpers.StringUtils;
 import me.vipa.app.utils.helpers.ToastHandler;
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
-import com.facebook.login.LoginManager;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
-import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
-
-import java.io.File;
-import java.util.Objects;
-
-import me.vipa.app.activities.usermanagment.viewmodel.RegistrationLoginViewModel;
-import me.vipa.app.baseModels.BaseBindingActivity;
-import me.vipa.app.networking.apiendpoints.ApiInterface;
-import me.vipa.app.networking.apiendpoints.RequestConfig;
 import retrofit2.Call;
 import retrofit2.Callback;
+
+//import com.amazonaws.auth.CognitoCachingCredentialsProvider;
+//import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener;
+//import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver;
+//import com.amazonaws.mobileconnectors.s3.transferutility.TransferState;
+//import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
+//import com.amazonaws.regions.Region;
+//import com.amazonaws.regions.Regions;
+//import com.amazonaws.services.s3.AmazonS3;
+//import com.amazonaws.services.s3.AmazonS3Client;
 
 
 public class SkipActivity extends BaseBindingActivity<SkipBinding> implements AlertDialogFragment.AlertDialogListener {
@@ -188,7 +185,7 @@ public class SkipActivity extends BaseBindingActivity<SkipBinding> implements Al
                 AppCommonMethod.afterLogin = true;
                 onPause();
                 //  skipCall();
-                //  new ActivityLauncher(SkipActivity.this).homeScreen(SkipActivity.this, HomeActivity.class);
+                //  ActivityLauncher.getInstance().homeScreen(SkipActivity.this, HomeActivity.class);
             } else
                 new ToastHandler(SkipActivity.this).show(SkipActivity.this.getResources().getString(R.string.no_internet_connection));
         });
@@ -427,16 +424,16 @@ public class SkipActivity extends BaseBindingActivity<SkipBinding> implements Al
                 if (preference.getAppPrefJumpBack()) {
                     int assetId = preference.getAppPrefJumpBackId();
                     if (preference.getAppPrefJumpTo().equalsIgnoreCase(getResources().getString(R.string.series))) {
-                        new ActivityLauncher(SkipActivity.this).seriesDetailScreen(SkipActivity.this, SeriesDetailActivity.class, assetId);
+                        ActivityLauncher.getInstance().seriesDetailScreen(SkipActivity.this, SeriesDetailActivity.class, assetId);
                     } else {
                         if (preference.getAppPrefIsEpisode()){
-                            new ActivityLauncher(SkipActivity.this).episodeScreen(SkipActivity.this, EpisodeActivity.class, assetId, "0", false);
+                            ActivityLauncher.getInstance().episodeScreen(SkipActivity.this, EpisodeActivity.class, assetId, "0", false);
                         } else {
-                            new ActivityLauncher(SkipActivity.this).detailScreen(SkipActivity.this, DetailActivity.class, assetId, "0", false);
+                            ActivityLauncher.getInstance().detailScreen(SkipActivity.this, DetailActivity.class, assetId, "0", false);
                         }
                     }
                 } else
-                    new ActivityLauncher(SkipActivity.this).homeScreen(SkipActivity.this, HomeActivity.class);
+                    ActivityLauncher.getInstance().homeScreen(SkipActivity.this, HomeActivity.class);
 
 
             }

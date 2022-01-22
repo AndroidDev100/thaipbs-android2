@@ -241,9 +241,9 @@ public class RecommendationRailFragment extends BaseBindingFragment<DetailFooter
             } else if (landingPageType.equals(LandingPageType.PDF.name())) {
                 if (railCommonData.getScreenWidget().getLandingPagetarget() != null) {
                     if (railCommonData.getScreenWidget().getLandingPagetarget().equals(PDFTarget.LGN.name())) {
-                        new ActivityLauncher(getActivity()).loginActivity(getActivity(), LoginActivity.class);
+                        ActivityLauncher.getInstance().loginActivity(getActivity(), LoginActivity.class);
                     } else if (railCommonData.getScreenWidget().getLandingPagetarget().equals(PDFTarget.SRH.name())) {
-                        new ActivityLauncher(getActivity()).searchActivity(getActivity(), ActivitySearch.class);
+                        ActivityLauncher.getInstance().searchActivity(getActivity(), ActivitySearch.class);
                     }
                 }
             } else if (landingPageType.equals(LandingPageType.PLT.name())) {

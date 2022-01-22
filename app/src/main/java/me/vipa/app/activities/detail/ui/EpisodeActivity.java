@@ -2,6 +2,8 @@ package me.vipa.app.activities.detail.ui;
 
 import static android.media.AudioManager.AUDIOFOCUS_LOSS;
 
+import static me.vipa.app.utils.commonMethods.AppCommonMethod.lang;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -56,11 +58,14 @@ import com.brightcove.player.pictureinpicture.PictureInPictureManager;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.tabs.TabLayout;
 import com.mmtv.utils.helpers.downloads.DownloadHelper;
+import com.moe.pushlibrary.MoEHelper;
+import com.moengage.core.Properties;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -126,6 +131,8 @@ import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
 import me.vipa.bookmarking.bean.GetBookmarkResponse;
 import me.vipa.brightcovelibrary.BrightcovePlayerFragment;
 import me.vipa.brightcovelibrary.Logger;
+import me.vipa.brightcovelibrary.callBacks.PlayerCallbacks;
+import me.vipa.constants.Constants;
 import me.vipa.enums.Layouts;
 
 public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> implements AlertDialogFragment.AlertDialogListener, NetworkChangeReceiver.ConnectivityReceiverListener, AudioManager.OnAudioFocusChangeListener, CommonRailtItemClickListner, MoreClickListner, BrightcovePlayerFragment.OnPlayerInteractionListener, OnDownloadClickInteraction, MediaDownloadable.DownloadEventListener, VideoListListener, BrightcovePlayerFragment.ChromeCastStartedCallBack {
@@ -232,7 +239,32 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
         }
 
     }
-
+    public void videoStartedMoEnGageEvent(){
+        Properties properties = new Properties();
+        properties.addAttribute(Constants.ID, videoDetails.getId())
+                .addAttribute(Constants.TITLE, videoDetails.getTitle())
+                .addAttribute(Constants.LANG, Constants.LANG_TH)
+                .addAttribute(Constants.GENRE, videoDetails.getAssetGenres().toString())
+                .addAttribute(Constants.PLATFORM, Constants.DEVICE_TYPE_ANDROID)
+                .addAttribute(Constants.CONTENT_TYPE, videoDetails.getAssetType())
+                .addAttribute(Constants.CONTENT_RATING, videoDetails.getParentalRating())
+                .addAttribute(Constants.CREATED_TIME, videoDetails.getSeason())
+                .setNonInteractive();
+        MoEHelper.getInstance(EpisodeActivity.this).trackEvent(Constants.VIDEO_STARTED, properties);
+    }
+    public void videoEndMoEnGageEvent(){
+        Properties properties = new Properties();
+        properties.addAttribute(Constants.ID, videoDetails.getId())
+                .addAttribute(Constants.TITLE, videoDetails.getTitle())
+                .addAttribute(Constants.LANG, Constants.LANG_TH)
+                .addAttribute(Constants.GENRE, videoDetails.getAssetGenres().toString())
+                .addAttribute(Constants.PLATFORM, Constants.DEVICE_TYPE_ANDROID)
+                .addAttribute(Constants.CONTENT_TYPE, videoDetails.getAssetType())
+                .addAttribute(Constants.CONTENT_RATING, videoDetails.getParentalRating())
+                .addAttribute(Constants.CREATED_TIME, videoDetails.getSeason())
+                .setNonInteractive();
+        MoEHelper.getInstance(EpisodeActivity.this).trackEvent(Constants.VIDEO_COMPLETED, properties);
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -243,7 +275,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,
                 WindowManager.LayoutParams.FLAG_SECURE);
 
-        kidsMode  = new SharedPrefHelper(EpisodeActivity.this).getKidsMode();
+        kidsMode  = SharedPrefHelper.getInstance(EpisodeActivity.this).getKidsMode();
         if (kidsMode) {
             parentalRating = AppCommonMethod.getParentalRating();
         }else {
@@ -850,7 +882,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
 
         preference.setAppPrefHasSelectedId(true);
         preference.setAppPrefSelectodSeasonId(selectedSeasonId);
-        new ActivityLauncher(EpisodeActivity.this).loginActivity(EpisodeActivity.this, LoginActivity.class);
+        ActivityLauncher.getInstance().loginActivity(EpisodeActivity.this, LoginActivity.class);
     }
 
     public void UIinitialization() {
@@ -1019,8 +1051,8 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
 //        }
 
         if (fromBingWatch) {
-            if(videoDetails.getBrightcoveVideoId()!=null){
-                downloadHelper.findVideo(videoDetails.getBrightcoveVideoId());
+            if(videoDetails.getBrightcoveVideoId()!=null && !videoDetails.getBrightcoveVideoId().trim().equals("")){
+                downloadHelper.findVideo(videoDetails.getBrightcoveVideoId().trim());
             }
             // getBinding().playIcon.setVisibility(View.GONE);
             if (AppCommonMethod.getCheckBCID(videoDetails.getBrightcoveVideoId())) {
@@ -2044,6 +2076,16 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
     }
 
     @Override
+    public void notifyMoEngageOnPlayerStart() {
+        videoStartedMoEnGageEvent();
+    }
+
+    @Override
+    public void notifyMoEngageOnPlayerEnd() {
+        videoEndMoEnGageEvent();
+    }
+
+    @Override
     public void onPlayerStart() {
         try {
             Logger.d("onPlayerStart");
@@ -2113,9 +2155,9 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
         try {
             boolean loginStatus = preference.getAppPrefLoginStatus().equalsIgnoreCase(AppConstants.UserStatus.Login.toString());
             if (!loginStatus)
-                new ActivityLauncher(this).loginActivity(this, LoginActivity.class);
+                ActivityLauncher.getInstance().loginActivity(this, LoginActivity.class);
             else {
-                int videoQuality = new SharedPrefHelper(this).getInt(SharedPrefesConstants.DOWNLOAD_QUALITY_INDEX, 4);
+                int videoQuality = SharedPrefHelper.getInstance(this).getInt(SharedPrefesConstants.DOWNLOAD_QUALITY_INDEX, 4);
                 Logger.d("downloadClick " + videoQuality);
                 if (KsPreferenceKeys.getInstance().getDownloadOverWifi() == 1 && NetworkHelper.INSTANCE.isWifiEnabled(this)) {
                     if (source instanceof UserInteractionFragment) {
@@ -2347,7 +2389,7 @@ public class EpisodeActivity extends BaseBindingActivity<EpisodeScreenBinding> i
                         downloadHelper.deleteVideo(downloadAbleVideo);
                         break;
                     case R.id.my_Download:
-                        new ActivityLauncher(this).launchMyDownloads();
+                        ActivityLauncher.getInstance().launchMyDownloads(EpisodeActivity.this);
                         break;
                 }
                 return false;
