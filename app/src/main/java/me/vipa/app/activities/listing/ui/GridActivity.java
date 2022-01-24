@@ -802,7 +802,7 @@ public class GridActivity extends BaseBindingActivity<ListingActivityBinding> im
 //        finish();
 
 
-        if (listData.isSeries() && AppCommonMethod.getCheckBCID(itemValue.getBrightcoveVideoId())) {
+        if (listData!=null && listData.isSeries() && AppCommonMethod.getCheckBCID(itemValue.getBrightcoveVideoId())) {
             Long getVideoId = Long.parseLong(itemValue.getBrightcoveVideoId());
             AppCommonMethod.launchDetailScreen(this, getVideoId, MediaTypeConstants.getInstance().getSeries(), itemValue.getId(), "0", false);
         } else {

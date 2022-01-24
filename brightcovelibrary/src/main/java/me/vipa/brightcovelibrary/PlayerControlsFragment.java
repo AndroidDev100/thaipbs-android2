@@ -228,9 +228,11 @@ public class PlayerControlsFragment extends Fragment {
 
     void sendPortraitCallback() {
         Logger.d("method called from " + Logger.getTag());
-        mListener.updateNextPreviousVisibility();
+        if (mListener != null) {
+            mListener.updateNextPreviousVisibility();
+        }
 
-        if (videoType.equalsIgnoreCase("1")) {
+        if (videoType != null && videoType.equalsIgnoreCase("1")) {
             if (playerSettingIcon != null) {
                 playerSettingIcon.setVisibility(View.INVISIBLE);
             }

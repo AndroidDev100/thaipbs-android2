@@ -114,7 +114,6 @@ import java.util.Set;
 import me.vipa.brightcovelibrary.callBacks.BackPressCallBack;
 import me.vipa.brightcovelibrary.callBacks.PhoneListenerCallBack;
 import me.vipa.brightcovelibrary.callBacks.PlayerCallbacks;
-import me.vipa.brightcovelibrary.callBacks.VideoStateListener;
 import me.vipa.brightcovelibrary.chromecast.ChromeCastCallback;
 import me.vipa.brightcovelibrary.chromecast.ChromecastManager;
 import me.vipa.brightcovelibrary.utils.ObjectHelper;
@@ -135,7 +134,6 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
     private boolean enable = true;
     private boolean imaEnable = false;
     private boolean bingeWatch = false;
-    private VideoStateListener videoStateListener;
     private int bingeWatchTimer = 0;
     private GoogleIMAComponent googleIMAComponent;
     private boolean fromTrailer = false;
