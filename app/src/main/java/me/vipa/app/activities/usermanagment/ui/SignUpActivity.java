@@ -55,6 +55,7 @@ import me.vipa.app.fragments.dialog.AlertDialogSingleButtonFragment;
 import me.vipa.app.manager.MoEUserTracker;
 import me.vipa.app.tarcker.EventConstant;
 import me.vipa.app.tarcker.FCMEvents;
+import me.vipa.app.utils.DeviceType;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.constants.AppConstants;
 import me.vipa.app.utils.helpers.CheckInternetConnection;
@@ -130,7 +131,8 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
                 ActivityLauncher.getInstance().homeScreen(SignUpActivity.this, HomeActivity.class);
             }
         });
-        getBinding().termsPrivacyPolicies.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        if(!DeviceType.isTablet(SignUpActivity.this)){
+            getBinding().termsPrivacyPolicies.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
@@ -163,6 +165,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
                 Objects.requireNonNull(SignUpActivity.this).startActivity(new Intent(SignUpActivity.this, HelpActivity.class).putExtra("type", "2"));
             }
         });
+        }
         connectObservors();
 
     }

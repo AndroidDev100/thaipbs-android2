@@ -495,7 +495,6 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             }
         }
 
-
         if (brightcoveAccountId.isEmpty() || brightcovePolicyKey.isEmpty()) {
             showErrorDialog(getString(R.string.implement_brightcove_creds));
             return;
@@ -576,8 +575,6 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
             eventEmitter.enable();
             baseVideoView.setMediaController((MediaController) null);
             baseVideoView.seekTo((int) (bookmarkPosition * 1000));
-
-
             baseVideoView.add(currentVideo);
             baseVideoView.start();
 

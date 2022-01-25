@@ -4,48 +4,52 @@
 
 
     <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:id="@+id/blurred_background_image_view"
-        >
-
-    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
+        android:layout_height="match_parent">
 
-        <include
-            android:id="@+id/toolbar"
-            layout="@layout/toolbar" />
-
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <FrameLayout
-                android:id="@+id/content_frame"
+<!--            <com.moengage.widgets.NudgeView-->
+<!--                android:id="@+id/nudge"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center" />-->
+
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/toolbar" />
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_above="@+id/navigation"
-                android:background="@color/theme_white" />
+                android:layout_height="match_parent">
 
-            <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:id="@+id/navigation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                <FrameLayout
+                    android:id="@+id/content_frame"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_above="@+id/navigation"
+                    android:background="@color/theme_white" />
 
-                android:layout_alignParentBottom="true"
-                android:background="?attr/bottomNavigationBackground"
-                android:theme="@style/Widget.BottomNavigationView"
-                app:itemTextAppearanceActive="@font/sukhumvittadmai_medium"
-                app:itemIconTint="?attr/menuItemSelector"
-                app:itemTextColor="?attr/menuItemTextSelector"
-                app:labelVisibilityMode="unlabeled"
-                app:menu="@menu/navigation" />
+                <com.google.android.material.bottomnavigation.BottomNavigationView
+                    android:id="@+id/navigation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:layout_alignParentBottom="true"
+                    android:background="?attr/bottomNavigationBackground"
+                    android:theme="@style/Widget.BottomNavigationView"
+                    app:itemIconTint="?attr/menuItemSelector"
+                    app:itemTextAppearanceActive="@font/sukhumvittadmai_medium"
+                    app:itemTextColor="?attr/menuItemTextSelector"
+                    app:labelVisibilityMode="unlabeled"
+                    app:menu="@menu/navigation" />
 
 
-        </RelativeLayout>
-    </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
     </FrameLayout>
 </layout>
