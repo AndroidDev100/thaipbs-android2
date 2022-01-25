@@ -16,7 +16,6 @@ import com.brightcove.player.model.Video
 import com.brightcove.player.network.DownloadStatus
 import com.brightcove.player.offline.MediaDownloadable
 import com.mmtv.utils.helpers.downloads.DownloadHelper
-
 import me.vipa.app.R
 import me.vipa.app.databinding.ListDownloadItemBinding
 import me.vipa.app.utils.MediaTypeConstants
@@ -31,8 +30,6 @@ import java.io.Serializable
 import java.text.DecimalFormat
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.collections.MutableList
-import kotlin.collections.MutableMap
 import kotlin.collections.set
 import kotlin.math.log10
 import kotlin.math.pow
@@ -127,7 +124,7 @@ class DownloadsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, MediaDow
         context = activity
         downloadHelper = DownloadHelper(activity, this)
         noDataCallBac=noDataCallBack
-        kidsMode = SharedPrefHelper(activity).kidsMode
+        kidsMode = SharedPrefHelper.getInstance(activity).kidsMode
         downloadsList.downloadVideos.forEachIndexed { index, downloadedVideo ->
             val b = downloadedVideo.downloadType == MediaTypeConstants.getInstance().series || downloadedVideo.downloadType ==  MediaTypeConstants.getInstance().episode
             Logger.e("ValueOfB", b.toString())

@@ -68,7 +68,7 @@ public class ToolBarHandler {
        /* binding.signUpTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new ActivityLauncher(activity).registerActivity(activity, RegisterActivity.class);
+                ActivityLauncher.getInstance().registerActivity(activity, RegisterActivity.class);
             }
         });
 */
@@ -79,25 +79,25 @@ public class ToolBarHandler {
         binding.loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new ActivityLauncher(activity).loginActivity(activity, LoginActivity.class);
+                ActivityLauncher.getInstance().loginActivity(activity, LoginActivity.class);
             }
         });
         binding.changepassText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new ActivityLauncher(activity).changePassword(activity, ChangePasswordActivity.class);
+                ActivityLauncher.getInstance().changePassword(activity, ChangePasswordActivity.class);
             }
         });
         binding.profileTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new ActivityLauncher(activity).ProfileActivity(activity, ProfileActivity.class);
+                ActivityLauncher.getInstance().ProfileActivity(activity, ProfileActivity.class);
             }
         });
         binding.notification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new ActivityLauncher(activity).notificationActivity(activity, NotificationActivity.class);
+                ActivityLauncher.getInstance().notificationActivity(activity, NotificationActivity.class);
             }
         });
   */
@@ -183,7 +183,7 @@ public class ToolBarHandler {
                     }
                     mLastClickTime = SystemClock.elapsedRealtime();
 
-                    new ActivityLauncher(activity).searchActivity(activity, ActivitySearch.class);
+                    ActivityLauncher.getInstance().searchActivity(activity, ActivitySearch.class);
                 }
         );
 
@@ -199,7 +199,7 @@ public class ToolBarHandler {
                 return;
             }
             mLastClickTime = SystemClock.elapsedRealtime();
-            // new ActivityLauncher(activity).portraitListing(activity, ListingActivity.class, id, title, flag, type);
+            // ActivityLauncher.getInstance().portraitListing(activity, ListingActivity.class, id, title, flag, type);
         });
     }
 
@@ -215,7 +215,7 @@ public class ToolBarHandler {
         });
         toolbar.clNotification.setOnClickListener(view -> {
             if (ClickHandler.INSTANCE.allowClick()) {
-                new ActivityLauncher(activity).notificationActivity(activity, NotificationActivity.class);
+                ActivityLauncher.getInstance().notificationActivity(activity, NotificationActivity.class);
             }
         });
     }

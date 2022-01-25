@@ -3,16 +3,12 @@ package me.vipa.app.activities.search.ui;
 import android.app.Activity;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 
 import com.xiaofeng.flowlayoutmanager.FlowLayoutManager;
 
@@ -98,16 +94,16 @@ public class FilterIconActivity extends BaseBindingActivity<ActivityFilterIconBi
         setupToolbar();
         currentLanguage = KsPreferenceKeys.getInstance().getAppLanguage();
         configBean = AppCommonMethod.getConfigResponse();
-        filterGenreSavedList = new SharedPrefHelper(FilterIconActivity.this).getDataGenreList();
+        filterGenreSavedList = SharedPrefHelper.getInstance(FilterIconActivity.this).getDataGenreList();
         filterGenreSelectedList = filterGenreSavedList;
-        filterGenreSavedListKeyForApi = new SharedPrefHelper(FilterIconActivity.this).getDataGenreListKeyValue();
+        filterGenreSavedListKeyForApi = SharedPrefHelper.getInstance(FilterIconActivity.this).getDataGenreListKeyValue();
         filterGenreSelectedListKeyForApi = filterGenreSavedListKeyForApi;
 
 
-        filterSortSavedList = new SharedPrefHelper(FilterIconActivity.this).getDataSortList();
+        filterSortSavedList = SharedPrefHelper.getInstance(FilterIconActivity.this).getDataSortList();
         filterSortSelectedList = filterSortSavedList;
 
-        filterSortSavedListKeyForApi = new SharedPrefHelper(FilterIconActivity.this).getDataSortListKeyValue();
+        filterSortSavedListKeyForApi = SharedPrefHelper.getInstance(FilterIconActivity.this).getDataSortListKeyValue();
         filterSortSelectedListKeyForApi = filterSortSavedListKeyForApi;
 
         getGenreData();
@@ -135,9 +131,9 @@ public class FilterIconActivity extends BaseBindingActivity<ActivityFilterIconBi
                 genereSearchAdapter.notifyDataSetChanged();
                 sortAdapter.notifyDataSetChanged();
                 AppCommonMethod.resetFilter(FilterIconActivity.this);
-                filterGenreSavedList = new SharedPrefHelper(FilterIconActivity.this).getDataGenreList();
+                filterGenreSavedList = SharedPrefHelper.getInstance(FilterIconActivity.this).getDataGenreList();
                 filterGenreSelectedList = filterGenreSavedList;
-                filterGenreSavedListKeyForApi = new SharedPrefHelper(FilterIconActivity.this).getDataGenreListKeyValue();
+                filterGenreSavedListKeyForApi = SharedPrefHelper.getInstance(FilterIconActivity.this).getDataGenreListKeyValue();
                 filterGenreSelectedListKeyForApi = filterGenreSavedListKeyForApi;
             }
         });
@@ -148,15 +144,15 @@ public class FilterIconActivity extends BaseBindingActivity<ActivityFilterIconBi
                 if (checkSelections()) {
                     KsPreferenceKeys.getInstance().setFilterApply("true");
                     if (filterGenreSelectedList != null && filterGenreSelectedListKeyForApi != null) {
-                        new SharedPrefHelper(FilterIconActivity.this).saveDataGenre(filterGenreSelectedList);
-                        new SharedPrefHelper(FilterIconActivity.this).saveDataGenreKeyValue(filterGenreSelectedListKeyForApi);
+                        SharedPrefHelper.getInstance(FilterIconActivity.this).saveDataGenre(filterGenreSelectedList);
+                        SharedPrefHelper.getInstance(FilterIconActivity.this).saveDataGenreKeyValue(filterGenreSelectedListKeyForApi);
                         //Log.e("SELECTEDLIST", filterGenreSelectedList.toString());
                         //Log.e("SELECTEDLISTKEYValue", filterGenreSelectedListKeyForApi.toString());
                     }
 
                     if (filterSortSelectedList != null && filterSortSelectedListKeyForApi != null) {
-                        new SharedPrefHelper(FilterIconActivity.this).saveDataSort(filterSortSelectedList);
-                        new SharedPrefHelper(FilterIconActivity.this).saveDataSortKeyValue(filterSortSelectedListKeyForApi);
+                        SharedPrefHelper.getInstance(FilterIconActivity.this).saveDataSort(filterSortSelectedList);
+                        SharedPrefHelper.getInstance(FilterIconActivity.this).saveDataSortKeyValue(filterSortSelectedListKeyForApi);
                        // Log.e("SELECTEDSort", filterSortSelectedList.toString());
                        // Log.e("SELECTEDSortKEYvalue", filterSortSelectedListKeyForApi.toString());
 

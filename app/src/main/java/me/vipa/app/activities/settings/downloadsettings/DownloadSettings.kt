@@ -21,15 +21,15 @@ class DownloadSettings : BaseBindingActivity<ActivityDownloadSettingsBinding>(),
         super.onCreate(savedInstanceState)
         setupToolbar()
 
-        binding.selectedQualityText.text = resources.getStringArray(R.array.download_quality)[SharedPrefHelper(this).getInt(SharedPrefesConstants.DOWNLOAD_QUALITY_INDEX, 4)]
+        binding.selectedQualityText.text = resources.getStringArray(R.array.download_quality)[SharedPrefHelper.getInstance(this).getInt(SharedPrefesConstants.DOWNLOAD_QUALITY_INDEX, 4)]
         binding.textDownloadQuality.setOnClickListener(this)
         binding.switchTheme.isChecked = KsPreferenceKeys.getInstance().getDownloadOverWifi() == 1
 
         binding.switchTheme.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
-                SharedPrefHelper(this@DownloadSettings).setInt(SharedPrefesConstants.DOWNLOAD_OVER_WIFI, 1)
+                SharedPrefHelper.getInstance(this@DownloadSettings).setInt(SharedPrefesConstants.DOWNLOAD_OVER_WIFI, 1)
             } else {
-                SharedPrefHelper(this@DownloadSettings).setInt(SharedPrefesConstants.DOWNLOAD_OVER_WIFI, 0)
+                SharedPrefHelper.getInstance(this@DownloadSettings).setInt(SharedPrefesConstants.DOWNLOAD_OVER_WIFI, 0)
             }
         }
     }
@@ -59,7 +59,7 @@ class DownloadSettings : BaseBindingActivity<ActivityDownloadSettingsBinding>(),
         super.onActivityResult(requestCode, resultCode, data)
         when (resultCode) {
             CHANGE_QUALITY_REQUEST_CODE -> {
-                binding.selectedQualityText.text = resources.getStringArray(R.array.download_quality)[SharedPrefHelper(this).getInt(SharedPrefesConstants.DOWNLOAD_QUALITY_INDEX, 4)]
+                binding.selectedQualityText.text = resources.getStringArray(R.array.download_quality)[SharedPrefHelper.getInstance(this).getInt(SharedPrefesConstants.DOWNLOAD_QUALITY_INDEX, 4)]
             }
         }
     }

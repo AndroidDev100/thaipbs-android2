@@ -11,25 +11,23 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import me.vipa.app.R;
+import me.vipa.app.activities.detail.ui.DetailActivity;
 import me.vipa.app.activities.listing.callback.ItemClickListener;
 import me.vipa.app.activities.series.ui.SeriesDetailActivity;
 import me.vipa.app.beanModel.ContinueRailModel.CommonContinueRail;
 import me.vipa.app.beanModel.responseModels.series.season.ItemsItem;
-import me.vipa.app.R;
-import me.vipa.app.activities.detail.ui.DetailActivity;
 import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
 import me.vipa.app.databinding.PosterPotraitItemBinding;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.constants.AppConstants;
 import me.vipa.app.utils.helpers.ImageHelper;
-
 import me.vipa.app.utils.helpers.StringUtils;
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
 
 public class CommonPosterPotraitAdapter extends RecyclerView.Adapter<CommonPosterPotraitAdapter.SingleItemRowHolder> {
@@ -138,7 +136,7 @@ public class CommonPosterPotraitAdapter extends RecyclerView.Adapter<CommonPoste
                         }
                         mLastClickTime = SystemClock.elapsedRealtime();
 
-                        new ActivityLauncher(mContext).seriesDetailScreen(mContext, SeriesDetailActivity.class, itemsList.get(i).getId());
+                        ActivityLauncher.getInstance().seriesDetailScreen(mContext, SeriesDetailActivity.class, itemsList.get(i).getId());
 
                     });
 
@@ -188,12 +186,12 @@ public class CommonPosterPotraitAdapter extends RecyclerView.Adapter<CommonPoste
                 if (!StringUtils.isNullOrEmptyOrZero(sItem.getVideoType())) {
 
                     if (sItem.getVideoType().equalsIgnoreCase("EPISODE")) {
-                        //      new ActivityLauncher(mContext).episodeScreen(mContext, EpisodeActivity.class, sItem.getId(), "", sItem.isPremium());
+                        //      ActivityLauncher.getInstance().episodeScreen(mContext, EpisodeActivity.class, sItem.getId(), "", sItem.isPremium());
                     } else {
-                        new ActivityLauncher(mContext).detailScreen(mContext, DetailActivity.class, sItem.getId(), "", sItem.isPremium());
+                        ActivityLauncher.getInstance().detailScreen(mContext, DetailActivity.class, sItem.getId(), "", sItem.isPremium());
                     }
                 }
-                //  new ActivityLauncher(mContext).detailScreen(mContext, DetailActivity.class, sItem.getId(), "", sItem.isPremium());
+                //  ActivityLauncher.getInstance().detailScreen(mContext, DetailActivity.class, sItem.getId(), "", sItem.isPremium());
 
             });
         } else if (continuelist.size() > 0) {

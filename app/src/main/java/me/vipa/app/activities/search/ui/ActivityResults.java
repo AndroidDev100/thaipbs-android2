@@ -286,7 +286,7 @@ public class ActivityResults extends BaseBindingActivity<ActivityResultBinding> 
             }
             mLastClickTime = SystemClock.elapsedRealtime();
 
-            new ActivityLauncher(ActivityResults.this).seriesDetailScreen(ActivityResults.this, SeriesDetailActivity.class, itemValue.getId());
+            ActivityLauncher.getInstance().seriesDetailScreen(ActivityResults.this, SeriesDetailActivity.class, itemValue.getId());
 
         } else if (itemValue.getType().equalsIgnoreCase(MediaTypeConstants.getInstance().getEpisode())) {
             Logger.e("ActivityResults", "Season click");
@@ -296,7 +296,7 @@ public class ActivityResults extends BaseBindingActivity<ActivityResultBinding> 
             }
             mLastClickTime = SystemClock.elapsedRealtime();
 
-            new ActivityLauncher(ActivityResults.this).episodeScreen(ActivityResults.this, EpisodeActivity.class, itemValue.getId(), "0", false);
+            ActivityLauncher.getInstance().episodeScreen(ActivityResults.this, EpisodeActivity.class, itemValue.getId(), "0", false);
 
         }else if (itemValue.getType().equalsIgnoreCase(MediaTypeConstants.getInstance().getLive())) {
             Logger.e("ActivityResults", "Season click");
@@ -313,7 +313,7 @@ public class ActivityResults extends BaseBindingActivity<ActivityResultBinding> 
                 return;
             }
             mLastClickTime = SystemClock.elapsedRealtime();
-            new ActivityLauncher(ActivityResults.this).detailScreen(ActivityResults.this, DetailActivity.class, itemValue.getId(), "0", false);
+            ActivityLauncher.getInstance().detailScreen(ActivityResults.this, DetailActivity.class, itemValue.getId(), "0", false);
 
 
         }

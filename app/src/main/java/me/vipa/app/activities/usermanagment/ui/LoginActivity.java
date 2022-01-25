@@ -141,7 +141,7 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
             @Override
             public void onClick(View view) {
                 if (loginCallingFrom.equalsIgnoreCase("OnBoarding")) {
-                    new ActivityLauncher(LoginActivity.this).signUpActivity(LoginActivity.this, SignUpActivity.class, loginCallingFrom);
+                    ActivityLauncher.getInstance().signUpActivity(LoginActivity.this, SignUpActivity.class, loginCallingFrom);
                 } else {
                     onBackPressed();
                 }
@@ -150,7 +150,7 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
         getBinding().toolbar.titleSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new ActivityLauncher(LoginActivity.this).homeScreen(LoginActivity.this, HomeActivity.class);
+                ActivityLauncher.getInstance().homeScreen(LoginActivity.this, HomeActivity.class);
             }
         });
         connectObservors();
@@ -327,7 +327,7 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
          /* Random rand = new Random();
             int rand_int1 = rand.nextInt(1000);
             int rand_int2 = rand.nextInt(1000);
-            new ActivityLauncher(LoginActivity.this).forceLogin(LoginActivity.this, ForceLoginFbActivity.class, "EAAJMIUJyU0IBAEIWKF4SXCkdvi7LNVY26L771ZCLAwobVxY3GkOd17teVvDTP1JK19YG6xQk643JwzGXrWibljsZCOkZCc1YTZARb0uSDasZANFOReNqIhAZBoWFuZClSC5OY9JZAG6rSzhCQv3x84ALsPURZCNCxGSwsiVzHeDZBNbzKN3WijMByEIH7GzM7NOhaZBinlkhxBsVA3qZAiqL"+rand_int1, rand_int2+"", "Ankur", "");*/
+            ActivityLauncher.getInstance().forceLogin(LoginActivity.this, ForceLoginFbActivity.class, "EAAJMIUJyU0IBAEIWKF4SXCkdvi7LNVY26L771ZCLAwobVxY3GkOd17teVvDTP1JK19YG6xQk643JwzGXrWibljsZCOkZCc1YTZARb0uSDasZANFOReNqIhAZBoWFuZClSC5OY9JZAG6rSzhCQv3x84ALsPURZCNCxGSwsiVzHeDZBNbzKN3WijMByEIH7GzM7NOhaZBinlkhxBsVA3qZAiqL"+rand_int1, rand_int2+"", "Ankur", "");*/
 
         });
         getBinding().etPassword.setOnEditorActionListener((textView, actionId, keyEvent) -> {
@@ -351,7 +351,7 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
         getBinding().tvForgotPassword.setOnClickListener(view -> {
             showLoading(getBinding().progressBar, false);
             clearEditView();
-            new ActivityLauncher(LoginActivity.this).forgotPasswordActivity(LoginActivity.this, ForgotPasswordActivity.class);
+            ActivityLauncher.getInstance().forgotPasswordActivity(LoginActivity.this, ForgotPasswordActivity.class);
 
         });
 
@@ -364,7 +364,7 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
             showLoading(getBinding().progressBar, false);
             clearEditView();
             finish();
-            new ActivityLauncher(LoginActivity.this).signUpActivity(LoginActivity.this, SignUpActivity.class, loginCallingFrom);
+            ActivityLauncher.getInstance().signUpActivity(LoginActivity.this, SignUpActivity.class, loginCallingFrom);
 
 
         });
@@ -386,7 +386,7 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
                         saveUserDetails(stringJson, loginResponseModelResponse.getData().getId(), false);
 
                     } else if (loginResponseModelResponse.getResponseCode() == 403) {
-                        new ActivityLauncher(LoginActivity.this).forceLogin(LoginActivity.this, ForceLoginFbActivity.class, accessTokenFB, id, name, String.valueOf(profile_pic));
+                        ActivityLauncher.getInstance().forceLogin(LoginActivity.this, ForceLoginFbActivity.class, accessTokenFB, id, name, String.valueOf(profile_pic));
                     } else {
                         dismissLoading(getBinding().progressBar);
                         showDialog(LoginActivity.this.getResources().getString(R.string.error), loginResponseModelResponse.getDebugMessage().toString());
@@ -477,7 +477,7 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
             Logger.w(e);
         }
 
-        //new ActivityLauncher(LoginActivity.this).homeScreen(LoginActivity.this, HomeActivity.class);
+        //ActivityLauncher.getInstance().homeScreen(LoginActivity.this, HomeActivity.class);
 
 //        try {
 //            trackEvent(String.valueOf(fbLoginData.getName()), isManual);
@@ -813,7 +813,7 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
     @Override
     public void onBackPressed() {
         if (loginCallingFrom.equalsIgnoreCase("OnBoarding")) {
-            new ActivityLauncher(LoginActivity.this).signUpActivity(LoginActivity.this, SignUpActivity.class, loginCallingFrom);
+            ActivityLauncher.getInstance().signUpActivity(LoginActivity.this, SignUpActivity.class, loginCallingFrom);
         } else {
             super.onBackPressed();
         }
@@ -838,8 +838,8 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
                                 }
                                 Logger.d("alllistApiPrimaryid: " + primaryAccountId);
                                 Logger.d("allListApiSecondid: " + secondaryId);
-                                new SharedPrefHelper(LoginActivity.this).savePrimaryAccountId(primaryAccountId);
-                                new SharedPrefHelper(LoginActivity.this).saveSecondaryAccountId(secondaryId);
+                                SharedPrefHelper.getInstance(LoginActivity.this).savePrimaryAccountId(primaryAccountId);
+                                SharedPrefHelper.getInstance(LoginActivity.this).saveSecondaryAccountId(secondaryId);
                                 ////
                                 if (loginCallingFrom.equalsIgnoreCase("home") && token != null && !token.equalsIgnoreCase("")) {
                                     GetPlansLayer.getInstance().getEntitlementStatus(preference, token, new EntitlementStatus() {
@@ -932,8 +932,8 @@ public class LoginActivity extends BaseBindingActivity<LoginBinding> implements 
                         String secondaryAccountId = secondaryUserDetails.getData().getAccountId();
                         Logger.d("addSecondaryApPrimaryid: " + primaryAccountId);
                         Logger.d("addSecondaryApiSecondid: " + secondaryAccountId);
-                        new SharedPrefHelper(LoginActivity.this).savePrimaryAccountId(primaryAccountId);
-                        new SharedPrefHelper(LoginActivity.this).saveSecondaryAccountId(secondaryAccountId);
+                        SharedPrefHelper.getInstance(LoginActivity.this).savePrimaryAccountId(primaryAccountId);
+                        SharedPrefHelper.getInstance(LoginActivity.this).saveSecondaryAccountId(secondaryAccountId);
                         ////
                         if (loginCallingFrom.equalsIgnoreCase("home") && token != null && !token.equalsIgnoreCase("")) {
                             GetPlansLayer.getInstance().getEntitlementStatus(preference, token, new EntitlementStatus() {

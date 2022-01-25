@@ -12,13 +12,16 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+
+import java.util.List;
+
+import me.vipa.app.R;
+import me.vipa.app.activities.detail.ui.DetailActivity;
 import me.vipa.app.activities.detail.ui.EpisodeActivity;
 import me.vipa.app.activities.listing.callback.ItemClickListener;
 import me.vipa.app.activities.series.ui.SeriesDetailActivity;
 import me.vipa.app.beanModel.responseModels.landingTabResponses.railData.ContentsItem;
 import me.vipa.app.beanModel.responseModels.series.season.ItemsItem;
-import me.vipa.app.R;
-import me.vipa.app.activities.detail.ui.DetailActivity;
 import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
 import me.vipa.app.databinding.LandscapeListingItemBinding;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
@@ -27,7 +30,6 @@ import me.vipa.app.utils.cropImage.helpers.PrintLogging;
 import me.vipa.app.utils.helpers.ImageHelper;
 import me.vipa.app.utils.helpers.StringUtils;
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
-import java.util.List;
 import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
 
 public class LandscapeListingAdapter extends RecyclerView.Adapter<LandscapeListingAdapter.SingleItemRowHolder> {
@@ -145,13 +147,13 @@ public class LandscapeListingAdapter extends RecyclerView.Adapter<LandscapeListi
                         try {
                             if ((itemsList.get(i).getAssetType()) != null) {
                                 if (itemsList.get(i).getAssetType().equalsIgnoreCase("EPISODE")) {
-                                    new ActivityLauncher(mContext).episodeScreen(mContext, EpisodeActivity.class, itemsList.get(i).getId(), "0", contentsItem.isPremium());
+                                    ActivityLauncher.getInstance().episodeScreen(mContext, EpisodeActivity.class, itemsList.get(i).getId(), "0", contentsItem.isPremium());
                                 } else {
-                                    new ActivityLauncher(mContext).detailScreen(mContext, DetailActivity.class, itemsList.get(i).getId(), "0", contentsItem.isPremium());
+                                    ActivityLauncher.getInstance().detailScreen(mContext, DetailActivity.class, itemsList.get(i).getId(), "0", contentsItem.isPremium());
                                 }
                             }
                         } catch (Exception e) {
-                            new ActivityLauncher(mContext).detailScreen(mContext, DetailActivity.class, itemsList.get(i).getId(), "0", contentsItem.isPremium());
+                            ActivityLauncher.getInstance().detailScreen(mContext, DetailActivity.class, itemsList.get(i).getId(), "0", contentsItem.isPremium());
                         }*/
 
                     });
@@ -165,7 +167,7 @@ public class LandscapeListingAdapter extends RecyclerView.Adapter<LandscapeListi
                         }
                         mLastClickTime = SystemClock.elapsedRealtime();
 
-                        new ActivityLauncher(mContext).seriesDetailScreen(mContext, SeriesDetailActivity.class, itemsList.get(i).getId());
+                        ActivityLauncher.getInstance().seriesDetailScreen(mContext, SeriesDetailActivity.class, itemsList.get(i).getId());
 
                     });
 
@@ -187,9 +189,9 @@ public class LandscapeListingAdapter extends RecyclerView.Adapter<LandscapeListi
 
                 if (!StringUtils.isNullOrEmptyOrZero(sItem.getVideoType())) {
                     if (sItem.getVideoType().equalsIgnoreCase("EPISODE")) {
-                        new ActivityLauncher(mContext).episodeScreen(mContext, EpisodeActivity.class, sItem.getId(), "", sItem.isPremium());
+                        ActivityLauncher.getInstance().episodeScreen(mContext, EpisodeActivity.class, sItem.getId(), "", sItem.isPremium());
                     } else {
-                        new ActivityLauncher(mContext).detailScreen(mContext, DetailActivity.class, sItem.getId(), "", sItem.isPremium());
+                        ActivityLauncher.getInstance().detailScreen(mContext, DetailActivity.class, sItem.getId(), "", sItem.isPremium());
                     }
                 }
 

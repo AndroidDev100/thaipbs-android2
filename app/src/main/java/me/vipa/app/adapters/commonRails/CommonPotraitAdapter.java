@@ -12,10 +12,13 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import me.vipa.app.R;
 import me.vipa.app.activities.listing.callback.ItemClickListener;
 import me.vipa.app.activities.series.ui.SeriesDetailActivity;
 import me.vipa.app.beanModel.ContinueRailModel.CommonContinueRail;
-import me.vipa.app.R;
 import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
 import me.vipa.app.databinding.PotraitItemBinding;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
@@ -23,10 +26,6 @@ import me.vipa.app.utils.constants.AppConstants;
 import me.vipa.app.utils.helpers.ImageHelper;
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
 
 
@@ -169,13 +168,13 @@ public class CommonPotraitAdapter extends RecyclerView.Adapter<CommonPotraitAdap
                         try {
                             if ((contentsItem.getAssetType()) != null) {
                                 if (contentsItem.getAssetType().equalsIgnoreCase("EPISODE")) {
-                                    new ActivityLauncher(mContext).episodeScreen(mContext, EpisodeActivity.class, contentsItem.getId(), "", contentsItem.isPremium());
+                                    ActivityLauncher.getInstance().episodeScreen(mContext, EpisodeActivity.class, contentsItem.getId(), "", contentsItem.isPremium());
                                 } else {
-                                    new ActivityLauncher(mContext).detailScreen(mContext, DetailActivity.class, contentsItem.getId(), "", contentsItem.isPremium());
+                                    ActivityLauncher.getInstance().detailScreen(mContext, DetailActivity.class, contentsItem.getId(), "", contentsItem.isPremium());
                                 }
                             }
                         } catch (Exception e) {
-                            new ActivityLauncher(mContext).detailScreen(mContext, DetailActivity.class, contentsItem.getId(), "", contentsItem.isPremium());
+                            ActivityLauncher.getInstance().detailScreen(mContext, DetailActivity.class, contentsItem.getId(), "", contentsItem.isPremium());
 
                         }
                     });*/
@@ -188,7 +187,7 @@ public class CommonPotraitAdapter extends RecyclerView.Adapter<CommonPotraitAdap
                         }
                         mLastClickTime = SystemClock.elapsedRealtime();
 
-                        new ActivityLauncher(mContext).seriesDetailScreen(mContext, SeriesDetailActivity.class, contentsItem.getId());
+                        ActivityLauncher.getInstance().seriesDetailScreen(mContext, SeriesDetailActivity.class, contentsItem.getId());
                     });
                     //holder.potraitItemBinding.tvTitle.setText(contentsItem.getTitle());
                     try {

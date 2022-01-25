@@ -1,22 +1,16 @@
 package me.vipa.app.activities.ManageAccount.UI;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+
 import me.vipa.app.R;
 import me.vipa.app.activities.profile.ui.ProfileActivityNew;
-import me.vipa.app.activities.settings.ActivitySettings;
-import me.vipa.app.activities.settings.downloadsettings.DownloadSettings;
 import me.vipa.app.activities.usermanagment.ui.ChangePasswordActivity;
-import me.vipa.app.activities.videoquality.ui.ChangeLanguageActivity;
 import me.vipa.app.baseModels.BaseBindingActivity;
 import me.vipa.app.databinding.ActivityManageAccountBinding;
-import me.vipa.app.databinding.SettingsActivityBinding;
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
 
 public class ManageAccount extends BaseBindingActivity<ActivityManageAccountBinding> {
@@ -35,14 +29,14 @@ public class ManageAccount extends BaseBindingActivity<ActivityManageAccountBind
         getBinding().myProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new ActivityLauncher(ManageAccount.this).ProfileActivityNew(ManageAccount.this, ProfileActivityNew.class);
+                ActivityLauncher.getInstance().ProfileActivityNew(ManageAccount.this, ProfileActivityNew.class);
             }
         });
 
         getBinding().changepassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new ActivityLauncher(ManageAccount.this).changePassword(ManageAccount.this, ChangePasswordActivity.class);
+                ActivityLauncher.getInstance().changePassword(ManageAccount.this, ChangePasswordActivity.class);
             }
         });
     }

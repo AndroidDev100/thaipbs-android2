@@ -679,7 +679,7 @@ class DownloadHelper() {
 
     fun getAllVideosFromDatabase(): MutableLiveData<DownloadModel> {
         val mutableLiveData = MutableLiveData<DownloadModel>()
-        kidsMode = SharedPrefHelper(activity).kidsMode
+        kidsMode = SharedPrefHelper.getInstance(activity).kidsMode
         if (kidsMode){
             val downloadTask = DownloadTask1()
             downloadTask.delegate = object : AsyncResponse<DownloadModel> {
@@ -888,7 +888,7 @@ class DownloadHelper() {
         })
         binding.btnStartDownload.setOnClickListener {
             if (binding.checkboxMakeDefault.isChecked) {
-                SharedPrefHelper(activity).setInt(SharedPrefesConstants.DOWNLOAD_QUALITY_INDEX, selectedVideoQualityPosition)
+                SharedPrefHelper.getInstance(activity).setInt(SharedPrefesConstants.DOWNLOAD_QUALITY_INDEX, selectedVideoQualityPosition)
             }
             videoQualitySelectedListener.videoQualitySelected(selectedVideoQualityPosition)
             dialog.dismiss()

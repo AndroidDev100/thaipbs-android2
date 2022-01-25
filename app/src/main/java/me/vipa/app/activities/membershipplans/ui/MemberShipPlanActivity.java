@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -22,9 +21,16 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.gson.JsonObject;
+
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+import me.vipa.app.R;
 import me.vipa.app.activities.membershipplans.adapter.MembershipAdapter;
 import me.vipa.app.activities.purchase.ui.VodOfferType;
 import me.vipa.app.activities.purchase.ui.adapter.PurchaseShimmerAdapter;
@@ -35,29 +41,16 @@ import me.vipa.app.beanModel.membershipAndPlan.ResponseMembershipAndPlan;
 import me.vipa.app.beanModel.purchaseModel.PurchaseModel;
 import me.vipa.app.beanModel.purchaseModel.PurchaseResponseModel;
 import me.vipa.app.cms.HelpActivity;
-import me.vipa.app.fragments.dialog.AlertDialogFragment;
-import me.vipa.app.fragments.dialog.AlertDialogSingleButtonFragment;
-import me.vipa.app.R;
 import me.vipa.app.databinding.MembershipPlanBinding;
+import me.vipa.app.fragments.dialog.AlertDialogSingleButtonFragment;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.constants.AppConstants;
 import me.vipa.app.utils.cropImage.helpers.Logger;
 import me.vipa.app.utils.helpers.ImageHelper;
 import me.vipa.app.utils.helpers.NetworkConnectivity;
-
 import me.vipa.app.utils.helpers.StringUtils;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
 import me.vipa.app.utils.helpers.ToastHandler;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
-
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-
-import me.vipa.app.activities.membershipplans.adapter.MembershipAdapter;
-import me.vipa.app.baseModels.BaseBindingActivity;
 
 public class MemberShipPlanActivity extends BaseBindingActivity<MembershipPlanBinding>  {
     private static String selectedPurchaseOption;
@@ -721,7 +714,7 @@ public class MemberShipPlanActivity extends BaseBindingActivity<MembershipPlanBi
 
                     // hitInitiatePayment();product
                     // finish();
-                    //  new ActivityLauncher(PurchaseActivity.this).detailScreen(PurchaseActivity.this, DetailActivity.class, assetId, "0", true);
+                    //  ActivityLauncher.getInstance().detailScreen(PurchaseActivity.this, DetailActivity.class, assetId, "0", true);
                 } else if (purchaseResponseModel.getResponseCode() == 4302) {
                     isloggedout = true;
                     dismissLoading(getBinding().progressBar);

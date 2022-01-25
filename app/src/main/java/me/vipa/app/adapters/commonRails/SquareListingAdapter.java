@@ -11,23 +11,19 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+
+import java.util.List;
+
+import me.vipa.app.R;
 import me.vipa.app.activities.listing.callback.ItemClickListener;
 import me.vipa.app.activities.series.ui.SeriesDetailActivity;
 import me.vipa.app.beanModel.responseModels.landingTabResponses.railData.ContentsItem;
-import me.vipa.app.R;
 import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
 import me.vipa.app.databinding.SquareListingItemBinding;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.constants.AppConstants;
 import me.vipa.app.utils.helpers.ImageHelper;
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
-
-import java.util.List;
-
-import me.vipa.app.activities.listing.callback.ItemClickListener;
-import me.vipa.app.activities.series.ui.SeriesDetailActivity;
-import me.vipa.app.beanModel.responseModels.landingTabResponses.railData.ContentsItem;
-import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
 
 
 public class SquareListingAdapter extends RecyclerView.Adapter<SquareListingAdapter.SingleItemRowHolder> {
@@ -105,7 +101,7 @@ public class SquareListingAdapter extends RecyclerView.Adapter<SquareListingAdap
                             return;
                         }
                         mLastClickTime = SystemClock.elapsedRealtime();
-                        new ActivityLauncher(mContext).seriesDetailScreen(mContext, SeriesDetailActivity.class, itemsList.get(i).getId());
+                        ActivityLauncher.getInstance().seriesDetailScreen(mContext, SeriesDetailActivity.class, itemsList.get(i).getId());
 
                     });
 

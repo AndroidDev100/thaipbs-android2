@@ -288,6 +288,7 @@ public class LiveActivity extends BaseBindingActivity<LiveDetailBinding> impleme
 
 
 
+
 //        getBinding().pBar.setVisibility(View.VISIBLE);
 //        getBinding().backButton.setVisibility(View.GONE);
 //        long bookmarkPosition = 0l;
@@ -617,7 +618,7 @@ public class LiveActivity extends BaseBindingActivity<LiveDetailBinding> impleme
         preference.setAppPrefJumpBack(true);
         preference.setAppPrefIsEpisode(false);
         preference.setAppPrefJumpBackId(assestId);
-        new ActivityLauncher(LiveActivity.this).loginActivity(LiveActivity.this, LoginActivity.class);
+        ActivityLauncher.getInstance().loginActivity(LiveActivity.this, LoginActivity.class);
 
     }
 
@@ -991,9 +992,9 @@ public class LiveActivity extends BaseBindingActivity<LiveDetailBinding> impleme
         getBinding().connection.btnMyDownloads.setOnClickListener(view -> {
             boolean loginStatus = preference.getAppPrefLoginStatus().equalsIgnoreCase(AppConstants.UserStatus.Login.toString());
             if (loginStatus)
-                new ActivityLauncher(this).launchMyDownloads();
+                ActivityLauncher.getInstance().launchMyDownloads(LiveActivity.this);
             else
-                new ActivityLauncher(this).loginActivity(this, LoginActivity.class);
+                ActivityLauncher.getInstance().loginActivity(this, LoginActivity.class);
         });
     }
 
@@ -1207,9 +1208,9 @@ public class LiveActivity extends BaseBindingActivity<LiveDetailBinding> impleme
         if (data.getScreenWidget() != null && data.getScreenWidget().getContentID() != null) {
             String playListId = data.getScreenWidget().getContentID();
             if (data.getScreenWidget().getName() != null) {
-                new ActivityLauncher(LiveActivity.this).listActivity(LiveActivity.this, ListActivity.class, playListId, data.getScreenWidget().getName().toString(), 0, 0, data.getScreenWidget());
+                ActivityLauncher.getInstance().listActivity(LiveActivity.this, ListActivity.class, playListId, data.getScreenWidget().getName().toString(), 0, 0, data.getScreenWidget());
             } else {
-                new ActivityLauncher(LiveActivity.this).listActivity(LiveActivity.this, ListActivity.class, playListId, "", 0, 0, data.getScreenWidget());
+                ActivityLauncher.getInstance().listActivity(LiveActivity.this, ListActivity.class, playListId, "", 0, 0, data.getScreenWidget());
             }
         }
     }
@@ -1373,6 +1374,16 @@ public class LiveActivity extends BaseBindingActivity<LiveDetailBinding> impleme
         } else {
             finish();
         }
+    }
+
+    @Override
+    public void notifyMoEngageOnPlayerStart() {
+
+    }
+
+    @Override
+    public void notifyMoEngageOnPlayerEnd() {
+
     }
 
     @Override

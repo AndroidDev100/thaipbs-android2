@@ -3,7 +3,6 @@ package me.vipa.app.adapters.commonRails;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.SystemClock;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,22 +11,21 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import me.vipa.app.R;
 import me.vipa.app.activities.listing.callback.ItemClickListener;
 import me.vipa.app.activities.series.ui.SeriesDetailActivity;
 import me.vipa.app.beanModel.ContinueRailModel.CommonContinueRail;
 import me.vipa.app.beanModel.responseModels.landingTabResponses.railData.ContentsItem;
-import me.vipa.app.R;
 import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
 import me.vipa.app.databinding.GridCircleItemBinding;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.constants.AppConstants;
 import me.vipa.app.utils.helpers.ImageHelper;
-
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class CommonCircleAdapter extends RecyclerView.Adapter<CommonCircleAdapter.SingleItemRowHolder> {
 
@@ -127,13 +125,13 @@ public class CommonCircleAdapter extends RecyclerView.Adapter<CommonCircleAdapte
                         try {
                             if ((itemsList.get(i).getAssetType()) != null) {
                                 if (itemsList.get(i).getAssetType().equalsIgnoreCase("EPISODE")) {
-                                    new ActivityLauncher(mContext).episodeScreen(mContext, EpisodeActivity.class, itemsList.get(i).getId(), "0", contentsItem.isPremium());
+                                    ActivityLauncher.getInstance().episodeScreen(mContext, EpisodeActivity.class, itemsList.get(i).getId(), "0", contentsItem.isPremium());
                                 } else {
-                                    new ActivityLauncher(mContext).detailScreen(mContext, DetailActivity.class, itemsList.get(i).getId(), "0", contentsItem.isPremium());
+                                    ActivityLauncher.getInstance().detailScreen(mContext, DetailActivity.class, itemsList.get(i).getId(), "0", contentsItem.isPremium());
                                 }
                             }
                         } catch (Exception e) {
-                            new ActivityLauncher(mContext).detailScreen(mContext, DetailActivity.class, itemsList.get(i).getId(), "0", contentsItem.isPremium());
+                            ActivityLauncher.getInstance().detailScreen(mContext, DetailActivity.class, itemsList.get(i).getId(), "0", contentsItem.isPremium());
                         }
 
                     });
@@ -145,7 +143,7 @@ public class CommonCircleAdapter extends RecyclerView.Adapter<CommonCircleAdapte
                             return;
                         }
                         mLastClickTime = SystemClock.elapsedRealtime();
-                        new ActivityLauncher(mContext).seriesDetailScreen(mContext, SeriesDetailActivity.class, itemsList.get(i).getId());
+                        ActivityLauncher.getInstance().seriesDetailScreen(mContext, SeriesDetailActivity.class, itemsList.get(i).getId());
 
                     });
                     ImageHelper.getInstance(mContext)

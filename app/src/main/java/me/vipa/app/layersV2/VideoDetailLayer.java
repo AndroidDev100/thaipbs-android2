@@ -13,7 +13,6 @@ import me.vipa.app.networking.errormodel.ApiErrorModel;
 import me.vipa.app.networking.servicelayer.APIServiceLayer;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.config.LanguageLayer;
-
 import me.vipa.app.utils.helpers.SharedPrefHelper;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,7 +43,7 @@ public class VideoDetailLayer {
         callBack.onStart();
         languageCode= LanguageLayer.getCurrentLanguageCode();
 
-        boolean isKidsMode  = new SharedPrefHelper(context).getKidsMode();
+        boolean isKidsMode  = SharedPrefHelper.getInstance(context).getKidsMode();
         if (isKidsMode) {
             String parentalRating = AppCommonMethod.getParentalRating();
             endpoint.getVideoDetailsPG(manualImageAssetId, languageCode,parentalRating).enqueue(new Callback<EnveuVideoDetailsBean>() {

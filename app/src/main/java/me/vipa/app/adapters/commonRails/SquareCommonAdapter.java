@@ -12,23 +12,22 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import me.vipa.app.R;
+import me.vipa.app.activities.detail.ui.DetailActivity;
 import me.vipa.app.activities.detail.ui.EpisodeActivity;
 import me.vipa.app.activities.series.ui.SeriesDetailActivity;
 import me.vipa.app.beanModel.ContinueRailModel.CommonContinueRail;
 import me.vipa.app.beanModel.responseModels.landingTabResponses.railData.ContentsItem;
-import me.vipa.app.R;
-import me.vipa.app.activities.detail.ui.DetailActivity;
 import me.vipa.app.databinding.SquareItemBinding;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.constants.AppConstants;
 import me.vipa.app.utils.cropImage.helpers.Logger;
 import me.vipa.app.utils.helpers.ImageHelper;
-
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class SquareCommonAdapter extends RecyclerView.Adapter<SquareCommonAdapter.SingleItemRowHolder> {
@@ -121,13 +120,13 @@ public class SquareCommonAdapter extends RecyclerView.Adapter<SquareCommonAdapte
                         try {
                             if ((itemsList.get(i).getAssetType()) != null) {
                                 if (itemsList.get(i).getAssetType().equalsIgnoreCase("EPISODE")) {
-                                    new ActivityLauncher(mContext).episodeScreen(mContext, EpisodeActivity.class, itemsList.get(i).getId(), "0", contentsItem.isPremium());
+                                    ActivityLauncher.getInstance().episodeScreen(mContext, EpisodeActivity.class, itemsList.get(i).getId(), "0", contentsItem.isPremium());
                                 } else {
-                                    new ActivityLauncher(mContext).detailScreen(mContext, DetailActivity.class, itemsList.get(i).getId(), "0", contentsItem.isPremium());
+                                    ActivityLauncher.getInstance().detailScreen(mContext, DetailActivity.class, itemsList.get(i).getId(), "0", contentsItem.isPremium());
                                 }
                             }
                         } catch (Exception e) {
-                            new ActivityLauncher(mContext).detailScreen(mContext, DetailActivity.class, itemsList.get(i).getId(), "0", contentsItem.isPremium());
+                            ActivityLauncher.getInstance().detailScreen(mContext, DetailActivity.class, itemsList.get(i).getId(), "0", contentsItem.isPremium());
                         }
 
                     });
@@ -138,7 +137,7 @@ public class SquareCommonAdapter extends RecyclerView.Adapter<SquareCommonAdapte
                             return;
                         }
                         mLastClickTime = SystemClock.elapsedRealtime();
-                        new ActivityLauncher(mContext).seriesDetailScreen(mContext, SeriesDetailActivity.class, itemsList.get(i).getId());
+                        ActivityLauncher.getInstance().seriesDetailScreen(mContext, SeriesDetailActivity.class, itemsList.get(i).getId());
 
                     });
                     holder.squareItemBinding.tvTitle.setText(itemsList.get(i).getName());

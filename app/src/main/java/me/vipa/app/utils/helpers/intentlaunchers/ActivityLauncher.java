@@ -45,16 +45,22 @@ import me.vipa.brightcovelibrary.Logger;
 
 
 public class ActivityLauncher {
-    private final Activity activity;
+    private static ActivityLauncher instance;
 
-    public ActivityLauncher(Activity context) {
-        this.activity = context;
+    private ActivityLauncher() {
+    }
+
+    public static ActivityLauncher getInstance() {
+        if (instance == null) {
+            instance = new ActivityLauncher();
+        }
+        return instance;
     }
 
     public void signUpActivity(Activity source, Class<SignUpActivity> destination, String from) {
         Intent intent = new Intent(source, destination);
         intent.putExtra("loginFrom",from);
-        activity.startActivity(intent);
+        source.startActivity(intent);
     }
 
 
@@ -65,38 +71,38 @@ public class ActivityLauncher {
         Intent intent = new Intent(source, destination);
         intent.putExtra(AppConstants.EXTRA_REGISTER_USER, args);
 
-        activity.startActivity(intent);
+        source.startActivity(intent);
     }
 
 
     public void avatarActivity(Activity source, Class<AvatarImageActivity> destination) {
 
         Intent intent = new Intent(source, destination);
-        activity.startActivity(intent);
+        source.startActivity(intent);
     }
 
     public void ProfileActivityNew(Activity source, Class<ProfileActivityNew> destination) {
 
         Intent intent = new Intent(source, destination);
-        activity.startActivity(intent);
+        source.startActivity(intent);
     }
 
     public void manageAccount(Activity source, Class<ManageAccount> destination) {
 
         Intent intent = new Intent(source, destination);
-        activity.startActivity(intent);
+        source.startActivity(intent);
     }
 
     public void changePassword(Activity source, Class<ChangePasswordActivity> destination) {
         Intent intent = new Intent(source, destination);
-        activity.startActivity(intent);
+        source.startActivity(intent);
 
     }
     public void signUpThird(Activity source, Class<SignUpThirdPage> destination, String contentPreference, boolean isNotificationEnable) {
         Intent intent = new Intent(source, destination);
         intent.putExtra(AppConstants.CONTENT_PREFERENCE,contentPreference);
         intent.putExtra("IsNotiEnabled",isNotificationEnable);
-        activity.startActivity(intent);
+        source.startActivity(intent);
 
     }
 
@@ -104,11 +110,11 @@ public class ActivityLauncher {
         if (source instanceof HomeActivity){
             Intent intent = new Intent(source, destination);
             intent.putExtra("loginFrom","home");
-            activity.startActivity(intent);
+            source.startActivity(intent);
         }else {
             Intent intent = new Intent(source, destination);
             intent.putExtra("loginFrom","");
-            activity.startActivity(intent);
+            source.startActivity(intent);
         }
 
 
@@ -116,7 +122,7 @@ public class ActivityLauncher {
 
     public void searchActivity(Activity source, Class<ActivitySearch> destination) {
         Intent intent = new Intent(source, destination);
-        activity.startActivity(intent);
+        source.startActivity(intent);
     }
 
     public void homeScreen(Activity source, Class<HomeActivity> destination) {
@@ -127,17 +133,17 @@ public class ActivityLauncher {
     }
     public void onBoardingScreen(Activity source, Class<OnBoarding> destination) {
         Intent intent = new Intent(source, destination);
-        activity.startActivity(intent);
+        source.startActivity(intent);
     }
     public void onBoardingTab(Activity source, Class<OnBoardingTab> destination) {
         Intent intent = new Intent(source, destination);
-        activity.startActivity(intent);
+        source.startActivity(intent);
     }
 
     public void onContentScreen(Activity source, Class<ContentPreference> destination, boolean isNotificationEnable) {
         Intent intent = new Intent(source, destination);
         intent.putExtra("IsNotiEnabled",isNotificationEnable);
-        activity.startActivity(intent);
+        source.startActivity(intent);
     }
 
 
@@ -157,11 +163,11 @@ public class ActivityLauncher {
         intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
         KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
         preference.setAppPrefAssetId(0);
-        if (ADHelper.getInstance(activity).getPipAct()!=null){
-            ADHelper.getInstance(activity).getPipAct().moveTaskToBack(false);
+        if (ADHelper.getInstance(source).getPipAct()!=null){
+            ADHelper.getInstance(source).getPipAct().moveTaskToBack(false);
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         }
-        activity.startActivity(intent);
+        source.startActivity(intent);
     }
 
     public void articleScreen(Activity source, Class<ArticleActivity> destination, int id, String duration, boolean isPremium) {
@@ -180,7 +186,7 @@ public class ActivityLauncher {
         intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
         KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
         preference.setAppPrefAssetId(0);
-        activity.startActivity(intent);
+        source.startActivity(intent);
     }
 
 
@@ -205,12 +211,12 @@ public class ActivityLauncher {
         KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
         preference.setAppPrefAssetId(0);
         Logger.d("JSON SENT: " + args);
-        if (ADHelper.getInstance(activity).getPipAct()!=null){
-            ADHelper.getInstance(activity).getPipAct().moveTaskToBack(false);
-            ADHelper.getInstance(activity).getPipAct().finish();
+        if (ADHelper.getInstance(source).getPipAct()!=null){
+            ADHelper.getInstance(source).getPipAct().moveTaskToBack(false);
+            ADHelper.getInstance(source).getPipAct().finish();
             //intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         }
-        activity.startActivity(intent);
+        source.startActivity(intent);
 
 
     }
@@ -235,7 +241,7 @@ public class ActivityLauncher {
         KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
         preference.setAppPrefAssetId(0);
         Logger.d("JSON SENT: " + args);
-        activity.startActivity(intent);
+        source.startActivity(intent);
     }
 
 
@@ -257,13 +263,13 @@ public class ActivityLauncher {
         intent.putExtra(AppConstants.BUNDLE_ASSET_BUNDLE, args);
         intent.setFlags(FLAG_ACTIVITY_CLEAR_TOP);
         preference.setAppPrefAssetId(0);
-        if (ADHelper.getInstance(activity).getPipAct()!=null){
-            ADHelper.getInstance(activity).getPipAct().moveTaskToBack(false);
-            ADHelper.getInstance(activity).getPipAct().finish();
+        if (ADHelper.getInstance(source).getPipAct()!=null){
+            ADHelper.getInstance(source).getPipAct().moveTaskToBack(false);
+            ADHelper.getInstance(source).getPipAct().finish();
             //intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         }
-        activity.startActivity(intent);
+        source.startActivity(intent);
     }
 
 
@@ -282,11 +288,11 @@ public class ActivityLauncher {
         intent.putExtra(AppConstants.BUNDLE_ASSET_BUNDLE, args);
         intent.setFlags(FLAG_ACTIVITY_CLEAR_TOP);
         preference.setAppPrefAssetId(0);
-        if (ADHelper.getInstance(activity).getPipAct()!=null){
-            ADHelper.getInstance(activity).getPipAct().moveTaskToBack(false);
+        if (ADHelper.getInstance(source).getPipAct()!=null){
+            ADHelper.getInstance(source).getPipAct().moveTaskToBack(false);
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         }
-        activity.startActivity(intent);
+        source.startActivity(intent);
     }
 
 
@@ -298,7 +304,7 @@ public class ActivityLauncher {
         intent.putExtra("shimmerType", type);
         intent.putExtra("baseCategory", baseCategory);
         intent.putExtra("isContinueWatching",continueWatching);
-        activity.startActivity(intent);
+        source.startActivity(intent);
     }
 
     public void listActivity(Activity source, Class<ListActivity> destination, String i, String title, int flag, int type, BaseCategory baseCategory) {
@@ -308,21 +314,21 @@ public class ActivityLauncher {
         intent.putExtra("flag", flag);
         intent.putExtra("shimmerType", type);
         intent.putExtra("baseCategory", baseCategory);
-        activity.startActivity(intent);
+        source.startActivity(intent);
     }
 
     public void notificationActivity(Activity source, Class<NotificationActivity> destination) {
         Intent intent = new Intent(source, destination);
-        activity.startActivity(intent);
+        source.startActivity(intent);
     }
 
     public void forgotPasswordActivity(Activity source, Class<ForgotPasswordActivity> destination) {
         Intent intent = new Intent(source, destination);
-        activity.startActivity(intent);
+        source.startActivity(intent);
     }
     public void otherActivity(Activity source, Class<OtherApplication> destination) {
         Intent intent = new Intent(source, destination);
-        activity.startActivity(intent);
+        source.startActivity(intent);
     }
 
 
@@ -336,7 +342,7 @@ public class ActivityLauncher {
         Intent intent = new Intent(source, destination);
         intent.putExtra(AppConstants.EXTRA_REGISTER_USER, args);
 
-        activity.startActivity(intent);
+        source.startActivity(intent);
     }
 
     public void resultActivityBundle(Activity source, Class<ActivityResults> destination, String searchType, String searchKey, int total,boolean applyFilter) {
@@ -347,14 +353,14 @@ public class ActivityLauncher {
         args.putBoolean("apply_filter", applyFilter);
         Intent intent = new Intent(source, destination);
         intent.putExtra("SearchResult", args);
-        activity.startActivity(intent);
+        source.startActivity(intent);
     }
 
     public void seriesDetailScreen(Activity source, Class<SeriesDetailActivity> destination, int seriesId) {
         Intent intent = new Intent(source, destination);
         intent.putExtra("seriesId", seriesId);
         intent.setFlags(FLAG_ACTIVITY_CLEAR_TOP);
-        activity.startActivity(intent);
+        source.startActivity(intent);
     }
 
     public void watchHistory(Activity source, Class<WatchListActivity> destination, String type, boolean isWatchHistory) {
@@ -363,10 +369,10 @@ public class ActivityLauncher {
         Intent intent = new Intent(source, destination);
         intent.putExtra("bundleId", args);
         intent.putExtra("isWatchHistory", isWatchHistory);
-        // activity.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(source).toBundle());
-        activity.startActivity(intent);
+        // source.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(source).toBundle());
+        source.startActivity(intent);
     }
-    public void launchMyDownloads(){
-        this.activity.startActivity(new Intent(this.activity, MyDownloads.class));
+    public void launchMyDownloads(Activity source){
+        source.startActivity(new Intent(source, MyDownloads.class));
     }
 }

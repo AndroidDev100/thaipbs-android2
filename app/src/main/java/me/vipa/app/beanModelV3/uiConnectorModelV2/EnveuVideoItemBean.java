@@ -24,8 +24,6 @@ import me.vipa.brightcovelibrary.Logger;
 public class EnveuVideoItemBean implements Serializable {
     private ArrayList seasons;
     private String description;
-
-
     private String longDescription;
     private List<String> assetKeywords;
     private int likeCount;
@@ -761,7 +759,6 @@ public class EnveuVideoItemBean implements Serializable {
     public EnveuVideoItemBean(ItemsItem details) {
 
         try {
-
             //  this.svod = details.getSvod() == null ? "" : details.getSvod();
             this.title = details.getTitle() == null ? "" : details.getTitle();
             this.description = details.getDescription() == null ? "" : details.getDescription().trim();

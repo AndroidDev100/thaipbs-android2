@@ -80,7 +80,7 @@ public class ContentPreference extends BaseBindingActivity<ActivityContentPrefer
 //                    selectedList = adatperContentPreference.getGenreList();
 //                }
 
-              new ActivityLauncher(ContentPreference.this).signUpThird(ContentPreference.this, SignUpThirdPage.class,contentPreference,isNotificationEnable);
+              ActivityLauncher.getInstance().signUpThird(ContentPreference.this, SignUpThirdPage.class,contentPreference,isNotificationEnable);
             }
         });
 
@@ -88,7 +88,7 @@ public class ContentPreference extends BaseBindingActivity<ActivityContentPrefer
             @Override
             public void onClick(View v) {
                 contentPreference = "";
-                new ActivityLauncher(ContentPreference.this).signUpThird(ContentPreference.this, SignUpThirdPage.class,contentPreference,isNotificationEnable);
+                ActivityLauncher.getInstance().signUpThird(ContentPreference.this, SignUpThirdPage.class,contentPreference,isNotificationEnable);
             }
         });
     }

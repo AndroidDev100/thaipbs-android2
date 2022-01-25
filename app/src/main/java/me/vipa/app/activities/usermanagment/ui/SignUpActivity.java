@@ -127,7 +127,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
         getBinding().toolbar.titleSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new ActivityLauncher(SignUpActivity.this).homeScreen(SignUpActivity.this, HomeActivity.class);
+                ActivityLauncher.getInstance().homeScreen(SignUpActivity.this, HomeActivity.class);
             }
         });
         getBinding().termsPrivacyPolicies.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -258,7 +258,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
                                 MoEUserTracker.INSTANCE.setUsername(SignUpActivity.this, signUpData.getName());
 
                                 // onBackPressed();
-                                //new ActivityLauncher(SignUpActivity.this).homeScreen(SignUpActivity.this, HomeActivity.class);
+                                //ActivityLauncher.getInstance().homeScreen(SignUpActivity.this, HomeActivity.class);
                                 //finish();
 
                             } else if (signupResponseAccessToken.getResponseModel().getResponseCode() == 4901) {
@@ -412,7 +412,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 isNotificationEnable = isChecked;
-                new SharedPrefHelper(SignUpActivity.this).saveNotificationEnable(isNotificationEnable);
+                SharedPrefHelper.getInstance(SignUpActivity.this).saveNotificationEnable(isNotificationEnable);
             }
         });
 
@@ -518,7 +518,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
 
 
                     } else if (loginResponseModelResponse.getResponseCode() == 403) {
-                        new ActivityLauncher(SignUpActivity.this).forceLogin(SignUpActivity.this, ForceLoginFbActivity.class, accessTokenFB, id, name, String.valueOf(profile_pic));
+                        ActivityLauncher.getInstance().forceLogin(SignUpActivity.this, ForceLoginFbActivity.class, accessTokenFB, id, name, String.valueOf(profile_pic));
                     } else {
                         dismissLoading(getBinding().progressBar);
                         showDialog(SignUpActivity.this.getResources().getString(R.string.error), loginResponseModelResponse.getDebugMessage().toString());
@@ -563,12 +563,12 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
         callAllSecondaryAccount(preference.getAppPrefAccessToken());
 
         // onBackPressed();
-        //  new ActivityLauncher(SignUpActivity.this).onContentScreen(SignUpActivity.this, ContentPreference.class,isNotificationEnable);
+        //  ActivityLauncher.getInstance().onContentScreen(SignUpActivity.this, ContentPreference.class,isNotificationEnable);
 //
 
 
 
-        //new ActivityLauncher(SignUpActivity.this).homeScreen(SignUpActivity.this, HomeActivity.class);
+        //ActivityLauncher.getInstance().homeScreen(SignUpActivity.this, HomeActivity.class);
 
         try {
             trackEvent(String.valueOf(fbLoginData.getName()), String.valueOf(fbLoginData.getEmail()));
@@ -617,7 +617,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
         if (userProfileResponse.getData().getCustomData().getContentPreferences() != null && userProfileResponse.getData().getCustomData().getContentPreferences() != "") {
             onBackPressed();
         } else {
-            new ActivityLauncher(SignUpActivity.this).onContentScreen(SignUpActivity.this, ContentPreference.class, isNotificationEnable);
+            ActivityLauncher.getInstance().onContentScreen(SignUpActivity.this, ContentPreference.class, isNotificationEnable);
         }
     }
 
@@ -642,9 +642,9 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
     public void onBackPressed() {
         super.onBackPressed();
         if (loginCallingFrom.equalsIgnoreCase("OnBoarding")) {
-            new ActivityLauncher(SignUpActivity.this).homeScreen(SignUpActivity.this, HomeActivity.class);
+            ActivityLauncher.getInstance().homeScreen(SignUpActivity.this, HomeActivity.class);
         } else {
-            new ActivityLauncher(SignUpActivity.this).loginActivity(SignUpActivity.this, LoginActivity.class);
+            ActivityLauncher.getInstance().loginActivity(SignUpActivity.this, LoginActivity.class);
         }
 
     }
@@ -773,12 +773,12 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
                             }
                             Logger.d("alllistApiPrimaryid: " + primaryAccountId);
                             Logger.d("allListApiSecondid " + secondaryId);
-                            new SharedPrefHelper(SignUpActivity.this).savePrimaryAccountId(primaryAccountId);
-                            new SharedPrefHelper(SignUpActivity.this).saveSecondaryAccountId(secondaryId);
+                            SharedPrefHelper.getInstance(SignUpActivity.this).savePrimaryAccountId(primaryAccountId);
+                            SharedPrefHelper.getInstance(SignUpActivity.this).saveSecondaryAccountId(secondaryId);
                             if (isFbLoginClick) {
                                 callUpdateApi();
                             } else {
-                                new ActivityLauncher(SignUpActivity.this).onContentScreen(SignUpActivity.this, ContentPreference.class, isNotificationEnable);
+                                ActivityLauncher.getInstance().onContentScreen(SignUpActivity.this, ContentPreference.class, isNotificationEnable);
                             }
                             //saveUserDetails(stringJson, id, true);
 
@@ -791,7 +791,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
                         if (isFbLoginClick) {
                             callUpdateApi();
                         } else {
-                            new ActivityLauncher(SignUpActivity.this).onContentScreen(SignUpActivity.this, ContentPreference.class, isNotificationEnable);
+                            ActivityLauncher.getInstance().onContentScreen(SignUpActivity.this, ContentPreference.class, isNotificationEnable);
                         }
 
                     }
@@ -800,7 +800,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
                     if (isFbLoginClick) {
                         callUpdateApi();
                     } else {
-                        new ActivityLauncher(SignUpActivity.this).onContentScreen(SignUpActivity.this, ContentPreference.class, isNotificationEnable);
+                        ActivityLauncher.getInstance().onContentScreen(SignUpActivity.this, ContentPreference.class, isNotificationEnable);
                     }
 
                 }
@@ -829,12 +829,12 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
                         String secondaryAccountId = secondaryUserDetails.getData().getAccountId();
                         Logger.d("addSecondaryApPrimaryid: " + primaryAccountId);
                         Logger.d("addSecondaryApiSecondid: " + secondaryAccountId);
-                        new SharedPrefHelper(SignUpActivity.this).savePrimaryAccountId(primaryAccountId);
-                        new SharedPrefHelper(SignUpActivity.this).saveSecondaryAccountId(secondaryAccountId);
+                        SharedPrefHelper.getInstance(SignUpActivity.this).savePrimaryAccountId(primaryAccountId);
+                        SharedPrefHelper.getInstance(SignUpActivity.this).saveSecondaryAccountId(secondaryAccountId);
                         if (isFbLoginClick) {
                             callUpdateApi();
                         } else {
-                            new ActivityLauncher(SignUpActivity.this).onContentScreen(SignUpActivity.this, ContentPreference.class, isNotificationEnable);
+                            ActivityLauncher.getInstance().onContentScreen(SignUpActivity.this, ContentPreference.class, isNotificationEnable);
                         }
                        // saveUserDetails(stringJson, id, true);
 
@@ -842,7 +842,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
                         if (isFbLoginClick) {
                             callUpdateApi();
                         } else {
-                            new ActivityLauncher(SignUpActivity.this).onContentScreen(SignUpActivity.this, ContentPreference.class, isNotificationEnable);
+                            ActivityLauncher.getInstance().onContentScreen(SignUpActivity.this, ContentPreference.class, isNotificationEnable);
                         }
                     }
 
@@ -850,7 +850,7 @@ public class SignUpActivity extends BaseBindingActivity<SignupActivityBinding> i
                     if (isFbLoginClick) {
                         callUpdateApi();
                     } else {
-                        new ActivityLauncher(SignUpActivity.this).onContentScreen(SignUpActivity.this, ContentPreference.class, isNotificationEnable);
+                        ActivityLauncher.getInstance().onContentScreen(SignUpActivity.this, ContentPreference.class, isNotificationEnable);
                     }
 
                 }

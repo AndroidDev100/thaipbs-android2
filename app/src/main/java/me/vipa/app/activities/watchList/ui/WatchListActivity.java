@@ -16,26 +16,30 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import me.vipa.bookmarking.bean.BookmarkingResponse;
-import me.vipa.enums.ImageType;
+import com.google.gson.JsonObject;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 import me.vipa.app.Bookmarking.BookmarkingViewModel;
-import me.vipa.app.activities.watchList.adapter.WatchHistoryAdapter;
-import me.vipa.app.activities.watchList.adapter.WatchListAdapter;
-import me.vipa.app.activities.watchList.viewModel.WatchListViewModel;
-import me.vipa.app.baseModels.BaseBindingActivity;
 import me.vipa.app.R;
 import me.vipa.app.activities.detail.ui.DetailActivity;
 import me.vipa.app.activities.detail.ui.EpisodeActivity;
 import me.vipa.app.activities.listing.callback.ItemClickListener;
 import me.vipa.app.activities.listing.listadapter.ListAdapter;
 import me.vipa.app.activities.series.ui.SeriesDetailActivity;
+import me.vipa.app.activities.watchList.adapter.WatchHistoryAdapter;
+import me.vipa.app.activities.watchList.adapter.WatchListAdapter;
+import me.vipa.app.activities.watchList.viewModel.WatchListViewModel;
 import me.vipa.app.adapters.CommonShimmerAdapter;
+import me.vipa.app.baseModels.BaseBindingActivity;
 import me.vipa.app.beanModel.AssetHistoryContinueWatching.ResponseAssetHistory;
 import me.vipa.app.beanModel.ContinueRailModel.CommonContinueRail;
 import me.vipa.app.beanModel.emptyResponse.ResponseEmpty;
 import me.vipa.app.beanModel.enveuCommonRailData.RailCommonData;
-import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
 import me.vipa.app.beanModel.watchHistory.ItemsItem;
+import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
 import me.vipa.app.databinding.WatchListActivityBinding;
 import me.vipa.app.fragments.dialog.AlertDialogFragment;
 import me.vipa.app.fragments.dialog.AlertDialogSingleButtonFragment;
@@ -46,15 +50,11 @@ import me.vipa.app.utils.cropImage.helpers.NetworkConnectivity;
 import me.vipa.app.utils.helpers.CheckInternetConnection;
 import me.vipa.app.utils.helpers.RailInjectionHelper;
 import me.vipa.app.utils.helpers.RecyclerAnimator;
-
 import me.vipa.app.utils.helpers.ToastHandler;
 import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
-import com.google.gson.JsonObject;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import me.vipa.bookmarking.bean.BookmarkingResponse;
+import me.vipa.enums.ImageType;
 
 
 public class WatchListActivity extends BaseBindingActivity<WatchListActivityBinding> implements WatchListAdapter.WatchListAdaperListener, WatchHistoryAdapter.WatchHistoryAdaperListener, WatchListAdapter.DeleteWatchList, AlertDialogFragment.AlertDialogListener, ItemClickListener, View.OnClickListener {
@@ -289,12 +289,12 @@ public class WatchListActivity extends BaseBindingActivity<WatchListActivityBind
         mLastClickTime = SystemClock.elapsedRealtime();
         try {
             if (itemValue.getVideoType().equalsIgnoreCase("SERIES")) {
-                new ActivityLauncher(this).detailScreen(this, DetailActivity.class, itemValue.getId(), "0", false);
+                ActivityLauncher.getInstance().detailScreen(this, DetailActivity.class, itemValue.getId(), "0", false);
 
             } else if (itemValue.getVideoType().equalsIgnoreCase("EPISODE")) {
-                new ActivityLauncher(this).episodeScreen(this, EpisodeActivity.class, itemValue.getId(), "0", false);
+                ActivityLauncher.getInstance().episodeScreen(this, EpisodeActivity.class, itemValue.getId(), "0", false);
             } else {
-                new ActivityLauncher(this).detailScreen(this, DetailActivity.class, itemValue.getId(), "0", false);
+                ActivityLauncher.getInstance().detailScreen(this, DetailActivity.class, itemValue.getId(), "0", false);
             }
         } catch (Exception e) {
 
@@ -312,12 +312,12 @@ public class WatchListActivity extends BaseBindingActivity<WatchListActivityBind
         mLastClickTime = SystemClock.elapsedRealtime();
 
         if (itemValue.getContentType().equalsIgnoreCase("SERIES")) {
-            new ActivityLauncher(this).seriesDetailScreen(this, SeriesDetailActivity.class, itemValue.getContentId());
+            ActivityLauncher.getInstance().seriesDetailScreen(this, SeriesDetailActivity.class, itemValue.getContentId());
         } else {
             if (itemValue.getAssetType().equalsIgnoreCase("EPISODE")) {
-                new ActivityLauncher(this).episodeScreen(this, EpisodeActivity.class, itemValue.getContentId(), "0", false);
+                ActivityLauncher.getInstance().episodeScreen(this, EpisodeActivity.class, itemValue.getContentId(), "0", false);
             } else {
-                new ActivityLauncher(this).detailScreen(this, DetailActivity.class, itemValue.getContentId(), "0", false);
+                ActivityLauncher.getInstance().detailScreen(this, DetailActivity.class, itemValue.getContentId(), "0", false);
             }
         }
 

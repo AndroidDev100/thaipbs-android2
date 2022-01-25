@@ -1,60 +1,73 @@
- package me.vipa.app.activities.homeactivity.ui;
+package me.vipa.app.activities.homeactivity.ui;
 
- import android.annotation.SuppressLint;
- import android.os.Bundle;
- import android.os.Handler;
- import android.view.LayoutInflater;
- import android.view.MenuItem;
- import android.view.View;
+import android.annotation.SuppressLint;
+import android.content.res.Configuration;
+import android.os.Bundle;
+import android.os.Handler;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
 
- import androidx.annotation.NonNull;
- import androidx.fragment.app.Fragment;
- import androidx.fragment.app.FragmentManager;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
- import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
- import com.google.android.material.bottomnavigation.BottomNavigationView;
- import com.google.android.material.navigation.NavigationBarView;
- import com.google.android.material.snackbar.Snackbar;
- import com.google.android.play.core.appupdate.AppUpdateInfo;
- import com.google.android.play.core.install.InstallStateUpdatedListener;
- import com.google.android.play.core.install.model.AppUpdateType;
- import com.google.android.play.core.install.model.InstallStatus;
- import com.moengage.inapp.MoEInAppHelper;
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.play.core.appupdate.AppUpdateInfo;
+import com.google.android.play.core.install.InstallStateUpdatedListener;
+import com.google.android.play.core.install.model.AppUpdateType;
+import com.google.android.play.core.install.model.InstallStatus;
+import com.moe.pushlibrary.MoEHelper;
+import com.moengage.core.MoEngage;
+import com.moengage.core.Properties;
+import com.moengage.inapp.MoEInAppHelper;
+import com.moengage.inapp.listeners.InAppMessageListener;
+import com.moengage.inapp.model.MoEInAppCampaign;
 
- import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.NotNull;
 
- import me.vipa.app.R;
- import me.vipa.app.activities.usermanagment.ui.LoginActivity;
- import me.vipa.app.baseModels.BaseBindingActivity;
- import me.vipa.app.callbacks.commonCallbacks.FragmentClickNetwork;
- import me.vipa.app.callbacks.commonCallbacks.HomeClickNetwork;
- import me.vipa.app.callbacks.commonCallbacks.OriginalFragmentClick;
- import me.vipa.app.callbacks.commonCallbacks.PremiumClick;
- import me.vipa.app.callbacks.commonCallbacks.SinetronClick;
- import me.vipa.app.databinding.ActivityMainBinding;
- import me.vipa.app.fragments.home.ui.HomeFragment;
- import me.vipa.app.fragments.more.ui.MoreFragment;
- import me.vipa.app.fragments.movies.ui.MovieFragment;
- import me.vipa.app.fragments.news.ui.NewsFragment;
- import me.vipa.app.fragments.shows.ui.ShowsFragment;
- import me.vipa.app.manager.MoEUserTracker;
- import me.vipa.app.manager.MoEngageNotificationManager;
- import me.vipa.app.utils.commonMethods.AppCommonMethod;
- import me.vipa.app.utils.constants.AppConstants;
- import me.vipa.app.utils.helpers.ActivityTrackers;
- import me.vipa.app.utils.helpers.AnalyticsController;
- import me.vipa.app.utils.helpers.SharedPrefHelper;
- import me.vipa.app.utils.helpers.StringUtils;
- import me.vipa.app.utils.helpers.ToolBarHandler;
- import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
- import me.vipa.app.utils.helpers.ksPreferenceKeys.KidsModeSinglton;
- import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
- import me.vipa.app.utils.inAppUpdate.AppUpdateCallBack;
- import me.vipa.app.utils.inAppUpdate.ApplicationUpdateManager;
- import me.vipa.brightcovelibrary.Logger;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
+import me.vipa.app.R;
+import me.vipa.app.activities.detail.ui.EpisodeActivity;
+import me.vipa.app.activities.splash.ui.ActivitySplash;
+import me.vipa.app.activities.usermanagment.ui.LoginActivity;
+import me.vipa.app.baseModels.BaseBindingActivity;
+import me.vipa.app.callbacks.commonCallbacks.FragmentClickNetwork;
+import me.vipa.app.callbacks.commonCallbacks.HomeClickNetwork;
+import me.vipa.app.callbacks.commonCallbacks.OriginalFragmentClick;
+import me.vipa.app.callbacks.commonCallbacks.PremiumClick;
+import me.vipa.app.callbacks.commonCallbacks.SinetronClick;
+import me.vipa.app.databinding.ActivityMainBinding;
+import me.vipa.app.fragments.home.ui.HomeFragment;
+import me.vipa.app.fragments.more.ui.MoreFragment;
+import me.vipa.app.fragments.movies.ui.MovieFragment;
+import me.vipa.app.fragments.news.ui.NewsFragment;
+import me.vipa.app.fragments.shows.ui.ShowsFragment;
+import me.vipa.app.manager.MoEUserTracker;
+import me.vipa.app.manager.MoEngageNotificationManager;
+import me.vipa.app.utils.commonMethods.AppCommonMethod;
+import me.vipa.app.utils.constants.AppConstants;
+import me.vipa.app.utils.helpers.ActivityTrackers;
+import me.vipa.app.utils.helpers.AnalyticsController;
+import me.vipa.app.utils.helpers.SharedPrefHelper;
+import me.vipa.app.utils.helpers.StringUtils;
+import me.vipa.app.utils.helpers.ToolBarHandler;
+import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
+import me.vipa.app.utils.helpers.ksPreferenceKeys.KidsModeSinglton;
+import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
+import me.vipa.app.utils.inAppUpdate.AppUpdateCallBack;
+import me.vipa.app.utils.inAppUpdate.ApplicationUpdateManager;
+import me.vipa.brightcovelibrary.Logger;
+import me.vipa.constants.Constants;
 
 
- public class HomeActivity extends BaseBindingActivity<ActivityMainBinding> implements MoreFragment.MoreFragmentInteraction, AppUpdateCallBack {
+public class HomeActivity extends BaseBindingActivity<ActivityMainBinding> implements MoreFragment.MoreFragmentInteraction, AppUpdateCallBack {
 
     public Fragment active;
     private KsPreferenceKeys preference;
@@ -139,12 +152,12 @@
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                ((MoreFragment)moreFragment).clickEvent();
+                                ((MoreFragment) moreFragment).clickEvent();
                             }
-                        },200);
+                        }, 200);
 
                     } else {
-                        ((MoreFragment)moreFragment).clickEvent();
+                        ((MoreFragment) moreFragment).clickEvent();
                         switchToMoreFragment();
                         if (updatfrag != null)
                             updatfrag.updatefrag(true);
@@ -156,8 +169,9 @@
         }
     };
     private BottomNavigationView navigation;
-    private boolean kidsMode=false;
+    private boolean kidsMode = false;
     private int aspectRatio;
+
     @SuppressLint("RestrictedApi")
     public static void removeNavigationShiftMode(BottomNavigationView view) {
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) view.getChildAt(0);
@@ -194,14 +208,27 @@
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MoEInAppHelper.getInstance().registerListener(new InAppMessageListener(){
+            @Override
+            public void onSelfHandledAvailable(@NonNull MoEInAppCampaign inAppCampaign) {
+                super.onSelfHandledAvailable(inAppCampaign);
+                MoEInAppHelper.getInstance().selfHandledShown(HomeActivity.this, inAppCampaign);
+            }
+
+            @Override
+            public void onShown(@NonNull MoEInAppCampaign inAppCampaign) {
+                super.onShown(inAppCampaign);
+
+            }
+        });
         //setupCrashlytics();
-      //  getDeviceSuperInfo();
+        //  getDeviceSuperInfo();
 
         strCurrentTheme = KsPreferenceKeys.getInstance().getCurrentTheme();
-        kidsMode  = new SharedPrefHelper(HomeActivity.this).getKidsMode();
+        kidsMode = SharedPrefHelper.getInstance(HomeActivity.this).getKidsMode();
 
-        KidsModeSinglton.getInstance().aBoolean=kidsMode; 
-        Logger.d("CurrentThemeIs",strCurrentTheme);
+        KidsModeSinglton.getInstance().aBoolean = kidsMode;
+        Logger.d("CurrentThemeIs", strCurrentTheme);
         if (KsPreferenceKeys.getInstance().getCurrentTheme().equalsIgnoreCase(AppConstants.LIGHT_THEME)) {
             setTheme(R.style.MyMaterialTheme_Base_Light);
         } else {
@@ -238,6 +265,7 @@
         });
 
         new AnalyticsController(HomeActivity.this).callAnalytics("home_activity", "Action", "Launch");
+//        getBinding().nudge.initialiseNudgeView(HomeActivity.this
     }
 
     private void getDeviceSuperInfo() {
@@ -246,23 +274,23 @@
         try {
 
             String s = "Debug-infos:";
-            s += "\n OS Version: "      + System.getProperty("os.version")      + "(" + android.os.Build.VERSION.INCREMENTAL + ")";
-            s += "\n OS API Level: "    + android.os.Build.VERSION.SDK_INT;
-            s += "\n Device: "          + android.os.Build.DEVICE;
-            s += "\n Model (and Product): " + android.os.Build.MODEL            + " ("+ android.os.Build.PRODUCT + ")";
+            s += "\n OS Version: " + System.getProperty("os.version") + "(" + android.os.Build.VERSION.INCREMENTAL + ")";
+            s += "\n OS API Level: " + android.os.Build.VERSION.SDK_INT;
+            s += "\n Device: " + android.os.Build.DEVICE;
+            s += "\n Model (and Product): " + android.os.Build.MODEL + " (" + android.os.Build.PRODUCT + ")";
 
-            s += "\n RELEASE: "         + android.os.Build.VERSION.RELEASE;
-            s += "\n BRAND: "           + android.os.Build.BRAND;
-            s += "\n DISPLAY: "         + android.os.Build.DISPLAY;
-            s += "\n CPU_ABI: "         + android.os.Build.CPU_ABI;
-            s += "\n CPU_ABI2: "        + android.os.Build.CPU_ABI2;
-            s += "\n UNKNOWN: "         + android.os.Build.UNKNOWN;
-            s += "\n HARDWARE: "        + android.os.Build.HARDWARE;
-            s += "\n Build ID: "        + android.os.Build.ID;
-            s += "\n MANUFACTURER: "    + android.os.Build.MANUFACTURER;
-            s += "\n SERIAL: "          + android.os.Build.SERIAL;
-            s += "\n USER: "            + android.os.Build.USER;
-            s += "\n HOST: "            + android.os.Build.HOST;
+            s += "\n RELEASE: " + android.os.Build.VERSION.RELEASE;
+            s += "\n BRAND: " + android.os.Build.BRAND;
+            s += "\n DISPLAY: " + android.os.Build.DISPLAY;
+            s += "\n CPU_ABI: " + android.os.Build.CPU_ABI;
+            s += "\n CPU_ABI2: " + android.os.Build.CPU_ABI2;
+            s += "\n UNKNOWN: " + android.os.Build.UNKNOWN;
+            s += "\n HARDWARE: " + android.os.Build.HARDWARE;
+            s += "\n Build ID: " + android.os.Build.ID;
+            s += "\n MANUFACTURER: " + android.os.Build.MANUFACTURER;
+            s += "\n SERIAL: " + android.os.Build.SERIAL;
+            s += "\n USER: " + android.os.Build.USER;
+            s += "\n HOST: " + android.os.Build.HOST;
 
             Logger.i("Device Info > " + s);
         } catch (Exception e) {
@@ -297,7 +325,7 @@
         }
 
         initialFragment();
-     // changeFragment(new HomeFragment(), "HomeFragment");
+        // changeFragment(new HomeFragment(), "HomeFragment");
         getBinding().navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         new ToolBarHandler(HomeActivity.this).setHomeAction(getBinding().toolbar, HomeActivity.this);
 
@@ -309,8 +337,8 @@
         getBinding().toolbar.clNotification.setVisibility(View.VISIBLE);
         fragmentManager.beginTransaction().hide(active).show(homeFragment).commit();
         active = homeFragment;
-        ((HomeFragment)homeFragment).updateList();
-        ((HomeFragment)homeFragment).updateAdList();
+        ((HomeFragment) homeFragment).updateList();
+        ((HomeFragment) homeFragment).updateAdList();
     }
 
     public void switchToOriginalFragment() {
@@ -336,6 +364,7 @@
         getBinding().toolbar.clNotification.setVisibility(View.VISIBLE);
         fragmentManager.beginTransaction().hide(active).show(premiumFragment).commit();
         active = premiumFragment;
+
     }
 
     public void switchToSinetronFragment() {
@@ -358,15 +387,14 @@
 
     private void UIinitialization() {
         navigation = findViewById(R.id.navigation);
-        if(kidsMode){
-            getBinding().toolbar.rlToolBar.setBackgroundColor(HomeActivity.this.getResources().getColor(R.color.ligh_blue ));
+        if (kidsMode) {
+            getBinding().toolbar.rlToolBar.setBackgroundColor(HomeActivity.this.getResources().getColor(R.color.ligh_blue));
             getBinding().toolbar.homeIconKids.setVisibility(View.VISIBLE);
             getBinding().toolbar.homeIcon.setVisibility(View.GONE);
             navigation.getMenu().findItem(R.id.navigation_originals).setVisible(false);
             navigation.getMenu().findItem(R.id.navigation_premium).setVisible(false);
             navigation.getMenu().findItem(R.id.navigation_sinetron).setVisible(false);
-        }
-        else {
+        } else {
             getBinding().toolbar.clNotification.setVisibility(View.VISIBLE);
             getBinding().toolbar.rlToolBar.setBackgroundColor(HomeActivity.this.getResources().getColor(R.color.black));
             getBinding().toolbar.homeIconKids.setVisibility(View.GONE);
@@ -448,19 +476,20 @@
     @Override
     public void onLoginClicked() {
 
-       // Blurry.with(HomeActivity.this).radius(25).sampling(2).onto(getBinding().blurredBackgroundImageView);
+        // Blurry.with(HomeActivity.this).radius(25).sampling(2).onto(getBinding().blurredBackgroundImageView);
         ActivityTrackers.getInstance().setAction("");
-        new ActivityLauncher(this).loginActivity(this, LoginActivity.class);
+        ActivityLauncher.getInstance().loginActivity(this, LoginActivity.class);
     }
 
     @Override
     protected void onStart() {
 
         super.onStart();
-        MoEInAppHelper.getInstance().showInApp(this);
+        MoEInAppHelper.getInstance().showInApp(HomeActivity.this);
+        MoEInAppHelper.getInstance().getSelfHandledInApp(HomeActivity.this);
         try {
-            ((HomeFragment)homeFragment).updateAdList();
-        }catch (Exception e){
+            ((HomeFragment) homeFragment).updateAdList();
+        } catch (Exception e) {
 
         }
     }
@@ -474,6 +503,7 @@
     };
 
     private AppUpdateInfo appUpdateInfo;
+
     @Override
     public void getAppUpdateCallBack(AppUpdateInfo appUpdateInfo) {
 
@@ -493,7 +523,6 @@
         snackbar.setActionTextColor(getResources().getColor(R.color.moretitlecolor));
         snackbar.show();
     }
-
 
 
 }

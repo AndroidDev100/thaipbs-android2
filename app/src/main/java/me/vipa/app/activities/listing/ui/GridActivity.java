@@ -15,21 +15,15 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import me.vipa.app.activities.homeactivity.ui.HomeActivity;
-import me.vipa.app.fragments.dialog.AlertDialogFragment;
-import me.vipa.app.fragments.dialog.AlertDialogSingleButtonFragment;
-import me.vipa.app.utils.helpers.CheckInternetConnection;
-import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
-import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
-import me.vipa.bookmarking.bean.continuewatching.ContinueWatchingBookmark;
-import me.vipa.enums.ImageType;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 import me.vipa.app.Bookmarking.BookmarkingViewModel;
+import me.vipa.app.R;
+import me.vipa.app.activities.homeactivity.ui.HomeActivity;
 import me.vipa.app.activities.listing.callback.ItemClickListener;
 import me.vipa.app.activities.listing.viewmodel.ListingViewModel;
-import me.vipa.app.baseModels.BaseBindingActivity;
-import me.vipa.app.beanModelV3.continueWatching.DataItem;
-import me.vipa.app.networking.apistatus.APIStatus;
-import me.vipa.app.R;
 import me.vipa.app.adapters.CommonListingAdapter;
 import me.vipa.app.adapters.commonRails.CommonCircleAdapter;
 import me.vipa.app.adapters.commonRails.CommonPosterLandscapeAdapter;
@@ -38,13 +32,18 @@ import me.vipa.app.adapters.commonRails.CommonPotraitAdapter;
 import me.vipa.app.adapters.commonRails.CommonPotraitTwoAdapter;
 import me.vipa.app.adapters.commonRails.LandscapeListingAdapter;
 import me.vipa.app.adapters.commonRails.SquareListingAdapter;
+import me.vipa.app.baseModels.BaseBindingActivity;
 import me.vipa.app.beanModel.enveuCommonRailData.RailCommonData;
-import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
 import me.vipa.app.beanModel.responseModels.landingTabResponses.railData.ContentsItem;
 import me.vipa.app.beanModel.responseModels.series.season.SeasonResponse;
+import me.vipa.app.beanModelV3.continueWatching.DataItem;
+import me.vipa.app.beanModelV3.uiConnectorModelV2.EnveuVideoItemBean;
 import me.vipa.app.callbacks.commonCallbacks.CommonApiCallBack;
 import me.vipa.app.databinding.ListingActivityBinding;
+import me.vipa.app.fragments.dialog.AlertDialogFragment;
+import me.vipa.app.fragments.dialog.AlertDialogSingleButtonFragment;
 import me.vipa.app.layersV2.ContinueWatchingLayer;
+import me.vipa.app.networking.apistatus.APIStatus;
 import me.vipa.app.utils.MediaTypeConstants;
 import me.vipa.app.utils.commonMethods.AppCommonMethod;
 import me.vipa.app.utils.constants.AppConstants;
@@ -52,15 +51,15 @@ import me.vipa.app.utils.cropImage.helpers.Logger;
 import me.vipa.app.utils.cropImage.helpers.NetworkConnectivity;
 import me.vipa.app.utils.cropImage.helpers.PrintLogging;
 import me.vipa.app.utils.cropImage.helpers.ShimmerDataModel;
+import me.vipa.app.utils.helpers.CheckInternetConnection;
 import me.vipa.app.utils.helpers.GridSpacingItemDecoration;
 import me.vipa.app.utils.helpers.RailInjectionHelper;
 import me.vipa.app.utils.helpers.RecyclerAnimator;
-
+import me.vipa.app.utils.helpers.intentlaunchers.ActivityLauncher;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import me.vipa.baseCollection.baseCategoryModel.BaseCategory;
+import me.vipa.bookmarking.bean.continuewatching.ContinueWatchingBookmark;
+import me.vipa.enums.ImageType;
 
 
 public class GridActivity extends BaseBindingActivity<ListingActivityBinding> implements ItemClickListener, AlertDialogFragment.AlertDialogListener {
@@ -196,7 +195,7 @@ public class GridActivity extends BaseBindingActivity<ListingActivityBinding> im
             if (loginStatus) {
                 getBinding().toolbar.screenText.setText(title + " " + "for" + " " + KsPreferenceKeys.getInstance().getAppPrefUserName());
             }else {
-                new ActivityLauncher(GridActivity.this).homeScreen(GridActivity.this, HomeActivity.class);
+                ActivityLauncher.getInstance().homeScreen(GridActivity.this, HomeActivity.class);
             }
         }else {
             getBinding().toolbar.screenText.setText(title);
@@ -349,7 +348,7 @@ public class GridActivity extends BaseBindingActivity<ListingActivityBinding> im
                                         runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {
-                                                new ActivityLauncher(GridActivity.this).homeScreen(GridActivity.this, HomeActivity.class);
+                                                ActivityLauncher.getInstance().homeScreen(GridActivity.this, HomeActivity.class);
                                             }
                                         });
                                     } catch (Exception e) {

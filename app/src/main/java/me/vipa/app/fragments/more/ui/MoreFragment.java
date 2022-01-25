@@ -230,7 +230,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
         mListLogin.addAll(Arrays.asList(label2));
         preference = KsPreferenceKeys.getInstance();
         isLogin = preference.getAppPrefLoginStatus();
-        isKidsMode = new SharedPrefHelper(getActivity()).getKidsMode();
+        isKidsMode = SharedPrefHelper.getInstance(getActivity()).getKidsMode();
         mListKidsMode = new ArrayList<>();
 
         if (isKidsMode) {
@@ -417,7 +417,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
         String isFacebook = preference.getAppPrefLoginType();
         if (caption.equals(getString(R.string.manage_account))) {
             if (loginStatus)
-                new ActivityLauncher(getActivity()).manageAccount(getActivity(), ManageAccount.class);
+                ActivityLauncher.getInstance().manageAccount(getActivity(), ManageAccount.class);
             else
                 mListener.onLoginClicked();
         } else if (caption.equals(getString(R.string.change_password))) {
@@ -425,14 +425,14 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
               /*  if (isFacebook.equalsIgnoreCase(AppConstants.UserLoginType.FbLogin.toString())) {
 
                 } else {*/
-                new ActivityLauncher(getActivity()).changePassword(getActivity(), ChangePasswordActivity.class);
+                ActivityLauncher.getInstance().changePassword(getActivity(), ChangePasswordActivity.class);
                 /* }*/
 
             else
                 mListener.onLoginClicked();
         } else if (caption.equals(getString(R.string.notification))) {
             if (loginStatus)
-                new ActivityLauncher(getActivity()).notificationActivity(getActivity(), NotificationActivity.class);
+                ActivityLauncher.getInstance().notificationActivity(getActivity(), NotificationActivity.class);
             else
                 mListener.onLoginClicked();
         } else if (caption.equals(getString(R.string.term_condition))) {
@@ -449,18 +449,18 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
             requireActivity().startActivity(new Intent(getActivity(), HelpActivity.class).putExtra("type", "6"));
         } else if (caption.equals(getString(R.string.other_application))) {
             requireActivity().startActivity(new Intent(getActivity(), HelpActivity.class).putExtra("type", "7"));
-            //  new ActivityLauncher(getActivity()).otherActivity(getActivity(), OtherApplication.class);
+            //  ActivityLauncher.getInstance().otherActivity(getActivity(), OtherApplication.class);
         } else if (caption.equals(getString(R.string.my_watchlist))) {
 
             if (loginStatus)
-                new ActivityLauncher(getActivity()).watchHistory(getActivity(), WatchListActivity.class, getString(R.string.my_watchlist), false);
+                ActivityLauncher.getInstance().watchHistory(getActivity(), WatchListActivity.class, getString(R.string.my_watchlist), false);
             else
                 mListener.onLoginClicked();
 
         } else if (caption.equals(getString(R.string.my_download))) {
 
             if (loginStatus)
-                new ActivityLauncher(getActivity()).launchMyDownloads();
+                ActivityLauncher.getInstance().launchMyDownloads(getActivity());
             else
                 mListener.onLoginClicked();
 
@@ -468,7 +468,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
             if (loginStatus) {
                 getProfileApi();
                 //Todo
-               /* String secondaryId = new SharedPrefHelper(getActivity()).getSecondaryAccountId();
+               /* String secondaryId = SharedPrefHelper.getInstance(getActivity()).getSecondaryAccountId();
                 if (secondaryId != null && !secondaryId.isEmpty()) {
                     KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
                     String authToken = preference.getAppPrefAccessToken();
@@ -481,8 +481,8 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
 
 
             } else {
-                new SharedPrefHelper(getActivity()).saveKidsMode(true);
-                new ActivityLauncher(getActivity()).homeScreen(getActivity(), HomeActivity.class);
+                SharedPrefHelper.getInstance(getActivity()).saveKidsMode(true);
+                ActivityLauncher.getInstance().homeScreen(getActivity(), HomeActivity.class);
                 getActivity().setTheme(R.style.MyMaterialTheme_Base_Light);
                 KsPreferenceKeys.getInstance().setCurrentTheme(AppConstants.LIGHT_THEME);
 
@@ -492,8 +492,8 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                 getProfileApi();
 
             } else {
-                new SharedPrefHelper(getActivity()).saveKidsMode(false);
-                new ActivityLauncher(getActivity()).homeScreen(getActivity(), HomeActivity.class);
+                SharedPrefHelper.getInstance(getActivity()).saveKidsMode(false);
+                ActivityLauncher.getInstance().homeScreen(getActivity(), HomeActivity.class);
                 getActivity().setTheme(R.style.MyMaterialTheme_Base_Dark);
                 KsPreferenceKeys.getInstance().setCurrentTheme(AppConstants.DARK_THEME);
             }
@@ -501,12 +501,12 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
 
         } else if (caption.equals(getString(R.string.my_history))) {
             if (loginStatus)
-                new ActivityLauncher(getActivity()).watchHistory(getActivity(), WatchListActivity.class, requireActivity().getResources().getString(R.string.my_history), true);
+                ActivityLauncher.getInstance().watchHistory(getActivity(), WatchListActivity.class, requireActivity().getResources().getString(R.string.my_history), true);
             else
                 mListener.onLoginClicked();
         } else if (caption.equals(getString(R.string.my_downloads))) {
             if (loginStatus)
-                new ActivityLauncher(getActivity()).launchMyDownloads();
+                ActivityLauncher.getInstance().launchMyDownloads(getActivity());
             else
                 mListener.onLoginClicked();
         } else if (caption.equals(requireActivity().getResources().getString(R.string.sign_out))) {
@@ -819,7 +819,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
     @Override
     public void onContinueClick() {
         Logger.w("More Fragment CONTINUE");
-        String primaryAccountId = new SharedPrefHelper(getActivity()).getPrimaryAccountId();
+        String primaryAccountId = SharedPrefHelper.getInstance(getActivity()).getPrimaryAccountId();
         if (primaryAccountId != null && !primaryAccountId.isEmpty()) {
             KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
             String authToken = preference.getAppPrefAccessToken();
@@ -834,7 +834,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
 
     @Override
     public void onSkipClick() {
-        String secondaryId = new SharedPrefHelper(getActivity()).getSecondaryAccountId();
+        String secondaryId = SharedPrefHelper.getInstance(getActivity()).getSecondaryAccountId();
         if (secondaryId != null && !secondaryId.isEmpty()) {
             KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
             String authToken = preference.getAppPrefAccessToken();
@@ -877,13 +877,13 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                         if (switchUserDetails.getResponseCode() == 2000) {
                             dismissLoading(getBinding().progressBar, getActivity());
                             if (vipaMode) {
-                                new SharedPrefHelper(getActivity()).saveKidsMode(true);
-                                new ActivityLauncher(getActivity()).homeScreen(getActivity(), HomeActivity.class);
+                                SharedPrefHelper.getInstance(getActivity()).saveKidsMode(true);
+                                ActivityLauncher.getInstance().homeScreen(getActivity(), HomeActivity.class);
                                 getActivity().setTheme(R.style.MyMaterialTheme_Base_Light);
                                 KsPreferenceKeys.getInstance().setCurrentTheme(AppConstants.LIGHT_THEME);
                             } else {
-                                new SharedPrefHelper(getActivity()).saveKidsMode(false);
-                                new ActivityLauncher(getActivity()).homeScreen(getActivity(), HomeActivity.class);
+                                SharedPrefHelper.getInstance(getActivity()).saveKidsMode(false);
+                                ActivityLauncher.getInstance().homeScreen(getActivity(), HomeActivity.class);
                                 getActivity().setTheme(R.style.MyMaterialTheme_Base_Dark);
                                 KsPreferenceKeys.getInstance().setCurrentTheme(AppConstants.DARK_THEME);
 
@@ -955,8 +955,8 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                                 }
                                 //Log.e("alllistApiPrimaryid", primaryAccountId);
                                 //Log.e("allListApiSecondid", secondaryId);
-                                new SharedPrefHelper(getActivity()).savePrimaryAccountId(primaryAccountId);
-                                new SharedPrefHelper(getActivity()).saveSecondaryAccountId(secondaryId);
+                                SharedPrefHelper.getInstance(getActivity()).savePrimaryAccountId(primaryAccountId);
+                                SharedPrefHelper.getInstance(getActivity()).saveSecondaryAccountId(secondaryId);
                                 if (vipaMode) {
                                     switchUserApi(token, secondaryId, vipaMode);
 
@@ -1033,8 +1033,8 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                         String secondaryAccountId = secondaryUserDetails.getData().getAccountId();
                         Logger.d("addSecondaryApPrimaryid " + primaryAccountId);
                         Logger.d("addSecondaryApiSecondid " + secondaryAccountId);
-                        new SharedPrefHelper(getActivity()).savePrimaryAccountId(primaryAccountId);
-                        new SharedPrefHelper(getActivity()).saveSecondaryAccountId(secondaryAccountId);
+                        SharedPrefHelper.getInstance(getActivity()).savePrimaryAccountId(primaryAccountId);
+                        SharedPrefHelper.getInstance(getActivity()).saveSecondaryAccountId(secondaryAccountId);
                         if (vipaMode) {
                             switchUserApi(token, secondaryAccountId, true);
 
@@ -1131,7 +1131,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
 
                                     } else {
                                         // when no pin choose from Pin Ui fragmnet
-                                        String primaryAccountId = new SharedPrefHelper(getActivity()).getPrimaryAccountId();
+                                        String primaryAccountId = SharedPrefHelper.getInstance(getActivity()).getPrimaryAccountId();
                                         if (primaryAccountId != null && !primaryAccountId.isEmpty()) {
                                             KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
                                             String authToken = preference.getAppPrefAccessToken();
@@ -1154,7 +1154,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
                             } else {
                                 // if user is first Time entry
                                 if (userProfileResponse.getData().getCustomData().getParentalPin() != null && !userProfileResponse.getData().getCustomData().getParentalPin().isEmpty()) {
-                                    String secondaryId = new SharedPrefHelper(getActivity()).getSecondaryAccountId();
+                                    String secondaryId = SharedPrefHelper.getInstance(getActivity()).getSecondaryAccountId();
                                     if (secondaryId != null && !secondaryId.isEmpty()) {
                                         KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
                                         String authToken = preference.getAppPrefAccessToken();
@@ -1178,7 +1178,7 @@ public class MoreFragment extends BaseBindingFragment<FragmentMoreBinding> imple
 
                                     }
                                     else {
-                                        String secondaryId = new SharedPrefHelper(getActivity()).getSecondaryAccountId();
+                                        String secondaryId = SharedPrefHelper.getInstance(getActivity()).getSecondaryAccountId();
                                         if (secondaryId != null && !secondaryId.isEmpty()) {
                                             KsPreferenceKeys preference = KsPreferenceKeys.getInstance();
                                             String authToken = preference.getAppPrefAccessToken();

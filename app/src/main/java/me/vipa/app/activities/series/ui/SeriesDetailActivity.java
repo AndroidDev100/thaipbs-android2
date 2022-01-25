@@ -35,6 +35,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.brightcove.player.edge.CatalogError;
 import com.brightcove.player.edge.OfflineCallback;
 import com.brightcove.player.edge.VideoListener;
 import com.brightcove.player.model.Video;
@@ -147,7 +148,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
             tabId = SDKConfig.getInstance().getSeriesDetailId();
         }
 
-        kidsMode  = new SharedPrefHelper(SeriesDetailActivity.this).getKidsMode();
+        kidsMode  = SharedPrefHelper.getInstance(SeriesDetailActivity.this).getKidsMode();
         if (kidsMode) {
             parentalRating = AppCommonMethod.getParentalRating();
         }
@@ -287,7 +288,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
         token = preference.getAppPrefAccessToken();
         viewModel = ViewModelProviders.of(this).get(SeriesViewModel.class);
 /*
-        kidsMode  = new SharedPrefHelper(SeriesDetailActivity.this).getKidsMode();
+        kidsMode  = SharedPrefHelper.getInstance(SeriesDetailActivity.this).getKidsMode();
 
 
         if( !isLogin.equalsIgnoreCase(AppConstants.UserStatus.Login.toString()) && kidsMode ){
@@ -403,10 +404,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
                 }
             }
         });*/
-
         getBinding().flBackIconImage.setOnClickListener(view -> onBackPressed());
-
-
     }
 
     private void parseSeriesData(RailCommonData enveuCommonResponse) {
@@ -425,13 +423,9 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
             getBinding().tabLayout.setTabIndicatorFullWidth(true);
             getBinding().tabLayout.setTabMode(TabLayout.MODE_FIXED);
             getBinding().tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
             ViewGroup.LayoutParams params = getBinding().tabLayout.getLayoutParams();
             params.width = MATCH_PARENT;
             params.height = WindowManager.LayoutParams.WRAP_CONTENT;
-
-
-
             getBinding().tabLayout.setLayoutParams(params);
 
 
@@ -471,7 +465,6 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
             Bundle args = new Bundle();
             args.putString(AppConstants.BUNDLE_TAB_ID, tabId);
             //railFragment.setArguments(args);
-
 
             Bundle bundleSeason = new Bundle();
             bundleSeason.putInt(AppConstants.BUNDLE_ASSET_ID, seriesId);
@@ -1071,7 +1064,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
         preference.setAppPrefJumpTo(MediaTypeConstants.getInstance().getSeries());
         preference.setAppPrefJumpBack(true);
         preference.setAppPrefJumpBackId(seriesId);
-        new ActivityLauncher(SeriesDetailActivity.this).loginActivity(SeriesDetailActivity.this, LoginActivity.class);
+        ActivityLauncher.getInstance().loginActivity(SeriesDetailActivity.this, LoginActivity.class);
 
     }
     @Override
@@ -1110,7 +1103,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
         preference.setAppPrefJumpTo(getResources().getString(R.string.series));
         preference.setAppPrefJumpBack(true);
         preference.setAppPrefJumpBackId(seriesId);
-        new ActivityLauncher(SeriesDetailActivity.this).loginActivity(SeriesDetailActivity.this, LoginActivity.class);
+        ActivityLauncher.getInstance().loginActivity(SeriesDetailActivity.this, LoginActivity.class);
 
     }
 
@@ -1154,9 +1147,9 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
 
             boolean loginStatus = preference.getAppPrefLoginStatus().equalsIgnoreCase(AppConstants.UserStatus.Login.toString());
             if (!loginStatus)
-                new ActivityLauncher(this).loginActivity(this, LoginActivity.class);
+                ActivityLauncher.getInstance().loginActivity(this, LoginActivity.class);
             else {
-                int videoQuality = new SharedPrefHelper(this).getInt(SharedPrefesConstants.DOWNLOAD_QUALITY_INDEX, 4);
+                int videoQuality = SharedPrefHelper.getInstance(this).getInt(SharedPrefesConstants.DOWNLOAD_QUALITY_INDEX, 4);
                 if (source instanceof UserInteractionFragment) {
                     if (KsPreferenceKeys.getInstance().getDownloadOverWifi() == 1 && NetworkHelper.INSTANCE.isWifiEnabled(this)) {
                         downloadHelper.findVideo(seriesDetailBean.getBrightcoveVideoId(), new VideoListener() {
@@ -1169,6 +1162,14 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
                             public void onError(String error) {
                                 super.onError(error);
                                 Logger.d(error);
+                            }
+
+                            @Override
+                            public void onError(@NonNull List<CatalogError> errors) {
+                                super.onError(errors);
+                                for (CatalogError error : errors) {
+                                    Logger.d("Error: " + error);
+                                }
                             }
                         });
                     } else {
@@ -1360,7 +1361,7 @@ public class SeriesDetailActivity extends BaseBindingActivity<ActivitySeriesDeta
                         downloadHelper.deleteVideo(downloadAbleVideo);
                         break;
                     case R.id.my_Download:
-                        new ActivityLauncher(this).launchMyDownloads();
+                        ActivityLauncher.getInstance().launchMyDownloads(this);
                         break;
                 }
                 return false;

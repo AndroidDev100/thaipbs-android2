@@ -11,13 +11,13 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
 import me.vipa.app.R;
 import me.vipa.app.databinding.ChangeLanguageItemBinding;
 import me.vipa.app.utils.constants.SharedPrefesConstants;
 import me.vipa.app.utils.helpers.SharedPrefHelper;
 import me.vipa.app.utils.helpers.ksPreferenceKeys.KsPreferenceKeys;
-
-import java.util.List;
 
 
 public class ChangeDownloadQualityAdapter extends RecyclerView.Adapter<ChangeDownloadQualityAdapter.SingleItemRowHolder> {
@@ -33,7 +33,7 @@ public class ChangeDownloadQualityAdapter extends RecyclerView.Adapter<ChangeDow
         pos = preference.getAppPrefLanguagePos();
         this.downloadQualities = downloadQualities;
         this.activity = activity;
-        pos = new SharedPrefHelper(activity).getInt(SharedPrefesConstants.DOWNLOAD_QUALITY_INDEX, 4);
+        pos = SharedPrefHelper.getInstance(activity).getInt(SharedPrefesConstants.DOWNLOAD_QUALITY_INDEX, 4);
     }
 
     @NonNull
@@ -60,7 +60,7 @@ public class ChangeDownloadQualityAdapter extends RecyclerView.Adapter<ChangeDow
 
         viewHolder.notificationItemBinding.parentLayout.setOnClickListener(view -> {
             pos = position;
-            new SharedPrefHelper(activity).setInt(SharedPrefesConstants.DOWNLOAD_QUALITY_INDEX, position);
+            SharedPrefHelper.getInstance(activity).setInt(SharedPrefesConstants.DOWNLOAD_QUALITY_INDEX, position);
             notifyDataSetChanged();
         });
     }

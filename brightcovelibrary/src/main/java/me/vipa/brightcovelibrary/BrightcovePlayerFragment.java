@@ -706,6 +706,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                         mListener = (OnPlayerInteractionListener) mActivity;
                         if (baseVideoView != null && !baseVideoView.isPlaying()) {
                             mListener.onPlayerStart();
+                            mListener.notifyMoEngageOnPlayerStart();
                         }
 
                         Logger.w("Playerstart PLAY");
@@ -743,12 +744,12 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
 
 
 
-                        if (!UhdUrl.equalsIgnoreCase("") && UhdUrl.contains("avc1_hvc1_mp4a")) {
-                            is4kSupported = true;
-                            playerControlsFragment.set4kSupported(is4kSupported);
-                        } else {
-                            is4kSupported = false;
-                        }
+                    if (!UhdUrl.equalsIgnoreCase("") && UhdUrl.contains("avc1_hvc1_mp4a")) {
+                        is4kSupported = true;
+                        playerControlsFragment.set4kSupported(is4kSupported);
+                    } else {
+                        is4kSupported = false;
+                    }
 
 
 
@@ -791,11 +792,13 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
         eventEmitter.on(EventType.COMPLETED, new EventListener() {
             @Override
             public void processEvent(Event event) {
+
                 baseVideoView.stopPlayback();
                 isContentCompleted = true;
                 willBingWatchShow = false;
                 baseVideoView.seekTo(baseVideoView.getDuration());
                 if (playerControlsFragment != null) {
+                    mListener.notifyMoEngageOnPlayerEnd();
                     playerControlsFragment.hideControls();
                     if (!isInPictureinPicture) {
                         if (playerControlsFragment.bingeLay.getVisibility() == View.VISIBLE) {
@@ -1861,7 +1864,7 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
                                     playerControlsFragment.sendTapCallBack(true);
                                     playerControlsFragment.startHandler();
                                     playerControlsFragment.showControls();
-                                    }
+                                }
                             }
 
                         }
@@ -2059,6 +2062,9 @@ public class BrightcovePlayerFragment extends com.brightcove.player.appcompat.Br
 
         void finishActivity();
 
+        void notifyMoEngageOnPlayerStart();
+
+        void notifyMoEngageOnPlayerEnd();
     }
 
     public interface ChromeCastStartedCallBack {

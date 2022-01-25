@@ -416,14 +416,14 @@ public class SeasonTabFragment extends BaseBindingFragment<SeasonFragmentLayoutB
                 AppCommonMethod.launchDetailScreen(getActivity(), Long.valueOf(enveuVideoItemBean.getBrightcoveVideoId()), AppConstants.Episode, enveuVideoItemBean.getId(), "0", enveuVideoItemBean.isPremium());
                 break;
             case AppConstants.Series:
-                //  new ActivityLauncher(getActivity()).seriesDetailScreen(getActivity(), SeriesDetailActivity.class, id);
+                //  ActivityLauncher.getInstance().seriesDetailScreen(getActivity(), SeriesDetailActivity.class, id);
                 break;
             case AppConstants.Video:
-               // new ActivityLauncher(getActivity()).detailScreenBrightCove(getActivity(), DetailActivity.class, brighCoveId, assetID, "0", isPremium, AppConstants.MOVIE_ENVEU);
+               // ActivityLauncher.getInstance().detailScreenBrightCove(getActivity(), DetailActivity.class, brighCoveId, assetID, "0", isPremium, AppConstants.MOVIE_ENVEU);
                 if (SDKConfig.getInstance().getMovieDetailId().equalsIgnoreCase("")){
-                   // new ActivityLauncher(getActivity()).detailScreenBrightCove(getActivity(), DetailActivity.class, brighCoveId, assetID, "0", isPremium, AppConstants.MOVIE_ENVEU);
+                   // ActivityLauncher.getInstance().detailScreenBrightCove(getActivity(), DetailActivity.class, brighCoveId, assetID, "0", isPremium, AppConstants.MOVIE_ENVEU);
                 }else {
-                    new ActivityLauncher(getActivity()).detailScreenBrightCove(getActivity(), DetailActivity.class, brighCoveId, assetID, "0", isPremium, SDKConfig.getInstance().getMovieDetailId());
+                    ActivityLauncher.getInstance().detailScreenBrightCove(getActivity(), DetailActivity.class, brighCoveId, assetID, "0", isPremium, SDKConfig.getInstance().getMovieDetailId());
                 }
                 break;
 

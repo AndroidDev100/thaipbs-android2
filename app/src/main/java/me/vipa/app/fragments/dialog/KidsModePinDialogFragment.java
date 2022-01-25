@@ -398,9 +398,9 @@ public class KidsModePinDialogFragment extends DialogFragment implements ErrorDi
             KsPreferenceKeys.getInstance().setAppLanguage(strCurrentLanguage);
             AppCommonMethod.updateLanguage(strCurrentLanguage, getActivity());
             KsPreferenceKeys.getInstance().setBingeWatchEnable(isBingeWatchEnable);
-            // new ActivityLauncher(this).homeScreen(this, HomeActivity.class);
+            // ActivityLauncher.getInstance().homeScreen(this, HomeActivity.class);
         } catch (Exception e) {
-            // new ActivityLauncher(this).homeScreen(this, HomeActivity.class);
+            // ActivityLauncher.getInstance().homeScreen(this, HomeActivity.class);
 
         }
     }
@@ -482,8 +482,8 @@ public class KidsModePinDialogFragment extends DialogFragment implements ErrorDi
             String json = KsPreferenceKeys.getInstance().getUserProfileData();
             newObject = gson.fromJson(json, UserProfileResponse.class);
 
-            isNotificationEnable = new SharedPrefHelper(getActivity()).getNotificationEnable();
-            via = new SharedPrefHelper(getActivity()).getVia();
+            isNotificationEnable = SharedPrefHelper.getInstance(getActivity()).getNotificationEnable();
+            via = SharedPrefHelper.getInstance(getActivity()).getVia();
 
             if (newObject.getData().getCustomData() != null && newObject.getData().getCustomData().getContentPreferences() != null && !newObject.getData().getCustomData().getContentPreferences().isEmpty()
             ) {

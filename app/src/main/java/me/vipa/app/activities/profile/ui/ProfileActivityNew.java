@@ -333,7 +333,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
                         galleryIntent();
                     } else if (items[item].equals(getResources().getString(R.string.select_from_avtar))) {
                         // userChoosenTask = "Choose from Library";
-                        new ActivityLauncher(ProfileActivityNew.this).avatarActivity(ProfileActivityNew.this, AvatarImageActivity.class);
+                        ActivityLauncher.getInstance().avatarActivity(ProfileActivityNew.this, AvatarImageActivity.class);
                     } else if (items[item].equals(getResources().getString(R.string.cancel))) {
                         dialog.dismiss();
                     }
@@ -547,7 +547,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
         imageToUpload = "Thumbnail_" + AppCommonMethod.getCurrentTimeStamp() + "Android" + ".jpg";
         imageUrlId = imageToUpload;
         via = "Gallery";
-        new SharedPrefHelper(this).saveVia(via);
+        SharedPrefHelper.getInstance(this).saveVia(via);
         TransferObserver transferObserver = transferUtility.upload(
                 "thai-pbs/profile_picture", imageToUpload,
                 fileToUpload
@@ -719,7 +719,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
             if (userProfileResponse.getData().getProfilePicURL() != null && userProfileResponse.getData().getProfilePicURL() != "") {
                 imageUrlId = userProfileResponse.getData().getProfilePicURL().toString();
                 via = "Gallery";
-                new SharedPrefHelper(this).saveVia(via);
+                SharedPrefHelper.getInstance(this).saveVia(via);
 
                 String firstFiveChar = imageUrlId.substring(0, 5);
                 if (firstFiveChar.equalsIgnoreCase("https")){
@@ -741,7 +741,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
                         if (userProfileResponse.getData().getCustomData().getProfileAvatar().equalsIgnoreCase(SDKConfig.getInstance().getAvatarImages().get(i).getIdentifier())) {
                             imageUrlId = SDKConfig.getInstance().getAvatarImages().get(i).getIdentifier();
                             via = "Avatar";
-                            new SharedPrefHelper(this).saveVia(via);
+                            SharedPrefHelper.getInstance(this).saveVia(via);
 
                             Glide.with(ProfileActivityNew.this).load(SDKConfig.getInstance().getAvatarImages().get(i).getUrl())
                                     .placeholder(R.drawable.default_profile_pic)
@@ -753,7 +753,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
                 } else {
                     imageUrlId = SDKConfig.getInstance().getAvatarImages().get(0).getIdentifier();
                     via = "Avatar";
-                    new SharedPrefHelper(this).saveVia(via);
+                    SharedPrefHelper.getInstance(this).saveVia(via);
                     Glide.with(ProfileActivityNew.this).load(SDKConfig.getInstance().getAvatarImages().get(0).getUrl())
                             .placeholder(R.drawable.default_profile_pic)
                             .error(R.drawable.default_profile_pic)
@@ -813,7 +813,7 @@ public class ProfileActivityNew extends BaseBindingActivity<ProfileActivityNewBi
 
             imageUrlId = AppCommonMethod.UriId;
             via = "Avatar";
-            new SharedPrefHelper(this).saveVia(via);
+            SharedPrefHelper.getInstance(this).saveVia(via);
             Glide.with(ProfileActivityNew.this).load(AppCommonMethod.Url)
                     .placeholder(R.drawable.default_profile_pic)
                     .error(R.drawable.default_profile_pic)
