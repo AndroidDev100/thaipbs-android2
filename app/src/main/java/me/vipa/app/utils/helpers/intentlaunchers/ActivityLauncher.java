@@ -5,7 +5,9 @@ import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 import android.app.Activity;
 import android.app.TaskStackBuilder;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 import me.vipa.app.activities.ManageAccount.UI.ManageAccount;
@@ -62,7 +64,9 @@ public class ActivityLauncher {
         intent.putExtra("loginFrom",from);
         source.startActivity(intent);
     }
-
+    public boolean isTablet(Context ctx){
+        return (ctx.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
+    }
 
     public void skipActivity(Activity source, Class<SkipActivity> destination, DataModel model) {
 

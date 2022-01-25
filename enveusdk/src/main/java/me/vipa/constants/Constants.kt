@@ -4,6 +4,9 @@ class Constants {
 
     companion object {
         @kotlin.jvm.JvmField
+        var CREATED_TIME: String = "created_time";
+
+        @kotlin.jvm.JvmField
         var VIDEO_COMPLETED: String = "VIDEO_COMPLETED"
 
         @kotlin.jvm.JvmField
